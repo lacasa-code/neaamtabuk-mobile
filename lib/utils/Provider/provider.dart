@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 class Provider_control with ChangeNotifier {
-  Color _themeData= Colors.blue;
-  String local ='ar';
+  Color _themeData = Color(0xff424242);
+  String local = 'ar';
   Color color;
   bool isLogin = false;
 
@@ -15,7 +16,7 @@ class Provider_control with ChangeNotifier {
     notifyListeners();
   }
 
-  setLogin( bool isLog) {
+  setLogin(bool isLog) {
     isLogin = isLog;
     notifyListeners();
   }
@@ -24,5 +25,4 @@ class Provider_control with ChangeNotifier {
     local = st;
     notifyListeners();
   }
-
 }

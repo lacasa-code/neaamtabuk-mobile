@@ -1,17 +1,19 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_pos/screens/splash_screen.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/AppLocalizations.dart';
+import 'package:global_configuration/global_configuration.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GlobalConfiguration().loadFromAsset("configurations");
+  print("base_url: ${GlobalConfiguration().getString('base_url')}");
   runApp(
     ChangeNotifierProvider<Provider_control>(
       create: (_) => Provider_control(),
-      child:MyApp(),
+      child: MyApp(),
     ),
   );
 
@@ -25,9 +27,7 @@ Future<void> main() async {
   // );
   // OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
   // await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
-
 }
-
 
 class MyApp extends StatefulWidget {
   static void setlocal(BuildContext context, Locale locale) {
@@ -42,7 +42,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale _locale;
   final GlobalKey<NavigatorState> navigatorKey =
-  new GlobalKey<NavigatorState>();
+      new GlobalKey<NavigatorState>();
 
   void setlocal(Locale locale) {
     setState(() {
@@ -58,8 +58,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
-    return  MaterialApp(
-
+    return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [

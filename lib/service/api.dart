@@ -6,9 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/Maintenance.dart';
+import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
@@ -17,7 +19,6 @@ class API {
   API(this.context) {
     getDeviceDetails();
   }
-
   String deviceName;
   String deviceVersion;
   String identifier;
@@ -25,15 +26,14 @@ class API {
   get(String url) async {
     final String full_url =
         '${GlobalConfiguration().getString('api_base_url')}$url';
+    print(full_url);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-      print(full_url);
-
       http.Response response = await http.get(full_url, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-        //'locale': Provider.of<Provider_control>(context).getlocal(),
+        //'Accept-Language': Provider.of<Provider_control>(context).getlocal(),
       });
       print(response.body);
       if (response.statusCode == 500) {
@@ -52,8 +52,37 @@ class API {
         return jsonDecode(response.body);
       }
     } catch (e) {
-      print(e);
-      Nav.route(context, Maintenance());
+      //Nav.route(context, Maintenance());
+    } finally {}
+  }
+
+  get_url(String url) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      http.Response response = await http.get(url, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
+        'locale': Provider.of<Provider_control>(context).getlocal(),
+      });
+      print(response.body);
+      if (response.statusCode == 500) {
+        Nav.route(
+            context,
+            Maintenance(
+              erorr: response.body,
+            ));
+      } else if (response.statusCode == 404) {
+        Nav.route(
+            context,
+            Maintenance(
+              erorr: url + '\n' + response.body,
+            ));
+      } else {
+        return jsonDecode(response.body);
+      }
+    } catch (e) {
+      //Nav.route(context, Maintenance());
     } finally {}
   }
 
@@ -63,15 +92,15 @@ class API {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    print("full_url =$full_url");
+    print("body =${body}");
 
     try {
       http.Response response = await http.post(full_url,
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'Bearer ${prefs.getString('token')}',
-            // 'locale': Provider.of<Provider_control>(context).getlocal(),
+            'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
+            'locale': Provider.of<Provider_control>(context).getlocal(),
           },
           body: json.encode(body));
       print("body =${jsonDecode(response.body)}");
@@ -91,14 +120,7 @@ class API {
       } else {
         return jsonDecode(response.body);
       }
-    } catch (e) {
-      Nav.route(
-          context,
-          Maintenance(
-            erorr: e,
-          ));
-      print(e);
-    } finally {}
+    } catch (e) {} finally {}
   }
 
   Put(String url, Map<String, dynamic> body) async {
@@ -113,7 +135,7 @@ class API {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-            //'locale': Provider.of<Provider_control>(context).getlocal(),
+            'locale': Provider.of<Provider_control>(context).getlocal(),
           },
           body: json.encode(body));
       print(jsonDecode(response.body));
@@ -140,7 +162,7 @@ class API {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-          // 'locale': Provider.of<Provider_control>(context).getlocal(),
+          'locale': Provider.of<Provider_control>(context).getlocal(),
         },
       );
       if (response.statusCode == 500) {
