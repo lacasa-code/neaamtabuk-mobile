@@ -32,7 +32,7 @@ class API {
       http.Response response = await http.get(full_url, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
+        'Authorization': 'Bearer 1373|MjV5FljVwN7ELYjoIj5lcuTM50nRQLg8jbSC4aid',
         //'Accept-Language': Provider.of<Provider_control>(context).getlocal(),
       });
       print(response.body);
@@ -56,36 +56,6 @@ class API {
     } finally {}
   }
 
-  get_url(String url) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    try {
-      http.Response response = await http.get(url, headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-        'locale': Provider.of<Provider_control>(context).getlocal(),
-      });
-      print(response.body);
-      if (response.statusCode == 500) {
-        Nav.route(
-            context,
-            Maintenance(
-              erorr: response.body,
-            ));
-      } else if (response.statusCode == 404) {
-        Nav.route(
-            context,
-            Maintenance(
-              erorr: url + '\n' + response.body,
-            ));
-      } else {
-        return jsonDecode(response.body);
-      }
-    } catch (e) {
-      //Nav.route(context, Maintenance());
-    } finally {}
-  }
-
   post(String url, Map<String, dynamic> body) async {
     final String full_url =
         '${GlobalConfiguration().getString('api_base_url')}$url';
@@ -99,8 +69,9 @@ class API {
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-            'locale': Provider.of<Provider_control>(context).getlocal(),
+            'Authorization':
+                'Bearer 1373|MjV5FljVwN7ELYjoIj5lcuTM50nRQLg8jbSC4aid',
+            // 'locale': Provider.of<Provider_control>(context).getlocal(),
           },
           body: json.encode(body));
       print("body =${jsonDecode(response.body)}");

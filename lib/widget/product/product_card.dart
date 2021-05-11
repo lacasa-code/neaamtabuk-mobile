@@ -3,7 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/product_model.dart';
+import 'package:flutter_pos/screens/ProductPage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -39,11 +41,11 @@ class _ProductCardState extends State<ProductCard> {
           ),
           child: InkWell(
             onTap: () {
-              // Nav.route(
-              //     context,
-              //     ProductDetailPage(
-              //       product: widget.product,
-              //     ));
+              Nav.route(
+                  context,
+                  ProductPage(
+                    product: widget.product,
+                  ));
             },
             child: Container(
               decoration: BoxDecoration(
@@ -62,7 +64,7 @@ class _ProductCardState extends State<ProductCard> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                    height: ScreenUtil.getHeight(context) / 6,
+                    height: 100,
                     width: ScreenUtil.getWidth(context) / 2,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
