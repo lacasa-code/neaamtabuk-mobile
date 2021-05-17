@@ -6,6 +6,9 @@ import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 
+import '../../screens/filterPage.dart';
+import '../../utils/navigator.dart';
+
 class CategoryCard extends StatefulWidget {
   const CategoryCard({
     Key key,
@@ -28,60 +31,52 @@ class _CategoryCardState extends State<CategoryCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          width: ScreenUtil.getWidth(context) / 2,
-          margin: EdgeInsets.only(left: 16, top: 8, right: 12, bottom: 2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: InkWell(
-            onTap: () {
-              // Nav.route(
-              //     context,
-              //     ProductDetailPage(
-              //       product: widget.product,
-              //     ));
-            },
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey[200],
-                            blurRadius: 5.0,
-                            spreadRadius: 1,
-                            offset: Offset(0.0, 2)),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CachedNetworkImage(
-                      imageUrl: (widget.product.photo == null)
-                          ? 'http://arabimagefoundation.com/images/defaultImage.png'
-                          : widget.product.photo.image,
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    ),
-                  ),
+    return Container(
+      width: ScreenUtil.getWidth(context) / 2,
+      margin: EdgeInsets.only(left: 16, top: 8, right: 12, bottom: 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: InkWell(
+        onTap: () {
+          Nav.route(context, FilterPage());
+        },
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey[200],
+                        blurRadius: 5.0,
+                        spreadRadius: 1,
+                        offset: Offset(0.0, 2)),
+                  ]),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CachedNetworkImage(
+                  imageUrl: (widget.product.photo == null)
+                      ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                      : widget.product.photo.image,
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
-                AutoSizeText(
-                  widget.product.name,
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF5D6A78),
-                    fontWeight: FontWeight.w300,
-                  ),
-                  minFontSize: 11,
-                )
-              ],
+              ),
             ),
-          ),
+            AutoSizeText(
+              widget.product.name,
+              maxLines: 1,
+              style: TextStyle(
+                fontSize: 20,
+                color: Color(0xFF5D6A78),
+                fontWeight: FontWeight.w300,
+              ),
+              minFontSize: 11,
+            )
+          ],
         ),
-      ],
+      ),
     );
   }
 

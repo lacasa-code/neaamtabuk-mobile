@@ -8,9 +8,13 @@ import 'package:flutter_pos/model/carmodel.dart';
 import 'package:flutter_pos/model/favourite.dart';
 import 'package:flutter_pos/model/transmission.dart';
 import 'package:flutter_pos/model/years.dart';
+import 'package:flutter_pos/screens/productCarPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:provider/provider.dart';
+
+import '../model/product_model.dart';
+import '../utils/navigator.dart';
 
 class MyCars extends StatefulWidget {
   const MyCars({Key key}) : super(key: key);
@@ -29,6 +33,7 @@ class _MyCarsState extends State<MyCars> {
   int checkboxValue = 0;
   int car_mades_id;
 
+  TextEditingController yearsID, carMadeID, CarmodelsID, transimionsID;
   @override
   void initState() {
     API(context).get('car/types/list').then((value) {
@@ -60,7 +65,10 @@ class _MyCarsState extends State<MyCars> {
       }
     });
     getFavorit();
-
+    yearsID = TextEditingController();
+    carMadeID = TextEditingController();
+    CarmodelsID = TextEditingController();
+    transimionsID = TextEditingController();
     super.initState();
   }
 
@@ -192,7 +200,8 @@ class _MyCarsState extends State<MyCars> {
                                 items: years,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (Year u) => u.year,
-                                onChanged: (Year data) => print(data),
+                                onChanged: (Year data) =>
+                                    yearsID.text = data.id.toString(),
                               ),
                             ),
                       car_mades == null
@@ -207,6 +216,7 @@ class _MyCarsState extends State<MyCars> {
                                 onChanged: (CarMade data) {
                                   getcarModels(data.id);
                                   car_mades_id = data.id;
+                                  carMadeID.text = data.id.toString();
                                 },
                               ),
                             ),
@@ -220,7 +230,8 @@ class _MyCarsState extends State<MyCars> {
                                 items: carmodels,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (CarModel u) => u.carmodel,
-                                onChanged: (CarModel data) => print(data),
+                                onChanged: (CarModel data) =>
+                                    CarmodelsID.text = data.id.toString(),
                               ),
                             ),
                       transmissions == null
@@ -229,39 +240,65 @@ class _MyCarsState extends State<MyCars> {
                               padding: const EdgeInsets.all(8.0),
                               child: DropdownSearch<Transmissions>(
                                 label: " ناقل الحركة ",
-
                                 items: transmissions,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (Transmissions u) =>
                                     u.transmissionName,
-                                onChanged: (Transmissions data) => print(data),
+                                onChanged: (Transmissions data) =>
+                                    transimionsID.text = data.id.toString(),
                               ),
                             ),
-                      Container(
-                        margin: const EdgeInsets.all(15.0),
-                        padding: const EdgeInsets.all(3.0),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.orange)),
-                        child: Center(
-                            child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.search,
-                              color: Colors.orange,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'إعرض منتجات المركبة',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange),
-                            ),
-                          ],
-                        )),
+                      InkWell(
+                        onTap: () {
+                          API(context).post('user/select/products', {
+                            "car_made_id": car_mades_id,
+                            "car_model_id": CarmodelsID.text,
+                            "car_year_id": yearsID.text,
+                            "transmission_id": transimionsID.text,
+                          }).then((value) {
+                            if (value != null) {
+                              if (value['status_code'] == 200) {
+                                Nav.route(
+                                    context,
+                                    ProductCarPage(
+                                      product:
+                                          Product_model.fromJson(value).data,
+                                    ));
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay(value['message']));
+                              }
+                            }
+                          });
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(3.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.orange)),
+                          child: Center(
+                              child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.search,
+                                color: Colors.orange,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'إعرض منتجات المركبة',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.orange),
+                              ),
+                            ],
+                          )),
+                        ),
                       ),
                       InkWell(
                         onTap: () {
@@ -271,8 +308,9 @@ class _MyCarsState extends State<MyCars> {
                                   builder: (_) =>
                                       ResultOverlay('Please select Car Made'))
                               : API(context).post(
-                                  'user/select/products/add/favourite/car',
-                                  {"car_made_id": car_mades_id}).then((value) {
+                                  'user/select/products/add/favourite/car', {
+                                  "car_made_id": car_mades_id,
+                                }).then((value) {
                                   if (value != null) {
                                     if (value['status_code'] == 200) {
                                       showDialog(
@@ -280,6 +318,11 @@ class _MyCarsState extends State<MyCars> {
                                           builder: (_) =>
                                               ResultOverlay(value['message']));
                                       getFavorit();
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) =>
+                                              ResultOverlay(value['message']));
                                     }
                                   }
                                 });

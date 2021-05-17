@@ -72,11 +72,9 @@ class _ProductCardState extends State<ProductCard> {
                         topRight: Radius.circular(8),
                       ),
                       child: CachedNetworkImage(
-                        imageUrl:
-                            'http://arabimagefoundation.com/images/defaultImage.png',
-                        // (widget.product.photo == null)
-                        //     ? 'http://arabimagefoundation.com/images/defaultImage.png'
-                        //     : widget.product.photo.image,
+                        imageUrl: (widget.product.photo.isEmpty)
+                            ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                            : widget.product.photo[0].image,
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                     ),

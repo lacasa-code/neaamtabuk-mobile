@@ -58,7 +58,10 @@ class Products {
   int transmissionId;
   String transmissionName;
   String origincountryName;
+  int cartypeId;
+  String cartypeName;
   int countViews;
+  List<Photo> photo;
   String timeCreated;
 
   Products(
@@ -89,7 +92,10 @@ class Products {
       this.transmissionId,
       this.transmissionName,
       this.origincountryName,
+      this.cartypeId,
+      this.cartypeName,
       this.countViews,
+      this.photo,
       this.timeCreated});
 
   Products.fromJson(Map<String, dynamic> json) {
@@ -120,7 +126,15 @@ class Products {
     transmissionId = json['transmission_id'];
     transmissionName = json['transmission_name'];
     origincountryName = json['origincountry_name'];
+    cartypeId = json['cartype_id'];
+    cartypeName = json['cartype_name'];
     countViews = json['count_views'];
+    if (json['photo'] != null) {
+      photo = new List<Photo>();
+      json['photo'].forEach((v) {
+        photo.add(new Photo.fromJson(v));
+      });
+    }
     timeCreated = json['time_created'];
   }
 
@@ -153,8 +167,98 @@ class Products {
     data['transmission_id'] = this.transmissionId;
     data['transmission_name'] = this.transmissionName;
     data['origincountry_name'] = this.origincountryName;
+    data['cartype_id'] = this.cartypeId;
+    data['cartype_name'] = this.cartypeName;
     data['count_views'] = this.countViews;
+    if (this.photo != null) {
+      data['photo'] = this.photo.map((v) => v.toJson()).toList();
+    }
     data['time_created'] = this.timeCreated;
+    return data;
+  }
+}
+
+class Photo {
+  int id;
+  int modelId;
+  String uuid;
+  String collectionName;
+  String name;
+  String fileName;
+  String mimeType;
+  String disk;
+  String conversionsDisk;
+  int size;
+  int orderColumn;
+  String createdAt;
+  String updatedAt;
+  String image;
+  String url;
+  String fullurl;
+  String thumbnail;
+  String preview;
+
+  Photo(
+      {this.id,
+      this.modelId,
+      this.uuid,
+      this.collectionName,
+      this.name,
+      this.fileName,
+      this.mimeType,
+      this.disk,
+      this.conversionsDisk,
+      this.size,
+      this.orderColumn,
+      this.createdAt,
+      this.updatedAt,
+      this.image,
+      this.url,
+      this.fullurl,
+      this.thumbnail,
+      this.preview});
+
+  Photo.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    modelId = json['model_id'];
+    uuid = json['uuid'];
+    collectionName = json['collection_name'];
+    name = json['name'];
+    fileName = json['file_name'];
+    mimeType = json['mime_type'];
+    disk = json['disk'];
+    conversionsDisk = json['conversions_disk'];
+    size = json['size'];
+    orderColumn = json['order_column'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    image = json['image'];
+    url = json['url'];
+    fullurl = json['fullurl'];
+    thumbnail = json['thumbnail'];
+    preview = json['preview'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['model_id'] = this.modelId;
+    data['uuid'] = this.uuid;
+    data['collection_name'] = this.collectionName;
+    data['name'] = this.name;
+    data['file_name'] = this.fileName;
+    data['mime_type'] = this.mimeType;
+    data['disk'] = this.disk;
+    data['conversions_disk'] = this.conversionsDisk;
+    data['size'] = this.size;
+    data['order_column'] = this.orderColumn;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['image'] = this.image;
+    data['url'] = this.url;
+    data['fullurl'] = this.fullurl;
+    data['thumbnail'] = this.thumbnail;
+    data['preview'] = this.preview;
     return data;
   }
 }

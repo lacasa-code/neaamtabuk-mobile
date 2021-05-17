@@ -7,33 +7,23 @@ import 'package:flutter_pos/screens/Sort.dart';
 import 'package:flutter_pos/screens/myCars.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
-import 'package:flutter_pos/utils/service/API.dart';
 import 'package:flutter_pos/widget/List/gridview.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
-import 'package:flutter_pos/widget/product/product_card.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class FilterPage extends StatefulWidget {
-  const FilterPage({Key key}) : super(key: key);
+class ProductCarPage extends StatefulWidget {
+  const ProductCarPage({Key key, this.product}) : super(key: key);
+  final List<Products> product;
 
   @override
-  _FilterPageState createState() => _FilterPageState();
+  _ProductCarPageState createState() => _ProductCarPageState();
 }
 
-class _FilterPageState extends State<FilterPage> {
-  List<Products> product;
+class _ProductCarPageState extends State<ProductCarPage> {
   bool list = false;
   @override
-  void initState() {
-    API(context).get('home/all/products').then((value) {
-      if (value != null) {
-        setState(() {
-          product = Product_model.fromJson(value).data;
-        });
-      }
-    });
-  }
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +87,7 @@ class _FilterPageState extends State<FilterPage> {
                 ],
               ),
             ),
-            product == null
+            widget.product == null
                 ? Container()
                 : Container(
                     color: Colors.black26,
@@ -119,7 +109,7 @@ class _FilterPageState extends State<FilterPage> {
                           ),
                           // color: Color(0xffE4E4E4),
                         ),
-                        Text('${product.length} منتج'),
+                        Text('${widget.product.length} منتج'),
                         InkWell(
                           onTap: () {
                             showDialog(
@@ -154,40 +144,18 @@ class _FilterPageState extends State<FilterPage> {
                       ],
                     ),
                   ),
-            product == null
+            widget.product == null
                 ? Container()
                 : list
                     ? grid_product(
-                        product: product,
+                        product: widget.product,
                       )
                     : List_product(
-                        product: product,
+                        product: widget.product,
                       ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget list_product(Provider_control themeColor) {
-    return GridView.builder(
-      primary: false,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 0.77,
-        crossAxisCount: 2,
-      ),
-      itemCount: product.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: ProductCard(
-            themeColor: themeColor,
-            product: product[index],
-          ),
-        );
-      },
     );
   }
 }
