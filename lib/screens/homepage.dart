@@ -10,8 +10,8 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/utils/service/API.dart';
+import 'package:flutter_pos/widget/category/category_card.dart';
 import 'package:flutter_pos/widget/hidden_menu.dart';
-import 'package:flutter_pos/widget/product/category_card.dart';
 import 'package:flutter_pos/widget/product/product_card.dart';
 import 'package:flutter_pos/widget/product/product_list_titlebar.dart';
 import 'package:flutter_pos/widget/slider/Banner.dart';
@@ -28,6 +28,14 @@ class _HomeState extends State<Home> {
   List<Products> product;
   List<Products> productMostSale;
   List<Category> categories;
+  int _currentIndex = 0;
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   void initState() {
     API(context).get('site/new/products').then((value) {
@@ -37,13 +45,13 @@ class _HomeState extends State<Home> {
         });
       }
     });
-    // API(context).get('best/seller/products').then((value) {
-    //   if (value != null) {
-    //     setState(() {
-    //       productMostSale = Product_model.fromJson(value).data;
-    //     });
-    //   }
-    // });
+    API(context).get('best/seller/products').then((value) {
+      if (value != null) {
+        setState(() {
+          productMostSale = Product_model.fromJson(value).data;
+        });
+      }
+    });
     API(context).get('fetch/categories/nested/part').then((value) {
       if (value != null) {
         setState(() {
@@ -55,10 +63,16 @@ class _HomeState extends State<Home> {
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final sliders = [
-    'https://www.uniquefbcovers.com/covers/thumbs/bmw_m6_dark_knight_black_forest_fog_front_bumper_100117_1600x900.jpg',
-    'https://i.pinimg.com/originals/0f/36/17/0f361741bf7c35e0aa795ea76c750a75.jpg',
-    'https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:642cddc5-5583-433a-92cc-56baee945e76;revision=0?component_id=996ae476-b356-4c68-b9d4-3d9b6b6e9416&api_key=CometServer1&access_token=1620676996_urn%3Aaaid%3Asc%3AUS%3A642cddc5-5583-433a-92cc-56baee945e76%3Bpublic_1c61409196c095dd29fd1e92f122a1deb24e63e9'
+  List<Photo> sliders = [
+    Photo(
+        image:
+            'https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:642cddc5-5583-433a-92cc-56baee945e76;revision=0?component_id=996ae476-b356-4c68-b9d4-3d9b6b6e9416&api_key=CometServer1&access_token=1620676996_urn%3Aaaid%3Asc%3AUS%3A642cddc5-5583-433a-92cc-56baee945e76%3Bpublic_1c61409196c095dd29fd1e92f122a1deb24e63e9'),
+    Photo(
+        image:
+            'https://i.pinimg.com/originals/0f/36/17/0f361741bf7c35e0aa795ea76c750a75.jpg'),
+    Photo(
+        image:
+            'https://www.uniquefbcovers.com/covers/thumbs/bmw_m6_dark_knight_black_forest_fog_front_bumper_100117_1600x900.jpg')
   ];
   int _carouselCurrentPage = 0;
   String pathImage;
@@ -102,7 +116,7 @@ class _HomeState extends State<Home> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text('إختر المركبة')
+                        Text(themeColor.getCar_made())
                       ],
                     ),
                     color: Color(0xffE4E4E4),
@@ -170,7 +184,7 @@ class _HomeState extends State<Home> {
             CarouselSlider(
               items: sliders
                   .map((item) => Banner_item(
-                        item: item,
+                        item: item.image,
                       ))
                   .toList(),
               options: CarouselOptions(
@@ -191,7 +205,7 @@ class _HomeState extends State<Home> {
               title: 'وصل حديثاٌ',
               description: 'المزيد',
             ),
-            product == null ? Container() : list_product(themeColor),
+            product == null ? Container() : list_product(themeColor, product),
             Banner_item(
               item:
                   'https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:642cddc5-5583-433a-92cc-56baee945e76;revision=0?component_id=5e9637db-920d-4383-8c7c-a07baf8b03cb&api_key=CometServer1&access_token=1620676996_urn%3Aaaid%3Asc%3AUS%3A642cddc5-5583-433a-92cc-56baee945e76%3Bpublic_1c61409196c095dd29fd1e92f122a1deb24e63e9',
@@ -209,14 +223,37 @@ class _HomeState extends State<Home> {
               title: 'الأكثر مبيعا',
               description: 'المزيد',
             ),
-            product == null ? Container() : list_product(themeColor),
+            productMostSale == null
+                ? Container()
+                : list_product(themeColor, productMostSale),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped, // new
+        fixedColor: Colors.orange,
+        currentIndex: _currentIndex, // new
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.home_outlined),
+            title: new Text('الرئيسية'),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.apps),
+            title: new Text('الفئات'),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.person),
+            title: new Text('حسابي'),
+          ),
+        ],
       ),
     );
   }
 
-  Widget list_category(Provider_control themeColor) {
+  Widget list_category(
+    Provider_control themeColor,
+  ) {
     return GridView.builder(
       primary: false,
       shrinkWrap: true,
@@ -238,7 +275,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget list_product(Provider_control themeColor) {
+  Widget list_product(Provider_control themeColor, List<Products> product) {
     return GridView.builder(
       primary: false,
       shrinkWrap: true,

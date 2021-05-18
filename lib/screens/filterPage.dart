@@ -78,7 +78,7 @@ class _FilterPageState extends State<FilterPage> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text('إختر المركبة')
+                        Text(themeColor.car_made)
                       ],
                     ),
                     color: Color(0xffE4E4E4),

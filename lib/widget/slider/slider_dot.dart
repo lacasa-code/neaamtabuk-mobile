@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/product_model.dart';
 
 class SliderDot extends StatelessWidget {
   final int _current;
-  final List<String> images;
+  final List<Photo> images;
   SliderDot(this._current, this.images);
 
   @override

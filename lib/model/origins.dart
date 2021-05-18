@@ -49,6 +49,7 @@ class Origin {
   String _countryName;
   String _countryCode;
   String _lang;
+  bool check = false;
 
   int get id => _id;
   String get countryName => _countryName;

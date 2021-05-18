@@ -5,7 +5,6 @@ import 'package:flutter_pos/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
-import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/slider/Banner.dart';
 import 'package:flutter_pos/widget/slider/slider_dot.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,11 +21,6 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final sliders = [
-    'https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:642cddc5-5583-433a-92cc-56baee945e76;revision=0?component_id=d4ec3884-325d-4605-bc3d-2b87ff1a77d6&api_key=CometServer1&access_token=1620761554_urn%3Aaaid%3Asc%3AUS%3A642cddc5-5583-433a-92cc-56baee945e76%3Bpublic_e75e5faa4055f5a2bb56145a3f67e47e57936479',
-    'https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:642cddc5-5583-433a-92cc-56baee945e76;revision=0?component_id=0efbdc5f-d11e-4bd6-ac5b-4d12c3a78d0b&api_key=CometServer1&access_token=1620761554_urn%3Aaaid%3Asc%3AUS%3A642cddc5-5583-433a-92cc-56baee945e76%3Bpublic_e75e5faa4055f5a2bb56145a3f67e47e57936479',
-    'https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:642cddc5-5583-433a-92cc-56baee945e76;revision=0?component_id=996ae476-b356-4c68-b9d4-3d9b6b6e9416&api_key=CometServer1&access_token=1620676996_urn%3Aaaid%3Asc%3AUS%3A642cddc5-5583-433a-92cc-56baee945e76%3Bpublic_1c61409196c095dd29fd1e92f122a1deb24e63e9'
-  ];
   int _carouselCurrentPage = 0;
   int dropdownValue = 1;
 
@@ -40,18 +34,28 @@ class _ProductPageState extends State<ProductPage> {
           children: [
             Container(
               color: themeColor.getColor(),
-              padding: const EdgeInsets.only(top: 35),
+              padding: const EdgeInsets.only(top: 35, bottom: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Center(
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      height: ScreenUtil.getHeight(context) / 10,
-                      width: ScreenUtil.getWidth(context) / 3,
-                      fit: BoxFit.contain,
+                  // Center(
+                  //   child: Image.asset(
+                  //     'assets/images/logo.png',
+                  //     height: ScreenUtil.getHeight(context) / 10,
+                  //     width: ScreenUtil.getWidth(context) / 3,
+                  //     fit: BoxFit.contain,
+                  //   ),
+                  // ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      size: 30,
                     ),
+                    color: Color(0xffE4E4E4),
                   ),
                   FlatButton(
                     onPressed: () {
@@ -67,7 +71,7 @@ class _ProductPageState extends State<ProductPage> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text('إختر المركبة')
+                        Text(themeColor.getCar_made())
                       ],
                     ),
                     color: Color(0xffE4E4E4),
@@ -94,9 +98,9 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
             CarouselSlider(
-              items: sliders
+              items: widget.product.photo
                   .map((item) => Banner_item(
-                        item: item,
+                        item: item.image,
                       ))
                   .toList(),
               options: CarouselOptions(
@@ -113,7 +117,7 @@ class _ProductPageState extends State<ProductPage> {
             SizedBox(
               height: 20,
             ),
-            SliderDot(_carouselCurrentPage, sliders),
+            SliderDot(_carouselCurrentPage, widget.product.photo),
             SizedBox(
               height: 20,
             ),

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/SearchOverlay.dart';
@@ -7,14 +8,16 @@ import 'package:flutter_pos/screens/Sort.dart';
 import 'package:flutter_pos/screens/myCars.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
+import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/List/gridview.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class ProductCarPage extends StatefulWidget {
-  const ProductCarPage({Key key, this.product}) : super(key: key);
+  const ProductCarPage({Key key, this.name, this.product}) : super(key: key);
   final List<Products> product;
+  final String name;
 
   @override
   _ProductCarPageState createState() => _ProductCarPageState();
@@ -50,9 +53,18 @@ class _ProductCarPageState extends State<ProductCarPage> {
                     ),
                     color: Color(0xffE4E4E4),
                   ),
-                  Text(
-                    'نتائج البحث عن\nزيت فرامل',
-                    style: TextStyle(fontSize: 10, color: Colors.white),
+                  Container(
+                    width: ScreenUtil.getWidth(context) / 4,
+                    child: AutoSizeText(
+                      widget.name == null
+                          ? "نتائج البحث"
+                          : 'نتائج البحث عن\n${widget.name}',
+                      maxLines: 2,
+                      maxFontSize: 15,
+                      minFontSize: 10,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                   FlatButton(
                     onPressed: () {
@@ -68,7 +80,13 @@ class _ProductCarPageState extends State<ProductCarPage> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text('إختر المركبة')
+                        Container(
+                            width: ScreenUtil.getWidth(context) / 4,
+                            child: Text(
+                              themeColor.getCar_made(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ))
                       ],
                     ),
                     color: Color(0xffE4E4E4),

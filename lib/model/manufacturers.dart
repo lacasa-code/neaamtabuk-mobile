@@ -47,6 +47,7 @@ class Manufacturer {
   int _id;
   String _manufacturerName;
   String _lang;
+  bool check = false;
 
   int get id => _id;
   String get manufacturerName => _manufacturerName;

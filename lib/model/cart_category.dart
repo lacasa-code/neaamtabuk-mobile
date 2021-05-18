@@ -67,6 +67,7 @@ class PartCategories {
   String categoryName;
   String lang;
   int categoryId;
+  bool partsCheck = false;
 
   PartCategories({this.id, this.categoryName, this.lang, this.categoryId});
 

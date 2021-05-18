@@ -1,6 +1,11 @@
+import 'dart:html';
+
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/ResultOverlay.dart';
+import 'package:flutter_pos/model/product_model.dart';
+import 'package:flutter_pos/service/api.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key key}) : super(key: key);
@@ -10,27 +15,19 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  List<Products> products = [];
   AutoCompleteTextField searchTextField;
-  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
+  GlobalKey<AutoCompleteTextFieldState<Products>> key = new GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
         padding: EdgeInsets.only(bottom: 4),
         height: 72,
-        child: searchTextField = AutoCompleteTextField<String>(
+        child: searchTextField = AutoCompleteTextField<Products>(
           key: key,
           clearOnSubmit: false,
-          suggestions: [
-            "Apple",
-            "Armidillo",
-            "Actual",
-            "Actuary",
-            "America",
-            "Argentina",
-            "Australia",
-            "Antarctica"
-          ],
+          suggestions: products,
           style: TextStyle(color: Colors.black, fontSize: 16.0),
           decoration: InputDecoration(
               border: InputBorder.none,
@@ -47,14 +44,30 @@ class _SearchPageState extends State<SearchPage> {
                 .startsWith(query.toLowerCase());
           },
           itemSorter: (a, b) {
-            return a.compareTo(b);
+            return a.name.compareTo(b.name);
           },
           itemSubmitted: (item) {
             setState(() {
               searchTextField.textField.controller.text = item.toString();
             });
           },
-          textChanged: (string) {},
+          textChanged: (string) {
+            API(context).post('user/search/products', {
+              "search_index": string,
+            }).then((value) {
+              if (value != null) {
+                if (value['status_code'] == 200) {
+                  setState(() {
+                    products = Product_model.fromJson(value).data;
+                  });
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (_) => ResultOverlay(value['message']));
+                }
+              }
+            });
+          },
           itemBuilder: (context, item) {
             // ui for the autocompelete row
             return row(item);
@@ -64,19 +77,19 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget row(String productModel) {
+  Widget row(Products productModel) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(
-          productModel.toString(),
+          productModel.name.toString(),
           style: TextStyle(fontSize: 16.0),
         ),
         SizedBox(
           width: 10.0,
         ),
         Text(
-          productModel.toString(),
+          productModel.carMadeName.toString(),
         ),
       ],
     );

@@ -116,15 +116,48 @@ class _MyCarsState extends State<MyCars> {
                                   onChanged: (int value) {
                                     setState(() {
                                       checkboxValue = value;
-                                      // model_ordel.shippingMethod = caption.code;
                                     });
+                                    Navigator.pop(context);
+                                    themeColor.setCar_made(
+                                        favourite[index].carMadeName);
                                   },
                                 ),
-                                Text(
-                                  favourite[index].carMadeName,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      checkboxValue = index;
+                                    });
+                                    themeColor.setCar_made(
+                                        favourite[index].carMadeName);
+                                    API(context).post('user/select/products', {
+                                      "car_made_id": favourite[index].carMadeId,
+                                    }).then((value) {
+                                      if (value != null) {
+                                        if (value['status_code'] == 200) {
+                                          Nav.route(
+                                              context,
+                                              ProductCarPage(
+                                                name: favourite[index]
+                                                    .carMadeName,
+                                                product: Product_model.fromJson(
+                                                        value)
+                                                    .data,
+                                              ));
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) => ResultOverlay(
+                                                  value['message']));
+                                        }
+                                      }
+                                    });
+                                  },
+                                  child: Text(
+                                    favourite[index].carMadeName,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
                                 ),
                                 Expanded(
                                     child: SizedBox(

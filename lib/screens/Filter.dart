@@ -1,6 +1,10 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/ResultOverlay.dart';
+import 'package:flutter_pos/model/product_model.dart';
+import 'package:flutter_pos/screens/productCarPage.dart';
+import 'package:flutter_pos/utils/navigator.dart';
 
 import '../model/cart_category.dart';
 import '../model/manufacturers.dart';
@@ -19,12 +23,17 @@ class _FilterdialogState extends State<Filterdialog> {
   List<Category> parts;
   List<Origin> origin;
   List<Manufacturer> manufacturer;
+  List<Products> product;
+  List<int> partSelect = [];
+  List<int> originSelect = [];
+  List<int> manufacturerSelect = [];
   @override
   void initState() {
     API(context).get('fetch/categories/nested/part').then((value) {
       if (value != null) {
         setState(() {
           parts = PartCategory.fromJson(value).data;
+          parts.forEach((element) {});
         });
       }
     });
@@ -32,6 +41,7 @@ class _FilterdialogState extends State<Filterdialog> {
       if (value != null) {
         setState(() {
           origin = Origins.fromJson(value).data;
+          origin.forEach((element) {});
         });
       }
     });
@@ -39,6 +49,7 @@ class _FilterdialogState extends State<Filterdialog> {
       if (value != null) {
         setState(() {
           manufacturer = Manufacturers.fromJson(value).data;
+          manufacturer.forEach((element) {});
         });
       }
     });
@@ -124,8 +135,20 @@ class _FilterdialogState extends State<Filterdialog> {
                                         return Row(
                                           children: [
                                             Checkbox(
-                                                value: false,
-                                                onChanged: (value) {}),
+                                                value: parts[index]
+                                                    .partCategories[i]
+                                                    .partsCheck,
+                                                activeColor: Colors.orange,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    parts[index]
+                                                        .partCategories[i]
+                                                        .partsCheck = value;
+                                                  });
+                                                  partSelect.add(parts[index]
+                                                      .partCategories[i]
+                                                      .id);
+                                                }),
                                             Text(
                                               parts[index]
                                                   .partCategories[i]
@@ -170,7 +193,16 @@ class _FilterdialogState extends State<Filterdialog> {
                             itemBuilder: (BuildContext context, int index) {
                               return Row(
                                 children: [
-                                  Checkbox(value: false, onChanged: (value) {}),
+                                  Checkbox(
+                                      activeColor: Colors.orange,
+                                      value: manufacturer[index].check,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          manufacturer[index].check = value;
+                                        });
+                                        manufacturerSelect
+                                            .add(manufacturer[index].id);
+                                      }),
                                   Text(
                                     manufacturer[index].manufacturerName,
                                     softWrap: true,
@@ -210,7 +242,15 @@ class _FilterdialogState extends State<Filterdialog> {
                             itemBuilder: (BuildContext context, int index) {
                               return Row(
                                 children: [
-                                  Checkbox(value: false, onChanged: (value) {}),
+                                  Checkbox(
+                                      value: origin[index].check,
+                                      activeColor: Colors.orange,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          origin[index].check = value;
+                                        });
+                                        originSelect.add(origin[index].id);
+                                      }),
                                   Text(
                                     origin[index].countryName,
                                     softWrap: true,
@@ -248,7 +288,28 @@ class _FilterdialogState extends State<Filterdialog> {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      API(context).post('site/checkbox/filter', {
+                        "part_categories": partSelect.toString(),
+                        "manufacturers": manufacturerSelect.toString(),
+                        "origins": originSelect.toString(),
+                      }).then((value) {
+                        if (value != null) {
+                          if (value['status_code'] == 200) {
+                            Nav.route(
+                                context,
+                                ProductCarPage(
+                                  product: Product_model.fromJson(value).data,
+                                ));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) =>
+                                    ResultOverlay(value['message']));
+                          }
+                        }
+                      });
+                    },
                     child: Container(
                       margin: const EdgeInsets.all(15.0),
                       padding: const EdgeInsets.all(3.0),
