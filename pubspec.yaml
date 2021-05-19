@@ -42,6 +42,7 @@ dependencies:
   dropdown_search: ^0.6.1
   autocomplete_textfield: ^1.7.3
   expandable: ^5.0.1
+  persistent_bottom_nav_bar: ^4.0.2
 
 
 dev_dependencies:

@@ -31,6 +31,7 @@ class _MyCarsState extends State<MyCars> {
   List<CarModel> carmodels;
   List<Transmissions> transmissions;
   int checkboxValue = 0;
+  int checkboxType;
   int car_mades_id;
 
   TextEditingController yearsID, carMadeID, CarmodelsID, transimionsID;
@@ -203,18 +204,29 @@ class _MyCarsState extends State<MyCars> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: cartype.length,
                         itemBuilder: (BuildContext context, int index) {
+                          bool selected = checkboxType == index;
                           return Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Container(
-                              margin: const EdgeInsets.all(15.0),
-                              padding: const EdgeInsets.all(3.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.orange)),
-                              child: Center(
-                                  child: Text(
-                                cartype[index].typeName,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )),
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  checkboxType = index;
+                                });
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(15.0),
+                                padding: const EdgeInsets.all(3.0),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: selected
+                                            ? Colors.orange
+                                            : Colors.grey)),
+                                child: Center(
+                                    child: Text(
+                                  cartype[index].typeName,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )),
+                              ),
                             ),
                           );
                         },
@@ -229,7 +241,6 @@ class _MyCarsState extends State<MyCars> {
                               padding: const EdgeInsets.all(8.0),
                               child: DropdownSearch<Year>(
                                 label: " سنة الصنع ",
-
                                 items: years,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (Year u) => u.year,
