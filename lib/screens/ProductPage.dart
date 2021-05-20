@@ -7,6 +7,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/widget/slider/Banner.dart';
 import 'package:flutter_pos/widget/slider/slider_dot.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class _ProductPageState extends State<ProductPage> {
     final themeColor = Provider.of<Provider_control>(context);
 
     return Scaffold(
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -165,6 +166,173 @@ class _ProductPageState extends State<ProductPage> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "${widget.product.price} ريال ",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Expanded(child: SizedBox(height: 10)),
+                  Row(
+                    children: [
+                      RatingBar.builder(
+                        ignoreGestures: true,
+                        initialRating: double.parse('3.5'),
+                        itemSize: 25.0,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 1,
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.orange,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
+                      Text(
+                        "3.5/5 ",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+
+                    ],
+                  ),
+                  SizedBox(width: 20)
+
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "العلامة التجارية : ",
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            '${widget.product.carMadeName}',
+                            style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    )),
+                Expanded(child: SizedBox(height: 10)),
+                Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "بلد المنشأ : ",
+                            style: TextStyle(fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            '${widget.product.origincountryName}',
+                            style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    )),
+                SizedBox(width: 10)
+              ],
+            ),
+            Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        "البائع : ",
+                        style: TextStyle(fontWeight: FontWeight.w400),
+                      ),
+                      Text(
+                        '${widget.product.vendorName}',
+                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                      ),
+                    ],
+                  ),
+                )),
+            Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        "المحرك : ",
+                        style: TextStyle(fontWeight: FontWeight.w400),
+                      ),
+                      Text(
+                        '${widget.product.transmissionName}',
+                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                      ),
+                    ],
+                  ),
+                )),
+            Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.circle,size: 20,),
+                      Text(
+                        '   ${widget.product.categoryName}',
+                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                      ),
+                    ],
+                  ),
+                )),
+            Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.circle,size: 20,),
+                      Text(
+                        '   ${widget.product.partCategoryName}',
+                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                      ),
+                    ],
+                  ),
+                )),
+            Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.circle,size: 20,),
+                      Text(
+                        '   ${widget.product.cartypeName}',
+                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                      ),
+                    ],
+                  ),
+                )),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -193,6 +361,7 @@ class _ProductPageState extends State<ProductPage> {
                     }).toList(),
                   ),
                 ),
+
                 Container(
                   margin: const EdgeInsets.all(15.0),
                   padding: const EdgeInsets.all(12.0),
@@ -225,7 +394,7 @@ class _ProductPageState extends State<ProductPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'متوافق مع',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black87) ,
                   ),
                 )),
             Align(
@@ -236,7 +405,35 @@ class _ProductPageState extends State<ProductPage> {
                     'تويوتا كامري  2015 سيدان \nتويوتا كامري 2015 هاتشباك',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
-                ))
+                )) ,
+            Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.money,size: 20,),
+                      Text(
+                        ' خيارات الدفع ',
+                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                      ),
+                    ],
+                  ),
+                )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Image.asset("assets/images/Companies - MasterCard.png",width: 70,),
+                  Image.asset("assets/images/Companies - Visa.png",width: 70,),
+                  SvgPicture.asset("assets/icons/Path 1715.svg",width: 70,),
+                ],
+              ),
+            ),
+            SizedBox(height: 25,)
+
           ],
         ),
       ),

@@ -108,23 +108,30 @@ class SearchOverlayState extends State<SearchOverlay>
                                 });
                               },
                               textChanged: (string) {
-                                API(context).post('user/search/products', {
-                                  "search_index": string,
-                                }).then((value) {
-                                  if (value != null) {
-                                    if (value['status_code'] == 200) {
-                                      setState(() {
-                                        products =
-                                            Product_model.fromJson(value).data;
-                                      });
-                                    } else {
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) =>
-                                              ResultOverlay(value['message']));
+                                if(string.length>=1){
+                                  API(context).post('user/search/products', {
+                                    "search_index": string,
+                                  }).then((value) {
+                                    if (value != null) {
+                                      if (value['status_code'] == 200) {
+                                        setState(() {
+                                          products =
+                                              Product_model.fromJson(value)
+                                                  .data;
+                                        });
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => ResultOverlay(
+                                                value['message']));
+                                      }
                                     }
-                                  }
-                                });
+                                  });
+                                }else{
+                                  setState(() {
+                                    products=[];
+                                  });
+                                }
                               },
                               itemBuilder: (context, item) {
                                 // ui for the autocompelete row
