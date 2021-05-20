@@ -51,6 +51,7 @@ class _CategoryCardState extends State<CategoryCard> {
                     context,
                     ProductCarPage(
                       name: widget.product.name,
+                      id:widget.product.id ,
                       product: Product_model.fromJson(value).data,
                     ));
               } else {

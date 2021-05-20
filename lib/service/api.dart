@@ -32,7 +32,7 @@ class API {
       http.Response response = await http.get(full_url, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer 1373|MjV5FljVwN7ELYjoIj5lcuTM50nRQLg8jbSC4aid',
+       // 'Authorization': 'Bearer 1373|MjV5FljVwN7ELYjoIj5lcuTM50nRQLg8jbSC4aid',
         //'Accept-Language': Provider.of<Provider_control>(context).getlocal(),
       });
       print(response.body);
@@ -69,8 +69,7 @@ class API {
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization':
-                'Bearer 1373|MjV5FljVwN7ELYjoIj5lcuTM50nRQLg8jbSC4aid',
+            //'Authorization': 'Bearer 1373|MjV5FljVwN7ELYjoIj5lcuTM50nRQLg8jbSC4aid',
             // 'locale': Provider.of<Provider_control>(context).getlocal(),
           },
           body: json.encode(body));

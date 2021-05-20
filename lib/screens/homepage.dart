@@ -14,7 +14,6 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/utils/service/API.dart';
 import 'package:flutter_pos/widget/category/category_card.dart';
-import 'package:flutter_pos/widget/hidden_menu.dart';
 import 'package:flutter_pos/widget/product/product_card.dart';
 import 'package:flutter_pos/widget/product/product_list_titlebar.dart';
 import 'package:flutter_pos/widget/slider/Banner.dart';
@@ -113,7 +112,6 @@ class _HomeState extends State<Home> {
 
     super.initState();
   }
-
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _carouselCurrentPage = 0;
   String pathImage;
@@ -122,7 +120,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: HiddenMenu(),
+      //drawer: HiddenMenu(),
       body: PersistentTabView(
         context,
         controller: _controller,

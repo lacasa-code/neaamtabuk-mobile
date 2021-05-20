@@ -9,6 +9,8 @@ class Sortdialog extends StatefulWidget {
 }
 
 class _SortdialogState extends State<Sortdialog> {
+  List characters=["ASC","DESC","ASC","DESC"];
+  String _character='ASC';
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -54,11 +56,14 @@ class _SortdialogState extends State<Sortdialog> {
             color: Colors.white,
             child: RadioListTile<String>(
               title: const Text('السعر الأقل الى الأعلى'),
-              value: "a",
-              groupValue: "b",
+              value: characters[0],
+              activeColor: Colors.orange,
+              groupValue: _character,
               onChanged: (String value) {
                 setState(() {
-                  //  _character = value;
+                    _character = value;
+                    Navigator.pop(context,value);
+
                 });
               },
             ),
@@ -67,11 +72,14 @@ class _SortdialogState extends State<Sortdialog> {
             color: Colors.white,
             child: RadioListTile<String>(
               title: const Text('السعر الأعلى الى الأقل'),
-              value: "a",
-              groupValue: "b",
+              value: characters[1],
+              activeColor: Colors.orange,
+
+              groupValue: _character,
               onChanged: (String value) {
                 setState(() {
-                  //  _character = value;
+                    _character = value;
+                    Navigator.pop(context,value);
                 });
               },
             ),
@@ -80,11 +88,14 @@ class _SortdialogState extends State<Sortdialog> {
             color: Colors.white,
             child: RadioListTile<String>(
               title: const Text('الأكثر مشاهدة'),
-              value: "a",
-              groupValue: "b",
+              value: characters[2],
+              activeColor: Colors.orange,
+              groupValue: _character,
               onChanged: (String value) {
                 setState(() {
-                  //  _character = value;
+                    _character = value;
+                    Navigator.pop(context,value);
+
                 });
               },
             ),
@@ -93,11 +104,14 @@ class _SortdialogState extends State<Sortdialog> {
             color: Colors.white,
             child: RadioListTile<String>(
               title: const Text('الأعلى مبيعا'),
-              value: "a",
-              groupValue: "b",
+              value: characters[3],
+              activeColor: Colors.orange,
+              groupValue:_character,
               onChanged: (String value) {
                 setState(() {
-                  //  _character = value;
+                    _character = value;
+                    Navigator.pop(context,value);
+
                 });
               },
             ),

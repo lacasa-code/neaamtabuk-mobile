@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/ResultOverlay.dart';
 import 'package:flutter_pos/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/Filter.dart';
@@ -9,16 +10,17 @@ import 'package:flutter_pos/screens/myCars.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/utils/service/API.dart';
 import 'package:flutter_pos/widget/List/gridview.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class ProductCarPage extends StatefulWidget {
-  const ProductCarPage({Key key, this.name, this.product}) : super(key: key);
-  final List<Products> product;
-  final String name;
-
+   List<Products> product;
+   int id;
+   String name;
+   ProductCarPage({this.product, this.id, this.name});
   @override
   _ProductCarPageState createState() => _ProductCarPageState();
 }
@@ -147,7 +149,25 @@ class _ProductCarPageState extends State<ProductCarPage> {
                         InkWell(
                           onTap: () {
                             showDialog(
-                                context: context, builder: (_) => Sortdialog());
+                                context: context, builder: (_) => Sortdialog()).then((val){
+                              print(val);
+                              API(context)
+                                  .get('site/categories/${widget.id}?sort_type=${val}')
+                                  .then((value) {
+                                if (value != null) {
+                                  if (value['status_code'] == 200) {
+                                 setState(() {
+                                   widget.product= Product_model.fromJson(value).data;
+
+                                 });
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => ResultOverlay(value['message']));
+                                  }
+                                }
+                              });
+                            });
                           },
                           child: Row(
                             children: [

@@ -294,7 +294,8 @@ class _MyCarsState extends State<MyCars> {
                             ),
                       InkWell(
                         onTap: () {
-                          API(context).post('user/select/products', {
+                          API(context).post('display/search/results', {
+                            "car_type_id": cartype[checkboxType].id,
                             "car_made_id": car_mades_id,
                             "car_model_id": CarmodelsID.text,
                             "car_year_id": yearsID.text,

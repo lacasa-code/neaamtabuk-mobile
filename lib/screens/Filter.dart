@@ -29,30 +29,7 @@ class _FilterdialogState extends State<Filterdialog> {
   List<int> manufacturerSelect = [];
   @override
   void initState() {
-    API(context).get('fetch/categories/nested/part').then((value) {
-      if (value != null) {
-        setState(() {
-          parts = PartCategory.fromJson(value).data;
-          parts.forEach((element) {});
-        });
-      }
-    });
-    API(context).get('site/origins/list').then((value) {
-      if (value != null) {
-        setState(() {
-          origin = Origins.fromJson(value).data;
-          origin.forEach((element) {});
-        });
-      }
-    });
-    API(context).get('site/manufacturers/list').then((value) {
-      if (value != null) {
-        setState(() {
-          manufacturer = Manufacturers.fromJson(value).data;
-          manufacturer.forEach((element) {});
-        });
-      }
-    });
+    getData();
   }
 
   @override
@@ -145,9 +122,12 @@ class _FilterdialogState extends State<Filterdialog> {
                                                         .partCategories[i]
                                                         .partsCheck = value;
                                                   });
-                                                  partSelect.add(parts[index]
+                                                  value?  partSelect.add(parts[index]
+                                                      .partCategories[i]
+                                                      .id): partSelect.remove(parts[index]
                                                       .partCategories[i]
                                                       .id);
+
                                                 }),
                                             Text(
                                               parts[index]
@@ -200,8 +180,7 @@ class _FilterdialogState extends State<Filterdialog> {
                                         setState(() {
                                           manufacturer[index].check = value;
                                         });
-                                        manufacturerSelect
-                                            .add(manufacturer[index].id);
+                                        value?  manufacturerSelect.add(manufacturer[index].id): manufacturerSelect.remove(manufacturer[index].id);
                                       }),
                                   Text(
                                     manufacturer[index].manufacturerName,
@@ -249,7 +228,7 @@ class _FilterdialogState extends State<Filterdialog> {
                                         setState(() {
                                           origin[index].check = value;
                                         });
-                                        originSelect.add(origin[index].id);
+                                        value?  originSelect.add(origin[index].id): originSelect.remove(origin[index].id);
                                       }),
                                   Text(
                                     origin[index].countryName,
@@ -339,7 +318,9 @@ class _FilterdialogState extends State<Filterdialog> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      getData();
+                    },
                     child: Container(
                       margin: const EdgeInsets.all(15.0),
                       padding: const EdgeInsets.all(3.0),
@@ -375,5 +356,35 @@ class _FilterdialogState extends State<Filterdialog> {
         ),
       ),
     );
+  }
+
+  void getData() {
+    partSelect = [];
+     originSelect = [];
+   manufacturerSelect = [];
+    API(context).get('fetch/categories/nested/part').then((value) {
+      if (value != null) {
+        setState(() {
+          parts = PartCategory.fromJson(value).data;
+          parts.forEach((element) {});
+        });
+      }
+    });
+    API(context).get('site/origins/list').then((value) {
+      if (value != null) {
+        setState(() {
+          origin = Origins.fromJson(value).data;
+          origin.forEach((element) {});
+        });
+      }
+    });
+    API(context).get('site/manufacturers/list').then((value) {
+      if (value != null) {
+        setState(() {
+          manufacturer = Manufacturers.fromJson(value).data;
+          manufacturer.forEach((element) {});
+        });
+      }
+    });
   }
 }

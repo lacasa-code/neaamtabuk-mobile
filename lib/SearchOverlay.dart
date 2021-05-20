@@ -109,7 +109,8 @@ class SearchOverlayState extends State<SearchOverlay>
                               },
                               textChanged: (string) {
                                 if(string.length>=1){
-                                  API(context).post('user/search/products', {
+
+                           API(context).post('user/search/products', {
                                     "search_index": string,
                                   }).then((value) {
                                     if (value != null) {

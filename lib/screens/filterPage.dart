@@ -23,9 +23,17 @@ class FilterPage extends StatefulWidget {
 
 class _FilterPageState extends State<FilterPage> {
   List<Products> product;
+  ScrollController _scrollController = new ScrollController();
+  int value=2;
   bool list = false;
   @override
   void initState() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        ubdateProduct();
+      }
+    });
     API(context).get('home/all/products').then((value) {
       if (value != null) {
         setState(() {
@@ -41,6 +49,7 @@ class _FilterPageState extends State<FilterPage> {
 
     return Scaffold(
       body: SingleChildScrollView(
+        controller:  _scrollController,
         child: Column(
           children: [
             Container(
@@ -138,8 +147,12 @@ class _FilterPageState extends State<FilterPage> {
                         ),
                         InkWell(
                           onTap: () {
+
                             showDialog(
-                                context: context, builder: (_) => Sortdialog());
+                                context: context, builder: (_) => Sortdialog()).then((val){
+                              print(val);
+
+                            });
                           },
                           child: Row(
                             children: [
@@ -158,6 +171,7 @@ class _FilterPageState extends State<FilterPage> {
                 ? Container()
                 : list
                     ? grid_product(
+
                         product: product,
                       )
                     : List_product(
@@ -189,5 +203,14 @@ class _FilterPageState extends State<FilterPage> {
         );
       },
     );
+  }
+
+  void ubdateProduct() {
+    API(context).get('home/all/products?page=${value++}').then((value)  {
+      setState(() {
+        product.addAll(Product_model.fromJson(value).data);
+      });
+
+    });
   }
 }

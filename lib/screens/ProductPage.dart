@@ -147,7 +147,7 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                     ],
                   ),
-                  Row(
+                widget.product.quantity>=1?  Row(
                     children: [
                       Icon(
                         Icons.check_circle_outline_sharp,
@@ -155,10 +155,26 @@ class _ProductPageState extends State<ProductPage> {
                         color: Colors.lightGreen,
                       ),
                       Text(
-                        'متوفر',
+                        ' متوفر ',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.lightGreen,
+                        ),
+                      ),
+                    ],
+                  )
+                 : Row(
+                    children: [
+                      Icon(
+                        Icons.remove_circle_outline,
+                        size: 30,
+                        color: Colors.red,
+                      ),
+                      Text(
+                        ' غير متوفر ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
                         ),
                       ),
                     ],
