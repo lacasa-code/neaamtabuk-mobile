@@ -1,9 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/screens/Account.dart';
 import 'package:flutter_pos/screens/CarType/productCarType.dart';
+import 'package:flutter_pos/screens/cart.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/ads.dart';
 import 'package:flutter_pos/model/car_type.dart';
@@ -41,7 +43,7 @@ class _HomeState extends State<Home> {
   final navigatorKey = GlobalKey<NavigatorState>();
 
   List<Widget> _buildScreens() {
-    return [HomePage(), CategoryScreen(), Account(), Container()];
+    return [HomePage(), CategoryScreen(), Account(), CartScreen()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -259,9 +261,11 @@ class _HomeState extends State<Home> {
                                 color: Colors.black12,
                                 child: Padding(
                                   padding: const EdgeInsets.all(4.0),
-                                  child: Text(cartype[index].typeName,
+                                  child: AutoSizeText(cartype[index].typeName,
+                                       maxLines: 1,maxFontSize: 18,
+                                      minFontSize: 10,
                                       style: TextStyle(color: Colors.white,
-                                          fontSize: 20,
+
                                           fontWeight: FontWeight.bold)),
                                 ),
                               ),

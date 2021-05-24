@@ -46,7 +46,7 @@ class _SortdialogState extends State<Sortdialog> {
                       icon:
                           Icon(Icons.close, size: 35, color: Color(0xff7B7B7B)),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pop(context,_character);
                       })
                 ],
               ),

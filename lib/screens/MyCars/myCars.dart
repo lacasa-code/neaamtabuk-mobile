@@ -1,6 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/screens/filterPage.dart';
+import 'package:flutter_pos/screens/productCarmade.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/car_made.dart';
 import 'package:flutter_pos/model/car_type.dart';
@@ -30,7 +32,8 @@ class _MyCarsState extends State<MyCars> {
   List<CarMade> car_mades;
   List<CarModel> carmodels;
   List<Transmissions> transmissions;
-  int checkboxValue ;
+  int checkboxValue;
+
   int checkboxType = 0;
   int car_mades_id;
 
@@ -119,9 +122,34 @@ class _MyCarsState extends State<MyCars> {
                                     setState(() {
                                       checkboxValue = value;
                                     });
-                                    Navigator.pop(context);
-                                    themeColor.setCar_made(
-                                        favourite[index].carMadeName);
+                                    API(context)
+                                        .get(
+                                            'user/select/from/favourites/${favourite[index].id}')
+                                        .then((value) {
+                                      if (value != null) {
+                                        if (value['status_code'] == 200) {
+                                          themeColor.setCar_made(
+                                              favourite[index].carMadeName);
+                                          Nav.route(
+                                              context,
+                                              ProductCarmade(
+                                                id: favourite[index].carMadeId,
+                                                name: favourite[index]
+                                                    .carMadeName,
+                                                product: Product_model.fromJson(
+                                                        value)
+                                                    .data,
+                                                api:
+                                                    " user/select/from/favourites/${favourite[index].id}",
+                                              ));
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) => ResultOverlay(
+                                                  value['message']));
+                                        }
+                                      }
+                                    });
                                   },
                                 ),
                                 InkWell(
@@ -129,22 +157,23 @@ class _MyCarsState extends State<MyCars> {
                                     setState(() {
                                       checkboxValue = index;
                                     });
-                                    themeColor.setCar_made(
-                                        favourite[index].carMadeName);
-                                    API(context).post('user/select/products', {
-                                      "car_made_id": favourite[index].carMadeId,
-                                    }).then((value) {
+
+                                    API(context)
+                                        .get(
+                                            'user/select/from/favourites/${favourite[index].id}')
+                                        .then((value) {
                                       if (value != null) {
                                         if (value['status_code'] == 200) {
-                                          Nav.route(
-                                              context,
-                                              ProductCarPage(
-                                                name: favourite[index]
-                                                    .carMadeName,
-                                                product: Product_model.fromJson(
-                                                        value)
-                                                    .data,
-                                              ));
+                                          themeColor.setCar_made(
+                                              favourite[index].carMadeName);
+                                          Nav.route(context, ProductCarmade(     id: favourite[index].carMadeId,
+                                            name: favourite[index]
+                                                .carMadeName,
+                                            product: Product_model.fromJson(
+                                                value)
+                                                .data,
+                                            api:
+                                            " user/select/from/favourites/${favourite[index].id}",));
                                         } else {
                                           showDialog(
                                               context: context,
@@ -178,11 +207,11 @@ class _MyCarsState extends State<MyCars> {
                                               builder: (_) => ResultOverlay(
                                                   value['message']));
                                           getFavorit();
-                                        }else {
+                                        } else {
                                           showDialog(
                                               context: context,
-                                              builder: (_) =>
-                                                  ResultOverlay(value['message']));
+                                              builder: (_) => ResultOverlay(
+                                                  value['message']));
                                         }
                                       }
                                     });

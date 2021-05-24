@@ -7,9 +7,8 @@ import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
-import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen();
@@ -39,26 +38,36 @@ class _SplashScreenState extends State<SplashScreen>
     );
     return Scaffold(
       backgroundColor: themeColor.getColor(),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 100, bottom: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: ScreenUtil.getHeight(context) / 2,
-                width: ScreenUtil.getWidth(context) / 1.5,
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  fit: BoxFit.contain,
+      body: Container(
+        decoration:BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          image: DecorationImage(
+            image: new ExactAssetImage('assets/images/splashscreen.png'),
+            fit: BoxFit.cover,
+          ),
+          color: Color(0xff27332F),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 100, bottom: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: ScreenUtil.getHeight(context) / 2,
+                  width: ScreenUtil.getWidth(context) / 1.5,
+                  child: SvgPicture.asset(
+                    'assets/images/trkar_logo_white.svg',
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              Text(
-                'Card Net Powered By 7lSoft',
-                style: TextStyle(
-                    fontWeight: FontWeight.w800, color: themeColor.getColor()),
-              )
-            ],
+                Text(
+                  'Card Net Powered By 7lSoft',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800, color: themeColor.getColor()),
+                )
+              ],
+            ),
           ),
         ),
       ),

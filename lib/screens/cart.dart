@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/cart_model.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/screens/category/productCategory.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -13,23 +14,23 @@ import 'package:provider/provider.dart';
 
 import 'MyCars/myCars.dart';
 
-class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key key}) : super(key: key);
+class CartScreen extends StatefulWidget {
+  const CartScreen({Key key}) : super(key: key);
 
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
+  _CartScreenState createState() => _CartScreenState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
-  List<Category> categories;
+class _CartScreenState extends State<CartScreen> {
+  List<Cart> categories;
   int checkboxType = 0;
 
   @override
   void initState() {
-  API(context).get('fetch/categories/nested/part').then((value) {
+  API(context).post('show/cart',{}).then((value) {
     if (value != null) {
       setState(() {
-        categories = Category_model.fromJson(value).data;
+        categories=Cart_model.fromJson(value).data;
       });
     }
   });
@@ -94,19 +95,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
           categories == null
               ? Container()
-              : Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: ScreenUtil.getWidth(context)/2.5,
+              : Container(
+                width: ScreenUtil.getWidth(context)/1.5,
                 height: ScreenUtil.getHeight(context)/1.25,
-                decoration: BoxDecoration(
-
-                    border: Border.symmetric(vertical: BorderSide(color:Colors.grey))),
-                //height: ScreenUtil.getHeight(context),
                child: ListView.builder(
                   primary: false,
                   shrinkWrap: true,
@@ -131,7 +122,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 ? Colors.black
                                 : Colors.grey))),
                         child: AutoSizeText(
-                          categories[index].name,
+                          categories[index].orderStatus,
                           maxLines: 2,minFontSize: 10,maxFontSize: 16,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -139,15 +130,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     );
                   },
                 ),
-              ),
-                Expanded(
-                  child: Container(
-                    child: getList(categories[checkboxType].partCategories),
-                  ),
-                ),
-
-            ],
-          ),
               )
         ],
       ),);

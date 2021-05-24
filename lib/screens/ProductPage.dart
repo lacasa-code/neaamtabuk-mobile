@@ -2,6 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/screens/Quastions.dart';
+import 'package:flutter_pos/screens/ratepage.dart';
+import 'package:flutter_pos/screens/writeQuastions.dart';
+import 'package:flutter_pos/screens/writerate.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
@@ -595,6 +599,9 @@ class _ProductPageState extends State<ProductPage> {
                     children: [
                       InkWell(
                         onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => Ratedialog());
                         },
                         child: Container(
                           width: ScreenUtil.getWidth(context)/2.5,
@@ -619,6 +626,9 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                       InkWell(
                         onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => WriteRatedialog());
                         },
                         child: Container(
                           width: ScreenUtil.getWidth(context)/2.5,
@@ -735,6 +745,9 @@ class _ProductPageState extends State<ProductPage> {
                       children: [
                         InkWell(
                           onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (_) => Qeastionsdialog());
                           },
                           child: Container(
                             width: ScreenUtil.getWidth(context)/2.5,
@@ -759,6 +772,9 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         InkWell(
                           onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (_) => WriteQuastionsdialog());
                           },
                           child: Container(
                             width: ScreenUtil.getWidth(context)/2.5,
