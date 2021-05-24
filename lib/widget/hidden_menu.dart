@@ -99,11 +99,11 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.person,
                             size: 25,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.orange,
                           ),
                           name: getTransrlate(context, 'ProfileSettings'),
                           baseStyle: TextStyle(
-                              color: Colors.white.withOpacity(0.6),
+                              color: Colors.black,
                               fontSize: 19.0,
                               fontWeight: FontWeight.w800),
                           colorLineSelected: Colors.orange,
@@ -117,11 +117,11 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.call,
                             size: 25,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.orange,
                           ),
                           name: getTransrlate(context, 'contact'),
                           baseStyle: TextStyle(
-                              color: Colors.white.withOpacity(0.6),
+                              color: Colors.black,
                               fontSize: 19.0,
                               fontWeight: FontWeight.w800),
                           colorLineSelected: Colors.orange,
@@ -134,11 +134,11 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.info_outline,
                             size: 25,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.orange,
                           ),
                           name: getTransrlate(context, 'About'),
                           baseStyle: TextStyle(
-                              color: Colors.white.withOpacity(0.6),
+                              color: Colors.black,
                               fontSize: 19.0,
                               fontWeight: FontWeight.w800),
                           colorLineSelected: Colors.orange,
@@ -158,13 +158,13 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.exit_to_app,
                             size: 19,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.orange,
                           ),
                           name: themeColor.isLogin
                               ? getTransrlate(context, 'Logout')
                               : getTransrlate(context, 'login'),
                           baseStyle: TextStyle(
-                              color: Colors.white.withOpacity(0.6),
+                              color: Colors.black,
                               fontSize: 19.0,
                               fontWeight: FontWeight.w800),
                           colorLineSelected: Colors.orange,
@@ -204,7 +204,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                                   icon: Icon(
                                     Icons.language,
                                     size: 25,
-                                    color: Colors.white.withOpacity(0.8),
+                                    color: Colors.orange,
                                   ),
                                   name: Provider.of<Provider_control>(context)
                                               .local ==
@@ -212,7 +212,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                                       ? 'English'
                                       : 'عربى',
                                   baseStyle: TextStyle(
-                                      color: Colors.white.withOpacity(0.6),
+                                      color: Colors.black,
                                       fontSize: 19.0,
                                       fontWeight: FontWeight.w800),
                                   colorLineSelected: Colors.orange,

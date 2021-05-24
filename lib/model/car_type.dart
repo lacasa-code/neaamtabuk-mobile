@@ -47,21 +47,25 @@ class CarType {
   int _id;
   String _typeName;
   String _lang;
+  String _image;
 
   int get id => _id;
   String get typeName => _typeName;
   String get lang => _lang;
+  String get image => _image;
 
   CarType({int id, String typeName, String lang}) {
     _id = id;
     _typeName = typeName;
     _lang = lang;
+    _image = image;
   }
 
   CarType.fromJson(dynamic json) {
     _id = json["id"];
     _typeName = json["type_name"];
     _lang = json["lang"];
+    _image = json["some_image"];
   }
 
   Map<String, dynamic> toJson() {

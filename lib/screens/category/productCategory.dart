@@ -16,19 +16,35 @@ import 'package:flutter_pos/widget/List/listview.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class ProductCarPage extends StatefulWidget {
-   List<Products> product;
+class ProductCategory extends StatefulWidget {
    int id;
    String name;
-   ProductCarPage({this.product, this.id, this.name});
+   ProductCategory({ this.id, this.name});
   @override
-  _ProductCarPageState createState() => _ProductCarPageState();
+  _ProductCategoryState createState() => _ProductCategoryState();
 }
 
-class _ProductCarPageState extends State<ProductCarPage> {
+class _ProductCategoryState extends State<ProductCategory> {
+  List<Products> product;
   bool list = false;
   @override
-  void initState() {}
+  void initState() {
+    API(context)
+        .get('site/categories/${widget.id}')
+        .then((value) {
+      if (value != null) {
+        if (value['status_code'] == 200) {
+        setState(() {
+          product= Product_model.fromJson(value).data;
+        });
+        } else {
+          showDialog(
+              context: context,
+              builder: (_) => ResultOverlay(value['message']));
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +75,8 @@ class _ProductCarPageState extends State<ProductCarPage> {
                     width: ScreenUtil.getWidth(context) / 4,
                     child: AutoSizeText(
                       widget.name == null
-                          ? "نتائج البحث"
-                          : 'نتائج البحث عن\n${widget.name}',
+                          ? " "
+                          : '${widget.name}',
                       maxLines: 2,
                       maxFontSize: 15,
                       minFontSize: 10,
@@ -78,20 +94,16 @@ class _ProductCarPageState extends State<ProductCarPage> {
                         SvgPicture.asset(
                           'assets/icons/car2.svg',
                           fit: BoxFit.contain,
+                          color: Colors.white,
                         ),
                         SizedBox(
                           width: 10,
                         ),
-                        Container(
-                            width: ScreenUtil.getWidth(context) / 4,
-                            child: Text(
-                              themeColor.getCar_made(),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ))
+                        Text(themeColor.getCar_made(),style: TextStyle(
+                            color: Colors.white
+                        ),)
                       ],
                     ),
-                    color: Color(0xffE4E4E4),
                   ),
                   IconButton(
                     onPressed: () {
@@ -107,7 +119,7 @@ class _ProductCarPageState extends State<ProductCarPage> {
                 ],
               ),
             ),
-            widget.product == null
+           product == null
                 ? Container()
                 : Container(
                     color: Colors.black26,
@@ -129,7 +141,7 @@ class _ProductCarPageState extends State<ProductCarPage> {
                           ),
                           // color: Color(0xffE4E4E4),
                         ),
-                        Text('${widget.product.length} منتج'),
+                        Text('${product.length} منتج'),
                         InkWell(
                           onTap: () {
                             showDialog(
@@ -157,7 +169,7 @@ class _ProductCarPageState extends State<ProductCarPage> {
                                 if (value != null) {
                                   if (value['status_code'] == 200) {
                                  setState(() {
-                                   widget.product= Product_model.fromJson(value).data;
+                                   product= Product_model.fromJson(value).data;
 
                                  });
                                   } else {
@@ -182,14 +194,14 @@ class _ProductCarPageState extends State<ProductCarPage> {
                       ],
                     ),
                   ),
-            widget.product == null
+            product == null
                 ? Container()
                 : list
                     ? grid_product(
-                        product: widget.product,
+                        product:product,
                       )
                     : List_product(
-                        product: widget.product,
+                        product:product,
                       ),
           ],
         ),

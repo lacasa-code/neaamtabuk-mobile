@@ -7,7 +7,9 @@ import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen();
@@ -64,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _auth() async {
-    // API(context).get('profile').then((value) {
+    // API(context).get('user/profile/info').then((value) {
     //   if(value!=null){
     //     if(value['status']!='error'){
     //       themeColor.setLogin(true);

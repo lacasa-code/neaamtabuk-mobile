@@ -1,7 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/ResultOverlay.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/car_made.dart';
 import 'package:flutter_pos/model/car_type.dart';
 import 'package:flutter_pos/model/carmodel.dart';
@@ -13,8 +13,8 @@ import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:provider/provider.dart';
 
-import '../model/product_model.dart';
-import '../utils/navigator.dart';
+import '../../model/product_model.dart';
+import '../../utils/navigator.dart';
 
 class MyCars extends StatefulWidget {
   const MyCars({Key key}) : super(key: key);
@@ -30,11 +30,12 @@ class _MyCarsState extends State<MyCars> {
   List<CarMade> car_mades;
   List<CarModel> carmodels;
   List<Transmissions> transmissions;
-  int checkboxValue = 0;
-  int checkboxType;
+  int checkboxValue ;
+  int checkboxType = 0;
   int car_mades_id;
 
   TextEditingController yearsID, carMadeID, CarmodelsID, transimionsID;
+
   @override
   void initState() {
     API(context).get('car/types/list').then((value) {
@@ -177,6 +178,11 @@ class _MyCarsState extends State<MyCars> {
                                               builder: (_) => ResultOverlay(
                                                   value['message']));
                                           getFavorit();
+                                        }else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) =>
+                                                  ResultOverlay(value['message']));
                                         }
                                       }
                                     });
@@ -241,6 +247,14 @@ class _MyCarsState extends State<MyCars> {
                               padding: const EdgeInsets.all(8.0),
                               child: DropdownSearch<Year>(
                                 label: " سنة الصنع ",
+                                showClearButton: true,
+                                validator: (Year item) {
+                                  if (item == null) {
+                                    return "Required field";
+                                  } else
+                                    return null;
+                                },
+
                                 items: years,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (Year u) => u.year,

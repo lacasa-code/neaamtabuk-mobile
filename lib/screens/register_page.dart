@@ -1,39 +1,39 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/screens/register_page.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_pos/screens/login.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
-import 'package:flutter_pos/widget/login/login_form.dart';
+import 'package:flutter_pos/widget/register/register_form.dart';
+
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
 
-    return Scaffold(
-
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(getTransrlate(context, 'login')),
-        ),
-        body: WillPopScope(
-          // ignore: missing_return
-          onWillPop: () {
-          //  Nav.routeReplacement(context, LoginPage());
-          },
-          child: SingleChildScrollView(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: themeColor.getColor(),
+      ),
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(getTransrlate(context, 'RegisterNew')),
+          ),
+         // resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 35),
@@ -46,14 +46,18 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                LoginForm(),
-                routeLoginWidget(themeColor, context),
 
+                RegisterForm(),
+                routeLoginWidget(themeColor, context),
+                //SocialRegisterButtons(themeColor: themeColor)
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
+
   Widget routeLoginWidget(Provider_control themeColor, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 36, left: 48, bottom: 12),
@@ -62,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
-              getTransrlate(context, 'AreadyAccount'),
+              getTransrlate(context, 'haveanaccount'),
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.black,
@@ -72,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           FlatButton(
             child: Text(
-              getTransrlate(context, 'Register'),
+              getTransrlate(context, 'login'),
               style: TextStyle(
                 fontSize: 14,
                 color: themeColor.getColor(),
@@ -80,12 +84,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             onPressed: () {
-              Nav.routeReplacement(context, RegisterPage());
+              Nav.routeReplacement(context, LoginPage());
             },
           )
         ],
       ),
     );
   }
-
 }

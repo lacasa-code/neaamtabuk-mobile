@@ -2,18 +2,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/SearchOverlay.dart';
+import 'package:flutter_pos/screens/Account.dart';
+import 'package:flutter_pos/screens/CarType/productCarType.dart';
+import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/ads.dart';
 import 'package:flutter_pos/model/car_type.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/category.dart';
-import 'package:flutter_pos/screens/myCars.dart';
+import 'package:flutter_pos/screens/MyCars/myCars.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
-import 'package:flutter_pos/utils/service/API.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/category/category_card.dart';
+import 'package:flutter_pos/widget/hidden_menu.dart';
 import 'package:flutter_pos/widget/product/product_card.dart';
 import 'package:flutter_pos/widget/product/product_list_titlebar.dart';
 import 'package:flutter_pos/widget/slider/Banner.dart';
@@ -38,7 +41,7 @@ class _HomeState extends State<Home> {
   final navigatorKey = GlobalKey<NavigatorState>();
 
   List<Widget> _buildScreens() {
-    return [HomePage(), CategoryScreen(), Container(), Container()];
+    return [HomePage(), CategoryScreen(), Account(), Container()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -120,7 +123,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      //drawer: HiddenMenu(),
+      drawer: HiddenMenu(),
       body: PersistentTabView(
         context,
         controller: _controller,
@@ -188,14 +191,16 @@ class _HomeState extends State<Home> {
                       SvgPicture.asset(
                         'assets/icons/car2.svg',
                         fit: BoxFit.contain,
+                        color: Colors.white,
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Text(themeColor.getCar_made())
+                      Text(themeColor.getCar_made(),style: TextStyle(
+                          color: Colors.white
+                      ),)
                     ],
                   ),
-                  color: Color(0xffE4E4E4),
                 ),
                 IconButton(
                   onPressed: () {
@@ -211,41 +216,62 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+
           cartype == null
               ? Container()
-              : GridView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 1.3,
-                    crossAxisCount: 2,
-                  ),
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: cartype.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      child: Padding(
+              : Padding(
+                padding: const EdgeInsets.only(left: 15,right: 15),
+                child: GridView.builder(
+                    primary: false,
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 1.3,
+                      crossAxisCount: 2,
+                    ),
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: cartype.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl:
-                              "https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:642cddc5-5583-433a-92cc-56baee945e76;revision=0?component_id=60da9b0e-81b6-4f86-81ec-9fa547dd9391&api_key=CometServer1&access_token=1621546121_urn%3Aaaid%3Asc%3AUS%3A642cddc5-5583-433a-92cc-56baee945e76%3Bpublic_85387991140aa5148daaa0404a4a8d6ade8b9c27"  ,
-                              height: ScreenUtil.getHeight(context) / 10,
-                              width: ScreenUtil.getWidth(context) / 2.5,
-                              fit: BoxFit.contain,
+                        child: InkWell(
+                          onTap: (){
+                            Nav.route(context, ProductCarType(id: cartype[index].id,name: cartype[index].typeName));
+                          },
+                          child: Container(
+                            height: ScreenUtil.getHeight(context) / 10,
+                            width: ScreenUtil.getWidth(context) / 2.5,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 3.0,color: Colors.black12
+                              ),
+                              image: DecorationImage(image: CachedNetworkImageProvider("${cartype[index].image}"),fit: BoxFit.cover) ,
+                              borderRadius: index.isEven?BorderRadius.only(
+                                  topRight: Radius.circular(15.0),
+                                  bottomRight: Radius.circular(15.0)
+                              ):BorderRadius.only(
+                                  topLeft: Radius.circular(15.0),
+                                  bottomLeft: Radius.circular(15.0)
+                              ),
                             ),
-                            Text(cartype[index].typeName,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Card(
+                                color: Colors.black12,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(cartype[index].typeName,
+                                      style: TextStyle(color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      );
+                    },
+                  ),
+              ),
           ads == null
               ? Container(): CarouselSlider(
             items: ads

@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/ResultOverlay.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/model/product_model.dart';
+import 'package:flutter_pos/screens/category/productCategory.dart';
 import 'package:flutter_pos/screens/productCarPage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
-import 'package:flutter_pos/utils/service/API.dart';
 
 import '../../utils/navigator.dart';
 
@@ -42,25 +42,7 @@ class _CategoryCardState extends State<CategoryCard> {
       ),
       child: InkWell(
         onTap: () {
-          API(context)
-              .get('site/categories/${widget.product.id}')
-              .then((value) {
-            if (value != null) {
-              if (value['status_code'] == 200) {
-                Nav.route(
-                    context,
-                    ProductCarPage(
-                      name: widget.product.name,
-                      id:widget.product.id ,
-                      product: Product_model.fromJson(value).data,
-                    ));
-              } else {
-                showDialog(
-                    context: context,
-                    builder: (_) => ResultOverlay(value['message']));
-              }
-            }
-          });
+        Nav.route(context, ProductCategory(id: widget.product.id,name: widget.product.name,));
         },
         child: Column(
           children: [

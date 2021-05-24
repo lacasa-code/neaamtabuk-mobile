@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/SearchOverlay.dart';
+import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/Filter.dart';
 import 'package:flutter_pos/screens/Sort.dart';
-import 'package:flutter_pos/screens/myCars.dart';
+import 'package:flutter_pos/screens/MyCars/myCars.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
-import 'package:flutter_pos/utils/service/API.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/List/gridview.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
 import 'package:flutter_pos/widget/product/product_card.dart';
@@ -70,7 +70,7 @@ class _FilterPageState extends State<FilterPage> {
                     color: Color(0xffE4E4E4),
                   ),
                   Text(
-                    'نتائج البحث عن\nزيت فرامل',
+                    'نتائج البحث ',
                     style: TextStyle(fontSize: 10, color: Colors.white),
                   ),
                   FlatButton(
@@ -83,14 +83,16 @@ class _FilterPageState extends State<FilterPage> {
                         SvgPicture.asset(
                           'assets/icons/car2.svg',
                           fit: BoxFit.contain,
+                          color: Colors.white,
                         ),
                         SizedBox(
                           width: 10,
                         ),
-                        Text(themeColor.car_made)
+                        Text(themeColor.getCar_made(),style: TextStyle(
+                            color: Colors.white
+                        ),)
                       ],
                     ),
-                    color: Color(0xffE4E4E4),
                   ),
                   IconButton(
                     onPressed: () {
