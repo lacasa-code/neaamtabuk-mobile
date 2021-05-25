@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/main.dart';
+import 'package:flutter_pos/screens/Address_Page.dart';
 import 'package:flutter_pos/screens/login.dart';
 import 'package:flutter_pos/screens/register_page.dart';
 import 'package:flutter_pos/user_information.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/widget/item_hidden_menu.dart';
+import 'package:flutter_pos/wishlist_page.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -197,41 +199,40 @@ String token;
                      },
                      child: Column(
                        children: <Widget>[
-                         InkWell(
-                           onTap: () {
+                         ItemHiddenMenu(
+                           onTap: (){
                              Nav.route(context, UserInfo());
+
                            },
-                           child: ItemHiddenMenu(
-                             icon: Icon(
-                               Icons.perm_identity_sharp,
-                               size: 25,
-                               color: Colors.orange,
-                             ),
-                             name: getTransrlate(context, 'ProfileSettings'),
-                             baseStyle: TextStyle(
-                                 color: Colors.black,
-                                 fontSize: 19.0,
-                                 fontWeight: FontWeight.w800),
-                             colorLineSelected: Colors.orange,
+                           icon: Icon(
+                             Icons.perm_identity_sharp,
+                             size: 25,
+                             color: Colors.orange,
                            ),
+                           name: getTransrlate(context, 'ProfileSettings'),
+                           baseStyle: TextStyle(
+                               color: Colors.black,
+                               fontSize: 19.0,
+                               fontWeight: FontWeight.w800),
+                           colorLineSelected: Colors.orange,
                          ),
 
-                         InkWell(
-                           onTap: () {
+                         ItemHiddenMenu(
+                           onTap: (){
+                             Nav.route(context, Shipping_Address());
+
                            },
-                           child: ItemHiddenMenu(
-                             icon: Icon(
-                               Icons.location_on_outlined,
-                               size: 25,
-                               color: Colors.orange,
-                             ),
-                             name: getTransrlate(context, 'MyAddress'),
-                             baseStyle: TextStyle(
-                                 color: Colors.black,
-                                 fontSize: 19.0,
-                                 fontWeight: FontWeight.w800),
-                             colorLineSelected: Colors.orange,
+                           icon: Icon(
+                             Icons.location_on_outlined,
+                             size: 25,
+                             color: Colors.orange,
                            ),
+                           name: getTransrlate(context, 'MyAddress'),
+                           baseStyle: TextStyle(
+                               color: Colors.black,
+                               fontSize: 19.0,
+                               fontWeight: FontWeight.w800),
+                           colorLineSelected: Colors.orange,
                          ),
                          InkWell(
                            onTap: () {
@@ -250,22 +251,21 @@ String token;
                              colorLineSelected: Colors.orange,
                            ),
                          ),
-                         InkWell(
-                           onTap: () {
-                           },
-                           child: ItemHiddenMenu(
-                             icon: Icon(
-                               Icons.favorite_border,
-                               size: 25,
-                               color: Colors.orange,
-                             ),
-                             name: getTransrlate(context, 'MyFav'),
-                             baseStyle: TextStyle(
-                                 color: Colors.black,
-                                 fontSize: 19.0,
-                                 fontWeight: FontWeight.w800),
-                             colorLineSelected: Colors.orange,
+                         ItemHiddenMenu(
+                            onTap: (){
+                              Nav.route(context, WishList());
+                            },
+                           icon: Icon(
+                             Icons.favorite_border,
+                             size: 25,
+                             color: Colors.orange,
                            ),
+                           name: getTransrlate(context, 'MyFav'),
+                           baseStyle: TextStyle(
+                               color: Colors.black,
+                               fontSize: 19.0,
+                               fontWeight: FontWeight.w800),
+                           colorLineSelected: Colors.orange,
                          ),
                          InkWell(
                            onTap: () {

@@ -34,7 +34,7 @@ class ItemHiddenMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(bottom: 15.0, left: 24),
+      margin: EdgeInsets.only(bottom: 15.0,top: 15.0, left: 24),
       child: InkWell(
         onTap: onTap,
         child: Row(
@@ -55,7 +55,8 @@ class ItemHiddenMenu extends StatelessWidget {
                         : TextStyle(
                             color: Colors.black, fontSize: 14)),
               ),
-            )
+            ),
+            onTap==null?Container():Icon(Icons.arrow_forward_ios,color: Colors.grey,)
           ],
         ),
       ),

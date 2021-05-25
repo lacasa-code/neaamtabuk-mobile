@@ -2,17 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/widget/ResultOverlay.dart';
-import 'package:flutter_pos/model/product_model.dart';
-import 'package:flutter_pos/screens/productCarPage.dart';
-import 'package:flutter_pos/utils/navigator.dart';
-import 'package:flutter_pos/widget/custom_textfield.dart';
+
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../model/cart_category.dart';
-import '../model/manufacturers.dart';
-import '../model/origins.dart';
-import '../service/api.dart';
 import '../utils/screen_size.dart';
 
 class WriteRatedialog extends StatefulWidget {

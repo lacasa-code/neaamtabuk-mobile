@@ -6,8 +6,10 @@ import 'package:flutter_pos/screens/Quastions.dart';
 import 'package:flutter_pos/screens/ratepage.dart';
 import 'package:flutter_pos/screens/writeQuastions.dart';
 import 'package:flutter_pos/screens/writerate.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -378,7 +380,7 @@ class _ProductPageState extends State<ProductPage> {
                         dropdownValue = newValue;
                       });
                     },
-                    items: <int>[1, 2, 3, 4, 5]
+                    items: <int>[1, 2, 3, 4, 5,6,7,8,9,10]
                         .map<DropdownMenuItem<int>>((int value) {
                       return DropdownMenuItem<int>(
                         value: value,
@@ -388,29 +390,50 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 ),
 
-                Container(
-                  margin: const EdgeInsets.all(15.0),
-                  padding: const EdgeInsets.all(12.0),
-                  color: Colors.lightGreen,
-                  child: Center(
-                      child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.shopping_cart_sharp,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        'أضف إلى عربة التسوق',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                    ],
-                  )),
+                InkWell(onTap: (){
+                  API(context).post('add/to/cart',{
+                    "product_id":widget.product.id,
+                    "quantity":dropdownValue
+                  }).then((value) {
+                    if (value != null) {
+                      if (value['status_code'] == 200) {
+                        showDialog(
+                            context: context,
+                            builder: (_) => ResultOverlay(
+                                value['message']));
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (_) => ResultOverlay(
+                                value['message']));
+                      }
+                    }
+                  });
+                },
+                  child: Container(
+                    margin: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(12.0),
+                    color: Colors.lightGreen,
+                    child: Center(
+                        child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.shopping_cart_sharp,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'أضف إلى عربة التسوق',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                      ],
+                    )),
+                  ),
                 ),
               ],
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:provider/provider.dart';
 
 class ResultOverlay extends StatefulWidget {
@@ -37,46 +38,46 @@ class ResultOverlayState extends State<ResultOverlay>
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
 
-    return Center(
+    return Align(
+      alignment: Alignment.bottomCenter,
       child: Material(
         color: Colors.transparent,
         child: ScaleTransition(
           scale: scaleAnimation,
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Container(
-              decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0))),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(
-                      Icons.info_outline,
-                      size: 50,
-                      color: themeColor.getColor(),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      '${widget.message}',
-                      style: TextStyle(
-                          color: themeColor.getColor(),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text("Close"))
-                  ],
-                ),
+          child: Container(
+            width: ScreenUtil.getWidth(context),
+
+            decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    size: 50,
+                    color: themeColor.getColor(),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    '${widget.message}',
+                    style: TextStyle(
+                        color: themeColor.getColor(),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Close"))
+                ],
               ),
             ),
           ),

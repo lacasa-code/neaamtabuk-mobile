@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/ProductPage.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ProductCard extends StatefulWidget {
@@ -53,7 +55,7 @@ class _ProductCardState extends State<ProductCard> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey[200],
+                        color: Colors.black12,
                         blurRadius: 5.0,
                         spreadRadius: 1,
                         offset: Offset(0.0, 2)),
@@ -140,7 +142,26 @@ class _ProductCardState extends State<ProductCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                API(context).post('add/to/cart',{
+                                  "product_id":widget.product.id,
+                                  "quantity":1
+                                }).then((value) {
+                                  if (value != null) {
+                                    if (value['status_code'] == 200) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => ResultOverlay(
+                                              value['message']));
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => ResultOverlay(
+                                              value['message']));
+                                    }
+                                  }
+                                });
+                              },
                               icon: Icon(Icons.add_shopping_cart,
                                   color: Colors.grey),
                             ),
@@ -148,7 +169,25 @@ class _ProductCardState extends State<ProductCard> {
                               width: 6,
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                API(context).post('user/add/wishlist',{
+                                  "product_id":widget.product.id
+                                }).then((value) {
+                                  if (value != null) {
+                                    if (value['status_code'] == 200) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => ResultOverlay(
+                                              value['message']));
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => ResultOverlay(
+                                              value['message']));
+                                    }
+                                  }
+                                });
+                              },
                               icon: Icon(
                                 Icons.favorite_border,
                                 color: Colors.grey,

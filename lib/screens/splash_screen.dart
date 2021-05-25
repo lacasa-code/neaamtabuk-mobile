@@ -7,7 +7,6 @@ import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +17,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  Provider_control themeColor;
 
   @override
   void initState() {
@@ -28,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    themeColor = Provider.of<Provider_control>(context);
+   final themeColor = Provider.of<Provider_control>(context);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: themeColor.getColor(),
@@ -56,16 +54,10 @@ class _SplashScreenState extends State<SplashScreen>
                 Container(
                   height: ScreenUtil.getHeight(context) / 2,
                   width: ScreenUtil.getWidth(context) / 1.5,
-                  child: SvgPicture.asset(
-                    'assets/images/trkar_logo_white.svg',
-                    color: Colors.white,
+                  child: Image.asset(
+                    'assets/images/splashscreen-trkar-logo-white.gif',
                   ),
                 ),
-                Text(
-                  'Card Net Powered By 7lSoft',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w800, color: themeColor.getColor()),
-                )
               ],
             ),
           ),

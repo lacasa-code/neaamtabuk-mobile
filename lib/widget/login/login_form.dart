@@ -38,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
         child: Column(
           children: <Widget>[
             MyTextFormField(
-              intialLabel: 'asd@asd.com',
+              intialLabel: 'firstuser@user.com',
               Keyboard_Type: TextInputType.emailAddress,
               labelText: getTransrlate(context, 'Email'),
               hintText: getTransrlate(context, 'Email'),
@@ -59,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
               },
             ),
             MyTextFormField(
-              intialLabel: '123123123',
+              intialLabel: 'password',
               labelText: getTransrlate(context, 'password'),
               hintText: getTransrlate(context, 'password'),
               suffixIcon: IconButton(
