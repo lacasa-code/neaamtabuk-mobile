@@ -60,8 +60,8 @@ class MyTextFormField extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(1.0),
                 borderSide: BorderSide(
-                  color: Colors.grey,
-                  width: 2.0,
+                  color: Colors.black12,
+                  width: 1.0,
                 ),
               ),
               filled: true,

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:provider/provider.dart';
 
@@ -51,34 +52,38 @@ class ResultOverlayState extends State<ResultOverlay>
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0))),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(
-                    Icons.info_outline,
-                    size: 50,
-                    color: themeColor.getColor(),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    '${widget.message}',
-                    style: TextStyle(
-                        color: themeColor.getColor(),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text("Close"))
-                ],
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(height: 25,color: Colors.orange,),
+                SizedBox(height: 15,),
+                Icon(
+                  Icons.check_circle_outline,
+                  size: 80,
+                  color: Colors.lightGreen,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '${widget.message}',
+                  style: TextStyle(
+                      color: themeColor.getColor(),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                InkWell(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 40),
+                      color: Colors.orange,
+                      child: Text(getTransrlate(context, 'close'),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
+                )
+              ],
             ),
           ),
         ),

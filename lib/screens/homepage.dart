@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/screens/Account.dart';
 import 'package:flutter_pos/screens/CarType/productCarType.dart';
 import 'package:flutter_pos/screens/cart.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/ads.dart';
 import 'package:flutter_pos/model/car_type.dart';
@@ -78,7 +79,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _controller = PersistentTabController(initialIndex: 0);
-
+    Provider.of<Provider_Data>(context).getCart(context);
     API(context).post('site/new/products',{}).then((value) {
       if (value != null) {
         setState(() {
@@ -388,4 +389,5 @@ class _HomeState extends State<Home> {
       },
     );
   }
+
 }

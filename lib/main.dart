@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_pos/screens/splash_screen.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/AppLocalizations.dart';
 import 'package:global_configuration/global_configuration.dart';
@@ -10,12 +11,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GlobalConfiguration().loadFromAsset("configurations");
   print("base_url: ${GlobalConfiguration().getString('base_url')}");
-  runApp(
+  runApp(MultiProvider(providers: [
     ChangeNotifierProvider<Provider_control>(
       create: (_) => Provider_control(),
-      child: MyApp(),
+    ),ChangeNotifierProvider<Provider_Data>(
+      create: (_) => Provider_Data(),
     ),
-  );
+  ], child: MyApp()));
 
   // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   // OneSignal.shared.init(

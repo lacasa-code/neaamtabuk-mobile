@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/ProductPage.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({
@@ -33,6 +35,8 @@ class _ProductCardState extends State<ProductCard> {
 
   @override
   Widget build(BuildContext context) {
+    final ServiceData = Provider.of<Provider_Data>(context);
+
     return Stack(
       children: <Widget>[
         Container(
@@ -153,6 +157,8 @@ class _ProductCardState extends State<ProductCard> {
                                           context: context,
                                           builder: (_) => ResultOverlay(
                                               value['message']));
+                                      ServiceData.getCart(context);
+
                                     } else {
                                       showDialog(
                                           context: context,

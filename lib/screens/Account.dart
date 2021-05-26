@@ -97,7 +97,7 @@ String token;
                 ],
               ),
             ),
-           Column(
+            Column(
                crossAxisAlignment: CrossAxisAlignment.start,
                children: <Widget>[
                  SizedBox(
@@ -216,7 +216,6 @@ String token;
                                fontWeight: FontWeight.w800),
                            colorLineSelected: Colors.orange,
                          ),
-
                          ItemHiddenMenu(
                            onTap: (){
                              Nav.route(context, Shipping_Address());
@@ -234,22 +233,18 @@ String token;
                                fontWeight: FontWeight.w800),
                            colorLineSelected: Colors.orange,
                          ),
-                         InkWell(
-                           onTap: () {
-                           },
-                           child: ItemHiddenMenu(
-                             icon: Icon(
-                               Icons.local_shipping_outlined,
-                               size: 25,
-                               color: Colors.orange,
-                             ),
-                             name: getTransrlate(context, 'Myorders'),
-                             baseStyle: TextStyle(
-                                 color: Colors.black,
-                                 fontSize: 19.0,
-                                 fontWeight: FontWeight.w800),
-                             colorLineSelected: Colors.orange,
+                         ItemHiddenMenu(
+                           icon: Icon(
+                             Icons.local_shipping_outlined,
+                             size: 25,
+                             color: Colors.orange,
                            ),
+                           name: getTransrlate(context, 'Myorders'),
+                           baseStyle: TextStyle(
+                               color: Colors.black,
+                               fontSize: 19.0,
+                               fontWeight: FontWeight.w800),
+                           colorLineSelected: Colors.orange,
                          ),
                          ItemHiddenMenu(
                             onTap: (){
@@ -267,116 +262,6 @@ String token;
                                fontWeight: FontWeight.w800),
                            colorLineSelected: Colors.orange,
                          ),
-                         InkWell(
-                           onTap: () {
-                           },
-                           child: ItemHiddenMenu(
-                             icon: Icon(
-                               Icons.settings,
-                               size: 25,
-                               color: Colors.orange,
-                             ),
-                             name: getTransrlate(context, 'Settings'),
-                             baseStyle: TextStyle(
-                                 color: Colors.black,
-                                 fontSize: 19.0,
-                                 fontWeight: FontWeight.w800),
-                             colorLineSelected: Colors.orange,
-                           ),
-                         ),
-                         InkWell(
-                           onTap: () async {
-                             await themeColor.local == 'ar'
-                                 ? themeColor.setLocal('en')
-                                 : themeColor.setLocal('ar');
-                             MyApp.setlocal(context,
-                                 Locale(themeColor.getlocal(), ''));
-                             SharedPreferences.getInstance()
-                                 .then((prefs) {
-                               prefs.setString(
-                                   'local', themeColor.local);
-                             });
-                           },
-                           child: ItemHiddenMenu(
-                             icon: Icon(
-                               Icons.language,
-                               size: 25,
-                               color: Colors.orange,
-                             ),
-                             name: Provider.of<Provider_control>(context)
-                                 .local ==
-                                 'ar'
-                                 ? 'English'
-                                 : 'عربى',
-                             baseStyle: TextStyle(
-                                 color: Colors.black,
-                                 fontSize: 19.0,
-                                 fontWeight: FontWeight.w800),
-                             colorLineSelected: Colors.orange,
-                           ),
-                         ),
-                         InkWell(
-                           onTap: () {
-                           },
-                           child: ItemHiddenMenu(
-                             icon: Icon(
-                               Icons.info_outline,
-                               size: 25,
-                               color: Colors.orange,
-                             ),
-                             name: getTransrlate(context, 'FAQ'),
-                             baseStyle: TextStyle(
-                                 color: Colors.black,
-                                 fontSize: 19.0,
-                                 fontWeight: FontWeight.w800),
-                             colorLineSelected: Colors.orange,
-                           ),
-                         ),
-                         InkWell(
-                           onTap: () {
-                           },
-                           child: ItemHiddenMenu(
-                             icon: Icon(
-                               Icons.contact_page_outlined,
-                               size: 25,
-                               color: Colors.orange,
-                             ),
-                             name: getTransrlate(context, 'About'),
-                             baseStyle: TextStyle(
-                                 color: Colors.black,
-                                 fontSize: 19.0,
-                                 fontWeight: FontWeight.w800),
-                             colorLineSelected: Colors.orange,
-                           ),
-                         ),
-
-                         token==null?Container(): InkWell(
-                           onTap: () async {
-                             themeColor.setLogin(false);
-                             final SharedPreferences prefs =
-                             await SharedPreferences.getInstance();
-                             prefs.clear();
-                             setState(() {
-                               token=null;
-                               name=null;
-                             });
-                             // Navigator.pushAndRemoveUntil(
-                             //     context, MaterialPageRoute(builder: (_) => LoginPage()), (r) => false);
-                             },
-                           child: ItemHiddenMenu(
-                             icon: Icon(
-                               Icons.exit_to_app,
-                               size: 19,
-                               color: Colors.orange,
-                             ),
-                             name:  getTransrlate(context, 'Logout'),
-                             baseStyle: TextStyle(
-                                 color: Colors.black,
-                                 fontSize: 19.0,
-                                 fontWeight: FontWeight.w800),
-                             colorLineSelected: Colors.orange,
-                           ),
-                         ),
 
                        ],
                      ),
@@ -384,87 +269,197 @@ String token;
                  ),
 
                ]),
-            SizedBox(height: 10,),
-            Container(height: 1,color:Colors.grey),
-            SizedBox(height: 20,),
-
-            Center(
-              child: Container(
-                width: ScreenUtil.getWidth(context)/3,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SvgPicture.asset("assets/icons/instagram.svg",color: Colors.blueGrey,width: 20,),
-                      SvgPicture.asset("assets/icons/facebook.svg",color: Colors.blueGrey,width: 20,),
-                      SvgPicture.asset("assets/icons/twitter.svg",color: Colors.blueGrey,width: 20,),
-
-                    ],
+            Container(
+              color: Color(0xffF6F6F6),
+              padding: const EdgeInsets.only(right: 16, left: 16),
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      await themeColor.local == 'ar'
+                          ? themeColor.setLocal('en')
+                          : themeColor.setLocal('ar');
+                      MyApp.setlocal(context,
+                          Locale(themeColor.getlocal(), ''));
+                      SharedPreferences.getInstance()
+                          .then((prefs) {
+                        prefs.setString(
+                            'local', themeColor.local);
+                      });
+                    },
+                    child: ItemHiddenMenu(
+                      icon: Icon(
+                        Icons.language,
+                        size: 25,
+                        color: Colors.orange,
+                      ),
+                      name: Provider.of<Provider_control>(context)
+                          .local ==
+                          'ar'
+                          ? 'English'
+                          : 'عربى',
+                      baseStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 19.0,
+                          fontWeight: FontWeight.w800),
+                      colorLineSelected: Colors.orange,
+                    ),
                   ),
-                ),
-              ),
-            ),
-            SizedBox(height: 10,),
-            Center(
-              child: Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  InkWell(
+                    onTap: () {
+                    },
+                    child: ItemHiddenMenu(
+                      icon: Icon(
+                        Icons.info_outline,
+                        size: 25,
+                        color: Colors.orange,
+                      ),
+                      name: getTransrlate(context, 'FAQ'),
+                      baseStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 19.0,
+                          fontWeight: FontWeight.w800),
+                      colorLineSelected: Colors.orange,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                    },
+                    child: ItemHiddenMenu(
+                      icon: Icon(
+                        Icons.contact_page_outlined,
+                        size: 25,
+                        color: Colors.orange,
+                      ),
+                      name: getTransrlate(context, 'About'),
+                      baseStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 19.0,
+                          fontWeight: FontWeight.w800),
+                      colorLineSelected: Colors.orange,
+                    ),
+                  ),
+                  token==null?Container(): InkWell(
+                    onTap: () async {
+                      themeColor.setLogin(false);
+                      final SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                      prefs.clear();
+                      setState(() {
+                        token=null;
+                        name=null;
+                      });
+                      // Navigator.pushAndRemoveUntil(
+                      //     context, MaterialPageRoute(builder: (_) => LoginPage()), (r) => false);
+                    },
+                    child: ItemHiddenMenu(
+                      icon: Icon(
+                        Icons.exit_to_app,
+                        size: 19,
+                        color: Colors.orange,
+                      ),
+                      name:  getTransrlate(context, 'Logout'),
+                      baseStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 19.0,
+                          fontWeight: FontWeight.w800),
+                      colorLineSelected: Colors.orange,
+                    ),
+                  ),
 
-                  children: [
-                    TextButton(onPressed: (){}, child: Text('من نحن',style: TextStyle(color: Colors.black),)),
-                    TextButton(onPressed: (){}, child: Text('تواصل معنا',style: TextStyle(color: Colors.black),)),
-                    TextButton(onPressed: (){}, child: Text('الأسئلة الشائعة',style: TextStyle(color: Colors.black),)),
-                  ],
-                ),
+                ],
               ),
             ),
-            Center(
-              child: Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+            Container(
+              color: Color(0xffF6F6F6),
+              child: Column(
+                children: [
+                  SizedBox(height: 10,),
+                  Container(height: 1,color:Colors.grey),
+                  SizedBox(height: 20,),
 
-                  children: [
-                    Container(
-                        width: ScreenUtil.getWidth(context)/3.1,
+                  Center(
+                    child: Container(
+                      width: ScreenUtil.getWidth(context)/3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SvgPicture.asset("assets/icons/instagram.svg",color: Colors.blueGrey,width: 20,),
+                            SvgPicture.asset("assets/icons/facebook.svg",color: Colors.blueGrey,width: 20,),
+                            SvgPicture.asset("assets/icons/twitter.svg",color: Colors.blueGrey,width: 20,),
 
-                        child: TextButton(onPressed: (){}, child: AutoSizeText('لماذا تبيع على تركار',maxLines: 1,minFontSize: 10,maxFontSize: 16,style: TextStyle(color: Colors.black),))),
-                    Container(                        width: ScreenUtil.getWidth(context)/3.1,
-                        child: TextButton(onPressed: (){}, child: AutoSizeText('التسجيل كبائع',maxLines: 1,minFontSize: 10,maxFontSize: 16,style: TextStyle(color: Colors.black),))),
-                    Container(                        width: ScreenUtil.getWidth(context)/3.1,
-                        child: TextButton(onPressed: (){}, child: AutoSizeText('كيف تبيع على تركار',maxLines: 1,minFontSize: 10,maxFontSize: 16,style: TextStyle(color: Colors.black),))),
-                  ],
-                ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Center(
+                    child: Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+
+                        children: [
+                          TextButton(onPressed: (){}, child: Text('من نحن',style: TextStyle(color: Colors.black),)),
+                          TextButton(onPressed: (){}, child: Text('تواصل معنا',style: TextStyle(color: Colors.black),)),
+                          TextButton(onPressed: (){}, child: Text('الأسئلة الشائعة',style: TextStyle(color: Colors.black),)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+
+                        children: [
+                          Container(
+                              width: ScreenUtil.getWidth(context)/3.1,
+
+                              child: TextButton(onPressed: (){}, child: AutoSizeText('لماذا تبيع على تركار',maxLines: 1,minFontSize: 10,maxFontSize: 16,style: TextStyle(color: Colors.black),))),
+                          Container(                        width: ScreenUtil.getWidth(context)/3.1,
+                              child: TextButton(onPressed: (){}, child: AutoSizeText('التسجيل كبائع',maxLines: 1,minFontSize: 10,maxFontSize: 16,style: TextStyle(color: Colors.black),))),
+                          Container(                        width: ScreenUtil.getWidth(context)/3.1,
+                              child: TextButton(onPressed: (){}, child: AutoSizeText('كيف تبيع على تركار',maxLines: 1,minFontSize: 10,maxFontSize: 16,style: TextStyle(color: Colors.black),))),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        getTransrlate(context, 'version') + ' 1.0.0',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'جميع الحقوق محفوظة ©2021 تركار',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  getTransrlate(context, 'version') + ' 1.0.0',
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'جميع الحقوق محفوظة ©2021 تركار',
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w300),
-                ),
-              ),
-            ),
+
+
           ],
         ),
       ),);

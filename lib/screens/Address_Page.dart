@@ -73,22 +73,6 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                 setState(() {
                                   checkboxValue = value;
                                 });
-                                API(context)
-                                    .get(
-                                    'user/select/from/favourites/${address[index].id}')
-                                    .then((value) {
-                                  if (value != null) {
-                                    if (value['status_code'] == 200) {
-                                      themeColor.setCar_made(
-                                          address[index].recipientName);
-                                    } else {
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) => ResultOverlay(
-                                              value['message']));
-                                    }
-                                  }
-                                });
                               },
                             ),
                             InkWell(

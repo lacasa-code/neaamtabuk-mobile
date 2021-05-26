@@ -2,9 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/user_info.dart';
+import 'package:flutter_pos/screens/changePasswordPAge.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
+import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +27,7 @@ class _UserInfoState extends State<UserInfo> {
   bool _isLoading = false;
   User userModal;
   String password;
-  String _email, _f_name, _username;
+  String _email, _f_name, _username, _password;
 
   submitForm() async {
     FocusScope.of(context).requestFocus(new FocusNode());
@@ -205,7 +207,27 @@ class _UserInfoState extends State<UserInfo> {
                                         onChanged: (String val) =>
                                             _username = val,
                                       )),
-                                  _status ? _getEditIcon() : _getActionButtons()
+                                  _status ? _getEditIcon() : _getActionButtons(),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25.0, right: 25.0, top: 25.0),
+                                      child: Text(
+                                        'كلمة المرور',
+                                      )),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25.0, right: 25.0, top: 2.0),
+                                      child: TextFormField(
+                                        initialValue: "123456789",
+                                        decoration: InputDecoration(
+                                            hintText: "أدخل كلمة المرور"),
+                                        enabled: !_status,
+                                        obscureText: true,
+                                        onSaved: (String val) => _username = val,
+                                        onChanged: (String val) =>
+                                        _username = val,
+                                      )),
+                                  _getChangePassword()
                                 ],
                               ),
                             ),
@@ -221,7 +243,6 @@ class _UserInfoState extends State<UserInfo> {
     myFocusNode.dispose();
     super.dispose();
   }
-
   Widget _getActionButtons() {
     return Center(
       child: Padding(
@@ -289,7 +310,6 @@ class _UserInfoState extends State<UserInfo> {
       ),
     );
   }
-
   Widget _getEditIcon() {
     return Center(
       child: GestureDetector(
@@ -313,6 +333,31 @@ class _UserInfoState extends State<UserInfo> {
           setState(() {
             _status = false;
           });
+        },
+      ),
+    );
+  }
+  Widget _getChangePassword() {
+    return Center(
+      child: GestureDetector(
+        child: Container(
+          width: ScreenUtil.getWidth(context) / 2.5,
+          padding: const EdgeInsets.all(10.0),
+          decoration: BoxDecoration(border: Border.all(color: Colors.orange)),
+          child: Center(
+            child: AutoSizeText(
+              getTransrlate(context, 'changePassword'),
+              overflow: TextOverflow.ellipsis,
+              maxFontSize: 14,
+              maxLines: 1,
+              minFontSize: 10,
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+            ),
+          ),
+        ),
+        onTap: () {
+          Nav.route(context, changePassword());
         },
       ),
     );
