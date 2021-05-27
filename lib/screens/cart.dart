@@ -33,6 +33,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   void initState() {
+    Provider.of<Provider_Data>(context, listen: false).getCart(context) ;
 
     super.initState();
   }
@@ -44,7 +45,7 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
+        child:themeColor.isLogin? Column(
           children: [
             Container(
               color: themeColor.getColor(),
@@ -98,7 +99,10 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
             _cart_model == null
-                ? Expanded(child: Center(child: CircularProgressIndicator()))
+                ? Center(child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircularProgressIndicator(),
+                ))
                 : SingleChildScrollView(
                     child: _cart_model.data.orderDetails.isEmpty
                         ? Container(
@@ -261,6 +265,33 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                   )
           ],
+        ): Center(
+          child: Container(
+            height: ScreenUtil.getHeight(context) / 1.5,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  "assets/icons/ic_user_profile.svg",
+                  width: ScreenUtil.getWidth(context) / 3,
+                  color: Colors.black12,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  'لا يوجد لديك حساب',
+                  style: TextStyle(color: Colors.black45,fontSize: 25),
+                ),
+                Text(
+                  'برجاء تسجيل دخول',
+                  style: TextStyle(color: Colors.black45,fontSize: 25),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

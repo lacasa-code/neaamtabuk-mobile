@@ -79,7 +79,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _controller = PersistentTabController(initialIndex: 0);
-    Provider.of<Provider_Data>(context).getCart(context);
     API(context).post('site/new/products',{}).then((value) {
       if (value != null) {
         setState(() {

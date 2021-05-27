@@ -40,116 +40,116 @@ class _CategoryScreenState extends State<CategoryScreen> {
     final themeColor = Provider.of<Provider_control>(context);
 
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            color: themeColor.getColor(),
-            padding: const EdgeInsets.only(top: 35),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: ScreenUtil.getHeight(context) / 10,
-                    width: ScreenUtil.getWidth(context) / 3,
-                    fit: BoxFit.contain,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              color: themeColor.getColor(),
+              padding: const EdgeInsets.only(top: 35),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      height: ScreenUtil.getHeight(context) / 10,
+                      width: ScreenUtil.getWidth(context) / 3,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    Nav.route(context, MyCars());
-                  },
+                  FlatButton(
+                    onPressed: () {
+                      Nav.route(context, MyCars());
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/car2.svg',
+                          fit: BoxFit.contain,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(themeColor.getCar_made(),style: TextStyle(
+                            color: Colors.white
+                        ),)
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context, builder: (_) => SearchOverlay());
+                    },
+                    icon: Icon(
+                      Icons.search,
+                      size: 30,
+                    ),
+                    color: Color(0xffE4E4E4),
+                  ),
+                ],
+              ),
+            ),
+            categories == null
+                ? Container()
+                : Padding(
+                  padding: const EdgeInsets.only(right: 4),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/car2.svg',
-                        fit: BoxFit.contain,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(themeColor.getCar_made(),style: TextStyle(
-                          color: Colors.white
-                      ),)
-                    ],
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: ScreenUtil.getWidth(context)/2.5,
+                 // height: ScreenUtil.getHeight(context)/1.25,
+                  decoration: BoxDecoration(
+                      border: Border.symmetric(vertical: BorderSide(color:Colors.grey))),
+                 child: ListView.builder(
+                    primary: false,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(1),
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: categories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      bool selected = checkboxType == index;
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            checkboxType = index;
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(top: 12.0,bottom: 12.0,right: 20,left: 20),
+                          decoration: BoxDecoration(
+                              color: selected
+                                  ? Colors.white
+                                  : Color(0xffF6F6F6),
+                              border: Border.symmetric(horizontal:  BorderSide(color: selected
+                                  ? Colors.black12
+                                  : Colors.grey))),
+                          child: AutoSizeText(
+                            categories[index].name,
+                            maxLines: 2,minFontSize: 10,maxFontSize: 16,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context, builder: (_) => SearchOverlay());
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 30,
+                  Expanded(
+                    child: Container(
+                      child: getList(categories[checkboxType].partCategories),
+                    ),
                   ),
-                  color: Color(0xffE4E4E4),
-                ),
+
               ],
             ),
-          ),
-          categories == null
-              ? Container()
-              : Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: ScreenUtil.getWidth(context)/2.5,
-                height: ScreenUtil.getHeight(context)/1.25,
-                decoration: BoxDecoration(
-
-                    border: Border.symmetric(vertical: BorderSide(color:Colors.grey))),
-                //height: ScreenUtil.getHeight(context),
-               child: ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(1),
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: categories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    bool selected = checkboxType == index;
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          checkboxType = index;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.only(top: 12.0,bottom: 12.0,right: 20,left: 20),
-                        decoration: BoxDecoration(
-                            color: selected
-                                ? Colors.white
-                                : Color(0xffF6F6F6),
-                            border: Border.symmetric(horizontal:  BorderSide(color: selected
-                                ? Colors.black
-                                : Colors.grey))),
-                        child: AutoSizeText(
-                          categories[index].name,
-                          maxLines: 2,minFontSize: 10,maxFontSize: 16,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-                Expanded(
-                  child: Container(
-                    child: getList(categories[checkboxType].partCategories),
-                  ),
-                ),
-
-            ],
-          ),
-              )
-        ],
+                )
+          ],
+        ),
       ),);
   }
 
