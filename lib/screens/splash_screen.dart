@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/homepage.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen();
@@ -17,7 +19,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-
+  Provider_control themeColor;
   @override
   void initState() {
     super.initState();
@@ -26,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-   final themeColor = Provider.of<Provider_control>(context);
+    themeColor = Provider.of<Provider_control>(context);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: themeColor.getColor(),
@@ -37,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       backgroundColor: themeColor.getColor(),
       body: Container(
-        decoration:BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
           image: DecorationImage(
             image: new ExactAssetImage('assets/images/splashscreen.png'),
@@ -67,19 +69,23 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _auth() async {
-    // API(context).get('user/profile/info').then((value) {
-    //   if(value!=null){
-    //     if(value['status']!='error'){
-    //       themeColor.setLogin(true);
-    //     }
-    //     else{
-    //       themeColor.setLogin(false);
-    //       SharedPreferences.getInstance().then((prefs) {
-    //         prefs.clear();
-    //       });
-    //     }
-    //   }
-    // });
+    API(context).post('token/data', {}).then((value) {
+      if (value['data'] != null) {
+        if (value['data']['status'] == 'ON') {
+          themeColor.setLogin(true);
+        } else {
+          themeColor.setLogin(false);
+          SharedPreferences.getInstance().then((prefs) {
+            prefs.clear();
+          });
+        }
+      } else {
+        themeColor.setLogin(false);
+        SharedPreferences.getInstance().then((prefs) {
+          prefs.clear();
+        });
+      }
+    });
     Nav.routeReplacement(context, Home());
   }
 }

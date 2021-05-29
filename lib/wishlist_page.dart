@@ -1,8 +1,10 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/wishlist_model.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/product/Wish_List_item.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +40,14 @@ class _WishListState extends State<WishList> {
             SizedBox(
               width: 10,
             ),
-            Text('قائمة المنتجات المفضلة'),
+            Container(
+                width: ScreenUtil.getWidth(context) / 2,
+                child: AutoSizeText(
+                  'قائمة المنتجات المفضلة',
+                  minFontSize: 10,
+                  maxFontSize: 16,
+                  maxLines: 1,
+                )),
           ],
         ),
       ),
@@ -57,8 +66,8 @@ class _WishListState extends State<WishList> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Wish_List(
-                         wishList,
-                           themeColor,
+                          wishList,
+                          themeColor,
                           wishList[index],
                         ),
                       );

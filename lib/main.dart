@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/screens/splash_screen.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -14,10 +15,11 @@ Future<void> main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<Provider_control>(
       create: (_) => Provider_control(),
-    ),ChangeNotifierProvider<Provider_Data>(
+    ),
+    ChangeNotifierProvider<Provider_Data>(
       create: (_) => Provider_Data(),
     ),
-  ], child: MyApp()));
+  ], child: Phoenix(child: MyApp())));
 
   // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   // OneSignal.shared.init(

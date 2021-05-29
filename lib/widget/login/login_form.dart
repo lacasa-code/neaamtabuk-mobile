@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/screens/Account.dart';
-import 'package:flutter_pos/screens/homepage.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
-import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
+import 'package:flutter_pos/widget/login/login_form_model.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_pos/widget/login/login_form_model.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -114,8 +112,10 @@ class _LoginFormState extends State<LoginForm> {
                           prefs.setString("token", user['token']);
                           prefs.setInt("user_id", user['id']);
                           themeColor.setLogin(true);
-                          Navigator.pushAndRemoveUntil(
-                              context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
+                          Phoenix.rebirth(context);
+
+                          // Navigator.pushAndRemoveUntil(
+                          //     context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
                         }
                       }
                     });

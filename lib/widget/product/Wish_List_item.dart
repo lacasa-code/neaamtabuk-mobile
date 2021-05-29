@@ -2,27 +2,21 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/model/wishlist_model.dart';
-import 'package:flutter_pos/screens/ProductPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
-import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Wish_List extends StatefulWidget {
-
-
   List<WishListItem> wishList;
-   Provider_control themeColor;
-   WishListItem product;
+  Provider_control themeColor;
+  WishListItem product;
   Wish_List(this.wishList, this.themeColor, this.product);
 
   @override
   _Wish_ListState createState() => _Wish_ListState();
-
 }
 
 class _Wish_ListState extends State<Wish_List> {
@@ -40,9 +34,10 @@ class _Wish_ListState extends State<Wish_List> {
       children: <Widget>[
         Container(
           height: 150,
-          width: ScreenUtil.getWidth(context) / 3.5,
+          width: ScreenUtil.getWidth(context) / 4,
           child: CachedNetworkImage(
-            imageUrl: "https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:aa5b859b-f4c9-4193-83b0-cb574fc1500e;revision=0?component_id=9825019b-2773-4a38-9b61-cc032ec031d0&api_key=CometServer1&access_token=1621970493_urn%3Aaaid%3Asc%3AUS%3Aaa5b859b-f4c9-4193-83b0-cb574fc1500e%3Bpublic_e5d839e4fa057eb8319d09ed7bbc0970247e6a00",
+            imageUrl:
+                "https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:aa5b859b-f4c9-4193-83b0-cb574fc1500e;revision=0?component_id=9825019b-2773-4a38-9b61-cc032ec031d0&api_key=CometServer1&access_token=1621970493_urn%3Aaaid%3Asc%3AUS%3Aaa5b859b-f4c9-4193-83b0-cb574fc1500e%3Bpublic_e5d839e4fa057eb8319d09ed7bbc0970247e6a00",
             errorWidget: (context, url, error) => Icon(Icons.error),
           ),
         ),
@@ -50,71 +45,82 @@ class _Wish_ListState extends State<Wish_List> {
           child: Container(
             color: Colors.white,
             //width: ScreenUtil.getWidth(context) / 1.7,
-            padding: EdgeInsets.only(left: 10, top: 2, right: 10),
+            padding: EdgeInsets.only(left: 5, top: 2, right: 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                   children: [
-                    AutoSizeText(
-                      widget.product.productName,
-                      maxLines: 3,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFF5D6A78),
-                        fontWeight: FontWeight.w300,
+                    Container(
+                      width: ScreenUtil.getWidth(context) / 2.5,
+                      child: AutoSizeText(
+                        widget.product.productName,
+                        maxLines: 3,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Color(0xFF5D6A78),
+                          fontWeight: FontWeight.w300,
+                        ),
+                        minFontSize: 11,
                       ),
-                      minFontSize: 11,
                     ),
-                    IconButton(onPressed: (){
-                      API(context).post('user/removeitem/wishlist',{
-                        "id":widget.product.id
-                      }).then((value) {
-                        if (value != null) {
-                          if (value['status_code'] == 200) {
-                            showDialog(
-                                context: context,
-                                builder: (_) => ResultOverlay(
-                                    value['message']));
-                            getWishList();
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (_) => ResultOverlay(
-                                    value['message']));
-                          }
-                        }
-                      });
-                    }, icon: Icon(Icons.close,color: Colors.grey,))
+                    IconButton(
+                        onPressed: () {
+                          API(context).post('user/removeitem/wishlist',
+                              {"id": widget.product.id}).then((value) {
+                            if (value != null) {
+                              if (value['status_code'] == 200) {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay(value['message']));
+                                getWishList();
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay(value['message']));
+                              }
+                            }
+                          });
+                        },
+                        icon: Icon(
+                          Icons.close,
+                          color: Colors.grey,
+                        ))
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 5,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       children: [
-                        RatingBar.builder(
-                          ignoreGestures: true,
-                          initialRating: double.parse('3.5'),
-                          itemSize: 14.0,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Colors.orange,
+                        Container(
+                          width: ScreenUtil.getWidth(context) / 5,
+                          child: RatingBar.builder(
+                            ignoreGestures: true,
+                            initialRating: double.parse('3.5'),
+                            itemSize: 14.0,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.orange,
+                            ),
+                            onRatingUpdate: (rating) {
+                              print(rating);
+                            },
                           ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
                         ),
                         Container(
-                          width: 50,
+                          width: ScreenUtil.getWidth(context) / 5,
                           child: AutoSizeText(
                             "33",
                             maxLines: 1,
@@ -125,55 +131,53 @@ class _Wish_ListState extends State<Wish_List> {
                                 fontWeight: FontWeight.w400),
                           ),
                         ),
-
                       ],
                     ),
-
                     InkWell(
-                        onTap: (){
-                          API(context).post('add/to/cart',{
-                            "product_id":widget.product.id,
-                            "quantity":1
-                          }).then((value) {
-                            if (value != null) {
-                              if (value['status_code'] == 200) {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => ResultOverlay(
-                                        value['message']));
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => ResultOverlay(
-                                        value['message']));
-                              }
+                      onTap: () {
+                        API(context).post('add/to/cart', {
+                          "product_id": widget.product.id,
+                          "quantity": 1
+                        }).then((value) {
+                          if (value != null) {
+                            if (value['status_code'] == 200) {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) =>
+                                      ResultOverlay(value['message']));
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) =>
+                                      ResultOverlay(value['message']));
                             }
-                          });
-                        },
+                          }
+                        });
+                      },
                       child: Container(
-                        width: ScreenUtil.getWidth(context) / 3.5,
                         padding: const EdgeInsets.all(5.0),
-                        decoration: BoxDecoration(border: Border.all(color: Colors.orange)),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.orange)),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-
-                            Icon(Icons.add_shopping_cart,
-                                color:Colors.orange),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'أضف للعربة',style: TextStyle(color:Colors.orange),
+                            Icon(CupertinoIcons.cart, color: Colors.orange),
+                            Container(
+                              width: ScreenUtil.getWidth(context) / 5,
+                              child: AutoSizeText(
+                                'أضف للعربة',
+                                minFontSize: 10,
+                                maxFontSize: 16,
+                                maxLines: 1,
+                                style: TextStyle(color: Colors.orange),
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
-
                   ],
                 ),
-
               ],
             ),
           ),
@@ -191,5 +195,4 @@ class _Wish_ListState extends State<Wish_List> {
       }
     });
   }
-
 }

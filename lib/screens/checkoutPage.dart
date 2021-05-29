@@ -15,6 +15,7 @@ import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+
 import '../add_address.dart';
 
 class CheckOutPage extends StatefulWidget {
@@ -66,7 +67,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     child: Image.asset(
                       'assets/images/logo.png',
                       height: ScreenUtil.getHeight(context) / 10,
-                      width: ScreenUtil.getWidth(context) / 3,
+                      width: ScreenUtil.getWidth(context) / 3.5,
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -110,6 +111,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
               child: Theme(
                 data: ThemeData(
                     fontFamily: 'Cairo',
+                    primaryColor: Colors.lightGreen,
+                    accentColor: Colors.orange,
+                    backgroundColor: Colors.orange,
+                    primarySwatch: Colors.orange,
                     colorScheme: ColorScheme.light(
                       primary: Colors.lightGreen,
                     )),
@@ -120,6 +125,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   onStepTapped: (step) => tapped(step),
                   onStepContinue: _currentStep == 2 ? null : continued,
                   onStepCancel: cancel,
+                  controlsBuilder: _createEventControlBuilder,
                   steps: <Step>[
                     Step(
                       title: Text(
@@ -354,17 +360,21 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               child: InkWell(
                                 onTap: continued,
                                 child: Container(
-                                  width: ScreenUtil.getWidth(context)/2,
+                                  width: ScreenUtil.getWidth(context) / 2,
                                   margin: const EdgeInsets.only(
                                       top: 16.0, right: 25, left: 25),
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       color: Colors.lightGreen,
-                                      border: Border.all(color: Colors.lightGreen)),
+                                      border:
+                                          Border.all(color: Colors.lightGreen)),
                                   child: Center(
                                     child: Text(
                                       'متابعة الشراء',
-                                      style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
@@ -660,26 +670,29 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             child: InkWell(
                               onTap: continued,
                               child: Container(
-                                width: ScreenUtil.getWidth(context)/2,
+                                width: ScreenUtil.getWidth(context) / 2,
                                 margin: const EdgeInsets.only(
                                     top: 16.0, right: 25, left: 25),
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                     color: Colors.lightGreen,
-                                    border: Border.all(color: Colors.lightGreen)),
+                                    border:
+                                        Border.all(color: Colors.lightGreen)),
                                 child: Center(
                                   child: Text(
                                     'إدفع',
-                                    style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
                             ),
                           )
-
                         ],
                       ),
-                      isActive: _currentStep >= 0,
+                      isActive: _currentStep >= 1,
                       state: _currentStep >= 1
                           ? StepState.complete
                           : StepState.disabled,
@@ -839,7 +852,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           )
                         ],
                       ),
-                      isActive: _currentStep >= 0,
+                      isActive: _currentStep >= 2,
                       state: _currentStep >= 2
                           ? StepState.complete
                           : StepState.disabled,
@@ -852,6 +865,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
         ),
       ),
     );
+  }
+
+  Widget _createEventControlBuilder(BuildContext context,
+      {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+    return Container();
   }
 
   tapped(int step) {
