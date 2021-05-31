@@ -12,6 +12,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -167,6 +168,23 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                             onChanged: (int value) {
                                               setState(() {
                                                 checkboxValue = value;
+                                                API(context).post('user/select/shipping/${address[index].id}', {}).then((value) {
+                                                  if (value != null) {
+                                                    if (value['status_code'] == 201) {
+                                                      Navigator.pop(context);
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              ResultOverlay(value['message']));
+
+                                                    } else {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              ResultOverlay(value['message']));
+                                                    }
+                                                  }
+                                                });
                                               });
                                             },
                                           ),

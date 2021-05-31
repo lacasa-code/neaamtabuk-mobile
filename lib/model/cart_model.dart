@@ -97,7 +97,7 @@ class OrderDetails {
   String storeName;
   String vendorName;
   int quantity;
-  int price;
+  String price;
   int discount;
   int total;
   int approved;
@@ -136,7 +136,7 @@ class OrderDetails {
     storeName = json['store_name'];
     vendorName = json['vendor_name'];
     quantity = json['quantity'];
-    price = json['price'];
+    price = json['price'].toString();
     discount = json['discount'];
     //total = json['total'];
     approved = json['approved'];
