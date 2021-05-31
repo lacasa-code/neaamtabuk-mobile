@@ -106,7 +106,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                       ],
                     ),
                     SizedBox(height: 15,),
-                    ListView.builder(
+                    orders[index].orderDetails==null?Container():  ListView.builder(
                       padding: EdgeInsets.all(1),
                       primary: false,
                       shrinkWrap: true,
@@ -150,6 +150,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                         width: ScreenUtil.getWidth(context) / 1.5,
                         child: AutoSizeText(
                           ' إجمالي : ${orders[index].orderTotal} ريال',maxLines: 1,)),
+                    SizedBox(height: 15,),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
 

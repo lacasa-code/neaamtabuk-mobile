@@ -41,7 +41,7 @@ class _ProductCardState extends State<ProductCard> {
       children: <Widget>[
         Container(
           width: ScreenUtil.getWidth(context) / 2,
-          margin: EdgeInsets.only(left: 16, top: 8, right: 12, bottom: 2),
+          margin: EdgeInsets.only(left: 6, top: 8, right: 6, bottom: 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -69,26 +69,20 @@ class _ProductCardState extends State<ProductCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Container(
-                    height: 100,
-                    width: ScreenUtil.getWidth(context) / 2,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: (widget.product.photo.isEmpty)
-                            ? 'http://arabimagefoundation.com/images/defaultImage.png'
-                            : widget.product.photo[0].image,
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      ),
+                  Expanded(
+                    child: CachedNetworkImage(
+                      width: ScreenUtil.getWidth(context) / 2,
+                      imageUrl: (widget.product.photo.isEmpty)
+                          ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                          : widget.product.photo[0].image,
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
                   ),
                   Container(
                     color: Colors.white,
                     width: ScreenUtil.getWidth(context) / 2.1,
-                    padding: EdgeInsets.only(left: 10, top: 2, right: 10),
+                    padding: EdgeInsets.only(left: 10, top: 10, right: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,9 +123,9 @@ class _ProductCardState extends State<ProductCard> {
                               width: 6,
                             ),
                             Container(
-                              width: 50,
+                              width: ScreenUtil.getWidth(context)/6,
                               child: AutoSizeText(
-                                widget.product.price,
+                                "${widget.product.price??0} ريال",
                                 maxLines: 1,
                                 minFontSize: 20,
                                 maxFontSize: 25,
@@ -176,11 +170,36 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                             IconButton(
                               onPressed: () {
+                                widget.product.inWishlist==0?
                                 API(context).post('user/add/wishlist',{
                                   "product_id":widget.product.id
                                 }).then((value) {
                                   if (value != null) {
                                     if (value['status_code'] == 200) {
+                                      setState(() {
+                                        widget.product.inWishlist=1;
+                                      });
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => ResultOverlay(
+                                              value['message']));
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => ResultOverlay(
+                                              value['message']));
+                                    }
+                                  }
+                                }):API(context).post('user/removeitem/wishlist',{
+                                  "product_id":widget.product.id
+                                })
+                                    .then((value) {
+                                  if (value != null) {
+                                    if (value['status_code'] == 200) {
+                                      setState(() {
+                                        widget.product.inWishlist=1;
+
+                                      });
                                       showDialog(
                                           context: context,
                                           builder: (_) => ResultOverlay(
@@ -195,7 +214,8 @@ class _ProductCardState extends State<ProductCard> {
                                 });
                               },
                               icon: Icon(
-                                Icons.favorite_border,
+                               widget.product.inWishlist==0?
+                               Icons.favorite_border:Icons.favorite,
                                 color: Colors.grey,
                               ),
                             ),

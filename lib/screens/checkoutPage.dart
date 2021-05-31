@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_pos/model/cart_model.dart';
+import 'package:flutter_pos/model/payment_model.dart';
 import 'package:flutter_pos/model/shipping_address.dart';
 import 'package:flutter_pos/screens/MyCars/myCars.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -29,6 +30,7 @@ class CheckOutPage extends StatefulWidget {
 class _CheckOutPageState extends State<CheckOutPage> {
   int _currentStep = 0;
   List<Address> address;
+  List<Payment> payment;
   int checkboxValue;
   int checkboxPay;
   final _formKey = GlobalKey<FormState>();
@@ -36,6 +38,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
   @override
   void initState() {
     getAddress();
+    getpaymentways();
     super.initState();
   }
 
@@ -189,7 +192,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                       fontSize: 20),
                                                 ),
                                                 Text(
-                                                  address[index].address,
+                                                  "${address[index].address}",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           checkboxValue == index
@@ -889,6 +892,15 @@ class _CheckOutPageState extends State<CheckOutPage> {
       if (value != null) {
         setState(() {
           address = ShippingAddress.fromJson(value).data;
+        });
+      }
+    });
+  }
+  void getpaymentways() {
+    API(context).get('all/paymentways').then((value) {
+      if (value != null) {
+        setState(() {
+          payment = Payment_model.fromJson(value).data;
         });
       }
     });

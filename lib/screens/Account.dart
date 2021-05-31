@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/main.dart';
 import 'package:flutter_pos/screens/Address_Page.dart';
 import 'package:flutter_pos/screens/OrderHistory.dart';
@@ -360,10 +361,8 @@ class _AccountState extends State<Account> {
                             final SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
                             prefs.clear();
-                            setState(() {
-                              token = null;
-                              name = null;
-                            });
+                            Phoenix.rebirth(context);
+
                             // Navigator.pushAndRemoveUntil(
                             //     context, MaterialPageRoute(builder: (_) => LoginPage()), (r) => false);
                           },

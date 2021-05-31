@@ -27,7 +27,7 @@ class _UserInfoState extends State<UserInfo> {
   bool _isLoading = false;
   User userModal;
   String password;
-  String _email, _f_name, _username, _password;
+  final _formKey = GlobalKey<FormState>();
 
   submitForm() async {
     FocusScope.of(context).requestFocus(new FocusNode());
@@ -71,8 +71,14 @@ class _UserInfoState extends State<UserInfo> {
         appBar: AppBar(
           title: Row(
             children: [
-              SvgPicture.asset("assets/icons/User Icon.svg",color: Colors.white,height: 25,),
-              SizedBox(width: 10,),
+              SvgPicture.asset(
+                "assets/icons/User Icon.svg",
+                color: Colors.white,
+                height: 25,
+              ),
+              SizedBox(
+                width: 10,
+              ),
               Text('البيانات الشخصية'),
             ],
           ),
@@ -113,122 +119,184 @@ class _UserInfoState extends State<UserInfo> {
                             color: Color(0xffFFFFFF),
                             child: Padding(
                               padding: EdgeInsets.only(bottom: 15.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 25.0, right: 25.0, top: 25.0),
-                                    child: Text(
-                                      'الاسم',
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25.0, right: 25.0, top: 25.0),
+                                      child: Text(
+                                        getTransrlate(context, 'Firstname'),
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 2.0),
-                                      child: TextFormField(
-                                        initialValue: userModal.name,
-                                        decoration: const InputDecoration(
-                                          hintText: "أدخل الاسم",
-                                        ),
-                                        enabled: !_status,
-                                        autofocus: !_status,
-                                        onChanged: (String val) => _f_name = val,
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 25.0),
-                                      child: Text(
-                                        'البريد الالكترونى ',
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 2.0),
-                                      child: TextFormField(
-                                        initialValue: userModal.email,
-                                        decoration: const InputDecoration(
-                                            hintText: "ادخل البريد الالكترونى"),
-                                        enabled: !_status,
-                                        onSaved: (String val) => _email = val,
-                                        onChanged: (String val) => _email = val,
-                                      )),
-                                  Padding(
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 2.0),
+                                        child: TextFormField(
+                                          initialValue: userModal.name,
+                                          decoration: const InputDecoration(
+                                            hintText: "أدخل الاسم",
+                                          ),
+                                          enabled: !_status,
+                                          validator: (String value) {
+                                            if (value.isEmpty) {
+                                              return getTransrlate(
+                                                  context, 'Firstname');
+                                            }
+                                            _formKey.currentState.save();
+                                            return null;
+                                          },
+                                          autofocus: !_status,
+                                          onSaved: (String val) =>
+                                              userModal.name = val,
+                                          onChanged: (String val) {
+                                            userModal.name = val;
+                                          },
+                                        )),
+                                    Padding(
                                       padding: EdgeInsets.only(
                                           left: 25.0, right: 25.0, top: 25.0),
                                       child: Text(
-                                        'رقم الهاتف ',
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 2.0),
-                                      child: TextFormField(
-                                        initialValue: "02010852852852",
-                                        decoration: InputDecoration(
-                                            hintText: "أدخل رقم الهاتف"),
-                                        enabled: !_status,
-                                        onSaved: (String val) => _username = val,
-                                        onChanged: (String val) =>
-                                            _username = val,
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 25.0),
-                                      child: Text(
-                                        'تاريخ الميلاد',
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 2.0),
-                                      child: TextFormField(
-                                        initialValue: "25-2-1990",
-                                        decoration: InputDecoration(
-                                            hintText: "أدخل تاريخ الميلاد"),
-                                        enabled: !_status,
-                                        onSaved: (String val) => _username = val,
-                                        onChanged: (String val) =>
-                                            _username = val,
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 25.0),
-                                      child: Text(
-                                        'الجنس',
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 2.0),
-                                      child: TextFormField(
-                                        initialValue: "25-2-1990",
-                                        decoration: InputDecoration(
-                                            hintText: " حدد الجنس"),
-                                        enabled: !_status,
-                                        onSaved: (String val) => _username = val,
-                                        onChanged: (String val) =>
-                                            _username = val,
-                                      )),
-                                  _status ? _getEditIcon() : _getActionButtons(),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 25.0),
-                                      child: Text(
-                                        'كلمة المرور',
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 2.0),
-                                      child: TextFormField(
-                                        initialValue: "123456789",
-                                        decoration: InputDecoration(
-                                            hintText: "أدخل كلمة المرور"),
-                                        enabled: !_status,
-                                        obscureText: true,
-                                        onSaved: (String val) => _username = val,
-                                        onChanged: (String val) =>
-                                        _username = val,
-                                      )),
-                                  _getChangePassword()
-                                ],
+                                        getTransrlate(context, 'Lastname'),
+                                      ),
+                                    ),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 2.0),
+                                        child: TextFormField(
+                                          initialValue: userModal.lastname,
+                                          decoration: const InputDecoration(
+                                          ),
+                                          enabled: !_status,
+                                          validator: (String value) {
+                                            if (value.isEmpty) {
+                                              return getTransrlate(
+                                                  context, 'Lastname');
+                                            }
+                                            _formKey.currentState.save();
+                                            return null;
+                                          },
+                                          autofocus: !_status,
+                                          onSaved: (String val) =>
+                                              userModal.lastname = val,
+                                          onChanged: (String val) {
+                                            userModal.lastname = val;
+                                          },
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 25.0),
+                                        child: Text(
+                                          getTransrlate(context, 'mail'),
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 2.0),
+                                        child: TextFormField(
+                                          initialValue: userModal.email,
+                                          decoration: const InputDecoration(
+                                          ),
+                                          validator: (String value) {
+                                            if (value.isEmpty) {
+                                              return getTransrlate(
+                                                  context, 'mail');
+                                            }
+                                            _formKey.currentState.save();
+                                            return null;
+                                          },
+                                          enabled: !_status,
+                                          onSaved: (String val) =>
+                                              userModal.email = val,
+                                          onChanged: (String val) =>
+                                              userModal.email = val,
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 25.0),
+                                        child: Text(
+                                          getTransrlate(context, 'phone'),
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 2.0),
+                                        child: TextFormField(
+                                          initialValue: userModal.phone,
+                                          decoration: InputDecoration(),
+                                          validator: (String value) {
+                                            if (value.isEmpty) {
+                                              return getTransrlate(
+                                                  context, 'phone');
+                                            }
+                                            _formKey.currentState.save();
+                                            return null;
+                                          },
+                                          enabled: !_status,
+                                          onSaved: (String val) =>
+                                              userModal.phone = val,
+                                          onChanged: (String val) =>
+                                              userModal.phone = val,
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 25.0),
+                                        child: Text(
+                                          'تاريخ الميلاد',
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 2.0),
+                                        child: TextFormField(
+                                          initialValue: userModal.bithdate,
+                                          decoration: InputDecoration(),
+                                          enabled: !_status,
+                                          onSaved: (String val) =>
+                                              userModal.bithdate = val,
+                                          onChanged: (String val) =>
+                                              userModal.bithdate = val,
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 25.0),
+                                        child: Text(
+                                          'الجنس',
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 2.0),
+                                        child: TextFormField(
+                                          initialValue: " ",
+                                          decoration: InputDecoration(),
+                                          enabled: !_status,
+                                          onSaved: (String val) =>
+                                              userModal.gender = val,
+                                          onChanged: (String val) =>
+                                              userModal.gender = val,
+                                        )),
+                                    _status
+                                        ? _getEditIcon()
+                                        : _getActionButtons(),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 25.0),
+                                        child: Text(
+                                          'كلمة المرور',
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25.0, right: 25.0, top: 2.0),
+                                        child: TextFormField(
+                                          initialValue: "123456789",
+                                          decoration: InputDecoration(
+                                              hintText: "أدخل كلمة المرور"),
+                                          enabled: !_status,
+                                          obscureText: true,
+                                        )),
+                                    _getChangePassword()
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -243,6 +311,7 @@ class _UserInfoState extends State<UserInfo> {
     myFocusNode.dispose();
     super.dispose();
   }
+
   Widget _getActionButtons() {
     return Center(
       child: Padding(
@@ -254,12 +323,45 @@ class _UserInfoState extends State<UserInfo> {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(right: 10.0),
-                child: Container(
-                    width: ScreenUtil.getWidth(context) / 2.5,
-                    padding: const EdgeInsets.all(10.0),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.orange)),
-                    child: GestureDetector(
+                child: InkWell(
+                  onTap: () {
+                    if (_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
+                      //setState(() => _isLoading = true);
+                      API(context).post('user/edit/profile', {
+                        "name": userModal.name,
+                        "email": userModal.email,
+                        "last_name": userModal.lastname,
+                        "phone_no": userModal.phone,
+                        "birthdate": userModal.bithdate,
+                        "gender": userModal.gender,
+                      }).then((value) {
+                        if (value != null) {
+                          if (value['status_code'] == 200) {
+                            showDialog(
+                                context: context,
+                                builder: (_) =>
+                                    ResultOverlay(value['message']));
+                            setState(() {
+                              _status = true;
+                              FocusScope.of(context)
+                                  .requestFocus(new FocusNode());
+                            });
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) =>
+                                    ResultOverlay(value['message']));
+                          }
+                        }
+                      });
+                    }
+                  },
+                  child: Container(
+                      width: ScreenUtil.getWidth(context) / 2.5,
+                      padding: const EdgeInsets.all(10.0),
+                      decoration:
+                          BoxDecoration(border: Border.all(color: Colors.orange)),
                       child: Center(
                         child: Text(
                           "حفظ",
@@ -267,41 +369,34 @@ class _UserInfoState extends State<UserInfo> {
                               fontWeight: FontWeight.bold,
                               color: Colors.orange),
                         ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          _status = true;
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                        });
-                      },
-                    )),
+                      )),
+                ),
               ),
               flex: 2,
             ),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                child: Container(
-                    width: ScreenUtil.getWidth(context) / 2.5,
-                    padding: const EdgeInsets.all(10.0),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.grey)),
-                    child: GestureDetector(
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _status = true;
+                      FocusScope.of(context).requestFocus(new FocusNode());
+                    });
+                  },
+                  child: Container(
+                      width: ScreenUtil.getWidth(context) / 2.5,
+                      padding: const EdgeInsets.all(10.0),
+                      decoration:
+                          BoxDecoration(border: Border.all(color: Colors.grey)),
                       child: Center(
                         child: Text(
                           "إلغاء",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey),
+                              fontWeight: FontWeight.bold, color: Colors.grey),
                         ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          _status = true;
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                        });
-                      },
-                    )),
+                      )),
+                ),
               ),
               flex: 2,
             ),
@@ -310,6 +405,7 @@ class _UserInfoState extends State<UserInfo> {
       ),
     );
   }
+
   Widget _getEditIcon() {
     return Center(
       child: GestureDetector(
@@ -337,6 +433,7 @@ class _UserInfoState extends State<UserInfo> {
       ),
     );
   }
+
   Widget _getChangePassword() {
     return Center(
       child: GestureDetector(

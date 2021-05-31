@@ -381,6 +381,7 @@ class _HomeState extends State<Home> {
   Widget list_product(Provider_control themeColor, List<Products> product) {
     return product.isEmpty?Container():GridView.builder(
       primary: false,
+      padding: EdgeInsets.all(1),
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -390,7 +391,7 @@ class _HomeState extends State<Home> {
       itemCount: product.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.symmetric(vertical: 5),
           child: ProductCard(
             themeColor: themeColor,
             product: product[index],

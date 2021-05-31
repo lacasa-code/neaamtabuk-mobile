@@ -132,7 +132,7 @@ class API {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-          'locale': Provider.of<Provider_control>(context).getlocal(),
+         // 'locale': Provider.of<Provider_control>(context).getlocal(),
         },
       );
       if (response.statusCode == 500) {

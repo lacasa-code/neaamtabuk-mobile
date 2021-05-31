@@ -21,6 +21,8 @@ class _grid_productState extends State<grid_product> {
     return GridView.builder(
       primary: false,
       shrinkWrap: true,
+      padding: EdgeInsets.all(1),
+
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         childAspectRatio: 0.77,

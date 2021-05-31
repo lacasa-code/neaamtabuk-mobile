@@ -42,6 +42,8 @@ class Products {
   String carMadeName;
   int carModelId;
   String carModelName;
+  int cartypeId;
+  String cartypeName;
   int yearId;
   String yearName;
   int partCategoryId;
@@ -57,46 +59,68 @@ class Products {
   String manufacturerName;
   int transmissionId;
   String transmissionName;
+  int producttypeId;
+  String producttypeName;
   String origincountryName;
-  int cartypeId;
-  String cartypeName;
+  int noOfOrders;
+  String holesalePrice;
   int countViews;
+  int cartEnable;
+  int wishlistEnable;
   List<Photo> photo;
+  List<ProductTags> productTags;
+  int countProductReviews;
+  int countAvgValuations;
   String timeCreated;
+  int inCart;
+  int inWishlist;
+  int inFavourites;
 
   Products(
       {this.id,
-      this.name,
-      this.description,
-      this.discount,
-      this.price,
-      this.quantity,
-      this.serialNumber,
-      this.carMadeId,
-      this.carMadeName,
-      this.carModelId,
-      this.carModelName,
-      this.yearId,
-      this.yearName,
-      this.partCategoryId,
-      this.partCategoryName,
-      this.categoryId,
-      this.categoryName,
-      this.vendorId,
-      this.vendorName,
-      this.storeId,
-      this.storeName,
-      this.manufacturerId,
-      this.prodcountryId,
-      this.manufacturerName,
-      this.transmissionId,
-      this.transmissionName,
-      this.origincountryName,
-      this.cartypeId,
-      this.cartypeName,
-      this.countViews,
-      this.photo,
-      this.timeCreated});
+        this.name,
+        this.description,
+        this.discount,
+        this.price,
+        this.quantity,
+        this.serialNumber,
+        this.carMadeId,
+        this.carMadeName,
+        this.carModelId,
+        this.carModelName,
+        this.cartypeId,
+        this.cartypeName,
+        this.yearId,
+        this.yearName,
+        this.partCategoryId,
+        this.partCategoryName,
+        this.categoryId,
+        this.categoryName,
+        this.vendorId,
+        this.vendorName,
+        this.storeId,
+        this.storeName,
+        this.manufacturerId,
+        this.prodcountryId,
+        this.manufacturerName,
+        this.transmissionId,
+        this.transmissionName,
+        this.producttypeId,
+        this.producttypeName,
+        this.origincountryName,
+        this.noOfOrders,
+        this.holesalePrice,
+        this.countViews,
+        this.cartEnable,
+        this.wishlistEnable,
+        this.photo,
+        this.productTags,
+        this.countProductReviews,
+        this.countAvgValuations,
+        this.timeCreated,
+        this.inCart,
+        this.inWishlist,
+        this.inFavourites});
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -110,6 +134,8 @@ class Products {
     carMadeName = json['car_made_name'];
     carModelId = json['car_model_id'];
     carModelName = json['car_model_name'];
+    cartypeId = json['cartype_id'];
+    cartypeName = json['cartype_name'];
     yearId = json['year_id'];
     yearName = json['year_name'];
     partCategoryId = json['part_category_id'];
@@ -125,17 +151,32 @@ class Products {
     manufacturerName = json['manufacturer_name'];
     transmissionId = json['transmission_id'];
     transmissionName = json['transmission_name'];
+    producttypeId = json['producttype_id'];
+    producttypeName = json['producttype_name'];
     origincountryName = json['origincountry_name'];
-    cartypeId = json['cartype_id'];
-    cartypeName = json['cartype_name'];
+    noOfOrders = json['no_of_orders'];
+    holesalePrice = json['holesale_price'];
     countViews = json['count_views'];
+    cartEnable = json['cart_enable'];
+    wishlistEnable = json['wishlist_enable'];
     if (json['photo'] != null) {
       photo = new List<Photo>();
       json['photo'].forEach((v) {
         photo.add(new Photo.fromJson(v));
       });
     }
+    if (json['product_tags'] != null) {
+      productTags = new List<ProductTags>();
+      json['product_tags'].forEach((v) {
+        productTags.add(new ProductTags.fromJson(v));
+      });
+    }
+    countProductReviews = json['count_product_reviews'];
+    countAvgValuations = json['count_avg_valuations'];
     timeCreated = json['time_created'];
+    inCart = json['in_cart'];
+    inWishlist = json['in_wishlist'];
+    inFavourites = json['in_favourites'];
   }
 
   Map<String, dynamic> toJson() {
@@ -151,6 +192,8 @@ class Products {
     data['car_made_name'] = this.carMadeName;
     data['car_model_id'] = this.carModelId;
     data['car_model_name'] = this.carModelName;
+    data['cartype_id'] = this.cartypeId;
+    data['cartype_name'] = this.cartypeName;
     data['year_id'] = this.yearId;
     data['year_name'] = this.yearName;
     data['part_category_id'] = this.partCategoryId;
@@ -166,29 +209,32 @@ class Products {
     data['manufacturer_name'] = this.manufacturerName;
     data['transmission_id'] = this.transmissionId;
     data['transmission_name'] = this.transmissionName;
+    data['producttype_id'] = this.producttypeId;
+    data['producttype_name'] = this.producttypeName;
     data['origincountry_name'] = this.origincountryName;
-    data['cartype_id'] = this.cartypeId;
-    data['cartype_name'] = this.cartypeName;
+    data['no_of_orders'] = this.noOfOrders;
+    data['holesale_price'] = this.holesalePrice;
     data['count_views'] = this.countViews;
+    data['cart_enable'] = this.cartEnable;
+    data['wishlist_enable'] = this.wishlistEnable;
     if (this.photo != null) {
       data['photo'] = this.photo.map((v) => v.toJson()).toList();
     }
+    if (this.productTags != null) {
+      data['product_tags'] = this.productTags.map((v) => v.toJson()).toList();
+    }
+    data['count_product_reviews'] = this.countProductReviews;
+    data['count_avg_valuations'] = this.countAvgValuations;
     data['time_created'] = this.timeCreated;
+    data['in_cart'] = this.inCart;
+    data['in_wishlist'] = this.inWishlist;
+    data['in_favourites'] = this.inFavourites;
     return data;
   }
 }
 
 class Photo {
   int id;
-  int modelId;
-  String uuid;
-  String collectionName;
-  String name;
-  String fileName;
-  String mimeType;
-  String disk;
-  String conversionsDisk;
-  int size;
   int orderColumn;
   String createdAt;
   String updatedAt;
@@ -200,35 +246,17 @@ class Photo {
 
   Photo(
       {this.id,
-      this.modelId,
-      this.uuid,
-      this.collectionName,
-      this.name,
-      this.fileName,
-      this.mimeType,
-      this.disk,
-      this.conversionsDisk,
-      this.size,
-      this.orderColumn,
-      this.createdAt,
-      this.updatedAt,
-      this.image,
-      this.url,
-      this.fullurl,
-      this.thumbnail,
-      this.preview});
+        this.orderColumn,
+        this.createdAt,
+        this.updatedAt,
+        this.image,
+        this.url,
+        this.fullurl,
+        this.thumbnail,
+        this.preview});
 
   Photo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    modelId = json['model_id'];
-    uuid = json['uuid'];
-    collectionName = json['collection_name'];
-    name = json['name'];
-    fileName = json['file_name'];
-    mimeType = json['mime_type'];
-    disk = json['disk'];
-    conversionsDisk = json['conversions_disk'];
-    size = json['size'];
     orderColumn = json['order_column'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -242,15 +270,6 @@ class Photo {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['model_id'] = this.modelId;
-    data['uuid'] = this.uuid;
-    data['collection_name'] = this.collectionName;
-    data['name'] = this.name;
-    data['file_name'] = this.fileName;
-    data['mime_type'] = this.mimeType;
-    data['disk'] = this.disk;
-    data['conversions_disk'] = this.conversionsDisk;
-    data['size'] = this.size;
     data['order_column'] = this.orderColumn;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
@@ -262,3 +281,23 @@ class Photo {
     return data;
   }
 }
+
+class ProductTags {
+  String name;
+  String timeCreated;
+
+  ProductTags({this.name, this.timeCreated});
+
+  ProductTags.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    timeCreated = json['time_created'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['time_created'] = this.timeCreated;
+    return data;
+  }
+}
+

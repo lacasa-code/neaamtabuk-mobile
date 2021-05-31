@@ -196,7 +196,29 @@ class _ProductCategoryState extends State<ProductCategory> {
                   ),
             product == null
                 ? Container()
-                : list
+                : product.isEmpty
+                ? Container(
+              height: ScreenUtil.getHeight(context) / 1.5,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/icons/reload.svg",
+                    width: ScreenUtil.getWidth(context) / 3,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    'لا توجد منتجات',
+                    style: TextStyle(color: Colors.black45,fontSize: 25),
+                  ),
+                ],
+              ),
+            ): list
                     ? grid_product(
                         product:product,
                       )

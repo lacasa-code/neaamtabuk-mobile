@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +83,6 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                   checkboxValue = index;
                                 });
                                   }
-
                               ,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,8 +93,9 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),
-                                  ),   Text(
-                                    address[index].address,
+                                  ),
+                                  Text(
+                                    address[index].address??'',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),
@@ -151,7 +153,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                       ),
                     ),
                     onTap: () {
-                    Nav.route(context, AddAddress());
+                      _navigateAndDisplaySelection(context);
                     },
                   ),
                 )
@@ -170,4 +172,10 @@ class _Shipping_AddressState extends State<Shipping_Address> {
       }
     });
   }
+  _navigateAndDisplaySelection(BuildContext context,) async {
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => AddAddress()));
+    Timer(Duration(seconds: 3), () => getAddress());
+  }
+
 }

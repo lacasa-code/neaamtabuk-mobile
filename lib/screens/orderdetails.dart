@@ -49,32 +49,40 @@ class _OrderdetailsState extends State<Orderdetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('تفاصيل الطلب',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+              SizedBox(height: 15,),
               Container(height: 1,color: Colors.black12,),
-              SizedBox(
-                height: 5,
-              ),
+              SizedBox(height: 15,),
+
               Row(
                 children: [
                   Text('رقم الطلب: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
                   Text('${widget.order.orderNumber}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                 ],
               ),
+              SizedBox(height: 15,),
+
               Row(
                 children: [
                   Text('تاريخ الطلب: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
                   Text('${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.order.created))}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                 ],
               ),
+              SizedBox(height: 15,),
+
               Row(
                 children: [
                   Text('طريقة الدفع: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
                   Text('${widget.order.paid??' '}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
                 ],
               ),
+              SizedBox(height: 15,),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('عنوان التوصيل: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+                  Text('عنوان التوصيل: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
+                  SizedBox(height: 15,),
+
                   Text('محمد حسن مبنى 12 الطابق الثاني مكتب 23 ش الملك عبدالله تبوك المملكة العربية السعودية +9660505521235',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),),
                 ],
               ),
@@ -82,30 +90,42 @@ class _OrderdetailsState extends State<Orderdetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
+                  SizedBox(height: 15,),
+
                   Text('ملخص الطلب: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
+                  SizedBox(height: 15,),
+
                   Row(
                     children: [
                       Text('إجمالي المنتجات:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
                       Text('${widget.order.orderTotal} ريال',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
                     ],
                   ),
+                  SizedBox(height: 15,),
+
                   Row(
                     children: [
                       Text('رسوم الشحن:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
                       Text('${widget.order.orderTotal} ريال',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
                     ],
                   ),
+                  SizedBox(height: 15,),
+
                   Row(
                     children: [
                       Text('إجمالي الطلب: ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
                       Text('${widget.order.orderTotal} ريال',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
                     ],
                   ),
+                  SizedBox(height: 15,),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
 
                     children: [
                       Text('حالة الطلب: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+                      SizedBox(height: 15,),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -126,7 +146,11 @@ class _OrderdetailsState extends State<Orderdetails> {
 
                 ],
               ),
+              SizedBox(height: 15,),
+
               Container(height: 1,color: Colors.black12,),
+              SizedBox(height: 15,),
+
               SizedBox(
                 height: 5,
               ),
@@ -137,7 +161,7 @@ class _OrderdetailsState extends State<Orderdetails> {
               SizedBox(
                 height: 5,
               ),
-              Container(
+              widget.order.orderDetails==null?Container():   Container(
                 child: ListView.builder(
                   padding: EdgeInsets.all(1),
                   primary: false,

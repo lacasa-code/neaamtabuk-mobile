@@ -139,8 +139,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.only(
-                                          top: 12.0,
-                                          bottom: 12.0,
+                                          top: 20.0,
+                                          bottom: 20.0,
                                           right: 20,
                                           left: 20),
                                       decoration: BoxDecoration(

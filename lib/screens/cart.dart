@@ -103,7 +103,7 @@ class _CartScreenState extends State<CartScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: CircularProgressIndicator(),
                 ))
-                : SingleChildScrollView(
+                : _cart_model.data==null?Container():SingleChildScrollView(
                     child: _cart_model.data.orderDetails.isEmpty
                         ? Container(
                             height: ScreenUtil.getHeight(context) / 1.5,

@@ -36,7 +36,7 @@ class _Wish_ListState extends State<Wish_List> {
           height: 150,
           width: ScreenUtil.getWidth(context) / 4,
           child: CachedNetworkImage(
-            imageUrl:widget.product.photo.isNotEmpty?widget.product.photo[0].image:" ",
+            imageUrl:widget.product.photo==null?' ':widget.product.photo.isNotEmpty?widget.product.photo[0].image:" ",
             errorWidget: (context, url, error) => Icon(Icons.error),
           ),
         ),
