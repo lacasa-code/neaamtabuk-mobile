@@ -1,8 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_pos/screens/lost_password.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
+import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/login/login_form_model.dart';
@@ -30,20 +33,21 @@ class _LoginFormState extends State<LoginForm> {
     final themeColor = Provider.of<Provider_control>(context);
 
     return Container(
-      padding: EdgeInsets.only(top: 24, right: 42, left: 42),
+      padding: EdgeInsets.only( right: 20, left: 20),
       child: Form(
         key: _formKey,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             MyTextFormField(
               intialLabel: 'firstuser@user.com',
               Keyboard_Type: TextInputType.emailAddress,
-              labelText: getTransrlate(context, 'Email'),
-              hintText: getTransrlate(context, 'Email'),
+              labelText: getTransrlate(context, 'mail'),
+              hintText: getTransrlate(context, 'mail'),
               isPhone: true,
               validator: (String value) {
                 if (value.isEmpty) {
-                  return getTransrlate(context, 'Email');
+                  return getTransrlate(context, 'mail');
                 } else if (!RegExp(
                         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
                     .hasMatch(value)) {
@@ -64,7 +68,7 @@ class _LoginFormState extends State<LoginForm> {
                 icon: Icon(
                   // Based on passwordVisible state choose the icon
                   passwordVisible ? Icons.visibility : Icons.visibility_off,
-                  color: themeColor.getColor(),
+                  color: Colors.black26,
                 ),
                 onPressed: () {
                   // Update the state i.e. toogle the state of passwordVisible variable
@@ -85,15 +89,17 @@ class _LoginFormState extends State<LoginForm> {
                 model.password = value;
               },
             ),
+            Container(margin: EdgeInsets.only(top: 20),
+                child: InkWell(onTap: (){Nav.route(context, LostPassword());},child: AutoSizeText(getTransrlate(context,'LostPassword'),style: TextStyle(decoration: TextDecoration.underline),))),
             Container(
               height: 42,
               width: ScreenUtil.getWidth(context),
-              margin: EdgeInsets.only(top: 32, bottom: 12),
+              margin: EdgeInsets.only(top: 25, bottom: 12),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(8.0),
+                  borderRadius: new BorderRadius.circular(1.0),
                 ),
-                color: themeColor.getColor(),
+                color:Colors.orange,
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();

@@ -117,9 +117,9 @@ class _ProductListState extends State<ProductList> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Container(
-                                width: 50,
+                                width: ScreenUtil.getWidth(context)/3,
                                 child: AutoSizeText(
-                                  widget.product.price,
+                                  "${widget.product.price} ريال ",
                                   maxLines: 1,
                                   minFontSize: 20,
                                   maxFontSize: 25,
@@ -154,8 +154,8 @@ class _ProductListState extends State<ProductList> {
                                     }
                                   });
                                 },
-                                icon: Icon(Icons.add_shopping_cart,
-                                    color: Colors.grey),
+                                icon: Icon(CupertinoIcons.cart,
+                                    color: Colors.black,),
                               ),
                               SizedBox(
                                 width: 10,

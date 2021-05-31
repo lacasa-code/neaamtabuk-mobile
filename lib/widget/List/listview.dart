@@ -21,6 +21,8 @@ class _List_productState extends State<List_product> {
     return ListView.builder(
       primary: false,
       shrinkWrap: true,
+      padding: EdgeInsets.symmetric(vertical: 4.0),
+
       physics: NeverScrollableScrollPhysics(),
       itemCount: widget.product.length,
       itemBuilder: (BuildContext context, int index) {

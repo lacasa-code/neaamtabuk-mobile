@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/screens/category/productCategory.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -26,15 +27,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   void initState() {
-  API(context).get('fetch/categories/nested/part').then((value) {
-    if (value != null) {
-      setState(() {
-        categories = Category_model.fromJson(value).data;
-      });
-    }
-  });
+    API(context).get('fetch/categories/nested/part').then((value) {
+      if (value != null) {
+        setState(() {
+          categories = Category_model.fromJson(value).data;
+        });
+      }
+    });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
@@ -42,8 +44,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
             Container(
+              height: ScreenUtil.getHeight(context) -
+                  ScreenUtil.getHeight(context) / 1.2,
               color: themeColor.getColor(),
               padding: const EdgeInsets.only(top: 35),
               child: Row(
@@ -73,9 +78,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(themeColor.getCar_made(),style: TextStyle(
-                            color: Colors.white
-                        ),)
+                        Text(
+                          themeColor.getCar_made(),
+                          style: TextStyle(color: Colors.white),
+                        )
                       ],
                     ),
                   ),
@@ -95,109 +101,132 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
             categories == null
                 ? Container()
-                : Padding(
-                  padding: const EdgeInsets.only(right: 4),
-                  child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: ScreenUtil.getWidth(context)/2.5,
-                 // height: ScreenUtil.getHeight(context)/1.25,
-                  decoration: BoxDecoration(
-                      border: Border.symmetric(vertical: BorderSide(color:Colors.grey))),
-                 child: ListView.builder(
-                    primary: false,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.all(1),
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: categories.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      bool selected = checkboxType == index;
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            checkboxType = index;
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 12.0,bottom: 12.0,right: 20,left: 20),
-                          decoration: BoxDecoration(
-                              color: selected
-                                  ? Colors.white
-                                  : Color(0xffF6F6F6),
-                              border: Border.symmetric(horizontal:  BorderSide(color: selected
-                                  ? Colors.black12
-                                  : Colors.grey))),
-                          child: AutoSizeText(
-                            categories[index].name,
-                            maxLines: 2,minFontSize: 10,maxFontSize: 16,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                : Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: ScreenUtil.getWidth(context) / 2.5,
+                            height: ScreenUtil.getHeight(context) / 1.25,
+                            decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: new ExactAssetImage(
+                                          'assets/images/trkar_logo_white.png',),
+                                      alignment: Alignment.bottomCenter,
+                                      fit: BoxFit.scaleDown),
+                              border: Border.symmetric(
+                                  vertical: BorderSide(color: Colors.grey)),
+                            ),
+                            child: Container(
+                              color: Colors.white70,
+                              child: ListView.builder(
+                                primary: false,
+                                shrinkWrap: true,
+                                padding: EdgeInsets.all(1),
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: categories.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  bool selected = checkboxType == index;
+                                  return InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        checkboxType = index;
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          top: 12.0,
+                                          bottom: 12.0,
+                                          right: 20,
+                                          left: 20),
+                                      decoration: BoxDecoration(
+                                          color: selected
+                                              ? Colors.white
+                                              : Color(0xffF6F6F6),
+                                          border: Border.symmetric(
+                                              horizontal: BorderSide(
+                                                  color: selected
+                                                      ? Colors.black12
+                                                      : Colors.grey))),
+                                      child: AutoSizeText(
+                                        categories[index].name,
+                                        maxLines: 2,
+                                        minFontSize: 10,
+                                        maxFontSize: 16,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                  Expanded(
-                    child: Container(
-                      child: getList(categories[checkboxType].partCategories),
+                          Expanded(
+                            child: Container(
+                              child: getList(
+                                  categories[checkboxType].partCategories),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-
-              ],
-            ),
-                )
+                  )
           ],
         ),
-      ),);
+      ),
+    );
   }
 
   getList(List<PartCategories> partCategories) {
     return categories == null
         ? Container()
         : ListView.builder(
-      primary: false,
-      shrinkWrap: true,
-      padding: EdgeInsets.all(1),
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: partCategories.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: InkWell(
-            onTap: () {
-              Nav.route(context, ProductCategory(id: partCategories[index].id,name:partCategories[index].categoryName,));
-
-            },
-            child: Container(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-
-                      Text(
-                        partCategories[index].categoryName,
-                        maxLines: 1,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios_sharp,size: 15,),
-                    ],
+            primary: false,
+            shrinkWrap: true,
+            padding: EdgeInsets.all(1),
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: partCategories.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: InkWell(
+                  onTap: () {
+                    Nav.route(
+                        context,
+                        ProductCategory(
+                          id: partCategories[index].id,
+                          name: partCategories[index].categoryName,
+                        ));
+                  },
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          partCategories[index].categoryName,
+                          maxLines: 1,
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              right: 16, top: 8, left: 16),
+                          child: Container(
+                            height: 1,
+                            color: Colors.black12,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16,top: 16,left: 16),
-                    child: Container(height: 1,color: Colors.black12,),
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-
+                ),
+              );
+            },
+          );
   }
-
 }

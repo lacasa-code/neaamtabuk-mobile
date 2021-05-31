@@ -21,8 +21,14 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
 
         appBar: AppBar(
-          centerTitle: true,
-          title: Text(getTransrlate(context, 'login')),
+          title: Image.asset(
+            'assets/images/logo.png',
+            height: ScreenUtil.getHeight(context) / 10,
+            width: ScreenUtil.getWidth(context) / 4,
+            fit: BoxFit.contain,
+            //color: themeColor.getColor(),
+          ) ,
+          leading: Container(),
         ),
         body: WillPopScope(
           // ignore: missing_return
@@ -30,53 +36,65 @@ class _LoginPageState extends State<LoginPage> {
           //  Nav.routeReplacement(context, LoginPage());
           },
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 35),
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      height: ScreenUtil.getHeight(context) / 5,
-                      width: ScreenUtil.getWidth(context) / 2,
-                      fit: BoxFit.contain,
-                      color: themeColor.getColor(),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical : 30,horizontal: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,),
+                          Text(getTransrlate(context, 'login'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),),
+                          Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,)
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                LoginForm(),
-                routeLoginWidget(themeColor, context),
+                  LoginForm(),
+                  routeLoginWidget(themeColor, context),
 
-              ],
+                ],
+              ),
             ),
           ),
         ));
   }
   Widget routeLoginWidget(Provider_control themeColor, BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(right: 36, left: 48, bottom: 12),
-      child: Row(
+      padding: EdgeInsets.only(right: 20, left: 20, bottom: 12),
+      child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical : 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,),
+                  Container(child: Text(getTransrlate(context, 'RegisterNew'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),)),
+                  Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,)
+                ],
+              ),
+            ),
+          ),
+          FlatButton(minWidth: ScreenUtil.getWidth(context),
+            shape: RoundedRectangleBorder(
+              borderRadius:  BorderRadius.circular(1.0),
+              side: BorderSide(color: Colors.black26)
+            ),
             child: Text(
               getTransrlate(context, 'AreadyAccount'),
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.black,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-          ),
-          FlatButton(
-            child: Text(
-              getTransrlate(context, 'Register'),
-              style: TextStyle(
-                fontSize: 14,
                 color: themeColor.getColor(),
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w500,
               ),
             ),
             onPressed: () {

@@ -59,8 +59,9 @@ class Order {
   int _expired;
   int _status;
   int _orderNumber;
+  String _created;
   String _orderTotal;
-  int _sumTotal;
+  String _sumTotal;
   String _orderStatus;
   List<Order_details> _orderDetails;
 
@@ -72,7 +73,8 @@ class Order {
   int get status => _status;
   int get orderNumber => _orderNumber;
   String get orderTotal => _orderTotal;
-  int get sumTotal => _sumTotal;
+  String get created => _created;
+  String get sumTotal => _sumTotal;
   String get orderStatus => _orderStatus;
   List<Order_details> get orderDetails => _orderDetails;
 
@@ -85,7 +87,7 @@ class Order {
       int status,
       int orderNumber,
       String orderTotal,
-      int sumTotal,
+        String sumTotal,
       String orderStatus,
       List<Order_details> orderDetails}) {
     _id = id;
@@ -108,9 +110,11 @@ class Order {
     _approved = json["approved"];
     _expired = json["expired"];
     _status = json["status"];
+    _created = json["created_at"];
     _orderNumber = json["order_number"];
+    _created = json["created_at"];
     _orderTotal = json["order_total"];
-    _sumTotal = json["sumTotal"];
+    _sumTotal = json["sumTotal"].toString();
     _orderStatus = json["orderStatus"];
     if (json["order_details"] != null) {
       _orderDetails = [];
@@ -161,7 +165,7 @@ class Order_details {
   int _quantity;
   int _price;
   int _discount;
-  int _total;
+  String _total;
   int _approved;
   int _vendorType;
   int _partCategoryId;
@@ -174,7 +178,7 @@ class Order_details {
   int get quantity => _quantity;
   int get price => _price;
   int get discount => _discount;
-  int get total => _total;
+  String get total => _total;
   int get approved => _approved;
   int get vendorType => _vendorType;
   int get partCategoryId => _partCategoryId;
@@ -188,7 +192,7 @@ class Order_details {
       int quantity,
       int price,
       int discount,
-      int total,
+        String total,
       int approved,
       int vendorType,
       int partCategoryId}) {
@@ -215,7 +219,7 @@ class Order_details {
     _quantity = json["quantity"];
     _price = json["price"];
     _discount = json["discount"];
-    _total = json["total"];
+    _total = json["total"].toString();
     _approved = json["approved"];
     _vendorType = json["vendor_type"];
     _partCategoryId = json["part_category_id"];

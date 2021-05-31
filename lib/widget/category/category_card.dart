@@ -35,8 +35,7 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenUtil.getWidth(context) / 2,
-      margin: EdgeInsets.only(left: 16, top: 8, right: 12, bottom: 2),
+      margin: EdgeInsets.only(left: 16,top: 8, right: 12, bottom: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
       ),
@@ -52,7 +51,7 @@ class _CategoryCardState extends State<CategoryCard> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey[200],
+                        color: Colors.black12,
                         blurRadius: 5.0,
                         spreadRadius: 1,
                         offset: Offset(0.0, 2)),
@@ -60,6 +59,8 @@ class _CategoryCardState extends State<CategoryCard> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CachedNetworkImage(
+                  height:  ScreenUtil.getHeight(context)/11       ,
+                    width: ScreenUtil.getWidth(context) / 3.2,
                   imageUrl: (widget.product.photo == null)
                       ? 'http://arabimagefoundation.com/images/defaultImage.png'
                       : widget.product.photo.image,
@@ -67,15 +68,16 @@ class _CategoryCardState extends State<CategoryCard> {
                 ),
               ),
             ),
+            SizedBox(height: 10,),
             AutoSizeText(
               widget.product.name,
               maxLines: 1,
               style: TextStyle(
-                fontSize: 20,
-                color: Color(0xFF5D6A78),
-                fontWeight: FontWeight.w300,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
               ),
-              minFontSize: 11,
+              minFontSize: 14,
+              maxFontSize: 20,
             )
           ],
         ),

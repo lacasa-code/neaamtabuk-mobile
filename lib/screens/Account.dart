@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/main.dart';
 import 'package:flutter_pos/screens/Address_Page.dart';
 import 'package:flutter_pos/screens/OrderHistory.dart';
+import 'package:flutter_pos/screens/infoPage.dart';
 import 'package:flutter_pos/screens/login.dart';
 import 'package:flutter_pos/screens/register_page.dart';
 import 'package:flutter_pos/user_information.dart';
@@ -315,7 +316,9 @@ class _AccountState extends State<Account> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Nav.route(context, Info());
+                    },
                     child: ItemHiddenMenu(
                       icon: Icon(
                         Icons.info_outline,
@@ -331,7 +334,10 @@ class _AccountState extends State<Account> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Nav.route(context, Info());
+
+                    },
                     child: ItemHiddenMenu(
                       icon: Icon(
                         Icons.contact_page_outlined,

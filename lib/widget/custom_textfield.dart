@@ -41,7 +41,7 @@ class MyTextFormField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w600),),
+          Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16),),
           SizedBox(height: 5,),
           TextFormField(
             onTap: press,
@@ -49,8 +49,8 @@ class MyTextFormField extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: Colors.white,
               prefixIcon: prefix,
-              hintText: hintText,
-              contentPadding: EdgeInsets.all(15.0),
+            //  hintText: hintText,
+              contentPadding: EdgeInsets.all(10.0),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(1.0),
                 borderSide: BorderSide(

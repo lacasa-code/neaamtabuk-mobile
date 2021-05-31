@@ -139,15 +139,36 @@ class _ProductPageState extends State<ProductPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Icon(Icons.favorite_border, size: 30, color: Colors.grey),
-                      Text(
-                        'أضف للمفضلة',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.grey),
-                      ),
-                    ],
+                  InkWell(
+                    onTap: (){
+                      API(context).post('user/add/wishlist',{
+                        "product_id":widget.product.id
+                      }).then((value) {
+                        if (value != null) {
+                          if (value['status_code'] == 200) {
+                            showDialog(
+                                context: context,
+                                builder: (_) => ResultOverlay(
+                                    value['message']));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) => ResultOverlay(
+                                    value['message']));
+                          }
+                        }
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.favorite_border, size: 30, color: Colors.grey),
+                        Text(
+                          'أضف للمفضلة',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.grey),
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     children: [

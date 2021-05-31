@@ -44,148 +44,141 @@ class _RegisterFormState extends State<RegisterForm> {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(top: 14, right: 36, left: 48),
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.topCenter,
-                    child: MyTextFormField(
-                      labelText: getTransrlate(context, 'name'),
-                      hintText: getTransrlate(context, 'name'),
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          return getTransrlate(context, 'name');
-                        }
-                        return null;
-                      },
-                      onSaved: (String value) {
-                        model.Name = value;
-                      },
+          padding: EdgeInsets.only( right: 36, left: 48),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                MyTextFormField(
+                  labelText: getTransrlate(context, 'name'),
+                  hintText: getTransrlate(context, 'name'),
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'name');
+                    }
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    model.Name = value;
+                  },
+                ),
+                MyTextFormField(
+                  labelText: getTransrlate(context, 'Email'),
+                  hintText: getTransrlate(context, 'Email'),
+                  isEmail: true,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'Email');
+                    } else if (!RegExp(
+                            r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                        .hasMatch(value)) {
+                      return getTransrlate(context, 'invalidemail');
+                    }
+                    _formKey.currentState.save();
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    model.email = value;
+                  },
+                ),
+                MyTextFormField(
+                  labelText: getTransrlate(context, 'password'),
+                  hintText: getTransrlate(context, 'password'),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.black26,
                     ),
-                  ),
-                  MyTextFormField(
-                    labelText: getTransrlate(context, 'Email'),
-                    hintText: getTransrlate(context, 'Email'),
-                    isEmail: true,
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return getTransrlate(context, 'Email');
-                      } else if (!RegExp(
-                              r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                          .hasMatch(value)) {
-                        return getTransrlate(context, 'invalidemail');
-                      }
-                      _formKey.currentState.save();
-                      return null;
-                    },
-                    onSaved: (String value) {
-                      model.email = value;
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
                     },
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  MyTextFormField(
-                    labelText: getTransrlate(context, 'password'),
-                    hintText: getTransrlate(context, 'password'),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        // Based on passwordVisible state choose the icon
-                        passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: themeColor.getColor(),
-                      ),
-                      onPressed: () {
-                        // Update the state i.e. toogle the state of passwordVisible variable
-                        setState(() {
-                          passwordVisible = !passwordVisible;
-                        });
-                      },
-                    ),
-                    isPassword: passwordVisible,
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return getTransrlate(context, 'password');
-                      } else if (value.length < 8) {
-                        return getTransrlate(context, 'password') + ' < 8';
-                      } else if (!value.contains(new RegExp(
-                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))) {
-                        return "one Uppercase, One Lowercase, One Number and one Special Character";
-                      } else if (value != model.password_confirmation) {
-                        return getTransrlate(context, 'Passwordmatch');
-                      }
-                      _formKey.currentState.save();
+                  isPassword: passwordVisible,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'password');
+                    } else if (value.length < 8) {
+                      return getTransrlate(context, 'password') + ' < 8';
+                    } else if (!value.contains(new RegExp(
+                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))) {
+                      return "one Uppercase, One Lowercase, One Number and one Special Character";
+                    } else if (value != model.password_confirmation) {
+                      return getTransrlate(context, 'Passwordmatch');
+                    }
+                    _formKey.currentState.save();
 
-                      return null;
-                    },
-                    onSaved: (String value) {
-                      model.password = value;
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    model.password = value;
+                  },
+                ),
+                MyTextFormField(
+                  labelText: getTransrlate(context, 'ConfirmPassword'),
+                  hintText: getTransrlate(context, 'ConfirmPassword'),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.black26,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
                     },
                   ),
-                  MyTextFormField(
-                    labelText: getTransrlate(context, 'ConfirmPassword'),
-                    hintText: getTransrlate(context, 'ConfirmPassword'),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        // Based on passwordVisible state choose the icon
-                        passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: themeColor.getColor(),
-                      ),
-                      onPressed: () {
-                        // Update the state i.e. toogle the state of passwordVisible variable
-                        setState(() {
-                          passwordVisible = !passwordVisible;
-                        });
-                      },
+                  isPassword: passwordVisible,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'ConfirmPassword');
+                    }
+
+                    _formKey.currentState.save();
+
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    model.password_confirmation = value;
+                  },
+                ),
+                Container(
+                  height: 40,
+                  width: ScreenUtil.getWidth(context),
+                  margin: EdgeInsets.only(top: 12, bottom: 0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(1.0),
                     ),
-                    isPassword: passwordVisible,
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return getTransrlate(context, 'ConfirmPassword');
+                    color: themeColor.getColor(),
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                        setState(() => _isLoading = true);
+                        register(themeColor);
                       }
-
-                      _formKey.currentState.save();
-
-                      return null;
                     },
-                    onSaved: (String value) {
-                      model.password_confirmation = value;
-                    },
-                  ),
-                  Container(
-                    height: 48,
-                    width: ScreenUtil.getWidth(context),
-                    margin: EdgeInsets.only(top: 12, bottom: 0),
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0),
-                      ),
-                      color: themeColor.getColor(),
-                      onPressed: () async {
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          setState(() => _isLoading = true);
-                          register(themeColor);
-                        }
-                      },
-                      child: Text(
-                        getTransrlate(context, 'RegisterNew'),
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                        ),
+                    child: Text(
+                      getTransrlate(context, 'RegisterNew'),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+
+              ],
             ),
           ),
         ),

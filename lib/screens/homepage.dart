@@ -125,7 +125,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: HiddenMenu(),
+     // drawer: HiddenMenu(),
       body: PersistentTabView(
         context,
         controller: _controller,
@@ -225,6 +225,7 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.only(left: 15,right: 15),
                 child: GridView.builder(
                     primary: false,
+                    padding: EdgeInsets.only(top: 20),
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: 1.3,
@@ -284,10 +285,19 @@ class _HomeState extends State<Home> {
                     ))
                 .toList(),
             options: CarouselOptions(
+                height: ScreenUtil.getHeight(context)/5,
+                aspectRatio: 16/9,
+                viewportFraction: 0.8,
+                initialPage: 0,
+                enableInfiniteScroll: true,
+                reverse: false,
                 autoPlay: true,
-                height: 175,
-                viewportFraction: 1.0,
-                enlargeCenterPage: false,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                //onPageChanged: callbackFunction,
+                scrollDirection: Axis.horizontal,
                 onPageChanged: (index, reason) {
                   setState(() {
                     _carouselCurrentPage = index;
@@ -299,7 +309,7 @@ class _HomeState extends State<Home> {
               ? Container():   SliderDotAds(_carouselCurrentPage,ads),
           categories == null ? Container() : list_category(themeColor),
 
-          product == null ? Container() : Column(
+          product == null ? Container() :product.isEmpty? Container() : Column(
             children: [
               ProductListTitleBar(
                 themeColor: themeColor,
@@ -328,7 +338,7 @@ class _HomeState extends State<Home> {
 
           productMostSale == null
               ? Container()
-              : Column(
+               :productMostSale.isEmpty? Container() :Column(
                 children: [
                   ProductListTitleBar(
                     themeColor: themeColor,
@@ -349,15 +359,16 @@ class _HomeState extends State<Home> {
     return GridView.builder(
       primary: false,
       shrinkWrap: true,
+      padding: EdgeInsets.symmetric(vertical: 4.0),
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 0.99,
+        childAspectRatio: 0.90,
         crossAxisCount: 3,
       ),
       itemCount: categories.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: CategoryCard(
             themeColor: themeColor,
             product: categories[index],
@@ -368,7 +379,7 @@ class _HomeState extends State<Home> {
   }
 
   Widget list_product(Provider_control themeColor, List<Products> product) {
-    return GridView.builder(
+    return product.isEmpty?Container():GridView.builder(
       primary: false,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),

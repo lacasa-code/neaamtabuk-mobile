@@ -44,7 +44,7 @@ dependencies:
   shared_preferences: ^2.0.5
   flutter_phoenix: ^0.1.0
   status_change: ^2.0.0
-
+  responsive_grid: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -84,12 +84,10 @@ flutter:
   fonts:
     - family: Cairo
       fonts:
-        - asset: assets/fonts/Cairo-Black.ttf
-        - asset: assets/fonts/Cairo-Bold.ttf
-        - asset: assets/fonts/Cairo-ExtraLight.ttf
-        - asset: assets/fonts/Cairo-Light.ttf
-        - asset: assets/fonts/Cairo-Regular.ttf
-        - asset: assets/fonts/Cairo-SemiBold.ttf
+        - asset: assets/fonts/Almarai-ExtraBold.ttf
+        - asset: assets/fonts/Almarai-Bold.ttf
+        - asset: assets/fonts/Almarai-Light.ttf
+        - asset: assets/fonts/Almarai-Regular.ttf
 
 
 

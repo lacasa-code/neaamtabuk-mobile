@@ -1,0 +1,243 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/order_model.dart';
+import 'package:flutter_pos/screens/CreateTickits.dart';
+import 'package:flutter_pos/utils/navigator.dart';
+import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:intl/intl.dart';
+
+class Orderdetails extends StatefulWidget {
+   Orderdetails({Key key,this.order}) : super(key: key);
+  Order order;
+
+  @override
+  _OrderdetailsState createState() => _OrderdetailsState();
+}
+
+class _OrderdetailsState extends State<Orderdetails> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Icon(
+              Icons.favorite_border,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Container(
+                width: ScreenUtil.getWidth(context) / 2,
+                child: AutoSizeText(
+                  'الطلبات والمشتريات',
+                  minFontSize: 10,
+                  maxFontSize: 16,
+                  maxLines: 1,
+                )),
+          ],
+        ),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(ScreenUtil.getWidth(context)/15),
+        width: ScreenUtil.getWidth(context),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('تفاصيل الطلب',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+              Container(height: 1,color: Colors.black12,),
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                children: [
+                  Text('رقم الطلب: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
+                  Text('${widget.order.orderNumber}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+                ],
+              ),
+              Row(
+                children: [
+                  Text('تاريخ الطلب: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
+                  Text('${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.order.created))}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+                ],
+              ),
+              Row(
+                children: [
+                  Text('طريقة الدفع: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
+                  Text('${widget.order.paid??' '}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('عنوان التوصيل: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+                  Text('محمد حسن مبنى 12 الطابق الثاني مكتب 23 ش الملك عبدالله تبوك المملكة العربية السعودية +9660505521235',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+
+                children: [
+                  Text('ملخص الطلب: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
+                  Row(
+                    children: [
+                      Text('إجمالي المنتجات:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                      Text('${widget.order.orderTotal} ريال',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text('رسوم الشحن:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                      Text('${widget.order.orderTotal} ريال',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text('إجمالي الطلب: ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                      Text('${widget.order.orderTotal} ريال',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: [
+                      Text('حالة الطلب: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey)),
+                              child: Text('${widget.order.orderStatus}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),)),
+                          InkWell(onTap: (){
+                            Nav.route(context, Tickits());},
+                            child: AutoSizeText(
+                              'إبلاغ عن مشكلة',maxLines: 1,style: TextStyle(color: Colors.orange,fontSize: 16,decoration: TextDecoration.underline),),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
+                ],
+              ),
+              Container(height: 1,color: Colors.black12,),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                'الشحنة 1',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                child: ListView.builder(
+                  padding: EdgeInsets.all(1),
+                  primary: false,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: widget.order.orderDetails.length,
+                  itemBuilder: (BuildContext context, int i) {
+                    return Container(
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width:
+                                ScreenUtil.getWidth(context) /
+                                    8,
+                                child: CachedNetworkImage(
+                                  imageUrl:'https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:aa5b859b-f4c9-4193-83b0-cb574fc1500e;revision=0?component_id=541ceed2-f0c4-432b-80dc-dd58eb0b7e89&api_key=CometServer1&access_token=1622401748_urn%3Aaaid%3Asc%3AUS%3Aaa5b859b-f4c9-4193-83b0-cb574fc1500e%3Bpublic_e0ea48ed44073f2db297b6b7a7af2eff0cfaf01b',
+                                  errorWidget:
+                                      (context, url, error) =>
+                                      Icon(Icons.error),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              AutoSizeText(
+                                widget.order.orderDetails[i].productId.toString(),
+                                maxLines: 2,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                minFontSize: 11,
+                              ),
+
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                AutoSizeText(
+                                  "كمية : ${widget.order.orderDetails[i].quantity}",
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  minFontSize: 11,
+                                ),
+                                AutoSizeText(
+                                  "سعر : ${widget.order.orderDetails[i].price}  ريال",
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  minFontSize: 11,
+                                ),
+
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('إجمالي المنتجات: ${widget.order.orderTotal??'0'} ريال ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+                  Text('رسوم الشحن: ${widget.order.orderTotal??'0'} ريال ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+                  Text('إجمالي الطلب: ${widget.order.orderTotal??'0'} ريال ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,),),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container( height: 1,color: Colors.black12,)
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

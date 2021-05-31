@@ -168,8 +168,8 @@ class _ProductCardState extends State<ProductCard> {
                                   }
                                 });
                               },
-                              icon: Icon(Icons.add_shopping_cart,
-                                  color: Colors.grey),
+                              icon: Icon(CupertinoIcons.cart,
+                                  color: Colors.black,),
                             ),
                             SizedBox(
                               width: 6,

@@ -29,7 +29,7 @@ class _AddAddressState extends State<AddAddress> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(24.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,7 +296,7 @@ class _AddAddressState extends State<AddAddress> {
                         ),
                       ),
                       onTap: () {
-
+                        Navigator.pop(context);
                       },
                     ),
                   ),

@@ -36,8 +36,7 @@ class _Wish_ListState extends State<Wish_List> {
           height: 150,
           width: ScreenUtil.getWidth(context) / 4,
           child: CachedNetworkImage(
-            imageUrl:
-                "https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:aa5b859b-f4c9-4193-83b0-cb574fc1500e;revision=0?component_id=9825019b-2773-4a38-9b61-cc032ec031d0&api_key=CometServer1&access_token=1621970493_urn%3Aaaid%3Asc%3AUS%3Aaa5b859b-f4c9-4193-83b0-cb574fc1500e%3Bpublic_e5d839e4fa057eb8319d09ed7bbc0970247e6a00",
+            imageUrl:widget.product.photo.isNotEmpty?widget.product.photo[0].image:" ",
             errorWidget: (context, url, error) => Icon(Icons.error),
           ),
         ),
