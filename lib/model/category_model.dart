@@ -45,7 +45,7 @@ class Category {
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
+    name = json['category_name']??json['name'];
     description = json['description'];
     lang = json['lang'];
     photo = json['photo'] != null ? new Photo.fromJson(json['photo']) : null;

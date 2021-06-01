@@ -17,7 +17,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class ProductCarPage extends StatefulWidget {
-   List<Products> product;
+   List<Product> product;
    int id;
    String name;
    ProductCarPage({this.product, this.id, this.name});

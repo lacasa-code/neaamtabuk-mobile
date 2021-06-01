@@ -64,7 +64,7 @@ class _OrderdetailsState extends State<Orderdetails> {
               Row(
                 children: [
                   Text('تاريخ الطلب: ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
-                  Text('${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.order.created))}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+                  Text('${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.order.createdAt))}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                 ],
               ),
               SizedBox(height: 15,),
@@ -184,7 +184,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                   imageUrl:'https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:aa5b859b-f4c9-4193-83b0-cb574fc1500e;revision=0?component_id=541ceed2-f0c4-432b-80dc-dd58eb0b7e89&api_key=CometServer1&access_token=1622401748_urn%3Aaaid%3Asc%3AUS%3Aaa5b859b-f4c9-4193-83b0-cb574fc1500e%3Bpublic_e0ea48ed44073f2db297b6b7a7af2eff0cfaf01b',
                                   errorWidget:
                                       (context, url, error) =>
-                                      Icon(Icons.error),
+                                      Icon(Icons.image,color: Colors.black12,),
                                 ),
                               ),
                               SizedBox(

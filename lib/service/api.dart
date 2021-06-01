@@ -26,6 +26,7 @@ class API {
   get(String url) async {
     final String full_url =
         '${GlobalConfiguration().getString('api_base_url')}$url';
+
     print(full_url);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
@@ -105,7 +106,7 @@ class API {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-            'locale': Provider.of<Provider_control>(context).getlocal(),
+            //'locale': Provider.of<Provider_control>(context).getlocal(),
           },
           body: json.encode(body));
       print(jsonDecode(response.body));

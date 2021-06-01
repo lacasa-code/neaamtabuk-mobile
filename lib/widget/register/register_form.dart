@@ -6,6 +6,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_model.dart';
 
@@ -204,6 +205,7 @@ class _RegisterFormState extends State<RegisterForm> {
       'email': model.email,
       'password': model.password,
       "password_confirmation": model.password_confirmation,
+      "role": 2,
     }).then((value) {
       if (!value.containsKey('errors')) {
         setState(() => _isLoading = false);
@@ -216,9 +218,11 @@ class _RegisterFormState extends State<RegisterForm> {
         Navigator.pushAndRemoveUntil(
             context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
       } else {
-        Scaffold.of(context).showSnackBar(SnackBar(
-            backgroundColor: themeColor.getColor(),
-            content: Text("${value['message']}\n${value['errors']}")));
+        showDialog(
+            context: context,
+            builder: (_) =>
+                ResultOverlay('${value['message']}\n${value['errors']}'));
+
         setState(() => _isLoading = false);
       }
     });

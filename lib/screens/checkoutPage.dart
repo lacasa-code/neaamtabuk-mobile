@@ -3,11 +3,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/model/cart_model.dart';
+import 'package:flutter_pos/model/checkout_model.dart';
 import 'package:flutter_pos/model/payment_model.dart';
 import 'package:flutter_pos/model/shipping_address.dart';
 import 'package:flutter_pos/screens/MyCars/myCars.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -35,7 +38,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
   int checkboxValue;
   int checkboxPay;
   final _formKey = GlobalKey<FormState>();
-
+  Checkout_model checkout_model;
   @override
   void initState() {
     getAddress();
@@ -168,20 +171,24 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                             onChanged: (int value) {
                                               setState(() {
                                                 checkboxValue = value;
-                                                API(context).post('user/select/shipping/${address[index].id}', {}).then((value) {
+                                                API(context).post(
+                                                    'user/select/shipping/${address[index].id}',
+                                                    {}).then((value) {
                                                   if (value != null) {
-                                                    if (value['status_code'] == 201) {
+                                                    if (value['status_code'] ==
+                                                        201) {
                                                       Navigator.pop(context);
                                                       showDialog(
                                                           context: context,
                                                           builder: (_) =>
-                                                              ResultOverlay(value['message']));
-
+                                                              ResultOverlay(value[
+                                                                  'message']));
                                                     } else {
                                                       showDialog(
                                                           context: context,
                                                           builder: (_) =>
-                                                              ResultOverlay(value['message']));
+                                                              ResultOverlay(value[
+                                                                  'message']));
                                                     }
                                                   }
                                                 });
@@ -302,7 +309,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                   : '',
                                               errorWidget:
                                                   (context, url, error) =>
-                                                      Icon(Icons.error),
+                                                      Icon(Icons.image,color: Colors.black12,),
                                             ),
                                           ),
                                           SizedBox(
@@ -452,234 +459,225 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
-                          Padding(
+                          payment==null?Container(): Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Container(
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black12)),
                               padding: const EdgeInsets.all(12.0),
-                              child: ListView(
+                              child: ListView.builder(
                                 padding: EdgeInsets.all(1),
                                 primary: false,
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                children: [
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Radio<int>(
-                                            value: 1,
-                                            groupValue: checkboxPay,
-                                            activeColor: themeColor.getColor(),
-                                            focusColor: themeColor.getColor(),
-                                            hoverColor: themeColor.getColor(),
-                                            onChanged: (int value) {
-                                              setState(() {
-                                                checkboxPay = value;
-                                              });
-                                            },
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                checkboxPay = 1;
-                                              });
-                                            },
-                                            child: Text(
-                                              'بطاقه الائتمان أو الخصم المباشر',
+                                itemCount: payment.length,
+                                itemBuilder: (BuildContext context, int index){
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Radio<int>(
+                                              value: index,
+                                              groupValue: checkboxPay,
+                                              activeColor:
+                                                  themeColor.getColor(),
+                                              focusColor: themeColor.getColor(),
+                                              hoverColor: themeColor.getColor(),
+                                              onChanged: (int value) {
+                                                setState(() {
+                                                  checkboxPay = value;
+                                                });
+                                                API(context).post(
+                                                    'user/select/paymentway',
+                                                    {"paymentway_id":payment[index].id}).then((value) {
+                                                  if (value != null) {
+                                                    if (value['status_code'] ==
+                                                        201) {
+                                                      Navigator.pop(context);
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              ResultOverlay(value[
+                                                              'message']));
+                                                    } else {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              ResultOverlay(value[
+                                                              'message']));
+                                                    }
+                                                  }
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              payment[index].paymentName??' ',
                                               style: TextStyle(
                                                   fontWeight: checkboxPay == 1
                                                       ? FontWeight.bold
                                                       : FontWeight.w400,
                                                   fontSize: 14),
                                             ),
-                                          ),
-                                          Expanded(
-                                              child: SizedBox(
-                                            height: 1,
-                                          )),
-                                        ],
-                                      ),
-                                      checkboxPay == 1
-                                          ? Container(
-                                              child: Column(
-                                                children: [
-                                                  MyTextFormField(
-                                                    intialLabel: '',
-                                                    Keyboard_Type:
-                                                        TextInputType.number,
-                                                    labelText: "رقم البطاقة",
-                                                    hintText:
-                                                        'xxxx xxxx xxxx xxxx',
-                                                    isPhone: true,
-                                                    validator: (String value) {
-                                                      if (value.isEmpty) {
-                                                        return "رقم البطاقة";
-                                                      }
-                                                      _formKey.currentState
-                                                          .save();
-                                                      return null;
-                                                    },
-                                                    onSaved: (String value) {},
-                                                  ),
-                                                  MyTextFormField(
-                                                    intialLabel: '',
-                                                    Keyboard_Type:
-                                                        TextInputType.number,
-                                                    labelText:
-                                                        "الإسم كما يظهر على البطاقة",
-                                                    hintText: 'Name',
-                                                    isPhone: true,
-                                                    validator: (String value) {
-                                                      if (value.isEmpty) {
-                                                        return "Name";
-                                                      }
-                                                      _formKey.currentState
-                                                          .save();
-                                                      return null;
-                                                    },
-                                                    onSaved: (String value) {},
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        width: 50,
-                                                        child: MyTextFormField(
-                                                          intialLabel: '',
-                                                          Keyboard_Type:
-                                                              TextInputType
-                                                                  .number,
-                                                          labelText: "شهر",
-                                                          hintText: '',
-                                                          isPhone: true,
-                                                          validator:
-                                                              (String value) {
-                                                            if (value.isEmpty) {
-                                                              return "Name";
-                                                            }
-                                                            _formKey
-                                                                .currentState
-                                                                .save();
-                                                            return null;
-                                                          },
-                                                          onSaved:
-                                                              (String value) {},
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                          width: 50,
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  top: 50),
-                                                          child: Center(
-                                                              child: Text(
-                                                            '/',
-                                                            style: TextStyle(
-                                                                fontSize: 35),
-                                                          ))),
-                                                      Container(
-                                                        width: 50,
-                                                        child: MyTextFormField(
-                                                          intialLabel: '',
-                                                          Keyboard_Type:
-                                                              TextInputType
-                                                                  .number,
-                                                          labelText: "سنة",
-                                                          hintText: '',
-                                                          isPhone: true,
-                                                          validator:
-                                                              (String value) {
-                                                            if (value.isEmpty) {
-                                                              return "Name";
-                                                            }
-                                                            _formKey
-                                                                .currentState
-                                                                .save();
-                                                            return null;
-                                                          },
-                                                          onSaved:
-                                                              (String value) {},
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Container(
-                                                        width: 120,
-                                                        child: MyTextFormField(
-                                                          intialLabel: '',
-                                                          Keyboard_Type:
-                                                              TextInputType
-                                                                  .number,
-                                                          prefix: Icon(Icons
-                                                              .credit_card),
-                                                          labelText:
-                                                              "رمز التحقق",
-                                                          hintText: '',
-                                                          isPhone: true,
-                                                          validator:
-                                                              (String value) {
-                                                            if (value.isEmpty) {
-                                                              return "Name";
-                                                            }
-                                                            _formKey
-                                                                .currentState
-                                                                .save();
-                                                            return null;
-                                                          },
-                                                          onSaved:
-                                                              (String value) {},
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          : Container(),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Radio<int>(
-                                        value: 2,
-                                        groupValue: checkboxPay,
-                                        activeColor: themeColor.getColor(),
-                                        focusColor: themeColor.getColor(),
-                                        hoverColor: themeColor.getColor(),
-                                        onChanged: (int value) {
-                                          setState(() {
-                                            checkboxPay = value;
-                                          });
-                                        },
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            checkboxPay = 2;
-                                          });
-                                        },
-                                        child: Text(
-                                          'الدفع عند الإستلام',
-                                          style: TextStyle(
-                                              fontWeight: checkboxPay == 2
-                                                  ? FontWeight.bold
-                                                  : FontWeight.w400,
-                                              fontSize: 14),
+                                            Expanded(
+                                                child: SizedBox(
+                                              height: 1,
+                                            )),
+                                          ],
                                         ),
-                                      ),
-                                      Expanded(
-                                          child: SizedBox(
-                                        height: 1,
-                                      )),
-                                    ],
-                                  ),
-                                ],
+                                  checkboxPay == 0&&index==0
+                                  ? Container(
+                                                child: Column(
+                                                  children: [
+                                                    MyTextFormField(
+                                                      intialLabel: '',
+                                                      Keyboard_Type:
+                                                          TextInputType.number,
+                                                      labelText: "رقم البطاقة",
+                                                      hintText:
+                                                          'xxxx xxxx xxxx xxxx',
+                                                      isPhone: true,
+                                                      validator:
+                                                          (String value) {
+                                                        if (value.isEmpty) {
+                                                          return "رقم البطاقة";
+                                                        }
+                                                        _formKey.currentState
+                                                            .save();
+                                                        return null;
+                                                      },
+                                                      onSaved:
+                                                          (String value) {},
+                                                    ),
+                                                    MyTextFormField(
+                                                      intialLabel: '',
+                                                      Keyboard_Type:
+                                                          TextInputType.number,
+                                                      labelText:
+                                                          "الإسم كما يظهر على البطاقة",
+                                                      hintText: 'Name',
+                                                      isPhone: true,
+                                                      validator:
+                                                          (String value) {
+                                                        if (value.isEmpty) {
+                                                          return "Name";
+                                                        }
+                                                        _formKey.currentState
+                                                            .save();
+                                                        return null;
+                                                      },
+                                                      onSaved:
+                                                          (String value) {},
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          width: 50,
+                                                          child:
+                                                              MyTextFormField(
+                                                            intialLabel: '',
+                                                            Keyboard_Type:
+                                                                TextInputType
+                                                                    .number,
+                                                            labelText: "شهر",
+                                                            hintText: '',
+                                                            isPhone: true,
+                                                            validator:
+                                                                (String value) {
+                                                              if (value
+                                                                  .isEmpty) {
+                                                                return "Name";
+                                                              }
+                                                              _formKey
+                                                                  .currentState
+                                                                  .save();
+                                                              return null;
+                                                            },
+                                                            onSaved: (String
+                                                                value) {},
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                            width: 50,
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    top: 50),
+                                                            child: Center(
+                                                                child: Text(
+                                                              '/',
+                                                              style: TextStyle(
+                                                                  fontSize: 35),
+                                                            ))),
+                                                        Container(
+                                                          width: 50,
+                                                          child:
+                                                              MyTextFormField(
+                                                            intialLabel: '',
+                                                            Keyboard_Type:
+                                                                TextInputType
+                                                                    .number,
+                                                            labelText: "سنة",
+                                                            hintText: '',
+                                                            isPhone: true,
+                                                            validator:
+                                                                (String value) {
+                                                              if (value
+                                                                  .isEmpty) {
+                                                                return "Name";
+                                                              }
+                                                              _formKey
+                                                                  .currentState
+                                                                  .save();
+                                                              return null;
+                                                            },
+                                                            onSaved: (String
+                                                                value) {},
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          width: 120,
+                                                          child:
+                                                              MyTextFormField(
+                                                            intialLabel: '',
+                                                            Keyboard_Type:
+                                                                TextInputType
+                                                                    .number,
+                                                            prefix: Icon(Icons
+                                                                .credit_card),
+                                                            labelText:
+                                                                "رمز التحقق",
+                                                            hintText: '',
+                                                            isPhone: true,
+                                                            validator:
+                                                                (String value) {
+                                                              if (value
+                                                                  .isEmpty) {
+                                                                return "Name";
+                                                              }
+                                                              _formKey
+                                                                  .currentState
+                                                                  .save();
+                                                              return null;
+                                                            },
+                                                            onSaved: (String
+                                                                value) {},
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ) : Container(),
+                                      ],
+                                    );
+
+                                },
                               ),
                             ),
                           ),
@@ -689,7 +687,26 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           CartList(),
                           Center(
                             child: InkWell(
-                              onTap: continued,
+                              onTap: (){
+                                API(context).post(
+                                    'user/checkout', {}).then((value) {
+                                  if (value != null) {
+                                    if (value['status_code'] ==
+                                        200) {
+                                      checkout_model=Checkout_model.fromJson(value);
+                                      Provider.of<Provider_Data>(context, listen: false).getCart(context);
+                                      continued();
+                                    }
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) =>
+                                              ResultOverlay(value[
+                                              'message']));
+
+                                  }
+                                });
+
+                              },
                               child: Container(
                                 width: ScreenUtil.getWidth(context) / 2,
                                 margin: const EdgeInsets.only(
@@ -720,20 +737,21 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     ),
                     Step(
                       title: Text('إتمام الشراء'),
-                      content: Column(
+                      content: checkout_model==null?Container():Column(
                         children: <Widget>[
                           Icon(
                             Icons.check_circle_outline,
                             color: Colors.lightGreen,
                             size: 100,
-                          ),
+                          ),SizedBox(height: 10,),
                           Text(
-                            'تمت عملية الشراء بنجاح',
+                            '${checkout_model.message}',
                             style: TextStyle(
                                 color: Colors.lightGreen,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22),
                           ),
+                      SizedBox(height: 10,),
                           Text(
                             'شكرا لثقتكم بــتركار .. سوف تصلك رسالة على الهاتف الجوال و البريد الإلكتروني بمعلومات الطلب والتوصيل',
                             style: TextStyle(
@@ -752,23 +770,24 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'رقم الطلب :875458755457',
+                                  ' رقم الطلب :${checkout_model.data.orderNumber}',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
-                                ),
+                                ),SizedBox(height: 10,),
                                 Text(
                                   'تفاصيل الطلب',
                                   style: TextStyle(
                                       color: Colors.orange,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
-                                ),
+                                ), SizedBox(height: 10,),
                                 Text(
                                   'بواسطة ارامكس  ARAMIX ',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
+                            SizedBox(height: 10,),
                                 Text(
                                   'متوقع وصولها يوم 25-6-2021',
                                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -781,8 +800,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                   primary: false,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
-                                  itemCount:
-                                      widget.carts.data.orderDetails.length,
+                                  itemCount:checkout_model.data.orderDetails.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return Row(
@@ -793,22 +811,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                           width:
                                               ScreenUtil.getWidth(context) / 8,
                                           child: CachedNetworkImage(
-                                            imageUrl: widget
-                                                    .carts
-                                                    .data
-                                                    .orderDetails[index]
+                                            imageUrl:checkout_model.data.orderDetails[index]
                                                     .productImage
                                                     .isNotEmpty
-                                                ? widget
-                                                    .carts
-                                                    .data
-                                                    .orderDetails[index]
+                                                ? checkout_model.data.orderDetails[index]
                                                     .productImage[0]
                                                     .image
                                                 : '',
                                             errorWidget:
                                                 (context, url, error) =>
-                                                    Icon(Icons.error),
+                                                    Icon(Icons.image,color: Colors.black12,),
                                           ),
                                         ),
                                         SizedBox(
@@ -817,10 +829,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                         Column(
                                           children: [
                                             AutoSizeText(
-                                              widget
-                                                  .carts
-                                                  .data
-                                                  .orderDetails[index]
+                                              checkout_model.data.orderDetails[index]
                                                   .productName,
                                               maxLines: 2,
                                               style: TextStyle(
@@ -830,7 +839,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                               minFontSize: 11,
                                             ),
                                             AutoSizeText(
-                                              " كمية : ${widget.carts.data.orderDetails[index].quantity}",
+                                              " كمية : ${checkout_model.data.orderDetails[index].quantity}",
                                               maxLines: 2,
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -861,13 +870,39 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                         width: 10,
                                       ),
                                       Text(
-                                        '${widget.carts.data.orderTotal} ريال ',
+                                        '${checkout_model.data.orderTotal} ريال ',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700),
                                       ),
                                     ],
                                   ),
                                 ),
+                                Center(
+                                  child: InkWell(
+                                    onTap: (){
+                                      Phoenix.rebirth(context);
+                                    },
+                                    child: Container(
+                                      width: ScreenUtil.getWidth(context) / 2,
+                                      margin: const EdgeInsets.only(
+                                          top: 16.0, right: 25, left: 25),
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          border:
+                                          Border.all(color: Colors.black26,width: 2)),
+                                      child: Center(
+                                        child: Text(
+                                          'العودة للتسوق',
+                                          style: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+
                               ],
                             ),
                           )
@@ -914,6 +949,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
       }
     });
   }
+
   void getpaymentways() {
     API(context).get('all/paymentways').then((value) {
       if (value != null) {
@@ -980,7 +1016,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                       .productImage[0].image
                                   : '',
                               errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                  Icon(Icons.image,color: Colors.black12,),
                             ),
                           ),
                           SizedBox(

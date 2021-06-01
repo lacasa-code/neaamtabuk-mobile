@@ -19,7 +19,7 @@ class ProductList extends StatefulWidget {
   }) : super(key: key);
 
   final Provider_control themeColor;
-  final Products product;
+  final Product product;
 
   @override
   _ProductListState createState() => _ProductListState();
@@ -72,7 +72,7 @@ class _ProductListState extends State<ProductList> {
                       imageUrl: (widget.product.photo.isEmpty)
                           ? 'http://arabimagefoundation.com/images/defaultImage.png'
                           : widget.product.photo[0].image,
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
                     ),
                   ),
                   Expanded(
@@ -117,7 +117,7 @@ class _ProductListState extends State<ProductList> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Container(
-                                width: ScreenUtil.getWidth(context)/3,
+                                width: ScreenUtil.getWidth(context)/3.2,
                                 child: AutoSizeText(
                                   "${widget.product.price} ريال ",
                                   maxLines: 1,
@@ -162,11 +162,16 @@ class _ProductListState extends State<ProductList> {
                               ),
                               IconButton(
                                 onPressed: () {
+                                  print(widget.product.inWishlist);
                                   API(context).post('user/add/wishlist',{
                                     "product_id":widget.product.id
                                   }).then((value) {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
+                                        setState(() {
+                                          widget.product.inWishlist="1";
+
+                                        });
                                         showDialog(
                                             context: context,
                                             builder: (_) => ResultOverlay(
@@ -180,10 +185,12 @@ class _ProductListState extends State<ProductList> {
                                     }
                                   });
                                 },
-                                icon: Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.grey,
-                                ),
+                                icon:Text('${widget.product.inWishlist}')
+                                // Icon(
+                                //   widget.product.inWishlist==0?
+                                //   Icons.favorite_border:Icons.favorite,
+                                //   color: Colors.grey,
+                                // ),
                               ),
                             ],
                           ),

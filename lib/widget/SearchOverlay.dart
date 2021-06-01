@@ -1,6 +1,7 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/filterPage.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 class SearchOverlay extends StatefulWidget {
@@ -19,9 +21,9 @@ class SearchOverlayState extends State<SearchOverlay>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
-  List<Products> products = [];
+  List<Product> products = [];
   AutoCompleteTextField searchTextField;
-  GlobalKey<AutoCompleteTextFieldState<Products>> key = new GlobalKey();
+  GlobalKey<AutoCompleteTextFieldState<Product>> key = new GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -78,7 +80,7 @@ class SearchOverlayState extends State<SearchOverlay>
                             height: 50,
                             color: Colors.white,
                             child: searchTextField =
-                                AutoCompleteTextField<Products>(
+                                AutoCompleteTextField<Product>(
                               key: key,
                               clearOnSubmit: false,
                               suggestions: products,
@@ -86,7 +88,7 @@ class SearchOverlayState extends State<SearchOverlay>
                                   color: Colors.black, fontSize: 16.0),
                               decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: 'search',
+                                  hintText:getTransrlate(context, 'search'),
                                   hintStyle: TextStyle(
                                     fontSize: 13,
                                     color: Color(0xFF5D6A78),
@@ -169,7 +171,7 @@ class SearchOverlayState extends State<SearchOverlay>
     );
   }
 
-  Widget row(Products productModel) {
+  Widget row(Product productModel) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[

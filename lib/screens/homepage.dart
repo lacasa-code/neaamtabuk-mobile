@@ -34,8 +34,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Products> product;
-  List<Products> productMostSale;
+  List<Product> product;
+  List<Product> productMostSale;
   List<Category> categories;
   List<CarType> cartype;
   List<Ads> ads;
@@ -93,7 +93,7 @@ class _HomeState extends State<Home> {
         });
       }
     });
-    API(context).get('fetch/categories/nested/part').then((value) {
+    API(context).get('site/part/categories').then((value) {
       if (value != null) {
         setState(() {
           categories = Category_model.fromJson(value).data;
@@ -378,7 +378,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget list_product(Provider_control themeColor, List<Products> product) {
+  Widget list_product(Provider_control themeColor, List<Product> product) {
     return product.isEmpty?Container():GridView.builder(
       primary: false,
       padding: EdgeInsets.all(1),

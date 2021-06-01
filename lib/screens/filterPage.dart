@@ -22,7 +22,7 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-  List<Products> product;
+  List<Product> product;
   ScrollController _scrollController = new ScrollController();
   int value=2;
   bool list = false;

@@ -48,7 +48,7 @@ class _ProductCartState extends State<ProductCart> {
                 imageUrl: widget.carts.productImage.isNotEmpty
                     ? widget.carts.productImage[0].image
                     : '',
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
               ),
             ),
             IconButton(

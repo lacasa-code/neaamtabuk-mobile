@@ -24,7 +24,7 @@ import 'MyCars/myCars.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key key, this.product}) : super(key: key);
-  final Products product;
+  final Product product;
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -146,6 +146,10 @@ class _ProductPageState extends State<ProductPage> {
                       }).then((value) {
                         if (value != null) {
                           if (value['status_code'] == 200) {
+                            setState(() {
+                              widget.product.inWishlist="1";
+
+                            });
                             showDialog(
                                 context: context,
                                 builder: (_) => ResultOverlay(
@@ -161,7 +165,8 @@ class _ProductPageState extends State<ProductPage> {
                     },
                     child: Row(
                       children: [
-                        Icon(Icons.favorite_border, size: 30, color: Colors.grey),
+                        Icon(widget.product.inWishlist==0?
+                        Icons.favorite_border:Icons.favorite, size: 30, color: Colors.grey),
                         Text(
                           'أضف للمفضلة',
                           style: TextStyle(

@@ -7,7 +7,7 @@ import '../product/product_card.dart';
 
 class grid_product extends StatefulWidget {
   const grid_product({Key key, this.product}) : super(key: key);
-  final List<Products> product;
+  final List<Product> product;
 
   @override
   _grid_productState createState() => _grid_productState();

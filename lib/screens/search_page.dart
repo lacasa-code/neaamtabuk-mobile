@@ -15,16 +15,16 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<Products> products = [];
+  List<Product> products = [];
   AutoCompleteTextField searchTextField;
-  GlobalKey<AutoCompleteTextFieldState<Products>> key = new GlobalKey();
+  GlobalKey<AutoCompleteTextFieldState<Product>> key = new GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
         padding: EdgeInsets.only(bottom: 4),
         height: 72,
-        child: searchTextField = AutoCompleteTextField<Products>(
+        child: searchTextField = AutoCompleteTextField<Product>(
           key: key,
           clearOnSubmit: false,
           suggestions: products,
@@ -77,7 +77,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget row(Products productModel) {
+  Widget row(Product productModel) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[

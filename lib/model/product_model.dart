@@ -1,7 +1,7 @@
 class Product_model {
   int statusCode;
   String message;
-  List<Products> data;
+  List<Product> data;
   int total;
 
   Product_model({this.statusCode, this.message, this.data, this.total});
@@ -10,9 +10,9 @@ class Product_model {
     statusCode = json['status_code'];
     message = json['message'];
     if (json['data'] != null) {
-      data = new List<Products>();
+      data = new List<Product>();
       json['data'].forEach((v) {
-        data.add(new Products.fromJson(v));
+        data.add(new Product.fromJson(v));
       });
     }
     total = json['total'];
@@ -30,7 +30,7 @@ class Product_model {
   }
 }
 
-class Products {
+class Product {
   int id;
   String name;
   String description;
@@ -73,10 +73,10 @@ class Products {
   int countAvgValuations;
   String timeCreated;
   int inCart;
-  int inWishlist;
+  String inWishlist;
   int inFavourites;
 
-  Products(
+  Product(
       {this.id,
         this.name,
         this.description,
@@ -122,7 +122,7 @@ class Products {
         this.inWishlist,
         this.inFavourites});
 
-  Products.fromJson(Map<String, dynamic> json) {
+  Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
@@ -175,7 +175,7 @@ class Products {
     countAvgValuations = json['count_avg_valuations'];
     timeCreated = json['time_created'];
     inCart = json['in_cart'];
-    inWishlist = json['in_wishlist'];
+    inWishlist = json['in_wishlist'].toString();
     inFavourites = json['in_favourites'];
   }
 

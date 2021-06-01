@@ -21,7 +21,7 @@ class ProductCard extends StatefulWidget {
   }) : super(key: key);
 
   final Provider_control themeColor;
-  final Products product;
+  final Product product;
 
   @override
   _ProductCardState createState() => _ProductCardState();
@@ -76,7 +76,7 @@ class _ProductCardState extends State<ProductCard> {
                           ? 'http://arabimagefoundation.com/images/defaultImage.png'
                           : widget.product.photo[0].image,
                       fit: BoxFit.cover,
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
                     ),
                   ),
                   Container(
@@ -177,7 +177,7 @@ class _ProductCardState extends State<ProductCard> {
                                   if (value != null) {
                                     if (value['status_code'] == 200) {
                                       setState(() {
-                                        widget.product.inWishlist=1;
+                                        widget.product.inWishlist="1";
                                       });
                                       showDialog(
                                           context: context,
@@ -197,7 +197,7 @@ class _ProductCardState extends State<ProductCard> {
                                   if (value != null) {
                                     if (value['status_code'] == 200) {
                                       setState(() {
-                                        widget.product.inWishlist=1;
+                                        widget.product.inWishlist="1";
 
                                       });
                                       showDialog(

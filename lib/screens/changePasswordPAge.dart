@@ -20,6 +20,7 @@ class changePassword extends StatefulWidget {
 class _changePasswordState extends State<changePassword> {
   String email,oldPassword,newPassword,ConfirmPassword;
   final _formKey = GlobalKey<FormState>();
+  bool passwordVisible = false;
 
   void initState() {
     SharedPreferences.getInstance().then((value) => {
@@ -73,7 +74,20 @@ class _changePasswordState extends State<changePassword> {
                   Keyboard_Type: TextInputType.visiblePassword,
                   labelText: getTransrlate(context, 'password'),
                   hintText: getTransrlate(context, 'password'),
-                  isPassword: true,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.black26,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                  ),
+                  isPassword: passwordVisible,
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'password');
@@ -90,12 +104,27 @@ class _changePasswordState extends State<changePassword> {
                   Keyboard_Type: TextInputType.visiblePassword,
                   labelText: getTransrlate(context, 'NewPassword'),
                   hintText: getTransrlate(context, 'NewPassword'),
-                  isPassword: true,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.black26,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                  ),
+                  isPassword: passwordVisible,
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'NewPassword');
-                    }
-                    _formKey.currentState.save();
+                    } else if (!value.contains(new RegExp(
+    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))) {
+                      return "one Uppercase, One Lowercase, One Number and one Special Character";
+                    }  _formKey.currentState.save();
                     return null;
                   },
                   onSaved: (String value) {
@@ -107,7 +136,20 @@ class _changePasswordState extends State<changePassword> {
                   Keyboard_Type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'ConfirmPassword'),
                   hintText: getTransrlate(context, 'ConfirmPassword'),
-                  isPassword: true,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.black26,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                  ),
+                  isPassword: passwordVisible,
                   validator: (String value) {
                     if (value!=newPassword) {
                       return getTransrlate(context, 'Passwordmatch');
@@ -147,7 +189,7 @@ class _changePasswordState extends State<changePassword> {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             //setState(() => _isLoading = true);
-                            API(context).post('user/forget/password', {
+                            API(context).post('user/change/password', {
                               "email": email,
                               "current_password": oldPassword,
                               "new_password": newPassword,
@@ -155,6 +197,7 @@ class _changePasswordState extends State<changePassword> {
                             }).then((value) {
                               if (value != null) {
                                 if (value['status_code'] == 200) {
+                                  Navigator.pop(context);
                                   showDialog(
                                       context: context,
                                       builder: (_) =>

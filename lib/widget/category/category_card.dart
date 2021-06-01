@@ -47,7 +47,7 @@ class _CategoryCardState extends State<CategoryCard> {
           children: [
             Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
+                  border: Border.all(color: Colors.black12),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -64,13 +64,13 @@ class _CategoryCardState extends State<CategoryCard> {
                   imageUrl: (widget.product.photo == null)
                       ? 'http://arabimagefoundation.com/images/defaultImage.png'
                       : widget.product.photo.image,
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
                 ),
               ),
             ),
             SizedBox(height: 10,),
             AutoSizeText(
-              widget.product.name,
+             "${ widget.product.name}",
               maxLines: 1,
               style: TextStyle(
                 color: Colors.black,

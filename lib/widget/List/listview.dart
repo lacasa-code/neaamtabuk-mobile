@@ -7,7 +7,7 @@ import '../product/product_List.dart';
 
 class List_product extends StatefulWidget {
   const List_product({Key key, this.product}) : super(key: key);
-  final List<Products> product;
+  final List<Product> product;
 
   @override
   _List_productState createState() => _List_productState();

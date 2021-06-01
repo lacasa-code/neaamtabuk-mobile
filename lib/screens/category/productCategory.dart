@@ -25,7 +25,7 @@ class ProductCategory extends StatefulWidget {
 }
 
 class _ProductCategoryState extends State<ProductCategory> {
-  List<Products> product;
+  List<Product> product;
   bool list = false;
   @override
   void initState() {

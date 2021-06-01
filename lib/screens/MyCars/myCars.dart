@@ -166,7 +166,7 @@ class _MyCarsState extends State<MyCars> {
                                         if (value['status_code'] == 200) {
                                           themeColor.setCar_made(
                                               favourite[index].carMadeName);
-                                          Nav.route(context, ProductCarmade(     id: favourite[index].carMadeId,
+                                          Nav.routeReplacement(context, ProductCarmade(     id: favourite[index].carMadeId,
                                             name: favourite[index]
                                                 .carMadeName,
                                             product: Product_model.fromJson(
@@ -346,7 +346,7 @@ class _MyCarsState extends State<MyCars> {
                           }).then((value) {
                             if (value != null) {
                               if (value['status_code'] == 200) {
-                                Nav.route(
+                                Nav.routeReplacement(
                                     context,
                                     ProductCarPage(
                                       product:
@@ -397,7 +397,8 @@ class _MyCarsState extends State<MyCars> {
                                       ResultOverlay('Please select Car Made'))
                               : API(context).post(
                                   'user/select/products/add/favourite/car', {
-                                  "car_made_id": car_mades_id,
+                            "car_type_id": cartype[checkboxType].id,
+                            "car_made_id": car_mades_id,
                                 }).then((value) {
                                   if (value != null) {
                                     if (value['status_code'] == 200) {

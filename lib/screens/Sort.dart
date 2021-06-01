@@ -9,7 +9,7 @@ class Sortdialog extends StatefulWidget {
 }
 
 class _SortdialogState extends State<Sortdialog> {
-  List characters=["ASC","DESC","ASC","DESC"];
+  List characters=["ASC","DESC"];
   String _character='ASC';
   @override
   Widget build(BuildContext context) {
@@ -84,38 +84,38 @@ class _SortdialogState extends State<Sortdialog> {
               },
             ),
           ),
-          Container(
-            color: Colors.white,
-            child: RadioListTile<String>(
-              title: const Text('الأكثر مشاهدة'),
-              value: characters[2],
-              activeColor: Colors.orange,
-              groupValue: _character,
-              onChanged: (String value) {
-                setState(() {
-                    _character = value;
-                    Navigator.pop(context,value);
-
-                });
-              },
-            ),
-          ),
-          Container(
-            color: Colors.white,
-            child: RadioListTile<String>(
-              title: const Text('الأعلى مبيعا'),
-              value: characters[3],
-              activeColor: Colors.orange,
-              groupValue:_character,
-              onChanged: (String value) {
-                setState(() {
-                    _character = value;
-                    Navigator.pop(context,value);
-
-                });
-              },
-            ),
-          ),
+          // Container(
+          //   color: Colors.white,
+          //   child: RadioListTile<String>(
+          //     title: const Text('الأكثر مشاهدة'),
+          //     value: characters[2],
+          //     activeColor: Colors.orange,
+          //     groupValue: _character,
+          //     onChanged: (String value) {
+          //       setState(() {
+          //           _character = value;
+          //           Navigator.pop(context,value);
+          //
+          //       });
+          //     },
+          //   ),
+          // ),
+          // Container(
+          //   color: Colors.white,
+          //   child: RadioListTile<String>(
+          //     title: const Text('الأعلى مبيعا'),
+          //     value: characters[3],
+          //     activeColor: Colors.orange,
+          //     groupValue:_character,
+          //     onChanged: (String value) {
+          //       setState(() {
+          //           _character = value;
+          //           Navigator.pop(context,value);
+          //
+          //       });
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );

@@ -167,7 +167,7 @@ class _UserInfoState extends State<UserInfo> {
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
-                                          initialValue: userModal.lastname,
+                                          initialValue: userModal.lastName,
                                           decoration: const InputDecoration(
                                           ),
                                           enabled: !_status,
@@ -181,9 +181,9 @@ class _UserInfoState extends State<UserInfo> {
                                           },
                                           autofocus: !_status,
                                           onSaved: (String val) =>
-                                              userModal.lastname = val,
+                                              userModal.lastName = val,
                                           onChanged: (String val) {
-                                            userModal.lastname = val;
+                                            userModal.lastName = val;
                                           },
                                         )),
                                     Padding(
@@ -223,7 +223,7 @@ class _UserInfoState extends State<UserInfo> {
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
-                                          initialValue: userModal.phone,
+                                          initialValue: userModal.phoneNo,
                                           decoration: InputDecoration(),
                                           validator: (String value) {
                                             if (value.isEmpty) {
@@ -235,9 +235,9 @@ class _UserInfoState extends State<UserInfo> {
                                           },
                                           enabled: !_status,
                                           onSaved: (String val) =>
-                                              userModal.phone = val,
+                                              userModal.phoneNo = val,
                                           onChanged: (String val) =>
-                                              userModal.phone = val,
+                                              userModal.phoneNo = val,
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
@@ -249,13 +249,13 @@ class _UserInfoState extends State<UserInfo> {
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
-                                          initialValue: userModal.bithdate,
+                                          initialValue: userModal.birthdate,
                                           decoration: InputDecoration(),
                                           enabled: !_status,
                                           onSaved: (String val) =>
-                                              userModal.bithdate = val,
+                                              userModal.birthdate = val,
                                           onChanged: (String val) =>
-                                              userModal.bithdate = val,
+                                              userModal.birthdate = val,
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
@@ -265,7 +265,7 @@ class _UserInfoState extends State<UserInfo> {
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 2.0),
+                                            left: 25.0, right: 25.0, top: 2.0,bottom: 10),
                                         child: TextFormField(
                                           initialValue: " ",
                                           decoration: InputDecoration(),
@@ -275,6 +275,7 @@ class _UserInfoState extends State<UserInfo> {
                                           onChanged: (String val) =>
                                               userModal.gender = val,
                                         )),
+
                                     _status
                                         ? _getEditIcon()
                                         : _getActionButtons(),
@@ -286,7 +287,7 @@ class _UserInfoState extends State<UserInfo> {
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 2.0),
+                                            left: 25.0, right: 25.0, top: 2.0,bottom: 10),
                                         child: TextFormField(
                                           initialValue: "123456789",
                                           decoration: InputDecoration(
@@ -331,9 +332,9 @@ class _UserInfoState extends State<UserInfo> {
                       API(context).post('user/edit/profile', {
                         "name": userModal.name,
                         "email": userModal.email,
-                        "last_name": userModal.lastname,
-                        "phone_no": userModal.phone,
-                        "birthdate": userModal.bithdate,
+                        "last_name": userModal.lastName,
+                        "phone_no": userModal.phoneNo,
+                        "birthdate": userModal.birthdate,
                         "gender": userModal.gender,
                       }).then((value) {
                         if (value != null) {

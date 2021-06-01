@@ -37,7 +37,7 @@ class _Wish_ListState extends State<Wish_List> {
           width: ScreenUtil.getWidth(context) / 4,
           child: CachedNetworkImage(
             imageUrl:widget.product.photo==null?' ':widget.product.photo.isNotEmpty?widget.product.photo[0].image:" ",
-            errorWidget: (context, url, error) => Icon(Icons.error),
+            errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
           ),
         ),
         Expanded(
@@ -68,7 +68,7 @@ class _Wish_ListState extends State<Wish_List> {
                     IconButton(
                         onPressed: () {
                           API(context).post('user/removeitem/wishlist',
-                              {"id": widget.product.id}).then((value) {
+                              {"product_id": widget.product.productId}).then((value) {
                             if (value != null) {
                               if (value['status_code'] == 200) {
                                 showDialog(

@@ -23,7 +23,7 @@ class _FilterdialogState extends State<Filterdialog> {
   List<Category> parts;
   List<Origin> origin;
   List<Manufacturer> manufacturer;
-  List<Products> product;
+  List<Product> product;
   List<int> partSelect = [];
   List<int> originSelect = [];
   List<int> manufacturerSelect = [];
@@ -275,7 +275,7 @@ class _FilterdialogState extends State<Filterdialog> {
                       }).then((value) {
                         if (value != null) {
                           if (value['status_code'] == 200) {
-                            Nav.route(
+                            Nav.routeReplacement(
                                 context,
                                 ProductCarPage(
                                   product: Product_model.fromJson(value).data,

@@ -17,7 +17,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class ProductCarmade extends StatefulWidget {
-   List<Products> product;
+   List<Product> product;
    String api;
    int id;
    String name;
@@ -185,7 +185,29 @@ class _ProductCarmadeState extends State<ProductCarmade> {
                   ),
             widget.product == null
                 ? Container()
-                : list
+                : widget.product.isEmpty
+                ? Container(
+              height: ScreenUtil.getHeight(context) / 1.5,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/icons/reload.svg",
+                    width: ScreenUtil.getWidth(context) / 3,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    'لا توجد منتجات',
+                    style: TextStyle(color: Colors.black45,fontSize: 25),
+                  ),
+                ],
+              ),
+            ):list
                     ? grid_product(
                         product: widget.product,
                       )
