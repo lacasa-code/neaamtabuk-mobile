@@ -165,7 +165,7 @@ class _ProductPageState extends State<ProductPage> {
                     },
                     child: Row(
                       children: [
-                        Icon(widget.product.inWishlist==0?
+                        Icon(widget.product.inWishlist=="0"?
                         Icons.favorite_border:Icons.favorite, size: 30, color: Colors.grey),
                         Text(
                           'أضف للمفضلة',

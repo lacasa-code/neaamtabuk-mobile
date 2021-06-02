@@ -30,7 +30,7 @@ class ProductListTitleBar extends StatelessWidget {
               "$title",
               maxLines: 1,
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 20,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),

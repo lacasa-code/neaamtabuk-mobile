@@ -74,7 +74,7 @@ class _CategoryCardState extends State<CategoryCard> {
               maxLines: 1,
               style: TextStyle(
                 color: Colors.black,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
               ),
               minFontSize: 14,
               maxFontSize: 20,

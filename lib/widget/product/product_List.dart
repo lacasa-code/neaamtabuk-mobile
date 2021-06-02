@@ -185,12 +185,12 @@ class _ProductListState extends State<ProductList> {
                                     }
                                   });
                                 },
-                                icon:Text('${widget.product.inWishlist}')
-                                // Icon(
-                                //   widget.product.inWishlist==0?
-                                //   Icons.favorite_border:Icons.favorite,
-                                //   color: Colors.grey,
-                                // ),
+                                icon:
+                                Icon(
+                                  widget.product.inWishlist=="0"?
+                                  Icons.favorite_border:Icons.favorite,
+                                  color: Colors.grey,
+                                ),
                               ),
                             ],
                           ),

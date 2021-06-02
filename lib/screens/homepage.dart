@@ -131,6 +131,7 @@ class _HomeState extends State<Home> {
         controller: _controller,
         screens: _buildScreens(),
         items: _navBarsItems(),
+        navBarHeight: 60,
         confineInSafeArea: true,
         backgroundColor: Colors.white, // Default is Colors.white.
         handleAndroidBackButtonPress: true, // Default is true.
@@ -143,16 +144,17 @@ class _HomeState extends State<Home> {
           borderRadius: BorderRadius.circular(10.0),
           colorBehindNavBar: Colors.white,
         ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
+        popAllScreensOnTapOfSelectedTab: false,
+        popActionScreens: PopActionScreensType.once,
         itemAnimationProperties: ItemAnimationProperties(
           // Navigation Bar's items animation properties.
           duration: Duration(milliseconds: 200),
           curve: Curves.ease,
         ),
+
         screenTransitionAnimation: ScreenTransitionAnimation(
           // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
+          animateTabTransition: false,
           curve: Curves.ease,
           duration: Duration(milliseconds: 200),
         ),

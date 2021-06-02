@@ -176,6 +176,7 @@ class Product {
     timeCreated = json['time_created'];
     inCart = json['in_cart'];
     inWishlist = json['in_wishlist'].toString();
+    print(json['in_wishlist']);
     inFavourites = json['in_favourites'];
   }
 

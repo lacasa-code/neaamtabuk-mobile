@@ -12,6 +12,8 @@ import 'package:flutter_pos/widget/login/login_form_model.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../ResultOverlay.dart';
+
 class LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -61,7 +63,7 @@ class _LoginFormState extends State<LoginForm> {
               },
             ),
             MyTextFormField(
-              intialLabel: 'password',
+              intialLabel: 'Password123',
               labelText: getTransrlate(context, 'password'),
               hintText: getTransrlate(context, 'password'),
               suffixIcon: IconButton(
@@ -122,6 +124,11 @@ class _LoginFormState extends State<LoginForm> {
 
                           // Navigator.pushAndRemoveUntil(
                           //     context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
+                        }else{
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay('${value['message']??''}\n${value['errors']}'));
                         }
                       }
                     });

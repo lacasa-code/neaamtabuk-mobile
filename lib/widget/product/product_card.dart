@@ -214,7 +214,7 @@ class _ProductCardState extends State<ProductCard> {
                                 });
                               },
                               icon: Icon(
-                               widget.product.inWishlist==0?
+                               widget.product.inWishlist=="0"?
                                Icons.favorite_border:Icons.favorite,
                                 color: Colors.grey,
                               ),
