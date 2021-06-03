@@ -27,6 +27,8 @@ class _FilterdialogState extends State<Filterdialog> {
   List<int> partSelect = [];
   List<int> originSelect = [];
   List<int> manufacturerSelect = [];
+  RangeValues _currentRangeValues = const RangeValues(10,10000);
+
   @override
   void initState() {
     getData();
@@ -258,7 +260,24 @@ class _FilterdialogState extends State<Filterdialog> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   expanded: Padding(
-                      padding: const EdgeInsets.all(16.0), child: Container()),
+                      padding: const EdgeInsets.all(16.0), child:
+                  RangeSlider(
+                    activeColor: Colors.orange,
+                    inactiveColor: Colors.black26,
+                    values: _currentRangeValues,
+                    min: 10,
+                    max: 10000,
+                    divisions: 10000,
+                    labels: RangeLabels(
+                      _currentRangeValues.start.round().toString(),
+                      _currentRangeValues.end.round().toString(),
+                    ),
+                    onChanged: (RangeValues values) {
+                      setState(() {
+                        _currentRangeValues = values;
+                      });
+                    },
+                  )),
                 ),
               ),
             ),
@@ -272,6 +291,9 @@ class _FilterdialogState extends State<Filterdialog> {
                         "part_categories": partSelect.toString(),
                         "manufacturers": manufacturerSelect.toString(),
                         "origins": originSelect.toString(),
+                        "start_price":  _currentRangeValues.start.round().toString(),
+                        "end_price": _currentRangeValues.end.round().toString(),
+
                       }).then((value) {
                         if (value != null) {
                           if (value['status_code'] == 200) {

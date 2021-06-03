@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:provider/provider.dart';
@@ -69,6 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _auth() async {
+    //themeColor.setCar_made(getTransrlate(context, 'selectCar'));
     API(context).post('token/data', {}).then((value) {
       if (value['data'] != null) {
         if (value['data']['status'] == 'ON') {

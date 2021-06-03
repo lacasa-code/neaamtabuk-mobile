@@ -89,7 +89,7 @@
   "ThankYou": "Thank You",
   "NewPassword": "New Password",
   "ConfirmPassword": "Confirm Password",
-  "LostPassword": "LostPassword",
+  "LostPassword": "Forget  Password ?",
   "passwordinvalid": "password Invalid",
   "invalidemail": "Please enter a valid email",
   "PasswordShorter": "Password should be minimum 7 characters",
@@ -132,6 +132,9 @@
   "Settings": "Settings ",
 
   "About": "About Us",
+  "Conditions": "Terms and Conditions",
+  "return": "Return Policy",
+
   "Support": "Support",
   "HomePage": "Home Page",
   "Logout": "Log out",
@@ -184,7 +187,7 @@
   "phone": "Phone Number",
   "hintphone": "Enter the Phone Number",
   "Register": "Register Now",
-  "AreadyAccount": "Already Registered !",
+  "AreadyAccount": "Register",
   "invildpassword": "phone Or Password Invalid ?",
   "Email": "Email ",
   "password": "Password",
@@ -262,9 +265,13 @@
   "Schedule_order": "Schedule Order",
 
   "change": "Change",
+  "Copyright": "Copyright (C) 2021 trkar",
 
   "version": "Version",
   "skip": "Skip",
-  "selectCity": "Select  City"
+  "selectCar": "Select Car",
+  "sellonTurkar": "Why sell on Turkar?",
+  "Registerseller": "Register as a seller",
+  "HowtosellTurkar": "How to sell on Turkar"
 
 }

@@ -1,9 +1,10 @@
+
 import 'package:flutter/material.dart';
 
 class Provider_control with ChangeNotifier {
   Color _themeData = Color(0xff424242);
   String local = 'ar';
-  String car_made = 'إختر المركبة';
+  String car_made =  'إختر المركبة';
   Color color;
   bool isLogin = false;
 

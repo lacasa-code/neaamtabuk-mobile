@@ -6,6 +6,7 @@ import 'package:flutter_pos/model/cart_model.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:provider/provider.dart';
@@ -90,7 +91,7 @@ class _ProductCartState extends State<ProductCart> {
                 maxLines: 3,
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
                 minFontSize: 11,
               ),
@@ -115,6 +116,7 @@ class _ProductCartState extends State<ProductCart> {
                             style: TextStyle(fontWeight: FontWeight.w400),
                           ),
                         ),
+                        SizedBox(height: 10,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,9 +184,11 @@ class _ProductCartState extends State<ProductCart> {
                             style: TextStyle(fontWeight: FontWeight.w400),
                           ),
                         ),
+                        SizedBox(height: 10,),
+
                         Container(
                           child: AutoSizeText(
-                            " ${widget.carts.price} ريال",
+                            " ${widget.carts.price} ${getTransrlate(context, 'Currency')}",
                             maxLines: 1,
                             minFontSize: 20,
                             maxFontSize: 25,

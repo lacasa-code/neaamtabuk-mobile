@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/order_model.dart';
 import 'package:flutter_pos/screens/orderdetails.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:intl/intl.dart';
@@ -157,7 +158,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                           Container(
                               width: ScreenUtil.getWidth(context) / 1.5,
                               child: AutoSizeText(
-                                ' إجمالي : ${orders[index].orderTotal} ريال',maxLines: 1,)),
+                                ' إجمالي : ${orders[index].orderTotal} ${getTransrlate(context, 'Currency')}',maxLines: 1,)),
                           SizedBox(height: 15,),
 
                           Row(

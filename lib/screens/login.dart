@@ -30,37 +30,31 @@ class _LoginPageState extends State<LoginPage> {
           ) ,
           leading: Container(),
         ),
-        body: WillPopScope(
-          // ignore: missing_return
-          onWillPop: () {
-          //  Nav.routeReplacement(context, LoginPage());
-          },
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical : 30,horizontal: 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,),
-                          Text(getTransrlate(context, 'login'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),),
-                          Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,)
-                        ],
-                      ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical : 30,horizontal: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,),
+                        Text(getTransrlate(context, 'login'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),),
+                        Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,)
+                      ],
                     ),
                   ),
-                  LoginForm(),
-                  routeLoginWidget(themeColor, context),
+                ),
+                LoginForm(),
+                routeLoginWidget(themeColor, context),
 
-                ],
-              ),
+              ],
             ),
           ),
         ));

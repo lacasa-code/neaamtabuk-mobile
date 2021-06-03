@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.person),
+        icon: Icon(CupertinoIcons.person,size: 35,),
         title: ("حسابى"),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
@@ -167,191 +167,201 @@ class _HomeState extends State<Home> {
   Widget HomePage() {
     final themeColor = Provider.of<Provider_control>(context);
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            color: themeColor.getColor(),
-            padding: const EdgeInsets.only(top: 35),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
+      children: [
+        Container(
+          color: themeColor.getColor(),
+          padding: const EdgeInsets.only(top: 35),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Center(
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  height: ScreenUtil.getHeight(context) / 10,
+                  width: ScreenUtil.getWidth(context) / 3,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Nav.route(context, MyCars());
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/car2.svg',
+                      fit: BoxFit.contain,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(themeColor.getCar_made(),style: TextStyle(
+                        color: Colors.white
+                    ),)
+                  ],
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context, builder: (_) => SearchOverlay());
+                },
+                icon: Icon(
+                  Icons.search,
+                  size: 30,
+                ),
+                color: Color(0xffE4E4E4),
+              ),
+            ],
+          ),
+        ),
+
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
               children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: ScreenUtil.getHeight(context) / 10,
-                    width: ScreenUtil.getWidth(context) / 3,
-                    fit: BoxFit.contain,
-                  ),
+
+                cartype == null
+                    ? Container()
+                    : Padding(
+                      padding: const EdgeInsets.only(left: 15,right: 15),
+                      child: GridView.builder(
+                          primary: false,
+                          padding: EdgeInsets.only(top: 20),
+                          shrinkWrap: true,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 1.3,
+                            crossAxisCount: 2,
+                          ),
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: cartype.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: (){
+                                  Nav.route(context, ProductCarType(id: cartype[index].id,name: cartype[index].typeName));
+                                },
+                                child: Container(
+                                  height: ScreenUtil.getHeight(context) / 10,
+                                  width: ScreenUtil.getWidth(context) / 2.5,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 3.0,color: Colors.black12
+                                    ),
+                                    image: DecorationImage(image: CachedNetworkImageProvider("${cartype[index].image}"),fit: BoxFit.cover) ,
+                                    borderRadius: index.isEven?BorderRadius.only(
+                                        topRight: Radius.circular(15.0),
+                                        bottomRight: Radius.circular(15.0)
+                                    ):BorderRadius.only(
+                                        topLeft: Radius.circular(15.0),
+                                        bottomLeft: Radius.circular(15.0)
+                                    ),
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Card(
+                                      color: Colors.black12,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: AutoSizeText(cartype[index].typeName,
+                                             maxLines: 1,maxFontSize: 18,
+                                            minFontSize: 10,
+                                            style: TextStyle(color: Colors.white,
+
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                    ),
+                ads == null
+                    ? Container(): Padding(
+                  padding: EdgeInsets.only(top: 10),
+                      child: CarouselSlider(
+                  items: ads
+                        .map((item) => Banner_item(
+                              item: item.photo.image,
+                            ))
+                        .toList(),
+                  options: CarouselOptions(
+                        height: ScreenUtil.getHeight(context)/5,
+                        aspectRatio: 16/9,
+                        viewportFraction: 0.8,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        //onPageChanged: callbackFunction,
+                        scrollDirection: Axis.horizontal,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _carouselCurrentPage = index;
+                          });
+                        }),
                 ),
-                FlatButton(
-                  onPressed: () {
-                    Nav.route(context, MyCars());
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/car2.svg',
-                        fit: BoxFit.contain,
-                        color: Colors.white,
+                    ),
+                SizedBox(height: 10,),
+                ads == null
+                    ? Container():   SliderDotAds(_carouselCurrentPage,ads),
+                categories == null ? Container() : list_category(themeColor),
+
+                product == null ? Container() :product.isEmpty? Container() : Column(
+                  children: [
+                    ProductListTitleBar(
+                      themeColor: themeColor,
+                      title: 'وصل حديثاٌ',
+                      description: 'المزيد',
+                    ),
+                    list_product(themeColor, product),
+                  ],
+                ),
+
+                ads == null
+                    ? Container(): ListView.builder(
+                  primary: false,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: ads.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Banner_item(
+                        item:ads[index].photo.image
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(themeColor.getCar_made(),style: TextStyle(
-                          color: Colors.white
-                      ),)
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context, builder: (_) => SearchOverlay());
+                    );
                   },
-                  icon: Icon(
-                    Icons.search,
-                    size: 30,
-                  ),
-                  color: Color(0xffE4E4E4),
                 ),
+
+                productMostSale == null
+                    ? Container()
+                     :productMostSale.isEmpty? Container() :Column(
+                      children: [
+                        ProductListTitleBar(
+                          themeColor: themeColor,
+                          title: 'الأكثر مبيعا',
+                          description: 'المزيد',
+                        ),
+                        list_product(themeColor, productMostSale),
+                      ],
+                    ),
               ],
             ),
           ),
-
-          cartype == null
-              ? Container()
-              : Padding(
-                padding: const EdgeInsets.only(left: 15,right: 15),
-                child: GridView.builder(
-                    primary: false,
-                    padding: EdgeInsets.only(top: 20),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 1.3,
-                      crossAxisCount: 2,
-                    ),
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: cartype.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: (){
-                            Nav.route(context, ProductCarType(id: cartype[index].id,name: cartype[index].typeName));
-                          },
-                          child: Container(
-                            height: ScreenUtil.getHeight(context) / 10,
-                            width: ScreenUtil.getWidth(context) / 2.5,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 3.0,color: Colors.black12
-                              ),
-                              image: DecorationImage(image: CachedNetworkImageProvider("${cartype[index].image}"),fit: BoxFit.cover) ,
-                              borderRadius: index.isEven?BorderRadius.only(
-                                  topRight: Radius.circular(15.0),
-                                  bottomRight: Radius.circular(15.0)
-                              ):BorderRadius.only(
-                                  topLeft: Radius.circular(15.0),
-                                  bottomLeft: Radius.circular(15.0)
-                              ),
-                            ),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Card(
-                                color: Colors.black12,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: AutoSizeText(cartype[index].typeName,
-                                       maxLines: 1,maxFontSize: 18,
-                                      minFontSize: 10,
-                                      style: TextStyle(color: Colors.white,
-
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-              ),
-          ads == null
-              ? Container(): CarouselSlider(
-            items: ads
-                .map((item) => Banner_item(
-                      item: item.photo.image,
-                    ))
-                .toList(),
-            options: CarouselOptions(
-                height: ScreenUtil.getHeight(context)/5,
-                aspectRatio: 16/9,
-                viewportFraction: 0.8,
-                initialPage: 0,
-                enableInfiniteScroll: true,
-                reverse: false,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-                //onPageChanged: callbackFunction,
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _carouselCurrentPage = index;
-                  });
-                }),
-          ),
-          SizedBox(height: 20,),
-          ads == null
-              ? Container():   SliderDotAds(_carouselCurrentPage,ads),
-          categories == null ? Container() : list_category(themeColor),
-
-          product == null ? Container() :product.isEmpty? Container() : Column(
-            children: [
-              ProductListTitleBar(
-                themeColor: themeColor,
-                title: 'وصل حديثاٌ',
-                description: 'المزيد',
-              ),
-              list_product(themeColor, product),
-            ],
-          ),
-
-          ads == null
-              ? Container(): ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: ads.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Banner_item(
-                  item:ads[index].photo.image
-                ),
-              );
-            },
-          ),
-
-          productMostSale == null
-              ? Container()
-               :productMostSale.isEmpty? Container() :Column(
-                children: [
-                  ProductListTitleBar(
-                    themeColor: themeColor,
-                    title: 'الأكثر مبيعا',
-                    description: 'المزيد',
-                  ),
-                  list_product(themeColor, productMostSale),
-                ],
-              ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

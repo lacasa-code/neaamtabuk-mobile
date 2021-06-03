@@ -21,7 +21,7 @@ import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../add_address.dart';
+import 'add_address.dart';
 
 class CheckOutPage extends StatefulWidget {
   CheckOutPage({Key key, this.carts}) : super(key: key);
@@ -370,7 +370,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                           ],
                                         ),
                                         Text(
-                                          '40 ريال',
+                                          '40 ${getTransrlate(context, 'Currency')}',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -870,7 +870,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                         width: 10,
                                       ),
                                       Text(
-                                        '${checkout_model.data.orderTotal} ريال ',
+                                        '${checkout_model.data.orderTotal} ${getTransrlate(context, 'Currency')} ',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700),
                                       ),
@@ -1049,7 +1049,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               minFontSize: 11,
                             ),
                             AutoSizeText(
-                              "سعر : ${widget.carts.data.orderDetails[index].price}  ريال",
+                              "سعر : ${widget.carts.data.orderDetails[index].price}  ${getTransrlate(context, 'Currency')}",
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 14,
@@ -1086,7 +1086,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      '${widget.carts.data.orderTotal} ريال ',
+                      '${widget.carts.data.orderTotal} ${getTransrlate(context, 'Currency')} ',
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                   ],
@@ -1103,7 +1103,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      '20 ريال ',
+                      '20 ${getTransrlate(context, 'Currency')} ',
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                   ],
@@ -1124,7 +1124,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      '${widget.carts.data.orderTotal} ريال ',
+                      '${widget.carts.data.orderTotal} ${getTransrlate(context, 'Currency')} ',
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                   ],

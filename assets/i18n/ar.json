@@ -112,8 +112,10 @@
   "ProfileSettings": "البيانات الشخصية",
   "Settings": "أعدادات ",
 
-  "FAQ": "سياسة الاسترجاع",
-  "About": "شروط وأحكام",
+  "FAQ": "الأسئلة الشائعه",
+  "About": "من نحن",
+  "Conditions": "شروط وأحكام",
+  "return": "سياسة الاسترجاع",
   "Support": "مساعدة",
   "HomePage": "الصفحة الرئيسية",
   "Logout": "تسجيل الخروج",
@@ -204,7 +206,7 @@
   "Done": "تم",
   "sorry": "نأسف",
   "notSavedAddress": "لم يتم أضافة العنوان",
-  "Currency": " ر.س ",
+  "Currency": " ريال ",
   "total_tax": "إجمالى الضريبة",
   "SavedAddress": "تم أضافة العنوان ",
   "notSavedcart": "لم يتم أضافة الى العربة",
@@ -266,11 +268,16 @@
   "noMyaddress": "لا توجد عناوين مسجلة",
   "change": "تغير",
   "Schedule_order": "الطلبات المجدولة",
+  "Copyright": "جميع الحقوق محفوظة ©2021 تركار",
 
   "version": "أصدار",
   "skip": "تخطى",
 
-  "selectCity": "أختر المدنية"
+  "selectCar": "إختر المركبة",
+
+  "sellonTurkar": "لماذا تبيع على تركار",
+  "Registerseller": "التسجيل كبائع",
+  "HowtosellTurkar": "كيف تبيع على تركار"
 
 
 }

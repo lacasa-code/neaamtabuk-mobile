@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/order_model.dart';
 import 'package:flutter_pos/screens/CreateTickits.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:intl/intl.dart';
@@ -98,7 +99,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   Row(
                     children: [
                       Text('إجمالي المنتجات:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
-                      Text('${widget.order.orderTotal} ريال',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                      Text('${widget.order.orderTotal} ${getTransrlate(context, 'Currency')}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
                     ],
                   ),
                   SizedBox(height: 15,),
@@ -106,7 +107,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   Row(
                     children: [
                       Text('رسوم الشحن:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
-                      Text('${widget.order.orderTotal} ريال',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                      Text('${widget.order.orderTotal} ${getTransrlate(context, 'Currency')}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
                     ],
                   ),
                   SizedBox(height: 15,),
@@ -114,7 +115,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   Row(
                     children: [
                       Text('إجمالي الطلب: ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
-                      Text('${widget.order.orderTotal} ريال',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                      Text('${widget.order.orderTotal} ${getTransrlate(context, 'Currency')}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
                     ],
                   ),
                   SizedBox(height: 15,),
@@ -221,7 +222,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                   minFontSize: 11,
                                 ),
                                 AutoSizeText(
-                                  "سعر : ${widget.order.orderDetails[i].price}  ريال",
+                                  "سعر : ${widget.order.orderDetails[i].price}  ${getTransrlate(context, 'Currency')}",
                                   maxLines: 2,
                                   style: TextStyle(
                                     fontSize: 14,
@@ -246,9 +247,9 @@ class _OrderdetailsState extends State<Orderdetails> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('إجمالي المنتجات: ${widget.order.orderTotal??'0'} ريال ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
-                  Text('رسوم الشحن: ${widget.order.orderTotal??'0'} ريال ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
-                  Text('إجمالي الطلب: ${widget.order.orderTotal??'0'} ريال ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,),),
+                  Text('إجمالي المنتجات: ${widget.order.orderTotal??'0'} ${getTransrlate(context, 'Currency')} ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+                  Text('رسوم الشحن: ${widget.order.orderTotal??'0'} ${getTransrlate(context, 'Currency')} ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+                  Text('إجمالي الطلب: ${widget.order.orderTotal??'0'} ${getTransrlate(context, 'Currency')} ',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,),),
                   SizedBox(
                     height: 10,
                   ),

@@ -7,6 +7,7 @@ import 'package:flutter_pos/screens/ProductPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
@@ -125,9 +126,10 @@ class _ProductCardState extends State<ProductCard> {
                             Container(
                               width: ScreenUtil.getWidth(context)/6,
                               child: AutoSizeText(
-                                "${widget.product.price??0} ريال",
+
+                                "${widget.product.price??0} ${getTransrlate(context, 'Currency')}",
                                 maxLines: 1,
-                                minFontSize: 20,
+                                minFontSize: 15,
                                 maxFontSize: 25,
                                 style: TextStyle(
                                     color: widget.themeColor.getColor(),

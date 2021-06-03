@@ -9,7 +9,7 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'model/shipping_address.dart';
+import '../model/shipping_address.dart';
 
 class AddAddress extends StatefulWidget {
   const AddAddress({Key key}) : super(key: key);

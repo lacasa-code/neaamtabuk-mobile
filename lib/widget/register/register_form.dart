@@ -160,7 +160,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(1.0),
                     ),
-                    color: themeColor.getColor(),
+                    color: Colors.orange,
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
