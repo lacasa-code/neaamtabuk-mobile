@@ -45,7 +45,7 @@ class _CartScreenState extends State<CartScreen> {
     final _cart_model = Provider.of<Provider_Data>(context).cart_model;
 
     return Scaffold(
-      bottomNavigationBar: Container(
+      bottomNavigationBar:themeColor.isLogin? Container(
         height: 80,
         decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
         child: Padding(
@@ -72,7 +72,7 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
         ),
-      ),
+      ):Container(height: 1,width: 1,),
       body: Column(
         children: [
           Container(

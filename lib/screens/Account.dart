@@ -200,6 +200,7 @@ class _AccountState extends State<Account> {
               ),
             ],
           ),
+         SizedBox(height: 20,),
          Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -442,7 +443,7 @@ class _AccountState extends State<Account> {
                                     child: AutoSizeText(
                                       getTransrlate(context, 'About'),
                                       maxLines: 1,
-                                      minFontSize: 10,
+                                      minFontSize: 12,
                                       maxFontSize: 14,
                                       style: TextStyle(color: Colors.black),
                                     )),
@@ -451,7 +452,7 @@ class _AccountState extends State<Account> {
                                     child: AutoSizeText(
                                       getTransrlate(context, 'contact'),
                                       maxLines: 1,
-                                      minFontSize: 10,
+                                      minFontSize: 12,
                                       maxFontSize: 14,
                                       style: TextStyle(color: Colors.black),
                                     )),
@@ -460,7 +461,7 @@ class _AccountState extends State<Account> {
                                     child: AutoSizeText(
                                       getTransrlate(context, 'FAQ'),
                                       maxLines: 1,
-                                      minFontSize: 10,
+                                      minFontSize: 12,
                                       maxFontSize: 14,
                                       style: TextStyle(color: Colors.black),
                                     )),
@@ -481,7 +482,7 @@ class _AccountState extends State<Account> {
                                         child: AutoSizeText(
                                         getTransrlate(context, 'sellonTurkar'),
                                           maxLines: 1,
-                                          minFontSize: 10,
+                                          minFontSize: 12,
                                           maxFontSize: 14,
                                           style: TextStyle(color: Colors.black),
                                         ))),
@@ -492,7 +493,7 @@ class _AccountState extends State<Account> {
                                         child: AutoSizeText(
                                           getTransrlate(context, 'Registerseller'),
                                           maxLines: 1,
-                                          minFontSize: 10,
+                                          minFontSize: 12,
                                           maxFontSize: 14,
                                           style: TextStyle(color: Colors.black),
                                         ))),
@@ -503,7 +504,7 @@ class _AccountState extends State<Account> {
                                         child: AutoSizeText(
                                           getTransrlate(context, 'HowtosellTurkar'),
                                           maxLines: 1,
-                                          minFontSize: 10,
+                                          minFontSize: 12,
                                           maxFontSize: 14,
                                           style: TextStyle(color: Colors.black),
                                         ))),
@@ -537,7 +538,7 @@ class _AccountState extends State<Account> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,)
+                        SizedBox(height: 25,)
                       ],
                     ),
                   ),

@@ -7,6 +7,7 @@ import 'package:flutter_pos/screens/ratepage.dart';
 import 'package:flutter_pos/screens/writeQuastions.dart';
 import 'package:flutter_pos/screens/writerate.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
@@ -37,9 +38,12 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
+    final ServiceData = Provider.of<Provider_Data>(context);
 
     return Scaffold(
       bottomNavigationBar: Container(
+        margin: EdgeInsets.only(bottom: 20,right: 2,left: 2),
+        decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
         height: 80,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -48,7 +52,8 @@ class _ProductPageState extends State<ProductPage> {
               margin: const EdgeInsets.all(15.0),
               padding: const EdgeInsets.all(3.0),
               decoration:
-              BoxDecoration(border: Border.all(color: Colors.grey)),
+              BoxDecoration(border: Border.all(color: Colors.black12)),
+
               child: DropdownButton<int>(
                 value: dropdownValue,
                 icon: const Icon(Icons.arrow_drop_down_outlined),
@@ -81,6 +86,8 @@ class _ProductPageState extends State<ProductPage> {
                         context: context,
                         builder: (_) => ResultOverlay(
                             value['message']));
+                    ServiceData.getCart(context);
+
                   } else {
                     showDialog(
                         context: context,
@@ -100,7 +107,7 @@ class _ProductPageState extends State<ProductPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.shopping_cart_sharp,
+                          CupertinoIcons.cart,
                           color: Colors.white,
                         ),
                         SizedBox(
@@ -122,7 +129,7 @@ class _ProductPageState extends State<ProductPage> {
         children: [
           Container(
             color: themeColor.getColor(),
-            padding: const EdgeInsets.only(top: 35, bottom: 10),
+            padding: const EdgeInsets.only(top: 35),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -432,7 +439,7 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.circle,size: 20,),
+                              Icons.circle,size: 15,),
                             Text(
                               '   ${widget.product.categoryName}',
                               style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
@@ -447,7 +454,7 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.circle,size: 20,),
+                              Icons.circle,size: 15,),
                             Text(
                               '   ${widget.product.partCategoryName}',
                               style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
@@ -462,7 +469,7 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.circle,size: 20,),
+                              Icons.circle,size: 15,),
                             Text(
                               '   ${widget.product.cartypeName}',
                               style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
@@ -540,7 +547,7 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
                   Container(
-              height: ScreenUtil.getHeight(context)/1,
+              height: ScreenUtil.getHeight(context)/1.5,
               width: ScreenUtil.getWidth(context),
               child: DefaultTabController(
               length: 2,
@@ -620,7 +627,7 @@ class _ProductPageState extends State<ProductPage> {
                                 RatingBar.builder(
                                   ignoreGestures: true,
                                   initialRating: double.parse('3.5'),
-                                  itemSize: 25.0,
+                                  itemSize: 20.0,
                                   minRating: 5,
                                   direction: Axis.horizontal,
                                   allowHalfRating: true,
@@ -638,14 +645,14 @@ class _ProductPageState extends State<ProductPage> {
                                   'منتج جيد الصناعة ويعتمد عليه أنصح به',
                                   style: TextStyle(fontWeight: FontWeight.w500,color: Colors.black),
                                 ),
-                                SizedBox(height: 5),
+                                SizedBox(height: 10),
 
                                 Text(
                                   '25-6-2020 بواسطة أحمد',
                                   style: TextStyle(fontWeight: FontWeight.w500,color: Colors.grey),
                                 ),
-                                SizedBox(height: 5),
-                                Container(height: 1,color: Colors.grey,),
+                                SizedBox(height: 10),
+                                Container(height: 1,color: Colors.black12,),
                                 SizedBox(height: 10),
 
                               ],
@@ -733,7 +740,7 @@ class _ProductPageState extends State<ProductPage> {
                             primary: false,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: 3,
+                            itemCount: 2,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -755,6 +762,8 @@ class _ProductPageState extends State<ProductPage> {
                                                 style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
                                               ),
                                             ),
+                                            SizedBox(height: 10,),
+
                                             Text(
                                               '25-6-2020 بواسطة أحمد',
                                               style: TextStyle(fontWeight: FontWeight.w500,color: Colors.grey),
@@ -784,6 +793,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
                                                 ),
                                               ),
+                                              SizedBox(height: 10,),
                                               Text(
                                                 '25-6-2020 بواسطة أحمد',
                                                 style: TextStyle(fontWeight: FontWeight.w500,color: Colors.grey),
@@ -795,7 +805,7 @@ class _ProductPageState extends State<ProductPage> {
                                       ],
                                     ),
                                   ),
-                                  Container(height: 1,color: Colors.grey,)
+                                  Container(height: 1,color: Colors.black12,)
                                 ],
                               );
                             },

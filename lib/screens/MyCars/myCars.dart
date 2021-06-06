@@ -84,6 +84,7 @@ class _MyCarsState extends State<MyCars> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           bottom: TabBar(
             indicatorColor: Colors.orange,
@@ -224,227 +225,234 @@ class _MyCarsState extends State<MyCars> {
                       ),
                     ),
             ),
-            Container(
-                child: Column(
+            Column(
               children: [
-                cartype == null
-                    ? Container()
-                    : GridView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 2.3,
-                          crossAxisCount: 2,
+            cartype == null
+                ? Container()
+                : GridView.builder(
+                    primary: false,
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 2.3,
+                      crossAxisCount: 2,
+                    ),
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: cartype.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      bool selected = checkboxType == index;
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              checkboxType = index;
+                            });
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: selected
+                                        ? Colors.orange
+                                        : Colors.grey)),
+                            child: Center(
+                                child: Text(
+                              cartype[index].typeName,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                          ),
                         ),
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: cartype.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          bool selected = checkboxType == index;
-                          return Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  checkboxType = index;
-                                });
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.all(15.0),
-                                padding: const EdgeInsets.all(3.0),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: selected
-                                            ? Colors.orange
-                                            : Colors.grey)),
-                                child: Center(
-                                    child: Text(
-                                  cartype[index].typeName,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 24, left: 24),
-                  child: Column(
-                    children: [
-                      years == null
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownSearch<Year>(
-                                label: " سنة الصنع ",
-                                showClearButton: true,
-                                validator: (Year item) {
-                                  if (item == null) {
-                                    return "Required field";
-                                  } else
-                                    return null;
-                                },
-
-                                items: years,
-                                //  onFind: (String filter) => getData(filter),
-                                itemAsString: (Year u) => u.year,
-                                onChanged: (Year data) =>
-                                    yearsID.text = data.id.toString(),
-                              ),
-                            ),
-                      car_mades == null
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownSearch<CarMade>(
-                                label: "الماركة",
-                                items: car_mades,
-                                //  onFind: (String filter) => getData(filter),
-                                itemAsString: (CarMade u) => u.carMade,
-                                onChanged: (CarMade data) {
-                                  getcarModels(data.id);
-                                  car_mades_id = data.id;
-                                  carMadeID.text = data.id.toString();
-                                },
-                              ),
-                            ),
-                      carmodels == null
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownSearch<CarModel>(
-                                label: " الموديل ",
-
-                                items: carmodels,
-                                //  onFind: (String filter) => getData(filter),
-                                itemAsString: (CarModel u) => u.carmodel,
-                                onChanged: (CarModel data) =>
-                                    CarmodelsID.text = data.id.toString(),
-                              ),
-                            ),
-                      transmissions == null
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownSearch<Transmissions>(
-                                label: " ناقل الحركة ",
-                                items: transmissions,
-                                //  onFind: (String filter) => getData(filter),
-                                itemAsString: (Transmissions u) =>
-                                    u.transmissionName,
-                                onChanged: (Transmissions data) =>
-                                    transimionsID.text = data.id.toString(),
-                              ),
-                            ),
-                      InkWell(
-                        onTap: () {
-                          API(context).post('display/search/results', {
-                            "car_type_id": cartype[checkboxType].id,
-                            "car_made_id": car_mades_id,
-                            "car_model_id": CarmodelsID.text,
-                            "car_year_id": yearsID.text,
-                            "transmission_id": transimionsID.text,
-                          }).then((value) {
-                            if (value != null) {
-                              if (value['status_code'] == 200) {
-                                Nav.routeReplacement(
-                                    context,
-                                    ProductCarPage(
-                                      product:
-                                          Product_model.fromJson(value).data,
-                                    ));
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay(value['message']));
-                              }
-                            }
-                          });
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.all(15.0),
-                          padding: const EdgeInsets.all(3.0),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.orange)),
-                          child: Center(
-                              child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.search,
-                                color: Colors.orange,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'إعرض منتجات المركبة',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.orange),
-                              ),
-                            ],
-                          )),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          car_mades_id == null
-                              ? showDialog(
-                                  context: context,
-                                  builder: (_) =>
-                                      ResultOverlay('Please select Car Made'))
-                              : API(context).post(
-                                  'user/select/products/add/favourite/car', {
-                            "car_type_id": cartype[checkboxType].id,
-                            "car_made_id": car_mades_id,
-                                }).then((value) {
-                                  if (value != null) {
-                                    if (value['status_code'] == 200) {
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) =>
-                                              ResultOverlay(value['message']));
-                                      getFavorit();
-                                    } else {
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) =>
-                                              ResultOverlay(value['message']));
-                                    }
-                                  }
-                                });
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.all(15.0),
-                          padding: const EdgeInsets.all(3.0),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.orange)),
-                          child: Center(
-                              child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.add,
-                                color: Colors.orange,
-                              ),
-                              Text(
-                                'أضف إلى مركباتي',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.orange),
-                              ),
-                            ],
-                          )),
-                        ),
-                      )
-                    ],
+                      );
+                    },
                   ),
-                ),
+            Padding(
+              padding: const EdgeInsets.only(right: 24, left: 24),
+              child: Column(
+                children: [
+                  years == null
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownSearch<Year>(
+                            showSearchBox: true,
+                            showClearButton: true,
+                            label: "  سنة الصنع ",
+                            validator: (Year item) {
+                              if (item == null) {
+                                return "Required field";
+                              } else
+                                return null;
+                            },
+
+                            items: years,
+                            //  onFind: (String filter) => getData(filter),
+                            itemAsString: (Year u) => u.year,
+                            onChanged: (Year data) =>
+                                yearsID.text = data.id.toString(),
+                          ),
+                        ),
+                  car_mades == null
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownSearch<CarMade>(
+                            showSearchBox: true,
+                            showClearButton: true,
+
+                            label: "  الماركة",
+                            items: car_mades,
+                            //  onFind: (String filter) => getData(filter),
+                            itemAsString: (CarMade u) => u.carMade,
+                            onChanged: (CarMade data) {
+                              getcarModels(data.id);
+                              car_mades_id = data.id;
+                              carMadeID.text = data.id.toString();
+                            },
+                          ),
+                        ),
+                  carmodels == null
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownSearch<CarModel>(
+                            label: "  الموديل ",
+                            showSearchBox: true,
+                            showClearButton: true,
+
+                            items: carmodels,
+                            //  onFind: (String filter) => getData(filter),
+                            itemAsString: (CarModel u) => u.carmodel,
+                            onChanged: (CarModel data) =>
+                                CarmodelsID.text = data.id.toString(),
+                          ),
+                        ),
+                  transmissions == null
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownSearch<Transmissions>(
+                            showSearchBox: true,
+                            showClearButton: true,
+                            label: "  ناقل الحركة ",
+                            items: transmissions,
+                            //  onFind: (String filter) => getData(filter),
+                            itemAsString: (Transmissions u) =>
+                                u.transmissionName,
+                            onChanged: (Transmissions data) =>
+                                transimionsID.text = data.id.toString(),
+                          ),
+                        ),
+                  InkWell(
+                    onTap: () {
+                      API(context).post('display/search/results', {
+                        "car_type_id": cartype[checkboxType].id,
+                        "car_made_id": car_mades_id,
+                        "car_model_id": CarmodelsID.text,
+                        "car_year_id": yearsID.text,
+                        "transmission_id": transimionsID.text,
+                      }).then((value) {
+                        if (value != null) {
+                          if (value['status_code'] == 200) {
+                            Nav.routeReplacement(
+                                context,
+                                ProductCarPage(
+                                  product:
+                                      Product_model.fromJson(value).data,
+                                ));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) =>
+                                    ResultOverlay(value['message']));
+                          }
+                        }
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.orange)),
+                      child: Center(
+                          child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.search,
+                            color: Colors.orange,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'إعرض منتجات المركبة',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orange),
+                          ),
+                        ],
+                      )),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      car_mades_id == null
+                          ? showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay('Please select Car Made'))
+                          : API(context).post(
+                              'user/select/products/add/favourite/car', {
+                        "car_type_id": cartype[checkboxType].id,
+                        "car_made_id": car_mades_id,
+                            }).then((value) {
+                              if (value != null) {
+                                if (value['status_code'] == 200) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) =>
+                                          ResultOverlay(value['message']));
+                                  getFavorit();
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) =>
+                                          ResultOverlay(value['message']));
+                                }
+                              }
+                            });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.orange)),
+                      child: Center(
+                          child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Colors.orange,
+                          ),
+                          Text(
+                            'أضف إلى مركباتي',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orange),
+                          ),
+                        ],
+                      )),
+                    ),
+                  )
+                ],
+              ),
+            ),
               ],
-            )),
+            ),
           ],
         ),
       ),

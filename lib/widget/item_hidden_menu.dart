@@ -32,34 +32,39 @@ class ItemHiddenMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.only(bottom: 15.0,top: 15.0, left: 24),
-      child: InkWell(
-        onTap: onTap,
-        child: Row(
-          children: <Widget>[
-            Container(width: 32, child: icon),
-            SizedBox(
-              width: 16,
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(bottom: 15.0,top: 15.0, left: 24),
+          child: InkWell(
+            onTap: onTap,
+            child: Row(
+              children: <Widget>[
+                Container(width: 32, child: icon),
+                SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                  child: Text(
+                    name,
+                    style: (this.baseStyle ??
+                            TextStyle(color: Colors.grey, fontSize: 14.0))
+                        .merge(this.selected
+                            ? this.selectedStyle ??
+                                TextStyle(
+                                    color: Colors.black, fontSize: 14)
+                            : TextStyle(
+                                color: Colors.black, fontSize: 14)),
+                  ),
+                ),
+                onTap==null?Container():Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 15,)
+              ],
             ),
-            Expanded(
-              child: Text(
-                name,
-                style: (this.baseStyle ??
-                        TextStyle(color: Colors.grey, fontSize: 14.0))
-                    .merge(this.selected
-                        ? this.selectedStyle ??
-                            TextStyle(
-                                color: Colors.black, fontSize: 14)
-                        : TextStyle(
-                            color: Colors.black, fontSize: 14)),
-              ),
-            ),
-            onTap==null?Container():Icon(Icons.arrow_forward_ios,color: Colors.grey,)
-          ],
+          ),
         ),
-      ),
+        onTap==null?Container():Container(height: 1,color: Colors.black12,)
+      ],
     );
   }
 }

@@ -41,7 +41,7 @@ class _ProductCardState extends State<ProductCard> {
     return Stack(
       children: <Widget>[
         Container(
-          width: ScreenUtil.getWidth(context) / 2,
+          width: ScreenUtil.getWidth(context) / 2.5,
           margin: EdgeInsets.only(left: 6, top: 8, right: 6, bottom: 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
@@ -61,9 +61,9 @@ class _ProductCardState extends State<ProductCard> {
                   boxShadow: [
                     BoxShadow(
                         color: Colors.black12,
-                        blurRadius: 5.0,
+                        blurRadius: 2.0,
                         spreadRadius: 1,
-                        offset: Offset(0.0, 2)),
+                        offset: Offset(0.0, 1)),
                   ]),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -76,7 +76,7 @@ class _ProductCardState extends State<ProductCard> {
                       imageUrl: (widget.product.photo.isEmpty)
                           ? 'http://arabimagefoundation.com/images/defaultImage.png'
                           : widget.product.photo[0].image,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
                     ),
                   ),
@@ -164,7 +164,7 @@ class _ProductCardState extends State<ProductCard> {
                                   }
                                 });
                               },
-                              icon: Icon(CupertinoIcons.cart,
+                              icon: Icon(CupertinoIcons.cart,size: 30,
                                   color: Colors.black,),
                             ),
                             SizedBox(
@@ -235,27 +235,4 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 
-  bool onLikeTapped() {
-    // API(context)
-    //     .post('wishlist', {"product_id": widget.product.id}).then((value) => {
-    //           if (value['status'] != 'error')
-    //             {
-    //               setState(() {
-    //                 widget.product.w = false;
-    //               }),
-    //               Scaffold.of(context).showSnackBar(SnackBar(
-    //                   backgroundColor: mainColor,
-    //                   content: Text(value['message'])))
-    //             }
-    //           else
-    //             {
-    //               setState(() {
-    //                 widget.product.is_wishlisted = true;
-    //               }),
-    //               Scaffold.of(context).showSnackBar(SnackBar(
-    //                   backgroundColor: mainColor,
-    //                   content: Text(value['message'])))
-    //             }
-    //         });
-  }
 }

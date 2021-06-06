@@ -48,6 +48,8 @@ class _HomeState extends State<Home> {
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
+    final data = Provider.of<Provider_Data>(context);
+
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
@@ -62,13 +64,22 @@ class _HomeState extends State<Home> {
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.person,size: 35,),
+        icon: Icon(
+          CupertinoIcons.person,
+          size: 35,
+        ),
         title: ("حسابى"),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.cart),
+        icon: Stack(
+          children: [
+            Center(child: Icon(CupertinoIcons.cart)),
+            Center(child: Text(data.cart_model!=null?" ${data.cart_model.cartTotal??0} ":'',style: TextStyle(backgroundColor: Colors.white,color: Colors.orange),)),
+          ],
+        ),
+        iconSize: 35,
         title: ("العربة"),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
@@ -79,7 +90,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _controller = PersistentTabController(initialIndex: 0);
-    API(context).post('site/new/products',{}).then((value) {
+    API(context).post('site/new/products', {}).then((value) {
       if (value != null) {
         setState(() {
           product = Product_model.fromJson(value).data;
@@ -117,6 +128,7 @@ class _HomeState extends State<Home> {
 
     super.initState();
   }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _carouselCurrentPage = 0;
   String pathImage;
@@ -125,21 +137,25 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-     // drawer: HiddenMenu(),
+      // drawer: HiddenMenu(),
       body: PersistentTabView(
         context,
         controller: _controller,
         screens: _buildScreens(),
         items: _navBarsItems(),
         navBarHeight: 60,
+        margin: EdgeInsets.only(bottom: 10),
         confineInSafeArea: true,
-        backgroundColor: Colors.white, // Default is Colors.white.
-        handleAndroidBackButtonPress: true, // Default is true.
-        resizeToAvoidBottomInset:
-            true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-        stateManagement: true, // Default is true.
-        hideNavigationBarWhenKeyboardShows:
-            true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+        backgroundColor: Colors.white,
+        // Default is Colors.white.
+        handleAndroidBackButtonPress: true,
+        // Default is true.
+        resizeToAvoidBottomInset: true,
+        // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+        stateManagement: true,
+        // Default is true.
+        hideNavigationBarWhenKeyboardShows: true,
+        // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(10.0),
           colorBehindNavBar: Colors.white,
@@ -199,16 +215,16 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(themeColor.getCar_made(),style: TextStyle(
-                        color: Colors.white
-                    ),)
+                    Text(
+                      themeColor.getCar_made(),
+                      style: TextStyle(color: Colors.white),
+                    )
                   ],
                 ),
               ),
               IconButton(
                 onPressed: () {
-                  showDialog(
-                      context: context, builder: (_) => SearchOverlay());
+                  showDialog(context: context, builder: (_) => SearchOverlay());
                 },
                 icon: Icon(
                   Icons.search,
@@ -219,21 +235,20 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-
         Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
-
                 cartype == null
                     ? Container()
                     : Padding(
-                      padding: const EdgeInsets.only(left: 15,right: 15),
-                      child: GridView.builder(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: GridView.builder(
                           primary: false,
                           padding: EdgeInsets.only(top: 20),
                           shrinkWrap: true,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: 1.3,
                             crossAxisCount: 2,
                           ),
@@ -243,24 +258,30 @@ class _HomeState extends State<Home> {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
-                                onTap: (){
-                                  Nav.route(context, ProductCarType(id: cartype[index].id,name: cartype[index].typeName));
+                                onTap: () {
+                                  Nav.route(
+                                      context,
+                                      ProductCarType(
+                                          id: cartype[index].id,
+                                          name: cartype[index].typeName));
                                 },
                                 child: Container(
                                   height: ScreenUtil.getHeight(context) / 10,
                                   width: ScreenUtil.getWidth(context) / 2.5,
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 3.0,color: Colors.black12
-                                    ),
-                                    image: DecorationImage(image: CachedNetworkImageProvider("${cartype[index].image}"),fit: BoxFit.cover) ,
-                                    borderRadius: index.isEven?BorderRadius.only(
-                                        topRight: Radius.circular(15.0),
-                                        bottomRight: Radius.circular(15.0)
-                                    ):BorderRadius.only(
-                                        topLeft: Radius.circular(15.0),
-                                        bottomLeft: Radius.circular(15.0)
-                                    ),
+                                        width: 3.0, color: Colors.black12),
+                                    image: DecorationImage(
+                                        image: CachedNetworkImageProvider(
+                                            "${cartype[index].image}"),
+                                        fit: BoxFit.cover),
+                                    borderRadius: index.isEven
+                                        ? BorderRadius.only(
+                                            topRight: Radius.circular(15.0),
+                                            bottomRight: Radius.circular(15.0))
+                                        : BorderRadius.only(
+                                            topLeft: Radius.circular(15.0),
+                                            bottomLeft: Radius.circular(15.0)),
                                   ),
                                   child: Align(
                                     alignment: Alignment.bottomCenter,
@@ -268,11 +289,13 @@ class _HomeState extends State<Home> {
                                       color: Colors.black12,
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
-                                        child: AutoSizeText(cartype[index].typeName,
-                                             maxLines: 1,maxFontSize: 18,
+                                        child: AutoSizeText(
+                                            cartype[index].typeName,
+                                            maxLines: 1,
+                                            maxFontSize: 18,
                                             minFontSize: 10,
-                                            style: TextStyle(color: Colors.white,
-
+                                            style: TextStyle(
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
                                       ),
                                     ),
@@ -282,81 +305,90 @@ class _HomeState extends State<Home> {
                             );
                           },
                         ),
-                    ),
-                ads == null
-                    ? Container(): Padding(
-                  padding: EdgeInsets.only(top: 10),
-                      child: CarouselSlider(
-                  items: ads
-                        .map((item) => Banner_item(
-                              item: item.photo.image,
-                            ))
-                        .toList(),
-                  options: CarouselOptions(
-                        height: ScreenUtil.getHeight(context)/5,
-                        aspectRatio: 16/9,
-                        viewportFraction: 0.8,
-                        initialPage: 0,
-                        enableInfiniteScroll: true,
-                        reverse: false,
-                        autoPlay: true,
-                        autoPlayInterval: Duration(seconds: 3),
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: true,
-                        //onPageChanged: callbackFunction,
-                        scrollDirection: Axis.horizontal,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            _carouselCurrentPage = index;
-                          });
-                        }),
-                ),
-                    ),
-                SizedBox(height: 10,),
-                ads == null
-                    ? Container():   SliderDotAds(_carouselCurrentPage,ads),
-                categories == null ? Container() : list_category(themeColor),
-
-                product == null ? Container() :product.isEmpty? Container() : Column(
-                  children: [
-                    ProductListTitleBar(
-                      themeColor: themeColor,
-                      title: 'وصل حديثاٌ',
-                      description: 'المزيد',
-                    ),
-                    list_product(themeColor, product),
-                  ],
-                ),
-
-                ads == null
-                    ? Container(): ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: ads.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Banner_item(
-                        item:ads[index].photo.image
                       ),
-                    );
-                  },
+                ads == null
+                    ? Container()
+                    : Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: CarouselSlider(
+                          items: ads
+                              .map((item) => Banner_item(
+                                    item: item.photo.image,
+                                  ))
+                              .toList(),
+                          options: CarouselOptions(
+                              height: ScreenUtil.getHeight(context) / 5,
+                              aspectRatio: 16 / 9,
+                              viewportFraction: 0.8,
+                              initialPage: 0,
+                              enableInfiniteScroll: true,
+                              reverse: false,
+                              autoPlay: true,
+                              autoPlayInterval: Duration(seconds: 3),
+                              autoPlayAnimationDuration:
+                                  Duration(milliseconds: 800),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              enlargeCenterPage: true,
+                              //onPageChanged: callbackFunction,
+                              scrollDirection: Axis.horizontal,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _carouselCurrentPage = index;
+                                });
+                              }),
+                        ),
+                      ),
+                SizedBox(
+                  height: 10,
                 ),
-
+                ads == null
+                    ? Container()
+                    : SliderDotAds(_carouselCurrentPage, ads),
+                categories == null ? Container() : list_category(themeColor),
+                product == null
+                    ? Container()
+                    : product.isEmpty
+                        ? Container()
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ProductListTitleBar(
+                                themeColor: themeColor,
+                                title: 'وصل حديثاٌ',
+                                description: 'المزيد',
+                              ),
+                              list_product(themeColor, product),
+                            ],
+                          ),
+                ads == null
+                    ? Container()
+                    : ListView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: ads.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Banner_item(item: ads[index].photo.image),
+                          );
+                        },
+                      ),
                 productMostSale == null
                     ? Container()
-                     :productMostSale.isEmpty? Container() :Column(
-                      children: [
-                        ProductListTitleBar(
-                          themeColor: themeColor,
-                          title: 'الأكثر مبيعا',
-                          description: 'المزيد',
-                        ),
-                        list_product(themeColor, productMostSale),
-                      ],
-                    ),
+                    : productMostSale.isEmpty
+                        ? Container()
+                        : Column(
+                            children: [
+                              ProductListTitleBar(
+                                themeColor: themeColor,
+                                title: 'الأكثر مبيعا',
+                                description: 'المزيد',
+                              ),
+                              list_product(themeColor, productMostSale),
+                            ],
+                          ),
               ],
             ),
           ),
@@ -391,26 +423,29 @@ class _HomeState extends State<Home> {
   }
 
   Widget list_product(Provider_control themeColor, List<Product> product) {
-    return product.isEmpty?Container():GridView.builder(
-      primary: false,
-      padding: EdgeInsets.all(1),
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 0.77,
-        crossAxisCount: 2,
-      ),
-      itemCount: product.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: ProductCard(
-            themeColor: themeColor,
-            product: product[index],
-          ),
-        );
-      },
-    );
+    return product.isEmpty
+        ? Container()
+        : GridView.builder(
+            primary: false,
+            padding: EdgeInsets.all(1),
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 0.77,
+              crossAxisCount: 2,
+            ),
+            itemCount: product.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                child: Center(
+                  child: ProductCard(
+                    themeColor: themeColor,
+                    product: product[index],
+                  ),
+                ),
+              );
+            },
+          );
   }
-
 }

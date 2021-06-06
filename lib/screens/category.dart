@@ -45,8 +45,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       body: Column(
         children: [
           Container(
-            height: ScreenUtil.getHeight(context) -
-                ScreenUtil.getHeight(context) / 1.2,
+            //height: ScreenUtil.getHeight(context) - ScreenUtil.getHeight(context) / 1.2,
             color: themeColor.getColor(),
             padding: const EdgeInsets.only(top: 35),
             child: Row(
@@ -117,6 +116,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   width: ScreenUtil.getWidth(context) / 2.5,
                                   height: ScreenUtil.getHeight(context) / 1.25,
                                   decoration: BoxDecoration(
+                                    color: Color(0xffF6F6F6),
                                         image: DecorationImage(
                                             image: new ExactAssetImage(
                                                 'assets/images/trkar_logo_white.png',),
@@ -155,7 +155,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     horizontal: BorderSide(
                                                         color: selected
                                                             ? Colors.black12
-                                                            : Colors.grey))),
+                                                            : Colors.black26))),
                                             child: AutoSizeText(
                                               categories[index].name,
                                               maxLines: 2,

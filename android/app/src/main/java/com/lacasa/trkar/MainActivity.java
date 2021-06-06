@@ -1,4 +1,4 @@
-package com.example.flutter_pos;
+package com.lacasa.trkar;
 
 import io.flutter.embedding.android.FlutterActivity;
 

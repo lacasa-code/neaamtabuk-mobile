@@ -47,15 +47,8 @@ class _CategoryCardState extends State<CategoryCard> {
           children: [
             Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black12),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 5.0,
-                        spreadRadius: 1,
-                        offset: Offset(0.0, 2)),
-                  ]),
+                  border: Border.all(color: Colors.black26),
+                  color: Colors.white),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CachedNetworkImage(
