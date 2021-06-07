@@ -2,17 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_pos/screens/Account.dart';
 import 'package:flutter_pos/screens/login.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/register/register_form.dart';
+import 'package:flutter_pos/widget/register/register_form_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -20,9 +25,12 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  Model model = Model();
+  Provider_control themeColor;
+
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+     themeColor = Provider.of<Provider_control>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: themeColor.getColor(),
@@ -100,13 +108,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/icons/facebook.svg',height: 30,width: 30,),
+                  SvgPicture.asset('assets/icons/facebook_2_.svg',height: 20,width: 30,
+                   color: Color(0xff3D2FA4),),
                   SizedBox(width: 5),
                   Text(
                    "دخول عن طريق فيسبوك",
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.blueAccent,
+                      color: Color(0xff3D2FA4),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -197,7 +206,11 @@ class _RegisterPageState extends State<RegisterPage> {
     try{
       await _googleSignIn.signIn();
       print(_googleSignIn.currentUser);
-
+      model.email=_googleSignIn.currentUser.email;
+      model.Name=_googleSignIn.currentUser.displayName;
+      model.password=_googleSignIn.currentUser.id+"Ss#";
+      model.password_confirmation=_googleSignIn.currentUser.id+'Ss#';
+      register(themeColor);
     } catch (err){
       print(err);
     }
@@ -213,6 +226,11 @@ class _RegisterPageState extends State<RegisterPage> {
         final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
         final profil = JSON.jsonDecode(graphResponse.body);
         print(graphResponse.body);
+        model.email=profil['email'];
+        model.Name=profil['name'];
+        model.password= "${profil['id']}Ss#";
+        model.password_confirmation="${profil['id']}Ss#";
+        register(themeColor);
         break;
 
       case FacebookLoginStatus.cancelledByUser:
@@ -222,4 +240,32 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
   }
+  register(Provider_control themeColor) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    API(context).post('user/register', {
+      'name': model.Name,
+      'email': model.email,
+      'password': model.password,
+      "password_confirmation": model.password_confirmation,
+      "role": 2,
+    }).then((value) {
+      if (!value.containsKey('errors')) {
+        var user = value['data'];
+        prefs.setString("user_email", user['email']);
+        prefs.setString("user_name", user['name']);
+        prefs.setString("token", user['token']);
+        prefs.setInt("user_id", user['id']);
+        themeColor.setLogin(true);
+        Navigator.pushAndRemoveUntil(
+            context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
+      } else {
+        showDialog(
+            context: context,
+            builder: (_) =>
+                ResultOverlay('${value['message']}\n${value['errors']}'));
+
+      }
+    });
+  }
+
 }

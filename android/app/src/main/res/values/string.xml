@@ -2,6 +2,5 @@
 <resources>
     <string name="app_name">Trkar</string>
     <string name="facebook_app_id">819785255321604</string>
-    <string name="fb_login_protocol_scheme">fb819785255321604</string>
-
+    <string name="fb_login_protocol_scheme">fb1365719610250300</string>
 </resources>

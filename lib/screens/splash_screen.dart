@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -21,6 +22,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   Provider_control themeColor;
+  Provider_Data _provider_data;
   @override
   void initState() {
     super.initState();
@@ -30,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     themeColor = Provider.of<Provider_control>(context);
+    _provider_data = Provider.of<Provider_Data>(context);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: themeColor.getColor(),
@@ -75,6 +78,7 @@ class _SplashScreenState extends State<SplashScreen>
       if (value['data'] != null) {
         if (value['data']['status'] == 'ON') {
           themeColor.setLogin(true);
+          _provider_data.getCart(context);
         } else {
           themeColor.setLogin(false);
           SharedPreferences.getInstance().then((prefs) {
