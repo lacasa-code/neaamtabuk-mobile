@@ -39,44 +39,49 @@ class _ProductCartState extends State<ProductCart> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: ScreenUtil.getWidth(context) / 3.5,
-              child: CachedNetworkImage(
-                imageUrl: widget.carts.productImage.isNotEmpty
-                    ? widget.carts.productImage[0].image
-                    : '',
-                errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
+        Container(
+          color: Colors.white,
+
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: ScreenUtil.getWidth(context) / 3.5,
+                child: CachedNetworkImage(
+                  imageUrl: widget.carts.productImage.isNotEmpty
+                      ? widget.carts.productImage[0].image
+                      : '',
+                  errorWidget: (context, url, error) =>
+                      Icon(Icons.image, color: Colors.black12,),
+                ),
               ),
-            ),
-            IconButton(
-                onPressed: () {
-                  API(context).post('delete/from/cart', {
-                    "order_id": widget.carts.orderId,
-                    "product_id": widget.carts.productId
-                  }).then((value) {
-                    if (value != null) {
-                      if (value['status_code'] == 200) {
-                        showDialog(
-                            context: context,
-                            builder: (_) => ResultOverlay(value['message']));
-                        ServiceData.getCart(context);
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (_) => ResultOverlay(value['message']));
+              IconButton(
+                  onPressed: () {
+                    API(context).post('delete/from/cart', {
+                      "order_id": widget.carts.orderId,
+                      "product_id": widget.carts.productId
+                    }).then((value) {
+                      if (value != null) {
+                        if (value['status_code'] == 200) {
+                          showDialog(
+                              context: context,
+                              builder: (_) => ResultOverlay(value['message']));
+                          ServiceData.getCart(context);
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) => ResultOverlay(value['message']));
+                        }
                       }
-                    }
-                  });
-                },
-                icon: Icon(
-                  Icons.close,
-                  color: Colors.grey,
-                )),
-          ],
+                    });
+                  },
+                  icon: Icon(
+                    Icons.close,
+                    color: Colors.grey,
+                  )),
+            ],
+          ),
         ),
         Container(
           color: Colors.white,
@@ -128,13 +133,13 @@ class _ProductCartState extends State<ProductCart> {
                               width: 50,
                               child: Center(
                                   child: IconButton(
-                                icon: Icon(Icons.add, color: Colors.grey),
-                                onPressed: () {
-                                  setState(() {
-                                    widget.carts.quantity++;
-                                  });
-                                },
-                              )),
+                                    icon: Icon(Icons.add, color: Colors.grey),
+                                    onPressed: () {
+                                      setState(() {
+                                        widget.carts.quantity++;
+                                      });
+                                    },
+                                  )),
                             ),
                             Container(
                               decoration: BoxDecoration(
@@ -151,18 +156,18 @@ class _ProductCartState extends State<ProductCart> {
                               height: 50,
                               child: Center(
                                   child: IconButton(
-                                icon: Icon(
-                                  Icons.remove,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if (widget.carts.quantity != 1) {
-                                      widget.carts.quantity--;
-                                    }
-                                  });
-                                },
-                              )),
+                                    icon: Icon(
+                                      Icons.remove,
+                                      color: Colors.grey,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (widget.carts.quantity != 1) {
+                                          widget.carts.quantity--;
+                                        }
+                                      });
+                                    },
+                                  )),
                             ),
                           ],
                         ),
@@ -188,7 +193,8 @@ class _ProductCartState extends State<ProductCart> {
 
                         Container(
                           child: AutoSizeText(
-                            " ${widget.carts.price} ${getTransrlate(context, 'Currency')}",
+                            " ${widget.carts.price} ${getTransrlate(
+                                context, 'Currency')}",
                             maxLines: 1,
                             minFontSize: 20,
                             maxFontSize: 25,
@@ -204,7 +210,7 @@ class _ProductCartState extends State<ProductCart> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Container(
                   height: 1,
                   color: Colors.black12,

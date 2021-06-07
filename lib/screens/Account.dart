@@ -148,7 +148,7 @@ class _AccountState extends State<Account> {
                         width: ScreenUtil.getWidth(context) / 4,
                         child: AutoSizeText(
                           getTransrlate(context, 'login'),
-                          maxFontSize: 16,
+                          maxFontSize: 12,
                           minFontSize: 10,
                           maxLines: 1,
                           style: TextStyle(
@@ -186,7 +186,7 @@ class _AccountState extends State<Account> {
                         child: AutoSizeText(
                           getTransrlate(context, 'AreadyAccount'),
                           overflow: TextOverflow.ellipsis,
-                          maxFontSize: 14,
+                          maxFontSize: 12,
                           maxLines: 1,
                           minFontSize: 10,
                           style: TextStyle(

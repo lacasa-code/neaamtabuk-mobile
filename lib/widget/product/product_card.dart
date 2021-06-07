@@ -124,12 +124,12 @@ class _ProductCardState extends State<ProductCard> {
                               width: 6,
                             ),
                             Container(
-                              width: ScreenUtil.getWidth(context)/6,
+                              width: ScreenUtil.getWidth(context)/6.7,
                               child: AutoSizeText(
 
                                 "${widget.product.price??0} ${getTransrlate(context, 'Currency')}",
                                 maxLines: 1,
-                                minFontSize: 15,
+                                minFontSize: 14,
                                 maxFontSize: 25,
                                 style: TextStyle(
                                     color: widget.themeColor.getColor(),

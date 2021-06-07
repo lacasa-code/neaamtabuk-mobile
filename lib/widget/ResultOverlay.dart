@@ -60,7 +60,7 @@ class ResultOverlayState extends State<ResultOverlay>
                 Container(height: 25,color: Colors.orange,),
                 SizedBox(height: 15,),
                 Icon(
-                  Icons.check_circle_outline,
+                  Icons.info_outline,
                   size: 80,
                   color: Colors.lightGreen,
                 ),
@@ -69,7 +69,7 @@ class ResultOverlayState extends State<ResultOverlay>
                   '${widget.message}',
                   style: TextStyle(
                       color: themeColor.getColor(),
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 10),
@@ -79,7 +79,7 @@ class ResultOverlayState extends State<ResultOverlay>
                   },
                   child: Container(
                       margin: const EdgeInsets.all(15.0),
-                      padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 40),
+                      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 50),
                       color: Colors.orange,
                       child: Text(getTransrlate(context, 'close'),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
                 )

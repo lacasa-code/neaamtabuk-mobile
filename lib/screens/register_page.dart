@@ -155,9 +155,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,),
+                  Container(height: 1,width: ScreenUtil.getWidth(context)/4.5,color: Colors.black12,),
                   Text(getTransrlate(context, 'haveanaccount'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),),
-                  Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,)
+                  Container(height: 1,width: ScreenUtil.getWidth(context)/4.5,color: Colors.black12,)
                 ],
               ),
             ),
