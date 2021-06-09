@@ -84,23 +84,26 @@ class _ProductListState extends State<ProductList> {
                     child: Container(
                       color: Colors.white,
                       //width: ScreenUtil.getWidth(context) / 1.7,
-                      padding: EdgeInsets.only(left: 10, top: 2, right: 10),
+                      padding: EdgeInsets.only(left: 10, top: 5, right: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+                          SizedBox(
+                            height: 5,
+                          ),
                           AutoSizeText(
                             widget.product.name,
                             maxLines: 1,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               color: Color(0xFF5D6A78),
                               fontWeight: FontWeight.w300,
                             ),
                             minFontSize: 11,
                           ),
                           SizedBox(
-                            height: 1,
+                            height: 5,
                           ),
                           RatingBar.builder(
                             ignoreGestures: true,
@@ -122,7 +125,7 @@ class _ProductListState extends State<ProductList> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Container(
-                                width: ScreenUtil.getWidth(context)/3.2,
+                                width: ScreenUtil.getWidth(context)/3.4,
                                 child: AutoSizeText(
                                   "${widget.product.price} ${getTransrlate(context, 'Currency')} ",
                                   maxLines: 1,

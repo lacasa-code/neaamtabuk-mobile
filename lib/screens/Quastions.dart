@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/productCarPage.dart';
@@ -148,6 +149,9 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                     children: [
                       InkWell(
                         onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => ResultOverlay(getTransrlate(context, 'OrderError')));
                         },
                         child: Container(
                           width: ScreenUtil.getWidth(context)/2.5,

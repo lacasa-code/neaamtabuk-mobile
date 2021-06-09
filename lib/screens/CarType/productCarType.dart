@@ -207,6 +207,7 @@ class _ProductCarTypeState extends State<ProductCarType> {
                           : List_product(
                               product:product,
                             ),
+                  SizedBox(height: 25,)
                 ],
               ),
             ),

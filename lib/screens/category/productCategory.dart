@@ -229,6 +229,7 @@ class _ProductCategoryState extends State<ProductCategory> {
                           : List_product(
                               product:product,
                             ),
+                  SizedBox(height: 25,)
                 ],
               ),
             ),

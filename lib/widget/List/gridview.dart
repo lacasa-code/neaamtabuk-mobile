@@ -31,7 +31,7 @@ class _grid_productState extends State<grid_product> {
       itemCount: widget.product.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(8.0),
           child: ProductCard(
             themeColor: themeColor,
             product: widget.product[index],

@@ -82,13 +82,7 @@ class API {
             Maintenance(
               erorr: jsonDecode(response.body),
             ));
-      } else if (response.statusCode == 404) {
-        Nav.route(
-            context,
-            Maintenance(
-              erorr: jsonDecode(response.body),
-            ));
-      } else {
+      }  else {
         return jsonDecode(response.body);
       }
     } catch (e) {} finally {}

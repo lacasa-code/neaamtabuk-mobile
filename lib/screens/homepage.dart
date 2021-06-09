@@ -359,6 +359,7 @@ class _HomeState extends State<Home> {
                                 description: 'المزيد',
                               ),
                               list_product(themeColor, product),
+
                             ],
                           ),
                 ads == null
@@ -387,6 +388,7 @@ class _HomeState extends State<Home> {
                                 description: 'المزيد',
                               ),
                               list_product(themeColor, productMostSale),
+                              SizedBox(height: 10,)
                             ],
                           ),
               ],
@@ -403,7 +405,7 @@ class _HomeState extends State<Home> {
     return GridView.builder(
       primary: false,
       shrinkWrap: true,
-      padding: EdgeInsets.symmetric(vertical: 4.0),
+      padding: EdgeInsets.symmetric(horizontal: 8),
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         childAspectRatio: 0.90,
@@ -427,7 +429,7 @@ class _HomeState extends State<Home> {
         ? Container()
         : GridView.builder(
             primary: false,
-            padding: EdgeInsets.all(1),
+            padding: EdgeInsets.only(left: 16),
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -436,9 +438,9 @@ class _HomeState extends State<Home> {
             ),
             itemCount: product.length,
             itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: Center(
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16,bottom: 16),
                   child: ProductCard(
                     themeColor: themeColor,
                     product: product[index],

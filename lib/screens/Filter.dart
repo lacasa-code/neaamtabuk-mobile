@@ -282,7 +282,7 @@ class _FilterdialogState extends State<Filterdialog> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Row(
                 children: [
                   InkWell(

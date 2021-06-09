@@ -130,7 +130,7 @@ class _ProductCartState extends State<ProductCart> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey)),
                               height: 50,
-                              width: 50,
+                              width: 43,
                               child: Center(
                                   child: IconButton(
                                     icon: Icon(Icons.add, color: Colors.grey),
@@ -152,7 +152,7 @@ class _ProductCartState extends State<ProductCart> {
                             Container(
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey)),
-                              width: 50,
+                              width: 43,
                               height: 50,
                               child: Center(
                                   child: IconButton(

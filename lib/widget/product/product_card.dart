@@ -41,8 +41,8 @@ class _ProductCardState extends State<ProductCard> {
     return Stack(
       children: <Widget>[
         Container(
-          width: ScreenUtil.getWidth(context) / 2.5,
-          margin: EdgeInsets.only(left: 6, top: 8, right: 6, bottom: 2),
+         // width: ScreenUtil.getWidth(context) / 2.5,
+          //margin: EdgeInsets.only(left: 12, top: 12, bottom: 12,right: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -56,7 +56,6 @@ class _ProductCardState extends State<ProductCard> {
             },
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -88,18 +87,21 @@ class _ProductCardState extends State<ProductCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        AutoSizeText(
-                          widget.product.name,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Color(0xFF5D6A78),
-                            fontWeight: FontWeight.w300,
+                        Container(
+                          width: ScreenUtil.getWidth(context) / 2.2,
+                          child: AutoSizeText(
+                            widget.product.name,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color(0xFF5D6A78),
+                              fontWeight: FontWeight.w300,
+                            ),
+                            minFontSize: 11,
                           ),
-                          minFontSize: 11,
                         ),
                         SizedBox(
-                          height: 1,
+                          height: 5,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -172,7 +174,8 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                             IconButton(
                               onPressed: () {
-                                widget.product.inWishlist==0?
+                                print( widget.product.inWishlist);
+                                widget.product.inWishlist=="0"?
                                 API(context).post('user/add/wishlist',{
                                   "product_id":widget.product.id
                                 }).then((value) {

@@ -183,6 +183,7 @@ class _FilterPageState extends State<FilterPage> {
                           : List_product(
                               product: product,
                             ),
+                  SizedBox(height: 25,)
                 ],
               ),
             ),

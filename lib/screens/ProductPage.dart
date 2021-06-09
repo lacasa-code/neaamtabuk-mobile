@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
-import 'package:flutter_pos/widget/slider/Banner.dart';
+import 'package:share/share.dart';
 import 'package:flutter_pos/widget/slider/slider_dot.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
@@ -140,7 +141,7 @@ class _ProductPageState extends State<ProductPage> {
                   },
                   icon: Icon(
                     Icons.arrow_back_ios,
-                    size: 30,
+                    size: 25,
                   ),
                   color: Color(0xffE4E4E4),
                 ),
@@ -149,7 +150,7 @@ class _ProductPageState extends State<ProductPage> {
                   child: Image.asset(
                     'assets/images/logo.png',
                     height: ScreenUtil.getHeight(context) / 10,
-                    width: ScreenUtil.getWidth(context) / 3,
+                    width: ScreenUtil.getWidth(context) / 3.2,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -181,14 +182,13 @@ class _ProductPageState extends State<ProductPage> {
                   },
                   icon: Icon(
                     Icons.search,
-                    size: 30,
+                    size: 25,
                   ),
                   color: Color(0xffE4E4E4),
                 ),
               ],
             ),
           ),
-
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -202,9 +202,10 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   CarouselSlider(
                     items: widget.product.photo
-                        .map((item) => Banner_item(
-                              item: item.image,
-                            ))
+                        .map((item) => CachedNetworkImage(
+                      imageUrl: item.image,
+                      fit: BoxFit.contain,
+                    ))
                         .toList(),
                     options: CarouselOptions(
                         autoPlay: true,
@@ -256,7 +257,8 @@ class _ProductPageState extends State<ProductPage> {
                           child: Row(
                             children: [
                               Icon(widget.product.inWishlist=="0"?
-                              Icons.favorite_border:Icons.favorite, size: 30, color: Colors.grey),
+                              Icons.favorite_border:Icons.favorite, size: 25, color: Colors.grey),
+                              SizedBox(width: 5,),
                               Text(
                                 'أضف للمفضلة',
                                 style: TextStyle(
@@ -265,23 +267,32 @@ class _ProductPageState extends State<ProductPage> {
                             ],
                           ),
                         ),
-                        Row(
-                          children: [
-                            Icon(Icons.share_outlined, size: 30, color: Colors.grey),
-                            Text(
-                              'أرسل لصديق',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.grey),
-                            ),
-                          ],
+                        InkWell(
+                          onTap: (){
+                            Share.share('https://trkar-frontend-5lqqa.ondigitalocean.app/product-details/${widget.product.id}', subject: 'Trkar');
+
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.share_outlined, size: 25, color: Colors.grey),
+                              SizedBox(width: 5,),
+                              Text(
+                                'أرسل لصديق',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, color: Colors.grey),
+                              ),
+                            ],
+                          ),
                         ),
                       widget.product.quantity>=1?  Row(
                           children: [
                             Icon(
                               Icons.check_circle_outline_sharp,
-                              size: 30,
+                              size: 25,
                               color: Colors.lightGreen,
                             ),
+                            SizedBox(width: 5,),
+
                             Text(
                               ' متوفر ',
                               style: TextStyle(
@@ -536,13 +547,13 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       )),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8,left: 8,right: 8),
+                    padding: const EdgeInsets.only(top: 8,left: 1,right: 1),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Image.asset("assets/images/Companies - MasterCard.png",width: 70,),
-                        Image.asset("assets/images/Companies - Visa.png",width: 70,),
-                        SvgPicture.asset("assets/icons/Path 1715.svg",width: 70,),
+                        Image.asset("assets/images/Companies - MasterCard.png",width: 60,),
+                        Image.asset("assets/images/Companies - Visa.png",width: 60,),
+                        SvgPicture.asset("assets/icons/Path 1715.svg",width: 60,),
                       ],
                     ),
                   ),
@@ -608,7 +619,6 @@ class _ProductPageState extends State<ProductPage> {
                                 color: Colors.black,
                               ),
                             ),
-
                           ],
                         ),
                         SizedBox(height: 25),
@@ -616,7 +626,7 @@ class _ProductPageState extends State<ProductPage> {
                         primary: false,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: 3,
+                        itemCount: 2,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -740,7 +750,7 @@ class _ProductPageState extends State<ProductPage> {
                             primary: false,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: 2,
+                            itemCount: 1,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 mainAxisAlignment: MainAxisAlignment.start,

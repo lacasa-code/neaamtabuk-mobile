@@ -35,7 +35,7 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 16,top: 8, right: 12, bottom: 2),
+      margin: EdgeInsets.only(left: 8,top: 8, right: 8, bottom: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
       ),
@@ -61,7 +61,7 @@ class _CategoryCardState extends State<CategoryCard> {
                 ),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 5,),
             AutoSizeText(
              "${ widget.product.name}",
               maxLines: 1,

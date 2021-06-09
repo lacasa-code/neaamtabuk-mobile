@@ -9,22 +9,13 @@ class Banner_item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //width: ScreenUtil.getWidth(context)/1.5,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey[200],
-              blurRadius: 5.0,
-              spreadRadius: 1,
-              offset: Offset(0.0, 1)),
-        ],
-      ),
+      width: ScreenUtil.getWidth(context)/1,
 
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
         child: CachedNetworkImage(
           imageUrl: item,
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
     );

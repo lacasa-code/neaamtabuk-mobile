@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -134,6 +136,9 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                     children: [
                       InkWell(
                         onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => ResultOverlay(getTransrlate(context, 'OrderError')));
                         },
                         child: Container(
                           width: ScreenUtil.getWidth(context)/2.5,
@@ -156,6 +161,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                       ),
                       InkWell(
                         onTap: () {
+                          Navigator.pop(context);
                         },
                         child: Container(
                           width: ScreenUtil.getWidth(context)/2.5,
