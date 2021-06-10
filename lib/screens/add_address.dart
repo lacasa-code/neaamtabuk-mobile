@@ -162,7 +162,7 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.countryCode=value;
+                    address.street=value;
 
                   },
                 ),
@@ -318,7 +318,8 @@ class _AddAddressState extends State<AddAddress> {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             //setState(() => _isLoading = true);
-                            API(context).post('user/add/shipping', address.toJson()).then((value) {
+                            API(context).post('user/add/shipping',
+                                address.toJson()).then((value) {
                               if (value != null) {
                                 if (value['status_code'] == 201) {
                                   Navigator.pop(context);

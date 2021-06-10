@@ -36,7 +36,7 @@ class ItemHiddenMenu extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          margin: EdgeInsets.only(bottom: 15.0,top: 15.0, left: 24),
+          margin: EdgeInsets.only(bottom: 15.0, top: 15.0, left: 24),
           child: InkWell(
             onTap: onTap,
             child: Row(
@@ -52,18 +52,27 @@ class ItemHiddenMenu extends StatelessWidget {
                             TextStyle(color: Colors.grey, fontSize: 14.0))
                         .merge(this.selected
                             ? this.selectedStyle ??
-                                TextStyle(
-                                    color: Colors.black, fontSize: 14)
-                            : TextStyle(
-                                color: Colors.black, fontSize: 14)),
+                                TextStyle(color: Colors.black, fontSize: 14)
+                            : TextStyle(color: Colors.black, fontSize: 14)),
                   ),
                 ),
-                onTap==null?Container():Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 15,)
+                onTap == null
+                    ? Container()
+                    : Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.grey,
+                        size: 15,
+                      )
               ],
             ),
           ),
         ),
-        onTap==null?Container():Container(height: 1,color: Colors.black12,)
+        onTap == null
+            ? Container()
+            : Container(
+                height: 1,
+                color: Colors.black12,
+              )
       ],
     );
   }

@@ -5,6 +5,7 @@ import 'package:flutter_pos/model/wishlist_model.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_pos/widget/product/Wish_List_item.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ class _WishListState extends State<WishList> {
           ],
         ),
       ),
-      body: Container(
+      body:!themeColor.isLogin?Notlogin(): Container(
         child: wishList == null
             ? Container()
             : SingleChildScrollView(

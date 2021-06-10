@@ -40,6 +40,7 @@ class Address {
   String city;
   String state;
   String countryCode;
+  String street;
   String postalCode;
   String latitude;
   String longitude;
@@ -81,6 +82,7 @@ class Address {
         this.nearestMilestone,
         this.notices,
         this.createdAt,
+        this.street,
         this.timeCreated});
 
   Address.fromJson(Map<String, dynamic> json) {
@@ -94,7 +96,7 @@ class Address {
     recipientEmail = json['recipient_email'];
     address = json['address'];
     city = json['city'];
-    //state = json['state'];
+    street = json['street'];
     countryCode = json['country_code'];
     postalCode = json['postal_code'];
     latitude = json['latitude'];
@@ -124,6 +126,7 @@ class Address {
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
     data['last_name'] = this.lastName;
+    data['street']=this.street;
     data['area'] = this.area;
     data['district'] = this.district;
     data['home_no'] = this.homeNo;

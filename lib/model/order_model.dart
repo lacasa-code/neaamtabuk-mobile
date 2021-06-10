@@ -62,7 +62,7 @@ class Order {
     orderNumber = json['order_number'];
     orderTotal = json['order_total'];
     expired = json['expired'];
-    approved = json['approved'];
+    //approved = json['approved'];
     paid = json['paid'];
     status = json['status'];
     createdAt = json['created_at'];

@@ -32,6 +32,7 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
   String name;
   String token;
+
   @override
   void initState() {
     SharedPreferences.getInstance().then((prefs) {
@@ -49,7 +50,6 @@ class _AccountState extends State<Account> {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
           Container(
             color: themeColor.getColor(),
@@ -102,195 +102,213 @@ class _AccountState extends State<Account> {
               ],
             ),
           ),
-          SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: AutoSizeText(
-              name == null
-                  ? getTransrlate(context, 'gust')
-                  : "${getTransrlate(context, 'gust')} : ${name}",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+          Container(
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 2.0,
+                  spreadRadius: 1,
+                  offset: Offset(0.0, 1)),
+            ]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: AutoSizeText(
+                    name == null
+                        ? getTransrlate(context, 'gust')
+                        : "${getTransrlate(context, 'gust')} : ${name}",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                token != null
+                    ? Container()
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Nav.route(context, LoginPage());
+                            },
+                            child: Container(
+                              width: ScreenUtil.getWidth(context) / 2.5,
+                              //  margin: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.orange)),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/User Icon.svg',
+                                    color: Colors.orange,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    width: ScreenUtil.getWidth(context) / 4,
+                                    child: AutoSizeText(
+                                      getTransrlate(context, 'login'),
+                                      maxFontSize: 12,
+                                      minFontSize: 10,
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.orange),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Nav.route(context, RegisterPage());
+                            },
+                            child: Container(
+                              width: ScreenUtil.getWidth(context) / 2.5,
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.orange)),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/reload.svg',
+                                    color: Colors.orange,
+                                    width: 25,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    width: ScreenUtil.getWidth(context) / 4,
+                                    child: AutoSizeText(
+                                      getTransrlate(context, 'AreadyAccount'),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxFontSize: 12,
+                                      maxLines: 1,
+                                      minFontSize: 10,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.orange),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
           ),
-          token != null
-              ? Container()
-              : Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              InkWell(
-                onTap: () {
-                  Nav.route(context, LoginPage());
-                },
-                child: Container(
-                  width: ScreenUtil.getWidth(context) / 2.5,
-                  //  margin: const EdgeInsets.all(10.0),
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.orange)),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/User Icon.svg',
-                        color: Colors.orange,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        width: ScreenUtil.getWidth(context) / 4,
-                        child: AutoSizeText(
-                          getTransrlate(context, 'login'),
-                          maxFontSize: 12,
-                          minFontSize: 10,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Nav.route(context, RegisterPage());
-                },
-                child: Container(
-                  width: ScreenUtil.getWidth(context) / 2.5,
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.orange)),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/reload.svg',
-                        color: Colors.orange,
-                        width: 25,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        width: ScreenUtil.getWidth(context) / 4,
-                        child: AutoSizeText(
-                          getTransrlate(context, 'AreadyAccount'),
-                          overflow: TextOverflow.ellipsis,
-                          maxFontSize: 12,
-                          maxLines: 1,
-                          minFontSize: 10,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-         SizedBox(height: 20,),
-         Expanded(
+          Expanded(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-
-                        SizedBox(
-                          height: ScreenUtil.getHeight(context) / 30,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 16, left: 16),
-                          child:
-                              NotificationListener<OverscrollIndicatorNotification>(
-                            onNotification: (scroll) {
-                              scroll.disallowGlow();
-                              return false;
-                            },
-                            child: Column(
-                              children: <Widget>[
-                                ItemHiddenMenu(
-                                  onTap: () {
-                                    Nav.route(context, UserInfo());
-                                  },
-                                  icon:   SvgPicture.asset(
-                                    'assets/icons/User Icon.svg',
-                                    color: Colors.orange,
+                  Container(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(right: 16, left: 16),
+                            child: NotificationListener<
+                                OverscrollIndicatorNotification>(
+                              onNotification: (scroll) {
+                                scroll.disallowGlow();
+                                return false;
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  ItemHiddenMenu(
+                                    onTap: () {
+                                      Nav.route(context, UserInfo());
+                                    },
+                                    icon: SvgPicture.asset(
+                                      'assets/icons/User Icon.svg',
+                                      color: Colors.orange,
+                                    ),
+                                    name:
+                                        getTransrlate(context, 'ProfileSettings'),
+                                    baseStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 19.0,
+                                        fontWeight: FontWeight.w800),
+                                    colorLineSelected: Colors.orange,
                                   ),
-                                  name: getTransrlate(context, 'ProfileSettings'),
-                                  baseStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 19.0,
-                                      fontWeight: FontWeight.w800),
-                                  colorLineSelected: Colors.orange,
-                                ),
-                                ItemHiddenMenu(
-                                  onTap: () {
-                                    Nav.route(context, Shipping_Address());
-                                  },
-                                  icon: Icon(
-                                    Icons.location_on_outlined,
-                                    size: 25,
-                                    color: Colors.orange,
+                                  ItemHiddenMenu(
+                                    onTap: () {
+                                      Nav.route(context, Shipping_Address());
+                                    },
+                                    icon: Icon(
+                                      Icons.location_on_outlined,
+                                      size: 25,
+                                      color: Colors.orange,
+                                    ),
+                                    name: getTransrlate(context, 'MyAddress'),
+                                    baseStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 19.0,
+                                        fontWeight: FontWeight.w800),
+                                    colorLineSelected: Colors.orange,
                                   ),
-                                  name: getTransrlate(context, 'MyAddress'),
-                                  baseStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 19.0,
-                                      fontWeight: FontWeight.w800),
-                                  colorLineSelected: Colors.orange,
-                                ),
-                                ItemHiddenMenu(
-                                  onTap: () {
-                                    Nav.route(context, OrderHistory());
-                                  },
-                                  icon: Icon(
-                                    Icons.local_shipping_outlined,
-                                    size: 25,
-                                    color: Colors.orange,
+                                  ItemHiddenMenu(
+                                    onTap: () {
+                                      Nav.route(context, OrderHistory());
+                                    },
+                                    icon: Icon(
+                                      Icons.local_shipping_outlined,
+                                      size: 25,
+                                      color: Colors.orange,
+                                    ),
+                                    name: getTransrlate(context, 'Myorders'),
+                                    baseStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 19.0,
+                                        fontWeight: FontWeight.w800),
+                                    colorLineSelected: Colors.orange,
                                   ),
-                                  name: getTransrlate(context, 'Myorders'),
-                                  baseStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 19.0,
-                                      fontWeight: FontWeight.w800),
-                                  colorLineSelected: Colors.orange,
-                                ),
-                                ItemHiddenMenu(
-                                  onTap: () {
-                                    Nav.route(context, WishList());
-                                  },
-                                  icon: Icon(
-                                    Icons.favorite_border,
-                                    size: 25,
-                                    color: Colors.orange,
+                                  ItemHiddenMenu(
+                                    onTap: () {
+                                      Nav.route(context, WishList());
+                                    },
+                                    icon: Icon(
+                                      Icons.favorite_border,
+                                      size: 25,
+                                      color: Colors.orange,
+                                    ),
+                                    name: getTransrlate(context, 'MyFav'),
+                                    baseStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 19.0,
+                                        fontWeight: FontWeight.w800),
+                                    colorLineSelected: Colors.orange,
                                   ),
-                                  name: getTransrlate(context, 'MyFav'),
-                                  baseStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 19.0,
-                                      fontWeight: FontWeight.w800),
-                                  colorLineSelected: Colors.orange,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
+                        ]),
+                  ),
                   Container(
                     color: Color(0xffF6F6F6),
                     padding: const EdgeInsets.only(right: 16, left: 16),
@@ -313,9 +331,11 @@ class _AccountState extends State<Account> {
                               size: 25,
                               color: Colors.orange,
                             ),
-                            name: Provider.of<Provider_control>(context).local == 'ar'
-                                ? 'English'
-                                : 'عربى',
+                            name:
+                                Provider.of<Provider_control>(context).local ==
+                                        'ar'
+                                    ? 'English'
+                                    : 'عربى',
                             baseStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 19.0,
@@ -344,7 +364,6 @@ class _AccountState extends State<Account> {
                         InkWell(
                           onTap: () {
                             Nav.route(context, Info());
-
                           },
                           child: ItemHiddenMenu(
                             icon: Icon(
@@ -407,7 +426,8 @@ class _AccountState extends State<Account> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(
                                     "assets/icons/instagram.svg",
@@ -480,7 +500,8 @@ class _AccountState extends State<Account> {
                                     child: TextButton(
                                         onPressed: () {},
                                         child: AutoSizeText(
-                                        getTransrlate(context, 'sellonTurkar'),
+                                          getTransrlate(
+                                              context, 'sellonTurkar'),
                                           maxLines: 1,
                                           minFontSize: 12,
                                           maxFontSize: 14,
@@ -491,7 +512,8 @@ class _AccountState extends State<Account> {
                                     child: TextButton(
                                         onPressed: () {},
                                         child: AutoSizeText(
-                                          getTransrlate(context, 'Registerseller'),
+                                          getTransrlate(
+                                              context, 'Registerseller'),
                                           maxLines: 1,
                                           minFontSize: 12,
                                           maxFontSize: 14,
@@ -502,7 +524,8 @@ class _AccountState extends State<Account> {
                                     child: TextButton(
                                         onPressed: () {},
                                         child: AutoSizeText(
-                                          getTransrlate(context, 'HowtosellTurkar'),
+                                          getTransrlate(
+                                              context, 'HowtosellTurkar'),
                                           maxLines: 1,
                                           minFontSize: 12,
                                           maxFontSize: 14,
@@ -538,7 +561,9 @@ class _AccountState extends State<Account> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 25,)
+                        SizedBox(
+                          height: 25,
+                        )
                       ],
                     ),
                   ),

@@ -11,6 +11,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +47,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
         ),
       ),
 
-      body:Container(
+      body:!themeColor.isLogin?Notlogin():Container(
         child: address == null
             ? Container()
             : Column(

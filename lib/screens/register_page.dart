@@ -25,12 +25,12 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  Model model = Model();
+  String email, facebook_id;
   Provider_control themeColor;
 
   @override
   Widget build(BuildContext context) {
-     themeColor = Provider.of<Provider_control>(context);
+    themeColor = Provider.of<Provider_control>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: themeColor.getColor(),
@@ -43,31 +43,48 @@ class _RegisterPageState extends State<RegisterPage> {
             width: ScreenUtil.getWidth(context) / 4,
             fit: BoxFit.contain,
             //color: themeColor.getColor(),
-          ) ,
+          ),
           leading: Container(),
         ),
-       // resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical : 30,horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,),
-                      Text(getTransrlate(context, 'AreadyAccount'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),),
-                      Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,)
+                      Container(
+                        height: 1,
+                        width: ScreenUtil.getWidth(context) / 4,
+                        color: Colors.black12,
+                      ),
+                      Text(
+                        getTransrlate(context, 'AreadyAccount'),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        height: 1,
+                        width: ScreenUtil.getWidth(context) / 4,
+                        color: Colors.black12,
+                      )
                     ],
                   ),
                 ),
               ),
               RegisterForm(),
               routeLoginWidget(themeColor, context),
-              SizedBox(height: 50,)
+              SizedBox(
+                height: 50,
+              )
 
               //SocialRegisterButtons(themeColor: themeColor)
             ],
@@ -79,19 +96,33 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget routeLoginWidget(Provider_control themeColor, BuildContext context) {
     return Container(
-      padding: EdgeInsets.only( right: 36, left: 48),
+      padding: EdgeInsets.only(right: 36, left: 48),
       child: Column(
         children: <Widget>[
           Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical : 25),
+              padding: const EdgeInsets.symmetric(vertical: 25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,),
-                  Text(getTransrlate(context, 'or'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),),
-                  Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,)
+                  Container(
+                    height: 1,
+                    width: ScreenUtil.getWidth(context) / 4,
+                    color: Colors.black12,
+                  ),
+                  Text(
+                    getTransrlate(context, 'or'),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    height: 1,
+                    width: ScreenUtil.getWidth(context) / 4,
+                    color: Colors.black12,
+                  )
                 ],
               ),
             ),
@@ -99,20 +130,23 @@ class _RegisterPageState extends State<RegisterPage> {
           FlatButton(
             minWidth: ScreenUtil.getWidth(context),
             shape: RoundedRectangleBorder(
-                borderRadius:  BorderRadius.circular(1.0),
-                side: BorderSide(color: Colors.black26)
-            ),
+                borderRadius: BorderRadius.circular(1.0),
+                side: BorderSide(color: Colors.black26)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/icons/facebook_2_.svg',height: 20,width: 30,
-                   color: Color(0xff3D2FA4),),
+                  SvgPicture.asset(
+                    'assets/icons/facebook_2_.svg',
+                    height: 20,
+                    width: 30,
+                    color: Color(0xff3D2FA4),
+                  ),
                   SizedBox(width: 5),
                   Text(
-                   "دخول عن طريق فيسبوك",
+                    "دخول عن طريق فيسبوك",
                     style: TextStyle(
                       fontSize: 14,
                       color: Color(0xff3D2FA4),
@@ -124,23 +158,27 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             onPressed: () {
               loginWithFB(context);
-              },
+            },
           ),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           FlatButton(
-
             minWidth: ScreenUtil.getWidth(context),
             shape: RoundedRectangleBorder(
-                borderRadius:  BorderRadius.circular(1.0),
-                side: BorderSide(color: Colors.black26)
-            ),
+                borderRadius: BorderRadius.circular(1.0),
+                side: BorderSide(color: Colors.black26)),
             child: Padding(
               padding: const EdgeInsets.all(14.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/icons/google-icon.svg',height: 20,width: 20,),
+                  SvgPicture.asset(
+                    'assets/icons/google-icon.svg',
+                    height: 20,
+                    width: 20,
+                  ),
                   SizedBox(width: 5),
                   Text(
                     "دخول عن طريق جوجل",
@@ -159,14 +197,28 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical : 25),
+              padding: const EdgeInsets.symmetric(vertical: 25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(height: 1,width: ScreenUtil.getWidth(context)/4.5,color: Colors.black12,),
-                  Text(getTransrlate(context, 'haveanaccount'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),),
-                  Container(height: 1,width: ScreenUtil.getWidth(context)/4.5,color: Colors.black12,)
+                  Container(
+                    height: 1,
+                    width: ScreenUtil.getWidth(context) / 4.5,
+                    color: Colors.black12,
+                  ),
+                  Text(
+                    getTransrlate(context, 'haveanaccount'),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    height: 1,
+                    width: ScreenUtil.getWidth(context) / 4.5,
+                    color: Colors.black12,
+                  )
                 ],
               ),
             ),
@@ -174,9 +226,8 @@ class _RegisterPageState extends State<RegisterPage> {
           FlatButton(
             minWidth: ScreenUtil.getWidth(context),
             shape: RoundedRectangleBorder(
-                borderRadius:  BorderRadius.circular(1.0),
-                side: BorderSide(color: Colors.black26)
-            ),
+                borderRadius: BorderRadius.circular(1.0),
+                side: BorderSide(color: Colors.black26)),
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
@@ -196,40 +247,38 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-  login(BuildContext context) async{
+
+  login(BuildContext context) async {
     GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: [
         'email',
         'https://www.googleapis.com/auth/contacts.readonly',
       ],
     );
-    try{
+    try {
       await _googleSignIn.signIn();
       print(_googleSignIn.currentUser);
-      model.email=_googleSignIn.currentUser.email;
-      model.Name=_googleSignIn.currentUser.displayName;
-      model.password=_googleSignIn.currentUser.id+"Ss#";
-      model.password_confirmation=_googleSignIn.currentUser.id+'Ss#';
+      email = _googleSignIn.currentUser.email;
+      facebook_id = _googleSignIn.currentUser.id;
       register(themeColor);
-    } catch (err){
+    } catch (err) {
       print(err);
     }
   }
-  loginWithFB(BuildContext context) async {
 
+  loginWithFB(BuildContext context) async {
     final facebookLogin = FacebookLogin();
     facebookLogin.logOut();
     final result = await facebookLogin.logIn(['email']);
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken.token;
-        final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
+        final graphResponse = await http.get(
+            'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
         final profil = JSON.jsonDecode(graphResponse.body);
         print(graphResponse.body);
-        model.email=profil['email'];
-        model.Name=profil['name'];
-        model.password= "${profil['id']}Ss#";
-        model.password_confirmation="${profil['id']}Ss#";
+        email = profil['email'];
+        facebook_id = "${profil['id']}";
         register(themeColor);
         break;
 
@@ -238,17 +287,12 @@ class _RegisterPageState extends State<RegisterPage> {
       case FacebookLoginStatus.error:
         break;
     }
-
   }
+
   register(Provider_control themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    API(context).post('user/register', {
-      'name': model.Name,
-      'email': model.email,
-      'password': model.password,
-      "password_confirmation": model.password_confirmation,
-      "role": 2,
-    }).then((value) {
+    API(context).post('login/facebook',
+        {'facebook_id': facebook_id, 'email': email}).then((value) {
       if (!value.containsKey('errors')) {
         var user = value['data'];
         prefs.setString("user_email", user['email']);
@@ -256,16 +300,14 @@ class _RegisterPageState extends State<RegisterPage> {
         prefs.setString("token", user['token']);
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);
-        Navigator.pushAndRemoveUntil(
-            context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (_) => Account()), (r) => false);
       } else {
         showDialog(
             context: context,
             builder: (_) =>
                 ResultOverlay('${value['message']}\n${value['errors']}'));
-
       }
     });
   }
-
 }

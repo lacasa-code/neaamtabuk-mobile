@@ -16,6 +16,7 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/Cart/product_cart.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
+import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -277,36 +278,9 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                         )
                 ],
-              ): Center(
-                child: Container(
-                  height: ScreenUtil.getHeight(context) / 1.5,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/ic_user_profile.svg",
-                        width: ScreenUtil.getWidth(context) / 3,
-                        color: Colors.black12,
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Text(
-                        'لا يوجد لديك حساب',
-                        style: TextStyle(color: Colors.black45,fontSize: 25),
-                      ),
-                      Text(
-                        'برجاء تسجيل دخول',
-                        style: TextStyle(color: Colors.black45,fontSize: 25),
-                      ),
-                    ],
-                  ),
-                ),
+              ): Notlogin(),
               ),
             ),
-          ),
         ],
       ),
     );

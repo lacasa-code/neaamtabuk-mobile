@@ -60,6 +60,7 @@ class _ProductPageState extends State<ProductPage> {
                 icon: const Icon(Icons.arrow_drop_down_outlined),
                 iconSize: 24,
                 elevation: 16,
+                underline: Container(),
                 style: const TextStyle(color: Colors.deepPurple),
                 onChanged: (int newValue) {
                   setState(() {
@@ -566,7 +567,6 @@ class _ProductPageState extends State<ProductPage> {
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(50.0),
                   child: AppBar(
-
                     backgroundColor: Colors.white,
                     bottom: TabBar(
                       tabs: [
@@ -585,6 +585,8 @@ class _ProductPageState extends State<ProductPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
+                        SizedBox(height: 10),
+
                         Row(
                           children: [
                             RatingBar.builder(

@@ -9,6 +9,8 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
+import 'package:flutter_pos/widget/no_found_product.dart';
+import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -192,7 +194,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   getList(List<PartCategories> partCategories) {
     return categories == null
         ? Container()
-        : ListView.builder(
+        : partCategories.isEmpty?NotFoundLogin():ListView.builder(
             primary: false,
             shrinkWrap: true,
             padding: EdgeInsets.all(1),
