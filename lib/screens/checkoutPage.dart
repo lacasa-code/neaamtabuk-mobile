@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -258,7 +260,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                   ),
                                 ),
                                 onTap: () {
-                                  Nav.route(context, AddAddress());
+                                  _navigate_add_Address(context);
                                 },
                               ),
                             ),
@@ -1135,5 +1137,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
         ),
       ],
     );
+  }
+  _navigate_add_Address(BuildContext context) async {
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => AddAddress()));
+    Timer(Duration(seconds: 3), () => getAddress());
   }
 }
