@@ -74,8 +74,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _auth() async {
     //themeColor.setCar_made(getTransrlate(context, 'selectCar'));
-    API(context).post('token/data', {}).then((value) {
-      if (value != null) {
+    API(context,Check: false).post('token/data', {}).then((value) {
+      if (value['data'] != null) {
         if (value['data']['status'] == 'ON') {
           themeColor.setLogin(true);
           _provider_data.getCart(context);

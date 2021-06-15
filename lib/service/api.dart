@@ -18,7 +18,13 @@ class API {
   BuildContext context;
   bool Check=true ;
 
-  API(this.context,{this.Check});
+  API(this.context,{Check}){
+    if(Check==null){
+       this.Check=true ;
+    }else{
+      this.Check=Check;
+    }
+  }
 
   String deviceName;
   String deviceVersion;
@@ -104,7 +110,8 @@ class API {
 
   getAction(http.Response response) {
    if(Check) {
-      if (response.statusCode == 500) {
+     print(jsonDecode(response.body));
+     if (response.statusCode == 500) {
         Nav.route(
             context,
             Maintenance(

@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/wishlist_model.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 class Wish_List extends StatefulWidget {
   List<WishListItem> wishList;
@@ -112,7 +114,7 @@ class _Wish_ListState extends State<Wish_List> {
                     InkWell(
                       onTap: () {
                         API(context).post('add/to/cart', {
-                          "product_id": widget.product.id,
+                          "product_id": widget.product.productId,
                           "quantity": 1
                         }).then((value) {
                           if (value != null) {
@@ -121,6 +123,8 @@ class _Wish_ListState extends State<Wish_List> {
                                   context: context,
                                   builder: (_) =>
                                       ResultOverlay(value['message']));
+                              Provider.of<Provider_Data>(context,listen: false).getCart(context);
+
                             } else {
                               showDialog(
                                   context: context,
