@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/years.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -44,7 +46,7 @@ class _AddAddressState extends State<AddAddress> {
                 Text('إضافة عنوان جديد',style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 22),),
                 MyTextFormField(
                   intialLabel: ' ',
-                  Keyboard_Type: TextInputType.text,
+                  Keyboard_Type: TextInputType.name,
                   labelText: getTransrlate(context, 'Firstname'),
                   hintText: getTransrlate(context, 'Firstname'),
                   isPhone: true,
@@ -76,22 +78,24 @@ class _AddAddressState extends State<AddAddress> {
                     address.lastName=value;
                     },
                 ),
-                MyTextFormField(
-                  intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
-                  labelText: getTransrlate(context, 'Countroy'),
-                  hintText: getTransrlate(context, 'Countroy'),
-                  isPhone: true,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'Countroy');
-                    }
-                    _formKey.currentState.save();
-                    return null;
-                  },
-                  onSaved: (String value) {
-                    address.state=value;
-                  },
+                Text(getTransrlate(context, 'Countroy'),style: TextStyle(color: Colors.black,fontSize: 16),),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: DropdownSearch<String>(
+                   // label: getTransrlate(context, 'Countroy'),
+                    validator: (String item) {
+                      if (item == null) {
+                        return "Required field";
+                      } else
+                        return null;
+                    },
+
+                    items: ["الإمارات العربية المتحدة","مصر ",'السعودية','الكويت'],
+                    //  onFind: (String filter) => getData(filter),
+                    itemAsString: (String u) => u,
+                    onChanged: (String data) =>
+                    address.countryCode = data,
+                  ),
                 ),
                 MyTextFormField(
                   intialLabel: '',
@@ -168,7 +172,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  Keyboard_Type: TextInputType.number,
                   labelText: "رقم المنزل",
                   hintText: "رقم المنزل",
                   isPhone: true,
@@ -186,7 +190,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  Keyboard_Type: TextInputType.number,
                   labelText: "رقم الطابق",
                   hintText: "رقم الطابق",
                   isPhone: true,
@@ -204,7 +208,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  Keyboard_Type: TextInputType.number,
                   labelText: "رقم الشقه",
                   hintText: "رقم الشقه",
                   isPhone: true,
@@ -222,7 +226,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  Keyboard_Type: TextInputType.phone,
                   labelText: "رقم الجوال",
                   hintText: "رقم الجوال",
                   isPhone: true,
@@ -240,7 +244,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  Keyboard_Type: TextInputType.phone,
                   labelText: "رقم الهاتف الأرضي",
                   hintText: "رقم الهاتف الأرضي",
                   isPhone: true,
@@ -265,6 +269,8 @@ class _AddAddressState extends State<AddAddress> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return "أقرب معلم";
+                    }else if (value.length>250) {
+                      return "Over length";
                     }
                     _formKey.currentState.save();
                     return null;
@@ -332,7 +338,7 @@ class _AddAddressState extends State<AddAddress> {
                                   showDialog(
                                       context: context,
                                       builder: (_) =>
-                                          ResultOverlay(value['message']));
+                                          ResultOverlay('${value['message']??''}\n${value['errors']}'));
                                 }
                               }
                             });
@@ -358,7 +364,7 @@ class _AddAddressState extends State<AddAddress> {
                           ),
                         ),
                         onTap: () {
-
+                          Navigator.pop(context);
                         },
                       ),
                     ),

@@ -108,10 +108,11 @@ class _LoginFormState extends State<LoginForm> {
                     //setState(() => _isLoading = true);
                     final SharedPreferences prefs =
                         await SharedPreferences.getInstance();
-                    API(context).post('user/login', {
+                    API(context,Check: false).post('user/login', {
                       'email': model.email,
                       'password': model.password,
                     }).then((value) {
+                      print(value);
                       if (value != null) {
                         if (value['status_code'] == 200) {
                           var user = value['data'];
@@ -128,7 +129,7 @@ class _LoginFormState extends State<LoginForm> {
                           showDialog(
                               context: context,
                               builder: (_) =>
-                                  ResultOverlay('${value['message']??''}\n${value['errors']}'));
+                                  ResultOverlay('${value['errors']}'));
                         }
                       }
                     });

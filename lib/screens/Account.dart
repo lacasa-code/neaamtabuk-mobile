@@ -14,11 +14,13 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
+import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/item_hidden_menu.dart';
 import 'package:flutter_pos/screens/wishlist_page.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'MyCars/myCars.dart';
 
@@ -51,57 +53,7 @@ class _AccountState extends State<Account> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            color: themeColor.getColor(),
-            padding: const EdgeInsets.only(top: 35),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: ScreenUtil.getHeight(context) / 10,
-                    width: ScreenUtil.getWidth(context) / 3,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    Nav.route(context, MyCars());
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/car2.svg',
-                        fit: BoxFit.contain,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        themeColor.getCar_made(),
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context, builder: (_) => SearchOverlay());
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 30,
-                  ),
-                  color: Color(0xffE4E4E4),
-                ),
-              ],
-            ),
-          ),
+          AppBarCustom(),
           Container(
             decoration: BoxDecoration(color: Colors.white, boxShadow: [
               BoxShadow(
@@ -212,7 +164,7 @@ class _AccountState extends State<Account> {
                         ],
                       ),
                 SizedBox(
-                  height: 10,
+                  height: ScreenUtil.getWidth(context) /15,
                 ),
               ],
             ),
@@ -349,6 +301,25 @@ class _AccountState extends State<Account> {
                           },
                           child: ItemHiddenMenu(
                             icon: Icon(
+                              Icons.help_outline_rounded,
+                              size: 25,
+                              color: Colors.orange,
+                            ),
+                            name: getTransrlate(context, 'Support'),
+                            baseStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 19.0,
+                                fontWeight: FontWeight.w800),
+                            colorLineSelected: Colors.orange,
+                          ),
+                        ),
+
+                        InkWell(
+                          onTap: () {
+                            Nav.route(context, Info());
+                          },
+                          child: ItemHiddenMenu(
+                            icon: Icon(
                               Icons.info_outline,
                               size: 25,
                               color: Colors.orange,
@@ -429,20 +400,35 @@ class _AccountState extends State<Account> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  SvgPicture.asset(
-                                    "assets/icons/instagram.svg",
-                                    color: Colors.blueGrey,
-                                    width: 20,
+                                  InkWell(
+                                    onTap: (){
+                                      _launchURL('https://www.instagram.com/');
+                                    },
+                                    child: SvgPicture.asset(
+                                      "assets/icons/instagram.svg",
+                                      color: Colors.blueGrey,
+                                      width: 20,
+                                    ),
                                   ),
-                                  SvgPicture.asset(
-                                    "assets/icons/facebook.svg",
-                                    color: Colors.blueGrey,
-                                    width: 20,
+                                  InkWell(
+                                    onTap: (){
+                                      _launchURL('https://www.facebook.com/');
+                                    },
+                                    child: SvgPicture.asset(
+                                      "assets/icons/facebook.svg",
+                                      color: Colors.blueGrey,
+                                      width: 20,
+                                    ),
                                   ),
-                                  SvgPicture.asset(
-                                    "assets/icons/twitter.svg",
-                                    color: Colors.blueGrey,
-                                    width: 20,
+                                  InkWell(
+                                    onTap: (){
+                                      _launchURL('https://twitter.com/');
+                                    },
+                                    child: SvgPicture.asset(
+                                      "assets/icons/twitter.svg",
+                                      color: Colors.blueGrey,
+                                      width: 20,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -572,7 +558,11 @@ class _AccountState extends State<Account> {
             ),
           ),
         ],
+
       ),
     );
+
   }
+  void _launchURL(String _url) async =>
+      await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
 }

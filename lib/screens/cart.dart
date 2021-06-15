@@ -16,6 +16,8 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/Cart/product_cart.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
+import 'package:flutter_pos/widget/app_bar_custom.dart';
+import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -40,13 +42,16 @@ class _CartScreenState extends State<CartScreen> {
     super.initState();
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
     final _cart_model = Provider.of<Provider_Data>(context).cart_model;
 
     return Scaffold(
-      bottomNavigationBar:themeColor.isLogin? Container(
+      bottomNavigationBar:themeColor.isLogin?_cart_model.data!=null? Container(
         height: 80,
         decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
         child: Padding(
@@ -73,60 +78,12 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
         ),
-      ):Container(height: 1,width: 1,),
+      ):Container(
+        height: 1,width: 1,):Container(
+        height: 1,width: 1,),
       body: Column(
         children: [
-          Container(
-            color: themeColor.getColor(),
-            padding: const EdgeInsets.only(top: 35),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: ScreenUtil.getHeight(context) / 10,
-                    width: ScreenUtil.getWidth(context) / 3,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    Nav.route(context, MyCars());
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/car2.svg',
-                        fit: BoxFit.contain,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        themeColor.getCar_made(),
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context, builder: (_) => SearchOverlay());
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 30,
-                  ),
-                  color: Color(0xffE4E4E4),
-                ),
-              ],
-            ),
-          ),
+          AppBarCustom(),
 
           Expanded(
             child: SingleChildScrollView(
@@ -137,34 +94,9 @@ class _CartScreenState extends State<CartScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: CircularProgressIndicator(),
                       ))
-                      : _cart_model.data==null?Container():SingleChildScrollView(
+                      : _cart_model.data==null?NotFoundProduct():SingleChildScrollView(
                           child: _cart_model.data.orderDetails.isEmpty
-                              ? Container(
-                                  height: ScreenUtil.getHeight(context) / 1.5,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/icons/reload.svg",
-                                        width: ScreenUtil.getWidth(context) / 3,
-                                        color: Colors.black12,
-                                      ),
-                                      SizedBox(
-                                        height: 25,
-                                      ),
-                                      Text(
-                                        'لا يوجد منتجات',
-                                        style: TextStyle(color: Colors.black45,fontSize: 25),
-                                      ),
-                                      Text(
-                                        'في عربة التسوق',
-                                        style: TextStyle(color: Colors.black45,fontSize: 25),
-                                      ),
-                                    ],
-                                  ),
-                                )
+                              ? NotFoundProduct()
                               : Container(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,

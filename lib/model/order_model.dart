@@ -1,3 +1,6 @@
+import 'package:flutter_pos/model/payment_model.dart';
+import 'package:flutter_pos/model/shipping_address.dart';
+
 class Order_model {
   int statusCode;
   String message;
@@ -40,6 +43,8 @@ class Order {
   String createdAt;
   String orderStatus;
   List<OrderDetails> orderDetails;
+  Address address;
+  Payment payment;
 
   Order(
       {this.id,
@@ -67,6 +72,8 @@ class Order {
     status = json['status'];
     createdAt = json['created_at'];
     orderStatus = json['orderStatus'];
+    payment =Payment.fromJson(json['paymentway']);
+    address =Address.fromJson(json['shipping']);
     if (json['orderDetails'] != null) {
       orderDetails = new List<OrderDetails>();
       json['orderDetails'].forEach((v) {

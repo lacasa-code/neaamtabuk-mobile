@@ -27,7 +27,7 @@ class _FilterdialogState extends State<Filterdialog> {
   List<int> partSelect = [];
   List<int> originSelect = [];
   List<int> manufacturerSelect = [];
-  RangeValues _currentRangeValues = const RangeValues(10,10000);
+  RangeValues _currentRangeValues = const RangeValues(10, 10000);
 
   @override
   void initState() {
@@ -124,12 +124,15 @@ class _FilterdialogState extends State<Filterdialog> {
                                                         .partCategories[i]
                                                         .partsCheck = value;
                                                   });
-                                                  value?  partSelect.add(parts[index]
-                                                      .partCategories[i]
-                                                      .id): partSelect.remove(parts[index]
-                                                      .partCategories[i]
-                                                      .id);
-
+                                                  value
+                                                      ? partSelect.add(
+                                                          parts[index]
+                                                              .partCategories[i]
+                                                              .id)
+                                                      : partSelect.remove(
+                                                          parts[index]
+                                                              .partCategories[i]
+                                                              .id);
                                                 }),
                                             Text(
                                               parts[index]
@@ -182,7 +185,11 @@ class _FilterdialogState extends State<Filterdialog> {
                                         setState(() {
                                           manufacturer[index].check = value;
                                         });
-                                        value?  manufacturerSelect.add(manufacturer[index].id): manufacturerSelect.remove(manufacturer[index].id);
+                                        value
+                                            ? manufacturerSelect
+                                                .add(manufacturer[index].id)
+                                            : manufacturerSelect
+                                                .remove(manufacturer[index].id);
                                       }),
                                   Text(
                                     manufacturer[index].manufacturerName,
@@ -230,7 +237,10 @@ class _FilterdialogState extends State<Filterdialog> {
                                         setState(() {
                                           origin[index].check = value;
                                         });
-                                        value?  originSelect.add(origin[index].id): originSelect.remove(origin[index].id);
+                                        value
+                                            ? originSelect.add(origin[index].id)
+                                            : originSelect
+                                                .remove(origin[index].id);
                                       }),
                                   Text(
                                     origin[index].countryName,
@@ -259,25 +269,39 @@ class _FilterdialogState extends State<Filterdialog> {
                     'السعر',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  expanded: Padding(
-                      padding: const EdgeInsets.all(16.0), child:
-                  RangeSlider(
-                    activeColor: Colors.orange,
-                    inactiveColor: Colors.black26,
-                    values: _currentRangeValues,
-                    min: 10,
-                    max: 10000,
-                    divisions: 10000,
-                    labels: RangeLabels(
-                      _currentRangeValues.start.round().toString(),
-                      _currentRangeValues.end.round().toString(),
-                    ),
-                    onChanged: (RangeValues values) {
-                      setState(() {
-                        _currentRangeValues = values;
-                      });
-                    },
-                  )),
+                  expanded: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          width: ScreenUtil.getWidth(context) * 0.10,
+                          child: Text(
+                              _currentRangeValues.start.round().toString())),
+                      Container(
+                        width: ScreenUtil.getWidth(context) / 1.5,
+                        child: RangeSlider(
+                          activeColor: Colors.orange,
+                          inactiveColor: Colors.black26,
+                          values: _currentRangeValues,
+                          min: 10,
+                          max: 10000,
+                          divisions: 10000,
+                          labels: RangeLabels(
+                            _currentRangeValues.start.round().toString(),
+                            _currentRangeValues.end.round().toString(),
+                          ),
+                          onChanged: (RangeValues values) {
+                            setState(() {
+                              _currentRangeValues = values;
+                            });
+                          },
+                        ),
+                      ),
+                      Container(
+                          width: ScreenUtil.getWidth(context) * 0.10,
+                          child:
+                              Text(_currentRangeValues.end.round().toString())),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -291,9 +315,9 @@ class _FilterdialogState extends State<Filterdialog> {
                         "part_categories": partSelect.toString(),
                         "manufacturers": manufacturerSelect.toString(),
                         "origins": originSelect.toString(),
-                        "start_price":  _currentRangeValues.start.round().toString(),
+                        "start_price":
+                            _currentRangeValues.start.round().toString(),
                         "end_price": _currentRangeValues.end.round().toString(),
-
                       }).then((value) {
                         if (value != null) {
                           if (value['status_code'] == 200) {
@@ -382,8 +406,8 @@ class _FilterdialogState extends State<Filterdialog> {
 
   void getData() {
     partSelect = [];
-     originSelect = [];
-   manufacturerSelect = [];
+    originSelect = [];
+    manufacturerSelect = [];
     API(context).get('fetch/categories/nested/part').then((value) {
       if (value != null) {
         setState(() {

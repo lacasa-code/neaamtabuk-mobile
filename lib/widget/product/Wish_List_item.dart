@@ -44,13 +44,14 @@ class _Wish_ListState extends State<Wish_List> {
           child: Container(
             color: Colors.white,
             //width: ScreenUtil.getWidth(context) / 1.7,
-            padding: EdgeInsets.only(left: 5, top: 2, right: 5),
+            padding: EdgeInsets.only(left: 5, top: 10, right: 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       width: ScreenUtil.getWidth(context) / 2.5,
@@ -65,30 +66,6 @@ class _Wish_ListState extends State<Wish_List> {
                         minFontSize: 11,
                       ),
                     ),
-                    IconButton(
-                        onPressed: () {
-                          API(context).post('user/removeitem/wishlist',
-                              {"product_id": widget.product.productId}).then((value) {
-                            if (value != null) {
-                              if (value['status_code'] == 200) {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay(value['message']));
-                                getWishList();
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay(value['message']));
-                              }
-                            }
-                          });
-                        },
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.grey,
-                        ))
                   ],
                 ),
                 SizedBox(

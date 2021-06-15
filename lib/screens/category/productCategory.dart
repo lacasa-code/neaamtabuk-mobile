@@ -204,7 +204,7 @@ class _ProductCategoryState extends State<ProductCategory> {
                       : product.isEmpty
                       ? Container(
                     height: ScreenUtil.getHeight(context) / 1.5,
-                    child: NotFoundLogin(),
+                    child: NotFoundProduct(),
                   ): list
                           ? grid_product(
                               product:product,

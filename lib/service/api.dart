@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/Maintenance.dart';
+import 'package:flutter_pos/screens/login.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:global_configuration/global_configuration.dart';
@@ -15,10 +16,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
   BuildContext context;
+  bool Check=true ;
 
-  API(this.context) {
-    getDeviceDetails();
-  }
+  API(this.context,{this.Check});
+
   String deviceName;
   String deviceVersion;
   String identifier;
@@ -36,22 +37,7 @@ class API {
         'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
         //'Accept-Language': Provider.of<Provider_control>(context).getlocal(),
       });
-      print(response.body);
-      if (response.statusCode == 500) {
-        Nav.route(
-            context,
-            Maintenance(
-              erorr: response.body,
-            ));
-      } else if (response.statusCode == 404) {
-        Nav.route(
-            context,
-            Maintenance(
-              erorr: full_url + '\n' + response.body,
-            ));
-      } else {
-        return jsonDecode(response.body);
-      }
+      return getAction(response);
     } catch (e) {
       //Nav.route(context, Maintenance());
     } finally {}
@@ -74,17 +60,7 @@ class API {
             // 'locale': Provider.of<Provider_control>(context).getlocal(),
           },
           body: json.encode(body));
-      print("body =${jsonDecode(response.body)}");
-
-      if (response.statusCode == 500) {
-        Nav.route(
-            context,
-            Maintenance(
-              erorr: jsonDecode(response.body),
-            ));
-      }  else {
-        return jsonDecode(response.body);
-      }
+      return getAction(response);
     } catch (e) {} finally {}
   }
 
@@ -103,16 +79,7 @@ class API {
             //'locale': Provider.of<Provider_control>(context).getlocal(),
           },
           body: json.encode(body));
-      print(jsonDecode(response.body));
-      if (response.statusCode == 500) {
-        Nav.route(
-            context,
-            Maintenance(
-              erorr: jsonDecode(response.body),
-            ));
-      } else {
-        return jsonDecode(response.body);
-      }
+      return getAction(response);
     } catch (e) {} finally {}
   }
 
@@ -127,40 +94,30 @@ class API {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-         // 'locale': Provider.of<Provider_control>(context).getlocal(),
+          // 'locale': Provider.of<Provider_control>(context).getlocal(),
         },
       );
+      return getAction(response);
+    } catch (e) {} finally {}
+  }
+
+
+  getAction(http.Response response) {
+   if(Check) {
       if (response.statusCode == 500) {
         Nav.route(
             context,
             Maintenance(
               erorr: jsonDecode(response.body),
             ));
+      } else if (response.statusCode == 401) {
+        Nav.route(context, LoginPage());
       } else {
         return jsonDecode(response.body);
       }
-    } catch (e) {} finally {}
+    }else {
+     return jsonDecode(response.body);
+   }
   }
 
-  Future<String> getDeviceDetails() async {
-    final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
-    try {
-      if (Platform.isAndroid) {
-        var build = await deviceInfoPlugin.androidInfo;
-        deviceName = build.model;
-        deviceVersion = build.version.toString();
-        identifier = build.androidId; //UUID for Android
-
-      } else if (Platform.isIOS) {
-        var data = await deviceInfoPlugin.iosInfo;
-        deviceName = data.name;
-        deviceVersion = data.systemVersion;
-        identifier = data.identifierForVendor; //UUID for iOS
-      }
-    } on PlatformException {
-      print('Failed to get platform version');
-    }
-
-    return identifier;
-  }
 }

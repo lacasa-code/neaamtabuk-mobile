@@ -46,11 +46,12 @@
 
 
 
-  "offers": "اخر المنتجات",
+  "offers": "وصل حديثاً",
   "diconts": "التخفيضات",
-  "moresale": "اخر الخدمات",
+  "moresale": "الأكثر مبيعا",
   "intersted": "أهتماماتك",
 
+  "category": "الفئات",
 
   "SeeAllComments": "عرض جميع التعليقات",
   "countrySelected": "برجاء حدد  المدينة",
@@ -59,7 +60,7 @@
   "haveanaccount": "هل لديك حساب ؟",
   "errorCode": "خطأ فى الكود",
   "New": "جديد",
-  "showAll": "عرض الكل",
+  "showAll": "المزيد",
   "price": "السعر ",
   "productVariation": "خصائص المنتج",
   "Buy": "أشترى الان",
@@ -104,6 +105,7 @@
   "SelectVariations": "برجاء حدد خصائص المنتج",
   "ADDtoCart": "أضف الى العربة",
   "ShoppingCart": "عربة التسوق",
+  "Cart": "العربة",
   "Shopping": "تسوق الأن",
   "SelectDate": "برجاء تحديد تاريخ الأستلام",
   "SelectTime": "برجاء تحديد توقيت الأستلام",
@@ -163,6 +165,7 @@
   "password": "كلمة المرور",
   "Required": "أدخل الأتى",
   "paymentMethod": "طريقة الدفع",
+  "paymentsMethod": "طرق الدفع",
   "MethodShipping": "طرق الشحن",
   "banklist": "قائمة البنوك",
 

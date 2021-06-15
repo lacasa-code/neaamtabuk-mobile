@@ -67,7 +67,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                 children: [
                   Text(
                     'رقم الطلب: ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   Text(
                     '${widget.order.orderNumber}',
@@ -82,7 +82,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                 children: [
                   Text(
                     'تاريخ الطلب: ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   Text(
                     '${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.order.createdAt))}',
@@ -97,11 +97,11 @@ class _OrderdetailsState extends State<Orderdetails> {
                 children: [
                   Text(
                     'طريقة الدفع: ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    '${widget.order.paid ?? ' '}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                    '${widget.order.payment.paymentName ?? ' '}',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -113,13 +113,13 @@ class _OrderdetailsState extends State<Orderdetails> {
                 children: [
                   Text(
                     'عنوان التوصيل: ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
                     height: 15,
                   ),
                   Text(
-                    'محمد حسن مبنى 12 الطابق الثاني مكتب 23 ش الملك عبدالله تبوك المملكة العربية السعودية +9660505521235',
+                    '${widget.order.address.address}',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                 ],
@@ -132,7 +132,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   ),
                   Text(
                     'ملخص الطلب: ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
                     height: 15,

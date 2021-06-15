@@ -70,8 +70,8 @@ class _ProductCarmadeState extends State<ProductCarmade> {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  FlatButton(
-                    onPressed: () {
+                  InkWell(
+                    onTap: () {
                       Nav.route(context, MyCars());
                     },
                     child: Row(
@@ -80,6 +80,7 @@ class _ProductCarmadeState extends State<ProductCarmade> {
                         SvgPicture.asset(
                           'assets/icons/car2.svg',
                           fit: BoxFit.contain,
+                          color: Colors.white,
                         ),
                         SizedBox(
                           width: 10,
@@ -90,10 +91,10 @@ class _ProductCarmadeState extends State<ProductCarmade> {
                               themeColor.getCar_made(),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: Colors.white),
                             ))
                       ],
                     ),
-                    color: Color(0xffE4E4E4),
                   ),
                   IconButton(
                     onPressed: () {
@@ -189,7 +190,7 @@ class _ProductCarmadeState extends State<ProductCarmade> {
                 : widget.product.isEmpty
                 ? Container(
               height: ScreenUtil.getHeight(context) / 1.5,
-              child: NotFoundLogin(),
+              child: NotFoundProduct(),
             ):list
                     ? grid_product(
                         product: widget.product,

@@ -7,6 +7,7 @@ import 'package:flutter_pos/screens/Account.dart';
 import 'package:flutter_pos/screens/CarType/productCarType.dart';
 import 'package:flutter_pos/screens/cart.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/ads.dart';
 import 'package:flutter_pos/model/car_type.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/category/category_card.dart';
 import 'package:flutter_pos/widget/hidden_menu.dart';
 import 'package:flutter_pos/widget/product/product_card.dart';
@@ -59,7 +61,7 @@ class _HomeState extends State<Home> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.apps),
-        title: ("الفئات"),
+        title: (getTransrlate(context, 'category')),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -68,7 +70,7 @@ class _HomeState extends State<Home> {
           CupertinoIcons.person,
           size: 35,
         ),
-        title: ("حسابى"),
+        title: (getTransrlate(context, 'MyProfile')),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -80,7 +82,7 @@ class _HomeState extends State<Home> {
           ],
         ),
         iconSize: 35,
-        title: ("العربة"),
+        title: (getTransrlate(context, 'Cart')),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -160,7 +162,7 @@ class _HomeState extends State<Home> {
           borderRadius: BorderRadius.circular(10.0),
           colorBehindNavBar: Colors.white,
         ),
-        popAllScreensOnTapOfSelectedTab: false,
+        popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.once,
         itemAnimationProperties: ItemAnimationProperties(
           // Navigation Bar's items animation properties.
@@ -185,56 +187,7 @@ class _HomeState extends State<Home> {
 
     return Column(
       children: [
-        Container(
-          color: themeColor.getColor(),
-          padding: const EdgeInsets.only(top: 35),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Center(
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  height: ScreenUtil.getHeight(context) / 10,
-                  width: ScreenUtil.getWidth(context) / 3,
-                  fit: BoxFit.contain,
-                ),
-              ),
-              FlatButton(
-                onPressed: () {
-                  Nav.route(context, MyCars());
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/car2.svg',
-                      fit: BoxFit.contain,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      themeColor.getCar_made(),
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ],
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  showDialog(context: context, builder: (_) => SearchOverlay());
-                },
-                icon: Icon(
-                  Icons.search,
-                  size: 30,
-                ),
-                color: Color(0xffE4E4E4),
-              ),
-            ],
-          ),
-        ),
+        AppBarCustom(),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
@@ -275,13 +228,19 @@ class _HomeState extends State<Home> {
                                         image: CachedNetworkImageProvider(
                                             "${cartype[index].image}"),
                                         fit: BoxFit.cover),
-                                    borderRadius: index.isEven
+                                    borderRadius:themeColor.local=='ar'? index.isEven
                                         ? BorderRadius.only(
                                             topRight: Radius.circular(15.0),
                                             bottomRight: Radius.circular(15.0))
                                         : BorderRadius.only(
                                             topLeft: Radius.circular(15.0),
-                                            bottomLeft: Radius.circular(15.0)),
+                                            bottomLeft: Radius.circular(15.0)) :index.isEven
+                                        ? BorderRadius.only(
+                                            topLeft: Radius.circular(15.0),
+                                            bottomLeft: Radius.circular(15.0))
+                                        : BorderRadius.only(
+                                            topRight: Radius.circular(15.0),
+                                            bottomRight: Radius.circular(15.0)),
                                   ),
                                   child: Align(
                                     alignment: Alignment.bottomCenter,
@@ -355,8 +314,8 @@ class _HomeState extends State<Home> {
                             children: [
                               ProductListTitleBar(
                                 themeColor: themeColor,
-                                title: 'وصل حديثاٌ',
-                                description: 'المزيد',
+                                title: getTransrlate(context, 'offers'),
+                                description: getTransrlate(context, 'showAll'),
                               ),
                               list_product(themeColor, product),
 
@@ -384,8 +343,8 @@ class _HomeState extends State<Home> {
                             children: [
                               ProductListTitleBar(
                                 themeColor: themeColor,
-                                title: 'الأكثر مبيعا',
-                                description: 'المزيد',
+                                title: getTransrlate(context, 'moresale'),
+                                description: getTransrlate(context, 'showAll'),
                               ),
                               list_product(themeColor, productMostSale),
                               SizedBox(height: 10,)

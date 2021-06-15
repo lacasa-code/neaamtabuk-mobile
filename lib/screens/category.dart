@@ -9,6 +9,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
+import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_svg/svg.dart';
@@ -46,59 +47,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            //height: ScreenUtil.getHeight(context) - ScreenUtil.getHeight(context) / 1.2,
-            color: themeColor.getColor(),
-            padding: const EdgeInsets.only(top: 35),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: ScreenUtil.getHeight(context) / 10,
-                    width: ScreenUtil.getWidth(context) / 3,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    Nav.route(context, MyCars());
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/car2.svg',
-                        fit: BoxFit.contain,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        themeColor.getCar_made(),
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context, builder: (_) => SearchOverlay());
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 30,
-                  ),
-                  color: Color(0xffE4E4E4),
-                ),
-              ],
-            ),
-          ),
-
+          AppBarCustom(),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -194,7 +143,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   getList(List<PartCategories> partCategories) {
     return categories == null
         ? Container()
-        : partCategories.isEmpty?NotFoundLogin():ListView.builder(
+        : partCategories.isEmpty?NotFoundProduct():ListView.builder(
             primary: false,
             shrinkWrap: true,
             padding: EdgeInsets.all(1),

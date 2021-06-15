@@ -4,8 +4,8 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class NotFoundLogin extends StatelessWidget {
-  const NotFoundLogin({Key key}) : super(key: key);
+class NotFoundProduct extends StatelessWidget {
+  const NotFoundProduct({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

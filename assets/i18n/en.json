@@ -13,7 +13,9 @@
   "contact": "Call Naw",
   "language": "language",
   "allproduct": "all Product",
-  "allcategory": "All Category",
+  "category": "Categories",
+  "Cart": "Cart",
+
   "add": "Add",
   "en": "English",
   "es": "Spanish",
@@ -194,6 +196,7 @@
   "password": "Password",
   "Required": "Required",
   "paymentMethod": "Payment Method",
+  "paymentsMethod": "Payments Method",
   "MethodShipping": "Shipping Method",
   "total_tax": "tax",
   "addressShipping": "Address Shipping",

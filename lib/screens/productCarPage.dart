@@ -13,6 +13,7 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/List/gridview.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
+import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -67,9 +68,10 @@ class _ProductCarPageState extends State<ProductCarPage> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                FlatButton(
-                  onPressed: () {
-                    Nav.route(context, MyCars());
+                InkWell(
+                  onTap: (){
+                    Nav.routeReplacement(context, MyCars());
+
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,6 +79,7 @@ class _ProductCarPageState extends State<ProductCarPage> {
                       SvgPicture.asset(
                         'assets/icons/car2.svg',
                         fit: BoxFit.contain,
+                        color: Colors.white,
                       ),
                       SizedBox(
                         width: 10,
@@ -87,10 +90,10 @@ class _ProductCarPageState extends State<ProductCarPage> {
                             themeColor.getCar_made(),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.white),
                           ))
                     ],
                   ),
-                  color: Color(0xffE4E4E4),
                 ),
                 IconButton(
                   onPressed: () {
@@ -186,7 +189,9 @@ class _ProductCarPageState extends State<ProductCarPage> {
                 children: [
 
                   widget.product == null
-                      ? Container()
+                      ? Container():
+                  widget.product.isEmpty
+                      ? NotFoundProduct()
                       : list
                           ? grid_product(
                               product: widget.product,

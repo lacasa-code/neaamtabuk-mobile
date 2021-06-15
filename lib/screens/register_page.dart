@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/screens/Account.dart';
 import 'package:flutter_pos/screens/login.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -300,8 +301,8 @@ class _RegisterPageState extends State<RegisterPage> {
         prefs.setString("token", user['token']);
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (_) => Account()), (r) => false);
+        Phoenix.rebirth(context);
+
       } else {
         showDialog(
             context: context,

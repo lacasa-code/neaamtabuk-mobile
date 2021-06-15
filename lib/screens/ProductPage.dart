@@ -16,6 +16,7 @@ import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
+import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:share/share.dart';
 import 'package:flutter_pos/widget/slider/slider_dot.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -34,7 +35,8 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   int _carouselCurrentPage = 0;
-  int dropdownValue = 1;
+  String dropdownValue = "1";
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,91 +44,6 @@ class _ProductPageState extends State<ProductPage> {
     final ServiceData = Provider.of<Provider_Data>(context);
 
     return Scaffold(
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.only(bottom: 20,right: 2,left: 2),
-        decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
-        height: 80,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              margin: const EdgeInsets.all(15.0),
-              padding: const EdgeInsets.all(3.0),
-              decoration:
-              BoxDecoration(border: Border.all(color: Colors.black12)),
-
-              child: DropdownButton<int>(
-                value: dropdownValue,
-                icon: const Icon(Icons.arrow_drop_down_outlined),
-                iconSize: 24,
-                elevation: 16,
-                underline: Container(),
-                style: const TextStyle(color: Colors.deepPurple),
-                onChanged: (int newValue) {
-                  setState(() {
-                    dropdownValue = newValue;
-                  });
-                },
-                items: <int>[1, 2, 3, 4, 5,6,7,8,9,10]
-                    .map<DropdownMenuItem<int>>((int value) {
-                  return DropdownMenuItem<int>(
-                    value: value,
-                    child: Text("$value"),
-                  );
-                }).toList(),
-              ),
-            ),
-
-            InkWell(onTap: (){
-              API(context).post('add/to/cart',{
-                "product_id":widget.product.id,
-                "quantity":dropdownValue
-              }).then((value) {
-                if (value != null) {
-                  if (value['status_code'] == 200) {
-                    showDialog(
-                        context: context,
-                        builder: (_) => ResultOverlay(
-                            value['message']));
-                    ServiceData.getCart(context);
-
-                  } else {
-                    showDialog(
-                        context: context,
-                        builder: (_) => ResultOverlay(
-                            value['message']));
-                  }
-                }
-              });
-            },
-              child: Container(
-                margin: const EdgeInsets.all(15.0),
-                padding: const EdgeInsets.all(12.0),
-                color: Colors.lightGreen,
-                child: Center(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          CupertinoIcons.cart,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          'أضف إلى عربة التسوق',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                      ],
-                    )),
-              ),
-            ),
-          ],
-        ),
-      ),
       body: Column(
         children: [
           Container(
@@ -146,7 +63,6 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   color: Color(0xffE4E4E4),
                 ),
-
                 Center(
                   child: Image.asset(
                     'assets/images/logo.png',
@@ -170,9 +86,10 @@ class _ProductPageState extends State<ProductPage> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text(themeColor.getCar_made(),style: TextStyle(
-                          color: Colors.white
-                      ),)
+                      Text(
+                        themeColor.getCar_made(),
+                        style: TextStyle(color: Colors.white),
+                      )
                     ],
                   ),
                 ),
@@ -204,9 +121,9 @@ class _ProductPageState extends State<ProductPage> {
                   CarouselSlider(
                     items: widget.product.photo
                         .map((item) => CachedNetworkImage(
-                      imageUrl: item.image,
-                      fit: BoxFit.contain,
-                    ))
+                              imageUrl: item.image,
+                              fit: BoxFit.contain,
+                            ))
                         .toList(),
                     options: CarouselOptions(
                         autoPlay: true,
@@ -229,96 +146,119 @@ class _ProductPageState extends State<ProductPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         InkWell(
-                          onTap: (){
-                            API(context).post('user/add/wishlist',{
-                              "product_id":widget.product.id
+                          onTap: () {
+                            API(context).post('user/add/wishlist', {
+                              "product_id": widget.product.id
                             }).then((value) {
                               if (value != null) {
                                 if (value['status_code'] == 200) {
                                   setState(() {
-                                    widget.product.inWishlist="1";
-
+                                    widget.product.inWishlist = "1";
                                   });
                                   showDialog(
                                       context: context,
-                                      builder: (_) => ResultOverlay(
-                                          value['message']));
+                                      builder: (_) =>
+                                          ResultOverlay(value['message']));
                                 } else {
                                   showDialog(
                                       context: context,
-                                      builder: (_) => ResultOverlay(
-                                          value['message']));
+                                      builder: (_) =>
+                                          ResultOverlay(value['message']));
                                 }
                               }
                             });
                           },
                           child: Row(
                             children: [
-                              Icon(widget.product.inWishlist=="0"?
-                              Icons.favorite_border:Icons.favorite, size: 25, color: Colors.grey),
-                              SizedBox(width: 5,),
-                              Text(
-                                'أضف للمفضلة',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, color: Colors.grey),
+                              Icon(
+                                  widget.product.inWishlist == "0"
+                                      ? Icons.favorite_border
+                                      : Icons.favorite,
+                                  size: 20,
+                                  color: Colors.grey),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Container(
+                                width: ScreenUtil.getWidth(context) / 4,
+                                child: Text(
+                                  'أضف للمفضلة',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      color: Colors.grey),
+                                ),
                               ),
                             ],
                           ),
                         ),
                         InkWell(
-                          onTap: (){
-                            Share.share('https://trkar-frontend-5lqqa.ondigitalocean.app/product-details/${widget.product.id}', subject: 'Trkar');
-
+                          onTap: () {
+                            Share.share(
+                                'https://trkar-frontend-5lqqa.ondigitalocean.app/product-details/${widget.product.id}',
+                                subject: 'Trkar');
                           },
                           child: Row(
                             children: [
-                              Icon(Icons.share_outlined, size: 25, color: Colors.grey),
-                              SizedBox(width: 5,),
-                              Text(
-                                'أرسل لصديق',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, color: Colors.grey),
+                              Icon(Icons.share_outlined,
+                                  size: 25, color: Colors.grey),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Container(
+                                width: ScreenUtil.getWidth(context) / 4,
+                                child: Text(
+                                  'أرسل لصديق',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      widget.product.quantity>=1?  Row(
-                          children: [
-                            Icon(
-                              Icons.check_circle_outline_sharp,
-                              size: 25,
-                              color: Colors.lightGreen,
-                            ),
-                            SizedBox(width: 5,),
-
-                            Text(
-                              ' متوفر ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.lightGreen,
-                              ),
-                            ),
-                          ],
-                        )
-                       : Row(
-                          children: [
-                            Icon(
-                              Icons.remove_circle_outline,
-                              size: 30,
-                              color: Colors.red,
-                            ),
-                            Text(
-                              ' غير متوفر ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
+                        widget.product.quantity >= 1
+                            ? Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle_outline_sharp,
+                                    size: 25,
+                                    color: Colors.lightGreen,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    width: ScreenUtil.getWidth(context) / 4,
+                                    child: Text(
+                                      ' متوفر ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.lightGreen,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  Icon(
+                                    Icons.remove_circle_outline,
+                                    size: 30,
+                                    color: Colors.red,
+                                  ),
+                                  Text(
+                                    ' غير متوفر ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              )
                       ],
                     ),
                   ),
@@ -362,11 +302,9 @@ class _ProductPageState extends State<ProductPage> {
                                 color: Colors.orange,
                               ),
                             ),
-
                           ],
                         ),
                         SizedBox(width: 20)
-
                       ],
                     ),
                   ),
@@ -384,7 +322,9 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                                 Text(
                                   '${widget.product.carMadeName}',
-                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
                                 ),
                               ],
                             ),
@@ -402,7 +342,9 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                                 Text(
                                   '${widget.product.origincountryName}',
-                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
                                 ),
                               ],
                             ),
@@ -422,7 +364,9 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                             Text(
                               '${widget.product.vendorName}',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ],
                         ),
@@ -439,7 +383,9 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                             Text(
                               '${widget.product.transmissionName}',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ],
                         ),
@@ -451,10 +397,14 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.circle,size: 15,),
+                              Icons.circle,
+                              size: 15,
+                            ),
                             Text(
                               '   ${widget.product.categoryName}',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ],
                         ),
@@ -466,10 +416,14 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.circle,size: 15,),
+                              Icons.circle,
+                              size: 15,
+                            ),
                             Text(
                               '   ${widget.product.partCategoryName}',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ],
                         ),
@@ -481,10 +435,14 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.circle,size: 15,),
+                              Icons.circle,
+                              size: 15,
+                            ),
                             Text(
                               '   ${widget.product.cartypeName}',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ],
                         ),
@@ -495,7 +453,9 @@ class _ProductPageState extends State<ProductPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'متوافق مع',
-                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black87) ,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87),
                         ),
                       )),
                   Align(
@@ -506,7 +466,7 @@ class _ProductPageState extends State<ProductPage> {
                           'تويوتا كامري  2015 سيدان \nتويوتا كامري 2015 هاتشباك',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
-                      )) ,
+                      )),
                   Align(
                       alignment: Alignment.topRight,
                       child: Padding(
@@ -514,10 +474,14 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.local_shipping_outlined,size: 20,),
+                              Icons.local_shipping_outlined,
+                              size: 20,
+                            ),
                             Text(
                               ' الشحن بواسطة ',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ],
                         ),
@@ -530,8 +494,10 @@ class _ProductPageState extends State<ProductPage> {
                           'أراميكس. الوصول المتوقع: الخميس 29 مارس - الثلاثاء 3 ابريل',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
-                      )) ,
-                  SizedBox(height: 25,) ,
+                      )),
+                  SizedBox(
+                    height: 25,
+                  ),
                   Align(
                       alignment: Alignment.topRight,
                       child: Padding(
@@ -539,369 +505,600 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.money,size: 20,),
+                              Icons.money,
+                              size: 20,
+                            ),
                             Text(
-                              ' خيارات الدفع ',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              getTransrlate(context, 'paymentsMethod'),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ],
                         ),
                       )),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8,left: 1,right: 1),
+                    padding: const EdgeInsets.only(top: 8, left: 1, right: 1),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Image.asset("assets/images/Companies - MasterCard.png",width: 60,),
-                        Image.asset("assets/images/Companies - Visa.png",width: 60,),
-                        SvgPicture.asset("assets/icons/Path 1715.svg",width: 60,),
+                        Image.asset(
+                          "assets/images/Companies - MasterCard.png",
+                          width: 60,
+                        ),
+                        Image.asset(
+                          "assets/images/Companies - Visa.png",
+                          width: 60,
+                        ),
+                        SvgPicture.asset(
+                          "assets/icons/Path 1715.svg",
+                          width: 60,
+                        ),
                       ],
                     ),
                   ),
                   Container(
-              height: ScreenUtil.getHeight(context)/1.5,
-              width: ScreenUtil.getWidth(context),
-              child: DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                appBar: PreferredSize(
-                  preferredSize: Size.fromHeight(50.0),
-                  child: AppBar(
-                    backgroundColor: Colors.white,
-                    bottom: TabBar(
-                      tabs: [
-                        Tab(icon: Text("التقييمات",)),
-                        Tab(icon: Text("أسئلة وأجوبة")),
-                      ],
-                      indicatorColor: Colors.orange,
-                      unselectedLabelColor: Colors.grey,
-                      labelColor: Colors.orange,
-                    ),
-                  ),
-                ),
-                body: TabBarView(
-                  children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-
-                        Row(
-                          children: [
-                            RatingBar.builder(
-                              ignoreGestures: true,
-                              initialRating: double.parse('3.5'),
-                              itemSize: 25.0,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 1,
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.orange,
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
-                            ),
-                            Text(
-                              "3.5/5 ",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange,
-                              ),
-                            ),
-                            Text(
-                              " (15 تقييم ) ",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 25),
-                        ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 2,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment:CrossAxisAlignment.start,
-                              children: [
-                                RatingBar.builder(
-                                  ignoreGestures: true,
-                                  initialRating: double.parse('3.5'),
-                                  itemSize: 20.0,
-                                  minRating: 5,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.orange,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    print(rating);
-                                  },
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  'منتج جيد الصناعة ويعتمد عليه أنصح به',
-                                  style: TextStyle(fontWeight: FontWeight.w500,color: Colors.black),
-                                ),
-                                SizedBox(height: 10),
-
-                                Text(
-                                  '25-6-2020 بواسطة أحمد',
-                                  style: TextStyle(fontWeight: FontWeight.w500,color: Colors.grey),
-                                ),
-                                SizedBox(height: 10),
-                                Container(height: 1,color: Colors.black12,),
-                                SizedBox(height: 10),
-
+                    height: ScreenUtil.getHeight(context) / 2,
+                    width: ScreenUtil.getWidth(context),
+                    child: DefaultTabController(
+                      length: 2,
+                      child: Scaffold(
+                        appBar: PreferredSize(
+                          preferredSize: Size.fromHeight(50.0),
+                          child: AppBar(
+                            backgroundColor: Colors.white,
+                            bottom: TabBar(
+                              tabs: [
+                                Tab(
+                                    icon: Text(
+                                  "التقييمات",
+                                )),
+                                Tab(icon: Text("أسئلة وأجوبة")),
                               ],
+                              indicatorColor: Colors.orange,
+                              unselectedLabelColor: Colors.grey,
+                              labelColor: Colors.orange,
                             ),
-
-                          );
-                        },
-                ),
-                        SizedBox(height: 25,),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => Ratedialog());
-                              },
-                              child: Container(
-                                width: ScreenUtil.getWidth(context)/2.5,
-                                //  margin: const EdgeInsets.all(10.0),
-                                padding: const EdgeInsets.all(10.0),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color:  Colors.grey
-                                    )),
-                                child: Container(
-                                  width: ScreenUtil.getWidth(context)/4,
-                                  child: Center(
-                                    child: AutoSizeText(
-                                      "جميع التقييمات",
-                                      maxFontSize: 16,
-                                      minFontSize: 10,
-                                      style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => WriteRatedialog());
-                              },
-                              child: Container(
-                                width: ScreenUtil.getWidth(context)/2.5,
-                                padding: const EdgeInsets.all(10.0),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color:  Colors.grey
-                                    )),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.edit_outlined,color: Colors.black,),
-                                    SizedBox(width: 5,),
-                                    Container(
-                                      width: ScreenUtil.getWidth(context)/4,
-                                      child: AutoSizeText(
-                                        'كتابة تقييم',
-                                        overflow: TextOverflow.ellipsis,
-                                        maxFontSize: 14,
-                                        maxLines: 1,
-                                        minFontSize: 10,
-                                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          ListView.builder(
-                            primary: false,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment:CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset('assets/icons/User Icon.svg',color: Colors.grey,height: 35,),
-                                        SizedBox(width: 10,),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              width: ScreenUtil.getWidth(context)/1.4,
-                                              child: Text(
-                                                'هل المنتج متوافق مع كامري 2014 ؟',
-                                                style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
-                                              ),
-                                            ),
-                                            SizedBox(height: 10,),
-
-                                            Text(
-                                              '25-6-2020 بواسطة أحمد',
-                                              style: TextStyle(fontWeight: FontWeight.w500,color: Colors.grey),
-                                            ),
-
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(25.0),
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.message_outlined,color: Colors.grey,size: 35,),
-                                        SizedBox(width: 10,),
-                                        Center(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                width: ScreenUtil.getWidth(context)/1.6,
-                                                child: Text(
-                                                  'نعم المنتج متوافق مع الموديل يجب التأكد من التركيب بشكل سليم في مركز معتمد لتجنب التلفيات اثناء تركيب المنتج',
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
-                                                ),
-                                              ),
-                                              SizedBox(height: 10,),
-                                              Text(
-                                                '25-6-2020 بواسطة أحمد',
-                                                style: TextStyle(fontWeight: FontWeight.w500,color: Colors.grey),
-                                              ),
-
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(height: 1,color: Colors.black12,)
-                                ],
-                              );
-                            },
                           ),
-                          SizedBox(height: 25,),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) => Qeastionsdialog());
-                                },
-                                child: Container(
-                                  width: ScreenUtil.getWidth(context)/2.5,
-                                  //  margin: const EdgeInsets.all(10.0),
-                                  padding: const EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color:  Colors.grey
-                                      )),
-                                  child: Container(
-                                    width: ScreenUtil.getWidth(context)/4,
-                                    child: Center(
-                                      child: AutoSizeText(
-                                        "جميع الأسئلة",
-                                        maxFontSize: 16,
-                                        minFontSize: 10,
-                                        style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) => WriteQuastionsdialog());
-                                },
-                                child: Container(
-                                  width: ScreenUtil.getWidth(context)/2.5,
-                                  padding: const EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color:  Colors.grey
-                                      )),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        body: TabBarView(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5),
+                                  Row(
                                     children: [
-                                      Icon(Icons.edit_outlined,color: Colors.black,),
-                                      SizedBox(width: 5,),
-                                      Container(
-                                        width: ScreenUtil.getWidth(context)/4,
-                                        child: AutoSizeText(
-                                          'كتابة سؤال',
-                                          overflow: TextOverflow.ellipsis,
-                                          maxFontSize: 14,
-                                          maxLines: 1,
-                                          minFontSize: 10,
-                                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                                      RatingBar.builder(
+                                        ignoreGestures: true,
+                                        initialRating: double.parse('3.5'),
+                                        itemSize: 25.0,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 1,
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Colors.orange,
+                                        ),
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
+                                      ),
+                                      Text(
+                                        "3.5/5 ",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.orange,
+                                        ),
+                                      ),
+                                      Text(
+                                        " (15 تقييم ) ",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
+                                  SizedBox(height: 5),
+                                  ListView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: 2,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            RatingBar.builder(
+                                              ignoreGestures: true,
+                                              initialRating:
+                                                  double.parse('3.5'),
+                                              itemSize: 20.0,
+                                              minRating: 5,
+                                              direction: Axis.horizontal,
+                                              allowHalfRating: true,
+                                              itemCount: 5,
+                                              itemBuilder: (context, _) => Icon(
+                                                Icons.star,
+                                                color: Colors.orange,
+                                              ),
+                                              onRatingUpdate: (rating) {
+                                                print(rating);
+                                              },
+                                            ),
+                                            SizedBox(height: 5),
+                                            Text(
+                                              'منتج جيد الصناعة ويعتمد عليه أنصح به',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Text(
+                                              '25-6-2020 بواسطة أحمد',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.grey),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Container(
+                                              height: 1,
+                                              color: Colors.black12,
+                                            ),
+                                            SizedBox(height: 10),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) => Ratedialog());
+                                        },
+                                        child: Container(
+                                          width: ScreenUtil.getWidth(context) /
+                                              2.5,
+                                          //  margin: const EdgeInsets.all(10.0),
+                                          padding: const EdgeInsets.all(10.0),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey)),
+                                          child: Container(
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    4,
+                                            child: Center(
+                                              child: AutoSizeText(
+                                                "جميع التقييمات",
+                                                maxFontSize: 16,
+                                                minFontSize: 10,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) =>
+                                                  WriteRatedialog());
+                                        },
+                                        child: Container(
+                                          width: ScreenUtil.getWidth(context) /
+                                              2.5,
+                                          padding: const EdgeInsets.all(10.0),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey)),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.edit_outlined,
+                                                color: Colors.black,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Container(
+                                                width: ScreenUtil.getWidth(
+                                                        context) /
+                                                    4,
+                                                child: AutoSizeText(
+                                                  'كتابة تقييم',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxFontSize: 14,
+                                                  maxLines: 1,
+                                                  minFontSize: 10,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                            ],
-                          )
-                        ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                children: [
+                                  ListView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: 1,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/icons/User Icon.svg',
+                                                  color: Colors.grey,
+                                                  height: 35,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      width:
+                                                          ScreenUtil.getWidth(
+                                                                  context) /
+                                                              1.4,
+                                                      child: Text(
+                                                        'هل المنتج متوافق مع كامري 2014 ؟',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Text(
+                                                      '25-6-2020 بواسطة أحمد',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Colors.grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(25.0),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.message_outlined,
+                                                  color: Colors.grey,
+                                                  size: 35,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Center(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Container(
+                                                        width:
+                                                            ScreenUtil.getWidth(
+                                                                    context) /
+                                                                1.6,
+                                                        child: Text(
+                                                          'نعم المنتج متوافق مع الموديل يجب التأكد من التركيب بشكل سليم في مركز معتمد لتجنب التلفيات اثناء تركيب المنتج',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Text(
+                                                        '25-6-2020 بواسطة أحمد',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Colors.grey),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 1,
+                                            color: Colors.black12,
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) =>
+                                                  Qeastionsdialog());
+                                        },
+                                        child: Container(
+                                          width: ScreenUtil.getWidth(context) /
+                                              2.5,
+                                          //  margin: const EdgeInsets.all(10.0),
+                                          padding: const EdgeInsets.all(10.0),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey)),
+                                          child: Container(
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    4,
+                                            child: Center(
+                                              child: AutoSizeText(
+                                                "جميع الأسئلة",
+                                                maxFontSize: 16,
+                                                minFontSize: 10,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) =>
+                                                  WriteQuastionsdialog());
+                                        },
+                                        child: Container(
+                                          width: ScreenUtil.getWidth(context) /
+                                              2.5,
+                                          padding: const EdgeInsets.all(10.0),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey)),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.edit_outlined,
+                                                color: Colors.black,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Container(
+                                                width: ScreenUtil.getWidth(
+                                                        context) /
+                                                    4,
+                                                child: AutoSizeText(
+                                                  'كتابة سؤال',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxFontSize: 14,
+                                                  maxLines: 1,
+                                                  minFontSize: 10,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-    ),
-            )
+                  )
                 ],
               ),
             ),
           ),
+          Form(
+            key: _formKey,
+            child: Container(
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black26)),
+              height: 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  dropdownValue == 'other'
+                      ? Container(
+                        width: 100,
+                        child: MyTextFormField(
+                          intialLabel: '',
+                          Keyboard_Type: TextInputType.number,
+                          labelText: "كمية",
+                          hintText: '',
+                          isPhone: true,
+                          validator: (String value) {
+                            if (value.isEmpty) {
+                              return "كمية";
+                            }
+                            _formKey.currentState.save();
+                            return null;
+                          },
+                          onSaved: (String value) {
+                            dropdownValue = value;
+                          },
+                        ),
+                      )
+                      : Container(
+                          margin: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(3.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black12)),
+                          child: DropdownButton<String>(
+                            value: dropdownValue,
+                            icon: const Icon(Icons.arrow_drop_down_outlined),
+                            iconSize: 24,
+                            elevation: 16,
+                            underline: Container(),
+                            style: const TextStyle(color: Colors.deepPurple),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValue = newValue;
+                              });
+                            },
+                            items: <String>[
+                              "1",
+                              "2",
+                              "3",
+                              "4",
+                              "5",
+                              "other",
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text("$value"),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                  InkWell(
+                    onTap: () {
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                        API(context).post('add/to/cart', {
+                          "product_id": widget.product.id,
+                          "quantity": dropdownValue
+                        }).then((value) {
+                          if (value != null) {
+                            if (value['status_code'] == 200) {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) =>
+                                      ResultOverlay(value['message']));
+                              ServiceData.getCart(context);
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) =>
+                                      ResultOverlay(value['message']));
+                            }
+                          }
+                        });
+                      }
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(12.0),
+                      color: Colors.lightGreen,
+                      child: Center(
+                          child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            CupertinoIcons.cart,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'أضف إلى عربة التسوق',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                        ],
+                      )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

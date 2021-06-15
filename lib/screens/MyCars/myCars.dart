@@ -236,7 +236,9 @@ class _MyCarsState extends State<MyCars> {
                     ? Container()
                     : GridView.builder(
                         primary: false,
-                        shrinkWrap: true,
+                  padding: const EdgeInsets.only(right: 20, left: 20),
+
+                  shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 2.3,
                           crossAxisCount: 2,
@@ -245,28 +247,25 @@ class _MyCarsState extends State<MyCars> {
                         itemCount: cartype.length,
                         itemBuilder: (BuildContext context, int index) {
                           bool selected = checkboxType == index;
-                          return Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  checkboxType = index;
-                                });
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.all(15.0),
-                                padding: const EdgeInsets.all(3.0),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: selected
-                                            ? Colors.orange
-                                            : Colors.grey)),
-                                child: Center(
-                                    child: Text(
-                                  cartype[index].typeName,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )),
-                              ),
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                checkboxType = index;
+                              });
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(1.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: selected
+                                          ? Colors.orange
+                                          : Colors.grey)),
+                              child: Center(
+                                  child: Text(
+                                cartype[index].typeName,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )),
                             ),
                           );
                         },

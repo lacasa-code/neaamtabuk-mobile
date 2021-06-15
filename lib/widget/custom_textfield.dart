@@ -37,12 +37,12 @@ class MyTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 16),
+      margin: EdgeInsets.only(top: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16),),
-          SizedBox(height: 5,),
+          SizedBox(height: 4,),
           TextFormField(
             onTap: press,
             initialValue: intialLabel == null ? '' : intialLabel,
