@@ -31,6 +31,7 @@ class Cart {
   String userName;
   int orderNumber;
   String orderTotal;
+  int count_pieces;
   int expired;
   String paid;
   String status;
@@ -46,6 +47,7 @@ class Cart {
         this.expired,
         this.paid,
         this.status,
+        this.count_pieces,
         this.orderStatus,
         this.orderDetails});
 
@@ -58,6 +60,7 @@ class Cart {
     expired = json['expired'];
     paid = json['paid'];
     status = json['status'];
+    count_pieces = json['count_pieces'];
     orderStatus = json['orderStatus'];
     if (json['orderDetails'] != null) {
       orderDetails = new List<OrderDetails>();

@@ -78,7 +78,7 @@ class _HomeState extends State<Home> {
         icon: Stack(
           children: [
             Center(child: Icon(CupertinoIcons.cart)),
-            Center(child: Text(data.cart_model!=null?" ${data.cart_model.cartTotal??0} ":'',style: TextStyle(backgroundColor: Colors.white,color: Colors.orange),)),
+            Center(child: Text(data.cart_model!=null?" ${data.cart_model.data.count_pieces??0} ":'',style: TextStyle(backgroundColor: Colors.white,color: Colors.orange),)),
           ],
         ),
         iconSize: 35,

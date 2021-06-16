@@ -105,7 +105,7 @@ class _CartScreenState extends State<CartScreen> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          'عربة التسوق (${_cart_model.cartTotal})',
+                                          'عربة التسوق (${_cart_model.data.count_pieces})',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
