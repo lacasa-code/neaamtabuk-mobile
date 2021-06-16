@@ -74,7 +74,7 @@ class Data {
   dynamic _paid;
   Address _shipping;
   Payment _payment;
-  int _status;
+  String _status;
   String _createdAt;
   String _orderStatus;
   List<OrderDetails> _orderDetails;
@@ -89,7 +89,7 @@ class Data {
   dynamic get paid => _paid;
   Address get shipping => _shipping;
   Payment get payment => _payment;
-  int get status => _status;
+  String get status => _status;
   String get createdAt => _createdAt;
   String get orderStatus => _orderStatus;
   List<OrderDetails> get orderDetails => _orderDetails;
@@ -104,8 +104,8 @@ class Data {
       dynamic approved, 
       dynamic paid,
     Address shipping,
-      Payment payment, 
-      int status, 
+      Payment payment,
+    String status,
       String createdAt, 
       String orderStatus, 
       List<OrderDetails> orderDetails}){

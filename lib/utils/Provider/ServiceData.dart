@@ -11,6 +11,7 @@ class Provider_Data with ChangeNotifier {
 
   getCart_model() => cart_model;
   getCart(BuildContext context) {
+
     API(context).post('show/cart', {}).then((value) {
       if (value != null) {
         cart_model = Cart_model.fromJson(value);

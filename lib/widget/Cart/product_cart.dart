@@ -135,8 +135,26 @@ class _ProductCartState extends State<ProductCart> {
                                   child: IconButton(
                                     icon: Icon(Icons.add, color: Colors.grey),
                                     onPressed: () {
-                                      setState(() {
-                                        widget.carts.quantity++;
+                                      API(context).post('add/to/cart', {
+                                        "product_id": widget.carts.productId,
+                                        "quantity": widget.carts.quantity+1,
+                                        "order_id": widget.carts.orderId
+                                      }).then((value) {
+                                        if (value != null) {
+                                          if (value['status_code'] == 200) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    ResultOverlay(value['message']));
+
+                                            ServiceData.getCart(context);
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    ResultOverlay(value['message']));
+                                          }
+                                        }
                                       });
                                     },
                                   )),

@@ -172,13 +172,34 @@ class _ProductListState extends State<ProductList> {
                               IconButton(
                                 onPressed: () {
                                   print(widget.product.inWishlist);
-                                  API(context).post('user/add/wishlist',{
+                                  widget.product.inWishlist=="0"? API(context).post('user/add/wishlist',{
                                     "product_id":widget.product.id
                                   }).then((value) {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
                                         setState(() {
                                           widget.product.inWishlist="1";
+
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => ResultOverlay(
+                                                value['message']));
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => ResultOverlay(
+                                                value['message']));
+                                      }
+                                    }
+                                  }):API(context).post('user/removeitem/wishlist',{
+                                    "product_id":widget.product.id
+                                  })
+                                      .then((value) {
+                                    if (value != null) {
+                                      if (value['status_code'] == 200) {
+                                        setState(() {
+                                          widget.product.inWishlist="0";
 
                                         });
                                         showDialog(

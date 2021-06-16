@@ -26,7 +26,7 @@ class MyCars extends StatefulWidget {
   _MyCarsState createState() => _MyCarsState();
 }
 
-class _MyCarsState extends State<MyCars> {
+class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
   List<CarType> cartype;
   List<Year> years;
   List<Fav> favourite;
@@ -34,6 +34,7 @@ class _MyCarsState extends State<MyCars> {
   List<CarModel> carmodels;
   List<Transmissions> transmissions;
   int checkboxValue;
+  TabController _controller;
 
   int checkboxType = 0;
   int car_mades_id;
@@ -42,6 +43,8 @@ class _MyCarsState extends State<MyCars> {
 
   @override
   void initState() {
+    _controller = TabController(vsync: this, length: 2);
+
     API(context).get('car/types/list').then((value) {
       if (value != null) {
         setState(() {
@@ -88,6 +91,7 @@ class _MyCarsState extends State<MyCars> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           bottom: TabBar(
+            controller: _controller,
             indicatorColor: Colors.orange,
             tabs: [
               Tab(icon: Text('مركباتى')),
@@ -97,6 +101,7 @@ class _MyCarsState extends State<MyCars> {
           title: Text('إختر المركبة'),
         ),
         body: TabBarView(
+          controller: _controller,
           children: [
            themeColor.isLogin? Container(
               child: favourite == null
@@ -418,8 +423,11 @@ class _MyCarsState extends State<MyCars> {
                                           context: context,
                                           builder: (_) =>
                                               ResultOverlay(value['message']));
+                                      _controller.index=0;
                                       getFavorit();
                                     } else {
+                                      _controller.index=0;
+
                                       showDialog(
                                           context: context,
                                           builder: (_) =>

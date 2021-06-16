@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/user_info.dart';
@@ -28,7 +29,7 @@ class _UserInfoState extends State<UserInfo> {
   User userModal;
   String password;
   final _formKey = GlobalKey<FormState>();
-
+  List<String> items=["male","female"];
   submitForm() async {
     FocusScope.of(context).requestFocus(new FocusNode());
     _isLoading = true;
@@ -66,7 +67,6 @@ class _UserInfoState extends State<UserInfo> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
-
     return Scaffold(
         appBar: AppBar(
           title: Row(
@@ -265,16 +265,24 @@ class _UserInfoState extends State<UserInfo> {
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 2.0,bottom: 10),
-                                        child: TextFormField(
-                                          initialValue: " ",
-                                          decoration: InputDecoration(),
+                                            left: 25.0, right: 25.0, top: 10.0,bottom: 10),
+                                        child:                                       DropdownSearch<String>(
+                                          validator: (String item) {
+                                            if (item == null) {
+                                              return "Required field";
+                                            } else
+                                              return null;
+                                          },
+
+                                          items: items,
+                                          selectedItem: userModal.gender,
                                           enabled: !_status,
-                                          onSaved: (String val) =>
-                                              userModal.gender = val,
-                                          onChanged: (String val) =>
-                                              userModal.gender = val,
-                                        )),
+                                          //  onFind: (String filter) => getData(filter),
+                                          itemAsString: (String u) => u,
+                                          onChanged: (String data) =>
+                                          userModal.gender = data,
+                                        ),
+                                    ),
 
                                     _status
                                         ? _getEditIcon()

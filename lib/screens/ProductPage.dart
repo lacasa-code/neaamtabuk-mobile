@@ -37,6 +37,20 @@ class _ProductPageState extends State<ProductPage> {
   int _carouselCurrentPage = 0;
   String dropdownValue = "1";
   final _formKey = GlobalKey<FormState>();
+  List<String>items=[
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "other",
+  ];
+  @override
+  void initState() {
+    print(widget.product.inWishlist);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +164,8 @@ class _ProductPageState extends State<ProductPage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            API(context).post('user/add/wishlist', {
+                            widget.product.inWishlist == "0"
+                                ? API(context).post('user/add/wishlist', {
                               "product_id": widget.product.id
                             }).then((value) {
                               if (value != null) {
@@ -169,6 +184,27 @@ class _ProductPageState extends State<ProductPage> {
                                           ResultOverlay(value['message']));
                                 }
                               }
+                            }):API(context).post('user/removeitem/wishlist',{
+                            "product_id":widget.product.id
+                            })
+                                .then((value) {
+                            if (value != null) {
+                            if (value['status_code'] == 200) {
+                            setState(() {
+                            widget.product.inWishlist="0";
+
+                            });
+                            showDialog(
+                            context: context,
+                            builder: (_) => ResultOverlay(
+                            value['message']));
+                            } else {
+                            showDialog(
+                            context: context,
+                            builder: (_) => ResultOverlay(
+                            value['message']));
+                            }
+                            }
                             });
                           },
                           child: Row(
@@ -1004,8 +1040,8 @@ class _ProductPageState extends State<ProductPage> {
                       istitle: true,
                           intialLabel: '',
                           Keyboard_Type: TextInputType.number,
-                          labelText: "كمية",
-                          hintText: 'كمية',
+                          labelText: getTransrlate(context, 'quantity'),
+                          hintText: getTransrlate(context, 'quantity'),
                           isPhone: true,
                           validator: (String value) {
                             if (value.isEmpty) {
@@ -1019,7 +1055,7 @@ class _ProductPageState extends State<ProductPage> {
                           },
                         ),
                       )
-                      : Container(
+                      : items==null?Container():Container(
                     margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 2),
                           padding: const EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
@@ -1036,14 +1072,7 @@ class _ProductPageState extends State<ProductPage> {
                                 dropdownValue = newValue;
                               });
                             },
-                            items: <String>[
-                              "1",
-                              "2",
-                              "3",
-                              "4",
-                              "5",
-                              "other",
-                            ].map<DropdownMenuItem<String>>((String value) {
+                            items: items.map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text("$value"),

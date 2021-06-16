@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/wishlist_model.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
@@ -78,30 +79,93 @@ class _WishListState extends State<WishList> {
                           ),
                           Positioned(
                             left: 10,
-                            child: IconButton(
-                                onPressed: () {
-                                  API(context).post('user/removeitem/wishlist',
-                                      {"product_id": wishList[index].productId}).then((value) {
-                                    if (value != null) {
-                                      if (value['status_code'] == 200) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (_) =>
-                                                ResultOverlay(value['message']));
-                                        getwWISHlIST();
-                                      } else {
-                                        showDialog(
-                                            context: context,
-                                            builder: (_) =>
-                                                ResultOverlay('${value['message']??''}\n${value['errors']}'));
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      API(context).post('user/removeitem/wishlist',
+                                          {"product_id": wishList[index].productId}).then((value) {
+                                        if (value != null) {
+                                          if (value['status_code'] == 200) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    ResultOverlay(value['message']));
+                                            getwWISHlIST();
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    ResultOverlay('${value['message']??''}\n${value['errors']}'));
+                                          }
+                                        }
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.close,
+                                      color: Colors.grey,
+                                    )),
+                                InkWell(
+                                  onTap: () {
+                                    API(context).post('add/to/cart', {
+                                      "product_id": wishList[index].productId,
+                                      "quantity": 1
+                                    }).then((value) {
+                                      if (value != null) {
+                                        if (value['status_code'] == 200) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) =>
+                                                  ResultOverlay(value['message']));
+                                          Provider.of<Provider_Data>(context,listen: false).getCart(context);
+                                          API(context).post('user/removeitem/wishlist',
+                                              {"product_id": wishList[index].productId}).then((value) {
+                                            if (value != null) {
+                                              if (value['status_code'] == 200) {
+                                                getwWISHlIST();
+                                              } else {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        ResultOverlay('${value['message']??''}\n${value['errors']}'));
+                                              }
+                                            }
+                                          });
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) =>
+                                                  ResultOverlay(value['message']));
+                                        }
                                       }
-                                    }
-                                  });
-                                },
-                                icon: Icon(
-                                  Icons.close,
-                                  color: Colors.grey,
-                                )),
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(5.0),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.orange)),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Icon(CupertinoIcons.cart, color: Colors.orange),
+                                        Container(
+                                          width: ScreenUtil.getWidth(context) / 5,
+                                          child: AutoSizeText(
+                                            'أضف للعربة',
+                                            minFontSize: 10,
+                                            maxFontSize: 16,
+                                            maxLines: 1,
+                                            style: TextStyle(color: Colors.orange),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                              ],
+                            ),
                           )
 
                         ],

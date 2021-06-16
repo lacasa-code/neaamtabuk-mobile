@@ -111,51 +111,6 @@ class _Wish_ListState extends State<Wish_List> {
                         ),
                       ],
                     ),
-                    InkWell(
-                      onTap: () {
-                        API(context).post('add/to/cart', {
-                          "product_id": widget.product.productId,
-                          "quantity": 1
-                        }).then((value) {
-                          if (value != null) {
-                            if (value['status_code'] == 200) {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) =>
-                                      ResultOverlay(value['message']));
-                              Provider.of<Provider_Data>(context,listen: false).getCart(context);
-
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) =>
-                                      ResultOverlay(value['message']));
-                            }
-                          }
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(5.0),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.orange)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Icon(CupertinoIcons.cart, color: Colors.orange),
-                            Container(
-                              width: ScreenUtil.getWidth(context) / 5,
-                              child: AutoSizeText(
-                                'أضف للعربة',
-                                minFontSize: 10,
-                                maxFontSize: 16,
-                                maxLines: 1,
-                                style: TextStyle(color: Colors.orange),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ],

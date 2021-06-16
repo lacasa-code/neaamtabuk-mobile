@@ -59,10 +59,10 @@ class _ProductCardState extends State<ProductCard> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 2.0,
+                        color: Colors.grey[200],
+                        blurRadius: 5.0,
                         spreadRadius: 1,
-                        offset: Offset(0.0, 1)),
+                        offset: Offset(0.0, 2)),
                   ]),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -202,7 +202,7 @@ class _ProductCardState extends State<ProductCard> {
                                   if (value != null) {
                                     if (value['status_code'] == 200) {
                                       setState(() {
-                                        widget.product.inWishlist="1";
+                                        widget.product.inWishlist="0";
 
                                       });
                                       showDialog(

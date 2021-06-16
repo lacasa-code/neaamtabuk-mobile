@@ -216,7 +216,7 @@ class _AccountState extends State<Account> {
                                       size: 25,
                                       color: Colors.orange,
                                     ),
-                                    name: getTransrlate(context, 'MyAddress'),
+                                    name: getTransrlate(context, 'MyAddress')+'',
                                     baseStyle: TextStyle(
                                         color: Colors.black,
                                         fontSize: 19.0,

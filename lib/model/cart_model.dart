@@ -33,7 +33,7 @@ class Cart {
   String orderTotal;
   int expired;
   String paid;
-  int status;
+  String status;
   String orderStatus;
   List<OrderDetails> orderDetails;
 
