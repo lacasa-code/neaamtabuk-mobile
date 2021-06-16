@@ -137,6 +137,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final provider_Data = Provider.of<Provider_Data>(context);
     return Scaffold(
       key: _scaffoldKey,
       // drawer: HiddenMenu(),
@@ -163,6 +164,11 @@ class _HomeState extends State<Home> {
           colorBehindNavBar: Colors.white,
         ),
         popAllScreensOnTapOfSelectedTab: true,
+        selectedTabScreenContext: (v){
+          if(_controller.index==3) {
+            provider_Data.getCart(context);
+          }
+        },
         popActionScreens: PopActionScreensType.once,
         itemAnimationProperties: ItemAnimationProperties(
           // Navigation Bar's items animation properties.

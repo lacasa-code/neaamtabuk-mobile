@@ -7,9 +7,7 @@ class Provider_control with ChangeNotifier {
   String car_made =  'إختر المركبة';
   Color color;
   bool isLogin = false;
-
   Provider_control();
-
   getColor() => _themeData;
   getCar_made() => car_made;
   getlocal() => local;
@@ -31,6 +29,11 @@ class Provider_control with ChangeNotifier {
 
   setLocal(String st) {
     local = st;
+    if(st=='en'){
+      car_made='Select Car';
+    }else if(st=='ar'){
+      car_made='إختر المركبة';
+    }
     notifyListeners();
   }
 }

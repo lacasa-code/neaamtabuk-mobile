@@ -119,7 +119,7 @@
   "Notification": "Notification",
   "search": "Product search..",
   "SelectVariations": "Please Select Variations",
-  "ADDtoCart": "Add to Cart",
+  "ADDtoCart": "Add to Shopping Cart",
   "ShoppingCart": "My Shopping Cart",
   "CartEmpty": "Cart Empty !",
   "ProfileSettings": "Profile Settings",
@@ -203,6 +203,14 @@
   "totalOrder": "Total Order",
   "totalShipping": "Total Shipping",
   "totalWeight": "total Weight",
+
+  "carmade": "Car Made",
+  "saller": "Saller",
+  "auto": "Motor",
+  "brand": "Copy Right",
+  "compatible": "Compatible",
+  "ShippingBy": "Shipping By",
+  "quantity": "Quantity",
 
   "totaldiscount": "Total discount",
   "total": "Total",

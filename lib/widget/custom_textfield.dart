@@ -10,6 +10,7 @@ class MyTextFormField extends StatelessWidget {
   final TextDirection textDirection;
   final Widget suffixIcon;
   final bool isPassword;
+  final bool istitle;
   final bool isEmail;
   final bool enabled;
   final bool isPhone;
@@ -26,6 +27,7 @@ class MyTextFormField extends StatelessWidget {
       this.isPassword = false,
       this.isEmail = false,
       this.isPhone = false,
+        this.istitle=false,
       this.labelText,
       this.suffixIcon,
       this.textDirection,
@@ -41,8 +43,8 @@ class MyTextFormField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16),),
-          SizedBox(height: 4,),
+          istitle?Container(): Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16),),
+          istitle?Container():SizedBox(height: 4,),
           TextFormField(
             onTap: press,
             initialValue: intialLabel == null ? '' : intialLabel,

@@ -146,7 +146,7 @@ class _ProductPageState extends State<ProductPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
                           onTap: () {
@@ -173,11 +173,14 @@ class _ProductPageState extends State<ProductPage> {
                           },
                           child: Row(
                             children: [
+                              SizedBox(
+                                width: 5,
+                              ),
                               Icon(
                                   widget.product.inWishlist == "0"
                                       ? Icons.favorite_border
                                       : Icons.favorite,
-                                  size: 20,
+                                  size: 25,
                                   color: Colors.grey),
                               SizedBox(
                                 width: 5,
@@ -220,45 +223,46 @@ class _ProductPageState extends State<ProductPage> {
                             ],
                           ),
                         ),
-                        widget.product.quantity >= 1
-                            ? Row(
-                                children: [
-                                  Icon(
-                                    Icons.check_circle_outline_sharp,
-                                    size: 25,
-                                    color: Colors.lightGreen,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Container(
-                                    width: ScreenUtil.getWidth(context) / 4,
-                                    child: Text(
-                                      ' متوفر ',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.lightGreen,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Row(
-                                children: [
-                                  Icon(
-                                    Icons.remove_circle_outline,
-                                    size: 30,
-                                    color: Colors.red,
-                                  ),
-                                  Text(
-                                    ' غير متوفر ',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
-                              )
+                        Container(
+                          width: ScreenUtil.getWidth(context) / 4,
+
+                          child:   widget.product.quantity >= 1
+                              ? Row(
+                            children: [
+                              Icon(
+                                Icons.check_circle_outline_sharp,
+                                size: 25,
+                                color: Colors.lightGreen,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                ' متوفر ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightGreen,
+                                ),
+                              ),
+                            ],
+                          )
+                              : Row(
+                            children: [
+                              Icon(
+                                Icons.remove_circle_outline,
+                                size: 30,
+                                color: Colors.red,
+                              ),
+                              Text(
+                                ' غير متوفر ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -317,7 +321,7 @@ class _ProductPageState extends State<ProductPage> {
                             child: Row(
                               children: [
                                 Text(
-                                  "العلامة التجارية : ",
+                                  "${getTransrlate(context, 'brand')} : ",
                                   style: TextStyle(fontWeight: FontWeight.w400),
                                 ),
                                 Text(
@@ -337,7 +341,7 @@ class _ProductPageState extends State<ProductPage> {
                             child: Row(
                               children: [
                                 Text(
-                                  "بلد المنشأ : ",
+                                  "${getTransrlate(context, 'carmade')} : ",
                                   style: TextStyle(fontWeight: FontWeight.w400),
                                 ),
                                 Text(
@@ -359,7 +363,7 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Text(
-                              "البائع : ",
+                              "${getTransrlate(context, 'saller')} : ",
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                             Text(
@@ -378,7 +382,7 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Text(
-                              "المحرك : ",
+                              "${getTransrlate(context, 'auto')} : ",
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                             Text(
@@ -447,29 +451,26 @@ class _ProductPageState extends State<ProductPage> {
                           ],
                         ),
                       )),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
+
+                  Column(crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'متوافق مع',
+                          "${getTransrlate(context, 'compatible')} : ",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black87),
                         ),
-                      )),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'تويوتا كامري  2015 سيدان \nتويوتا كامري 2015 هاتشباك',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
-                      )),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
@@ -478,25 +479,25 @@ class _ProductPageState extends State<ProductPage> {
                               size: 20,
                             ),
                             Text(
-                              ' الشحن بواسطة ',
+                              "${getTransrlate(context, 'ShippingBy')} : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
                           ],
                         ),
-                      )),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'أراميكس. الوصول المتوقع: الخميس 29 مارس - الثلاثاء 3 ابريل',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
-                      )),
-                  SizedBox(
-                    height: 25,
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                    ],
                   ),
                   Align(
                       alignment: Alignment.topRight,
@@ -986,20 +987,25 @@ class _ProductPageState extends State<ProductPage> {
           Form(
             key: _formKey,
             child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 20),
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black26)),
-              height: 80,
+              height: 100,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  Text("${getTransrlate(context, 'quantity')} :"),
                   dropdownValue == 'other'
                       ? Container(
                         width: 100,
-                        child: MyTextFormField(
+                    margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 12),
+                    padding: const EdgeInsets.all(3.0),
+                    child: MyTextFormField(
+                      istitle: true,
                           intialLabel: '',
                           Keyboard_Type: TextInputType.number,
                           labelText: "كمية",
-                          hintText: '',
+                          hintText: 'كمية',
                           isPhone: true,
                           validator: (String value) {
                             if (value.isEmpty) {
@@ -1014,7 +1020,7 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       )
                       : Container(
-                          margin: const EdgeInsets.all(15.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 2),
                           padding: const EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.black12)),
@@ -1059,6 +1065,9 @@ class _ProductPageState extends State<ProductPage> {
                                   context: context,
                                   builder: (_) =>
                                       ResultOverlay(value['message']));
+                              setState(() {
+                                dropdownValue="1";
+                              });
                               ServiceData.getCart(context);
                             } else {
                               showDialog(
@@ -1071,7 +1080,8 @@ class _ProductPageState extends State<ProductPage> {
                       }
                     },
                     child: Container(
-                      margin: const EdgeInsets.all(15.0),
+                      height: 50,
+                      margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 1),
                       padding: const EdgeInsets.all(12.0),
                       color: Colors.lightGreen,
                       child: Center(
@@ -1087,7 +1097,7 @@ class _ProductPageState extends State<ProductPage> {
                             width: 5,
                           ),
                           Text(
-                            'أضف إلى عربة التسوق',
+                            getTransrlate(context, 'ADDtoCart'),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, color: Colors.white),
                           ),
