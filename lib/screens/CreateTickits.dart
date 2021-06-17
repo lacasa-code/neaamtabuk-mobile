@@ -162,7 +162,7 @@ super.initState();
                             //setState(() => _isLoading = true);
                             API(context).post('new/ticket',
                                 {
-                                  "title": addressTickit,
+                                  "title": typeTickit,
                                   "priority": 'low',
                                   "message": messageTickit,
                                   "order_id": widget.order_id,
@@ -180,7 +180,7 @@ super.initState();
                                   showDialog(
                                       context: context,
                                       builder: (_) =>
-                                          ResultOverlay(value['message']));
+                                          ResultOverlay("${value['message']}\n${value['error']}"));
                                 }
                               }
                             });

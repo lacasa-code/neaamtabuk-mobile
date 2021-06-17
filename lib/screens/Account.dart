@@ -101,7 +101,7 @@ class _AccountState extends State<Account> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(
-                                    'assets/icons/User Icon.svg',
+                                    'assets/icons/account.svg',
                                     color: Colors.orange,
                                   ),
                                   SizedBox(
@@ -196,7 +196,7 @@ class _AccountState extends State<Account> {
                                       Nav.route(context, UserInfo());
                                     },
                                     icon: SvgPicture.asset(
-                                      'assets/icons/User Icon.svg',
+                                      'assets/icons/account.svg',
                                       color: Colors.orange,
                                     ),
                                     name:

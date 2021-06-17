@@ -1055,7 +1055,7 @@ class _ProductPageState extends State<ProductPage> {
                           },
                         ),
                       )
-                      : items==null?Container():Container(
+                      : items==null?Container():items.isEmpty?Container():Container(
                     margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 2),
                           padding: const EdgeInsets.all(3.0),
                           decoration: BoxDecoration(

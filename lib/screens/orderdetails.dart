@@ -100,7 +100,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    '${widget.order.payment.paymentName ?? ' '}',
+                    '${widget.order.payment==null?'':widget.order.payment.paymentName ?? ' '}',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                 ],
@@ -119,7 +119,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                     height: 15,
                   ),
                   Text(
-                    '${widget.order.address.address}',
+                    '${widget.order.address==null?'':widget.order.address.address??''}',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                 ],

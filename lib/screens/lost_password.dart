@@ -42,6 +42,10 @@ class _LostPasswordState extends State<LostPassword> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'mail');
+                    }else if (!RegExp(
+                        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                        .hasMatch(value)) {
+                      return getTransrlate(context, 'invalidemail');
                     }
                     _formKey.currentState.save();
                     return null;

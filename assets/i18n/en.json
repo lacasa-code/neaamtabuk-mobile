@@ -7,6 +7,13 @@
     "change_language": "Change Language"
   },
   "gust": "Welcome",
+  "area": "Area",
+  "district": "District",
+  "HomeNo": "Home Number",
+  "apartment_no": "Apartment Number",
+  "FloorNo": "Floor Number",
+  "telphone": "Tel phone",
+  "nearest_milestone": "Nearest Milestone",
   "Empty": "No found product !",
   "good_morning": "Good Morning",
   "good_night": "Good Night",
@@ -51,7 +58,7 @@
   "2month": "two month",
 
 
-  "OrderNote": "Order Note",
+  "OrderNote": "Note",
   "OrderHint": "Enter the order Notes",
   "couponcode": "Enter coupon code",
   "couponApplay": "Applay",

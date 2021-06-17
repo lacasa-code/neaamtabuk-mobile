@@ -427,7 +427,6 @@ class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
                                       getFavorit();
                                     } else {
                                       _controller.index=0;
-
                                       showDialog(
                                           context: context,
                                           builder: (_) =>

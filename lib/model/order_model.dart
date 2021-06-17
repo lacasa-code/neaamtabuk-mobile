@@ -39,7 +39,7 @@ class Order {
   int expired;
   Null approved;
   int paid;
-  int status;
+  String status;
   String createdAt;
   String orderStatus;
   List<OrderDetails> orderDetails;
@@ -48,17 +48,17 @@ class Order {
 
   Order(
       {this.id,
-        this.userId,
-        this.userName,
-        this.orderNumber,
-        this.orderTotal,
-        this.expired,
-        this.approved,
-        this.paid,
-        this.status,
-        this.createdAt,
-        this.orderStatus,
-        this.orderDetails});
+      this.userId,
+      this.userName,
+      this.orderNumber,
+      this.orderTotal,
+      this.expired,
+      this.approved,
+      this.paid,
+      this.status,
+      this.createdAt,
+      this.orderStatus,
+      this.orderDetails});
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -72,8 +72,12 @@ class Order {
     status = json['status'];
     createdAt = json['created_at'];
     orderStatus = json['orderStatus'];
-    payment =Payment.fromJson(json['paymentway']);
-    address =Address.fromJson(json['shipping']);
+    if (json['paymentway'] != null) {
+      payment = Payment.fromJson(json['paymentway']);
+    }
+    if (json['shipping'] != null) {
+      address = Address.fromJson(json['shipping']);
+    }
     if (json['orderDetails'] != null) {
       orderDetails = new List<OrderDetails>();
       json['orderDetails'].forEach((v) {
@@ -122,21 +126,21 @@ class OrderDetails {
 
   OrderDetails(
       {this.id,
-        this.orderId,
-        this.productId,
-        this.storeId,
-        this.vendorId,
-        this.productName,
-        this.productImage,
-        this.productSerial,
-        this.storeName,
-        this.vendorName,
-        this.quantity,
-        this.price,
-        this.discount,
-        this.total,
-        this.approved,
-        this.createdAt});
+      this.orderId,
+      this.productId,
+      this.storeId,
+      this.vendorId,
+      this.productName,
+      this.productImage,
+      this.productSerial,
+      this.storeName,
+      this.vendorName,
+      this.quantity,
+      this.price,
+      this.discount,
+      this.total,
+      this.approved,
+      this.createdAt});
 
   OrderDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -212,27 +216,27 @@ class ProductImage {
 
   ProductImage(
       {this.id,
-        this.modelType,
-        this.modelId,
-        this.uuid,
-        this.collectionName,
-        this.name,
-        this.fileName,
-        this.mimeType,
-        this.disk,
-        this.conversionsDisk,
-        this.size,
-        this.manipulations,
-        this.customProperties,
-        this.responsiveImages,
-        this.orderColumn,
-        this.createdAt,
-        this.updatedAt,
-        this.image,
-        this.url,
-        this.fullurl,
-        this.thumbnail,
-        this.preview});
+      this.modelType,
+      this.modelId,
+      this.uuid,
+      this.collectionName,
+      this.name,
+      this.fileName,
+      this.mimeType,
+      this.disk,
+      this.conversionsDisk,
+      this.size,
+      this.manipulations,
+      this.customProperties,
+      this.responsiveImages,
+      this.orderColumn,
+      this.createdAt,
+      this.updatedAt,
+      this.image,
+      this.url,
+      this.fullurl,
+      this.thumbnail,
+      this.preview});
 
   ProductImage.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -246,7 +250,7 @@ class ProductImage {
     disk = json['disk'];
     conversionsDisk = json['conversions_disk'];
     size = json['size'];
-    
+
     orderColumn = json['order_column'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -270,7 +274,6 @@ class ProductImage {
     data['disk'] = this.disk;
     data['conversions_disk'] = this.conversionsDisk;
     data['size'] = this.size;
-
 
     data['order_column'] = this.orderColumn;
     data['created_at'] = this.createdAt;

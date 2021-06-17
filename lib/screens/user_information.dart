@@ -203,6 +203,10 @@ class _UserInfoState extends State<UserInfo> {
                                             if (value.isEmpty) {
                                               return getTransrlate(
                                                   context, 'mail');
+                                            }else if (!RegExp(
+                                                r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                                .hasMatch(value)) {
+                                              return getTransrlate(context, 'invalidemail');
                                             }
                                             _formKey.currentState.save();
                                             return null;
@@ -224,6 +228,7 @@ class _UserInfoState extends State<UserInfo> {
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
                                           initialValue: userModal.phoneNo,
+                                          keyboardType:TextInputType.number ,
                                           decoration: InputDecoration(),
                                           validator: (String value) {
                                             if (value.isEmpty) {
@@ -250,6 +255,8 @@ class _UserInfoState extends State<UserInfo> {
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
                                           initialValue: userModal.birthdate,
+                                          keyboardType:TextInputType.datetime ,
+
                                           decoration: InputDecoration(),
                                           enabled: !_status,
                                           onSaved: (String val) =>

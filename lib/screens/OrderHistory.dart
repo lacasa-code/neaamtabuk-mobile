@@ -228,7 +228,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                         Container(
                                             width:
                                                 ScreenUtil.getWidth(context) /
-                                                    4,
+                                                   4,
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 8, vertical: 5),
                                             decoration: BoxDecoration(
@@ -238,6 +238,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               child: AutoSizeText(
                                                 '${orders[index].orderStatus}',
                                                 maxLines: 1,
+                                                maxFontSize: 20,
+                                                minFontSize: 14,
                                               ),
                                             )),
                                       ],

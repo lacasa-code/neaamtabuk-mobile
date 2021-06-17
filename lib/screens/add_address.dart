@@ -43,7 +43,8 @@ class _AddAddressState extends State<AddAddress> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('إضافة عنوان جديد',style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 22),),
+                Text(getTransrlate(context,'AddNewAddress'),style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 22),),
+              SizedBox(height: 10,),
                 MyTextFormField(
                   intialLabel: ' ',
                   Keyboard_Type: TextInputType.name,
@@ -78,6 +79,7 @@ class _AddAddressState extends State<AddAddress> {
                     address.lastName=value;
                     },
                 ),
+              SizedBox(height: 5,),
                 Text(getTransrlate(context, 'Countroy'),style: TextStyle(color: Colors.black,fontSize: 16),),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -100,30 +102,29 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.emailAddress,
-                  labelText:"المنطقة",
-                  hintText: "المنطقة",
+                  labelText:getTransrlate(context, 'area'),
+                  hintText: getTransrlate(context, 'area'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "المنطقة";
+                      return getTransrlate(context, 'area');
                     }
                     _formKey.currentState.save();
                     return null;
                   },
                   onSaved: (String value) {
                     address.area=value;
-
                   },
                 ),
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.emailAddress,
-                  labelText: "المدينة",
-                  hintText: "المدينة",
+                  labelText: getTransrlate(context, 'City'),
+                  hintText:  getTransrlate(context, 'City'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "المدينة";
+                      return  getTransrlate(context, 'City');
                     }
                     _formKey.currentState.save();
                     return null;
@@ -137,12 +138,12 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.emailAddress,
-                  labelText: 'الحي',
-                  hintText: 'الحي',
+                  labelText: getTransrlate(context, 'district'),
+                  hintText:  getTransrlate(context, 'district'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return 'الحي';
+                      return  getTransrlate(context, 'district');
                     }
                     _formKey.currentState.save();
                     return null;
@@ -155,12 +156,12 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.emailAddress,
-                  labelText: "اسم/رقم شارع",
-                  hintText: "اسم/رقم شارع",
+                  labelText:  getTransrlate(context, 'street'),
+                  hintText: getTransrlate(context, 'street'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "اسم/رقم شارع";
+                      return getTransrlate(context, 'street');
                     }
                     _formKey.currentState.save();
                     return null;
@@ -173,12 +174,12 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.number,
-                  labelText: "رقم المنزل",
-                  hintText: "رقم المنزل",
+                  labelText: getTransrlate(context, 'HomeNo'),
+                  hintText: getTransrlate(context, 'HomeNo'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "رقم المنزل";
+                      return getTransrlate(context, 'HomeNo');
                     }
                     _formKey.currentState.save();
                     return null;
@@ -191,12 +192,12 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.number,
-                  labelText: "رقم الطابق",
-                  hintText: "رقم الطابق",
+                  labelText:getTransrlate(context, 'FloorNo'),
+                  hintText: getTransrlate(context, 'FloorNo'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "رقم الطابق";
+                      return getTransrlate(context, 'FloorNo');
                     }
                     _formKey.currentState.save();
                     return null;
@@ -209,12 +210,12 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.number,
-                  labelText: "رقم الشقه",
-                  hintText: "رقم الشقه",
+                  labelText: getTransrlate(context, 'apartment_no'),
+                  hintText: getTransrlate(context, 'apartment_no'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "رقم الشقه";
+                      return getTransrlate(context, 'apartment_no');
                     }
                     _formKey.currentState.save();
                     return null;
@@ -227,12 +228,12 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.phone,
-                  labelText: "رقم الجوال",
-                  hintText: "رقم الجوال",
+                  labelText: getTransrlate(context,'phone'),
+                  hintText: getTransrlate(context,'phone'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "رقم الجوال";
+                      return getTransrlate(context,'phone');
                     }
                     _formKey.currentState.save();
                     return null;
@@ -245,12 +246,12 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.phone,
-                  labelText: "رقم الهاتف الأرضي",
-                  hintText: "رقم الهاتف الأرضي",
+                  labelText: getTransrlate(context, 'telphone'),
+                  hintText:  getTransrlate(context, 'telphone'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "رقم الهاتف الأرضي";
+                      return  getTransrlate(context, 'telphone');
                     }
                     _formKey.currentState.save();
                     return null;
@@ -263,12 +264,12 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.emailAddress,
-                  labelText: "أقرب معلم",
-                  hintText: "أقرب معلم",
+                  labelText: getTransrlate(context, 'nearest_milestone'),
+                  hintText: getTransrlate(context, 'nearest_milestone'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "أقرب معلم";
+                      return getTransrlate(context, 'nearest_milestone');
                     }else if (value.length>250) {
                       return "Over length";
                     }
@@ -283,12 +284,12 @@ class _AddAddressState extends State<AddAddress> {
                 MyTextFormField(
                   intialLabel: '',
                   Keyboard_Type: TextInputType.emailAddress,
-                  labelText: "ملاحظات",
-                  hintText: "ملاحظات",
+                  labelText: getTransrlate(context, 'OrderNote'),
+                  hintText: getTransrlate(context, 'OrderNote'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return "ملاحظات";
+                      return getTransrlate(context, 'OrderNote');
                     }
                     _formKey.currentState.save();
                     return null;
