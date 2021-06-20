@@ -70,7 +70,7 @@ class _CartScreenState extends State<CartScreen> {
               color: Colors.lightGreen,
               child: Center(
                   child: Text(
-                    'إتمام عملية الشراء',
+                    getTransrlate(context, 'CheckOut'),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
@@ -105,7 +105,7 @@ class _CartScreenState extends State<CartScreen> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          'عربة التسوق (${_cart_model.data.count_pieces})',
+                                          '${getTransrlate(context, 'ShoppingCart')} (${_cart_model.data.count_pieces})',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -171,7 +171,7 @@ class _CartScreenState extends State<CartScreen> {
                                             children: [
                                               Container(
                                                 child: AutoSizeText(
-                                                  "المجموع",
+                                                  getTransrlate(context, 'total'),
                                                   maxLines: 1,
                                                   minFontSize: 20,
                                                   maxFontSize: 25,

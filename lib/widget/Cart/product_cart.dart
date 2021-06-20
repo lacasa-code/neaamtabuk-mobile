@@ -114,7 +114,7 @@ class _ProductCartState extends State<ProductCart> {
                       children: [
                         Container(
                           child: AutoSizeText(
-                            "الكمية",
+                            getTransrlate(context, 'quantity'),
                             maxLines: 1,
                             minFontSize: 20,
                             maxFontSize: 25,
@@ -200,7 +200,7 @@ class _ProductCartState extends State<ProductCart> {
                       children: [
                         Container(
                           child: AutoSizeText(
-                            "السعر",
+                            getTransrlate(context, 'price'),
                             maxLines: 1,
                             minFontSize: 20,
                             maxFontSize: 25,

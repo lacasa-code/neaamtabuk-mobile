@@ -15,7 +15,7 @@ class MyTextFormField extends StatelessWidget {
   final bool enabled;
   final bool isPhone;
   final Widget prefix;
-  final TextInputType Keyboard_Type;
+  final TextInputType keyboard_type;
   final String intialLabel;
   final GestureTapCallback press;
 
@@ -32,7 +32,7 @@ class MyTextFormField extends StatelessWidget {
       this.suffixIcon,
       this.textDirection,
       this.prefix,
-      this.Keyboard_Type,
+      this.keyboard_type,
       this.intialLabel,
       this.press});
 
@@ -74,7 +74,7 @@ class MyTextFormField extends StatelessWidget {
             textDirection: textDirection,
             onSaved: onSaved,
             enabled: enabled,
-            keyboardType: Keyboard_Type,
+            keyboardType: keyboard_type,
           ),
         ],
       ),

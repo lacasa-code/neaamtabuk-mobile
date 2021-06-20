@@ -12,6 +12,7 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
@@ -31,10 +32,9 @@ class API {
   String identifier;
 
   get(String url) async {
-    final String full_url =
-        '${GlobalConfiguration().getString('api_base_url')}$url';
-
-    print(full_url);
+    final  full_url = Uri.parse(
+        '${GlobalConfiguration().getString('api_base_url')}$url');
+    //print(full_url);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       http.Response response = await http.get(full_url, headers: {
@@ -44,18 +44,22 @@ class API {
         //'Accept-Language': Provider.of<Provider_control>(context).getlocal(),
       });
       return getAction(response);
-    } catch (e) {
-      //Nav.route(context, Maintenance());
+    } catch (exception,stackTrace) {
+      print("exception >>>>>>>>>>>>>>>>>>= ${exception}");
+      // await Sentry.captureException(
+      //   exception,
+      //   stackTrace: stackTrace,
+      // );
     } finally {}
   }
 
   post(String url, Map<String, dynamic> body) async {
-    final String full_url =
-        '${GlobalConfiguration().getString('api_base_url')}$url';
+    final  full_url = Uri.parse(
+        '${GlobalConfiguration().getString('api_base_url')}$url');
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    print("body =${body}");
+    //print("body =${body}");
 
     try {
       http.Response response = await http.post(full_url,
@@ -71,9 +75,8 @@ class API {
   }
 
   Put(String url, Map<String, dynamic> body) async {
-    final String full_url =
-        '${GlobalConfiguration().getString('api_base_url')}$url';
-
+    final  full_url = Uri.parse(
+        '${GlobalConfiguration().getString('api_base_url')}$url');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {
@@ -90,8 +93,8 @@ class API {
   }
 
   Delete(String url) async {
-    final String full_url =
-        '${GlobalConfiguration().getString('api_base_url')}$url';
+    final  full_url = Uri.parse(
+        '${GlobalConfiguration().getString('api_base_url')}$url');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       http.Response response = await http.delete(
@@ -110,7 +113,7 @@ class API {
 
   getAction(http.Response response) {
    if(Check) {
-     print(jsonDecode(response.body));
+    // print(jsonDecode(response.body));
      if (response.statusCode == 500) {
         Nav.route(
             context,

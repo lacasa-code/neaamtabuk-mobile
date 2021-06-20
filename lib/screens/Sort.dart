@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 
 class Sortdialog extends StatefulWidget {
   const Sortdialog({Key key}) : super(key: key);
@@ -36,7 +37,7 @@ class _SortdialogState extends State<Sortdialog> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'ترتيب',
+                    ' ${getTransrlate(context, 'Sort')}',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,

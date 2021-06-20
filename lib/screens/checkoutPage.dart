@@ -19,6 +19,7 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
+import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -55,67 +56,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
       body: Container(
         child: Column(
           children: [
-            Container(
-              color: themeColor.getColor(),
-              padding: const EdgeInsets.only(top: 35, bottom: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      size: 30,
-                    ),
-                    color: Color(0xffE4E4E4),
-                  ),
-                  Center(
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      height: ScreenUtil.getHeight(context) / 10,
-                      width: ScreenUtil.getWidth(context) / 3.5,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      Nav.route(context, MyCars());
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/car2.svg',
-                          fit: BoxFit.contain,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          themeColor.getCar_made(),
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context, builder: (_) => SearchOverlay());
-                    },
-                    icon: Icon(
-                      Icons.search,
-                      size: 30,
-                    ),
-                    color: Color(0xffE4E4E4),
-                  ),
-                ],
-              ),
-            ),
+            AppBarCustom(isback: true,),
             Expanded(
               child: Theme(
                 data: ThemeData(
@@ -138,7 +79,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   steps: <Step>[
                     Step(
                       title: Text(
-                        'الشحن',
+                        getTransrlate(context, 'shipping'),
                       ),
                       content: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -146,7 +87,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'الشحن إلى',
+                              getTransrlate(context, 'shippingTo'),
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             address == null
@@ -265,7 +206,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               ),
                             ),
                             Text(
-                              'الشحنة 1',
+                              "${getTransrlate(context, 'Shipping')} 1",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
@@ -342,7 +283,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                     height: 5,
                                   ),
                                   Text(
-                                    'رسوم الشحن : ',
+                                    "${getTransrlate(context, 'fees_ship')} : ",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -400,7 +341,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                           Border.all(color: Colors.lightGreen)),
                                   child: Center(
                                     child: Text(
-                                      'متابعة الشراء',
+                                      getTransrlate(context, 'next_checkout'),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 15,
@@ -419,12 +360,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           : StepState.disabled,
                     ),
                     Step(
-                      title: Text('الدفع'),
+                      title: Text(getTransrlate(context, 'payment'),),
                       content: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'الشحن إلى : ',
+                            getTransrlate(context, 'shippingTo'),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
@@ -455,14 +396,14 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Text(
-                              'طريقة الدفع  : ',
+                              getTransrlate(context, 'paymentMethod'),
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                           payment==null?Container(): Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Container(
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black12)),
@@ -532,16 +473,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                   children: [
                                                     MyTextFormField(
                                                       intialLabel: '',
-                                                      Keyboard_Type:
+                                                      keyboard_type:
                                                           TextInputType.number,
-                                                      labelText: "رقم البطاقة",
+                                                      labelText: getTransrlate(context, 'CardNumber'),
                                                       hintText:
                                                           'xxxx xxxx xxxx xxxx',
                                                       isPhone: true,
                                                       validator:
                                                           (String value) {
                                                         if (value.isEmpty) {
-                                                          return "رقم البطاقة";
+                                                          return getTransrlate(context, 'CardNumber');
                                                         }
                                                         _formKey.currentState
                                                             .save();
@@ -552,16 +493,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                     ),
                                                     MyTextFormField(
                                                       intialLabel: '',
-                                                      Keyboard_Type:
+                                                      keyboard_type:
                                                           TextInputType.number,
                                                       labelText:
-                                                          "الإسم كما يظهر على البطاقة",
-                                                      hintText: 'Name',
+                                                      getTransrlate(context, 'CardName'),
+                                                      hintText: getTransrlate(context, 'CardName'),
                                                       isPhone: true,
                                                       validator:
                                                           (String value) {
                                                         if (value.isEmpty) {
-                                                          return "Name";
+                                                          return getTransrlate(context, 'CardName');
                                                         }
                                                         _formKey.currentState
                                                             .save();
@@ -577,17 +518,17 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                           child:
                                                               MyTextFormField(
                                                             intialLabel: '',
-                                                            Keyboard_Type:
+                                                            keyboard_type:
                                                                 TextInputType
                                                                     .number,
-                                                            labelText: "شهر",
+                                                            labelText: getTransrlate(context, 'month'),
                                                             hintText: '',
                                                             isPhone: true,
                                                             validator:
                                                                 (String value) {
                                                               if (value
                                                                   .isEmpty) {
-                                                                return "Name";
+                                                                return getTransrlate(context, 'month');
                                                               }
                                                               _formKey
                                                                   .currentState
@@ -614,17 +555,17 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                           child:
                                                               MyTextFormField(
                                                             intialLabel: '',
-                                                            Keyboard_Type:
+                                                            keyboard_type:
                                                                 TextInputType
                                                                     .number,
-                                                            labelText: "سنة",
+                                                            labelText: getTransrlate(context, 'year'),
                                                             hintText: '',
                                                             isPhone: true,
                                                             validator:
                                                                 (String value) {
                                                               if (value
                                                                   .isEmpty) {
-                                                                return "Name";
+                                                                return getTransrlate(context, 'year');
                                                               }
                                                               _formKey
                                                                   .currentState
@@ -647,20 +588,20 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                           child:
                                                               MyTextFormField(
                                                             intialLabel: '',
-                                                            Keyboard_Type:
+                                                            keyboard_type:
                                                                 TextInputType
                                                                     .number,
                                                             prefix: Icon(Icons
                                                                 .credit_card),
                                                             labelText:
-                                                                "رمز التحقق",
+                                                            getTransrlate(context, 'Cvv'),
                                                             hintText: '',
                                                             isPhone: true,
                                                             validator:
                                                                 (String value) {
                                                               if (value
                                                                   .isEmpty) {
-                                                                return "Name";
+                                                                return  getTransrlate(context, 'Cvv');
                                                               }
                                                               _formKey
                                                                   .currentState
@@ -720,7 +661,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                         Border.all(color: Colors.lightGreen)),
                                 child: Center(
                                   child: Text(
-                                    'إدفع',
+                                      getTransrlate(context, 'paying'),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 15,
@@ -738,7 +679,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           : StepState.disabled,
                     ),
                     Step(
-                      title: Text('إتمام الشراء'),
+                      title: Text(getTransrlate(context, 'next_checkout'),),
                       content: checkout_model==null?Container():Column(
                         children: <Widget>[
                           Icon(
@@ -772,14 +713,14 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  ' رقم الطلب :${checkout_model.data.orderNumber}',
+                                  '${getTransrlate(context, 'OrderNO')} ${checkout_model.data.orderNumber} :',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
                                 ),SizedBox(height: 10,),
                                 Text(
-                                  'تفاصيل الطلب',
+                                  '${getTransrlate(context, 'OrderDitails')}',
                                   style: TextStyle(
                                       color: Colors.orange,
                                       fontWeight: FontWeight.bold,
@@ -841,7 +782,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                               minFontSize: 11,
                                             ),
                                             AutoSizeText(
-                                              " كمية : ${checkout_model.data.orderDetails[index].quantity}",
+                                              "  : ${getTransrlate(context, 'quantity')}${checkout_model.data.orderDetails[index].quantity}",
                                               maxLines: 2,
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -864,7 +805,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'الإجمالي :',
+                                        getTransrlate(context, 'total'),
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700),
                                       ),
@@ -894,7 +835,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                           Border.all(color: Colors.black26,width: 2)),
                                       child: Center(
                                         child: Text(
-                                          'العودة للتسوق',
+                                          getTransrlate(context, 'backToshopping'),
+
                                           style: TextStyle(
                                               color: Colors.black54,
                                               fontSize: 15,
@@ -969,7 +911,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'عربة التسوق',
+              getTransrlate(context, 'ShoppingCart'),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             InkWell(
@@ -977,7 +919,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 Navigator.pop(context);
               },
               child: Text(
-                'عودة لعربة التسوق',
+                getTransrlate(context, 'backToshoppingCart'),
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.orange,
@@ -1042,7 +984,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AutoSizeText(
-                              "كمية : ${widget.carts.data.orderDetails[index].quantity}",
+                              "${getTransrlate(context, 'quantity')} :  ${widget.carts.data.orderDetails[index].quantity}",
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 14,
@@ -1051,7 +993,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               minFontSize: 11,
                             ),
                             AutoSizeText(
-                              "سعر : ${widget.carts.data.orderDetails[index].price}  ${getTransrlate(context, 'Currency')}",
+                              "${getTransrlate(context, 'price')} : ${widget.carts.data.orderDetails[index].price}  ${getTransrlate(context, 'Currency')}",
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 14,
@@ -1084,7 +1026,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'إجالمي المنتجات',
+                      getTransrlate(context, 'total_product'),
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(
@@ -1101,7 +1043,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'رسوم الشحن',
+                      getTransrlate(context, 'fees_ship'),
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(
@@ -1122,7 +1064,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'إجالمي الطلب',
+                      getTransrlate(context, 'total_order'),
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(

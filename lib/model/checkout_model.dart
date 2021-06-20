@@ -134,7 +134,7 @@ class Data {
     _expired = json["expired"];
     _approved = json["approved"];
     _paid = json["paid"];
-    _shipping = json["shipping"] != null ? Address.fromJson(json["payment"]) : null;
+    _shipping = json["shipping"] != null ? Address.fromJson(json["shipping"]) : null;
     _payment = json["payment"] != null ? Payment.fromJson(json["payment"]) : null;
     _status = json["status"];
     _createdAt = json["created_at"];

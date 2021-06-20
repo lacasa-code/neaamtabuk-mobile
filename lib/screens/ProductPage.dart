@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/review.dart';
 import 'package:flutter_pos/screens/Quastions.dart';
 import 'package:flutter_pos/screens/ratepage.dart';
 import 'package:flutter_pos/screens/writeQuastions.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
+import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:share/share.dart';
 import 'package:flutter_pos/widget/slider/slider_dot.dart';
@@ -35,9 +37,10 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   int _carouselCurrentPage = 0;
+  Reviews reviews;
   String dropdownValue = "1";
   final _formKey = GlobalKey<FormState>();
-  List<String>items=[
+  List<String> items = [
     "1",
     "2",
     "3",
@@ -45,10 +48,10 @@ class _ProductPageState extends State<ProductPage> {
     "5",
     "other",
   ];
+
   @override
   void initState() {
-    print(widget.product.inWishlist);
-
+    getreview();
     super.initState();
   }
 
@@ -60,67 +63,7 @@ class _ProductPageState extends State<ProductPage> {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            color: themeColor.getColor(),
-            padding: const EdgeInsets.only(top: 35),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    size: 25,
-                  ),
-                  color: Color(0xffE4E4E4),
-                ),
-                Center(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: ScreenUtil.getHeight(context) / 10,
-                    width: ScreenUtil.getWidth(context) / 3.2,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    Nav.route(context, MyCars());
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/car2.svg',
-                        fit: BoxFit.contain,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        themeColor.getCar_made(),
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context, builder: (_) => SearchOverlay());
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 25,
-                  ),
-                  color: Color(0xffE4E4E4),
-                ),
-              ],
-            ),
-          ),
+          AppBarCustom(isback: true,),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -166,46 +109,46 @@ class _ProductPageState extends State<ProductPage> {
                           onTap: () {
                             widget.product.inWishlist == "0"
                                 ? API(context).post('user/add/wishlist', {
-                              "product_id": widget.product.id
-                            }).then((value) {
-                              if (value != null) {
-                                if (value['status_code'] == 200) {
-                                  setState(() {
-                                    widget.product.inWishlist = "1";
+                                    "product_id": widget.product.id
+                                  }).then((value) {
+                                    if (value != null) {
+                                      if (value['status_code'] == 200) {
+                                        setState(() {
+                                          widget.product.inWishlist = "1";
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => ResultOverlay(
+                                                value['message']));
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => ResultOverlay(
+                                                value['message']));
+                                      }
+                                    }
+                                  })
+                                : API(context).post(
+                                    'user/removeitem/wishlist', {
+                                    "product_id": widget.product.id
+                                  }).then((value) {
+                                    if (value != null) {
+                                      if (value['status_code'] == 200) {
+                                        setState(() {
+                                          widget.product.inWishlist = "0";
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => ResultOverlay(
+                                                value['message']));
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => ResultOverlay(
+                                                value['message']));
+                                      }
+                                    }
                                   });
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) =>
-                                          ResultOverlay(value['message']));
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) =>
-                                          ResultOverlay(value['message']));
-                                }
-                              }
-                            }):API(context).post('user/removeitem/wishlist',{
-                            "product_id":widget.product.id
-                            })
-                                .then((value) {
-                            if (value != null) {
-                            if (value['status_code'] == 200) {
-                            setState(() {
-                            widget.product.inWishlist="0";
-
-                            });
-                            showDialog(
-                            context: context,
-                            builder: (_) => ResultOverlay(
-                            value['message']));
-                            } else {
-                            showDialog(
-                            context: context,
-                            builder: (_) => ResultOverlay(
-                            value['message']));
-                            }
-                            }
-                            });
                           },
                           child: Row(
                             children: [
@@ -224,7 +167,7 @@ class _ProductPageState extends State<ProductPage> {
                               Container(
                                 width: ScreenUtil.getWidth(context) / 4,
                                 child: Text(
-                                  'أضف للمفضلة',
+                                    getTransrlate(context, 'AddFavorit'),
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
@@ -250,7 +193,7 @@ class _ProductPageState extends State<ProductPage> {
                               Container(
                                 width: ScreenUtil.getWidth(context) / 4,
                                 child: Text(
-                                  'أرسل لصديق',
+                                  getTransrlate(context, 'share'),
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey),
@@ -261,43 +204,42 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         Container(
                           width: ScreenUtil.getWidth(context) / 4,
-
-                          child:   widget.product.quantity >= 1
+                          child: widget.product.quantity >= 1
                               ? Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle_outline_sharp,
-                                size: 25,
-                                color: Colors.lightGreen,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                ' متوفر ',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.lightGreen,
-                                ),
-                              ),
-                            ],
-                          )
+                                  children: [
+                                    Icon(
+                                      Icons.check_circle_outline_sharp,
+                                      size: 25,
+                                      color: Colors.lightGreen,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      getTransrlate(context, 'available'),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.lightGreen,
+                                      ),
+                                    ),
+                                  ],
+                                )
                               : Row(
-                            children: [
-                              Icon(
-                                Icons.remove_circle_outline,
-                                size: 30,
-                                color: Colors.red,
-                              ),
-                              Text(
-                                ' غير متوفر ',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red,
+                                  children: [
+                                    Icon(
+                                      Icons.remove_circle_outline,
+                                      size: 30,
+                                      color: Colors.red,
+                                    ),
+                                    Text(
+                                      ' غير متوفر ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
                         )
                       ],
                     ),
@@ -487,8 +429,8 @@ class _ProductPageState extends State<ProductPage> {
                           ],
                         ),
                       )),
-
-                  Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -600,7 +542,7 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         body: TabBarView(
                           children: [
-                            Padding(
+                           reviews==null?Container(): Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
@@ -624,7 +566,7 @@ class _ProductPageState extends State<ProductPage> {
                                         },
                                       ),
                                       Text(
-                                        "3.5/5 ",
+                                        "${reviews.avgValuations}/5 ",
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -632,7 +574,7 @@ class _ProductPageState extends State<ProductPage> {
                                         ),
                                       ),
                                       Text(
-                                        " (15 تقييم ) ",
+                                        " (${reviews.reviewsCount} تقييم ) ",
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w500,
@@ -646,7 +588,7 @@ class _ProductPageState extends State<ProductPage> {
                                     primary: false,
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
-                                    itemCount: 2,
+                                    itemCount: reviews.reviewsData.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return Padding(
@@ -660,7 +602,7 @@ class _ProductPageState extends State<ProductPage> {
                                             RatingBar.builder(
                                               ignoreGestures: true,
                                               initialRating:
-                                                  double.parse('3.5'),
+                                              reviews.reviewsData[index].evaluations[0].evaluationValue.toDouble(),
                                               itemSize: 20.0,
                                               minRating: 5,
                                               direction: Axis.horizontal,
@@ -676,7 +618,7 @@ class _ProductPageState extends State<ProductPage> {
                                             ),
                                             SizedBox(height: 5),
                                             Text(
-                                              'منتج جيد الصناعة ويعتمد عليه أنصح به',
+                                              reviews.reviewsData[index].bodyReview,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   color: Colors.black),
@@ -1023,7 +965,7 @@ class _ProductPageState extends State<ProductPage> {
           Form(
             key: _formKey,
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 20),
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black26)),
               height: 100,
@@ -1033,53 +975,65 @@ class _ProductPageState extends State<ProductPage> {
                   Text("${getTransrlate(context, 'quantity')} :"),
                   dropdownValue == 'other'
                       ? Container(
-                        width: 100,
-                    margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 12),
-                    padding: const EdgeInsets.all(3.0),
-                    child: MyTextFormField(
-                      istitle: true,
-                          intialLabel: '',
-                          Keyboard_Type: TextInputType.number,
-                          labelText: getTransrlate(context, 'quantity'),
-                          hintText: getTransrlate(context, 'quantity'),
-                          isPhone: true,
-                          validator: (String value) {
-                            if (value.isEmpty) {
-                              return "كمية";
-                            }
-                            _formKey.currentState.save();
-                            return null;
-                          },
-                          onSaved: (String value) {
-                            dropdownValue = value;
-                          },
-                        ),
-                      )
-                      : items==null?Container():items.isEmpty?Container():Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 2),
+                          width: 100,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 2, vertical: 12),
                           padding: const EdgeInsets.all(3.0),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black12)),
-                          child: DropdownButton<String>(
-                            value: dropdownValue,
-                            icon: const Icon(Icons.arrow_drop_down_outlined),
-                            iconSize: 24,
-                            elevation: 16,
-                            underline: Container(),
-                            style: const TextStyle(color: Colors.deepPurple),
-                            onChanged: (String newValue) {
-                              setState(() {
-                                dropdownValue = newValue;
-                              });
+                          child: MyTextFormField(
+                            istitle: true,
+                            intialLabel: '',
+                            keyboard_type: TextInputType.number,
+                            labelText: getTransrlate(context, 'quantity'),
+                            hintText: getTransrlate(context, 'quantity'),
+                            isPhone: true,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return "كمية";
+                              }
+                              _formKey.currentState.save();
+                              return null;
                             },
-                            items: items.map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text("$value"),
-                              );
-                            }).toList(),
+                            onSaved: (String value) {
+                              dropdownValue = value;
+                            },
                           ),
-                        ),
+                        )
+                      : items == null
+                          ? Container()
+                          : items.isEmpty
+                              ? Container()
+                              :dropdownValue==null
+                              ? Container()
+                              : Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 2, vertical: 2),
+                                  padding: const EdgeInsets.all(3.0),
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Colors.black12)),
+                                  child: DropdownButton<String>(
+                                    value: dropdownValue,
+                                    icon: const Icon(
+                                        Icons.arrow_drop_down_outlined),
+                                    iconSize: 24,
+                                    elevation: 16,
+                                    underline: Container(),
+                                    style: const TextStyle(
+                                        color: Colors.deepPurple),
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        dropdownValue = newValue;
+                                      });
+                                    },
+                                    items: items.map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text("$value"),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
                   InkWell(
                     onTap: () {
                       if (_formKey.currentState.validate()) {
@@ -1095,10 +1049,13 @@ class _ProductPageState extends State<ProductPage> {
                                   builder: (_) =>
                                       ResultOverlay(value['message']));
                               setState(() {
-                                dropdownValue="1";
+                                dropdownValue = "1";
                               });
                               ServiceData.getCart(context);
                             } else {
+                              setState(() {
+                                dropdownValue = "1";
+                              });
                               showDialog(
                                   context: context,
                                   builder: (_) =>
@@ -1110,7 +1067,8 @@ class _ProductPageState extends State<ProductPage> {
                     },
                     child: Container(
                       height: 50,
-                      margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 1),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 2, vertical: 1),
                       padding: const EdgeInsets.all(12.0),
                       color: Colors.lightGreen,
                       child: Center(
@@ -1128,7 +1086,8 @@ class _ProductPageState extends State<ProductPage> {
                           Text(
                             getTransrlate(context, 'ADDtoCart'),
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.white),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                         ],
                       )),
@@ -1141,5 +1100,13 @@ class _ProductPageState extends State<ProductPage> {
         ],
       ),
     );
+  }
+
+  void getreview() {
+    API(context).get('home/review/product/${widget.product.id}').then((value){
+      setState(() {
+        reviews=Review.fromJson(value).data;
+      });
+    });
   }
 }

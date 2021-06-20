@@ -2,10 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/model/years.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
-import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
@@ -47,7 +45,7 @@ class _AddAddressState extends State<AddAddress> {
               SizedBox(height: 10,),
                 MyTextFormField(
                   intialLabel: ' ',
-                  Keyboard_Type: TextInputType.name,
+                  keyboard_type: TextInputType.name,
                   labelText: getTransrlate(context, 'Firstname'),
                   hintText: getTransrlate(context, 'Firstname'),
                   isPhone: true,
@@ -64,7 +62,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.text,
+                  keyboard_type: TextInputType.text,
                   labelText: getTransrlate(context, 'Lastname'),
                   hintText: getTransrlate(context, 'Lastname'),
                   isPhone: true,
@@ -101,7 +99,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.emailAddress,
                   labelText:getTransrlate(context, 'area'),
                   hintText: getTransrlate(context, 'area'),
                   isPhone: true,
@@ -118,7 +116,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'City'),
                   hintText:  getTransrlate(context, 'City'),
                   isPhone: true,
@@ -137,7 +135,7 @@ class _AddAddressState extends State<AddAddress> {
 
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'district'),
                   hintText:  getTransrlate(context, 'district'),
                   isPhone: true,
@@ -155,25 +153,24 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
-                  labelText:  getTransrlate(context, 'street'),
-                  hintText: getTransrlate(context, 'street'),
+                  keyboard_type: TextInputType.emailAddress,
+                  labelText:  getTransrlate(context, 'Street'),
+                  hintText: getTransrlate(context, 'Street'),
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'street');
+                      return getTransrlate(context, 'Street');
                     }
                     _formKey.currentState.save();
                     return null;
                   },
                   onSaved: (String value) {
                     address.street=value;
-
                   },
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.number,
+                  keyboard_type: TextInputType.number,
                   labelText: getTransrlate(context, 'HomeNo'),
                   hintText: getTransrlate(context, 'HomeNo'),
                   isPhone: true,
@@ -191,7 +188,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.number,
+                  keyboard_type: TextInputType.number,
                   labelText:getTransrlate(context, 'FloorNo'),
                   hintText: getTransrlate(context, 'FloorNo'),
                   isPhone: true,
@@ -209,7 +206,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.number,
+                  keyboard_type: TextInputType.number,
                   labelText: getTransrlate(context, 'apartment_no'),
                   hintText: getTransrlate(context, 'apartment_no'),
                   isPhone: true,
@@ -227,7 +224,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.phone,
+                  keyboard_type: TextInputType.phone,
                   labelText: getTransrlate(context,'phone'),
                   hintText: getTransrlate(context,'phone'),
                   isPhone: true,
@@ -245,7 +242,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.phone,
+                  keyboard_type: TextInputType.phone,
                   labelText: getTransrlate(context, 'telphone'),
                   hintText:  getTransrlate(context, 'telphone'),
                   isPhone: true,
@@ -263,7 +260,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'nearest_milestone'),
                   hintText: getTransrlate(context, 'nearest_milestone'),
                   isPhone: true,
@@ -283,7 +280,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'OrderNote'),
                   hintText: getTransrlate(context, 'OrderNote'),
                   isPhone: true,

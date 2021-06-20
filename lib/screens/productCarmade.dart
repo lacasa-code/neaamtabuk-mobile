@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/List/gridview.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
+import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -40,76 +42,9 @@ class _ProductCarmadeState extends State<ProductCarmade> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.only(top: 40, bottom: 20),
-              color: themeColor.getColor(),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      size: 30,
-                    ),
-                    color: Color(0xffE4E4E4),
-                  ),
-                  Container(
-                    width: ScreenUtil.getWidth(context) / 4,
-                    child: AutoSizeText(
-                      widget.name == null
-                          ? "نتائج البحث"
-                          : 'نتائج البحث عن\n${widget.name}',
-                      maxLines: 2,
-                      maxFontSize: 15,
-                      minFontSize: 10,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Nav.route(context, MyCars());
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/car2.svg',
-                          fit: BoxFit.contain,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                            width: ScreenUtil.getWidth(context) / 4,
-                            child: Text(
-                              themeColor.getCar_made(),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.white),
-                            ))
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context, builder: (_) => SearchOverlay());
-                    },
-                    icon: Icon(
-                      Icons.search,
-                      size: 30,
-                    ),
-                    color: Color(0xffE4E4E4),
-                  ),
-                ],
-              ),
-            ),
+            AppBarCustom(isback: true,title:   widget.name == null
+                ? "نتائج البحث"
+                : 'نتائج البحث عن\n${widget.name}'),
             widget.product == null
                 ? Container()
                 : Container(
@@ -132,7 +67,7 @@ class _ProductCarmadeState extends State<ProductCarmade> {
                           ),
                           // color: Color(0xffE4E4E4),
                         ),
-                        Text('${widget.product.length} منتج'),
+                        Text('${widget.product.length}  ${getTransrlate(context, 'product')}'),
                         InkWell(
                           onTap: () {
                             showDialog(
@@ -141,7 +76,7 @@ class _ProductCarmadeState extends State<ProductCarmade> {
                           },
                           child: Row(
                             children: [
-                              Text('تصفية'),
+                              Text(' ${getTransrlate(context, 'filter')}'),
                               Icon(
                                 Icons.keyboard_arrow_down,
                                 size: 30,
@@ -174,7 +109,7 @@ class _ProductCarmadeState extends State<ProductCarmade> {
                           },
                           child: Row(
                             children: [
-                              Text('ترتيب'),
+                              Text(' ${getTransrlate(context, 'Sort')}'),
                               Icon(
                                 Icons.keyboard_arrow_down,
                                 size: 30,

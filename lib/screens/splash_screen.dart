@@ -74,11 +74,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _auth() async {
     //themeColor.setCar_made(getTransrlate(context, 'selectCar'));
-    API(context,Check: false).post('token/data', {}).then((value) {
+    API(context,Check: false).post('token/data', {}).then((value) async {
       if (value['data'] != null) {
         if (value['data']['status'] == 'ON') {
           themeColor.setLogin(true);
-          _provider_data.getCart(context);
         } else {
           themeColor.setLogin(false);
           SharedPreferences.getInstance().then((prefs) {
@@ -94,4 +93,5 @@ class _SplashScreenState extends State<SplashScreen>
     });
     Nav.routeReplacement(context, Home());
   }
+
 }

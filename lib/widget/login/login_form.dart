@@ -43,7 +43,7 @@ class _LoginFormState extends State<LoginForm> {
           children: <Widget>[
             MyTextFormField(
               intialLabel: 'firstuser@user.com',
-              Keyboard_Type: TextInputType.emailAddress,
+              keyboard_type: TextInputType.emailAddress,
               labelText: getTransrlate(context, 'mail'),
               hintText: getTransrlate(context, 'mail'),
               isPhone: true,

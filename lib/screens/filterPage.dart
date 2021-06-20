@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/Filter.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/List/gridview.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
+import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/product/product_card.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -50,62 +52,7 @@ class _FilterPageState extends State<FilterPage> {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 40, bottom: 20),
-            color: themeColor.getColor(),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    size: 30,
-                  ),
-                  color: Color(0xffE4E4E4),
-                ),
-                Text(
-                  ' ',
-                  style: TextStyle(fontSize: 10, color: Colors.white),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    Nav.route(context, MyCars());
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/car2.svg',
-                        fit: BoxFit.contain,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(themeColor.getCar_made(),style: TextStyle(
-                          color: Colors.white
-                      ),)
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context, builder: (_) => SearchOverlay());
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 30,
-                  ),
-                  color: Color(0xffE4E4E4),
-                ),
-              ],
-            ),
-          ),
+          AppBarCustom(isback: true,title:getTransrlate(context, 'search_result') ,),
           product == null
               ? Container()
               : Container(
@@ -128,7 +75,7 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                   // color: Color(0xffE4E4E4),
                 ),
-                Text('${product.length} منتج'),
+                Text('${product.length}  ${getTransrlate(context, 'product')}'),
                 InkWell(
                   onTap: () {
                     showDialog(
@@ -137,7 +84,7 @@ class _FilterPageState extends State<FilterPage> {
                   },
                   child: Row(
                     children: [
-                      Text('تصفية'),
+                      Text(' ${getTransrlate(context, 'filter')}'),
                       Icon(
                         Icons.keyboard_arrow_down,
                         size: 30,
@@ -156,7 +103,7 @@ class _FilterPageState extends State<FilterPage> {
                   },
                   child: Row(
                     children: [
-                      Text('ترتيب'),
+                      Text(' ${getTransrlate(context, 'Sort')}'),
                       Icon(
                         Icons.keyboard_arrow_down,
                         size: 30,

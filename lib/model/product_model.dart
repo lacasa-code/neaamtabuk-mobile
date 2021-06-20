@@ -133,7 +133,7 @@ class Product {
     carMadeId = json['car_made_id'];
     carMadeName = json['car_made_name'];
     carModelId = json['car_model_id'];
-    carModelName = json['car_model_name'];
+    carModelName = json['car_model_name'].toString();
     cartypeId = json['cartype_id'];
     cartypeName = json['cartype_name'];
     yearId = json['year_id'];

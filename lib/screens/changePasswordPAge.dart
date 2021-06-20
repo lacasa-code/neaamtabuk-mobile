@@ -53,7 +53,7 @@ class _changePasswordState extends State<changePassword> {
               children: [
                 MyTextFormField(
                   intialLabel: email??' ',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'Email'),
                   hintText: getTransrlate(context, 'Email'),
                   isPhone: true,
@@ -75,7 +75,7 @@ class _changePasswordState extends State<changePassword> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.visiblePassword,
+                  keyboard_type: TextInputType.visiblePassword,
                   labelText: getTransrlate(context, 'password'),
                   hintText: getTransrlate(context, 'password'),
                   suffixIcon: IconButton(
@@ -105,7 +105,7 @@ class _changePasswordState extends State<changePassword> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.visiblePassword,
+                  keyboard_type: TextInputType.visiblePassword,
                   labelText: getTransrlate(context, 'NewPassword'),
                   hintText: getTransrlate(context, 'NewPassword'),
                   suffixIcon: IconButton(
@@ -137,7 +137,7 @@ class _changePasswordState extends State<changePassword> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'ConfirmPassword'),
                   hintText: getTransrlate(context, 'ConfirmPassword'),
                   suffixIcon: IconButton(

@@ -100,7 +100,7 @@ super.initState();
                 // ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.emailAddress,
                   labelText: 'عنوان الشكوى',
                   hintText: 'عنوان الشكوى',
                   isPhone: true,
@@ -117,7 +117,7 @@ super.initState();
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  Keyboard_Type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.emailAddress,
                   labelText: 'الرسالة',
                   hintText: 'الرسالة',
                   isPhone: true,

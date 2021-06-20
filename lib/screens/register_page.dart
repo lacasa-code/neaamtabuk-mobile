@@ -274,8 +274,9 @@ class _RegisterPageState extends State<RegisterPage> {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken.token;
-        final graphResponse = await http.get(
+        final  full_url = Uri.parse(
             'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
+        final graphResponse = await http.get(full_url );
         final profil = JSON.jsonDecode(graphResponse.body);
         print(graphResponse.body);
         email = profil['email'];

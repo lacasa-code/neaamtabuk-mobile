@@ -22,13 +22,18 @@ class SearchOverlayState extends State<SearchOverlay>
   AnimationController controller;
   Animation<double> scaleAnimation;
   List<Product> products = [];
+  FocusNode _focusNode = FocusNode();
   AutoCompleteTextField searchTextField;
   GlobalKey<AutoCompleteTextFieldState<Product>> key = new GlobalKey();
+
   @override
   void initState() {
     super.initState();
-
-    controller =
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        FocusScope.of(context).requestFocus(_focusNode);
+      }
+    });    controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 450));
     scaleAnimation =
         CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
@@ -36,7 +41,6 @@ class SearchOverlayState extends State<SearchOverlay>
     controller.addListener(() {
       setState(() {});
     });
-
     controller.forward();
   }
 
@@ -81,66 +85,71 @@ class SearchOverlayState extends State<SearchOverlay>
                             color: Colors.white,
                             child: searchTextField =
                                 AutoCompleteTextField<Product>(
-                              key: key,
-                              clearOnSubmit: false,
-                              suggestions: products,
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 16.0),
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText:getTransrlate(context, 'search'),
-                                  hintStyle: TextStyle(
-                                    fontSize: 13,
-                                    color: Color(0xFF5D6A78),
-                                    fontWeight: FontWeight.w400,
-                                  )),
-                              itemFilter: (item, query) {
-                                return item
-                                    .toString()
-                                    .toLowerCase()
-                                    .startsWith(query.toLowerCase());
-                              },
-                              itemSorter: (a, b) {
-                                return a.name.compareTo(b.name);
-                              },
-                              itemSubmitted: (item) {
-                                setState(() {
-                                  searchTextField.textField.controller.text =
-                                      item.toString();
-                                });
-                              },
-                              textChanged: (string) {
-                                if(string.length>=1){
-
-                           API(context).post('user/search/products', {
-                                    "search_index": string,
-                                  }).then((value) {
-                                    if (value != null) {
-                                      if (value['status_code'] == 200) {
-                                        setState(() {
-                                          products =
-                                              Product_model.fromJson(value)
-                                                  .data;
-                                        });
-                                      } else {
-                                        showDialog(
-                                            context: context,
-                                            builder: (_) => ResultOverlay(
-                                                value['message']));
-                                      }
+                                  key: key,
+                                  clearOnSubmit: false,
+                                  suggestions: products,
+                                  focusNode: _focusNode,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16.0),
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: getTransrlate(
+                                          context, 'search'),
+                                      hintStyle: TextStyle(
+                                        fontSize: 13,
+                                        color: Color(0xFF5D6A78),
+                                        fontWeight: FontWeight.w400,
+                                      )),
+                                  itemFilter: (item, query) {
+                                    return item
+                                        .toString()
+                                        .toLowerCase()
+                                        .startsWith(query.toLowerCase());
+                                  },
+                                  itemSorter: (a, b) {
+                                    return a.name.compareTo(b.name);
+                                  },
+                                  itemSubmitted: (item) {
+                                    setState(() {
+                                      searchTextField.textField.controller
+                                          .text =
+                                          item.toString();
+                                    });
+                                  },
+                                  textChanged: (string) {
+                                    if (string.length >= 1) {
+                                      API(context).post(
+                                          'user/search/products', {
+                                        "search_index": string,
+                                      }).then((value) {
+                                        if (value != null) {
+                                          if (value['status_code'] == 200) {
+                                            setState(() {
+                                              products =
+                                                  Product_model
+                                                      .fromJson(value)
+                                                      .data;
+                                            });
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    ResultOverlay(
+                                                        value['message']));
+                                          }
+                                        }
+                                      });
+                                    } else {
+                                      setState(() {
+                                        products = [];
+                                      });
                                     }
-                                  });
-                                }else{
-                                  setState(() {
-                                    products=[];
-                                  });
-                                }
-                              },
-                              itemBuilder: (context, item) {
-                                // ui for the autocompelete row
-                                return row(item);
-                              },
-                            ),
+                                  },
+                                  itemBuilder: (context, item) {
+                                    // ui for the autocompelete row
+                                    return row(item);
+                                  },
+                                ),
                           ),
                         ),
                         Padding(
