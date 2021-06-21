@@ -19,6 +19,9 @@
   "telphone": "Tel phone",
   "nearest_milestone": "Nearest Milestone",
   "Empty": "No found product !",
+  "EmptyRate": "No Found Rate",
+  "EmptyQuastion": "No Questions Found",
+
   "good_morning": "Good Morning",
   "good_night": "Good Night",
   "contact": "Call Naw",
@@ -149,6 +152,7 @@
   "Conditions": "Terms and Conditions",
   "return": "Return Policy",
 
+  "company": "Company",
 
   "shippingTo": "Shipping To",
   "shipping": "Shipping",

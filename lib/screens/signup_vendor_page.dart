@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_pos/screens/Account.dart';
 import 'package:flutter_pos/screens/login.dart';
-import 'package:flutter_pos/screens/signUP_page.dart';
-import 'package:flutter_pos/screens/signup_vendor_page.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/register/register_form.dart';
+import 'package:flutter_pos/widget/register/register_form_model.dart';
+import 'package:flutter_pos/widget/register/register_form_vendor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -19,12 +21,12 @@ import 'dart:convert' as JSON;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class RegisterPage extends StatefulWidget {
+class SignUpVendorPage extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _SignUpVendorPageState createState() => _SignUpVendorPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _SignUpVendorPageState extends State<SignUpVendorPage> {
   String email, facebook_id;
   Provider_control themeColor;
 
@@ -44,7 +46,6 @@ class _RegisterPageState extends State<RegisterPage> {
             fit: BoxFit.contain,
             //color: themeColor.getColor(),
           ),
-          leading: Container(),
         ),
         // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
@@ -53,60 +54,34 @@ class _RegisterPageState extends State<RegisterPage> {
             children: <Widget>[
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  child: Text(
-                    getTransrlate(context, 'AreadyAccount'),
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: (){
-                  Nav.route(context, SignUpPage());
-                },
-                child: Container(
-                  width: ScreenUtil.getWidth(context)/1.3,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.orange, width: 1)),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'أرغب في شراء منتجات',
-                        style: TextStyle(
-                            color: Colors.orange, fontWeight: FontWeight.bold),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 1,
+                        width: ScreenUtil.getWidth(context) / 4,
+                        color: Colors.black12,
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              InkWell(
-                onTap: (){
-                  Nav.route(context, SignUpVendorPage());
-                },
-                child: Container(
-                  width: ScreenUtil.getWidth(context)/1.3,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.orange, width: 1)),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'أرغب في التسجيل كبائع',
+                      Text(
+                        getTransrlate(context, 'AreadyAccount'),
                         style: TextStyle(
-                            color: Colors.orange, fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                      Container(
+                        height: 1,
+                        width: ScreenUtil.getWidth(context) / 4,
+                        color: Colors.black12,
+                      )
+                    ],
                   ),
                 ),
               ),
+              RegisterFormVendor(),
               routeLoginWidget(themeColor, context),
               SizedBox(
                 height: 50,
@@ -122,8 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget routeLoginWidget(Provider_control themeColor, BuildContext context) {
     return Container(
-      width: ScreenUtil.getWidth(context)/1.3,
-
+      padding: EdgeInsets.only(right: 36, left: 48),
       child: Column(
         children: <Widget>[
           Center(
@@ -160,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 borderRadius: BorderRadius.circular(1.0),
                 side: BorderSide(color: Colors.black26)),
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -300,9 +274,9 @@ class _RegisterPageState extends State<RegisterPage> {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken.token;
-        final full_url = Uri.parse(
+        final  full_url = Uri.parse(
             'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
-        final graphResponse = await http.get(full_url);
+        final graphResponse = await http.get(full_url );
         final profil = JSON.jsonDecode(graphResponse.body);
         print(graphResponse.body);
         email = profil['email'];
@@ -329,6 +303,7 @@ class _RegisterPageState extends State<RegisterPage> {
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);
         Phoenix.rebirth(context);
+
       } else {
         showDialog(
             context: context,

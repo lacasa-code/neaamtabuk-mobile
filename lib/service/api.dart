@@ -113,7 +113,7 @@ class API {
 
   getAction(http.Response response) {
    if(Check) {
-    // print(jsonDecode(response.body));
+     print(jsonDecode(response.body));
      if (response.statusCode == 500) {
         Nav.route(
             context,

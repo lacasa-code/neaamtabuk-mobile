@@ -15,12 +15,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../main.dart';
 
-class RegisterForm extends StatefulWidget {
+class RegisterFormVendor extends StatefulWidget {
   @override
-  _RegisterFormState createState() => _RegisterFormState();
+  _RegisterFormVendorState createState() => _RegisterFormVendorState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class _RegisterFormVendorState extends State<RegisterFormVendor> {
   final _formKey = GlobalKey<FormState>();
   Model model = Model();
   bool PhoneStatue = false;
@@ -80,6 +80,19 @@ class _RegisterFormState extends State<RegisterForm> {
                   },
                   onSaved: (String value) {
                     model.email = value;
+                  },
+                ),
+                MyTextFormField(
+                  labelText: getTransrlate(context, 'company'),
+                  hintText: getTransrlate(context, 'company'),
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'company');
+                    }
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    model.company = value;
                   },
                 ),
 

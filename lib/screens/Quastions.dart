@@ -1,33 +1,21 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
-import 'package:flutter_pos/widget/ResultOverlay.dart';
-import 'package:flutter_pos/model/product_model.dart';
-import 'package:flutter_pos/screens/productCarPage.dart';
-import 'package:flutter_pos/utils/navigator.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_pos/model/question_model.dart';
+import 'package:flutter_pos/screens/writeQuastions.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../model/cart_category.dart';
-import '../model/manufacturers.dart';
-import '../model/origins.dart';
-import '../service/api.dart';
 import '../utils/screen_size.dart';
 
 class Qeastionsdialog extends StatefulWidget {
-  const Qeastionsdialog({Key key}) : super(key: key);
+   List<Question> _question;
+   int id;
+   Qeastionsdialog(this._question,this.id);
 
-  @override
+   @override
   _QeastionsdialogState createState() => _QeastionsdialogState();
 }
 
 class _QeastionsdialogState extends State<Qeastionsdialog> {
-
-  @override
-  void initState() {
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,67 +65,120 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                     primary: false,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, int index) {
+                    itemCount: widget._question.length,
+                    itemBuilder:
+                        (BuildContext context, int index) {
                       return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment:CrossAxisAlignment.start,
+                        mainAxisAlignment:
+                        MainAxisAlignment.start,
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Row(
                               children: [
-                                SvgPicture.asset('assets/icons/User Icon.svg',color: Colors.grey,height: 35,),
-                                SizedBox(width: 10,),
+                                SvgPicture.asset(
+                                  'assets/icons/User Icon.svg',
+                                  color: Colors.grey,
+                                  height: 35,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'هل المنتج متوافق مع كامري 2014 ؟',
-                                      maxLines: 5,
-                                      style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                                    Container(
+                                      width:
+                                      ScreenUtil.getWidth(
+                                          context) /
+                                          1.4,
+                                      child: Text(
+                                        '${widget._question[index].bodyQuestion}',
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            color:
+                                            Colors.black),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
                                     ),
                                     Text(
-                                      '25-6-2020 بواسطة أحمد',
-                                      style: TextStyle(fontWeight: FontWeight.w500,color: Colors.grey),
+                                      '${widget._question[index].createdAt} بواسطة ${widget._question[index].userName}',
+                                      style: TextStyle(
+                                          fontWeight:
+                                          FontWeight.w500,
+                                          color: Colors.grey),
                                     ),
-
                                   ],
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          widget._question[index].answer==null?Container():
                           Padding(
                             padding: const EdgeInsets.all(25.0),
                             child: Row(
                               children: [
-                                Icon(Icons.message_outlined,color: Colors.grey,size: 35,),
-                                SizedBox(width: 10,),
+                                Icon(
+                                  Icons.message_outlined,
+                                  color: Colors.grey,
+                                  size: 35,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Center(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment
+                                        .start,
                                     children: [
                                       Container(
-                                        width: ScreenUtil.getWidth(context)/1.6,
+                                        width:
+                                        ScreenUtil.getWidth(
+                                            context) /
+                                            1.6,
                                         child: Text(
-                                          'نعم المنتج متوافق مع الموديل يجب التأكد من التركيب بشكل سليم في مركز معتمد لتجنب التلفيات اثناء تركيب المنتج',
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 5,
-                                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                                          '${widget._question[index].answer??''}',
+                                          overflow: TextOverflow
+                                              .ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight
+                                                  .bold,
+                                              color:
+                                              Colors.black),
                                         ),
                                       ),
-                                      Text(
-                                        '25-6-2020 بواسطة أحمد',
-                                        style: TextStyle(fontWeight: FontWeight.w500,color: Colors.grey),
+                                      SizedBox(
+                                        height: 10,
                                       ),
-
+                                      Text(
+                                        '${widget._question[index].updatedAt} بواسطة ${widget._question[index].vendor.vendorName}',
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.w500,
+                                            color: Colors.grey),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Container(height: 1,color: Colors.grey,)
+                          Container(
+                            height: 1,
+                            color: Colors.black12,
+                          )
                         ],
                       );
                     },
@@ -151,7 +192,8 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                         onTap: () {
                           showDialog(
                               context: context,
-                              builder: (_) => ResultOverlay(getTransrlate(context, 'OrderError')));
+                              builder: (_) =>
+                                  WriteQuastionsdialog(widget.id));
                         },
                         child: Container(
                           width: ScreenUtil.getWidth(context)/2.5,
@@ -186,7 +228,6 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                 ],
               ),
             ),
-
           ],
         ),
       ),

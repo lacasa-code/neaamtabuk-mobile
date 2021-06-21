@@ -28,11 +28,15 @@
   "contact": "تواصل معنا",
   "allcatery": "كل الفئات",
   "Empty": "لا توجد منتجات",
+  "EmptyRate": "لا توجد تقيمات",
+  "EmptyQuastion": "لا توجد أسئلة",
+
   "product": "منتجات",
   "filter": "تصفية",
 
   "shippingTo": "شحن إلى",
   "shipping": "الشحن",
+  "company": "الشركة",
   "payment": "الدفع",
   "paying": "أدفع",
   "next_checkout": "متابعة الشراء",

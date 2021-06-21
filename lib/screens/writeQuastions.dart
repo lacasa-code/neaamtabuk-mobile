@@ -17,14 +17,17 @@ import '../service/api.dart';
 import '../utils/screen_size.dart';
 
 class WriteQuastionsdialog extends StatefulWidget {
-  const WriteQuastionsdialog({Key key}) : super(key: key);
+  int id;
+
+  WriteQuastionsdialog(this.id);
 
   @override
   _WriteQuastionsdialogState createState() => _WriteQuastionsdialogState();
 }
 
 class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
-  TextEditingController CommentController;
+  TextEditingController CommentController=TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -82,31 +85,31 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
                   SizedBox(height: 15,),
 
                   Container(
-                margin: EdgeInsets.all(8),
-                height: 300,
-                child: TextField(
-                  controller: CommentController,
-                  maxLines: 10,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Colors.orange,
+                    margin: EdgeInsets.all(8),
+                    height: 300,
+                    child: TextField(
+                      controller: CommentController,
+                      maxLines: 10,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.orange,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 2.0,
+                          ),
+                        ),
+                        focusColor: Colors.orange,
+                        filled: true,
                       ),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Colors.grey,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusColor: Colors.orange,
-                    filled: true,
                   ),
-                ),
-              ),
                   SizedBox(height: 25,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,16 +117,34 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
                     children: [
                       InkWell(
                         onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (_) => ResultOverlay(getTransrlate(context, 'OrderError')));
+                          API(context)
+                              .post('user/add/prod/question',
+                              {"body_question":CommentController.text,"product_id":widget.id})
+                              .then((value) {
+                            if (value != null) {
+                              if (value['status_code'] == 201) {
+                                Navigator.pop(context);
+
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay(value['message']));
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message'] ??
+                                            ''}\n${value['errors']??""}'));
+                              }
+                            }
+                          });
                         },
                         child: Container(
-                          width: ScreenUtil.getWidth(context)/2.5,
+                          width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
                               border: Border.all(
-                                  color:  Colors.grey
+                                  color: Colors.grey
                               )),
                           child: Center(
                             child: AutoSizeText(
@@ -132,7 +153,8 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
                               maxFontSize: 14,
                               maxLines: 1,
                               minFontSize: 10,
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ),
                         ),
@@ -142,11 +164,11 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                          width: ScreenUtil.getWidth(context)/2.5,
+                          width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
                               border: Border.all(
-                                  color:  Colors.grey
+                                  color: Colors.grey
                               )),
                           child: Center(
                             child: AutoSizeText(
@@ -155,7 +177,8 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
                               maxFontSize: 14,
                               maxLines: 1,
                               minFontSize: 10,
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ),
                         ),

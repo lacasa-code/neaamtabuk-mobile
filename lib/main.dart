@@ -14,40 +14,30 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GlobalConfiguration().loadFromAsset("configurations");
   print("base_url: ${GlobalConfiguration().getString('base_url')}");
-  // runApp(MultiProvider(providers: [
-  //   ChangeNotifierProvider<Provider_control>(
-  //     create: (_) => Provider_control(),
-  //   ),
-  //   ChangeNotifierProvider<Provider_Data>(
-  //     create: (_) => Provider_Data(),
-  //   ),
-  // ], child: Phoenix(child: MyApp())));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<Provider_control>(
+      create: (_) => Provider_control(),
+    ),
+    ChangeNotifierProvider<Provider_Data>(
+      create: (_) => Provider_Data(),
+    ),
+  ], child: Phoenix(child: MyApp())));
 
-  await SentryFlutter.init(
-
-        (options) {
-      options.dsn = 'https://536b9d1a8e014f0dbca91d2f7f5c487a@o551399.ingest.sentry.io/5825146';
-    },
-    appRunner: () => runApp(MultiProvider(providers: [
-      ChangeNotifierProvider<Provider_control>(
-        create: (_) => Provider_control(),
-      ),
-      ChangeNotifierProvider<Provider_Data>(
-        create: (_) => Provider_Data(),
-      ),
-    ], child: Phoenix(child: MyApp()))),
-
-  );
-  // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-  // OneSignal.shared.init(
-  //     "b2f7f966-d8cc-11e4-bed1-df8f05be55ba",
-  //     iOSSettings: {
-  //       OSiOSSettings.autoPrompt: false,
-  //       OSiOSSettings.inAppLaunchUrl: false
-  //     }
+  // await SentryFlutter.init(
+  //
+  //       (options) {
+  //     options.dsn = 'https://536b9d1a8e014f0dbca91d2f7f5c487a@o551399.ingest.sentry.io/5825146';
+  //   },
+  //   appRunner: () => runApp(MultiProvider(providers: [
+  //     ChangeNotifierProvider<Provider_control>(
+  //       create: (_) => Provider_control(),
+  //     ),
+  //     ChangeNotifierProvider<Provider_Data>(
+  //       create: (_) => Provider_Data(),
+  //     ),
+  //   ], child: Phoenix(child: MyApp()))),
+  //
   // );
-  // OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
-  // await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
 }
 
 class MyApp extends StatefulWidget {

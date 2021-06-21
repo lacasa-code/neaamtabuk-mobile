@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 
@@ -10,14 +11,18 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../utils/screen_size.dart';
 
 class WriteRatedialog extends StatefulWidget {
-  const WriteRatedialog({Key key}) : super(key: key);
+  int id;
+
+  WriteRatedialog(this.id);
 
   @override
   _WriteRatedialogState createState() => _WriteRatedialogState();
 }
 
 class _WriteRatedialogState extends State<WriteRatedialog> {
-  TextEditingController CommentController;
+  TextEditingController CommentController = TextEditingController();
+  int rating = 3;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -62,7 +67,6 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-
                 children: [
                   Text(
                     " أخبرنا عن رأيك في المنتج ",
@@ -75,78 +79,100 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                   Row(
                     children: [
                       Text(
-                        "3.5/5 ",
+                        "$rating/5 ",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.orange,
                         ),
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       RatingBar.builder(
-                        initialRating: double.parse('3.5'),
+                        initialRating: rating.toDouble(),
                         itemSize: 25.0,
-                        minRating: 5,
+                        minRating: 1,
                         direction: Axis.horizontal,
-                        allowHalfRating: true,
+                        allowHalfRating: false,
                         itemCount: 5,
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
                           color: Colors.orange,
                         ),
                         onRatingUpdate: (rating) {
-                          print(rating);
+                          setState(() {
+                            this.rating = rating.toInt();
+                          });
                         },
                       ),
-
                     ],
                   ),
-                  SizedBox(height: 15,),
-
-                  Container(
-                margin: EdgeInsets.all(8),
-                height: 300,
-                child: TextField(
-                  controller: CommentController,
-                  maxLines: 10,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Colors.orange,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Colors.grey,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusColor: Colors.orange,
-                    filled: true,
+                  SizedBox(
+                    height: 15,
                   ),
-                ),
-              ),
-                  SizedBox(height: 25,),
+                  Container(
+                    margin: EdgeInsets.all(8),
+                    height: 300,
+                    child: TextField(
+                      controller: CommentController,
+                      maxLines: 10,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.orange,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 2.0,
+                          ),
+                        ),
+                        focusColor: Colors.orange,
+                        filled: true,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InkWell(
                         onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (_) => ResultOverlay(getTransrlate(context, 'OrderError')));
+                          API(context).post('user/add/review', {
+                            "body_review": CommentController.text,
+                            "product_id": widget.id,
+                            "evaluation_value": rating
+                          }).then((value) {
+                            if (value != null) {
+                              if (value['status_code'] == 201) {
+                                Navigator.pop(context);
+
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay(value['message']));
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => ResultOverlay(
+                                        '${value['message'] ?? ''}\n${value['errors'] ?? ""}'));
+                              }
+                            }
+                          });
                         },
                         child: Container(
-                          width: ScreenUtil.getWidth(context)/2.5,
+                          width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:  Colors.grey
-                              )),
+                              border: Border.all(color: Colors.grey)),
                           child: Center(
                             child: AutoSizeText(
                               'إرسال',
@@ -154,7 +180,9 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                               maxFontSize: 14,
                               maxLines: 1,
                               minFontSize: 10,
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ),
                         ),
@@ -164,12 +192,10 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                          width: ScreenUtil.getWidth(context)/2.5,
+                          width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:  Colors.grey
-                              )),
+                              border: Border.all(color: Colors.grey)),
                           child: Center(
                             child: AutoSizeText(
                               'إلغاء',
@@ -177,7 +203,9 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                               maxFontSize: 14,
                               maxLines: 1,
                               minFontSize: 10,
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ),
                         ),
@@ -187,11 +215,9 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                 ],
               ),
             ),
-
           ],
         ),
       ),
     );
   }
-
 }

@@ -9,7 +9,7 @@ class Model {
   String gender="1";
   String photo;
   String city_id;
-  String postal_code;
+  String company;
   String country_id;
 
   Model(
@@ -23,7 +23,7 @@ class Model {
         this.gender,
         this.photo,
         this.city_id,
-        this.postal_code,
+        this.company,
         this.country_id
       });
 }
