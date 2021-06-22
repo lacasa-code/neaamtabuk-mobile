@@ -136,7 +136,7 @@ class _RatedialogState extends State<Ratedialog> {
                                         RatingBar.builder(
                                           ignoreGestures: true,
                                           initialRating: widget
-                                              .reviews.reviewsData[index].id
+                                              .reviews.reviewsData[index].evaluationValue
                                               .toDouble(),
                                           itemSize: 20.0,
                                           minRating: 5,

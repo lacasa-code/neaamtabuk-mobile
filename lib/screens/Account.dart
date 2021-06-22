@@ -9,6 +9,7 @@ import 'package:flutter_pos/screens/infoPage.dart';
 import 'package:flutter_pos/screens/login.dart';
 import 'package:flutter_pos/screens/register_page.dart';
 import 'package:flutter_pos/screens/user_information.dart';
+import 'package:flutter_pos/screens/vendor_information.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -191,6 +192,23 @@ class _AccountState extends State<Account> {
                               },
                               child: Column(
                                 children: <Widget>[
+                                  ItemHiddenMenu(
+                                    onTap: () {
+                                      Nav.route(context, VendorInfo());
+                                    },
+                                    icon: SvgPicture.asset(
+                                      'assets/icons/store.svg',
+                                      height: 25,
+                                      color: Colors.orange,
+                                    ),
+                                    name:
+                                        getTransrlate(context, 'vendorSettings'),
+                                    baseStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 19.0,
+                                        fontWeight: FontWeight.w800),
+                                    colorLineSelected: Colors.orange,
+                                  ),
                                   ItemHiddenMenu(
                                     onTap: () {
                                       Nav.route(context, UserInfo());

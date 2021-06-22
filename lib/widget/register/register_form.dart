@@ -206,12 +206,12 @@ class _RegisterFormState extends State<RegisterForm> {
       'email': model.email,
       'password': model.password,
       "password_confirmation": model.password_confirmation,
-      "role": 2,
     }).then((value) {
       if (!value.containsKey('errors')) {
         setState(() => _isLoading = false);
         var user = value['data'];
         prefs.setString("user_email", user['email']);
+        prefs.setString("email_verified_at", user['email_verified_at']);
         prefs.setString("user_name", user['name']);
         prefs.setString("token", user['token']);
         prefs.setInt("user_id", user['id']);

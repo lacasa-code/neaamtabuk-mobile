@@ -51,14 +51,12 @@ class _ProductPageState extends State<ProductPage> {
     "5",
     "other",
   ];
-
   @override
   void initState() {
     getreview();
     getQuastion();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
@@ -521,8 +519,8 @@ class _ProductPageState extends State<ProductPage> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: ScreenUtil.getHeight(context) / 2,
+                  reviews==null?Container(): Container(
+                    height:reviews.reviewsData.length<1? ScreenUtil.getHeight(context)/4:ScreenUtil.getHeight(context)/ 2.5 ,
                     width: ScreenUtil.getWidth(context),
                     child: DefaultTabController(
                       length: 2,
@@ -620,7 +618,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   RatingBar.builder(
                                                     ignoreGestures: true,
                                                     initialRating: reviews
-                                                        .reviewsData[index].id
+                                                        .reviewsData[index].evaluationValue
                                                         .toDouble(),
                                                     itemSize: 20.0,
                                                     minRating: 5,
@@ -667,36 +665,7 @@ class _ProductPageState extends State<ProductPage> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        reviews.reviewsData.isEmpty
-                                            ? Container(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      "assets/icons/reload.svg",
-                                                      width:
-                                                          ScreenUtil.getWidth(
-                                                                  context) /
-                                                              3,
-                                                      color: Colors.black12,
-                                                    ),
-                                                    SizedBox(
-                                                      height: 25,
-                                                    ),
-                                                    Text(
-                                                      getTransrlate(
-                                                          context, 'EmptyRate'),
-                                                      style: TextStyle(
-                                                          color: Colors.black45,
-                                                          fontSize: 25),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            : Row(
+                                       Row(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
                                                 mainAxisAlignment:
@@ -813,289 +782,267 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                             _question == null
                                 ? Container()
-                                : _question.isEmpty
-                                    ? Container(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                              "assets/icons/reload.svg",
-                                              width:
-                                                  ScreenUtil.getWidth(context) /
-                                                      3,
-                                              color: Colors.black12,
-                                            ),
-                                            SizedBox(
-                                              height: 25,
-                                            ),
-                                            Text(
-                                              getTransrlate(
-                                                  context, 'EmptyQuastion'),
-                                              style: TextStyle(
-                                                  color: Colors.black45,
-                                                  fontSize: 25),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Column(
-                                          children: [
-                                            ListView.builder(
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
-                                              itemCount: 1,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10.0),
-                                                      child: Row(
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                            'assets/icons/User Icon.svg',
-                                                            color: Colors.grey,
-                                                            height: 35,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                : Column(
+                                      children: [
+                                        _question.isEmpty
+                                            ? Container()
+                                            :  Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Column(
+                                              children: [
+                                                ListView.builder(
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(),
+                                                  itemCount: 1,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment.start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets.all(
+                                                                  10.0),
+                                                          child: Row(
                                                             children: [
-                                                              Container(
-                                                                width: ScreenUtil
-                                                                        .getWidth(
-                                                                            context) /
-                                                                    1.4,
-                                                                child: Text(
-                                                                  '${_question[index].bodyQuestion}',
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color: Colors
-                                                                          .black),
-                                                                ),
+                                                              SvgPicture.asset(
+                                                                'assets/icons/User Icon.svg',
+                                                                color: Colors.grey,
+                                                                height: 35,
                                                               ),
                                                               SizedBox(
-                                                                height: 10,
+                                                                width: 10,
                                                               ),
-                                                              Text(
-                                                                '${_question[index].createdAt} بواسطة ${_question[index].userName}',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: Colors
-                                                                        .grey),
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Container(
+                                                                    width: ScreenUtil
+                                                                            .getWidth(
+                                                                                context) /
+                                                                        1.4,
+                                                                    child: Text(
+                                                                      '${_question[index].bodyQuestion}',
+                                                                      style: TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .bold,
+                                                                          color: Colors
+                                                                              .black),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  Text(
+                                                                    '${_question[index].createdAt} بواسطة ${_question[index].userName}',
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: Colors
+                                                                            .grey),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ],
                                                           ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    _question[index].answer ==
-                                                            null
-                                                        ? Container()
-                                                        : Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(25.0),
-                                                            child: Row(
-                                                              children: [
-                                                                Icon(
-                                                                  Icons
-                                                                      .message_outlined,
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  size: 35,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 10,
-                                                                ),
-                                                                Center(
-                                                                  child: Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Container(
-                                                                        width: ScreenUtil.getWidth(context) /
-                                                                            1.6,
-                                                                        child:
-                                                                            Text(
-                                                                          '${_question[index].answer ?? ''}',
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,
-                                                                          maxLines:
-                                                                              1,
-                                                                          style: TextStyle(
-                                                                              fontWeight: FontWeight.bold,
-                                                                              color: Colors.black),
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            10,
-                                                                      ),
-                                                                      Text(
-                                                                        '${_question[index].updatedAt} بواسطة ${_question[index].vendor.vendorName}',
-                                                                        style: TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            color: Colors.grey),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                    Container(
-                                                      height: 1,
-                                                      color: Colors.black12,
-                                                    )
-                                                  ],
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              height: 25,
-                                            ),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (_) =>
-                                                            Qeastionsdialog(
-                                                                _question,
-                                                                widget.product
-                                                                    .id));
-                                                  },
-                                                  child: Container(
-                                                    width: ScreenUtil.getWidth(
-                                                            context) /
-                                                        2.5,
-                                                    //  margin: const EdgeInsets.all(10.0),
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10.0),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color:
-                                                                Colors.grey)),
-                                                    child: Container(
-                                                      width:
-                                                          ScreenUtil.getWidth(
-                                                                  context) /
-                                                              4,
-                                                      child: Center(
-                                                        child: AutoSizeText(
-                                                          "جميع الأسئلة",
-                                                          maxFontSize: 16,
-                                                          minFontSize: 10,
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (_) =>
-                                                            WriteQuastionsdialog(
-                                                                widget.product
-                                                                    .id));
-                                                  },
-                                                  child: Container(
-                                                    width: ScreenUtil.getWidth(
-                                                            context) /
-                                                        2.5,
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10.0),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color:
-                                                                Colors.grey)),
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.edit_outlined,
-                                                          color: Colors.black,
                                                         ),
                                                         SizedBox(
-                                                          width: 5,
+                                                          height: 10,
                                                         ),
+                                                        _question[index].answer ==
+                                                                null
+                                                            ? Container()
+                                                            : Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(25.0),
+                                                                child: Row(
+                                                                  children: [
+                                                                    Icon(
+                                                                      Icons
+                                                                          .message_outlined,
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      size: 35,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 10,
+                                                                    ),
+                                                                    Center(
+                                                                      child: Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment
+                                                                                .start,
+                                                                        children: [
+                                                                          Container(
+                                                                            width: ScreenUtil.getWidth(context) /
+                                                                                1.6,
+                                                                            child:
+                                                                                Text(
+                                                                              '${_question[index].answer ?? ''}',
+                                                                              overflow:
+                                                                                  TextOverflow.ellipsis,
+                                                                              maxLines:
+                                                                                  1,
+                                                                              style: TextStyle(
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  color: Colors.black),
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                10,
+                                                                          ),
+                                                                          Text(
+                                                                            '${_question[index].updatedAt} بواسطة ${_question[index].vendor.vendorName}',
+                                                                            style: TextStyle(
+                                                                                fontWeight:
+                                                                                    FontWeight.w500,
+                                                                                color: Colors.grey),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
                                                         Container(
-                                                          width: ScreenUtil
-                                                                  .getWidth(
-                                                                      context) /
-                                                              4,
-                                                          child: AutoSizeText(
-                                                            'كتابة سؤال',
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            maxFontSize: 14,
-                                                            maxLines: 1,
-                                                            minFontSize: 10,
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          ),
-                                                        ),
+                                                          height: 1,
+                                                          color: Colors.black12,
+                                                        )
                                                       ],
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        SizedBox(
+                                          height: 25,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        Qeastionsdialog(
+                                                            _question,
+                                                            widget.product
+                                                                .id));
+                                              },
+                                              child: Container(
+                                                width: ScreenUtil.getWidth(
+                                                    context) /
+                                                    2.5,
+                                                //  margin: const EdgeInsets.all(10.0),
+                                                padding:
+                                                const EdgeInsets.all(
+                                                    10.0),
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color:
+                                                        Colors.grey)),
+                                                child: Container(
+                                                  width:
+                                                  ScreenUtil.getWidth(
+                                                      context) /
+                                                      4,
+                                                  child: Center(
+                                                    child: AutoSizeText(
+                                                      "جميع الأسئلة",
+                                                      maxFontSize: 16,
+                                                      minFontSize: 10,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .bold,
+                                                          color:
+                                                          Colors.black),
                                                     ),
                                                   ),
                                                 ),
-                                              ],
-                                            )
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        WriteQuastionsdialog(
+                                                            widget.product
+                                                                .id));
+                                              },
+                                              child: Container(
+                                                width: ScreenUtil.getWidth(
+                                                    context) /
+                                                    2.5,
+                                                padding:
+                                                const EdgeInsets.all(
+                                                    10.0),
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color:
+                                                        Colors.grey)),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment
+                                                      .center,
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.edit_outlined,
+                                                      color: Colors.black,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Container(
+                                                      width: ScreenUtil
+                                                          .getWidth(
+                                                          context) /
+                                                          4,
+                                                      child: AutoSizeText(
+                                                        'كتابة سؤال',
+                                                        overflow:
+                                                        TextOverflow
+                                                            .ellipsis,
+                                                        maxFontSize: 14,
+                                                        maxLines: 1,
+                                                        minFontSize: 10,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .bold,
+                                                            color: Colors
+                                                                .black),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
-                                      ),
+                                      ],
+                                    ),
                           ],
                         ),
                       ),
@@ -1245,15 +1192,13 @@ class _ProductPageState extends State<ProductPage> {
       ),
     );
   }
-
   void getreview() {
     API(context).get('home/review/product/${widget.product.id}').then((value) {
       setState(() {
-        reviews = Review.fromJson(value).data;
+        reviews = Review_model.fromJson(value).data;
       });
     });
   }
-
   void getQuastion() {
     API(context).get('prod/all/questions/${widget.product.id}').then((value) {
       setState(() {

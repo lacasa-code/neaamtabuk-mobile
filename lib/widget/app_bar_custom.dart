@@ -68,11 +68,7 @@ class _AppBarCustomState extends State<AppBarCustom> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SvgPicture.asset(
-                  'assets/icons/orders.svg',
-                  fit: BoxFit.contain,
-                  color: Colors.white,
-                ),
+                Icon(CupertinoIcons.car_detailed,color: Colors.white,),
                 SizedBox(
                   width: 10,
                 ),

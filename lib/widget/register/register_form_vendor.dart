@@ -210,16 +210,14 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
       ],
     );
   }
-
   register(Provider_control themeColor) async {
     model.gender = checkboxValueA.toString();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    API(context).post('user/register', {
+    API(context).post('vendor/register', {
       'name': model.Name,
       'email': model.email,
       'password': model.password,
       "password_confirmation": model.password_confirmation,
-      "role": 2,
     }).then((value) {
       if (!value.containsKey('errors')) {
         setState(() => _isLoading = false);

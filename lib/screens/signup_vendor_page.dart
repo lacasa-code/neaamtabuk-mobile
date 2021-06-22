@@ -248,7 +248,6 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
       ),
     );
   }
-
   login(BuildContext context) async {
     GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: [
@@ -266,7 +265,6 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
       print(err);
     }
   }
-
   loginWithFB(BuildContext context) async {
     final facebookLogin = FacebookLogin();
     facebookLogin.logOut();
@@ -290,7 +288,6 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
         break;
     }
   }
-
   register(Provider_control themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('login/facebook',

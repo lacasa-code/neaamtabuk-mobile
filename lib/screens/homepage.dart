@@ -6,22 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/screens/Account.dart';
 import 'package:flutter_pos/screens/CarType/productCarType.dart';
 import 'package:flutter_pos/screens/cart.dart';
+import 'package:flutter_pos/screens/vendor_information.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
-import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/ads.dart';
 import 'package:flutter_pos/model/car_type.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/category.dart';
-import 'package:flutter_pos/screens/MyCars/myCars.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/category/category_card.dart';
-import 'package:flutter_pos/widget/hidden_menu.dart';
 import 'package:flutter_pos/widget/product/product_card.dart';
 import 'package:flutter_pos/widget/product/product_list_titlebar.dart';
 import 'package:flutter_pos/widget/slider/Banner.dart';
@@ -29,6 +27,7 @@ import 'package:flutter_pos/widget/slider/slider_dotAds.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -41,7 +40,7 @@ class _HomeState extends State<Home> {
   List<Category> categories;
   List<CarType> cartype;
   List<Ads> ads;
-
+  int complete;
   PersistentTabController _controller;
   final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -78,7 +77,14 @@ class _HomeState extends State<Home> {
         icon: Stack(
           children: [
             Center(child: Icon(CupertinoIcons.cart)),
-            Center(child: Text(data.cart_model!=null?" ${data.cart_model.data==null?0:data.cart_model.data.count_pieces??0} ":'',style: TextStyle(backgroundColor: Colors.white,color: Colors.orange),)),
+            Center(
+                child: Text(
+              data.cart_model != null
+                  ? " ${data.cart_model.data == null ? 0 : data.cart_model.data.count_pieces ?? 0} "
+                  : '',
+              style: TextStyle(
+                  backgroundColor: Colors.white, color: Colors.orange),
+            )),
           ],
         ),
         iconSize: 35,
@@ -92,7 +98,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _controller = PersistentTabController(initialIndex: 0);
-    API(context,Check:false).post('site/new/products', {}).then((value) {
+    API(context, Check: false).post('site/new/products', {}).then((value) {
       if (value != null) {
         setState(() {
           product = Product_model.fromJson(value).data;
@@ -127,7 +133,9 @@ class _HomeState extends State<Home> {
         });
       }
     });
-
+    SharedPreferences.getInstance().then((value) {
+      complete=value.getInt('complete');
+    });
     super.initState();
   }
 
@@ -164,8 +172,8 @@ class _HomeState extends State<Home> {
           colorBehindNavBar: Colors.white,
         ),
         popAllScreensOnTapOfSelectedTab: true,
-        selectedTabScreenContext: (v){
-          if(_controller.index==3) {
+        selectedTabScreenContext: (v) {
+          if (_controller.index == 3) {
             provider_Data.getCart(context);
           }
         },
@@ -190,10 +198,26 @@ class _HomeState extends State<Home> {
 
   Widget HomePage() {
     final themeColor = Provider.of<Provider_control>(context);
-
     return Column(
       children: [
         AppBarCustom(),
+        complete==0?
+        Padding(
+          padding: const EdgeInsets.only(top: 22,right: 22,left: 22),
+          child: InkWell(
+            onTap: (){Nav.route(context, VendorInfo());},
+            child: Row(
+              children: [
+                SvgPicture.asset("assets/icons/Attention.svg",color: Colors.orange,),
+                SizedBox(width: 10,),
+                Text(
+                  'حسابك كبائع حاليا غير مفعليرجى استكمال وإرسال البيانات التالية لتفعيل حسابك',
+                  style: TextStyle(color: Colors.orange),
+                ),
+              ],
+            ),
+          ),
+        ):Container(),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
@@ -234,19 +258,25 @@ class _HomeState extends State<Home> {
                                         image: CachedNetworkImageProvider(
                                             "${cartype[index].image}"),
                                         fit: BoxFit.cover),
-                                    borderRadius:themeColor.local=='ar'? index.isEven
-                                        ? BorderRadius.only(
-                                            topRight: Radius.circular(15.0),
-                                            bottomRight: Radius.circular(15.0))
-                                        : BorderRadius.only(
-                                            topLeft: Radius.circular(15.0),
-                                            bottomLeft: Radius.circular(15.0)) :index.isEven
-                                        ? BorderRadius.only(
-                                            topLeft: Radius.circular(15.0),
-                                            bottomLeft: Radius.circular(15.0))
-                                        : BorderRadius.only(
-                                            topRight: Radius.circular(15.0),
-                                            bottomRight: Radius.circular(15.0)),
+                                    borderRadius: themeColor.local == 'ar'
+                                        ? index.isEven
+                                            ? BorderRadius.only(
+                                                topRight: Radius.circular(15.0),
+                                                bottomRight:
+                                                    Radius.circular(15.0))
+                                            : BorderRadius.only(
+                                                topLeft: Radius.circular(15.0),
+                                                bottomLeft:
+                                                    Radius.circular(15.0))
+                                        : index.isEven
+                                            ? BorderRadius.only(
+                                                topLeft: Radius.circular(15.0),
+                                                bottomLeft:
+                                                    Radius.circular(15.0))
+                                            : BorderRadius.only(
+                                                topRight: Radius.circular(15.0),
+                                                bottomRight:
+                                                    Radius.circular(15.0)),
                                   ),
                                   child: Align(
                                     alignment: Alignment.bottomCenter,
@@ -324,7 +354,6 @@ class _HomeState extends State<Home> {
                                 description: getTransrlate(context, 'showAll'),
                               ),
                               list_product(themeColor, product),
-
                             ],
                           ),
                 ads == null
@@ -353,7 +382,9 @@ class _HomeState extends State<Home> {
                                 description: getTransrlate(context, 'showAll'),
                               ),
                               list_product(themeColor, productMostSale),
-                              SizedBox(height: 10,)
+                              SizedBox(
+                                height: 10,
+                              )
                             ],
                           ),
               ],
@@ -405,7 +436,7 @@ class _HomeState extends State<Home> {
             itemBuilder: (BuildContext context, int index) {
               return Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 16,bottom: 16),
+                  padding: const EdgeInsets.only(right: 16, bottom: 16),
                   child: ProductCard(
                     themeColor: themeColor,
                     product: product[index],

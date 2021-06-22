@@ -42,7 +42,7 @@ class _LoginFormState extends State<LoginForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             MyTextFormField(
-              intialLabel: 'firstuser@user.com',
+              intialLabel: 'trkar2@lacasacode.com',
               keyboard_type: TextInputType.emailAddress,
               labelText: getTransrlate(context, 'mail'),
               hintText: getTransrlate(context, 'mail'),
@@ -112,8 +112,12 @@ class _LoginFormState extends State<LoginForm> {
                       if (value != null) {
                         if (value['status_code'] == 200) {
                           var user = value['data'];
+                          if(user.containsKey('vendor_details')){
+                            prefs.setInt("complete", user['vendor_details']['complete']);
+                          }
                           prefs.setString("user_email", user['email']);
                           prefs.setString("user_name", user['name']);
+                          prefs.setString("email_verified_at", user['email_verified_at']);
                           prefs.setString("token", user['token']);
                           prefs.setInt("user_id", user['id']);
                           themeColor.setLogin(true);

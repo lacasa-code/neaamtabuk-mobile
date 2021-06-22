@@ -138,6 +138,7 @@
   "ShoppingCart": "Shopping Cart",
   "CartEmpty": "Cart Empty !",
   "ProfileSettings": "Profile Settings",
+  "vendorSettings": "Vendor Profile",
   "FAQ": "F A Q",
 
 
@@ -239,6 +240,8 @@
   "MethodShipping": "Shipping Method",
   "total_tax": "tax",
   "addressShipping": "Address Shipping",
+  "addressVendor": "Address Vendor",
+
   "totalOrder": "Total Order",
   "totalShipping": "Total Shipping",
   "totalWeight": "total Weight",

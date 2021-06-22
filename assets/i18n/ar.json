@@ -147,6 +147,7 @@
   "CartEmpty": "العربة الفارغة",
   "ProfileSettings": "البيانات الشخصية",
   "Settings": "أعدادات ",
+  "vendorSettings": "حساب البائع",
 
   "FAQ": "الأسئلة الشائعه",
   "About": "من نحن",
@@ -230,6 +231,7 @@
 
 
   "addressShipping": "عنوان الشحن",
+  "addressVendor": "العنوان التفصيلي",
   "totalOrder": "إجمالى المبلغ ",
   "totalWeight": "إجمالى الوزن ",
   "totalShipping": "إجمالى الشحن",
