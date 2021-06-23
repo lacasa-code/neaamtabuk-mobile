@@ -17,13 +17,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
   BuildContext context;
-  bool Check=true ;
+  bool Check = true;
 
-  API(this.context,{Check}){
-    if(Check==null){
-       this.Check=true ;
-    }else{
-      this.Check=Check;
+  API(this.context, {Check}) {
+    if (Check == null) {
+      this.Check = true;
+    } else {
+      this.Check = Check;
     }
   }
 
@@ -32,8 +32,8 @@ class API {
   String identifier;
 
   get(String url) async {
-    final  full_url = Uri.parse(
-        '${GlobalConfiguration().getString('api_base_url')}$url');
+    final full_url =
+        Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
     //print(full_url);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
@@ -44,7 +44,7 @@ class API {
         //'Accept-Language': Provider.of<Provider_control>(context).getlocal(),
       });
       return getAction(response);
-    } catch (exception,stackTrace) {
+    } catch (exception, stackTrace) {
       print("exception >>>>>>>>>>>>>>>>>>= ${exception}");
       // await Sentry.captureException(
       //   exception,
@@ -53,9 +53,12 @@ class API {
     } finally {}
   }
 
-  post(String url, Map<String, dynamic> body) async {
-    final  full_url = Uri.parse(
-        '${GlobalConfiguration().getString('api_base_url')}$url');
+  post(
+    String url,
+    Map<String, dynamic> body,
+  ) async {
+    final full_url =
+        Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -74,11 +77,38 @@ class API {
     } catch (e) {} finally {}
   }
 
-  Put(String url, Map<String, dynamic> body) async {
-    final  full_url = Uri.parse(
-        '${GlobalConfiguration().getString('api_base_url')}$url');
+  postFile(String url, Map<String, String> body,
+      {File commercialDocs,
+      File taxCardDocs,
+      File wholesaleDocs,
+      File bankDocs}) async {
+    final full_url =
+        Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var headers = {
+      'Authorization': 'Bearer  ${prefs.getString('token')}'
+    }; // remove headers if not wanted
+    var request = http.MultipartRequest(
+        'POST', Uri.parse(full_url.toString())); // your server url
+    request.fields.addAll(body); // any other fields required by your server
+    request.files.add(await http.MultipartFile.fromPath('commercialDocs', '${commercialDocs.path}')); // file you want to upload
+    request.files.add(await http.MultipartFile.fromPath('taxCardDocs', '${taxCardDocs.path}')); // file you want to upload
+    request.files.add(await http.MultipartFile.fromPath('wholesaleDocs', '${wholesaleDocs.path}')); // file you want to upload
+    request.files.add(await http.MultipartFile.fromPath('bankDocs', '${bankDocs.path}')); // file you want to upload
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    print(await request.files);
 
+    if (response.statusCode == 200) {
+      return jsonDecode(response.stream.toString());
+    } else {
+      return jsonDecode(response.stream.toString());
+    }
+  }
+  Put(String url, Map<String, dynamic> body) async {
+    final full_url =
+        Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       http.Response response = await http.put(full_url,
           headers: {
@@ -91,10 +121,9 @@ class API {
       return getAction(response);
     } catch (e) {} finally {}
   }
-
   Delete(String url) async {
-    final  full_url = Uri.parse(
-        '${GlobalConfiguration().getString('api_base_url')}$url');
+    final full_url =
+        Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       http.Response response = await http.delete(
@@ -109,12 +138,10 @@ class API {
       return getAction(response);
     } catch (e) {} finally {}
   }
-
-
   getAction(http.Response response) {
-   if(Check) {
-     print(jsonDecode(response.body));
-     if (response.statusCode == 500) {
+    if (Check) {
+      print(jsonDecode(response.body));
+      if (response.statusCode == 500) {
         Nav.route(
             context,
             Maintenance(
@@ -125,9 +152,8 @@ class API {
       } else {
         return jsonDecode(response.body);
       }
-    }else {
-     return jsonDecode(response.body);
-   }
+    } else {
+      return jsonDecode(response.body);
+    }
   }
-
 }

@@ -37,7 +37,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<Product> product;
   List<Product> productMostSale;
-  List<Category> categories;
   List<CarType> cartype;
   List<Ads> ads;
   int complete;
@@ -112,13 +111,7 @@ class _HomeState extends State<Home> {
         });
       }
     });
-    API(context).get('site/part/categories').then((value) {
-      if (value != null) {
-        setState(() {
-          categories = Category_model.fromJson(value).data;
-        });
-      }
-    });
+
     API(context).get('car/types/list').then((value) {
       if (value != null) {
         setState(() {
@@ -134,7 +127,8 @@ class _HomeState extends State<Home> {
       }
     });
     SharedPreferences.getInstance().then((value) {
-      complete=value.getInt('complete');
+      complete = value.getInt('complete');
+      print('complete @@@@@@@@@@@@@@@@@@@@@@@@ $complete');
     });
     super.initState();
   }
@@ -201,23 +195,31 @@ class _HomeState extends State<Home> {
     return Column(
       children: [
         AppBarCustom(),
-        complete==0?
-        Padding(
-          padding: const EdgeInsets.only(top: 22,right: 22,left: 22),
-          child: InkWell(
-            onTap: (){Nav.route(context, VendorInfo());},
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/icons/Attention.svg",color: Colors.orange,),
-                SizedBox(width: 10,),
-                Text(
-                  'حسابك كبائع حاليا غير مفعليرجى استكمال وإرسال البيانات التالية لتفعيل حسابك',
-                  style: TextStyle(color: Colors.orange),
+        complete == 0
+            ? Padding(
+                padding: const EdgeInsets.only(top: 22, right: 22, left: 22),
+                child: InkWell(
+                  onTap: () {
+                    Nav.route(context, VendorInfo());
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/icons/Attention.svg",
+                        color: Colors.orange,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'حسابك كبائع حاليا غير مفعليرجى استكمال وإرسال البيانات التالية لتفعيل حسابك',
+                        style: TextStyle(color: Colors.orange),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ):Container(),
+              )
+            : Container(),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
@@ -339,7 +341,9 @@ class _HomeState extends State<Home> {
                 ads == null
                     ? Container()
                     : SliderDotAds(_carouselCurrentPage, ads),
-                categories == null ? Container() : list_category(themeColor),
+                productMostSale == null
+                    ? Container()
+                    : list_category(themeColor),
                 product == null
                     ? Container()
                     : product.isEmpty
@@ -398,26 +402,28 @@ class _HomeState extends State<Home> {
   Widget list_category(
     Provider_control themeColor,
   ) {
-    return GridView.builder(
-      primary: false,
-      shrinkWrap: true,
-      padding: EdgeInsets.symmetric(horizontal: 8),
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 0.90,
-        crossAxisCount: 3,
-      ),
-      itemCount: categories.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: CategoryCard(
-            themeColor: themeColor,
-            product: categories[index],
-          ),
-        );
-      },
-    );
+    return productMostSale.isEmpty
+        ? Container()
+        : GridView.builder(
+            primary: false,
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 0.90,
+              crossAxisCount: 3,
+            ),
+            itemCount: productMostSale.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: CategoryCard(
+                  themeColor: themeColor,
+                  product: productMostSale[index],
+                ),
+              );
+            },
+          );
   }
 
   Widget list_product(Provider_control themeColor, List<Product> product) {

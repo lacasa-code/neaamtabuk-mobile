@@ -53,6 +53,7 @@ dependencies:
   jiffy: ^4.1.0
   sentry_flutter: ^5.1.0
   sentry: ^5.1.0
+  file_picker: ^3.0.3
 
 dev_dependencies:
   flutter_test:

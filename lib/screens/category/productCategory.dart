@@ -33,7 +33,7 @@ class _ProductCategoryState extends State<ProductCategory> {
   @override
   void initState() {
     API(context)
-        .get('site/categories/${widget.id}')
+        .get('site/part/categories/${widget.id}')
         .then((value) {
       if (value != null) {
         if (value['status_code'] == 200) {

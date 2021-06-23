@@ -76,10 +76,15 @@ class _SplashScreenState extends State<SplashScreen>
     //themeColor.setCar_made(getTransrlate(context, 'selectCar'));
     final SharedPreferences prefs =
     await SharedPreferences.getInstance();
+
     API(context,Check: false).post('token/data', {}).then((value) async {
       if (value['data'] != null) {
-        if (value['status_code'] == 200) {
-          var user = value['data'];
+        if (value['data']['status'] == 'ON') {
+          var user = value['data']['user'];
+          if (user.containsKey('vendor_details')) {
+            prefs.setInt(
+                "complete", user['vendor_details']['complete']);
+          }
           prefs.setString("user_email", user['email']);
           prefs.setString("user_name", user['name']);
           prefs.setString("email_verified_at", user['email_verified_at']);

@@ -20,7 +20,7 @@ class CategoryCard extends StatefulWidget {
   }) : super(key: key);
 
   final Provider_control themeColor;
-  final Category product;
+  final Product product;
 
   @override
   _CategoryCardState createState() => _CategoryCardState();
@@ -41,7 +41,7 @@ class _CategoryCardState extends State<CategoryCard> {
       ),
       child: InkWell(
         onTap: () {
-        Nav.route(context, ProductCategory(id: widget.product.id,name: widget.product.name,));
+        Nav.route(context, ProductCategory(id: widget.product.id,name: widget.product.categoryName,));
         },
         child: Column(
           children: [
@@ -56,14 +56,14 @@ class _CategoryCardState extends State<CategoryCard> {
                     width: ScreenUtil.getWidth(context) / 3.2,
                   imageUrl: (widget.product.photo == null)
                       ? 'http://arabimagefoundation.com/images/defaultImage.png'
-                      : widget.product.photo.image,
+                      : widget.product.photo[0].image,
                   errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
                 ),
               ),
             ),
             SizedBox(height: 5,),
             AutoSizeText(
-             "${ widget.product.name}",
+             "${ widget.product.categoryName}",
               maxLines: 1,
               style: TextStyle(
                 color: Colors.black,

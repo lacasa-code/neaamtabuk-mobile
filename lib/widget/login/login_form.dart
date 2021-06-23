@@ -35,7 +35,7 @@ class _LoginFormState extends State<LoginForm> {
     final themeColor = Provider.of<Provider_control>(context);
 
     return Container(
-      padding: EdgeInsets.only( right: 20, left: 20),
+      padding: EdgeInsets.only(right: 20, left: 20),
       child: Form(
         key: _formKey,
         child: Column(
@@ -59,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
               },
             ),
             MyTextFormField(
-              intialLabel: 'Password123',
+              intialLabel: 'password',
               labelText: getTransrlate(context, 'password'),
               hintText: getTransrlate(context, 'password'),
               suffixIcon: IconButton(
@@ -87,8 +87,16 @@ class _LoginFormState extends State<LoginForm> {
                 model.password = value;
               },
             ),
-            Container(margin: EdgeInsets.only(top: 20),
-                child: InkWell(onTap: (){Nav.route(context, LostPassword());},child: AutoSizeText(getTransrlate(context,'LostPassword'),style: TextStyle(decoration: TextDecoration.underline),))),
+            Container(
+                margin: EdgeInsets.only(top: 20),
+                child: InkWell(
+                    onTap: () {
+                      Nav.route(context, LostPassword());
+                    },
+                    child: AutoSizeText(
+                      getTransrlate(context, 'LostPassword'),
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ))),
             Container(
               height: 42,
               width: ScreenUtil.getWidth(context),
@@ -97,14 +105,14 @@ class _LoginFormState extends State<LoginForm> {
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(1.0),
                 ),
-                color:Colors.orange,
+                color: Colors.orange,
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     //setState(() => _isLoading = true);
                     final SharedPreferences prefs =
                         await SharedPreferences.getInstance();
-                    API(context,Check: false).post('user/login', {
+                    API(context, Check: false).post('user/login', {
                       'email': model.email,
                       'password': model.password,
                     }).then((value) {
@@ -112,12 +120,17 @@ class _LoginFormState extends State<LoginForm> {
                       if (value != null) {
                         if (value['status_code'] == 200) {
                           var user = value['data'];
-                          if(user.containsKey('vendor_details')){
-                            prefs.setInt("complete", user['vendor_details']['complete']);
+                          if (user.containsKey('vendor_details')) {
+                            prefs.setInt(
+                                "complete", user['vendor_details']['complete']);
+                            prefs.setString("vendor", 'vendor');
                           }
+                          print(
+                              'complete @@@@@@@@@@@@@@zzzzzzzzzzz@@@@@@@@@@ ${user['token']}');
                           prefs.setString("user_email", user['email']);
                           prefs.setString("user_name", user['name']);
-                          prefs.setString("email_verified_at", user['email_verified_at']);
+                          prefs.setString(
+                              "email_verified_at", user['email_verified_at']);
                           prefs.setString("token", user['token']);
                           prefs.setInt("user_id", user['id']);
                           themeColor.setLogin(true);
@@ -125,7 +138,7 @@ class _LoginFormState extends State<LoginForm> {
 
                           // Navigator.pushAndRemoveUntil(
                           //     context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
-                        }else{
+                        } else {
                           showDialog(
                               context: context,
                               builder: (_) =>

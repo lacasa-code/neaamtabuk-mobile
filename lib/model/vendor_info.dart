@@ -189,34 +189,22 @@ class Vendor {
     }
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["id"] = _id;
+  Map<String, String> toJson() {
+    var map = <String, String>{};
+    map["vendor_id"] = _id.toString();
+    map["userid_id"] = _useridId.toString();
     map["vendor_name"] = _vendorName;
-    map["email"] = _email;
-    map["type"] = _type;
-    map["serial"] = _serial;
-    map["created_at"] = _createdAt;
-    map["updated_at"] = _updatedAt;
-    map["userid_id"] = _useridId;
-    map["phone_no"] = _phone_no;
-    map["lang"] = _lang;
     map["commercial_no"] = _commercialNo;
-    map["commercial_doc"] = _commercialDoc;
+    //map["commercial_doc"] = _commercialDoc;
     map["tax_card_no"] = _taxCardNo;
     map["tax_card_doc"] = _taxCardDoc;
     map["bank_account"] = _bankAccount;
-    map["approved"] = _approved;
-    map["complete"] = _complete;
-    map["declined"] = _declined;
-    map["rejected"] = _rejected;
+    map["type"] = _type;
+    map["email"] = _email;
+    map["serial"] = _serial;
+    map["phone_no"] = _phone_no;
+    map["lang"] = _lang;
     map["company_name"] = _companyName;
-    if (_images != null) {
-      map["images"] = _images.toJson();
-    }
-    if (_media != null) {
-      map["media"] = _media.map((v) => v.toJson()).toList();
-    }
     return map;
   }
 

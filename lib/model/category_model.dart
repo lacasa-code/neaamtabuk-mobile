@@ -1,7 +1,9 @@
+import 'package:flutter_pos/model/ads.dart';
+
 class Category_model {
   int statusCode;
   String message;
-  List<Category> data;
+  List<Main_Category> data;
 
   Category_model({this.statusCode, this.message, this.data});
 
@@ -9,9 +11,9 @@ class Category_model {
     statusCode = json['status_code'];
     message = json['message'];
     if (json['data'] != null) {
-      data = new List<Category>();
+      data = new List<Main_Category>();
       json['data'].forEach((v) {
-        data.add(new Category.fromJson(v));
+        data.add(new Main_Category.fromJson(v));
       });
     }
   }
@@ -27,34 +29,81 @@ class Category_model {
   }
 }
 
-class Category {
+class Main_Category {
+  int id;
+  String mainCategoryName;
+  List<Categories> categories;
+  String lang;
+  int last_level;
+  String createdAt;
+
+  Main_Category(
+      {this.id,
+        this.mainCategoryName,
+        this.categories,
+        this.lang,
+        this.last_level,
+        this.createdAt});
+
+  Main_Category.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    mainCategoryName = json['main_category_name'];
+    if (json['categories'] != null) {
+      categories = new List<Categories>();
+      json['categories'].forEach((v) {
+        categories.add(new Categories.fromJson(v));
+      });
+    }
+    lang = json['lang'];
+    last_level = json['last_level'];
+    createdAt = json['created_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['main_category_name'] = this.mainCategoryName;
+    if (this.categories != null) {
+      data['categories'] = this.categories.map((v) => v.toJson()).toList();
+    }
+    data['lang'] = this.lang;
+    data['status'] = this.last_level;
+    data['created_at'] = this.createdAt;
+    return data;
+  }
+}
+
+class Categories {
   int id;
   String name;
   String description;
+  List<PartCategories> partCategories;
   String lang;
-  Photo photo;
-  List<PartCategories>partCategories;
+  int last_level;
+  String createdAt;
 
-  Category(
+  Categories(
       {this.id,
         this.name,
         this.description,
+        this.partCategories,
         this.lang,
-        this.photo,
-        this.partCategories});
+        this.last_level,
+        this.createdAt});
 
-  Category.fromJson(Map<String, dynamic> json) {
+  Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['category_name']??json['name'];
+    name = json['name'];
     description = json['description'];
-    lang = json['lang'];
-    photo = json['photo'] != null ? new Photo.fromJson(json['photo']) : null;
     if (json['part_categories'] != null) {
       partCategories = new List<PartCategories>();
       json['part_categories'].forEach((v) {
         partCategories.add(new PartCategories.fromJson(v));
       });
     }
+    lang = json['lang'];
+    last_level = json['last_level'];
+    createdAt = json['created_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -62,33 +111,10 @@ class Category {
     data['id'] = this.id;
     data['name'] = this.name;
     data['description'] = this.description;
+
     data['lang'] = this.lang;
-    if (this.photo != null) {
-      data['photo'] = this.photo.toJson();
-    }
-    if (this.partCategories != null) {
-      data['part_categories'] =
-          this.partCategories.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Photo {
-  int id;
-  String image;
-
-  Photo({this.id, this.image});
-
-  Photo.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    image = json['image'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['image'] = this.image;
+    data['status'] = this.last_level;
+    data['created_at'] = this.createdAt;
     return data;
   }
 }
@@ -97,35 +123,24 @@ class PartCategories {
   int id;
   String categoryName;
   String lang;
-  int categoryId;
+  String createdAt;
   Photo photo;
-
+  int last_level;
   PartCategories(
       {this.id,
-        this.categoryName,
+        this.categoryName,this.photo,
         this.lang,
-        this.categoryId,
-        this.photo});
+        this.createdAt});
 
   PartCategories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     categoryName = json['category_name'];
-    lang = json['lang'];
-    categoryId = json['category_id'];
-    photo = json['photo'] != null ? new Photo.fromJson(json['photo']) : null;
-
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['category_name'] = this.categoryName;
-    data['lang'] = this.lang;
-    data['category_id'] = this.categoryId;
-    if (this.photo != null) {
-      data['photo'] = this.photo.toJson();
+    if (json['photo'] != null) {
+        photo = Photo.fromJson(json['photo']);
     }
-    return data;
+    lang = json['lang'];
+    last_level = json['last_level'];
+    createdAt = json['created_at'];
   }
-}
 
+}
