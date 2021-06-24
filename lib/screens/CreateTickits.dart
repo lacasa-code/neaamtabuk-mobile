@@ -10,8 +10,8 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 
 class Tickits extends StatefulWidget {
-  const Tickits({Key key,this.vendor_id,this.order_id}) : super(key: key);
- final  String order_id, vendor_id;
+  const Tickits({Key key,this.vendor_id,this.order_id,this.product_id}) : super(key: key);
+ final  String order_id, vendor_id,product_id;
 
   @override
   _TickitsState createState() => _TickitsState();
@@ -168,6 +168,7 @@ super.initState();
                                   "order_id": widget.order_id,
                                   "vendor_id": widget.vendor_id,
                                   "category_id": category_id,
+                                  "product_id": widget.product_id,
                                 }).then((value) {
                               if (value != null) {
                                 if (value['status_code'] == 201) {
@@ -180,7 +181,7 @@ super.initState();
                                   showDialog(
                                       context: context,
                                       builder: (_) =>
-                                          ResultOverlay("${value['message']}\n${value['error']}"));
+                                          ResultOverlay("${value['message']}\n${value['errors']}"));
                                 }
                               }
                             });

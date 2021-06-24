@@ -35,6 +35,7 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
   String name;
   String token;
+  String vendor;
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _AccountState extends State<Account> {
       setState(() {
         name = prefs.getString('user_name');
         token = prefs.getString('token');
+        vendor = prefs.getString('vendor');
       });
     });
     super.initState();
@@ -192,7 +194,7 @@ class _AccountState extends State<Account> {
                               },
                               child: Column(
                                 children: <Widget>[
-                                  ItemHiddenMenu(
+                                  vendor==null?Container():    ItemHiddenMenu(
                                     onTap: () {
                                       Nav.route(context, VendorInfo());
                                     },

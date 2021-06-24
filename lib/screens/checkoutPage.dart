@@ -1026,7 +1026,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      getTransrlate(context, 'total_product'),
+                     "${ getTransrlate(context, 'total_product')}",
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(

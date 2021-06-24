@@ -24,7 +24,7 @@ class _LoginFormState extends State<LoginForm> {
   Model_login model = Model_login();
   bool passwordVisible = false;
   String CountryNo = '';
-
+bool isloading=false;
   @override
   void initState() {
     super.initState();
@@ -38,11 +38,11 @@ class _LoginFormState extends State<LoginForm> {
       padding: EdgeInsets.only(right: 20, left: 20),
       child: Form(
         key: _formKey,
-        child: Column(
+        child: isloading?Container(height: 400,color:Colors.black12,child:Center(child: CircularProgressIndicator()) ,):Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             MyTextFormField(
-              intialLabel: 'trkar2@lacasacode.com',
+              intialLabel: 'trkar3@lacasacode.com',
               keyboard_type: TextInputType.emailAddress,
               labelText: getTransrlate(context, 'mail'),
               hintText: getTransrlate(context, 'mail'),
@@ -59,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
               },
             ),
             MyTextFormField(
-              intialLabel: 'password',
+              intialLabel: 'Password123',
               labelText: getTransrlate(context, 'password'),
               hintText: getTransrlate(context, 'password'),
               suffixIcon: IconButton(
@@ -109,14 +109,14 @@ class _LoginFormState extends State<LoginForm> {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    //setState(() => _isLoading = true);
+                    setState(() => isloading = true);
                     final SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     API(context, Check: false).post('user/login', {
                       'email': model.email,
                       'password': model.password,
                     }).then((value) {
-                      print(value);
+                      setState(() => isloading = false);
                       if (value != null) {
                         if (value['status_code'] == 200) {
                           var user = value['data'];
@@ -125,8 +125,6 @@ class _LoginFormState extends State<LoginForm> {
                                 "complete", user['vendor_details']['complete']);
                             prefs.setString("vendor", 'vendor');
                           }
-                          print(
-                              'complete @@@@@@@@@@@@@@zzzzzzzzzzz@@@@@@@@@@ ${user['token']}');
                           prefs.setString("user_email", user['email']);
                           prefs.setString("user_name", user['name']);
                           prefs.setString(

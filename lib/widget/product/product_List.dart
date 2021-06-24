@@ -178,7 +178,7 @@ class _ProductListState extends State<ProductList> {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
                                         setState(() {
-                                          widget.product.inWishlist="1";
+                                          widget.product.inWishlist=1;
 
                                         });
                                         showDialog(
@@ -199,7 +199,7 @@ class _ProductListState extends State<ProductList> {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
                                         setState(() {
-                                          widget.product.inWishlist="0";
+                                          widget.product.inWishlist=0;
 
                                         });
                                         showDialog(

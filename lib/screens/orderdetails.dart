@@ -213,26 +213,6 @@ class _OrderdetailsState extends State<Orderdetails> {
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.w500),
                               )),
-                          InkWell(
-                            onTap: () {
-                              Nav.route(
-                                  context,
-                                  Tickits(
-                                    order_id: widget.order.id.toString(),
-                                    vendor_id: widget
-                                        .order.orderDetails[0].vendorId
-                                        .toString(),
-                                  ));
-                            },
-                            child: AutoSizeText(
-                              'إبلاغ عن مشكلة',
-                              maxLines: 1,
-                              style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 16,
-                                  decoration: TextDecoration.underline),
-                            ),
-                          ),
                         ],
                       ),
                     ],
@@ -278,9 +258,15 @@ class _OrderdetailsState extends State<Orderdetails> {
                                     Container(
                                       width: ScreenUtil.getWidth(context) / 8,
                                       child: CachedNetworkImage(
-                                        imageUrl:
-                                            'https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:aa5b859b-f4c9-4193-83b0-cb574fc1500e;revision=0?component_id=541ceed2-f0c4-432b-80dc-dd58eb0b7e89&api_key=CometServer1&access_token=1622401748_urn%3Aaaid%3Asc%3AUS%3Aaa5b859b-f4c9-4193-83b0-cb574fc1500e%3Bpublic_e0ea48ed44073f2db297b6b7a7af2eff0cfaf01b',
-                                        errorWidget: (context, url, error) =>
+                                        imageUrl:  widget.order
+                                          .orderDetails[i]
+                                          .productImage
+                                          .isNotEmpty
+                                      ? widget.order
+                                          .orderDetails[i]
+                                          .productImage[0]
+                                          .image
+                                        : ' ',                                        errorWidget: (context, url, error) =>
                                             Icon(
                                           Icons.image,
                                           color: Colors.black12,
@@ -309,8 +295,23 @@ class _OrderdetailsState extends State<Orderdetails> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      SizedBox(
-                                        width: 10,
+                                  InkWell(
+                                        onTap: () {
+                                          Nav.route(
+                                              context,
+                                              Tickits(product_id:widget.order.orderDetails[i].productId.toString(),
+                                                order_id: widget.order.id.toString(),
+                                                vendor_id: widget.order.orderDetails[i].vendorId.toString(),
+                                              ));
+                                        },
+                                        child: AutoSizeText(
+                                          'إبلاغ عن مشكلة',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              color: Colors.orange,
+                                              fontSize: 16,
+                                              decoration: TextDecoration.underline),
+                                        ),
                                       ),
                                       AutoSizeText(
                                         "كمية : ${widget.order.orderDetails[i].quantity}",

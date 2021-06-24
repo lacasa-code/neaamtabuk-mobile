@@ -41,7 +41,7 @@ class _CategoryCardState extends State<CategoryCard> {
       ),
       child: InkWell(
         onTap: () {
-        Nav.route(context, ProductCategory(id: widget.product.id,name: widget.product.categoryName,));
+        Nav.route(context, ProductCategory(id: widget.product.id,name: widget.product.categoryName.name,));
         },
         child: Column(
           children: [
@@ -54,16 +54,16 @@ class _CategoryCardState extends State<CategoryCard> {
                 child: CachedNetworkImage(
                   height:  ScreenUtil.getHeight(context)/11       ,
                     width: ScreenUtil.getWidth(context) / 3.2,
-                  imageUrl: (widget.product.photo == null)
+                  imageUrl: (widget.product.categoryName == null)
                       ? 'http://arabimagefoundation.com/images/defaultImage.png'
-                      : widget.product.photo[0].image,
+                      : widget.product.categoryName.photo.image,
                   errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
                 ),
               ),
             ),
             SizedBox(height: 5,),
             AutoSizeText(
-             "${ widget.product.categoryName}",
+             "${ widget.product.categoryName.name}",
               maxLines: 1,
               style: TextStyle(
                 color: Colors.black,

@@ -77,18 +77,20 @@ class _SplashScreenState extends State<SplashScreen>
     final SharedPreferences prefs =
     await SharedPreferences.getInstance();
 
-    API(context,Check: false).post('token/data', {}).then((value) async {
-      if (value['data'] != null) {
-        if (value['data']['status'] == 'ON') {
-          var user = value['data']['user'];
+    API(context,Check: false).post('check/valid/session', {}).then((value) async {
+      if (value != null) {
+        if (value['status_code'] == 200) {
+          var user = value['data'];
           if (user.containsKey('vendor_details')) {
             prefs.setInt(
                 "complete", user['vendor_details']['complete']);
+            prefs.setString("vendor", 'vendor');
+
           }
           prefs.setString("user_email", user['email']);
           prefs.setString("user_name", user['name']);
           prefs.setString("email_verified_at", user['email_verified_at']);
-          prefs.setString("token", user['token']);
+        //  prefs.setString("token", user['token']);
           prefs.setInt("user_id", user['id']);
           themeColor.setLogin(true);
         } else {

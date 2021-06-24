@@ -16,6 +16,7 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VendorInfo extends StatefulWidget {
   const VendorInfo({Key key}) : super(key: key);
@@ -43,7 +44,7 @@ class _VendorInfoState extends State<VendorInfo> {
   File taxCardDocs;
   File commercialDocs;
   File wholesaleDocs;
-
+  String country,area,city,address;
   @override
   void initState() {
     API(context).get('vendor/saved/docs').then((value) {
@@ -51,6 +52,7 @@ class _VendorInfoState extends State<VendorInfo> {
         if (value['status_code'] == 200) {
           setState(() {
             userModal = Vendor_info.fromJson(value).data;
+            _value = int.parse(userModal.type);
           });
         } else {
           showDialog(
@@ -191,24 +193,24 @@ class _VendorInfoState extends State<VendorInfo> {
                                           userModal.companyName = value;
                                         },
                                       ),
-                                      MyTextFormField(
-                                        intialLabel: userModal.phone_no,
-                                        keyboard_type:
-                                            TextInputType.emailAddress,
-                                        labelText: "الهاتف",
-                                        hintText: "الهاتف",
-                                        isPhone: true,
-                                        validator: (String value) {
-                                          if (value.isEmpty) {
-                                            return "الهاتف";
-                                          }
-                                          _formKey.currentState.save();
-                                          return null;
-                                        },
-                                        onSaved: (String value) {
-                                          userModal.phone_no = value;
-                                        },
-                                      ),
+                                      // MyTextFormField(
+                                      //   intialLabel: "",
+                                      //   keyboard_type:
+                                      //       TextInputType.emailAddress,
+                                      //   labelText: "الهاتف",
+                                      //   hintText: "الهاتف",
+                                      //   isPhone: true,
+                                      //   validator: (String value) {
+                                      //     if (value.isEmpty) {
+                                      //       return "الهاتف";
+                                      //     }
+                                      //     _formKey.currentState.save();
+                                      //     return null;
+                                      //   },
+                                      //   onSaved: (String value) {
+                                      //     //userModal.phone_no = value;
+                                      //   },
+                                      // ),
                                       MyTextFormField(
                                         intialLabel: userModal.commercialNo,
                                         keyboard_type:
@@ -312,6 +314,42 @@ class _VendorInfoState extends State<VendorInfo> {
                                           ],
                                         ),
                                       ),
+                                      userModal.commercialDocs == null
+                                          ? Container()
+                                          : InkWell(
+                                              onTap: () {
+                                                _launchURL(userModal
+                                                    .commercialDocs.image);
+                                              },
+                                              child: Container(
+                                                  child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: ScreenUtil.getWidth(
+                                                            context) /
+                                                        2.5,
+                                                    child: Text(
+                                                      "${userModal.commercialDocs.file_name}",
+                                                      maxLines: 1,
+                                                    ),
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      CupertinoIcons
+                                                          .clear_circled,
+                                                      size: 20,
+                                                    ),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        userModal
+                                                                .commercialDocs =
+                                                            null;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              )),
+                                            ),
                                       SizedBox(
                                         height: 10,
                                       ),
@@ -418,23 +456,50 @@ class _VendorInfoState extends State<VendorInfo> {
                                           ],
                                         ),
                                       ),
+                                      userModal.taxCardDocs == null
+                                          ? Container()
+                                          : InkWell(
+                                              onTap: () {
+                                                _launchURL(userModal
+                                                    .taxCardDocs.image);
+                                              },
+                                              child: Container(
+                                                  child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: ScreenUtil.getWidth(
+                                                            context) /
+                                                        2.5,
+                                                    child: Text(
+                                                      "${userModal.taxCardDocs.file_name}",
+                                                      maxLines: 1,
+                                                    ),
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      CupertinoIcons
+                                                          .clear_circled,
+                                                      size: 20,
+                                                    ),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        userModal.taxCardDocs =
+                                                            null;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              )),
+                                            ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       MyTextFormField(
-                                        intialLabel: userModal.commercialDoc,
                                         keyboard_type:
                                             TextInputType.emailAddress,
                                         labelText: 'تصريح تاجر الجملة',
                                         hintText: "تصريح تاجر الجملة",
                                         isPhone: true,
-                                        validator: (String value) {
-                                          if (value.isEmpty) {
-                                            return "تصريح تاجر الجملة";
-                                          }
-                                          _formKey.currentState.save();
-                                          return null;
-                                        },
                                         onSaved: (String value) {
                                           userModal.commercialDoc = value;
                                         },
@@ -524,6 +589,42 @@ class _VendorInfoState extends State<VendorInfo> {
                                           ],
                                         ),
                                       ),
+                                      userModal.wholesaleDocs == null
+                                          ? Container()
+                                          : InkWell(
+                                              onTap: () {
+                                                _launchURL(userModal
+                                                    .wholesaleDocs.image);
+                                              },
+                                              child: Container(
+                                                  child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: ScreenUtil.getWidth(
+                                                            context) /
+                                                        2.5,
+                                                    child: Text(
+                                                      "${userModal.wholesaleDocs.file_name}",
+                                                      maxLines: 1,
+                                                    ),
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      CupertinoIcons
+                                                          .clear_circled,
+                                                      size: 20,
+                                                    ),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        userModal
+                                                                .wholesaleDocs =
+                                                            null;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              )),
+                                            ),
                                       SizedBox(
                                         height: 10,
                                       ),
@@ -630,6 +731,41 @@ class _VendorInfoState extends State<VendorInfo> {
                                           ],
                                         ),
                                       ),
+                                      userModal.bankDocs == null
+                                          ? Container()
+                                          : InkWell(
+                                              onTap: () {
+                                                _launchURL(
+                                                    userModal.bankDocs.image);
+                                              },
+                                              child: Container(
+                                                  child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: ScreenUtil.getWidth(
+                                                            context) /
+                                                        2.5,
+                                                    child: Text(
+                                                      "${userModal.bankDocs.file_name}",
+                                                      maxLines: 1,
+                                                    ),
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      CupertinoIcons
+                                                          .clear_circled,
+                                                      size: 20,
+                                                    ),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        userModal.bankDocs =
+                                                            null;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              )),
+                                            ),
                                       SizedBox(
                                         height: 30,
                                       ),
@@ -717,7 +853,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 return null;
                                               },
                                               onSaved: (String value) {
-                                                //address.city=value;
+                                                country=value;
                                               },
                                             ),
                                             MyTextFormField(
@@ -738,7 +874,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 return null;
                                               },
                                               onSaved: (String value) {
-                                                //address.city=value;
+                                                area=value;
                                               },
                                             ),
                                             MyTextFormField(
@@ -759,7 +895,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 return null;
                                               },
                                               onSaved: (String value) {
-                                                //address.city=value;
+                                               address=value;
                                               },
                                             ),
                                             MyTextFormField(
@@ -780,7 +916,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 return null;
                                               },
                                               onSaved: (String value) {
-                                                //address.city=value;
+                                               city=value;
                                               },
                                             ),
                                             Text(
@@ -804,7 +940,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     color: Colors.orange)),
                                             child: Center(
                                               child: AutoSizeText(
-                                                "إرسال الطلب",
+                                                "حفظ العنوان",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxFontSize: 14,
                                                 maxLines: 1,
@@ -816,12 +952,19 @@ class _VendorInfoState extends State<VendorInfo> {
                                             ),
                                           ),
                                           onTap: () {
-                                            if (_formKey.currentState
+                                            if (address_key.currentState
                                                 .validate()) {
-                                              _formKey.currentState.save();
+                                              address_key.currentState.save();
                                               API(context).post(
                                                   "vendor/add/head/center",
-                                                  {}).then((value) {
+                                                  {"address":address,
+                                                  "user_id":userModal.useridId,
+                                                    "vendor_id":userModal.id,
+                                                    "area_id":area,
+                                                    "country_id":country,
+                                                    "lat":30,
+                                                    "long":30,
+                                                  }).then((value) {
                                                 if (value != null) {
                                                   if (value['status_code'] ==
                                                       200) {
@@ -899,4 +1042,8 @@ class _VendorInfoState extends State<VendorInfo> {
       // User canceled the picker
     }
   }
+
+  void _launchURL(String _url) async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
 }

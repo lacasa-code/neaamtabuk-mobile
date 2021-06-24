@@ -161,7 +161,8 @@ class _ProductCardState extends State<ProductCard> {
                                       showDialog(
                                           context: context,
                                           builder: (_) => ResultOverlay(
-                                              value['message']));
+                                              value['${value['message'] ??
+                                                  ''}\n${value['errors']??""}']));
                                     }
                                   }
                                 });
@@ -175,14 +176,14 @@ class _ProductCardState extends State<ProductCard> {
                             IconButton(
                               onPressed: () {
                                 print( widget.product.inWishlist);
-                                widget.product.inWishlist=="0"?
+                                widget.product.inWishlist==0?
                                 API(context).post('user/add/wishlist',{
                                   "product_id":widget.product.id
                                 }).then((value) {
                                   if (value != null) {
                                     if (value['status_code'] == 200) {
                                       setState(() {
-                                        widget.product.inWishlist="1";
+                                        widget.product.inWishlist=1;
                                       });
                                       showDialog(
                                           context: context,
@@ -192,7 +193,8 @@ class _ProductCardState extends State<ProductCard> {
                                       showDialog(
                                           context: context,
                                           builder: (_) => ResultOverlay(
-                                              value['message']));
+                                              value['${value['message'] ??
+                                                  ''}\n${value['errors']??""}']));
                                     }
                                   }
                                 }):API(context).post('user/removeitem/wishlist',{
@@ -202,7 +204,7 @@ class _ProductCardState extends State<ProductCard> {
                                   if (value != null) {
                                     if (value['status_code'] == 200) {
                                       setState(() {
-                                        widget.product.inWishlist="0";
+                                        widget.product.inWishlist=0;
 
                                       });
                                       showDialog(
@@ -219,7 +221,7 @@ class _ProductCardState extends State<ProductCard> {
                                 });
                               },
                               icon: Icon(
-                               widget.product.inWishlist=="0"?
+                               widget.product.inWishlist==0?
                                Icons.favorite_border:Icons.favorite,
                                 color: Colors.grey,
                               ),

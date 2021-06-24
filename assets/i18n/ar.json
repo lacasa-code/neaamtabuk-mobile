@@ -42,6 +42,7 @@
   "next_checkout": "متابعة الشراء",
   "Shipping": "الشحنة",
   "backToshoppingCart": "عودة لعربة التسوق",
+  "backToshopping": "عودة للتسوق",
 
   "CardNumber": "رقم البطاقة",
   "CardName": "الإسم كما يظهر على البطاقة",
@@ -55,6 +56,7 @@
 
   "fees_ship": "رسوم الشحن",
   "total_order": "إجالمي الطلب",
+  "total_product": "إجالمي المنتجات",
 
   "allproduct": "كل المنتجات",
   "add": "أضف",

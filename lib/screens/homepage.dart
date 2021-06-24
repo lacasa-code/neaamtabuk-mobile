@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
         });
       }
     });
-    API(context).get('best/seller/products').then((value) {
+    API(context).get('mostly/viewed/products').then((value) {
       if (value != null) {
         setState(() {
           productMostSale = Product_model.fromJson(value).data;
@@ -259,7 +259,9 @@ class _HomeState extends State<Home> {
                                     image: DecorationImage(
                                         image: CachedNetworkImageProvider(
                                             "${cartype[index].image}"),
+
                                         fit: BoxFit.cover),
+
                                     borderRadius: themeColor.local == 'ar'
                                         ? index.isEven
                                             ? BorderRadius.only(

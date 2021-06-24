@@ -110,14 +110,14 @@ class _ProductPageState extends State<ProductPage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            widget.product.inWishlist == "0"
+                            widget.product.inWishlist == 0
                                 ? API(context).post('user/add/wishlist', {
                                     "product_id": widget.product.id
                                   }).then((value) {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
                                         setState(() {
-                                          widget.product.inWishlist = "1";
+                                          widget.product.inWishlist = 1;
                                         });
                                         showDialog(
                                             context: context,
@@ -138,7 +138,7 @@ class _ProductPageState extends State<ProductPage> {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
                                         setState(() {
-                                          widget.product.inWishlist = "0";
+                                          widget.product.inWishlist = 0;
                                         });
                                         showDialog(
                                             context: context,
@@ -279,8 +279,8 @@ class _ProductPageState extends State<ProductPage> {
                                 print(rating);
                               },
                             ),
-                            Text(
-                              "3.5/5 ",
+                            reviews==null?Container(): Text(
+                              "${reviews.avgValuations??'0'}/5 ",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -306,7 +306,8 @@ class _ProductPageState extends State<ProductPage> {
                                   style: TextStyle(fontWeight: FontWeight.w400),
                                 ),
                                 Text(
-                                  '${widget.product.carMadeName}',
+                                  '${widget.product.carMadeName==null?'الجميع':widget.product.carMadeName.carMade}',
+                                  maxLines: 1,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black),
@@ -367,7 +368,7 @@ class _ProductPageState extends State<ProductPage> {
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                             Text(
-                              '${widget.product.transmissionName}',
+                              '${widget.product.transmissionName?? 'الجميع'}',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
@@ -386,7 +387,7 @@ class _ProductPageState extends State<ProductPage> {
                               size: 15,
                             ),
                             Text(
-                              '   ${widget.product.categoryName}',
+                              '   ${widget.product.categoryName.runtimeType==String?widget.product.categoryName:widget.product.categoryName.name }',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
@@ -520,7 +521,7 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
                   reviews==null?Container(): Container(
-                    height:reviews.reviewsData.length<1? ScreenUtil.getHeight(context)/4:ScreenUtil.getHeight(context)/ 2.5 ,
+                    height:reviews.reviewsData.length<1? ScreenUtil.getHeight(context)/3:ScreenUtil.getHeight(context)/ 2.5 ,
                     width: ScreenUtil.getWidth(context),
                     child: DefaultTabController(
                       length: 2,
@@ -928,7 +929,7 @@ class _ProductPageState extends State<ProductPage> {
                                             ),
                                           ),
                                         SizedBox(
-                                          height: 25,
+                                          height: 10,
                                         ),
                                         Row(
                                           crossAxisAlignment:
@@ -1149,8 +1150,9 @@ class _ProductPageState extends State<ProductPage> {
                               });
                               showDialog(
                                   context: context,
-                                  builder: (_) =>
-                                      ResultOverlay(value['message']));
+                                  builder: (_) => ResultOverlay(
+                                  value['${value['message'] ??
+                                      ''}\n${value['errors']??""}']));
                             }
                           }
                         });

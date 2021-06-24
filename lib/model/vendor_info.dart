@@ -1,579 +1,493 @@
-/// status_code : 200
-/// message : "succcess"
-/// data : {"id":2,"vendor_name":"second vendor","email":"seconduser@example.com","type":"1","serial":"V002","created_at":"2021-03-09 14:24:50","updated_at":"2021-06-08 12:04:44","userid_id":2,"lang":"ar","commercial_no":"323123","commercial_doc":"","tax_card_no":"13123","tax_card_doc":"","bank_account":"321321","approved":1,"complete":0,"declined":0,"rejected":0,"company_name":"null","images":{"id":237,"model_id":2,"uuid":"34639590-2223-48eb-bb4d-e08ef2fef46b","collection_name":"images","name":"SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV","file_name":"SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","mime_type":"image/jpeg","disk":"public","conversions_disk":"public","size":130009,"order_column":232,"created_at":"2021-06-08T11:49:34.000000Z","updated_at":"2021-06-08T11:49:35.000000Z","image":"https://traker.fra1.digitaloceanspaces.com/add-vendors/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","url":"https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","fullurl":"https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","thumbnail":"https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-thumb.jpg","preview":"https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-preview.jpg"},"media":[{"id":237,"model_id":2,"uuid":"34639590-2223-48eb-bb4d-e08ef2fef46b","collection_name":"images","name":"SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV","file_name":"SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","mime_type":"image/jpeg","disk":"public","conversions_disk":"public","size":130009,"order_column":232,"created_at":"2021-06-08T11:49:34.000000Z","updated_at":"2021-06-08T11:49:35.000000Z","image":"https://traker.fra1.digitaloceanspaces.com/add-vendors/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","url":"https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","fullurl":"https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","thumbnail":"https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-thumb.jpg","preview":"https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-preview.jpg"}]}
 
 class Vendor_info {
-  int _statusCode;
-  String _message;
-  Vendor _data;
+  int statusCode;
+  String message;
+  Vendor data;
 
-  int get statusCode => _statusCode;
-  String get message => _message;
-  Vendor get data => _data;
+  Vendor_info({this.statusCode, this.message, this.data});
 
-  Vendor_info({
-      int statusCode, 
-      String message, 
-      Vendor data}){
-    _statusCode = statusCode;
-    _message = message;
-    _data = data;
-}
-
-  Vendor_info.fromJson(dynamic json) {
-    _statusCode = json["status_code"];
-    _message = json["message"];
-    _data = json["data"] != null ? Vendor.fromJson(json["data"]) : null;
+  Vendor_info.fromJson(Map<String, dynamic> json) {
+    statusCode = json['status_code'];
+    message = json['message'];
+    data = json['data'] != null ? new Vendor.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["status_code"] = _statusCode;
-    map["message"] = _message;
-    if (_data != null) {
-      map["data"] = _data.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status_code'] = this.statusCode;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data.toJson();
     }
-    return map;
+    return data;
   }
-
 }
-
-/// id : 2
-/// vendor_name : "second vendor"
-/// email : "seconduser@example.com"
-/// type : "1"
-/// serial : "V002"
-/// created_at : "2021-03-09 14:24:50"
-/// updated_at : "2021-06-08 12:04:44"
-/// userid_id : 2
-/// lang : "ar"
-/// commercial_no : "323123"
-/// commercial_doc : ""
-/// tax_card_no : "13123"
-/// tax_card_doc : ""
-/// bank_account : "321321"
-/// approved : 1
-/// complete : 0
-/// declined : 0
-/// rejected : 0
-/// company_name : "null"
-/// images : {"id":237,"model_id":2,"uuid":"34639590-2223-48eb-bb4d-e08ef2fef46b","collection_name":"images","name":"SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV","file_name":"SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","mime_type":"image/jpeg","disk":"public","conversions_disk":"public","size":130009,"order_column":232,"created_at":"2021-06-08T11:49:34.000000Z","updated_at":"2021-06-08T11:49:35.000000Z","image":"https://traker.fra1.digitaloceanspaces.com/add-vendors/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","url":"https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","fullurl":"https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","thumbnail":"https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-thumb.jpg","preview":"https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-preview.jpg"}
-/// media : [{"id":237,"model_id":2,"uuid":"34639590-2223-48eb-bb4d-e08ef2fef46b","collection_name":"images","name":"SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV","file_name":"SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","mime_type":"image/jpeg","disk":"public","conversions_disk":"public","size":130009,"order_column":232,"created_at":"2021-06-08T11:49:34.000000Z","updated_at":"2021-06-08T11:49:35.000000Z","image":"https://traker.fra1.digitaloceanspaces.com/add-vendors/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","url":"https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","fullurl":"https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg","thumbnail":"https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-thumb.jpg","preview":"https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-preview.jpg"}]
 
 class Vendor {
-  int _id;
-  String _vendorName;
-  String _email;
-  String _phone_no;
-  String _type;
-  String _serial;
-  String _createdAt;
-  String _updatedAt;
-  int _useridId;
-  String _lang;
-  String _commercialNo;
-  String _commercialDoc;
-  String _taxCardNo;
-  String _taxCardDoc;
-  String _bankAccount;
-  int _approved;
-  int _complete;
-  int _declined;
-  int _rejected;
+  int id;
+  String vendorName;
+  String email;
+  String type;
+  String serial;
+  String createdAt;
+  String updatedAt;
+  int useridId;
+  String lang;
+  String commercialNo;
+  String commercialDoc;
+  String taxCardNo;
+  String taxCardDoc;
+  String bankAccount;
+  int approved;
+  int complete;
+  int declined;
+  int rejected;
+  String companyName;
+  UserDetails userDetails;
+  Images images;
+  CommercialDocs commercialDocs;
+  TaxCardDocs taxCardDocs;
+  WholesaleDocs wholesaleDocs;
+  Images bankDocs;
 
-  set id(int value) {
-    _id = value;
+  Vendor(
+      {this.id,
+        this.vendorName,
+        this.email,
+        this.type,
+        this.serial,
+        this.createdAt,
+        this.updatedAt,
+        this.useridId,
+        this.lang,
+        this.commercialNo,
+        this.commercialDoc,
+        this.taxCardNo,
+        this.taxCardDoc,
+        this.bankAccount,
+        this.approved,
+        this.complete,
+        this.declined,
+        this.rejected,
+        this.companyName,
+        this.userDetails,
+        this.images,
+        this.commercialDocs,
+        this.taxCardDocs,
+        this.wholesaleDocs,
+        this.bankDocs});
+
+  Vendor.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    vendorName = json['vendor_name'];
+    email = json['email'];
+    type = json['type'];
+    serial = json['serial'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    useridId = json['userid_id'];
+    lang = json['lang'];
+    commercialNo = json['commercial_no'];
+    commercialDoc = json['commercial_doc'];
+    taxCardNo = json['tax_card_no'];
+    taxCardDoc = json['tax_card_doc'];
+    bankAccount = json['bank_account'];
+    approved = json['approved'];
+    complete = json['complete'];
+    declined = json['declined'];
+    rejected = json['rejected'];
+    companyName = json['company_name'];
+    userDetails = json['user_details'] != null
+        ? new UserDetails.fromJson(json['user_details'])
+        : null;
+    images =
+    json['images'] != null ? new Images.fromJson(json['images']) : null;
+    commercialDocs = json['commercialDocs'] != null
+        ? new CommercialDocs.fromJson(json['commercialDocs'])
+        : null;
+    taxCardDocs = json['taxCardDocs'] != null
+        ? new TaxCardDocs.fromJson(json['taxCardDocs'])
+        : null;
+    wholesaleDocs = json['wholesaleDocs'] != null
+        ? new WholesaleDocs.fromJson(json['wholesaleDocs'])
+        : null;
+    bankDocs =
+    json['bankDocs'] != null ? new Images.fromJson(json['bankDocs']) : null;
   }
 
-  String _companyName;
-  Images _images;
-  List<Media> _media;
-
-  int get id => _id;
-  String get vendorName => _vendorName;
-  String get email => _email;
-  String get type => _type;
-  String get phone_no => _phone_no;
-  String get serial => _serial;
-  String get createdAt => _createdAt;
-  String get updatedAt => _updatedAt;
-  int get useridId => _useridId;
-  String get lang => _lang;
-  String get commercialNo => _commercialNo;
-  String get commercialDoc => _commercialDoc;
-  String get taxCardNo => _taxCardNo;
-  String get taxCardDoc => _taxCardDoc;
-  String get bankAccount => _bankAccount;
-  int get approved => _approved;
-  int get complete => _complete;
-  int get declined => _declined;
-  int get rejected => _rejected;
-  String get companyName => _companyName;
-  Images get images => _images;
-  List<Media> get media => _media;
-
-  Vendor({
-      int id, 
-      String vendorName, 
-      String email, 
-      String phone_no,
-      String type,
-      String serial, 
-      String createdAt, 
-      String updatedAt, 
-      int useridId, 
-      String lang, 
-      String commercialNo, 
-      String commercialDoc, 
-      String taxCardNo, 
-      String taxCardDoc, 
-      String bankAccount, 
-      int approved, 
-      int complete, 
-      int declined, 
-      int rejected, 
-      String companyName, 
-      Images images, 
-      List<Media> media}){
-    _id = id;
-    _vendorName = vendorName;
-    _email = email;
-    _type = type;
-    _serial = serial;
-    _createdAt = createdAt;
-    _updatedAt = updatedAt;
-    _useridId = useridId;
-    _lang = lang;
-    _commercialNo = commercialNo;
-    _commercialDoc = commercialDoc;
-    _taxCardNo = taxCardNo;
-    _taxCardDoc = taxCardDoc;
-    _bankAccount = bankAccount;
-    _approved = approved;
-    _phone_no = phone_no;
-    _complete = complete;
-    _declined = declined;
-    _rejected = rejected;
-    _companyName = companyName;
-    _images = images;
-    _media = media;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['vendor_name'] = this.vendorName;
+    data['email'] = this.email;
+    data['type'] = this.type;
+    data['serial'] = this.serial;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['userid_id'] = this.useridId;
+    data['lang'] = this.lang;
+    data['commercial_no'] = this.commercialNo;
+    data['commercial_doc'] = this.commercialDoc;
+    data['tax_card_no'] = this.taxCardNo;
+    data['tax_card_doc'] = this.taxCardDoc;
+    data['bank_account'] = this.bankAccount;
+    data['approved'] = this.approved;
+    data['complete'] = this.complete;
+    data['declined'] = this.declined;
+    data['rejected'] = this.rejected;
+    data['company_name'] = this.companyName;
+    if (this.userDetails != null) {
+      data['user_details'] = this.userDetails.toJson();
+    }
+    if (this.images != null) {
+      data['images'] = this.images.toJson();
+    }
+    if (this.commercialDocs != null) {
+      data['commercialDocs'] = this.commercialDocs.toJson();
+    }
+    if (this.taxCardDocs != null) {
+      data['taxCardDocs'] = this.taxCardDocs.toJson();
+    }
+    if (this.wholesaleDocs != null) {
+      data['wholesaleDocs'] = this.wholesaleDocs.toJson();
+    }
+    if (this.bankDocs != null) {
+      data['bankDocs'] = this.bankDocs.toJson();
+    }
+    return data;
+  }
 }
 
-  Vendor.fromJson(dynamic json) {
-    _id = json["id"];
-    _vendorName = json["vendor_name"];
-    _email = json["email"];
-    _phone_no = json["phone_no"];
-    _type = json["type"];
-    _serial = json["serial"];
-    _createdAt = json["created_at"];
-    _updatedAt = json["updated_at"];
-    _useridId = json["userid_id"];
-    _lang = json["lang"];
-    _commercialNo = json["commercial_no"];
-    _commercialDoc = json["commercial_doc"];
-    _taxCardNo = json["tax_card_no"];
-    _taxCardDoc = json["tax_card_doc"];
-    _bankAccount = json["bank_account"];
-    _approved = json["approved"];
-    _complete = json["complete"];
-    _declined = json["declined"];
-    _rejected = json["rejected"];
-    _companyName = json["company_name"];
-    _images = json["images"] != null ? Images.fromJson(json["images"]) : null;
-    if (json["media"] != null) {
-      _media = [];
-      json["media"].forEach((v) {
-        _media.add(Media.fromJson(v));
+class UserDetails {
+  int id;
+  String name;
+  String email;
+  String emailVerifiedAt;
+  String createdAt;
+  String updatedAt;
+  Null deletedAt;
+  int addedById;
+  String lang;
+  String lastName;
+  String phoneNo;
+  String birthdate;
+  String gender;
+  Null facebookId;
+  Null facebookAvatar;
+  List<Roles> roles;
+
+  UserDetails(
+      {this.id,
+        this.name,
+        this.email,
+        this.emailVerifiedAt,
+        this.createdAt,
+        this.updatedAt,
+        this.deletedAt,
+        this.addedById,
+        this.lang,
+        this.lastName,
+        this.phoneNo,
+        this.birthdate,
+        this.gender,
+        this.facebookId,
+        this.facebookAvatar,
+        this.roles});
+
+  UserDetails.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    emailVerifiedAt = json['email_verified_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+    addedById = json['added_by_id'];
+    lang = json['lang'];
+    lastName = json['last_name'];
+    phoneNo = json['phone_no'];
+    birthdate = json['birthdate'];
+    gender = json['gender'];
+    facebookId = json['facebook_id'];
+    facebookAvatar = json['facebook_avatar'];
+    if (json['roles'] != null) {
+      roles = new List<Roles>();
+      json['roles'].forEach((v) {
+        roles.add(new Roles.fromJson(v));
       });
     }
   }
 
-  Map<String, String> toJson() {
-    var map = <String, String>{};
-    map["vendor_id"] = _id.toString();
-    map["userid_id"] = _useridId.toString();
-    map["vendor_name"] = _vendorName;
-    map["commercial_no"] = _commercialNo;
-    //map["commercial_doc"] = _commercialDoc;
-    map["tax_card_no"] = _taxCardNo;
-    map["tax_card_doc"] = _taxCardDoc;
-    map["bank_account"] = _bankAccount;
-    map["type"] = _type;
-    map["email"] = _email;
-    map["serial"] = _serial;
-    map["phone_no"] = _phone_no;
-    map["lang"] = _lang;
-    map["company_name"] = _companyName;
-    return map;
-  }
-
-  set vendorName(String value) {
-    _vendorName = value;
-  }
-
-  set email(String value) {
-    _email = value;
-  }
-set phone_no(String value) {
-    _phone_no = value;
-  }
-
-  set type(String value) {
-    _type = value;
-  }
-
-  set serial(String value) {
-    _serial = value;
-  }
-
-  set createdAt(String value) {
-    _createdAt = value;
-  }
-
-  set updatedAt(String value) {
-    _updatedAt = value;
-  }
-
-  set useridId(int value) {
-    _useridId = value;
-  }
-
-  set lang(String value) {
-    _lang = value;
-  }
-
-  set commercialNo(String value) {
-    _commercialNo = value;
-  }
-
-  set commercialDoc(String value) {
-    _commercialDoc = value;
-  }
-
-  set taxCardNo(String value) {
-    _taxCardNo = value;
-  }
-
-  set taxCardDoc(String value) {
-    _taxCardDoc = value;
-  }
-
-  set bankAccount(String value) {
-    _bankAccount = value;
-  }
-
-  set approved(int value) {
-    _approved = value;
-  }
-
-  set complete(int value) {
-    _complete = value;
-  }
-
-  set declined(int value) {
-    _declined = value;
-  }
-
-  set rejected(int value) {
-    _rejected = value;
-  }
-
-  set companyName(String value) {
-    _companyName = value;
-  }
-
-  set images(Images value) {
-    _images = value;
-  }
-
-  set media(List<Media> value) {
-    _media = value;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['email_verified_at'] = this.emailVerifiedAt;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['deleted_at'] = this.deletedAt;
+    data['added_by_id'] = this.addedById;
+    data['lang'] = this.lang;
+    data['last_name'] = this.lastName;
+    data['phone_no'] = this.phoneNo;
+    data['birthdate'] = this.birthdate;
+    data['gender'] = this.gender;
+    data['facebook_id'] = this.facebookId;
+    data['facebook_avatar'] = this.facebookAvatar;
+    if (this.roles != null) {
+      data['roles'] = this.roles.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }
 
-/// id : 237
-/// model_id : 2
-/// uuid : "34639590-2223-48eb-bb4d-e08ef2fef46b"
-/// collection_name : "images"
-/// name : "SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV"
-/// file_name : "SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg"
-/// mime_type : "image/jpeg"
-/// disk : "public"
-/// conversions_disk : "public"
-/// size : 130009
-/// order_column : 232
-/// created_at : "2021-06-08T11:49:34.000000Z"
-/// updated_at : "2021-06-08T11:49:35.000000Z"
-/// image : "https://traker.fra1.digitaloceanspaces.com/add-vendors/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg"
-/// url : "https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg"
-/// fullurl : "https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg"
-/// thumbnail : "https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-thumb.jpg"
-/// preview : "https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-preview.jpg"
+class Roles {
+  int id;
+  String title;
+  String createdAt;
+  String updatedAt;
+  Null deletedAt;
+  int addedById;
+  String lang;
+  Pivot pivot;
 
-class Media {
-  int _id;
-  int _modelId;
-  String _uuid;
-  String _collectionName;
-  String _name;
-  String _fileName;
-  String _mimeType;
-  String _disk;
-  String _conversionsDisk;
-  int _size;
-  int _orderColumn;
-  String _createdAt;
-  String _updatedAt;
-  String _image;
-  String _url;
-  String _fullurl;
-  String _thumbnail;
-  String _preview;
+  Roles(
+      {this.id,
+        this.title,
+        this.createdAt,
+        this.updatedAt,
+        this.deletedAt,
+        this.addedById,
+        this.lang,
+        this.pivot});
 
-  int get id => _id;
-  int get modelId => _modelId;
-  String get uuid => _uuid;
-  String get collectionName => _collectionName;
-  String get name => _name;
-  String get fileName => _fileName;
-  String get mimeType => _mimeType;
-  String get disk => _disk;
-  String get conversionsDisk => _conversionsDisk;
-  int get size => _size;
-  int get orderColumn => _orderColumn;
-  String get createdAt => _createdAt;
-  String get updatedAt => _updatedAt;
-  String get image => _image;
-  String get url => _url;
-  String get fullurl => _fullurl;
-  String get thumbnail => _thumbnail;
-  String get preview => _preview;
-
-  Media({
-      int id, 
-      int modelId, 
-      String uuid, 
-      String collectionName, 
-      String name, 
-      String fileName, 
-      String mimeType, 
-      String disk, 
-      String conversionsDisk, 
-      int size, 
-      int orderColumn, 
-      String createdAt, 
-      String updatedAt, 
-      String image, 
-      String url, 
-      String fullurl, 
-      String thumbnail, 
-      String preview}){
-    _id = id;
-    _modelId = modelId;
-    _uuid = uuid;
-    _collectionName = collectionName;
-    _name = name;
-    _fileName = fileName;
-    _mimeType = mimeType;
-    _disk = disk;
-    _conversionsDisk = conversionsDisk;
-    _size = size;
-    _orderColumn = orderColumn;
-    _createdAt = createdAt;
-    _updatedAt = updatedAt;
-    _image = image;
-    _url = url;
-    _fullurl = fullurl;
-    _thumbnail = thumbnail;
-    _preview = preview;
-}
-
-  Media.fromJson(dynamic json) {
-    _id = json["id"];
-    _modelId = json["model_id"];
-    _uuid = json["uuid"];
-    _collectionName = json["collection_name"];
-    _name = json["name"];
-    _fileName = json["file_name"];
-    _mimeType = json["mime_type"];
-    _disk = json["disk"];
-    _conversionsDisk = json["conversions_disk"];
-    _size = json["size"];
-    _orderColumn = json["order_column"];
-    _createdAt = json["created_at"];
-    _updatedAt = json["updated_at"];
-    _image = json["image"];
-    _url = json["url"];
-    _fullurl = json["fullurl"];
-    _thumbnail = json["thumbnail"];
-    _preview = json["preview"];
+  Roles.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+    addedById = json['added_by_id'];
+    lang = json['lang'];
+    pivot = json['pivot'] != null ? new Pivot.fromJson(json['pivot']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["id"] = _id;
-    map["model_id"] = _modelId;
-    map["uuid"] = _uuid;
-    map["collection_name"] = _collectionName;
-    map["name"] = _name;
-    map["file_name"] = _fileName;
-    map["mime_type"] = _mimeType;
-    map["disk"] = _disk;
-    map["conversions_disk"] = _conversionsDisk;
-    map["size"] = _size;
-    map["order_column"] = _orderColumn;
-    map["created_at"] = _createdAt;
-    map["updated_at"] = _updatedAt;
-    map["image"] = _image;
-    map["url"] = _url;
-    map["fullurl"] = _fullurl;
-    map["thumbnail"] = _thumbnail;
-    map["preview"] = _preview;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['deleted_at'] = this.deletedAt;
+    data['added_by_id'] = this.addedById;
+    data['lang'] = this.lang;
+    if (this.pivot != null) {
+      data['pivot'] = this.pivot.toJson();
+    }
+    return data;
   }
-
 }
 
-/// id : 237
-/// model_id : 2
-/// uuid : "34639590-2223-48eb-bb4d-e08ef2fef46b"
-/// collection_name : "images"
-/// name : "SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV"
-/// file_name : "SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg"
-/// mime_type : "image/jpeg"
-/// disk : "public"
-/// conversions_disk : "public"
-/// size : 130009
-/// order_column : 232
-/// created_at : "2021-06-08T11:49:34.000000Z"
-/// updated_at : "2021-06-08T11:49:35.000000Z"
-/// image : "https://traker.fra1.digitaloceanspaces.com/add-vendors/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg"
-/// url : "https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg"
-/// fullurl : "https://development.lacasacode.dev/storage/237/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV.jpg"
-/// thumbnail : "https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-thumb.jpg"
-/// preview : "https://development.lacasacode.dev/storage/237/conversions/SJpIpzunzPisAfihtfKPT29QW3EgmGPumLehZHbV-preview.jpg"
+class Pivot {
+  int userId;
+  int roleId;
+
+  Pivot({this.userId, this.roleId});
+
+  Pivot.fromJson(Map<String, dynamic> json) {
+    userId = json['user_id'];
+    roleId = json['role_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['user_id'] = this.userId;
+    data['role_id'] = this.roleId;
+    return data;
+  }
+}
 
 class Images {
-  int _id;
-  int _modelId;
-  String _uuid;
-  String _collectionName;
-  String _name;
-  String _fileName;
-  String _mimeType;
-  String _disk;
-  String _conversionsDisk;
-  int _size;
-  int _orderColumn;
-  String _createdAt;
-  String _updatedAt;
-  String _image;
-  String _url;
-  String _fullurl;
-  String _thumbnail;
-  String _preview;
+  int id;
+  int orderColumn;
+  String createdAt;
+  String updatedAt;
+  String image;
+  String url;
+  String fullurl;
+  String file_name;
+  String preview;
 
-  int get id => _id;
-  int get modelId => _modelId;
-  String get uuid => _uuid;
-  String get collectionName => _collectionName;
-  String get name => _name;
-  String get fileName => _fileName;
-  String get mimeType => _mimeType;
-  String get disk => _disk;
-  String get conversionsDisk => _conversionsDisk;
-  int get size => _size;
-  int get orderColumn => _orderColumn;
-  String get createdAt => _createdAt;
-  String get updatedAt => _updatedAt;
-  String get image => _image;
-  String get url => _url;
-  String get fullurl => _fullurl;
-  String get thumbnail => _thumbnail;
-  String get preview => _preview;
+  Images(
+      {this.id,
+        this.orderColumn,
+        this.createdAt,
+        this.updatedAt,
+        this.image,
+        this.url,
+        this.fullurl,
+        this.file_name,
+        this.preview});
 
-  Images({
-      int id, 
-      int modelId, 
-      String uuid, 
-      String collectionName, 
-      String name, 
-      String fileName, 
-      String mimeType, 
-      String disk, 
-      String conversionsDisk, 
-      int size, 
-      int orderColumn, 
-      String createdAt, 
-      String updatedAt, 
-      String image, 
-      String url, 
-      String fullurl, 
-      String thumbnail, 
-      String preview}){
-    _id = id;
-    _modelId = modelId;
-    _uuid = uuid;
-    _collectionName = collectionName;
-    _name = name;
-    _fileName = fileName;
-    _mimeType = mimeType;
-    _disk = disk;
-    _conversionsDisk = conversionsDisk;
-    _size = size;
-    _orderColumn = orderColumn;
-    _createdAt = createdAt;
-    _updatedAt = updatedAt;
-    _image = image;
-    _url = url;
-    _fullurl = fullurl;
-    _thumbnail = thumbnail;
-    _preview = preview;
-}
-
-  Images.fromJson(dynamic json) {
-    _id = json["id"];
-    _modelId = json["model_id"];
-    _uuid = json["uuid"];
-    _collectionName = json["collection_name"];
-    _name = json["name"];
-    _fileName = json["file_name"];
-    _mimeType = json["mime_type"];
-    _disk = json["disk"];
-    _conversionsDisk = json["conversions_disk"];
-    _size = json["size"];
-    _orderColumn = json["order_column"];
-    _createdAt = json["created_at"];
-    _updatedAt = json["updated_at"];
-    _image = json["image"];
-    _url = json["url"];
-    _fullurl = json["fullurl"];
-    _thumbnail = json["thumbnail"];
-    _preview = json["preview"];
+  Images.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    orderColumn = json['order_column'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    image = json['image'];
+    url = json['url'];
+    fullurl = json['fullurl'];
+    file_name = json['file_name'];
+    preview = json['preview'];
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["id"] = _id;
-    map["model_id"] = _modelId;
-    map["uuid"] = _uuid;
-    map["collection_name"] = _collectionName;
-    map["name"] = _name;
-    map["file_name"] = _fileName;
-    map["mime_type"] = _mimeType;
-    map["disk"] = _disk;
-    map["conversions_disk"] = _conversionsDisk;
-    map["size"] = _size;
-    map["order_column"] = _orderColumn;
-    map["created_at"] = _createdAt;
-    map["updated_at"] = _updatedAt;
-    map["image"] = _image;
-    map["url"] = _url;
-    map["fullurl"] = _fullurl;
-    map["thumbnail"] = _thumbnail;
-    map["preview"] = _preview;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['order_column'] = this.orderColumn;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['image'] = this.image;
+    data['url'] = this.url;
+    data['fullurl'] = this.fullurl;
+    data['thumbnail'] = this.file_name;
+    data['preview'] = this.preview;
+    return data;
+  }
+}
+
+class CommercialDocs {
+  int id;
+  String createdAt;
+  String updatedAt;
+  String image;
+  String url;
+  String fullurl;
+  String file_name;
+  String preview;
+
+  CommercialDocs(
+      {this.id,
+        this.createdAt,
+        this.updatedAt,
+        this.image,
+        this.url,
+        this.fullurl,
+        this.file_name,
+        this.preview});
+
+  CommercialDocs.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    image = json['image'];
+    url = json['url'];
+    fullurl = json['fullurl'];
+    file_name = json['file_name'];
+    preview = json['preview'];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['image'] = this.image;
+    data['url'] = this.url;
+    data['fullurl'] = this.fullurl;
+    data['thumbnail'] = this.file_name;
+    data['preview'] = this.preview;
+    return data;
+  }
+}
+
+class TaxCardDocs {
+  int id;
+  String modelType;
+  String createdAt;
+  String updatedAt;
+  String image;
+  String url;
+  String fullurl;
+  String file_name;
+  String preview;
+
+  TaxCardDocs(
+      {this.id,
+        this.modelType,
+        this.createdAt,
+        this.updatedAt,
+        this.image,
+        this.url,
+        this.fullurl,
+        this.file_name,
+        this.preview});
+
+  TaxCardDocs.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    modelType = json['model_type'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    image = json['image'];
+    url = json['url'];
+    fullurl = json['fullurl'];
+    file_name = json['file_name'];
+    preview = json['preview'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['model_type'] = this.modelType;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['image'] = this.image;
+    data['url'] = this.url;
+    data['fullurl'] = this.fullurl;
+    data['thumbnail'] = this.file_name;
+    data['preview'] = this.preview;
+    return data;
+  }
+}
+
+class WholesaleDocs {
+  int id;
+  String updatedAt;
+  String image;
+  String url;
+  String fullurl;
+  String file_name;
+  String preview;
+
+  WholesaleDocs(
+      {this.id,
+        this.updatedAt,
+        this.image,
+        this.url,
+        this.fullurl,
+        this.file_name,
+        this.preview});
+
+  WholesaleDocs.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    updatedAt = json['updated_at'];
+    image = json['image'];
+    url = json['url'];
+    fullurl = json['fullurl'];
+    file_name = json['file_name'];
+    preview = json['preview'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['updated_at'] = this.updatedAt;
+    data['image'] = this.image;
+    data['url'] = this.url;
+    data['fullurl'] = this.fullurl;
+    data['thumbnail'] = this.file_name;
+    data['preview'] = this.preview;
+    return data;
+  }
 }
