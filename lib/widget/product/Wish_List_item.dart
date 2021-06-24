@@ -59,7 +59,7 @@ class _Wish_ListState extends State<Wish_List> {
                       width: ScreenUtil.getWidth(context) / 2.5,
                       child: AutoSizeText(
                         widget.product.productName,
-                        maxLines: 3,
+                        maxLines: 2,
                         style: TextStyle(
                           fontSize: 20,
                           color: Color(0xFF5D6A78),

@@ -465,7 +465,9 @@ class _AccountState extends State<Account> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _launchURL('https://frontend.lacasacode.dev/info/about');
+                                    },
                                     child: AutoSizeText(
                                       getTransrlate(context, 'About'),
                                       maxLines: 1,
@@ -474,7 +476,10 @@ class _AccountState extends State<Account> {
                                       style: TextStyle(color: Colors.black),
                                     )),
                                 TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _launchURL('https://frontend.lacasacode.dev/info/communicate');
+
+                                    },
                                     child: AutoSizeText(
                                       getTransrlate(context, 'contact'),
                                       maxLines: 1,
@@ -483,7 +488,10 @@ class _AccountState extends State<Account> {
                                       style: TextStyle(color: Colors.black),
                                     )),
                                 TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _launchURL('https://frontend.lacasacode.dev/info/FAQs');
+
+                                    },
                                     child: AutoSizeText(
                                       getTransrlate(context, 'FAQ'),
                                       maxLines: 1,
@@ -504,7 +512,10 @@ class _AccountState extends State<Account> {
                                 Container(
                                     width: ScreenUtil.getWidth(context) / 3.1,
                                     child: TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          _launchURL('https://frontend.lacasacode.dev/sell/why');
+
+                                        },
                                         child: AutoSizeText(
                                           getTransrlate(
                                               context, 'sellonTurkar'),
@@ -516,7 +527,10 @@ class _AccountState extends State<Account> {
                                 Container(
                                     width: ScreenUtil.getWidth(context) / 3.1,
                                     child: TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          _launchURL('https://frontend.lacasacode.dev/register');
+
+                                        },
                                         child: AutoSizeText(
                                           getTransrlate(
                                               context, 'Registerseller'),
@@ -528,7 +542,10 @@ class _AccountState extends State<Account> {
                                 Container(
                                     width: ScreenUtil.getWidth(context) / 3.1,
                                     child: TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          _launchURL('https://frontend.lacasacode.dev/sell/how-to');
+
+                                        },
                                         child: AutoSizeText(
                                           getTransrlate(
                                               context, 'HowtosellTurkar'),

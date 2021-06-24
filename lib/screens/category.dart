@@ -51,99 +51,110 @@ class _CategoryScreenState extends State<CategoryScreen> {
         children: [
           AppBarCustom(),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  categories == null
-                      ? Container()
-                      : Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 4),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: ScreenUtil.getWidth(context) / 3,
-                                  height: ScreenUtil.getHeight(context) / 1.25,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffF6F6F6),
-                                    image: DecorationImage(
-                                        image: new ExactAssetImage(
-                                          'assets/images/trkar_logo_white.png',
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0xffF6F6F6),
+                image: DecorationImage(
+
+                    image: new ExactAssetImage(
+                      'assets/images/trkar_logo_white.png',
+                    ),
+                    alignment: Alignment.bottomRight,
+                    fit: BoxFit.scaleDown),
+                border: Border.symmetric(
+                    vertical:
+                    BorderSide(color: Colors.grey)),
+              ),
+              child: Container(
+                color: Colors.white70,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      categories == null
+                          ? Container()
+                          : Container(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 4),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Center(
+                                      child: Container(
+                                        width: ScreenUtil.getWidth(context) / 3,
+                                       // height: ScreenUtil.getHeight(context) / 1.25,
+                                        decoration: BoxDecoration(
+                                          border: Border.symmetric(
+                                              vertical:
+                                                  BorderSide(color: Colors.grey)),
                                         ),
-                                        alignment: Alignment.bottomCenter,
-                                        fit: BoxFit.scaleDown),
-                                    border: Border.symmetric(
-                                        vertical:
-                                            BorderSide(color: Colors.grey)),
-                                  ),
-                                  child: Container(
-                                    color: Colors.white70,
-                                    child: ListView.builder(
-                                      primary: false,
-                                      shrinkWrap: true,
-                                      padding: EdgeInsets.all(1),
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: categories.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        bool selected = checkboxType == index;
-                                        return InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              checkboxType = index;
-                                              checkboxPart = 0;
-                                            });
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.only(
-                                                top: 20.0,
-                                                bottom: 20.0,
-                                                right: 20,
-                                                left: 20),
-                                            decoration: BoxDecoration(
-                                                color: selected
-                                                    ? Colors.white
-                                                    : Color(0xffF6F6F6),
-                                                border: Border.symmetric(
-                                                    horizontal: BorderSide(
-                                                        color: selected
-                                                            ? Colors.black12
-                                                            : Colors.black26))),
-                                            child: AutoSizeText(
-                                              "${categories[index].mainCategoryName}",
-                                              maxLines: 2,
-                                              minFontSize: 10,
-                                              maxFontSize: 16,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.symmetric(
+                                                vertical:
+                                                BorderSide(color: Colors.grey)),
                                           ),
-                                        );
-                                      },
+                                          child: ListView.builder(
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            padding: EdgeInsets.all(1),
+                                            physics: NeverScrollableScrollPhysics(),
+                                            itemCount: categories.length,
+                                            itemBuilder:
+                                                (BuildContext context, int index) {
+                                              bool selected = checkboxType == index;
+                                              return InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    checkboxType = index;
+                                                    checkboxPart = 0;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 20.0,
+                                                      bottom: 20.0,
+                                                      right: 20,
+                                                      left: 20),
+                                                  decoration: BoxDecoration(
+                                                      color: selected
+                                                          ? Colors.white
+                                                          : Color(0xffF6F6F6),
+                                                      border: Border.symmetric(
+                                                          horizontal: BorderSide(
+                                                              color: selected
+                                                                  ? Colors.black12
+                                                                  : Colors.black26))),
+                                                  child: AutoSizeText(
+                                                    "${categories[index].mainCategoryName}",
+                                                    maxLines: 2,
+                                                    minFontSize: 10,
+                                                    maxFontSize: 16,
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Expanded(
+                                      child: Container(
+                                        child: getList(
+                                            categories[checkboxType].categories),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Expanded(
-                                  child: Container(
-                                    child: getList(
-                                        categories[checkboxType].categories),
-                                  ),
-                                ),
-                                // Container(
-                                //  width: ScreenUtil.getWidth(context) / 3,
-                                //  height: ScreenUtil.getHeight(context) / 1.25,
-                                //   child:  getPartCategories(
-                                //       categories[checkboxType].categories[checkboxPart].partCategories),
-                                // ),
-                              ],
-                            ),
-                          ),
-                        )
-                ],
+                              ),
+                            )
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

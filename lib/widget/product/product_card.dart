@@ -97,7 +97,7 @@ class _ProductCardState extends State<ProductCard> {
                               color: Color(0xFF5D6A78),
                               fontWeight: FontWeight.w300,
                             ),
-                            minFontSize: 11,
+                            minFontSize: 13,
                           ),
                         ),
                         SizedBox(

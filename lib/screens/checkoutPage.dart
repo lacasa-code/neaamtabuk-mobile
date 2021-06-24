@@ -258,18 +258,21 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                           SizedBox(
                                             width: 10,
                                           ),
-                                          AutoSizeText(
-                                            widget
-                                                .carts
-                                                .data
-                                                .orderDetails[index]
-                                                .productName,
-                                            maxLines: 2,
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
+                                          Container(
+                                            width:ScreenUtil.getWidth(context)/2,
+                                            child: AutoSizeText(
+                                              widget
+                                                  .carts
+                                                  .data
+                                                  .orderDetails[index]
+                                                  .productName,
+                                              maxLines: 2,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              minFontSize: 11,
                                             ),
-                                            minFontSize: 11,
                                           ),
                                         ],
                                       );
@@ -771,15 +774,18 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                         ),
                                         Column(
                                           children: [
-                                            AutoSizeText(
-                                              checkout_model.data.orderDetails[index]
-                                                  .productName,
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
+                                            Container(
+                                              width:ScreenUtil.getWidth(context)/2,
+                                              child: AutoSizeText(
+                                                checkout_model.data.orderDetails[index]
+                                                    .productName,
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                minFontSize: 11,
                                               ),
-                                              minFontSize: 11,
                                             ),
                                             AutoSizeText(
                                               "  : ${getTransrlate(context, 'quantity')}${checkout_model.data.orderDetails[index].quantity}",
@@ -966,14 +972,18 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           SizedBox(
                             width: 10,
                           ),
-                          AutoSizeText(
-                            widget.carts.data.orderDetails[index].productName,
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            width:ScreenUtil.getWidth(context)/2,
+
+                            child: AutoSizeText(
+                              widget.carts.data.orderDetails[index].productName,
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              minFontSize: 11,
                             ),
-                            minFontSize: 11,
                           ),
                         ],
                       ),

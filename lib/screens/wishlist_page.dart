@@ -107,6 +107,7 @@ class _WishListState extends State<WishList> {
                                       Icons.close,
                                       color: Colors.grey,
                                     )),
+                                SizedBox(height: 25,),
                                 InkWell(
                                   onTap: () {
                                     API(context).post('add/to/cart', {
