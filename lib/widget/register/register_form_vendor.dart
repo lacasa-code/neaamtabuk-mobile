@@ -222,6 +222,11 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
       if (!value.containsKey('errors')) {
         setState(() => _isLoading = false);
         var user = value['data'];
+        if (user.containsKey('vendor_details')) {
+          prefs.setInt(
+              "complete", user['vendor_details']['complete']);
+          prefs.setString("vendor", 'vendor');
+        }
         prefs.setString("user_email", user['email']);
         prefs.setString("user_name", user['name']);
         prefs.setString("token", user['token']);

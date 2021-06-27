@@ -120,14 +120,14 @@ class Address {
     data['recipient_phone'] = this.recipientPhone;
     data['recipient_alt_phone'] = this.recipientAltPhone;
     data['recipient_email'] = this.recipientEmail;
-    data['city'] = this.city;
+    data['city_id'] = this.city;
     data['state'] = this.state;
-    data['country_code'] = this.countryCode;
+    data['country_id'] = this.countryCode;
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
     data['last_name'] = this.lastName;
     data['street']=this.street;
-    data['area'] = this.area;
+    data['area_id'] = this.area;
     data['district'] = this.district;
     data['home_no'] = this.homeNo;
     data['floor_no'] = this.floorNo;

@@ -56,8 +56,8 @@ class Product {
   int producttypeId;
   String producttypeName;
   String origincountryName;
-  Null noOfOrders;
-  Null holesalePrice;
+  String noOfOrders;
+  String holesalePrice;
   int countViews;
   int avgValuations;
   int cartEnable;
@@ -111,8 +111,8 @@ class Product {
     producttypeId = json['producttype_id'];
     producttypeName = json['producttype_name'];
     origincountryName = json['origincountry_name'];
-    noOfOrders = json['no_of_orders'];
-    holesalePrice = json['holesale_price'];
+    noOfOrders = json['no_of_orders'].toString();
+    holesalePrice = json['holesale_price'].toString();
     countViews = json['count_views'];
     avgValuations = json['avg_valuations'];
     cartEnable = json['cart_enable'];

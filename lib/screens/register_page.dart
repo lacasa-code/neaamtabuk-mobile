@@ -324,7 +324,7 @@ class _RegisterPageState extends State<RegisterPage> {
       if (!value.containsKey('errors')) {
         var user = value['data'];
         prefs.setString("user_email", user['email']);
-        prefs.setString("user_name", user['name']);
+        prefs.setString("user_name", user['name']??' ');
         prefs.setString("token", user['token']);
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);

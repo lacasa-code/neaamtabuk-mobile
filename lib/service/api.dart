@@ -34,7 +34,6 @@ class API {
   get(String url) async {
     final full_url =
         Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
-    //print(full_url);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       http.Response response = await http.get(full_url, headers: {
@@ -46,10 +45,7 @@ class API {
       return getAction(response);
     } catch (exception, stackTrace) {
       print("exception >>>>>>>>>>>>>>>>>>= ${exception}");
-      // await Sentry.captureException(
-      //   exception,
-      //   stackTrace: stackTrace,
-      // );
+
     } finally {}
   }
 
@@ -140,7 +136,6 @@ class API {
   }
   getAction(http.Response response) {
     if (Check) {
-      print(jsonDecode(response.body));
       if (response.statusCode == 500) {
         Nav.route(
             context,

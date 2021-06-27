@@ -107,7 +107,7 @@ class _ProductListState extends State<ProductList> {
                           ),
                           RatingBar.builder(
                             ignoreGestures: true,
-                            initialRating: double.parse('3.5'),
+                            initialRating: widget.product.avgValuations.toDouble(),
                             itemSize: 14.0,
                             minRating: 1,
                             direction: Axis.horizontal,
@@ -172,7 +172,7 @@ class _ProductListState extends State<ProductList> {
                               IconButton(
                                 onPressed: () {
                                   print(widget.product.inWishlist);
-                                  widget.product.inWishlist=="0"? API(context).post('user/add/wishlist',{
+                                  widget.product.inWishlist==0? API(context).post('user/add/wishlist',{
                                     "product_id":widget.product.id
                                   }).then((value) {
                                     if (value != null) {
@@ -217,7 +217,7 @@ class _ProductListState extends State<ProductList> {
                                 },
                                 icon:
                                 Icon(
-                                  widget.product.inWishlist=="0"?
+                                  widget.product.inWishlist==0?
                                   Icons.favorite_border:Icons.favorite,
                                   color: Colors.grey,
                                 ),

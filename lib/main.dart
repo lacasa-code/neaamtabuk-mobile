@@ -14,30 +14,30 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GlobalConfiguration().loadFromAsset("configurations");
   print("base_url: ${GlobalConfiguration().getString('base_url')}");
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<Provider_control>(
-      create: (_) => Provider_control(),
-    ),
-    ChangeNotifierProvider<Provider_Data>(
-      create: (_) => Provider_Data(),
-    ),
-  ], child: Phoenix(child: MyApp())));
+  // runApp(MultiProvider(providers: [
+  //   ChangeNotifierProvider<Provider_control>(
+  //     create: (_) => Provider_control(),
+  //   ),
+  //   ChangeNotifierProvider<Provider_Data>(
+  //     create: (_) => Provider_Data(),
+  //   ),
+  // ], child: Phoenix(child: MyApp())));
 
-  // await SentryFlutter.init(
-  //
-  //       (options) {
-  //     options.dsn = 'https://536b9d1a8e014f0dbca91d2f7f5c487a@o551399.ingest.sentry.io/5825146';
-  //   },
-  //   appRunner: () => runApp(MultiProvider(providers: [
-  //     ChangeNotifierProvider<Provider_control>(
-  //       create: (_) => Provider_control(),
-  //     ),
-  //     ChangeNotifierProvider<Provider_Data>(
-  //       create: (_) => Provider_Data(),
-  //     ),
-  //   ], child: Phoenix(child: MyApp()))),
-  //
-  // );
+  await SentryFlutter.init(
+
+        (options) {
+      options.dsn = 'https://536b9d1a8e014f0dbca91d2f7f5c487a@o551399.ingest.sentry.io/5825146';
+    },
+    appRunner: () => runApp(MultiProvider(providers: [
+      ChangeNotifierProvider<Provider_control>(
+        create: (_) => Provider_control(),
+      ),
+      ChangeNotifierProvider<Provider_Data>(
+        create: (_) => Provider_Data(),
+      ),
+    ], child: Phoenix(child: MyApp()))),
+
+  );
 }
 
 class MyApp extends StatefulWidget {

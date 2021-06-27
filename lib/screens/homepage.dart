@@ -128,7 +128,6 @@ class _HomeState extends State<Home> {
     });
     SharedPreferences.getInstance().then((value) {
       complete = value.getInt('complete');
-      print('complete @@@@@@@@@@@@@@@@@@@@@@@@ $complete');
     });
     super.initState();
   }
@@ -258,7 +257,8 @@ class _HomeState extends State<Home> {
                                         width: 3.0, color: Colors.black12),
                                     image: DecorationImage(
                                         image: CachedNetworkImageProvider(
-                                            "${cartype[index].image}"),
+                                            "${cartype[index].image}"
+                                        ),
 
                                         fit: BoxFit.cover),
 

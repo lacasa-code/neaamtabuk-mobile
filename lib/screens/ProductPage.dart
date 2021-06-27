@@ -26,6 +26,7 @@ import 'package:flutter_pos/widget/slider/slider_dot.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'MyCars/myCars.dart';
 
@@ -40,6 +41,7 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   int _carouselCurrentPage = 0;
   Reviews reviews;
+  String Vendor ;
   List<Question> _question;
   String dropdownValue = "1";
   final _formKey = GlobalKey<FormState>();
@@ -53,6 +55,11 @@ class _ProductPageState extends State<ProductPage> {
   ];
   @override
   void initState() {
+    SharedPreferences.getInstance().then((value) {
+      setState(() {
+        Vendor=value.getString('vendor');
+      });
+    });
     getreview();
     getQuastion();
     super.initState();
@@ -108,7 +115,7 @@ class _ProductPageState extends State<ProductPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(
+                      widget.product.wishlistEnable==0?Container():  InkWell(
                           onTap: () {
                             widget.product.inWishlist == 0
                                 ? API(context).post('user/add/wishlist', {
@@ -127,7 +134,7 @@ class _ProductPageState extends State<ProductPage> {
                                         showDialog(
                                             context: context,
                                             builder: (_) => ResultOverlay(
-                                                value['message']));
+                                                value['data']));
                                       }
                                     }
                                   })
@@ -148,7 +155,7 @@ class _ProductPageState extends State<ProductPage> {
                                         showDialog(
                                             context: context,
                                             builder: (_) => ResultOverlay(
-                                                value['message']));
+                                                value['data']));
                                       }
                                     }
                                   });
@@ -159,7 +166,7 @@ class _ProductPageState extends State<ProductPage> {
                                 width: 5,
                               ),
                               Icon(
-                                  widget.product.inWishlist == "0"
+                                  widget.product.inWishlist == 0
                                       ? Icons.favorite_border
                                       : Icons.favorite,
                                   size: 25,
@@ -357,6 +364,25 @@ class _ProductPageState extends State<ProductPage> {
                           ],
                         ),
                       )),
+                  Vendor!=null?Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "سعر الجملة  : ",
+                              style: TextStyle(fontWeight: FontWeight.w400),
+                            ),
+                            Text(
+                              '${widget.product.holesalePrice??' '} ${getTransrlate(context, 'Currency')} ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      )): Container(),
                   Align(
                       alignment: Alignment.topRight,
                       child: Padding(
@@ -439,16 +465,7 @@ class _ProductPageState extends State<ProductPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "${getTransrlate(context, 'compatible')} : ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'تويوتا كامري  2015 سيدان \nتويوتا كامري 2015 هاتشباك',
+                          '${widget.product.description}',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -460,6 +477,7 @@ class _ProductPageState extends State<ProductPage> {
                               Icons.local_shipping_outlined,
                               size: 20,
                             ),
+                            SizedBox(width: 5,),
                             Text(
                               "${getTransrlate(context, 'ShippingBy')} : ",
                               style: TextStyle(
@@ -602,9 +620,9 @@ class _ProductPageState extends State<ProductPage> {
                                           physics:
                                               NeverScrollableScrollPhysics(),
                                           itemCount:
-                                              reviews.reviewsData.length <= 2
+                                              reviews.reviewsData.length <= 1
                                                   ? reviews.reviewsData.length
-                                                  : 2,
+                                                  : 1,
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return Padding(
@@ -1053,7 +1071,7 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
           ),
-          Form(
+          widget.product.cartEnable==0?Container():    Form(
             key: _formKey,
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 20),

@@ -26,7 +26,7 @@ class Reviews {
   List<ReviewsData> reviewsData;
   int reviewsCount;
   int evaluationsCount;
-  String avgValuations;
+  int avgValuations;
 
   Reviews(
       {this.reviewsData,

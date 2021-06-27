@@ -160,7 +160,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                       fontSize: 20),
                                                 ),
                                                 Text(
-                                                  "${address[index].address}",
+                                                  "${address[index].apartmentNo??' '} /  ${address[index].floorNo??' '} ${address[index].district??' '} ,${address[index].street??' '},${address[index].city??' '},${address[index].countryCode??' '}",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           checkboxValue == index

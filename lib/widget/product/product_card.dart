@@ -108,7 +108,7 @@ class _ProductCardState extends State<ProductCard> {
                           children: <Widget>[
                             RatingBar.builder(
                               ignoreGestures: true,
-                              initialRating: double.parse('3.5'),
+                              initialRating: widget.product.avgValuations.toDouble(),
                               itemSize: 14.0,
                               minRating: 1,
                               direction: Axis.horizontal,
@@ -119,7 +119,6 @@ class _ProductCardState extends State<ProductCard> {
                                 color: Colors.orange,
                               ),
                               onRatingUpdate: (rating) {
-                                print(rating);
                               },
                             ),
                             SizedBox(
@@ -192,9 +191,7 @@ class _ProductCardState extends State<ProductCard> {
                                     } else {
                                       showDialog(
                                           context: context,
-                                          builder: (_) => ResultOverlay(
-                                              value['${value['message'] ??
-                                                  ''}\n${value['errors']??""}']));
+                                          builder: (_) => ResultOverlay('${value['data']??""}'));
                                     }
                                   }
                                 }):API(context).post('user/removeitem/wishlist',{
@@ -215,7 +212,7 @@ class _ProductCardState extends State<ProductCard> {
                                       showDialog(
                                           context: context,
                                           builder: (_) => ResultOverlay(
-                                              value['message']));
+                                              value['data']));
                                     }
                                   }
                                 });

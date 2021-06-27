@@ -65,7 +65,7 @@ class CarType {
     _id = json["id"];
     _typeName = json["type_name"];
     _lang = json["lang"];
-    _image = json["some_image"];
+    _image = json["photo"]["image"];
   }
 
   Map<String, dynamic> toJson() {

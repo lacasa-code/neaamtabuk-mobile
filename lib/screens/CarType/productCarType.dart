@@ -15,6 +15,7 @@ import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/List/gridview.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
+import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -138,6 +139,8 @@ class _ProductCarTypeState extends State<ProductCarType> {
 
                   product == null
                       ? Container()
+                      :product.isEmpty
+                      ? NotFoundProduct()
                       : list
                           ? grid_product(
                               product:product,

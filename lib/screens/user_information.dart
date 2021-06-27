@@ -29,7 +29,8 @@ class _UserInfoState extends State<UserInfo> {
   User userModal;
   String password;
   final _formKey = GlobalKey<FormState>();
-  List<String> items=["male","female"];
+  List<String> items = ["male", "female"];
+
   submitForm() async {
     FocusScope.of(context).requestFocus(new FocusNode());
     _isLoading = true;
@@ -42,25 +43,7 @@ class _UserInfoState extends State<UserInfo> {
 
   @override
   void initState() {
-    SharedPreferences.getInstance().then((value) => {
-          setState(() {
-            name = value.getString('user_name');
-            email = value.getString('user_email');
-          })
-        });
-    API(context).get('user/profile/info').then((value) {
-      if (value != null) {
-        if (value['status_code'] == 200) {
-          setState(() {
-            userModal = UserInformation.fromJson(value).data;
-          });
-        } else {
-          showDialog(
-              context: context,
-              builder: (_) => ResultOverlay(value['message']));
-        }
-      }
-    });
+    getUser();
     super.initState();
   }
 
@@ -168,8 +151,7 @@ class _UserInfoState extends State<UserInfo> {
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
                                           initialValue: userModal.lastName,
-                                          decoration: const InputDecoration(
-                                          ),
+                                          decoration: const InputDecoration(),
                                           enabled: !_status,
                                           validator: (String value) {
                                             if (value.isEmpty) {
@@ -197,16 +179,16 @@ class _UserInfoState extends State<UserInfo> {
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
                                           initialValue: userModal.email,
-                                          decoration: const InputDecoration(
-                                          ),
+                                          decoration: const InputDecoration(),
                                           validator: (String value) {
                                             if (value.isEmpty) {
                                               return getTransrlate(
                                                   context, 'mail');
-                                            }else if (!RegExp(
-                                                r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                            } else if (!RegExp(
+                                                    r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
                                                 .hasMatch(value)) {
-                                              return getTransrlate(context, 'invalidemail');
+                                              return getTransrlate(
+                                                  context, 'invalidemail');
                                             }
                                             _formKey.currentState.save();
                                             return null;
@@ -228,7 +210,7 @@ class _UserInfoState extends State<UserInfo> {
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
                                           initialValue: userModal.phoneNo,
-                                          keyboardType:TextInputType.number ,
+                                          keyboardType: TextInputType.number,
                                           decoration: InputDecoration(),
                                           validator: (String value) {
                                             if (value.isEmpty) {
@@ -255,8 +237,7 @@ class _UserInfoState extends State<UserInfo> {
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
                                           initialValue: userModal.birthdate,
-                                          keyboardType:TextInputType.datetime ,
-
+                                          keyboardType: TextInputType.datetime,
                                           decoration: InputDecoration(),
                                           enabled: !_status,
                                           onSaved: (String val) =>
@@ -271,26 +252,27 @@ class _UserInfoState extends State<UserInfo> {
                                           'الجنس',
                                         )),
                                     Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 10.0,bottom: 10),
-                                        child:                                       DropdownSearch<String>(
-                                          validator: (String item) {
-                                            if (item == null) {
-                                              return "Required field";
-                                            } else
-                                              return null;
-                                          },
-
-                                          items: items,
-                                          selectedItem: userModal.gender,
-                                          enabled: !_status,
-                                          //  onFind: (String filter) => getData(filter),
-                                          itemAsString: (String u) => u,
-                                          onChanged: (String data) =>
-                                          userModal.gender = data,
-                                        ),
+                                      padding: EdgeInsets.only(
+                                          left: 25.0,
+                                          right: 25.0,
+                                          top: 10.0,
+                                          bottom: 10),
+                                      child: DropdownSearch<String>(
+                                        validator: (String item) {
+                                          if (item == null) {
+                                            return "Required field";
+                                          } else
+                                            return null;
+                                        },
+                                        items: items,
+                                        selectedItem: userModal.gender,
+                                        enabled: !_status,
+                                        //  onFind: (String filter) => getData(filter),
+                                        itemAsString: (String u) => u,
+                                        onChanged: (String data) =>
+                                            userModal.gender = data,
+                                      ),
                                     ),
-
                                     _status
                                         ? _getEditIcon()
                                         : _getActionButtons(),
@@ -302,7 +284,10 @@ class _UserInfoState extends State<UserInfo> {
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 2.0,bottom: 10),
+                                            left: 25.0,
+                                            right: 25.0,
+                                            top: 2.0,
+                                            bottom: 10),
                                         child: TextFormField(
                                           initialValue: "123456789",
                                           decoration: InputDecoration(
@@ -340,9 +325,11 @@ class _UserInfoState extends State<UserInfo> {
               child: Padding(
                 padding: EdgeInsets.only(right: 10.0),
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
+                      final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                       //setState(() => _isLoading = true);
                       API(context).post('user/edit/profile', {
                         "name": userModal.name,
@@ -354,6 +341,7 @@ class _UserInfoState extends State<UserInfo> {
                       }).then((value) {
                         if (value != null) {
                           if (value['status_code'] == 200) {
+                            getUser();
                             showDialog(
                                 context: context,
                                 builder: (_) =>
@@ -376,8 +364,8 @@ class _UserInfoState extends State<UserInfo> {
                   child: Container(
                       width: ScreenUtil.getWidth(context) / 2.5,
                       padding: const EdgeInsets.all(10.0),
-                      decoration:
-                          BoxDecoration(border: Border.all(color: Colors.orange)),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.orange)),
                       child: Center(
                         child: Text(
                           "حفظ",
@@ -474,5 +462,31 @@ class _UserInfoState extends State<UserInfo> {
         },
       ),
     );
+  }
+
+  void getUser() {
+    SharedPreferences.getInstance().then((pref) => {
+      setState(() {
+        name = pref.getString('user_name');
+        email = pref.getString('user_email');
+      }),
+      API(context).get('user/profile/info').then((value) {
+        if (value != null) {
+          if (value['status_code'] == 200) {
+            var user = value['data'];
+            pref.setString("user_email", user['email']??' ');
+            pref.setString("user_name", user['name']??' ');
+            setState(() {
+              userModal = UserInformation.fromJson(value).data;
+            });
+          } else {
+            showDialog(
+                context: context,
+                builder: (_) => ResultOverlay(value['message']));
+          }
+        }
+      })
+    });
+
   }
 }
