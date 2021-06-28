@@ -60,7 +60,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                   : Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(24.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: ListView.builder(
                             primary: false,
                             shrinkWrap: true,
@@ -124,11 +124,15 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
                                           ),
-                                          Text(
-                                            address[index].address ?? '',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20),
+                                          Container(
+                                            width: ScreenUtil.getWidth(context) / 2.3,
+                                            child: Text(
+                                              "${address[index].apartmentNo??' '} /  ${address[index].floorNo??' '} ${address[index].district??' '} ,${address[index].street??' '},${address[index].city??' '},${address[index].countryCode??' '}",
+                                             maxLines: 2,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -137,6 +141,12 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                         child: SizedBox(
                                       height: 1,
                                     )),
+                                    IconButton(
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+
+                                      },
+                                    ),
                                     IconButton(
                                       icon: Icon(Icons.clear),
                                       onPressed: () {

@@ -14,7 +14,7 @@ class Provider_Data with ChangeNotifier {
 
     API(context,Check: false).post('show/cart', {}).then((value) {
       if (value != null) {
-        print(value['data']['orderDetails'][0]['total']);
+        print(value);
         cart_model = Cart_model.fromJson(value);
         notifyListeners();
       }

@@ -21,6 +21,7 @@ import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import 'MyCars/myCars.dart';
@@ -52,32 +53,45 @@ class _CartScreenState extends State<CartScreen> {
           ? _cart_model != null
               ? _cart_model.data != null
                   ? Container(
-                      height: 80,
+                      height: 90,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black26)),
                       child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: InkWell(
-                          onTap: () {
-                            Nav.route(
-                                context,
-                                CheckOutPage(
-                                  carts: _cart_model,
-                                ));
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 12),
-                            padding: const EdgeInsets.all(12.0),
-                            color: Colors.lightGreen,
-                            child: Center(
-                                child: Text(
-                              getTransrlate(context, 'CheckOut'),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )),
-                          ),
+                        padding: const EdgeInsets.all(4.0),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                pushNewScreen(
+                                  context,
+                                  screen: CheckOutPage(
+                                    carts: _cart_model,
+                                  ),
+                                  withNavBar: false, // OPTIONAL VALUE. True by default.
+                                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                                );
+                                // Nav.route(
+                                //     context,
+                                //     CheckOutPage(
+                                //       carts: _cart_model,
+                                //     ));
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 5),
+                                padding: const EdgeInsets.all(12.0),
+                                color: Colors.lightGreen,
+                                child: Center(
+                                    child: Text(
+                                  getTransrlate(context, 'CheckOut'),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                )),
+                              ),
+                            ),
+                            SizedBox(height: 10,)
+                          ],
                         ),
                       ),
                     )
@@ -104,7 +118,7 @@ class _CartScreenState extends State<CartScreen> {
                         _cart_model == null
                             ? Center(
                                 child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(24.0),
                                 child: CircularProgressIndicator(),
                               ))
                             : _cart_model.data == null

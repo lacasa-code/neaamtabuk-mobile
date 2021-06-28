@@ -127,7 +127,7 @@ class _ProductListState extends State<ProductList> {
                               Container(
                                 width: ScreenUtil.getWidth(context)/3.4,
                                 child: AutoSizeText(
-                                  "${widget.product.price} ${getTransrlate(context, 'Currency')} ",
+                                  "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
                                   maxLines: 1,
                                   minFontSize: 20,
                                   maxFontSize: 25,

@@ -94,6 +94,8 @@ class _FilterdialogState extends State<Filterdialog> {
                     padding: const EdgeInsets.all(16.0),
                     child: parts == null
                         ? Container()
+                        : parts.isEmpty
+                        ? Container()
                         : ListView.builder(
                             primary: false,
                             shrinkWrap: true,
@@ -101,9 +103,9 @@ class _FilterdialogState extends State<Filterdialog> {
                             itemCount: parts.length,
                             itemBuilder: (BuildContext context, int index) {
                               return ExpansionTile(
-                                title: Text(parts[index].name),
+                                title: Text("${parts[index].name}"),
                                 children: [
-                                  ListView.builder(
+                                  parts[index].partCategories==null?Container(): ListView.builder(
                                       primary: false,
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),

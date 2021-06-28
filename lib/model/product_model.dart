@@ -31,6 +31,7 @@ class Product {
   String description;
   int discount;
   String price;
+  String action_price;
   int quantity;
   String serialNumber;
   int carMadeId;
@@ -83,6 +84,7 @@ class Product {
     description = json['description'];
     discount = json['discount'];
     price = json['price'];
+    action_price = json['actual_price'].toString();
     quantity = json['quantity'];
     serialNumber = json['serial_number'];
     carMadeId = json['car_made_id'];

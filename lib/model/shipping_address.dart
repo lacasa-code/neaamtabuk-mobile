@@ -95,14 +95,14 @@ class Address {
     recipientAltPhone = json['recipient_alt_phone'];
     recipientEmail = json['recipient_email'];
     address = json['address'];
-    city = json['city'];
+    city = json['city'].toString();
     street = json['street'];
     countryCode = json['country_code'];
     postalCode = json['postal_code'];
     latitude = json['latitude'];
     longitude = json['longitude'];
     lastName = json['last_name'];
-    area = json['area'];
+    area = json['area'].toString();
     district = json['district'];
     homeNo = json['home_no'];
     floorNo = json['floor_no'];

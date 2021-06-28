@@ -82,12 +82,14 @@ class _HomeState extends State<Home> {
                   ? " ${data.cart_model.data == null ? 0 : data.cart_model.data.count_pieces ?? 0} "
                   : '',
               style: TextStyle(
+                height:1,
                   backgroundColor: Colors.white, color: Colors.orange),
             )),
           ],
         ),
         iconSize: 35,
         title: (getTransrlate(context, 'Cart')),
+        textStyle: TextStyle(height: 1),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -162,6 +164,7 @@ class _HomeState extends State<Home> {
         // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(color: Colors.black12,width: 1),
           colorBehindNavBar: Colors.white,
         ),
         popAllScreensOnTapOfSelectedTab: true,
@@ -412,7 +415,7 @@ class _HomeState extends State<Home> {
             padding: EdgeInsets.symmetric(horizontal: 8),
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 0.90,
+              childAspectRatio: 0.80,
               crossAxisCount: 3,
             ),
             itemCount: productMostSale.length,

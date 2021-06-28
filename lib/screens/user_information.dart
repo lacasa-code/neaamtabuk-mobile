@@ -216,6 +216,8 @@ class _UserInfoState extends State<UserInfo> {
                                             if (value.isEmpty) {
                                               return getTransrlate(
                                                   context, 'phone');
+                                            }else if (value.length<=12) {
+                                              return "${getTransrlate(context, 'phone')} <=14";
                                             }
                                             _formKey.currentState.save();
                                             return null;
@@ -295,7 +297,8 @@ class _UserInfoState extends State<UserInfo> {
                                           enabled: !_status,
                                           obscureText: true,
                                         )),
-                                    _getChangePassword()
+                                    _getChangePassword(),
+                                  SizedBox(height: 20,)
                                   ],
                                 ),
                               ),

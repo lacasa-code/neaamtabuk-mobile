@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pos/model/area_model.dart';
+import 'package:flutter_pos/model/city_model.dart';
+import 'package:flutter_pos/model/country_model.dart';
 import 'package:flutter_pos/model/vendor_info.dart';
 import 'package:flutter_pos/screens/changePasswordPAge.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -31,6 +35,9 @@ class _VendorInfoState extends State<VendorInfo> {
   bool _isLoading = false;
   Vendor userModal;
   int _value = 0;
+  List<Country> contries;
+  List<City> cities;
+  List<Area> area;
   List typies = ['جملة', 'تجزئة', 'جملة وتجزئة'];
   String password;
   final _formKey = GlobalKey<FormState>();
@@ -44,9 +51,12 @@ class _VendorInfoState extends State<VendorInfo> {
   File taxCardDocs;
   File commercialDocs;
   File wholesaleDocs;
-  String country,area,city,address;
+  String country, areas, city,  address, phone;
+
   @override
   void initState() {
+    getCountry();
+
     API(context).get('vendor/saved/docs').then((value) {
       if (value != null) {
         if (value['status_code'] == 200) {
@@ -835,93 +845,137 @@ class _VendorInfoState extends State<VendorInfo> {
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            MyTextFormField(
-                                              intialLabel: '',
-                                              keyboard_type:
-                                                  TextInputType.emailAddress,
-                                              labelText: getTransrlate(
-                                                  context, 'Countroy'),
-                                              hintText: getTransrlate(
-                                                  context, 'Countroy'),
-                                              isPhone: true,
-                                              validator: (String value) {
-                                                if (value.isEmpty) {
-                                                  return getTransrlate(
-                                                      context, 'Countroy');
-                                                }
-                                                address_key.currentState.save();
-                                                return null;
-                                              },
-                                              onSaved: (String value) {
-                                                country=value;
-                                              },
-                                            ),
-                                            MyTextFormField(
-                                              intialLabel: '',
-                                              keyboard_type:
-                                                  TextInputType.emailAddress,
-                                              labelText: getTransrlate(
-                                                  context, 'area'),
-                                              hintText: getTransrlate(
-                                                  context, 'area'),
-                                              isPhone: true,
-                                              validator: (String value) {
-                                                if (value.isEmpty) {
-                                                  return getTransrlate(
-                                                      context, 'area');
-                                                }
-                                                address_key.currentState.save();
-                                                return null;
-                                              },
-                                              onSaved: (String value) {
-                                                area=value;
-                                              },
-                                            ),
-                                            MyTextFormField(
-                                              intialLabel: '',
-                                              keyboard_type:
-                                                  TextInputType.emailAddress,
-                                              labelText: getTransrlate(
-                                                  context, 'addressVendor'),
-                                              hintText: getTransrlate(
-                                                  context, 'addressVendor'),
-                                              isPhone: true,
-                                              validator: (String value) {
-                                                if (value.isEmpty) {
-                                                  return getTransrlate(
-                                                      context, 'addressVendor');
-                                                }
-                                                address_key.currentState.save();
-                                                return null;
-                                              },
-                                              onSaved: (String value) {
-                                               address=value;
-                                              },
-                                            ),
-                                            MyTextFormField(
-                                              intialLabel: '',
-                                              keyboard_type:
-                                                  TextInputType.emailAddress,
-                                              labelText: getTransrlate(
-                                                  context, 'City'),
-                                              hintText: getTransrlate(
-                                                  context, 'City'),
-                                              isPhone: true,
-                                              validator: (String value) {
-                                                if (value.isEmpty) {
-                                                  return getTransrlate(
-                                                      context, 'City');
-                                                }
-                                                address_key.currentState.save();
-                                                return null;
-                                              },
-                                              onSaved: (String value) {
-                                               city=value;
-                                              },
-                                            ),
                                             Text(
-                                              "الموقع",
+                                              getTransrlate(
+                                                  context, 'Countroy'),
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16),
                                             ),
+                                            contries == null
+                                                ? Container()
+                                                : Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 10),
+                                                    child:
+                                                        DropdownSearch<Country>(
+                                                      // label: getTransrlate(context, 'Countroy'),
+                                                      validator:
+                                                          (Country item) {
+                                                        if (item == null) {
+                                                          return "Required field";
+                                                        } else
+                                                          return null;
+                                                      },
+                                                      showSearchBox: true,
+                                                      items: contries,
+                                                      //  onFind: (String filter) => getData(filter),
+                                                      itemAsString:
+                                                          (Country u) =>
+                                                              u.countryName,
+                                                      onChanged:
+                                                          (Country data) {
+                                                        country =
+                                                            data.id.toString();
+                                                        getArea(data.id);
+                                                      },
+                                                    ),
+                                                  ),
+                                            area == null
+                                                ? Container()
+                                                : Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 10),
+                                                    child: DropdownSearch<Area>(
+                                                      // label: getTransrlate(context, 'Countroy'),
+                                                      validator: (Area item) {
+                                                        if (item == null) {
+                                                          return "Required field";
+                                                        } else
+                                                          return null;
+                                                      },
+
+                                                      items: area,
+                                                      //  onFind: (String filter) => getData(filter),
+                                                      itemAsString: (Area u) =>
+                                                          u.areaName,
+                                                      onChanged: (Area data) {
+                                                        areas =
+                                                            data.id.toString();
+                                                        getCity(data.id);
+                                                      },
+                                                    ),
+                                                  ),
+                                            cities == null
+                                                ? Container()
+                                                : Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 10),
+                                                    child: DropdownSearch<City>(
+                                                      // label: getTransrlate(context, 'Countroy'),
+                                                      validator: (City item) {
+                                                        if (item == null) {
+                                                          return "Required field";
+                                                        } else
+                                                          return null;
+                                                      },
+
+                                                      items: cities,
+                                                      //  onFind: (String filter) => getData(filter),
+                                                      itemAsString: (City u) =>
+                                                          u.cityName,
+                                                      onChanged: (City data) {
+                                                        city =
+                                                            data.id.toString();
+                                                      },
+                                                    ),
+                                                  ),
+                                            MyTextFormField(
+                                              intialLabel: '',
+                                              keyboard_type:
+                                                  TextInputType.text,
+                                              labelText: getTransrlate(
+                                                  context, 'Addres'),
+                                              hintText: getTransrlate(
+                                                  context, 'Addres'),
+                                              isPhone: true,
+                                              validator: (String value) {
+                                                if (value.isEmpty) {
+                                                  return getTransrlate(
+                                                      context, 'Addres');
+                                                }
+                                                _formKey.currentState.save();
+                                                return null;
+                                              },
+                                              onSaved: (String value) {
+                                                address = value;
+                                              },
+                                            ),
+                                            MyTextFormField(
+                                              intialLabel: '',
+                                              keyboard_type:
+                                                  TextInputType.phone,
+                                              labelText: getTransrlate(
+                                                  context, 'phone'),
+                                              hintText: getTransrlate(
+                                                  context, 'phone'),
+                                              isPhone: true,
+                                              validator: (String value) {
+                                                if (value.isEmpty) {
+                                                  return getTransrlate(
+                                                      context, 'phone');
+                                                }
+                                                _formKey.currentState.save();
+                                                return null;
+                                              },
+                                              onSaved: (String value) {
+                                                phone = value;
+                                              },
+                                            ),
+
                                             SizedBox(
                                               height: 30,
                                             ),
@@ -956,15 +1010,16 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 .validate()) {
                                               address_key.currentState.save();
                                               API(context).post(
-                                                  "vendor/add/head/center",
-                                                  {"address":address,
-                                                  "user_id":userModal.useridId,
-                                                    "vendor_id":userModal.id,
-                                                    "area_id":area,
-                                                    "country_id":country,
-                                                    "lat":30,
-                                                    "long":30,
-                                                  }).then((value) {
+                                                  "vendor/add/head/center", {
+                                                "moderator_phone": phone,
+                                                "user_id": userModal.useridId,
+                                                "vendor_id": userModal.id,
+                                                "area_id": areas,
+                                                "country_id": country,
+                                                "city_id": city,
+                                                "address": address,
+                                                //"long": 30,
+                                              }).then((value) {
                                                 if (value != null) {
                                                   if (value['status_code'] ==
                                                       200) {
@@ -1041,6 +1096,31 @@ class _VendorInfoState extends State<VendorInfo> {
     } else {
       // User canceled the picker
     }
+  }
+
+  void getCity(int id) {
+    API(context).get('cities/list/all/$id').then((value) {
+      setState(() {
+        cities = City_model.fromJson(value).data;
+      });
+    });
+  }
+
+  void getArea(int id) {
+    API(context).get('areas/list/all/$id').then((value) {
+      print(value);
+      setState(() {
+        area = Area_model.fromJson(value).data;
+      });
+    });
+  }
+
+  void getCountry() {
+    API(context).get('countries/list/all').then((value) {
+      setState(() {
+        contries = Country_model.fromJson(value).data;
+      });
+    });
   }
 
   void _launchURL(String _url) async => await canLaunch(_url)

@@ -61,7 +61,8 @@ class _Wish_ListState extends State<Wish_List> {
                         widget.product.productName,
                         maxLines: 2,
                         style: TextStyle(
-                          fontSize: 20,
+                          height: 1.5,
+                          fontSize: 16,
                           color: Color(0xFF5D6A78),
                           fontWeight: FontWeight.w300,
                         ),

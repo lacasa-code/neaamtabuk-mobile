@@ -405,14 +405,16 @@ class _AddAddressState extends State<AddAddress> {
       });
     });
 
-  } void getArea(int id) {
+  }
+  void getArea(int id) {
     API(context).get('areas/list/all/$id').then((value) {
       setState(() {
         area=Area_model.fromJson(value).data;
       });
     });
 
-  } void getCountry() {
+  }
+  void getCountry() {
     API(context).get('countries/list/all').then((value) {
       setState(() {
         contries=Country_model.fromJson(value).data;

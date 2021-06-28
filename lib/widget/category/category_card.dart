@@ -52,7 +52,7 @@ class _CategoryCardState extends State<CategoryCard> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CachedNetworkImage(
-                  height:  ScreenUtil.getHeight(context)/11       ,
+                  height:  ScreenUtil.getHeight(context)/12       ,
                     width: ScreenUtil.getWidth(context) / 3.2,
                   imageUrl: (widget.product.categoryName == null)
                       ? 'http://arabimagefoundation.com/images/defaultImage.png'
@@ -61,16 +61,18 @@ class _CategoryCardState extends State<CategoryCard> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 4,),
             AutoSizeText(
              "${ widget.product.categoryName.name}",
-              maxLines: 1,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w500,
               ),
               minFontSize: 14,
-              maxFontSize: 20,
+              maxFontSize: 16,
             )
           ],
         ),

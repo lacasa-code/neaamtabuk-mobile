@@ -42,7 +42,7 @@ bool isloading=false;
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             MyTextFormField(
-              intialLabel: 'trkar3@lacasacode.com',
+              intialLabel: '',
               keyboard_type: TextInputType.emailAddress,
               labelText: getTransrlate(context, 'mail'),
               hintText: getTransrlate(context, 'mail'),
@@ -59,7 +59,7 @@ bool isloading=false;
               },
             ),
             MyTextFormField(
-              intialLabel: 'Password123',
+              intialLabel: '',
               labelText: getTransrlate(context, 'password'),
               hintText: getTransrlate(context, 'password'),
               suffixIcon: IconButton(

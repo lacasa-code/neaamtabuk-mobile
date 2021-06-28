@@ -7,6 +7,7 @@ class MyTextFormField extends StatelessWidget {
   final String labelText;
   final Function validator;
   final Function onSaved;
+  final Function onChange;
   final TextDirection textDirection;
   final Widget suffixIcon;
   final bool isPassword;
@@ -18,6 +19,7 @@ class MyTextFormField extends StatelessWidget {
   final TextInputType keyboard_type;
   final String intialLabel;
   final GestureTapCallback press;
+  final FocusNode focus ;
 
   MyTextFormField(
       {this.hintText,
@@ -34,6 +36,7 @@ class MyTextFormField extends StatelessWidget {
       this.prefix,
       this.keyboard_type,
       this.intialLabel,
+        this.onChange,this.focus,
       this.press});
 
   @override
@@ -46,6 +49,8 @@ class MyTextFormField extends StatelessWidget {
           istitle?Container(): Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16),),
           istitle?Container():SizedBox(height: 4,),
           TextFormField(
+            focusNode: focus,
+            autofocus: true,
             onTap: press,
             initialValue: intialLabel == null ? '' : intialLabel,
             decoration: InputDecoration(
@@ -74,6 +79,7 @@ class MyTextFormField extends StatelessWidget {
             textDirection: textDirection,
             onSaved: onSaved,
             enabled: enabled,
+            onChanged:onChange ,
             keyboardType: keyboard_type,
           ),
         ],

@@ -7,8 +7,9 @@ import 'package:provider/provider.dart';
 
 class ResultOverlay extends StatefulWidget {
   String message;
+  Widget icon;
 
-  ResultOverlay(this.message);
+  ResultOverlay(this.message,{this.icon});
 
   @override
   State<StatefulWidget> createState() => ResultOverlayState();
@@ -51,7 +52,7 @@ class ResultOverlayState extends State<ResultOverlay>
             decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
+                    borderRadius: BorderRadius.circular(1.0))),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,30 +60,35 @@ class ResultOverlayState extends State<ResultOverlay>
               children: [
                 Container(height: 25,color: Colors.orange,),
                 SizedBox(height: 15,),
-                Icon(
-                  Icons.info_outline,
+                widget.icon??  Icon(
+                Icons.info_outline,
                   size: 80,
                   color: Colors.lightGreen,
                 ),
-                SizedBox(height: 10),
-                Text(
-                  '${widget.message}',
-                  style: TextStyle(
-                      color: themeColor.getColor(),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
+                Container(width: ScreenUtil.getWidth(context)/2,
+                  child: Text(
+                    '${widget.message}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: themeColor.getColor(),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,),
+                  ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
+
                 InkWell(
                   onTap: (){
                     Navigator.pop(context);
                   },
                   child: Container(
-                      margin: const EdgeInsets.all(15.0),
-                      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 50),
+                      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
                       color: Colors.orange,
-                      child: Text(getTransrlate(context, 'close'),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
-                )
+                      child: Text(getTransrlate(context, 'close'),
+                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
+                ),
+                SizedBox(height: 45),
+
               ],
             ),
           ),

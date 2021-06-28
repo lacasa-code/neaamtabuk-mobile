@@ -41,7 +41,7 @@ class _ProductCardState extends State<ProductCard> {
     return Stack(
       children: <Widget>[
         Container(
-         // width: ScreenUtil.getWidth(context) / 2.5,
+          // width: ScreenUtil.getWidth(context) / 2.5,
           //margin: EdgeInsets.only(left: 12, top: 12, bottom: 12,right: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
@@ -55,15 +55,13 @@ class _ProductCardState extends State<ProductCard> {
                   ));
             },
             child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey[200],
-                        blurRadius: 5.0,
-                        spreadRadius: 1,
-                        offset: Offset(0.0, 2)),
-                  ]),
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                    color: Colors.grey[200],
+                    blurRadius: 5.0,
+                    spreadRadius: 1,
+                    offset: Offset(0.0, 2)),
+              ]),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +74,10 @@ class _ProductCardState extends State<ProductCard> {
                           ? 'http://arabimagefoundation.com/images/defaultImage.png'
                           : widget.product.photo[0].image,
                       fit: BoxFit.contain,
-                      errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.image,
+                        color: Colors.black12,
+                      ),
                     ),
                   ),
                   Container(
@@ -93,11 +94,11 @@ class _ProductCardState extends State<ProductCard> {
                             widget.product.name,
                             maxLines: 1,
                             style: TextStyle(
-                              fontSize: 16,
                               color: Color(0xFF5D6A78),
                               fontWeight: FontWeight.w300,
                             ),
                             minFontSize: 13,
+                            maxFontSize: 16,
                           ),
                         ),
                         SizedBox(
@@ -108,7 +109,8 @@ class _ProductCardState extends State<ProductCard> {
                           children: <Widget>[
                             RatingBar.builder(
                               ignoreGestures: true,
-                              initialRating: widget.product.avgValuations.toDouble(),
+                              initialRating:
+                                  widget.product.avgValuations.toDouble(),
                               itemSize: 14.0,
                               minRating: 1,
                               direction: Axis.horizontal,
@@ -118,17 +120,15 @@ class _ProductCardState extends State<ProductCard> {
                                 Icons.star,
                                 color: Colors.orange,
                               ),
-                              onRatingUpdate: (rating) {
-                              },
+                              onRatingUpdate: (rating) {},
                             ),
                             SizedBox(
                               width: 6,
                             ),
                             Container(
-                              width: ScreenUtil.getWidth(context)/6.7,
+                              width: ScreenUtil.getWidth(context) / 6.7,
                               child: AutoSizeText(
-
-                                "${widget.product.price??0} ${getTransrlate(context, 'Currency')}",
+                                "${widget.product.action_price ?? 0} ${getTransrlate(context, 'Currency')}",
                                 maxLines: 1,
                                 minFontSize: 14,
                                 maxFontSize: 25,
@@ -144,82 +144,122 @@ class _ProductCardState extends State<ProductCard> {
                           children: <Widget>[
                             IconButton(
                               onPressed: () {
-                                API(context).post('add/to/cart',{
-                                  "product_id":widget.product.id,
-                                  "quantity":1
+                                API(context).post('add/to/cart', {
+                                  "product_id": widget.product.id,
+                                  "quantity": 1
                                 }).then((value) {
                                   if (value != null) {
+                                    print(value);
                                     if (value['status_code'] == 200) {
                                       showDialog(
                                           context: context,
-                                          builder: (_) => ResultOverlay(
-                                              value['message']));
-                                      ServiceData.getCart(context);
+                                          builder: (_) =>
+                                              ResultOverlay(value['message'],
+                                                  icon: Icon(
+                                                    Icons.check_circle_outline,
+                                                    color: Colors.green,
+                                                    size: 80,
 
+                                                  )));
+                                      ServiceData.getCart(context);
                                     } else {
                                       showDialog(
                                           context: context,
                                           builder: (_) => ResultOverlay(
-                                              value['${value['message'] ??
-                                                  ''}\n${value['errors']??""}']));
+                                              '${value['message'] ?? ''}\n${value['errors'] ?? ""}',
+                                              icon: Icon(
+                                                Icons.info_outline,
+                                                color: Colors.yellow,
+                                                size: 80,
+                                              )));
                                     }
                                   }
                                 });
                               },
-                              icon: Icon(CupertinoIcons.cart,size: 30,
-                                  color: Colors.black,),
+                              icon: Icon(
+                                CupertinoIcons.cart,
+                                size: 30,
+                                color: Colors.black,
+                              ),
                             ),
                             SizedBox(
                               width: 6,
                             ),
                             IconButton(
                               onPressed: () {
-                                print( widget.product.inWishlist);
-                                widget.product.inWishlist==0?
-                                API(context).post('user/add/wishlist',{
-                                  "product_id":widget.product.id
-                                }).then((value) {
-                                  if (value != null) {
-                                    if (value['status_code'] == 200) {
-                                      setState(() {
-                                        widget.product.inWishlist=1;
-                                      });
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) => ResultOverlay(
-                                              value['message']));
-                                    } else {
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) => ResultOverlay('${value['data']??""}'));
-                                    }
-                                  }
-                                }):API(context).post('user/removeitem/wishlist',{
-                                  "product_id":widget.product.id
-                                })
-                                    .then((value) {
-                                  if (value != null) {
-                                    if (value['status_code'] == 200) {
-                                      setState(() {
-                                        widget.product.inWishlist=0;
+                                print(widget.product.inWishlist);
+                                widget.product.inWishlist == 0
+                                    ? API(context).post('user/add/wishlist', {
+                                        "product_id": widget.product.id
+                                      }).then((value) {
+                                        if (value != null) {
+                                          if (value['status_code'] == 200) {
+                                            setState(() {
+                                              widget.product.inWishlist = 1;
+                                            });
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) => ResultOverlay(
+                                                    value['message'],
+                                                    icon: Icon(
+                                                      Icons.check_circle_outline,
+                                                      size: 80,
 
+                                                      color: Colors.green,
+                                                    )));
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) => ResultOverlay(
+                                                      '${value['data'] ?? ""}',
+                                                      icon: Icon(
+                                                        Icons.info_outline,
+                                                        size: 80,
+
+                                                        color: Colors.yellow,
+                                                      ),
+                                                    ));
+                                          }
+                                        }
+                                      })
+                                    : API(context).post(
+                                        'user/removeitem/wishlist', {
+                                        "product_id": widget.product.id
+                                      }).then((value) {
+                                        if (value != null) {
+                                          if (value['status_code'] == 200) {
+                                            setState(() {
+                                              widget.product.inWishlist = 0;
+                                            });
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) => ResultOverlay(
+                                                    value['message'],
+                                                    icon: Icon(
+                                                      Icons.check_circle_outline,
+                                                      color: Colors.green,
+                                                      size: 80,
+
+                                                    )));
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) => ResultOverlay(
+                                                    value['data'],
+                                                    icon: Icon(
+                                                      Icons.info_outline,
+                                                      color: Colors.yellow,
+                                                      size: 80,
+
+                                                    )));
+                                          }
+                                        }
                                       });
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) => ResultOverlay(
-                                              value['message']));
-                                    } else {
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) => ResultOverlay(
-                                              value['data']));
-                                    }
-                                  }
-                                });
                               },
                               icon: Icon(
-                               widget.product.inWishlist==0?
-                               Icons.favorite_border:Icons.favorite,
+                                widget.product.inWishlist == 0
+                                    ? Icons.favorite_border
+                                    : Icons.favorite,
                                 color: Colors.grey,
                               ),
                             ),
@@ -236,5 +276,4 @@ class _ProductCardState extends State<ProductCard> {
       ],
     );
   }
-
 }
