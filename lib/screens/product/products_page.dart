@@ -5,8 +5,8 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
-import 'package:flutter_pos/screens/Filter.dart';
-import 'package:flutter_pos/screens/Sort.dart';
+import 'package:flutter_pos/screens/product/Filter.dart';
+import 'package:flutter_pos/screens/product/Sort.dart';
 import 'package:flutter_pos/screens/MyCars/myCars.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -19,19 +19,36 @@ import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class ProductCarPage extends StatefulWidget {
-   List<Product> product;
+class Products_Page extends StatefulWidget {
    int id;
    String name;
-   ProductCarPage({this.product, this.id, this.name});
+   String Url;
+   Products_Page({ this.id, this.name, this.Url});
   @override
-  _ProductCarPageState createState() => _ProductCarPageState();
+  _Products_PageState createState() => _Products_PageState();
 }
 
-class _ProductCarPageState extends State<ProductCarPage> {
+class _Products_PageState extends State<Products_Page> {
+  List<Product> product;
   bool list = false;
   @override
-  void initState() {}
+  void initState() {
+    API(context)
+        .get(widget.Url)
+        .then((value) {
+      if (value != null) {
+        if (value['status_code'] == 200) {
+        setState(() {
+          product= Product_model.fromJson(value).data;
+        });
+        } else {
+          showDialog(
+              context: context,
+              builder: (_) => ResultOverlay(value['message']));
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +57,8 @@ class _ProductCarPageState extends State<ProductCarPage> {
     return Scaffold(
       body: Column(
         children: [
-         AppBarCustom(title:   widget.name == null
-             ? "نتائج البحث"
-             : 'نتائج البحث عن\n${widget.name}',isback: true,),
-          widget.product == null
+          AppBarCustom(isback: true,title:widget.name ,),
+          product == null
               ? Container()
               : Container(
             color: Colors.black26,
@@ -65,12 +80,29 @@ class _ProductCarPageState extends State<ProductCarPage> {
                   ),
                   // color: Color(0xffE4E4E4),
                 ),
-                Text('${widget.product.length}  ${getTransrlate(context, 'product')}'),
+                Text('${product.length} ${getTransrlate(context, 'product')} '),
                 InkWell(
                   onTap: () {
                     showDialog(
                         context: context,
-                        builder: (_) => Filterdialog());
+                        builder: (_) => Filterdialog()).then((partSelect){
+                      print(partSelect);
+                      API(context).post('site/checkbox/filter', partSelect).then((value) {
+                        if (value != null) {
+                          if (value['status_code'] == 200) {
+                            setState(() {
+                              product= Product_model.fromJson(value).data;
+
+                            });
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) => ResultOverlay(value['message']));
+                          }
+                        }
+                      });
+                    });
+
                   },
                   child: Row(
                     children: [
@@ -88,12 +120,12 @@ class _ProductCarPageState extends State<ProductCarPage> {
                         context: context, builder: (_) => Sortdialog()).then((val){
                       print(val);
                       API(context)
-                          .get('site/categories/${widget.id}?sort_type=${val}')
+                          .get('${widget.Url}?sort_type=${val}')
                           .then((value) {
                         if (value != null) {
                           if (value['status_code'] == 200) {
                             setState(() {
-                              widget.product= Product_model.fromJson(value).data;
+                              product= Product_model.fromJson(value).data;
 
                             });
                           } else {
@@ -118,21 +150,22 @@ class _ProductCarPageState extends State<ProductCarPage> {
               ],
             ),
           ),
-          Expanded(child: SingleChildScrollView(
+          Expanded(
+            child: SingleChildScrollView(
               child: Column(
                 children: [
-
-                  widget.product == null
-                      ? Container():
-                  widget.product.isEmpty
+                  product == null
+                      ? Container()
+                      :product.isEmpty
                       ? NotFoundProduct()
                       : list
                           ? grid_product(
-                              product: widget.product,
+                              product:product,
                             )
                           : List_product(
-                              product: widget.product,
+                              product:product,
                             ),
+                  SizedBox(height: 25,)
                 ],
               ),
             ),
@@ -141,4 +174,5 @@ class _ProductCarPageState extends State<ProductCarPage> {
       ),
     );
   }
+
 }

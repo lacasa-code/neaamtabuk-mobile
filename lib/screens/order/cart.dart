@@ -4,9 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/cart_model.dart';
 import 'package:flutter_pos/model/category_model.dart';
-import 'package:flutter_pos/screens/Address_Page.dart';
-import 'package:flutter_pos/screens/category/productCategory.dart';
-import 'package:flutter_pos/screens/checkoutPage.dart';
+import 'package:flutter_pos/screens/address/Address_Page.dart';
+import 'package:flutter_pos/screens/order/checkoutPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -24,7 +23,7 @@ import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
-import 'MyCars/myCars.dart';
+import '../MyCars/myCars.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key key}) : super(key: key);

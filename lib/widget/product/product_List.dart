@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/product_model.dart';
-import 'package:flutter_pos/screens/ProductPage.dart';
+import 'package:flutter_pos/screens/product/ProductPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';

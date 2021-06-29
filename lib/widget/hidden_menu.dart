@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/main.dart';
 import 'package:flutter_pos/screens/homepage.dart';
-import 'package:flutter_pos/screens/login.dart';
+import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';

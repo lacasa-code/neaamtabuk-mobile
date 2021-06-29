@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_pos/screens/lost_password.dart';
+import 'package:flutter_pos/screens/account/lost_password.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';

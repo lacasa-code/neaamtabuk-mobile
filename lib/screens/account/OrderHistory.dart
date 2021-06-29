@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/duration.dart';
 import 'package:flutter_pos/model/order_model.dart';
-import 'package:flutter_pos/screens/orderdetails.dart';
+import 'package:flutter_pos/screens/account/orderdetails.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';

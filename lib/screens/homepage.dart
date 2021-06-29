@@ -3,17 +3,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/screens/Account.dart';
-import 'package:flutter_pos/screens/CarType/productCarType.dart';
-import 'package:flutter_pos/screens/cart.dart';
-import 'package:flutter_pos/screens/vendor_information.dart';
+import 'package:flutter_pos/screens/account/Account.dart';
+import 'package:flutter_pos/screens/product/products_page.dart';
+import 'package:flutter_pos/screens/order/cart.dart';
+import 'package:flutter_pos/screens/account/vendor_information.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/model/ads.dart';
 import 'package:flutter_pos/model/car_type.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/model/product_model.dart';
-import 'package:flutter_pos/screens/category.dart';
+import 'package:flutter_pos/screens/product/category.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
@@ -248,9 +248,9 @@ class _HomeState extends State<Home> {
                                 onTap: () {
                                   Nav.route(
                                       context,
-                                      ProductCarType(
+                                      Products_Page(
                                           id: cartype[index].id,
-                                          name: cartype[index].typeName));
+                                          name: cartype[index].typeName,Url: 'car/type/related/products/${ cartype[index].id}',));
                                 },
                                 child: Container(
                                   height: ScreenUtil.getHeight(context) / 10,

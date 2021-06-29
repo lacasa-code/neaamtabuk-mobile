@@ -24,7 +24,7 @@ import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import 'add_address.dart';
+import '../address/add_address.dart';
 
 class CheckOutPage extends StatefulWidget {
   CheckOutPage({Key key, this.carts}) : super(key: key);

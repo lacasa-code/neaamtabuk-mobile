@@ -4,20 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_pos/model/category_model.dart';
-import 'package:flutter_pos/screens/category/productCategory.dart';
+import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
-import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
-import 'package:flutter_pos/widget/no_found_product.dart';
-import 'package:flutter_pos/widget/not_login.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-
-import 'MyCars/myCars.dart';
-
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key key}) : super(key: key);
 
@@ -171,9 +164,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 : () {
                                     Nav.route(
                                         context,
-                                        ProductCategory(
+                                        Products_Page(
                                           id: Categories[index].id,
                                           name: Categories[index].name,
+                                          Url: "site/part/categories/${Categories[index].id}",
                                         ));
                                   },
                             child: Container(
@@ -233,9 +227,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       onTap: () {
                         Nav.route(
                             context,
-                            ProductCategory(
+                            Products_Page(
                               id: partCategories[index].id,
                               name: partCategories[index].categoryName,
+                              Url: "site/part/categories/${partCategories[index].id}",
                             ));
                       },
                       child: Container(

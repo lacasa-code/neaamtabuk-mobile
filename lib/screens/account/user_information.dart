@@ -3,7 +3,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/user_info.dart';
-import 'package:flutter_pos/screens/changePasswordPAge.dart';
+import 'package:flutter_pos/screens/account/changePasswordPAge.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';

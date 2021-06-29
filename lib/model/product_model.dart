@@ -47,6 +47,7 @@ class Product {
   dynamic categoryName;
   int vendorId;
   String vendorName;
+  String vendorSerial;
   int storeId;
   String storeName;
   int manufacturerId;
@@ -103,6 +104,7 @@ class Product {
     categoryName = json['category_name'] != null ?json['category_name'].runtimeType==String?json['category_name']: new Category_Name.fromJson(json['category_name']) : null;
     vendorId = json['vendor_id'];
     vendorName = json['vendor_name'];
+    vendorSerial = json['vendor_serial'];
     storeId = json['store_id'];
     storeName = json['store_name'];
     manufacturerId = json['manufacturer_id'];

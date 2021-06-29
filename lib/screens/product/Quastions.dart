@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/question_model.dart';
-import 'package:flutter_pos/screens/writeQuastions.dart';
+import 'package:flutter_pos/screens/product/writeQuastions.dart';
 import 'package:flutter_svg/svg.dart';
-import '../utils/screen_size.dart';
+import '../../utils/screen_size.dart';
 
 class Qeastionsdialog extends StatefulWidget {
    List<Question> _question;

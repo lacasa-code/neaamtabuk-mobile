@@ -3,20 +3,19 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/review.dart';
-import 'package:flutter_pos/screens/writerate.dart';
+import 'package:flutter_pos/screens/product/writerate.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
-import 'package:flutter_pos/screens/productCarPage.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../model/cart_category.dart';
-import '../model/manufacturers.dart';
-import '../model/origins.dart';
-import '../service/api.dart';
-import '../utils/screen_size.dart';
+import '../../model/cart_category.dart';
+import '../../model/manufacturers.dart';
+import '../../model/origins.dart';
+import '../../service/api.dart';
+import '../../utils/screen_size.dart';
 
 class Ratedialog extends StatefulWidget {
   Ratedialog(this.reviews, this.id);

@@ -10,7 +10,7 @@ import 'package:flutter_pos/model/area_model.dart';
 import 'package:flutter_pos/model/city_model.dart';
 import 'package:flutter_pos/model/country_model.dart';
 import 'package:flutter_pos/model/vendor_info.dart';
-import 'package:flutter_pos/screens/changePasswordPAge.dart';
+import 'package:flutter_pos/screens/account/changePasswordPAge.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';

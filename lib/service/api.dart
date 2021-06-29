@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/Maintenance.dart';
-import 'package:flutter_pos/screens/login.dart';
+import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:global_configuration/global_configuration.dart';

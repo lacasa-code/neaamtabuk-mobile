@@ -2,11 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/widget/ResultOverlay.dart';
-import 'package:flutter_pos/model/category_model.dart';
+import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/model/product_model.dart';
-import 'package:flutter_pos/screens/category/productCategory.dart';
-import 'package:flutter_pos/screens/productCarPage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 
@@ -35,13 +32,19 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 8,top: 8, right: 8, bottom: 2),
+      margin: EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(
         onTap: () {
-        Nav.route(context, ProductCategory(id: widget.product.id,name: widget.product.categoryName.name,));
+          Nav.route(
+              context,
+              Products_Page(
+                id: widget.product.id,
+                name: widget.product.categoryName.name,
+                Url: 'site/part/categories/${widget.product.id}',
+              ));
         },
         child: Column(
           children: [
@@ -52,18 +55,23 @@ class _CategoryCardState extends State<CategoryCard> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CachedNetworkImage(
-                  height:  ScreenUtil.getHeight(context)/12       ,
-                    width: ScreenUtil.getWidth(context) / 3.2,
+                  height: ScreenUtil.getHeight(context) / 12,
+                  width: ScreenUtil.getWidth(context) / 3.2,
                   imageUrl: (widget.product.categoryName == null)
                       ? 'http://arabimagefoundation.com/images/defaultImage.png'
                       : widget.product.categoryName.photo.image,
-                  errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
+                  errorWidget: (context, url, error) => Icon(
+                    Icons.image,
+                    color: Colors.black12,
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 4,),
+            SizedBox(
+              height: 4,
+            ),
             AutoSizeText(
-             "${ widget.product.categoryName.name}",
+              "${widget.product.categoryName.name}",
               maxLines: 2,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

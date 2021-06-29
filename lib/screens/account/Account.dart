@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/main.dart';
-import 'package:flutter_pos/screens/Address_Page.dart';
-import 'package:flutter_pos/screens/OrderHistory.dart';
-import 'package:flutter_pos/screens/infoPage.dart';
-import 'package:flutter_pos/screens/login.dart';
-import 'package:flutter_pos/screens/register_page.dart';
-import 'package:flutter_pos/screens/user_information.dart';
-import 'package:flutter_pos/screens/vendor_information.dart';
+import 'package:flutter_pos/screens/address/Address_Page.dart';
+import 'package:flutter_pos/screens/account/OrderHistory.dart';
+import 'package:flutter_pos/screens/account/infoPage.dart';
+import 'package:flutter_pos/screens/account/login.dart';
+import 'package:flutter_pos/screens/account/register_page.dart';
+import 'package:flutter_pos/screens/account/user_information.dart';
+import 'package:flutter_pos/screens/account/vendor_information.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -17,13 +17,13 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/item_hidden_menu.dart';
-import 'package:flutter_pos/screens/wishlist_page.dart';
+import 'package:flutter_pos/screens/account/wishlist_page.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'MyCars/myCars.dart';
+import '../MyCars/myCars.dart';
 
 class Account extends StatefulWidget {
   const Account({Key key}) : super(key: key);

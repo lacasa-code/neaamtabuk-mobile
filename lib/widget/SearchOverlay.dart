@@ -1,10 +1,10 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
-import 'package:flutter_pos/screens/filterPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -66,7 +66,7 @@ class SearchOverlayState extends State<SearchOverlay>
                       children: [
                         InkWell(
                           onTap: () {
-                            Nav.route(context, FilterPage());
+                            Nav.route(context, Products_Page(Url: 'home/all/products',name:" " ,));
                           },
                           child: Container(
                             margin: const EdgeInsets.all(15.0),

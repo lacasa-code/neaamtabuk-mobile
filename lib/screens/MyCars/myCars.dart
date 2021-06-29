@@ -1,8 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/screens/filterPage.dart';
-import 'package:flutter_pos/screens/productCarmade.dart';
+import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/car_made.dart';
 import 'package:flutter_pos/model/car_type.dart';
@@ -10,7 +9,6 @@ import 'package:flutter_pos/model/carmodel.dart';
 import 'package:flutter_pos/model/favourite.dart';
 import 'package:flutter_pos/model/transmission.dart';
 import 'package:flutter_pos/model/years.dart';
-import 'package:flutter_pos/screens/productCarPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/widget/not_login.dart';
@@ -129,34 +127,17 @@ class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
                                     setState(() {
                                       checkboxValue = value;
                                     });
-                                    API(context)
-                                        .get(
-                                            'user/select/from/favourites/${favourite[index].id}')
-                                        .then((value) {
-                                      if (value != null) {
-                                        if (value['status_code'] == 200) {
-                                          themeColor.setCar_made(
-                                              favourite[index].carMadeName);
-                                          Nav.route(
-                                              context,
-                                              ProductCarmade(
-                                                id: favourite[index].carMadeId,
-                                                name: favourite[index]
-                                                    .carMadeName,
-                                                product: Product_model.fromJson(
-                                                        value)
-                                                    .data,
-                                                api:
-                                                    " user/select/from/favourites/${favourite[index].id}",
-                                              ));
-                                        } else {
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) => ResultOverlay(
-                                                  value['message']));
-                                        }
-                                      }
-                                    });
+                                    themeColor.setCar_made(
+                                        favourite[index].carMadeName);
+                                    Nav.route(
+                                        context,
+                                        Products_Page(
+                                          id: favourite[index].carMadeId,
+                                          name: favourite[index]
+                                              .carMadeName,
+                                          Url:
+                                          " user/select/from/favourites/${favourite[index].id}",
+                                        ));
                                   },
                                 ),
                                 InkWell(
@@ -164,35 +145,17 @@ class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
                                     setState(() {
                                       checkboxValue = index;
                                     });
-
-                                    API(context)
-                                        .get(
-                                            'user/select/from/favourites/${favourite[index].id}')
-                                        .then((value) {
-                                      if (value != null) {
-                                        if (value['status_code'] == 200) {
-                                          themeColor.setCar_made(
-                                              favourite[index].carMadeName);
-                                          Nav.routeReplacement(
-                                              context,
-                                              ProductCarmade(
-                                                id: favourite[index].carMadeId,
-                                                name: favourite[index]
-                                                    .carMadeName,
-                                                product: Product_model.fromJson(
-                                                        value)
-                                                    .data,
-                                                api:
-                                                    " user/select/from/favourites/${favourite[index].id}",
-                                              ));
-                                        } else {
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) => ResultOverlay(
-                                                  value['message']));
-                                        }
-                                      }
-                                    });
+                                    themeColor.setCar_made(
+                                        favourite[index].carMadeName);
+                                    Nav.route(
+                                        context,
+                                        Products_Page(
+                                          id: favourite[index].carMadeId,
+                                          name: favourite[index]
+                                              .carMadeName,
+                                          Url:
+                                          " user/select/from/favourites/${favourite[index].id}",
+                                        ));
                                   },
                                   child: Text(
                                     favourite[index].carMadeName,
@@ -363,12 +326,12 @@ class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
                           }).then((value) {
                             if (value != null) {
                               if (value['status_code'] == 200) {
-                                Nav.routeReplacement(
-                                    context,
-                                    ProductCarPage(
-                                      product:
-                                          Product_model.fromJson(value).data,
-                                    ));
+                                // Nav.routeReplacement(
+                                //     context,
+                                //     ProductCarPage(
+                                //       product:
+                                //           Product_model.fromJson(value).data,
+                                //     ));
                               } else {
                                 showDialog(
                                     context: context,

@@ -3,14 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
-import 'package:flutter_pos/screens/productCarPage.dart';
-import 'package:flutter_pos/utils/navigator.dart';
 
-import '../model/cart_category.dart';
-import '../model/manufacturers.dart';
-import '../model/origins.dart';
-import '../service/api.dart';
-import '../utils/screen_size.dart';
+import '../../model/cart_category.dart';
+import '../../model/manufacturers.dart';
+import '../../model/origins.dart';
+import '../../service/api.dart';
+import '../../utils/screen_size.dart';
 
 class Filterdialog extends StatefulWidget {
   const Filterdialog({Key key}) : super(key: key);
@@ -313,28 +311,12 @@ class _FilterdialogState extends State<Filterdialog> {
                 children: [
                   InkWell(
                     onTap: () {
-                      API(context).post('site/checkbox/filter', {
+                      Navigator.pop(context,{
                         "part_categories": partSelect.toString(),
                         "manufacturers": manufacturerSelect.toString(),
                         "origins": originSelect.toString(),
-                        "start_price":
-                            _currentRangeValues.start.round().toString(),
+                        "start_price": _currentRangeValues.start.round().toString(),
                         "end_price": _currentRangeValues.end.round().toString(),
-                      }).then((value) {
-                        if (value != null) {
-                          if (value['status_code'] == 200) {
-                            Nav.routeReplacement(
-                                context,
-                                ProductCarPage(
-                                  product: Product_model.fromJson(value).data,
-                                ));
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (_) =>
-                                    ResultOverlay(value['message']));
-                          }
-                        }
                       });
                     },
                     child: Container(

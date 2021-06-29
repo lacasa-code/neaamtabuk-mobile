@@ -5,10 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/question_model.dart';
 import 'package:flutter_pos/model/review.dart';
-import 'package:flutter_pos/screens/Quastions.dart';
-import 'package:flutter_pos/screens/ratepage.dart';
-import 'package:flutter_pos/screens/writeQuastions.dart';
-import 'package:flutter_pos/screens/writerate.dart';
+import 'package:flutter_pos/screens/product/products_page.dart';
+import 'package:flutter_pos/screens/product/Quastions.dart';
+import 'package:flutter_pos/screens/product/ratepage.dart';
+import 'package:flutter_pos/screens/product/writeQuastions.dart';
+import 'package:flutter_pos/screens/product/writerate.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -28,7 +29,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'MyCars/myCars.dart';
+import '../MyCars/myCars.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key key, this.product}) : super(key: key);
@@ -264,52 +265,56 @@ class _ProductPageState extends State<ProductPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        widget.product.producttypeId==2?Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "سعر الجملة  : ",
-                                  style: TextStyle(fontWeight: FontWeight.w400),
+                        widget.product.producttypeId == 2
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "سعر الجملة  : ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      Text(
+                                        '${widget.product.holesalePrice ?? ' '} ${getTransrlate(context, 'Currency')} ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "الحد الادنى للطلب  : ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      Text(
+                                        '${widget.product.noOfOrders ?? ' '} ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Text(
+                                "${widget.product.price} ${getTransrlate(context, 'Currency')} ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  decoration: widget.product.discount != 0
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
                                 ),
-                                Text(
-                                  '${widget.product.holesalePrice ?? ' '} ${getTransrlate(context, 'Currency')} ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5,),
-                            Row(
-
-                              children: [
-                                Text(
-                                  "الحد الادنى للطلب  : ",
-                                  style: TextStyle(fontWeight: FontWeight.w400),
-                                ),
-                                Text(
-                                  '${widget.product.noOfOrders?? ' '} ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ):Text(
-                          "${widget.product.price} ${getTransrlate(context, 'Currency')} ",
-                          style: TextStyle(
-                            fontSize: 17,
-                            decoration: widget.product.discount != 0
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
+                              ),
                         widget.product.discount == 0
                             ? Container()
                             : Text(
@@ -323,22 +328,25 @@ class _ProductPageState extends State<ProductPage> {
                         Expanded(child: SizedBox(height: 10)),
                         Row(
                           children: [
-                            reviews==null?Container():   RatingBar.builder(
-                              ignoreGestures: true,
-                              initialRating: double.parse("${reviews.avgValuations ?? '0'}"),
-                              itemSize: 25.0,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 1,
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.orange,
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
-                            ),
+                            reviews == null
+                                ? Container()
+                                : RatingBar.builder(
+                                    ignoreGestures: true,
+                                    initialRating: double.parse(
+                                        "${reviews.avgValuations ?? '0'}"),
+                                    itemSize: 25.0,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 1,
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.orange,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                    },
+                                  ),
                             reviews == null
                                 ? Container()
                                 : Text(
@@ -405,10 +413,41 @@ class _ProductPageState extends State<ProductPage> {
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                             Text(
-                              '${widget.product.vendorName}',
+                              '${widget.product.vendorSerial}',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      )),
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${getTransrlate(context, 'Productsaller')} : ",
+                              style: TextStyle(fontWeight: FontWeight.w400),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Nav.route(
+                                    context,
+                                    Products_Page(
+                                      name: widget.product.vendorSerial,
+                                      id: widget.product.vendorId,
+                                      Url: 'home/vendor/products/${widget.product.vendorId}',
+                                    ));
+                              },
+                              child: Text(
+                                '${widget.product.vendorSerial}',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.orange),
+                              ),
                             ),
                           ],
                         ),
@@ -588,7 +627,6 @@ class _ProductPageState extends State<ProductPage> {
                       ],
                     ),
                   ),
-
                   SizedBox(
                     height: 5,
                   ),
@@ -947,11 +985,12 @@ class _ProductPageState extends State<ProductPage> {
                                                                                 10,
                                                                           ),
                                                                           Container(
-                                                                            width: ScreenUtil.getWidth(context)/1.5,
-                                                                            child: Text(
+                                                                            width:
+                                                                                ScreenUtil.getWidth(context) / 1.5,
+                                                                            child:
+                                                                                Text(
                                                                               '${_question[index].createdAt} بواسطة ${_question[index].userName}',
-                                                                              style:
-                                                                                  TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
+                                                                              style: TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
                                                                             ),
                                                                           ),
                                                                         ],
@@ -1156,7 +1195,9 @@ class _ProductPageState extends State<ProductPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text("${getTransrlate(context, 'quantity')} :",),
+                        Text(
+                          "${getTransrlate(context, 'quantity')} :",
+                        ),
                         dropdownValue == 'other'
                             ? Container(
                                 width: 100,
@@ -1202,7 +1243,8 @@ class _ProductPageState extends State<ProductPage> {
                                               iconSize: 24,
                                               elevation: 16,
                                               underline: Container(),
-                                              style: const TextStyle(height: 1,
+                                              style: const TextStyle(
+                                                  height: 1,
                                                   color: Colors.deepPurple),
                                               onChanged: (String newValue) {
                                                 setState(() {
@@ -1214,7 +1256,11 @@ class _ProductPageState extends State<ProductPage> {
                                                   (String value) {
                                                 return DropdownMenuItem<String>(
                                                   value: value,
-                                                  child: Center(child: Text("$value",textAlign: TextAlign.center,)),
+                                                  child: Center(
+                                                      child: Text(
+                                                    "$value",
+                                                    textAlign: TextAlign.center,
+                                                  )),
                                                 );
                                               }).toList(),
                                             ),
@@ -1249,7 +1295,7 @@ class _ProductPageState extends State<ProductPage> {
                                     showDialog(
                                         context: context,
                                         builder: (_) => ResultOverlay(
-                                                '${value['message'] ?? ''}\n${value['errors'] ?? ""}',
+                                            '${value['message'] ?? ''}\n${value['errors'] ?? ""}',
                                             icon: Icon(
                                               Icons.info_outline,
                                               color: Colors.yellow,

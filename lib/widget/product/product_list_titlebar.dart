@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/screens/filterPage.dart';
+import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 
@@ -40,7 +40,7 @@ class ProductListTitleBar extends StatelessWidget {
           ),
           InkWell(
             onTap: (){
-              Nav.route(context, FilterPage());
+              Nav.route(context, Products_Page(Url: 'home/all/products',name:"$title" ,));
             },
             child: Padding(
               padding: EdgeInsets.only(

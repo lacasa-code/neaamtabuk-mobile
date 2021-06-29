@@ -2,26 +2,23 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '../../service/api.dart';
+import '../../utils/screen_size.dart';
 
-import '../utils/screen_size.dart';
-
-class WriteRatedialog extends StatefulWidget {
+class WriteQuastionsdialog extends StatefulWidget {
   int id;
 
-  WriteRatedialog(this.id);
+  WriteQuastionsdialog(this.id);
 
   @override
-  _WriteRatedialogState createState() => _WriteRatedialogState();
+  _WriteQuastionsdialogState createState() => _WriteQuastionsdialogState();
 }
 
-class _WriteRatedialogState extends State<WriteRatedialog> {
-  TextEditingController CommentController = TextEditingController();
-  int rating = 3;
+class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
+  TextEditingController CommentController=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +44,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'كتابة تقييم',
+                      'كتابة سؤال',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -67,50 +64,18 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+
                 children: [
                   Text(
-                    " أخبرنا عن رأيك في المنتج ",
+                    " أخبرنا عن سؤالك : ",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        "$rating/5 ",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      RatingBar.builder(
-                        initialRating: rating.toDouble(),
-                        itemSize: 25.0,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: false,
-                        itemCount: 5,
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.orange,
-                        ),
-                        onRatingUpdate: (rating) {
-                          setState(() {
-                            this.rating = rating.toInt();
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  SizedBox(height: 15,),
+
                   Container(
                     margin: EdgeInsets.all(8),
                     height: 300,
@@ -137,20 +102,17 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 25,
-                  ),
+                  SizedBox(height: 25,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InkWell(
                         onTap: () {
-                          API(context).post('user/add/review', {
-                            "body_review": CommentController.text,
-                            "product_id": widget.id,
-                            "evaluation_value": rating
-                          }).then((value) {
+                          API(context)
+                              .post('user/add/prod/question',
+                              {"body_question":CommentController.text,"product_id":widget.id})
+                              .then((value) {
                             if (value != null) {
                               if (value['status_code'] == 201) {
                                 Navigator.pop(context);
@@ -162,8 +124,9 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                               } else {
                                 showDialog(
                                     context: context,
-                                    builder: (_) => ResultOverlay(
-                                        '${value['message'] ?? ''}\n${value['errors'] ?? ""}'));
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message'] ??
+                                            ''}\n${value['errors']??""}'));
                               }
                             }
                           });
@@ -172,7 +135,9 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                           width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)),
+                              border: Border.all(
+                                  color: Colors.grey
+                              )),
                           child: Center(
                             child: AutoSizeText(
                               'إرسال',
@@ -180,8 +145,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                               maxFontSize: 14,
                               maxLines: 1,
                               minFontSize: 10,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                              style: TextStyle(fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
                           ),
@@ -195,7 +159,9 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                           width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)),
+                              border: Border.all(
+                                  color: Colors.grey
+                              )),
                           child: Center(
                             child: AutoSizeText(
                               'إلغاء',
@@ -203,8 +169,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                               maxFontSize: 14,
                               maxLines: 1,
                               minFontSize: 10,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                              style: TextStyle(fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
                           ),
@@ -215,9 +180,11 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                 ],
               ),
             ),
+
           ],
         ),
       ),
     );
   }
+
 }
