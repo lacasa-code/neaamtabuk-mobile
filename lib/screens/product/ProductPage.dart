@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -816,7 +818,7 @@ class _ProductPageState extends State<ProductPage> {
                                                               Ratedialog(
                                                                   reviews,
                                                                   widget.product
-                                                                      .id));
+                                                                      .id)).then((value) => getreview());
                                                     },
                                                     child: Container(
                                                       width:
@@ -859,7 +861,7 @@ class _ProductPageState extends State<ProductPage> {
                                                           builder: (_) =>
                                                               WriteRatedialog(
                                                                   widget.product
-                                                                      .id));
+                                                                      .id)).then((value) => getreview());
                                                     },
                                                     child: Container(
                                                       width:
@@ -1074,7 +1076,7 @@ class _ProductPageState extends State<ProductPage> {
                                                             Qeastionsdialog(
                                                                 _question,
                                                                 widget.product
-                                                                    .id));
+                                                                    .id)).then((value) => getQuastion());
                                                   },
                                                   child: Container(
                                                     width: ScreenUtil.getWidth(
@@ -1116,7 +1118,7 @@ class _ProductPageState extends State<ProductPage> {
                                                         builder: (_) =>
                                                             WriteQuastionsdialog(
                                                                 widget.product
-                                                                    .id));
+                                                                    .id)).then((value) => getQuastion());
                                                   },
                                                   child: Container(
                                                     width: ScreenUtil.getWidth(
@@ -1342,7 +1344,6 @@ class _ProductPageState extends State<ProductPage> {
       ),
     );
   }
-
   void getreview() {
     API(context).get('home/review/product/${widget.product.id}').then((value) {
       setState(() {

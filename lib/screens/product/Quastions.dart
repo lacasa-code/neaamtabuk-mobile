@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/question_model.dart';
 import 'package:flutter_pos/screens/product/writeQuastions.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../utils/screen_size.dart';
 
@@ -193,7 +194,13 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                           showDialog(
                               context: context,
                               builder: (_) =>
-                                  WriteQuastionsdialog(widget.id));
+                                  WriteQuastionsdialog(widget.id)).then((value) {
+                            API(context).get('prod/all/questions/${widget.id}').then((value) {
+                              setState(() {
+                                widget._question = Question_model.fromJson(value).data;
+                              });
+                            });
+                          });
                         },
                         child: Container(
                           width: ScreenUtil.getWidth(context)/2.5,

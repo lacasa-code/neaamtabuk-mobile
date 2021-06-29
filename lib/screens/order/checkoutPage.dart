@@ -186,7 +186,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                       ' '},${address[index]
                                                       .city ??
                                                       ' '},${address[index]
-                                                      .countryCode ?? ' '}",
+                                                      .state.countryName ?? ' '}",
                                                   maxLines: 2,
                                                   style: TextStyle(
                                                       height: 1.5,
@@ -479,23 +479,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                     "paymentway_id": payment[index]
                                                         .id
                                                   }).then((value) {
-                                                if (value != null) {
-                                                  if (value['status_code'] ==
-                                                      201) {
-                                                    Navigator.pop(context);
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (_) =>
-                                                            ResultOverlay(value[
-                                                            'message']));
-                                                  } else {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (_) =>
-                                                            ResultOverlay(value[
-                                                            'message']));
-                                                  }
-                                                }
+
                                               });
                                             },
                                           ),

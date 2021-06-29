@@ -33,6 +33,7 @@ class _Products_PageState extends State<Products_Page> {
   bool list = false;
   @override
   void initState() {
+
     API(context)
         .get(widget.Url)
         .then((value) {
@@ -42,9 +43,10 @@ class _Products_PageState extends State<Products_Page> {
           product= Product_model.fromJson(value).data;
         });
         } else {
+          //Navigator.pop(context);
           showDialog(
               context: context,
-              builder: (_) => ResultOverlay(value['message']));
+              builder: (_) => ResultOverlay("${value['message']??''} ${value['errors']??''}"));
         }
       }
     });

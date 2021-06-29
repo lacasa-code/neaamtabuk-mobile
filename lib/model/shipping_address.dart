@@ -1,9 +1,14 @@
+import 'package:flutter_pos/model/area_model.dart';
+import 'package:flutter_pos/model/city_model.dart';
+import 'package:flutter_pos/model/country_model.dart';
+
 class ShippingAddress {
   int statusCode;
   String message;
   List<Address> data;
+  int total;
 
-  ShippingAddress({this.statusCode, this.message, this.data});
+  ShippingAddress({this.statusCode, this.message, this.data, this.total});
 
   ShippingAddress.fromJson(Map<String, dynamic> json) {
     statusCode = json['status_code'];
@@ -14,6 +19,7 @@ class ShippingAddress {
         data.add(new Address.fromJson(v));
       });
     }
+    total = json['total'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +29,7 @@ class ShippingAddress {
     if (this.data != null) {
       data['data'] = this.data.map((v) => v.toJson()).toList();
     }
+    data['total'] = this.total;
     return data;
   }
 }
@@ -37,15 +44,14 @@ class Address {
   String recipientAltPhone;
   String recipientEmail;
   String address;
-  String city;
-  String state;
-  String countryCode;
-  String street;
-  String postalCode;
-  String latitude;
-  String longitude;
+  int Country_id;
+  int area_id;
+  int city_id;
+  Country state;
+  Area area;
+  City city;
   String lastName;
-  String area;
+  String street;
   String district;
   String homeNo;
   String floorNo;
@@ -58,32 +64,28 @@ class Address {
 
   Address(
       {this.id,
-        this.userId,
-        this.userName,
-        this.status,
-        this.recipientName,
-        this.recipientPhone,
-        this.recipientAltPhone,
-        this.recipientEmail,
-        this.address,
-        this.city,
-        this.state,
-        this.countryCode,
-        this.postalCode,
-        this.latitude,
-        this.longitude,
-        this.lastName,
-        this.area,
-        this.district,
-        this.homeNo,
-        this.floorNo,
-        this.apartmentNo,
-        this.telephoneNo,
-        this.nearestMilestone,
-        this.notices,
-        this.createdAt,
-        this.street,
-        this.timeCreated});
+      this.userId,
+      this.userName,
+      this.status,
+      this.recipientName,
+      this.recipientPhone,
+      this.recipientAltPhone,
+      this.recipientEmail,
+      this.address,
+      this.state,
+      this.area,
+      this.city,
+      this.lastName,
+      this.street,
+      this.district,
+      this.homeNo,
+      this.floorNo,
+      this.apartmentNo,
+      this.telephoneNo,
+      this.nearestMilestone,
+      this.notices,
+      this.createdAt,
+      this.timeCreated});
 
   Address.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -95,14 +97,11 @@ class Address {
     recipientAltPhone = json['recipient_alt_phone'];
     recipientEmail = json['recipient_email'];
     address = json['address'];
-    city = json['city'].toString();
-    street = json['street'];
-    countryCode = json['country_code'];
-    postalCode = json['postal_code'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
+    state = json['state'] != null ? new Country.fromJson(json['state']) : null;
+    area = json['area'] != null ? new Area.fromJson(json['area']) : null;
+    city = json['city'] != null ? new City.fromJson(json['city']) : null;
     lastName = json['last_name'];
-    area = json['area'].toString();
+    street = json['street'];
     district = json['district'];
     homeNo = json['home_no'];
     floorNo = json['floor_no'];
@@ -116,18 +115,23 @@ class Address {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.id != null) {
+      data['id'] = this.id;
+    }
+    data['user_id'] = this.userId;
+    data['user_name'] = this.userName;
+    data['status'] = this.status;
     data['recipient_name'] = this.recipientName;
     data['recipient_phone'] = this.recipientPhone;
     data['recipient_alt_phone'] = this.recipientAltPhone;
     data['recipient_email'] = this.recipientEmail;
-    data['city_id'] = this.city;
-    data['state'] = this.state;
-    data['country_id'] = this.countryCode;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
+    data['address'] = this.address;
+
+    data['country_id'] = this.Country_id;
+    data['city_id'] = this.city_id;
+    data['area_id'] = this.city_id;
     data['last_name'] = this.lastName;
-    data['street']=this.street;
-    data['area_id'] = this.area;
+    data['street'] = this.street;
     data['district'] = this.district;
     data['home_no'] = this.homeNo;
     data['floor_no'] = this.floorNo;

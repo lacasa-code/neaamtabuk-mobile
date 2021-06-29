@@ -61,7 +61,7 @@ class Product {
   String noOfOrders;
   String holesalePrice;
   int countViews;
-  int avgValuations;
+  double avgValuations;
   int cartEnable;
   int wishlistEnable;
   List<Media> media;
@@ -118,7 +118,7 @@ class Product {
     noOfOrders = json['no_of_orders'].toString();
     holesalePrice = json['holesale_price'].toString();
     countViews = json['count_views'];
-    avgValuations = json['avg_valuations'];
+    avgValuations = double.parse(json['avg_valuations'].toString());
     cartEnable = json['cart_enable'];
     wishlistEnable = json['wishlist_enable'];
     if (json['media'] != null) {

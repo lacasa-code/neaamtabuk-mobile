@@ -171,7 +171,7 @@ class _ProductListState extends State<ProductList> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  print(widget.product.inWishlist);
+                                  print("  FFFFFFFFFFFFFFFFFFFFFF   ${widget.product.inWishlist}");
                                   widget.product.inWishlist==0? API(context).post('user/add/wishlist',{
                                     "product_id":widget.product.id
                                   }).then((value) {

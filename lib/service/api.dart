@@ -118,6 +118,7 @@ class API {
     } catch (e) {} finally {}
   }
   Delete(String url) async {
+
     final full_url =
         Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -135,6 +136,8 @@ class API {
     } catch (e) {} finally {}
   }
   getAction(http.Response response) {
+    print(response.body);
+
     if (Check) {
       if (response.statusCode == 500) {
         Nav.route(

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/screens/address/add_address.dart';
 import 'package:flutter_pos/model/shipping_address.dart';
+import 'package:flutter_pos/screens/address/edit_address.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -127,7 +128,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                           Container(
                                             width: ScreenUtil.getWidth(context) / 2.3,
                                             child: Text(
-                                              "${address[index].apartmentNo??' '} /  ${address[index].floorNo??' '} ${address[index].district??' '} ,${address[index].street??' '},${address[index].city??' '},${address[index].countryCode??' '}",
+                                              "${address[index].apartmentNo??' '} /  ${address[index].floorNo??' '} ${address[index].district??' '} ,${address[index].street??' '}},}",
                                              maxLines: 2,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -144,7 +145,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                     IconButton(
                                       icon: Icon(Icons.edit),
                                       onPressed: () {
-
+                                        Nav.route(context, EditAddress(address[index]));
                                       },
                                     ),
                                     IconButton(

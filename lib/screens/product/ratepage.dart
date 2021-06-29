@@ -217,7 +217,13 @@ class _RatedialogState extends State<Ratedialog> {
                                             showDialog(
                                                 context: context,
                                                 builder: (_) =>
-                                                    WriteRatedialog(widget.id));
+                                                    WriteRatedialog(widget.id)).then((value) {
+                                              API(context).get('home/review/product/${widget.id}').then((value) {
+                                                setState(() {
+                                                  widget.reviews = Review_model.fromJson(value).data;
+                                                });
+                                              });
+                                            });
                                           },
                                           child: Container(
                                             width:

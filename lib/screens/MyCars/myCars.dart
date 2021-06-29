@@ -24,7 +24,7 @@ class MyCars extends StatefulWidget {
   _MyCarsState createState() => _MyCarsState();
 }
 
-class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
+class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
   List<CarType> cartype;
   List<Year> years;
   List<Fav> favourite;
@@ -101,112 +101,115 @@ class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
         body: TabBarView(
           controller: _controller,
           children: [
-           themeColor.isLogin? Container(
-              child: favourite == null
-                  ? Container()
-                  : Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: favourite.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                                child: Row(
-                              children: [
-                                Radio<int>(
-                                  value: index,
-                                  groupValue: checkboxValue,
-                                  activeColor: themeColor.getColor(),
-                                  focusColor: themeColor.getColor(),
-                                  hoverColor: themeColor.getColor(),
-                                  onChanged: (int value) {
-                                    setState(() {
-                                      checkboxValue = value;
-                                    });
-                                    themeColor.setCar_made(
-                                        favourite[index].carMadeName);
-                                    Nav.route(
-                                        context,
-                                        Products_Page(
-                                          id: favourite[index].carMadeId,
-                                          name: favourite[index]
-                                              .carMadeName,
-                                          Url:
-                                          " user/select/from/favourites/${favourite[index].id}",
-                                        ));
-                                  },
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      checkboxValue = index;
-                                    });
-                                    themeColor.setCar_made(
-                                        favourite[index].carMadeName);
-                                    Nav.route(
-                                        context,
-                                        Products_Page(
-                                          id: favourite[index].carMadeId,
-                                          name: favourite[index]
-                                              .carMadeName,
-                                          Url:
-                                          " user/select/from/favourites/${favourite[index].id}",
-                                        ));
-                                  },
-                                  child: Text(
-                                    favourite[index].carMadeName,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  ),
-                                ),
-                                Expanded(
-                                    child: SizedBox(
-                                  height: 1,
-                                )),
-                                IconButton(
-                                  icon: Icon(Icons.clear),
-                                  onPressed: () {
-                                    API(context).post('remove/favourite/car', {
-                                      "id": favourite[index].id
-                                    }).then((value) {
-                                      if (value != null) {
-                                        if (value['status_code'] == 200) {
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) => ResultOverlay(
-                                                  value['message']));
-                                          getFavorit();
-                                        } else {
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) => ResultOverlay(
-                                                  value['message']));
-                                        }
-                                      }
-                                    });
-                                  },
-                                )
-                              ],
-                            )),
-                          );
-                        },
-                      ),
-                    ),
-            ):Notlogin(),
+            themeColor.isLogin
+                ? Container(
+                    child: favourite == null
+                        ? Container()
+                        : Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: ListView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: favourite.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                      child: Row(
+                                    children: [
+                                      Radio<int>(
+                                        value: index,
+                                        groupValue: checkboxValue,
+                                        activeColor: themeColor.getColor(),
+                                        focusColor: themeColor.getColor(),
+                                        hoverColor: themeColor.getColor(),
+                                        onChanged: (int value) {
+                                          setState(() {
+                                            checkboxValue = value;
+                                          });
+
+                                          themeColor.setCar_made(
+                                              favourite[index].carMadeName);
+                                          Nav.route(
+                                              context,
+                                              Products_Page(
+                                                id: favourite[index].carMadeId,
+                                                name: favourite[index]
+                                                    .carMadeName,
+                                                Url: "user/select/from/favourites/${favourite[index].id}",
+                                              ));
+                                        },
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            checkboxValue = index;
+                                          });
+                                          themeColor.setCar_made(
+                                              favourite[index].carMadeName);
+                                          Nav.route(
+                                              context,
+                                              Products_Page(
+                                                id: favourite[index].carMadeId,
+                                                name: favourite[index]
+                                                    .carMadeName,
+                                                Url: "user/select/from/favourites/${favourite[index].id}",
+                                              ));
+                                        },
+                                        child: Text(
+                                          favourite[index].carMadeName,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20),
+                                        ),
+                                      ),
+                                      Expanded(
+                                          child: SizedBox(
+                                        height: 1,
+                                      )),
+                                      IconButton(
+                                        icon: Icon(Icons.clear),
+                                        onPressed: () {
+                                          API(context).post(
+                                              'remove/favourite/car', {
+                                            "id": favourite[index].id
+                                          }).then((value) {
+                                            if (value != null) {
+                                              if (value['status_code'] == 200) {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        ResultOverlay(
+                                                            value['message']));
+                                                getFavorit();
+                                              } else {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        ResultOverlay(
+                                                            value['message']));
+                                              }
+                                            }
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  )),
+                                );
+                              },
+                            ),
+                          ),
+                  )
+                : Notlogin(),
             Column(
               children: [
                 cartype == null
                     ? Container()
                     : GridView.builder(
                         primary: false,
-                  padding: const EdgeInsets.only(right: 20, left: 20),
-
-                  shrinkWrap: true,
+                        padding: const EdgeInsets.only(right: 20, left: 20),
+                        shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 2.3,
                           crossAxisCount: 2,
@@ -260,8 +263,10 @@ class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
                                 items: years,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (Year u) => u.year,
-                                onChanged: (Year data) =>
-                                    yearsID.text = data.id.toString(),
+                                onChanged: (Year data) {
+                                  print(data.id);
+                                  yearsID.text = data.id.toString();
+                                },
                               ),
                             ),
                       car_mades == null
@@ -317,29 +322,16 @@ class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
                             ),
                       InkWell(
                         onTap: () {
-                          API(context).post('display/search/results', {
-                            "car_type_id": cartype[checkboxType].id,
-                            "car_made_id": car_mades_id,
-                            "car_model_id": CarmodelsID.text,
-                            "car_year_id": yearsID.text,
-                            "transmission_id": transimionsID.text,
-                          }).then((value) {
-                            if (value != null) {
-                              if (value['status_code'] == 200) {
-                                // Nav.routeReplacement(
-                                //     context,
-                                //     ProductCarPage(
-                                //       product:
-                                //           Product_model.fromJson(value).data,
-                                //     ));
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay(value['message']));
-                              }
-                            }
-                          });
+                          Nav.routeReplacement(
+                              context,
+                              Products_Page(
+                                Url:
+                                    "display/search/results/mobile?"
+                                        "car_type_id=${cartype[checkboxType].id}"
+                                "${CarmodelsID.text.isEmpty?'':'&car_model_id=${CarmodelsID.text}'}"
+                                "${yearsID.text.isEmpty?'':'&car_year_id=${yearsID.text}'}"
+                                "${transimionsID.text.isEmpty?'':'&transmission_id=${yearsID.text}'}",
+                              ));
                         },
                         child: Container(
                           margin: const EdgeInsets.all(8.0),
@@ -386,10 +378,10 @@ class _MyCarsState extends State<MyCars>  with SingleTickerProviderStateMixin{
                                           context: context,
                                           builder: (_) =>
                                               ResultOverlay(value['message']));
-                                      _controller.index=0;
+                                      _controller.index = 0;
                                       getFavorit();
                                     } else {
-                                      _controller.index=0;
+                                      _controller.index = 0;
                                       showDialog(
                                           context: context,
                                           builder: (_) =>

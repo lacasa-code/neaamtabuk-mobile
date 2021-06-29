@@ -524,7 +524,7 @@ class _AccountState extends State<Account> {
                                           maxFontSize: 14,
                                           style: TextStyle(color: Colors.black),
                                         ))),
-                                Container(
+                               token!=null?Container(): Container(
                                     width: ScreenUtil.getWidth(context) / 3.1,
                                     child: TextButton(
                                         onPressed: () {

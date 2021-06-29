@@ -66,8 +66,13 @@ class _FilterdialogState extends State<Filterdialog> {
                         icon: Icon(Icons.close,
                             size: 35, color: Color(0xff7B7B7B)),
                         onPressed: () {
-                          Navigator.pop(context);
-                        })
+                          Navigator.pop(context,{
+                            "part_categories":[],
+                            "manufacturers":[],
+                            "origins": [],
+                            //"start_price": [],
+                          //  "end_price": [],
+                          });})
                   ],
                 ),
               ),
@@ -101,43 +106,46 @@ class _FilterdialogState extends State<Filterdialog> {
                             itemCount: parts.length,
                             itemBuilder: (BuildContext context, int index) {
                               return ExpansionTile(
-                                title: Text("${parts[index].name}"),
+                                textColor:Colors.orange ,
+                                iconColor: Colors.orange,
+                                collapsedTextColor: Colors.black,
+                                title: Text("${parts[index].mainCategoryName}"),
                                 children: [
-                                  parts[index].partCategories==null?Container(): ListView.builder(
+                                  parts[index].categories==null?Container(): ListView.builder(
                                       primary: false,
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
                                       itemCount:
-                                          parts[index].partCategories.length,
+                                          parts[index].categories.length,
                                       itemBuilder:
                                           (BuildContext context, int i) {
                                         return Row(
                                           children: [
                                             Checkbox(
                                                 value: parts[index]
-                                                    .partCategories[i]
+                                                    .categories[i]
                                                     .partsCheck,
                                                 activeColor: Colors.orange,
                                                 onChanged: (value) {
                                                   setState(() {
                                                     parts[index]
-                                                        .partCategories[i]
+                                                        .categories[i]
                                                         .partsCheck = value;
                                                   });
                                                   value
                                                       ? partSelect.add(
                                                           parts[index]
-                                                              .partCategories[i]
+                                                              .categories[i]
                                                               .id)
                                                       : partSelect.remove(
                                                           parts[index]
-                                                              .partCategories[i]
+                                                              .categories[i]
                                                               .id);
                                                 }),
                                             Text(
                                               parts[index]
-                                                  .partCategories[i]
-                                                  .categoryName,
+                                                  .categories[i]
+                                                  .name,
                                               softWrap: true,
                                             ),
                                           ],

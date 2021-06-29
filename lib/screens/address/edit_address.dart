@@ -14,22 +14,27 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../model/shipping_address.dart';
 
-class AddAddress extends StatefulWidget {
-  const AddAddress({Key key}) : super(key: key);
+class EditAddress extends StatefulWidget {
+  EditAddress(this.address);
+
+  Address address;
 
   @override
-  _AddAddressState createState() => _AddAddressState();
+  _EditAddressState createState() => _EditAddressState();
 }
 
-class _AddAddressState extends State<AddAddress> {
+class _EditAddressState extends State<EditAddress> {
   final _formKey = GlobalKey<FormState>();
-  Address address = new Address();
   List<Country> contries;
   List<City> cities;
   List<Area> area;
 
   @override
   void initState() {
+    widget.address.Country_id=widget.address.state==null?null:widget.address.state.id;
+    widget.address.area_id=widget.address.area==null?null:widget.address.area.id;
+    widget.address.city_id=widget.address.city==null?null:widget.address.city.id;
+
     getCountry();
   }
 
@@ -60,7 +65,7 @@ class _AddAddressState extends State<AddAddress> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  getTransrlate(context, 'AddNewAddress'),
+                  getTransrlate(context, 'edit'),
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -70,7 +75,7 @@ class _AddAddressState extends State<AddAddress> {
                   height: 10,
                 ),
                 MyTextFormField(
-                  intialLabel: ' ',
+                  intialLabel: widget.address.recipientName,
                   keyboard_type: TextInputType.name,
                   labelText: getTransrlate(context, 'Firstname'),
                   hintText: getTransrlate(context, 'Firstname'),
@@ -83,11 +88,11 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.recipientName = value;
+                    widget.address.recipientName = value;
                   },
                 ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.lastName,
                   keyboard_type: TextInputType.text,
                   labelText: getTransrlate(context, 'Lastname'),
                   hintText: getTransrlate(context, 'Lastname'),
@@ -100,7 +105,7 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.lastName = value;
+                    widget.address.lastName = value;
                   },
                 ),
                 SizedBox(
@@ -110,69 +115,75 @@ class _AddAddressState extends State<AddAddress> {
                   getTransrlate(context, 'Countroy'),
                   style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
-                contries==null?Container():Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: DropdownSearch<Country>(
-                    // label: getTransrlate(context, 'Countroy'),
-                    validator: (Country item) {
-                      if (item == null) {
-                        return "Required field";
-                      } else
-                        return null;
-                    },
+                contries == null
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: DropdownSearch<Country>(
+                          // label: getTransrlate(context, 'Countroy'),
+                          validator: (Country item) {
+                            if (item == null) {
+                              return "Required field";
+                            } else
+                              return null;
+                          },
+                          selectedItem: widget.address.state,
+                          items: contries,
+                          //  onFind: (String filter) => getData(filter),
+                          itemAsString: (Country u) => u.countryName,
+                          onChanged: (Country data) {
+                            widget.address.Country_id = data.id ;
+                            getArea(data.id);
+                          },
+                        ),
+                      ),
+                area == null
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: DropdownSearch<Area>(
+                          // label: getTransrlate(context, 'Countroy'),
+                          validator: (Area item) {
+                            if (item == null) {
+                              return "Required field";
+                            } else
+                              return null;
+                          },
+                          selectedItem: widget.address.area,
 
-                    items: contries,
-                    //  onFind: (String filter) => getData(filter),
-                    itemAsString: (Country u) => u.countryName,
-                    onChanged: (Country data) {
-                      address.Country_id = data.id;
-                      getArea(data.id);
+                          items: area,
+                          //  onFind: (String filter) => getData(filter),
+                          itemAsString: (Area u) => u.areaName,
+                          onChanged: (Area data) {
+                            widget.address.area_id = data.id;
+                            getCity(data.id);
+                          },
+                        ),
+                      ),
+                cities == null
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: DropdownSearch<City>(
+                          // label: getTransrlate(context, 'Countroy'),
+                          validator: (City item) {
+                            if (item == null) {
+                              return "Required field";
+                            } else
+                              return null;
+                          },
+                          selectedItem: widget.address.city,
 
-                    },
-                  ),
-                ),
-                area==null?Container():Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: DropdownSearch<Area>(
-                    // label: getTransrlate(context, 'Countroy'),
-                    validator: (Area item) {
-                      if (item == null) {
-                        return "Required field";
-                      } else
-                        return null;
-                    },
-
-                    items: area,
-                    //  onFind: (String filter) => getData(filter),
-                    itemAsString: (Area u) => u.areaName,
-                    onChanged: (Area data) {
-                      address.area_id = data.id;
-                      getCity(data.id);
-
-                    },
-                  ),
-                ),
-                cities==null?Container():Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: DropdownSearch<City>(
-                    // label: getTransrlate(context, 'Countroy'),
-                    validator: (City item) {
-                      if (item == null) {
-                        return "Required field";
-                      } else
-                        return null;
-                    },
-
-                    items: cities,
-                    //  onFind: (String filter) => getData(filter),
-                    itemAsString: (City u) => u.cityName,
-                    onChanged: (City data) {
-                      address.city_id = data.id;
-                    } ,
-                  ),
-                ),
+                          items: cities,
+                          //  onFind: (String filter) => getData(filter),
+                          itemAsString: (City u) => u.cityName,
+                          onChanged: (City data) {
+                            widget.address.city_id = data.id;
+                          },
+                        ),
+                      ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.district,
                   keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'district'),
                   hintText: getTransrlate(context, 'district'),
@@ -185,11 +196,11 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.district = value;
+                    widget.address.district = value;
                   },
                 ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.street,
                   keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'Street'),
                   hintText: getTransrlate(context, 'Street'),
@@ -202,11 +213,11 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.street = value;
+                    widget.address.street = value;
                   },
                 ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.homeNo,
                   keyboard_type: TextInputType.number,
                   labelText: getTransrlate(context, 'HomeNo'),
                   hintText: getTransrlate(context, 'HomeNo'),
@@ -219,11 +230,11 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.homeNo = value;
+                    widget.address.homeNo = value;
                   },
                 ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.floorNo,
                   keyboard_type: TextInputType.number,
                   labelText: getTransrlate(context, 'FloorNo'),
                   hintText: getTransrlate(context, 'FloorNo'),
@@ -236,11 +247,11 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.floorNo = value;
+                    widget.address.floorNo = value;
                   },
                 ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.apartmentNo,
                   keyboard_type: TextInputType.number,
                   labelText: getTransrlate(context, 'apartment_no'),
                   hintText: getTransrlate(context, 'apartment_no'),
@@ -253,11 +264,11 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.apartmentNo = value;
+                    widget.address.apartmentNo = value;
                   },
                 ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.recipientPhone,
                   keyboard_type: TextInputType.phone,
                   labelText: getTransrlate(context, 'phone'),
                   hintText: getTransrlate(context, 'phone'),
@@ -270,21 +281,21 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.recipientPhone = value;
+                    widget.address.recipientPhone = value;
                   },
                 ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.telephoneNo,
                   keyboard_type: TextInputType.phone,
                   labelText: getTransrlate(context, 'telphone'),
                   hintText: getTransrlate(context, 'telphone'),
                   isPhone: true,
                   onSaved: (String value) {
-                    address.telephoneNo = value;
+                    widget.address.telephoneNo = value;
                   },
                 ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.nearestMilestone,
                   keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'nearest_milestone'),
                   hintText: getTransrlate(context, 'nearest_milestone'),
@@ -299,17 +310,17 @@ class _AddAddressState extends State<AddAddress> {
                     return null;
                   },
                   onSaved: (String value) {
-                    address.nearestMilestone = value;
+                    widget.address.nearestMilestone = value;
                   },
                 ),
                 MyTextFormField(
-                  intialLabel: '',
+                  intialLabel: widget.address.notices,
                   keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'OrderNote'),
                   hintText: getTransrlate(context, 'OrderNote'),
                   isPhone: true,
                   onSaved: (String value) {
-                    address.notices = value;
+                    widget.address.notices = value;
                   },
                 ),
                 SizedBox(height: 25),
@@ -339,14 +350,14 @@ class _AddAddressState extends State<AddAddress> {
                         onTap: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                            print("value");
+                            //setState(() => _isLoading = true);
                             API(context)
-                                .post('user/add/shipping', address.toJson())
+                                .post(
+                                    'user/update/shipping/${widget.address.id}',
+                                    widget.address.toJson())
                                 .then((value) {
-
                               if (value != null) {
-                                print(value);
-                                if (value['status_code'] == 201) {
+                                if (value['status_code'] == 200) {
                                   Navigator.pop(context);
                                   showDialog(
                                       context: context,
@@ -356,7 +367,7 @@ class _AddAddressState extends State<AddAddress> {
                                   showDialog(
                                       context: context,
                                       builder: (_) => ResultOverlay(
-                                          '${value['message'] ?? ''}\n${value['errors']}'));
+                                          '${value['message'] ?? ''}\n${value['errors']??''}'));
                                 }
                               }
                             });
@@ -403,26 +414,27 @@ class _AddAddressState extends State<AddAddress> {
   void getCity(int id) {
     API(context).get('cities/list/all/$id').then((value) {
       setState(() {
-        cities=City_model.fromJson(value).data;
+        cities = City_model.fromJson(value).data;
       });
     });
-
   }
+
   void getArea(int id) {
     API(context).get('areas/list/all/$id').then((value) {
       setState(() {
-        area=Area_model.fromJson(value).data;
+        area = Area_model.fromJson(value).data;
       });
+      getCity(widget.address.city_id);
     });
 
   }
+
   void getCountry() {
     API(context).get('countries/list/all').then((value) {
       setState(() {
-        contries=Country_model.fromJson(value).data;
-
+        contries = Country_model.fromJson(value).data;
       });
+      getArea(widget.address.Country_id);
     });
-
   }
 }
