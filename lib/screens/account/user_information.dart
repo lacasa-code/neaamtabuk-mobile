@@ -11,6 +11,7 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,7 +31,7 @@ class _UserInfoState extends State<UserInfo> {
   String password;
   final _formKey = GlobalKey<FormState>();
   List<String> items = ["male", "female"];
-
+  TextEditingController _tocontroller = TextEditingController();
   submitForm() async {
     FocusScope.of(context).requestFocus(new FocusNode());
     _isLoading = true;
@@ -234,19 +235,24 @@ class _UserInfoState extends State<UserInfo> {
                                         child: Text(
                                           'تاريخ الميلاد',
                                         )),
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 2.0),
-                                        child: TextFormField(
-                                          initialValue: userModal.birthdate,
-                                          keyboardType: TextInputType.datetime,
-                                          decoration: InputDecoration(),
-                                          enabled: !_status,
-                                          onSaved: (String val) =>
-                                              userModal.birthdate = val,
-                                          onChanged: (String val) =>
-                                              userModal.birthdate = val,
-                                        )),
+                                    InkWell(
+                                      onTap: (){
+                                        _selectDateto(context);
+                                      },
+                                      child: Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 25.0, right: 25.0, top: 2.0),
+                                          child: TextFormField(
+                                            controller: _tocontroller,
+                                            keyboardType: TextInputType.datetime,
+                                            decoration: InputDecoration(),
+                                            enabled: !_status,
+                                            onSaved: (String val) =>
+                                                userModal.birthdate = val,
+                                            onChanged: (String val) =>
+                                                userModal.birthdate = val,
+                                          )),
+                                    ),
                                     Padding(
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 25.0),
@@ -315,7 +321,14 @@ class _UserInfoState extends State<UserInfo> {
     myFocusNode.dispose();
     super.dispose();
   }
-
+  Future<void> _selectDateto(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,initialDate: DateTime(2015),lastDate: DateTime(2015), firstDate: DateTime(1900));
+    if (picked != null)
+      setState(() {
+        _tocontroller.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+  }
   Widget _getActionButtons() {
     return Center(
       child: Padding(
@@ -482,6 +495,7 @@ class _UserInfoState extends State<UserInfo> {
             setState(() {
               userModal = UserInformation.fromJson(value).data;
             });
+            _tocontroller.text=DateFormat('yyyy-MM-dd').format(DateTime.parse(userModal.birthdate));
           } else {
             showDialog(
                 context: context,

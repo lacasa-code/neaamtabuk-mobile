@@ -63,7 +63,9 @@ class _CheckOutPageState extends State<CheckOutPage> {
       body: Container(
         child: Column(
           children: [
-            AppBarCustom(isback: true,),
+            AppBarCustom(
+              isback: true,
+            ),
             Expanded(
               child: Theme(
                 data: ThemeData(
@@ -97,118 +99,112 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               getTransrlate(context, 'shippingTo'),
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(
+                              height: 10,
+                            ),
                             address == null
                                 ? Padding(
-                              padding: const EdgeInsets.all(24.0),
-                              child: CircularProgressIndicator(),
-                            )
+                                    padding: const EdgeInsets.all(24.0),
+                                    child: CircularProgressIndicator(),
+                                  )
                                 : ListView.builder(
-                              padding: EdgeInsets.all(1),
-                              primary: false,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: address.length,
-                              itemBuilder:
-                                  (BuildContext context, int index) {
-                                return Center(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Radio<int>(
-                                          value: index,
-                                          groupValue: checkboxValue,
-                                          activeColor: themeColor.getColor(),
-                                          focusColor: themeColor.getColor(),
-                                          hoverColor: themeColor.getColor(),
-                                          onChanged: (int value) {
-                                            setState(() {
-                                              checkboxValue = value;
-                                              API(context).post(
-                                                  'user/select/shipping/${address[index]
-                                                      .id}',
-                                                  {}).then((value) {
-                                                if (value != null) {
-                                                  if (value['status_code'] ==
-                                                      201) {
-                                                    Navigator.pop(context);
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (_) =>
-                                                            ResultOverlay(value[
-                                                            'message']));
-                                                  } else {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (_) =>
-                                                            ResultOverlay(value[
-                                                            'message']));
-                                                  }
-                                                }
-                                              });
-                                            });
-                                          },
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              checkboxValue = index;
-                                            });
-                                          },
-                                          child: Column(
-                                            crossAxisAlignment:
+                                    padding: EdgeInsets.all(1),
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: address.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Center(
+                                          child: Row(
+                                        crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                address[index].recipientName,
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    checkboxValue == index
-                                                        ? FontWeight.bold
-                                                        : FontWeight.w400,
-                                                    fontSize: 20),
-                                              ),
-                                              Container(
-                                                width: ScreenUtil.getWidth(
-                                                    context) / 2,
-                                                child: Text(
-                                                  "${address[index]
-                                                      .apartmentNo ??
-                                                      ' '} /  ${address[index]
-                                                      .floorNo ??
-                                                      ' '} ${address[index]
-                                                      .district ??
-                                                      ' '} ,${address[index]
-                                                      .street ??
-                                                      ' '},${address[index]
-                                                      .city ??
-                                                      ' '},${address[index]
-                                                      .state.countryName ?? ' '}",
-                                                  maxLines: 2,
+                                        children: [
+                                          Radio<int>(
+                                            value: index,
+                                            groupValue: checkboxValue,
+                                            activeColor: themeColor.getColor(),
+                                            focusColor: themeColor.getColor(),
+                                            hoverColor: themeColor.getColor(),
+                                            onChanged: (int value) {
+                                              setState(() {
+                                                checkboxValue = value;
+                                                API(context).post(
+                                                    'user/select/shipping/${address[index].id}',
+                                                    {}).then((value) {
+                                                  if (value != null) {
+                                                    if (value['status_code'] ==
+                                                        201) {
+                                                      Navigator.pop(context);
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              ResultOverlay(value[
+                                                                  'message']));
+                                                    } else {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              ResultOverlay(value[
+                                                                  'message']));
+                                                    }
+                                                  }
+                                                });
+                                              });
+                                            },
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                checkboxValue = index;
+                                              });
+                                            },
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  address[index].recipientName,
                                                   style: TextStyle(
-                                                      height: 1.5,
-
                                                       fontWeight:
-                                                      checkboxValue == index
-                                                          ? FontWeight.bold
-                                                          : FontWeight.w400,
+                                                          checkboxValue == index
+                                                              ? FontWeight.bold
+                                                              : FontWeight.w400,
                                                       fontSize: 20),
                                                 ),
-                                              ),
-                                            ],
+                                                Container(
+                                                  width: ScreenUtil.getWidth(
+                                                          context) /
+                                                      2,
+                                                  child: Text(
+                                                    "${address[index].apartmentNo ?? ' '} /  ${address[index].floorNo ?? ' '} ${address[index].district ?? ' '} ,${address[index].street ?? ' '},${address[index].city ?? ' '},"
+                                                        "${address[index].state==null?'':address[index].state.countryName ?? ' '}",
+                                                    maxLines: 2,
+                                                    style: TextStyle(
+                                                        height: 1.5,
+                                                        fontWeight:
+                                                            checkboxValue ==
+                                                                    index
+                                                                ? FontWeight
+                                                                    .bold
+                                                                : FontWeight
+                                                                    .w400,
+                                                        fontSize: 20),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Expanded(
-                                            child: SizedBox(
-                                              height: 1,
-                                            )),
-                                      ],
-                                    ));
-                              },
-                            ),
+                                          Expanded(
+                                              child: SizedBox(
+                                            height: 1,
+                                          )),
+                                        ],
+                                      ));
+                                    },
+                                  ),
                             Center(
                               child: GestureDetector(
                                 child: Container(
@@ -255,43 +251,45 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount:
-                                    widget.carts.data.orderDetails.length,
+                                        widget.carts.data.orderDetails.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return Row(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Container(
                                             width:
-                                            ScreenUtil.getWidth(context) /
-                                                8,
+                                                ScreenUtil.getWidth(context) /
+                                                    8,
                                             child: CachedNetworkImage(
                                               imageUrl: widget
-                                                  .carts
-                                                  .data
-                                                  .orderDetails[index]
-                                                  .productImage
-                                                  .isNotEmpty
+                                                      .carts
+                                                      .data
+                                                      .orderDetails[index]
+                                                      .productImage
+                                                      .isNotEmpty
                                                   ? widget
-                                                  .carts
-                                                  .data
-                                                  .orderDetails[index]
-                                                  .productImage[0]
-                                                  .image
+                                                      .carts
+                                                      .data
+                                                      .orderDetails[index]
+                                                      .productImage[0]
+                                                      .image
                                                   : '',
                                               errorWidget:
-                                                  (context, url, error) =>
-                                                  Icon(Icons.image,
-                                                    color: Colors.black12,),
+                                                  (context, url, error) => Icon(
+                                                Icons.image,
+                                                color: Colors.black12,
+                                              ),
                                             ),
                                           ),
                                           SizedBox(
                                             width: 10,
                                           ),
                                           Container(
-                                            width: ScreenUtil.getWidth(
-                                                context) / 2,
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    2,
                                             child: AutoSizeText(
                                               widget
                                                   .carts
@@ -320,20 +318,20 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                   Text(
                                     "${getTransrlate(context, 'fees_ship')} : ",
                                     style:
-                                    TextStyle(fontWeight: FontWeight.bold),
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Padding(
                                     padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
+                                        const EdgeInsets.symmetric(vertical: 5),
                                     child: Row(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               'ARAMIX',
@@ -345,14 +343,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                               'متوقع وصولها يوم 25-6-2021',
                                               style: TextStyle(
                                                   height: 1.5,
-
                                                   fontWeight: FontWeight.w700),
                                             ),
                                           ],
                                         ),
                                         Text(
-                                          '40 ${getTransrlate(
-                                              context, 'Currency')}',
+                                          '40 ${getTransrlate(context, 'Currency')}',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -377,7 +373,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                   decoration: BoxDecoration(
                                       color: Colors.lightGreen,
                                       border:
-                                      Border.all(color: Colors.lightGreen)),
+                                          Border.all(color: Colors.lightGreen)),
                                   child: Center(
                                     child: Text(
                                       getTransrlate(context, 'next_checkout'),
@@ -399,29 +395,31 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           : StepState.disabled,
                     ),
                     Step(
-                      title: Text(getTransrlate(context, 'payment'),),
+                      title: Text(
+                        getTransrlate(context, 'payment'),
+                      ),
                       content: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             getTransrlate(context, 'shippingTo'),
-                            style: TextStyle(height: 1.5,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             'محمد حسن مبنى 12 ش الملك عبدالله، تبوك، المملكة العربية السعودية+966050412236',
-                            style: TextStyle(height: 1.5,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             'بواسطة ارامكس  ARAMIX ',
-                            style: TextStyle(height: 1.5,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             'متوقع وصولها يوم 25-6-2021',
-                            style: TextStyle(height: 1.5,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -445,279 +443,350 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
-                          payment == null ? Container() : Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black12)),
-                              padding: const EdgeInsets.all(12.0),
-                              child: ListView.builder(
-                                padding: EdgeInsets.all(1),
-                                primary: false,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: payment.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Radio<int>(
-                                            value: index,
-                                            groupValue: checkboxPay,
-                                            activeColor:
-                                            themeColor.getColor(),
-                                            focusColor: themeColor.getColor(),
-                                            hoverColor: themeColor.getColor(),
-                                            onChanged: (int value) {
-                                              setState(() {
-                                                checkboxPay = value;
-                                              });
-                                              API(context).post(
-                                                  'user/select/paymentway',
-                                                  {
-                                                    "paymentway_id": payment[index]
-                                                        .id
-                                                  }).then((value) {
-
-                                              });
-                                            },
-                                          ),
-                                          Text(
-                                            payment[index].paymentName ?? ' ',
-                                            style: TextStyle(
-                                                fontWeight: checkboxPay == 1
-                                                    ? FontWeight.bold
-                                                    : FontWeight.w400,
-                                                fontSize: 14),
-                                          ),
-                                          Expanded(
-                                              child: SizedBox(
-                                                height: 1,
-                                              )),
-                                        ],
-                                      ),
-                                      checkboxPay == 0 && index == 0
-                                          ? Container(
-                                        child: Column(
+                          payment == null
+                              ? Container()
+                              : Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: Colors.black12)),
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.all(1),
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: payment.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Column(
                                           children: [
-                                            MyTextFormField(
-                                              focus: focusnumber,
-                                              intialLabel: '',
-                                              keyboard_type:
-                                              TextInputType.number,
-                                              labelText: getTransrlate(
-                                                  context, 'CardNumber'),
-                                              hintText:
-                                              'xxxx xxxx xxxx xxxx',
-                                              isPhone: true,
-                                              onChange: (String value) {
-                                                if (value.length >= 16) {
-                                                  FocusScope.of(context)
-                                                      .requestFocus(focusName);
-                                                }
-                                              },
-                                              validator:
-                                                  (String value) {
-                                                if (value.isEmpty) {
-                                                  return getTransrlate(
-                                                      context, 'CardNumber');
-                                                } else if (value.length < 14) {
-                                                  return getTransrlate(
-                                                      context, 'CardNumber');
-                                                }
-
-
-                                                _formKey.currentState
-                                                    .save();
-                                                return null;
-                                              },
-                                              onSaved:
-                                                  (String value) {},
-                                            ),
-                                            MyTextFormField(
-                                              focus: focusName,
-                                              intialLabel: '',
-                                              keyboard_type:
-                                              TextInputType.text,
-                                              labelText:
-                                              getTransrlate(
-                                                  context, 'CardName'),
-                                              hintText: getTransrlate(
-                                                  context, 'CardName'),
-                                              isPhone: true,
-                                              onChange: (String value) {
-                                                if (value.length >= 16) {
-                                                  FocusScope.of(context)
-                                                      .requestFocus(focusMonth);
-                                                }
-                                              },
-                                              validator:
-                                                  (String value) {
-                                                if (value.isEmpty) {
-                                                  return getTransrlate(
-                                                      context, 'CardName');
-                                                }else if (value.length < 4) {
-                                                  return getTransrlate(
-                                                      context, 'CardName');
-                                                }
-                                                _formKey.currentState
-                                                    .save();
-                                                return null;
-                                              },
-                                              onSaved:
-                                                  (String value) {},
-                                            ),
                                             Row(
                                               children: [
-                                                Container(
-                                                  width: 50,
-                                                  child:
-                                                  MyTextFormField(
-                                                    focus: focusMonth,
-                                                    intialLabel: '',
-                                                    keyboard_type:
-                                                    TextInputType
-                                                        .number,
-                                                    labelText: getTransrlate(
-                                                        context, 'month'),
-                                                    hintText: '',
-                                                    isPhone: true,
-                                                    validator:
-                                                        (String value) {
-                                                      if (value
-                                                          .isEmpty) {
-                                                        return getTransrlate(
-                                                            context, 'month');
-                                                      }else if (value.length < 2) {
-                                                        return getTransrlate(
-                                                            context, 'month');
-                                                      }
-                                                      _formKey
-                                                          .currentState
-                                                          .save();
-                                                      return null;
-                                                    },
-                                                    onChange: (String value) {
-                                                      if (value.length >= 2) {
-                                                        FocusScope.of(context)
-                                                            .requestFocus(
-                                                            focusYear);
-                                                      }
-                                                    },
-                                                    onSaved: (String
-                                                    value) {},
-                                                  ),
+                                                Radio<int>(
+                                                  value: index,
+                                                  groupValue: checkboxPay,
+                                                  activeColor:
+                                                      themeColor.getColor(),
+                                                  focusColor:
+                                                      themeColor.getColor(),
+                                                  hoverColor:
+                                                      themeColor.getColor(),
+                                                  onChanged: (int value) {
+                                                    setState(() {
+                                                      checkboxPay = value;
+                                                    });
+                                                    API(context).post(
+                                                        'user/select/paymentway',
+                                                        {
+                                                          "paymentway_id":
+                                                              payment[index].id
+                                                        }).then((value) {});
+                                                  },
                                                 ),
-                                                Container(
-                                                    width: 50,
-                                                    margin:
-                                                    EdgeInsets.only(
-                                                        top: 50),
-                                                    child: Center(
-                                                        child: Text(
-                                                          '/',
-                                                          style: TextStyle(
-                                                              fontSize: 35),
-                                                        ))),
-                                                Container(
-                                                  width: 50,
-                                                  child:
-                                                  MyTextFormField(
-                                                    focus: focusYear,
-                                                    intialLabel: '',
-                                                    keyboard_type:
-                                                    TextInputType
-                                                        .number,
-                                                    labelText: getTransrlate(
-                                                        context, 'year'),
-                                                    hintText: '',
-                                                    isPhone: true,
-                                                    onChange: (String value) {
-                                                      if (value.length >= 2) {
-                                                        FocusScope.of(context)
-                                                            .requestFocus(
-                                                            focuscvv);
-                                                      }
-                                                    },
-                                                    validator:
-                                                        (String value) {
-                                                      if (value
-                                                          .isEmpty) {
-                                                        return getTransrlate(
-                                                            context, 'year');
-                                                      }else if (value.length < 2) {
-                                                        return getTransrlate(
-                                                            context, 'year');
-                                                      }
-                                                      _formKey
-                                                          .currentState
-                                                          .save();
-                                                      return null;
-                                                    },
-                                                    onSaved: (String
-                                                    value) {},
-                                                  ),
+                                                Text(
+                                                  payment[index].paymentName ??
+                                                      ' ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          checkboxPay == 1
+                                                              ? FontWeight.bold
+                                                              : FontWeight.w400,
+                                                      fontSize: 14),
                                                 ),
+                                                Expanded(
+                                                    child: SizedBox(
+                                                  height: 1,
+                                                )),
                                               ],
                                             ),
-                                            Row(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
-                                              children: [
-                                                Container(
-                                                  width: 120,
-                                                  child:
-                                                  MyTextFormField(
-                                                    focus: focuscvv,
-                                                    intialLabel: '',
-                                                    keyboard_type:
-                                                    TextInputType
-                                                        .number,
-                                                    prefix: Icon(Icons
-                                                        .credit_card),
-                                                    labelText:
-                                                    getTransrlate(
-                                                        context, 'Cvv'),
-                                                    hintText: '',
-                                                    isPhone: true,
-                                                    onChange: (String value) {
-                                                      if (value.length >= 4) {
-                                                        FocusScope.of(context)
-                                                            .nextFocus();
-                                                      }
-                                                    },
-                                                    validator:
-                                                        (String value) {
-                                                      if (value
-                                                          .isEmpty) {
-                                                        return getTransrlate(
-                                                            context, 'Cvv');
-                                                      }else if (value.length < 4) {
-                                                        return getTransrlate(
-                                                            context, 'Cvv');
-                                                      }
-                                                      _formKey
-                                                          .currentState
-                                                          .save();
-                                                      return null;
-                                                    },
-                                                    onSaved: (String
-                                                    value) {},
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                            checkboxPay == 0 && index == 0
+                                                ? Container(
+                                                    child: Column(
+                                                      children: [
+                                                        MyTextFormField(
+                                                          focus: focusnumber,
+                                                          intialLabel: '',
+                                                          keyboard_type:
+                                                              TextInputType
+                                                                  .number,
+                                                          labelText:
+                                                              getTransrlate(
+                                                                  context,
+                                                                  'CardNumber'),
+                                                          hintText:
+                                                              'xxxx xxxx xxxx xxxx',
+                                                          isPhone: true,
+                                                          onChange:
+                                                              (String value) {
+                                                            if (value.length >=
+                                                                16) {
+                                                              FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      focusName);
+                                                            }
+                                                          },
+                                                          validator:
+                                                              (String value) {
+                                                            if (value.isEmpty) {
+                                                              return getTransrlate(
+                                                                  context,
+                                                                  'CardNumber');
+                                                            } else if (value
+                                                                    .length <
+                                                                14) {
+                                                              return getTransrlate(
+                                                                  context,
+                                                                  'CardNumber');
+                                                            }
+
+                                                            _formKey
+                                                                .currentState
+                                                                .save();
+                                                            return null;
+                                                          },
+                                                          onSaved:
+                                                              (String value) {},
+                                                        ),
+                                                        MyTextFormField(
+                                                          focus: focusName,
+                                                          intialLabel: '',
+                                                          keyboard_type:
+                                                              TextInputType
+                                                                  .text,
+                                                          labelText:
+                                                              getTransrlate(
+                                                                  context,
+                                                                  'CardName'),
+                                                          hintText:
+                                                              getTransrlate(
+                                                                  context,
+                                                                  'CardName'),
+                                                          isPhone: true,
+                                                          onChange:
+                                                              (String value) {
+                                                            if (value.length >=
+                                                                16) {
+                                                              FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      focusMonth);
+                                                            }
+                                                          },
+                                                          validator:
+                                                              (String value) {
+                                                            if (value.isEmpty) {
+                                                              return getTransrlate(
+                                                                  context,
+                                                                  'CardName');
+                                                            } else if (value
+                                                                    .length <
+                                                                4) {
+                                                              return getTransrlate(
+                                                                  context,
+                                                                  'CardName');
+                                                            }
+                                                            _formKey
+                                                                .currentState
+                                                                .save();
+                                                            return null;
+                                                          },
+                                                          onSaved:
+                                                              (String value) {},
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Container(
+                                                              width: 50,
+                                                              child:
+                                                                  MyTextFormField(
+                                                                focus:
+                                                                    focusMonth,
+                                                                intialLabel: '',
+                                                                keyboard_type:
+                                                                    TextInputType
+                                                                        .number,
+                                                                labelText:
+                                                                    getTransrlate(
+                                                                        context,
+                                                                        'month'),
+                                                                hintText: '',
+                                                                isPhone: true,
+                                                                validator:
+                                                                    (String
+                                                                        value) {
+                                                                  if (value
+                                                                      .isEmpty) {
+                                                                    return getTransrlate(
+                                                                        context,
+                                                                        'month');
+                                                                  } else if (value
+                                                                          .length <
+                                                                      2) {
+                                                                    return getTransrlate(
+                                                                        context,
+                                                                        'month');
+                                                                  }
+                                                                  _formKey
+                                                                      .currentState
+                                                                      .save();
+                                                                  return null;
+                                                                },
+                                                                onChange:
+                                                                    (String
+                                                                        value) {
+                                                                  if (value
+                                                                          .length >=
+                                                                      2) {
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .requestFocus(
+                                                                            focusYear);
+                                                                  }
+                                                                },
+                                                                onSaved: (String
+                                                                    value) {},
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                                width: 50,
+                                                                margin: EdgeInsets
+                                                                    .only(
+                                                                        top:
+                                                                            50),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  '/',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          35),
+                                                                ))),
+                                                            Container(
+                                                              width: 50,
+                                                              child:
+                                                                  MyTextFormField(
+                                                                focus:
+                                                                    focusYear,
+                                                                intialLabel: '',
+                                                                keyboard_type:
+                                                                    TextInputType
+                                                                        .number,
+                                                                labelText:
+                                                                    getTransrlate(
+                                                                        context,
+                                                                        'year'),
+                                                                hintText: '',
+                                                                isPhone: true,
+                                                                onChange:
+                                                                    (String
+                                                                        value) {
+                                                                  if (value
+                                                                          .length >=
+                                                                      2) {
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .requestFocus(
+                                                                            focuscvv);
+                                                                  }
+                                                                },
+                                                                validator:
+                                                                    (String
+                                                                        value) {
+                                                                  if (value
+                                                                      .isEmpty) {
+                                                                    return getTransrlate(
+                                                                        context,
+                                                                        'year');
+                                                                  } else if (value
+                                                                          .length <
+                                                                      2) {
+                                                                    return getTransrlate(
+                                                                        context,
+                                                                        'year');
+                                                                  }
+                                                                  _formKey
+                                                                      .currentState
+                                                                      .save();
+                                                                  return null;
+                                                                },
+                                                                onSaved: (String
+                                                                    value) {},
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Container(
+                                                              width: 120,
+                                                              child:
+                                                                  MyTextFormField(
+                                                                focus: focuscvv,
+                                                                intialLabel: '',
+                                                                keyboard_type:
+                                                                    TextInputType
+                                                                        .number,
+                                                                prefix: Icon(Icons
+                                                                    .credit_card),
+                                                                labelText:
+                                                                    getTransrlate(
+                                                                        context,
+                                                                        'Cvv'),
+                                                                hintText: '',
+                                                                isPhone: true,
+                                                                onChange:
+                                                                    (String
+                                                                        value) {
+                                                                  if (value
+                                                                          .length >=
+                                                                      4) {
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .nextFocus();
+                                                                  }
+                                                                },
+                                                                validator:
+                                                                    (String
+                                                                        value) {
+                                                                  if (value
+                                                                      .isEmpty) {
+                                                                    return getTransrlate(
+                                                                        context,
+                                                                        'Cvv');
+                                                                  } else if (value
+                                                                          .length <
+                                                                      4) {
+                                                                    return getTransrlate(
+                                                                        context,
+                                                                        'Cvv');
+                                                                  }
+                                                                  _formKey
+                                                                      .currentState
+                                                                      .save();
+                                                                  return null;
+                                                                },
+                                                                onSaved: (String
+                                                                    value) {},
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : Container(),
                                           ],
-                                        ),
-                                      ) : Container(),
-                                    ],
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
                           SizedBox(
                             height: 20,
                           ),
@@ -725,23 +794,21 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                API(context).post(
-                                    'user/checkout', {}).then((value) {
+                                API(context)
+                                    .post('user/checkout', {}).then((value) {
                                   if (value != null) {
-                                    if (value['status_code'] ==
-                                        200) {
+                                    if (value['status_code'] == 200) {
                                       checkout_model =
                                           Checkout_model.fromJson(value);
-                                      Provider.of<Provider_Data>(
-                                          context, listen: false).getCart(
-                                          context);
+                                      Provider.of<Provider_Data>(context,
+                                              listen: false)
+                                          .getCart(context);
                                       continued();
                                     }
                                     showDialog(
                                         context: context,
                                         builder: (_) =>
-                                            ResultOverlay(value[
-                                            'message']));
+                                            ResultOverlay(value['message']));
                                   }
                                 });
                               },
@@ -753,7 +820,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                 decoration: BoxDecoration(
                                     color: Colors.lightGreen,
                                     border:
-                                    Border.all(color: Colors.lightGreen)),
+                                        Border.all(color: Colors.lightGreen)),
                                 child: Center(
                                   child: Text(
                                     getTransrlate(context, 'paying'),
@@ -774,197 +841,222 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           : StepState.disabled,
                     ),
                     Step(
-                      title: Text(getTransrlate(context, 'next_checkout'),),
-                      content: checkout_model == null ? Container() : Column(
-                        children: <Widget>[
-                          Icon(
-                            Icons.check_circle_outline,
-                            color: Colors.lightGreen,
-                            size: 100,
-                          ), SizedBox(height: 10,),
-                          Text(
-                            '${checkout_model.message}',
-                            style: TextStyle(
-                                color: Colors.lightGreen,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22),
-                          ),
-                          SizedBox(height: 10,),
-                          Text(
-                            'شكرا لثقتكم بــتركار .. سوف تصلك رسالة على الهاتف الجوال و البريد الإلكتروني بمعلومات الطلب والتوصيل',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black12)),
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${getTransrlate(
-                                      context, 'OrderNO')} ${checkout_model.data
-                                      .orderNumber} :',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ), SizedBox(height: 10,),
-                                Text(
-                                  '${getTransrlate(context, 'OrderDitails')}',
-                                  style: TextStyle(
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ), SizedBox(height: 10,),
-                                Text(
-                                  'بواسطة ارامكس  ARAMIX ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 10,),
-                                Text(
-                                  'متوقع وصولها يوم 25-6-2021',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                      title: Text(
+                        getTransrlate(context, 'next_checkout'),
+                      ),
+                      content: checkout_model == null
+                          ? Container()
+                          : Column(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.check_circle_outline,
+                                  color: Colors.lightGreen,
+                                  size: 100,
                                 ),
                                 SizedBox(
-                                  height: 25,
+                                  height: 10,
                                 ),
-                                ListView.builder(
-                                  padding: EdgeInsets.all(1),
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: checkout_model.data.orderDetails
-                                      .length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Row(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width:
-                                          ScreenUtil.getWidth(context) / 8,
-                                          child: CachedNetworkImage(
-                                            imageUrl: checkout_model.data
-                                                .orderDetails[index]
-                                                .productImage
-                                                .isNotEmpty
-                                                ? checkout_model.data
-                                                .orderDetails[index]
-                                                .productImage[0]
-                                                .image
-                                                : '',
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                Icon(Icons.image,
-                                                  color: Colors.black12,),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Column(
-                                          children: [
-                                            Container(
-                                              width: ScreenUtil.getWidth(
-                                                  context) / 2,
-                                              child: AutoSizeText(
-                                                checkout_model.data
-                                                    .orderDetails[index]
-                                                    .productName,
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
+                                Text(
+                                  '${checkout_model.message}',
+                                  style: TextStyle(
+                                      color: Colors.lightGreen,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'شكرا لثقتكم بــتركار .. سوف تصلك رسالة على الهاتف الجوال و البريد الإلكتروني بمعلومات الطلب والتوصيل',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Colors.black12)),
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${getTransrlate(context, 'OrderNO')} ${checkout_model.data.orderNumber} :',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        '${getTransrlate(context, 'OrderDitails')}',
+                                        style: TextStyle(
+                                            color: Colors.orange,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        'بواسطة ارامكس  ARAMIX ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        'متوقع وصولها يوم 25-6-2021',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        height: 25,
+                                      ),
+                                      ListView.builder(
+                                        padding: EdgeInsets.all(1),
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: checkout_model
+                                            .data.orderDetails.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: ScreenUtil.getWidth(
+                                                        context) /
+                                                    8,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: checkout_model
+                                                          .data
+                                                          .orderDetails[index]
+                                                          .productImage
+                                                          .isNotEmpty
+                                                      ? checkout_model
+                                                          .data
+                                                          .orderDetails[index]
+                                                          .productImage[0]
+                                                          .image
+                                                      : '',
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Icon(
+                                                    Icons.image,
+                                                    color: Colors.black12,
+                                                  ),
                                                 ),
-                                                minFontSize: 11,
                                               ),
-                                            ),
-                                            AutoSizeText(
-                                              "  : ${getTransrlate(context,
-                                                  'quantity')}${checkout_model
-                                                  .data.orderDetails[index]
-                                                  .quantity}",
-                                              maxLines: 2,
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Container(
+                                                    width: ScreenUtil.getWidth(
+                                                            context) /
+                                                        2,
+                                                    child: AutoSizeText(
+                                                      checkout_model
+                                                          .data
+                                                          .orderDetails[index]
+                                                          .productName,
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      minFontSize: 11,
+                                                    ),
+                                                  ),
+                                                  AutoSizeText(
+                                                    "  : ${getTransrlate(context, 'quantity')}${checkout_model.data.orderDetails[index].quantity}",
+                                                    maxLines: 2,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.grey),
+                                                    minFontSize: 11,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              getTransrlate(context, 'total'),
                                               style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.grey),
-                                              minFontSize: 11,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              '${checkout_model.data.orderTotal} ${getTransrlate(context, 'Currency')} ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w700),
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(vertical: 10),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        getTransrlate(context, 'total'),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700),
                                       ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        '${checkout_model.data
-                                            .orderTotal} ${getTransrlate(
-                                            context, 'Currency')} ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700),
-                                      ),
+                                      Center(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Phoenix.rebirth(context);
+                                          },
+                                          child: Container(
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    2,
+                                            margin: const EdgeInsets.only(
+                                                top: 16.0, right: 25, left: 25),
+                                            padding: const EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.black26,
+                                                    width: 2)),
+                                            child: Center(
+                                              child: Text(
+                                                getTransrlate(
+                                                    context, 'backToshopping'),
+                                                style: TextStyle(
+                                                    color: Colors.black54,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   ),
-                                ),
-                                Center(
-                                  child: InkWell(
-                                    onTap: () {
-                                      Phoenix.rebirth(context);
-                                    },
-                                    child: Container(
-                                      width: ScreenUtil.getWidth(context) / 2,
-                                      margin: const EdgeInsets.only(
-                                          top: 16.0, right: 25, left: 25),
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          border:
-                                          Border.all(
-                                              color: Colors.black26, width: 2)),
-                                      child: Center(
-                                        child: Text(
-                                          getTransrlate(
-                                              context, 'backToshopping'),
-
-                                          style: TextStyle(
-                                              color: Colors.black54,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 )
-
                               ],
                             ),
-                          )
-                        ],
-                      ),
                       isActive: _currentStep >= 2,
                       state: _currentStep >= 2
                           ? StepState.complete
@@ -1001,9 +1093,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     API(context).get('user/all/shippings').then((value) {
       if (value != null) {
         setState(() {
-          address = ShippingAddress
-              .fromJson(value)
-              .data;
+          address = ShippingAddress.fromJson(value).data;
         });
       }
     });
@@ -1013,9 +1103,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     API(context).get('all/paymentways').then((value) {
       if (value != null) {
         setState(() {
-          payment = Payment_model
-              .fromJson(value)
-              .data;
+          payment = Payment_model.fromJson(value).data;
         });
       }
     });
@@ -1029,7 +1117,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
           children: [
             Text(
               getTransrlate(context, 'ShoppingCart'),
-              style: TextStyle(fontWeight: FontWeight.bold,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
                 height: 1.5,
               ),
             ),
@@ -1041,7 +1130,6 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 getTransrlate(context, 'backToshoppingCart'),
                 style: TextStyle(
                     height: 1.5,
-
                     fontWeight: FontWeight.bold,
                     color: Colors.orange,
                     decoration: TextDecoration.underline),
@@ -1076,12 +1164,14 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             width: ScreenUtil.getWidth(context) / 8,
                             child: CachedNetworkImage(
                               imageUrl: widget.carts.data.orderDetails[index]
-                                  .productImage.isNotEmpty
+                                      .productImage.isNotEmpty
                                   ? widget.carts.data.orderDetails[index]
-                                  .productImage[0].image
+                                      .productImage[0].image
                                   : '',
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.image, color: Colors.black12,),
+                              errorWidget: (context, url, error) => Icon(
+                                Icons.image,
+                                color: Colors.black12,
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -1089,7 +1179,6 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           ),
                           Container(
                             width: ScreenUtil.getWidth(context) / 2,
-
                             child: AutoSizeText(
                               widget.carts.data.orderDetails[index].productName,
                               maxLines: 2,
@@ -1109,8 +1198,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AutoSizeText(
-                              "${getTransrlate(context, 'quantity')} :  ${widget
-                                  .carts.data.orderDetails[index].quantity}",
+                              "${getTransrlate(context, 'quantity')} :  ${widget.carts.data.orderDetails[index].quantity}",
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 14,
@@ -1119,10 +1207,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               minFontSize: 11,
                             ),
                             AutoSizeText(
-                              "${getTransrlate(context, 'price')} : ${widget
-                                  .carts.data.orderDetails[index]
-                                  .price}  ${getTransrlate(
-                                  context, 'Currency')}",
+                              "${getTransrlate(context, 'price')} : ${widget.carts.data.orderDetails[index].price}  ${getTransrlate(context, 'Currency')}",
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 14,
@@ -1155,12 +1240,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "${ getTransrlate(context, 'total_product')}",
+                      "${getTransrlate(context, 'total_product')}",
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      '${widget.carts.data.orderTotal} ${getTransrlate(
-                          context, 'Currency')} ',
+                      '${widget.carts.data.orderTotal} ${getTransrlate(context, 'Currency')} ',
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                   ],
@@ -1198,8 +1282,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      '${widget.carts.data.orderTotal} ${getTransrlate(
-                          context, 'Currency')} ',
+                      '${widget.carts.data.orderTotal} ${getTransrlate(context, 'Currency')} ',
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                   ],

@@ -123,7 +123,7 @@ class _ProductCartState extends State<ProductCart> {
                               });
                             },
                             child: Container(
-                              width: 50,
+                              width: 100,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       width: 1, color: Colors.black12)),
@@ -134,7 +134,10 @@ class _ProductCartState extends State<ProductCart> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text("${widget.carts.quantity}"),
+                                    Container(
+                                        width: 50,
+                                        child:
+                                            Text("${widget.carts.quantity}")),
                                     Icon(Icons.arrow_drop_down)
                                   ],
                                 ),
@@ -142,102 +145,130 @@ class _ProductCartState extends State<ProductCart> {
                             ),
                           ),
                           !other
-                              ? Container(child: Form(
-                            key: _formKey,
-                            child: Container(
-                              margin:
-                              const EdgeInsets.only(bottom: 10, left: 2, right: 2,top: 10),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black12)),
-                              height: 90,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text("${getTransrlate(context, 'quantity')} :",),
-                                  Container(
-                                    width: 100,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 2, vertical: 12),
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: MyTextFormField(
-                                      istitle: true,
-                                      intialLabel: '',
-                                      keyboard_type: TextInputType.number,
-                                      labelText: getTransrlate(context, 'quantity'),
-                                      hintText: getTransrlate(context, 'quantity'),
-                                      isPhone: true,
-                                      validator: (String value) {
-                                        if (value.isEmpty) {
-                                          return "كمية";
-                                        }
-                                        _formKey.currentState.save();
-                                        return null;
-                                      },
-                                      onSaved: (String value) {
-                                        widget.carts.quantity = int.parse(value);
-                                      },
-                                    ),
-                                  )
-                                  ,
-                                  InkWell(
-                                    onTap: () {
-    if (_formKey.currentState.validate()) {
-    _formKey.currentState.save();
-                                      API(context).post('add/to/cart', {
-                                        "product_id": widget.carts.productId,
-                                        "quantity": widget.carts.quantity ,
-                                        "order_id": widget.carts.orderId
-                                      }).then((value) {
-                                        if (value != null) {
-                                          if (value['status_code'] == 200) {
-                                            showDialog(
-                                                context: context,
-                                                builder: (_) => ResultOverlay(
-                                                    value['message']));
-
-                                            ServiceData.getCart(context);
-                                          } else {
-                                            showDialog(
-                                                context: context,
-                                                builder: (_) => ResultOverlay(
-                                                    value['message']));
-                                          }
-                                        }
-                                      });
-    }
-                                    },
+                              ? Container(
+                                  child: Form(
+                                    key: _formKey,
                                     child: Container(
-                                      height: 50,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 2, vertical: 1),
-                                      padding: const EdgeInsets.all(12.0),
-                                      color: Colors.lightGreen,
-                                      child: Center(
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                CupertinoIcons.cart,
-                                                color: Colors.white,
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                getTransrlate(context, 'updateCart'),
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white),
-                                              ),
-                                            ],
-                                          )),
+                                      margin: const EdgeInsets.only(
+                                          bottom: 10,
+                                          left: 2,
+                                          right: 2,
+                                          top: 10),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.black12)),
+                                      height: 90,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            "${getTransrlate(context, 'quantity')} :",
+                                          ),
+                                          Container(
+                                            width: 100,
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 2, vertical: 12),
+                                            padding: const EdgeInsets.all(3.0),
+                                            child: MyTextFormField(
+                                              istitle: true,
+                                              intialLabel: widget.carts.quantity.toString(),
+                                              keyboard_type:
+                                                  TextInputType.number,
+                                              labelText: getTransrlate(
+                                                  context, 'quantity'),
+                                              hintText: getTransrlate(
+                                                  context, 'quantity'),
+                                              isPhone: true,
+                                              validator: (String value) {
+                                                if (value.isEmpty) {
+                                                  return "كمية";
+                                                }
+                                                _formKey.currentState.save();
+                                                return null;
+                                              },
+                                              onSaved: (String value) {
+                                                widget.carts.quantity =
+                                                    int.parse(value);
+                                              },
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              if (_formKey.currentState
+                                                  .validate()) {
+                                                _formKey.currentState.save();
+                                                API(context)
+                                                    .post('add/to/cart', {
+                                                  "product_id":
+                                                      widget.carts.productId,
+                                                  "quantity":
+                                                      widget.carts.quantity,
+                                                  "order_id":
+                                                      widget.carts.orderId
+                                                }).then((value) {
+                                                  if (value != null) {
+                                                    if (value['status_code'] ==
+                                                        200) {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              ResultOverlay(value[
+                                                                  'message']));
+
+                                                      ServiceData.getCart(
+                                                          context);
+                                                    } else {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              ResultOverlay(value[
+                                                                  'message']));
+                                                    }
+                                                  }
+                                                });
+                                              }
+                                            },
+                                            child: Container(
+                                              height: 50,
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 2,
+                                                      vertical: 1),
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              color: Colors.lightGreen,
+                                              child: Center(
+                                                  child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    CupertinoIcons.cart,
+                                                    color: Colors.white,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    getTransrlate(
+                                                        context, 'updateCart'),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white),
+                                                  ),
+                                                ],
+                                              )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),)
+                                )
                               : Container(),
                         ],
                       ),

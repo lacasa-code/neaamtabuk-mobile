@@ -20,6 +20,7 @@ class MyTextFormField extends StatelessWidget {
   final String intialLabel;
   final GestureTapCallback press;
   final FocusNode focus ;
+  final TextEditingController controller;
 
   MyTextFormField(
       {this.hintText,
@@ -36,7 +37,7 @@ class MyTextFormField extends StatelessWidget {
       this.prefix,
       this.keyboard_type,
       this.intialLabel,
-        this.onChange,this.focus,
+        this.onChange,this.focus,this.controller,
       this.press});
 
   @override
@@ -49,10 +50,11 @@ class MyTextFormField extends StatelessWidget {
           istitle?Container(): Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16),),
           istitle?Container():SizedBox(height: 4,),
           TextFormField(
+            controller: controller,
             focusNode: focus,
             autofocus: true,
             onTap: press,
-            initialValue: intialLabel == null ? '' : intialLabel,
+            initialValue: intialLabel,
             decoration: InputDecoration(
               fillColor: Colors.white,
               prefixIcon: prefix,

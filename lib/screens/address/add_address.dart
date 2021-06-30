@@ -27,7 +27,7 @@ class _AddAddressState extends State<AddAddress> {
   List<Country> contries;
   List<City> cities;
   List<Area> area;
-
+  TextEditingController code= TextEditingController();
   @override
   void initState() {
     getCountry();
@@ -113,6 +113,7 @@ class _AddAddressState extends State<AddAddress> {
                 contries==null?Container():Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: DropdownSearch<Country>(
+                    showSearchBox: true,
                     // label: getTransrlate(context, 'Countroy'),
                     validator: (Country item) {
                       if (item == null) {
@@ -126,6 +127,9 @@ class _AddAddressState extends State<AddAddress> {
                     itemAsString: (Country u) => u.countryName,
                     onChanged: (Country data) {
                       address.Country_id = data.id;
+
+                        code.text=data.phonecode.toString();
+
                       getArea(data.id);
 
                     },
@@ -134,7 +138,7 @@ class _AddAddressState extends State<AddAddress> {
                 area==null?Container():Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: DropdownSearch<Area>(
-                    // label: getTransrlate(context, 'Countroy'),
+                    showSearchBox: true,
                     validator: (Area item) {
                       if (item == null) {
                         return "Required field";
@@ -155,7 +159,7 @@ class _AddAddressState extends State<AddAddress> {
                 cities==null?Container():Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: DropdownSearch<City>(
-                    // label: getTransrlate(context, 'Countroy'),
+                    showSearchBox: true,
                     validator: (City item) {
                       if (item == null) {
                         return "Required field";
@@ -256,22 +260,51 @@ class _AddAddressState extends State<AddAddress> {
                     address.apartmentNo = value;
                   },
                 ),
-                MyTextFormField(
-                  intialLabel: '',
-                  keyboard_type: TextInputType.phone,
-                  labelText: getTransrlate(context, 'phone'),
-                  hintText: getTransrlate(context, 'phone'),
-                  isPhone: true,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'phone');
-                    }
-                    _formKey.currentState.save();
-                    return null;
-                  },
-                  onSaved: (String value) {
-                    address.recipientPhone = value;
-                  },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: ScreenUtil.getWidth(context)/1.5 ,
+                      child: MyTextFormField(
+                        intialLabel: '',
+                        keyboard_type: TextInputType.phone,
+                        labelText: getTransrlate(context, 'phone'),
+                        hintText: getTransrlate(context, 'phone'),
+                        isPhone: true,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return getTransrlate(context, 'phone');
+                          }
+                          _formKey.currentState.save();
+                          return null;
+                        },
+                        onSaved: (String value) {
+                          address.recipientPhone ="+${code.text}$value";
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: ScreenUtil.getWidth(context)*0.2 ,
+                      child: MyTextFormField(
+                        enabled: false,
+                        controller: code,
+                        keyboard_type: TextInputType.phone,
+                        labelText: getTransrlate(context, 'CountroyCode'),
+                        hintText: getTransrlate(context, 'CountroyCode'),
+                        isPhone: true,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return getTransrlate(context, 'CountroyCode');
+                          }
+                          _formKey.currentState.save();
+                          return null;
+                        },
+                        onSaved: (String value) {
+                          //address.recipientPhone = value;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 MyTextFormField(
                   intialLabel: '',
@@ -339,13 +372,11 @@ class _AddAddressState extends State<AddAddress> {
                         onTap: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                            print("value");
+                            print( address.toJson());
                             API(context)
                                 .post('user/add/shipping', address.toJson())
                                 .then((value) {
-
                               if (value != null) {
-                                print(value);
                                 if (value['status_code'] == 201) {
                                   Navigator.pop(context);
                                   showDialog(
