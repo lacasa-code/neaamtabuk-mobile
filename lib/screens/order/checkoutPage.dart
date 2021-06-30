@@ -348,7 +348,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                           ],
                                         ),
                                         Text(
-                                          '40 ${getTransrlate(context, 'Currency')}',
+                                          '0.00 ${getTransrlate(context, 'Currency')}',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -982,7 +982,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                     ),
                                                   ),
                                                   AutoSizeText(
-                                                    "  : ${getTransrlate(context, 'quantity')}${checkout_model.data.orderDetails[index].quantity}",
+                                                    "${getTransrlate(context, 'quantity')}  : ${checkout_model.data.orderDetails[index].quantity}",
                                                     maxLines: 2,
                                                     style: TextStyle(
                                                         fontSize: 14,
@@ -1207,7 +1207,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               minFontSize: 11,
                             ),
                             AutoSizeText(
-                              "${getTransrlate(context, 'price')} : ${widget.carts.data.orderDetails[index].price}  ${getTransrlate(context, 'Currency')}",
+                              "${getTransrlate(context, 'price')} : ${widget.carts.data.orderDetails[index].total}  ${getTransrlate(context, 'Currency')}",
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 14,
@@ -1261,7 +1261,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      '20 ${getTransrlate(context, 'Currency')} ',
+                      '0.00 ${getTransrlate(context, 'Currency')} ',
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                   ],

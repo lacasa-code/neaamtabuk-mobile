@@ -472,19 +472,17 @@ class _AccountState extends State<Account> {
                                       getTransrlate(context, 'About'),
                                       maxLines: 1,
                                       minFontSize: 12,
-                                      maxFontSize: 14,
                                       style: TextStyle(color: Colors.black),
                                     )),
                                 TextButton(
                                     onPressed: () {
-                                      _launchURL('https://frontend.lacasacode.dev/info/communicate');
+                                      _launchURL('https://frontend.lacasacode.dev/info/contact-us');
 
                                     },
                                     child: AutoSizeText(
                                       getTransrlate(context, 'contact'),
                                       maxLines: 1,
                                       minFontSize: 12,
-                                      maxFontSize: 14,
                                       style: TextStyle(color: Colors.black),
                                     )),
                                 TextButton(
@@ -496,7 +494,6 @@ class _AccountState extends State<Account> {
                                       getTransrlate(context, 'FAQ'),
                                       maxLines: 1,
                                       minFontSize: 12,
-                                      maxFontSize: 14,
                                       style: TextStyle(color: Colors.black),
                                     )),
                               ],
@@ -521,7 +518,6 @@ class _AccountState extends State<Account> {
                                               context, 'sellonTurkar'),
                                           maxLines: 1,
                                           minFontSize: 12,
-                                          maxFontSize: 14,
                                           style: TextStyle(color: Colors.black),
                                         ))),
                                token!=null?Container(): Container(
@@ -536,7 +532,6 @@ class _AccountState extends State<Account> {
                                               context, 'Registerseller'),
                                           maxLines: 1,
                                           minFontSize: 12,
-                                          maxFontSize: 14,
                                           style: TextStyle(color: Colors.black),
                                         ))),
                                 Container(
@@ -551,7 +546,6 @@ class _AccountState extends State<Account> {
                                               context, 'HowtosellTurkar'),
                                           maxLines: 1,
                                           minFontSize: 12,
-                                          maxFontSize: 14,
                                           style: TextStyle(color: Colors.black),
                                         ))),
                               ],

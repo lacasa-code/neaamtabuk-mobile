@@ -440,7 +440,8 @@ class _ProductPageState extends State<ProductPage> {
                                     Products_Page(
                                       name: widget.product.vendorSerial,
                                       id: widget.product.vendorId,
-                                      Url: 'home/vendor/products/${widget.product.vendorId}',
+                                      Url:
+                                          'home/vendor/products/${widget.product.vendorId}?cartype_id=1',
                                     ));
                               },
                               child: Text(
@@ -621,7 +622,8 @@ class _ProductPageState extends State<ProductPage> {
                                 child: Text(
                                   getTransrlate(context, 'cod'),
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                       color: Colors.black),
                                 ))
                           ],
@@ -716,90 +718,113 @@ class _ProductPageState extends State<ProductPage> {
                                                         ),
                                                       ],
                                                     ),
-                                              ListView.builder(
-                                                primary: false,
-                                                shrinkWrap: true,
-                                                physics:
-                                                    NeverScrollableScrollPhysics(),
-                                                itemCount: reviews.reviewsData
-                                                            .length <=
-                                                        1
-                                                    ? reviews.reviewsData.length
-                                                    : 1,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            4.0),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        RatingBar.builder(
-                                                          ignoreGestures: true,
-                                                          initialRating: reviews
-                                                              .reviewsData[
-                                                                  index]
-                                                              .evaluationValue
-                                                              .toDouble(),
-                                                          itemSize: 20.0,
-                                                          minRating: 5,
-                                                          direction:
-                                                              Axis.horizontal,
-                                                          allowHalfRating: true,
-                                                          itemCount: 5,
-                                                          itemBuilder:
-                                                              (context, _) =>
-                                                                  Icon(
-                                                            Icons.star,
-                                                            color:
-                                                                Colors.orange,
+                                              reviews.reviewsData.isEmpty
+                                                  ? Container(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 20),
+                                                        child: Text(
+                                                            getTransrlate(
+                                                                context,
+                                                                'EmptyRate')),
+                                                      ),
+                                                    )
+                                                  : ListView.builder(
+                                                      primary: false,
+                                                      shrinkWrap: true,
+                                                      physics:
+                                                          NeverScrollableScrollPhysics(),
+                                                      itemCount: reviews
+                                                                  .reviewsData
+                                                                  .length <=
+                                                              1
+                                                          ? reviews.reviewsData
+                                                              .length
+                                                          : 1,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(4.0),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              RatingBar.builder(
+                                                                ignoreGestures:
+                                                                    true,
+                                                                initialRating: reviews
+                                                                    .reviewsData[
+                                                                        index]
+                                                                    .evaluationValue
+                                                                    .toDouble(),
+                                                                itemSize: 20.0,
+                                                                minRating: 5,
+                                                                direction: Axis
+                                                                    .horizontal,
+                                                                allowHalfRating:
+                                                                    true,
+                                                                itemCount: 5,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                            _) =>
+                                                                        Icon(
+                                                                  Icons.star,
+                                                                  color: Colors
+                                                                      .orange,
+                                                                ),
+                                                                onRatingUpdate:
+                                                                    (rating) {
+                                                                  print(rating);
+                                                                },
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              Text(
+                                                                reviews
+                                                                    .reviewsData[
+                                                                        index]
+                                                                    .bodyReview,
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Colors
+                                                                        .black),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              Text(
+                                                                '${reviews.reviewsData[index].createdAt} بواسطة ${reviews.reviewsData[index].userName}',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Colors
+                                                                        .grey),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              Container(
+                                                                height: 1,
+                                                                color: Colors
+                                                                    .black12,
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                            ],
                                                           ),
-                                                          onRatingUpdate:
-                                                              (rating) {
-                                                            print(rating);
-                                                          },
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                        Text(
-                                                          reviews
-                                                              .reviewsData[
-                                                                  index]
-                                                              .bodyReview,
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                        Text(
-                                                          '${reviews.reviewsData[index].createdAt} بواسطة ${reviews.reviewsData[index].userName}',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color:
-                                                                  Colors.grey),
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                        Container(
-                                                          height: 1,
-                                                          color: Colors.black12,
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                      ],
+                                                        );
+                                                      },
                                                     ),
-                                                  );
-                                                },
-                                              ),
                                               SizedBox(
                                                 height: 5,
                                               ),
@@ -818,7 +843,9 @@ class _ProductPageState extends State<ProductPage> {
                                                               Ratedialog(
                                                                   reviews,
                                                                   widget.product
-                                                                      .id)).then((value) => getreview());
+                                                                      .id)).then(
+                                                          (value) =>
+                                                              getreview());
                                                     },
                                                     child: Container(
                                                       width:
@@ -861,7 +888,9 @@ class _ProductPageState extends State<ProductPage> {
                                                           builder: (_) =>
                                                               WriteRatedialog(
                                                                   widget.product
-                                                                      .id)).then((value) => getreview());
+                                                                      .id)).then(
+                                                          (value) =>
+                                                              getreview());
                                                     },
                                                     child: Container(
                                                       width:
@@ -932,130 +961,133 @@ class _ProductPageState extends State<ProductPage> {
                                                             14.0),
                                                     child: Column(
                                                       children: [
-                                                        ListView.builder(
-                                                          primary: false,
-                                                          shrinkWrap: true,
-                                                          physics:
-                                                              NeverScrollableScrollPhysics(),
-                                                          itemCount: 1,
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  int index) {
-                                                            return Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          10.0),
-                                                                  child: Row(
+                                                        _question.isEmpty
+                                                            ? Container(
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      vertical:
+                                                                          20),
+                                                                  child: Text(
+                                                                      getTransrlate(
+                                                                          context,
+                                                                          'EmptyRate')),
+                                                                ),
+                                                              )
+                                                            : ListView.builder(
+                                                                primary: false,
+                                                                shrinkWrap:
+                                                                    true,
+                                                                physics:
+                                                                    NeverScrollableScrollPhysics(),
+                                                                itemCount: 1,
+                                                                itemBuilder:
+                                                                    (BuildContext
+                                                                            context,
+                                                                        int index) {
+                                                                  return Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
                                                                     children: [
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                        'assets/icons/User Icon.svg',
-                                                                        color: Colors
-                                                                            .grey,
-                                                                        height:
-                                                                            35,
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            10,
-                                                                      ),
-                                                                      Column(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Container(
-                                                                            width:
-                                                                                ScreenUtil.getWidth(context) / 1.4,
-                                                                            child:
-                                                                                Text(
-                                                                              '${_question[index].bodyQuestion}',
-                                                                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                                                            ),
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          Container(
-                                                                            width:
-                                                                                ScreenUtil.getWidth(context) / 1.5,
-                                                                            child:
-                                                                                Text(
-                                                                              '${_question[index].createdAt} بواسطة ${_question[index].userName}',
-                                                                              style: TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 10,
-                                                                ),
-                                                                _question[index]
-                                                                            .answer ==
-                                                                        null
-                                                                    ? Container()
-                                                                    : Padding(
+                                                                      Padding(
                                                                         padding:
-                                                                            const EdgeInsets.all(25.0),
+                                                                            const EdgeInsets.all(10.0),
                                                                         child:
                                                                             Row(
                                                                           children: [
-                                                                            Icon(
-                                                                              Icons.message_outlined,
+                                                                            SvgPicture.asset(
+                                                                              'assets/icons/User Icon.svg',
                                                                               color: Colors.grey,
-                                                                              size: 35,
+                                                                              height: 35,
                                                                             ),
                                                                             SizedBox(
                                                                               width: 10,
                                                                             ),
-                                                                            Center(
-                                                                              child: Column(
-                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                children: [
-                                                                                  Container(
-                                                                                    width: ScreenUtil.getWidth(context) / 1.6,
-                                                                                    child: Text(
-                                                                                      '${_question[index].answer ?? ''}',
-                                                                                      overflow: TextOverflow.ellipsis,
-                                                                                      maxLines: 1,
-                                                                                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                                                                    ),
+                                                                            Column(
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              children: [
+                                                                                Container(
+                                                                                  width: ScreenUtil.getWidth(context) / 1.4,
+                                                                                  child: Text(
+                                                                                    '${_question[index].bodyQuestion}',
+                                                                                    maxLines: 1,
+                                                                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                                                                                   ),
-                                                                                  SizedBox(
-                                                                                    height: 10,
-                                                                                  ),
-                                                                                  Text(
-                                                                                    '${_question[index].updatedAt} بواسطة ${_question[index].vendor.vendorName}',
+                                                                                ),
+                                                                                SizedBox(
+                                                                                  height: 10,
+                                                                                ),
+                                                                                Container(
+                                                                                  width: ScreenUtil.getWidth(context) / 1.5,
+                                                                                  child: Text(
+                                                                                    '${_question[index].createdAt} بواسطة ${_question[index].userName}',
                                                                                     style: TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
                                                                                   ),
-                                                                                ],
-                                                                              ),
+                                                                                ),
+                                                                              ],
                                                                             ),
                                                                           ],
                                                                         ),
                                                                       ),
-                                                                Container(
-                                                                  height: 1,
-                                                                  color: Colors
-                                                                      .black12,
-                                                                )
-                                                              ],
-                                                            );
-                                                          },
-                                                        ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            10,
+                                                                      ),
+                                                                      _question[index].answer ==
+                                                                              null
+                                                                          ? Container()
+                                                                          : Padding(
+                                                                              padding: const EdgeInsets.all(25.0),
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  Icon(
+                                                                                    Icons.message_outlined,
+                                                                                    color: Colors.grey,
+                                                                                    size: 35,
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    width: 10,
+                                                                                  ),
+                                                                                  Center(
+                                                                                    child: Column(
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Container(
+                                                                                          width: ScreenUtil.getWidth(context) / 1.6,
+                                                                                          child: Text(
+                                                                                            '${_question[index].answer ?? ''}',
+                                                                                            overflow: TextOverflow.ellipsis,
+                                                                                            maxLines: 1,
+                                                                                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                                                                          ),
+                                                                                        ),
+                                                                                        SizedBox(
+                                                                                          height: 10,
+                                                                                        ),
+                                                                                        Text(
+                                                                                          '${_question[index].updatedAt} بواسطة ${_question[index].vendor.vendorName}',
+                                                                                          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                      Container(
+                                                                        height:
+                                                                            1,
+                                                                        color: Colors
+                                                                            .black12,
+                                                                      )
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ),
                                                       ],
                                                     ),
                                                   ),
@@ -1076,7 +1108,9 @@ class _ProductPageState extends State<ProductPage> {
                                                             Qeastionsdialog(
                                                                 _question,
                                                                 widget.product
-                                                                    .id)).then((value) => getQuastion());
+                                                                    .id)).then(
+                                                        (value) =>
+                                                            getQuastion());
                                                   },
                                                   child: Container(
                                                     width: ScreenUtil.getWidth(
@@ -1118,7 +1152,9 @@ class _ProductPageState extends State<ProductPage> {
                                                         builder: (_) =>
                                                             WriteQuastionsdialog(
                                                                 widget.product
-                                                                    .id)).then((value) => getQuastion());
+                                                                    .id)).then(
+                                                        (value) =>
+                                                            getQuastion());
                                                   },
                                                   child: Container(
                                                     width: ScreenUtil.getWidth(
@@ -1344,6 +1380,7 @@ class _ProductPageState extends State<ProductPage> {
       ),
     );
   }
+
   void getreview() {
     API(context).get('home/review/product/${widget.product.id}').then((value) {
       setState(() {

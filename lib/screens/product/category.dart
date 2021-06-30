@@ -53,72 +53,72 @@ class _CategoryScreenState extends State<CategoryScreen> {
               child: Container(
                 color: Colors.white70,
                 child: categories == null
-                    ? Container()
+                    ? Center(child: CircularProgressIndicator())
                     : Container(
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SingleChildScrollView(
-                              child: Container(
-                                width: ScreenUtil.getWidth(context) / 3,
-                               // height: ScreenUtil.getHeight(context) / 1.25,
-                                decoration: BoxDecoration(
-                                  border: Border.symmetric(
-                                      vertical:
-                                          BorderSide(color: Colors.grey)),
-                                ),
+                            Container(
+                              height:ScreenUtil.getHeight(context) / 1.25 ,
+                              decoration: BoxDecoration(
+                                border: Border.symmetric(
+                                    vertical:
+                                    BorderSide(color: Colors.grey)),
+                              ),
+                              child: SingleChildScrollView(
                                 child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.symmetric(
-                                        vertical:
-                                        BorderSide(color: Colors.grey)),
-                                  ),
-                                  child: ListView.builder(
-                                    primary: false,
-                                    shrinkWrap: true,
-                                    padding: EdgeInsets.all(1),
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: categories.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      bool selected = checkboxType == index;
-                                      return InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            checkboxType = index;
-                                            checkboxPart = 0;
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.only(
-                                              top: 20.0,
-                                              bottom: 20.0,
-                                              right: 5,
-                                              left: 5),
-                                          decoration: BoxDecoration(
-                                              color: selected
-                                                  ? Colors.white
-                                                  : Color(0xffF6F6F6),
-                                              border: Border.symmetric(
-                                                  horizontal: BorderSide(
-                                                      color: selected
-                                                          ? Colors.black12
-                                                          : Colors.black26))),
-                                          child: AutoSizeText(
-                                            "${categories[index].mainCategoryName}",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            minFontSize: 14,
-                                            textAlign: TextAlign.center,
-                                            maxFontSize: 16,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                  width: ScreenUtil.getWidth(context) / 3,
+                                 // height: ScreenUtil.getHeight(context) / 1.25,
+
+                                  child: Container(
+
+                                    child: ListView.builder(
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.all(1),
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: categories.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        bool selected = checkboxType == index;
+                                        return InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              checkboxType = index;
+                                              checkboxPart = 0;
+                                            });
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.only(
+                                                top: 20.0,
+                                                bottom: 20.0,
+                                                right: 5,
+                                                left: 5),
+                                            decoration: BoxDecoration(
+                                                color: selected
+                                                    ? Colors.white
+                                                    : Color(0xffF6F6F6),
+                                                border: Border.symmetric(
+                                                    horizontal: BorderSide(
+                                                        color: selected
+                                                            ? Colors.black12
+                                                            : Colors.black26))),
+                                            child: AutoSizeText(
+                                              "${categories[index].mainCategoryName}",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              minFontSize: 13,
+                                              textAlign: TextAlign.center,
+                                              maxFontSize: 14,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -167,7 +167,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         Products_Page(
                                           id: Categories[index].id,
                                           name: Categories[index].name,
-                                          Url: "site/part/categories/${Categories[index].id}",
+                                          Url: "site/part/categories/${Categories[index].id}?cartype_id=1",
                                         ));
                                   },
                             child: Container(
@@ -230,7 +230,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             Products_Page(
                               id: partCategories[index].id,
                               name: partCategories[index].categoryName,
-                              Url: "site/part/categories/${partCategories[index].id}",
+                              Url: "site/part/categories/${partCategories[index].id}?cartype_id=1",
                             ));
                       },
                       child: Container(

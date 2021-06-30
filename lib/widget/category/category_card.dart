@@ -43,7 +43,7 @@ class _CategoryCardState extends State<CategoryCard> {
               Products_Page(
                 id: widget.product.id,
                 name: widget.product.categoryName.name,
-                Url: 'site/part/categories/${widget.product.id}',
+                Url: 'site/categories/${widget.product.categoryId}?cartype_id=1',
               ));
         },
         child: Column(

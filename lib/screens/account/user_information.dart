@@ -215,10 +215,11 @@ class _UserInfoState extends State<UserInfo> {
                                           decoration: InputDecoration(),
                                           validator: (String value) {
                                             if (value.isEmpty) {
-                                              return getTransrlate(
-                                                  context, 'phone');
-                                            }else if (value.length<=12) {
-                                              return "${getTransrlate(context, 'phone')} <=14";
+                                              return getTransrlate(context, 'phone');
+                                            }else if (value.length<15) {
+                                              return "${getTransrlate(context, 'phone')} = 14";
+                                            }else if (value.length>12) {
+                                              return "${getTransrlate(context, 'phone')} = 14";
                                             }
                                             _formKey.currentState.save();
                                             return null;
@@ -246,7 +247,7 @@ class _UserInfoState extends State<UserInfo> {
                                             controller: _tocontroller,
                                             keyboardType: TextInputType.datetime,
                                             decoration: InputDecoration(),
-                                            enabled: !_status,
+                                            enabled:false,
                                             onSaved: (String val) =>
                                                 userModal.birthdate = val,
                                             onChanged: (String val) =>
@@ -266,6 +267,7 @@ class _UserInfoState extends State<UserInfo> {
                                           top: 10.0,
                                           bottom: 10),
                                       child: DropdownSearch<String>(
+                                        maxHeight: 120,
                                         validator: (String item) {
                                           if (item == null) {
                                             return "Required field";
@@ -323,7 +325,7 @@ class _UserInfoState extends State<UserInfo> {
   }
   Future<void> _selectDateto(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-        context: context,initialDate: DateTime(2015),lastDate: DateTime(2015), firstDate: DateTime(1900));
+        context: context,initialDate: DateTime(2005),lastDate: DateTime(2005), firstDate: DateTime(1900));
     if (picked != null)
       setState(() {
         _tocontroller.text = DateFormat('yyyy-MM-dd').format(picked);

@@ -18,7 +18,9 @@ import '../../model/product_model.dart';
 import '../../utils/navigator.dart';
 
 class MyCars extends StatefulWidget {
-  const MyCars({Key key}) : super(key: key);
+  int checkboxType = 0;
+
+  MyCars(this.checkboxType);
 
   @override
   _MyCarsState createState() => _MyCarsState();
@@ -34,14 +36,14 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
   int checkboxValue;
   TabController _controller;
 
-  int checkboxType = 0;
+  //int checkboxType = 0;
   int car_mades_id;
 
   TextEditingController yearsID, carMadeID, CarmodelsID, transimionsID;
 
   @override
   void initState() {
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 2,initialIndex: 1);
 
     API(context).get('car/types/list').then((value) {
       if (value != null) {
@@ -217,11 +219,11 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: cartype.length,
                         itemBuilder: (BuildContext context, int index) {
-                          bool selected = checkboxType == index;
+                          bool selected = widget.checkboxType == index;
                           return InkWell(
                             onTap: () {
                               setState(() {
-                                checkboxType = index;
+                                widget.checkboxType = index;
                               });
                             },
                             child: Container(
@@ -327,7 +329,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                               Products_Page(
                                 Url:
                                     "display/search/results/mobile?"
-                                        "car_type_id=${cartype[checkboxType].id}"
+                                        "car_type_id=${cartype[widget.checkboxType].id}"
                                 "${CarmodelsID.text.isEmpty?'':'&car_model_id=${CarmodelsID.text}'}"
                                 "${yearsID.text.isEmpty?'':'&car_year_id=${yearsID.text}'}"
                                 "${transimionsID.text.isEmpty?'':'&transmission_id=${yearsID.text}'}",
@@ -369,7 +371,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                       ResultOverlay('Please select Car Made'))
                               : API(context).post(
                                   'user/select/products/add/favourite/car', {
-                                  "car_type_id": cartype[checkboxType].id,
+                                  "car_type_id": cartype[widget.checkboxType].id,
                                   "car_made_id": car_mades_id,
                                 }).then((value) {
                                   if (value != null) {

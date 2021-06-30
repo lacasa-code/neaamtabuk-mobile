@@ -209,9 +209,14 @@ class _changePasswordState extends State<changePassword> {
 
                                 } else {
                                   showDialog(
+
                                       context: context,
                                       builder: (_) =>
-                                          ResultOverlay(value['message']));
+                                          ResultOverlay(value['errors'], icon: Icon(
+                                            Icons.info_outline,
+                                            color: Colors.yellow,
+                                            size: 80,
+                                          )));
                                 }
                               }
                             });

@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/screens/MyCars/myCars.dart';
 import 'package:flutter_pos/screens/account/Account.dart';
 import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/screens/order/cart.dart';
@@ -36,9 +37,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Product> product;
+  List<Product> productMostView;
   List<Product> productMostSale;
   List<CarType> cartype;
   List<Ads> ads;
+  int checkboxType = 0;
+
   int complete;
   PersistentTabController _controller;
   final navigatorKey = GlobalKey<NavigatorState>();
@@ -99,21 +103,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _controller = PersistentTabController(initialIndex: 0);
-    API(context, Check: false).post('site/new/products', {}).then((value) {
-      if (value != null) {
-        setState(() {
-          product = Product_model.fromJson(value).data;
-        });
-      }
-    });
-    API(context).get('mostly/viewed/products').then((value) {
-      if (value != null) {
-        setState(() {
-          productMostSale = Product_model.fromJson(value).data;
-        });
-      }
-    });
 
+    getData(1);
     API(context).get('car/types/list').then((value) {
       if (value != null) {
         setState(() {
@@ -133,7 +124,30 @@ class _HomeState extends State<Home> {
     });
     super.initState();
   }
-
+getData(int cartypeId){
+  API(context, Check: false).post('site/new/products', {
+    "cartype_id":cartypeId,
+  }).then((value) {
+    if (value != null) {
+      setState(() {
+        product = Product_model.fromJson(value).data;
+      });
+    }
+  });
+  API(context).get('mostly/viewed/products?cartype_id=$cartypeId').then((value) {
+    if (value != null) {
+      setState(() {
+        productMostView = Product_model.fromJson(value).data;
+      });
+    }
+  }); API(context).get('best/seller/products?cartype_id=$cartypeId').then((value) {
+    if (value != null) {
+      setState(() {
+        productMostSale = Product_model.fromJson(value).data;
+      });
+    }
+  });
+}
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _carouselCurrentPage = 0;
   String pathImage;
@@ -242,27 +256,33 @@ class _HomeState extends State<Home> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: cartype.length,
                           itemBuilder: (BuildContext context, int index) {
+                            bool selected = checkboxType == index;
+
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
                                 onTap: () {
-                                  Nav.route(
-                                      context,
-                                      Products_Page(
-                                          id: cartype[index].id,
-                                          name: cartype[index].typeName,Url: 'car/type/related/products/${ cartype[index].id}',));
+                                  setState(() {
+                                    checkboxType = index;
+                                   product=null;
+                                  productMostView=null;
+                                    productMostSale=null;
+                                  });
+
+                                  getData( cartype[index].id);
                                 },
                                 child: Container(
                                   height: ScreenUtil.getHeight(context) / 10,
                                   width: ScreenUtil.getWidth(context) / 2.5,
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 3.0, color: Colors.black12),
+                                        width: 3.0, color: selected
+                                        ? Colors.orange
+                                        :  Colors.black12),
                                     image: DecorationImage(
                                         image: CachedNetworkImageProvider(
                                             "${cartype[index].image}"
                                         ),
-
                                         fit: BoxFit.cover),
 
                                     borderRadius: themeColor.local == 'ar'
@@ -346,8 +366,11 @@ class _HomeState extends State<Home> {
                 ads == null
                     ? Container()
                     : SliderDotAds(_carouselCurrentPage, ads),
-                productMostSale == null
-                    ? Container()
+                productMostView == null
+                    ? Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: CircularProgressIndicator(),
+                    )
                     : list_category(themeColor),
                 product == null
                     ? Container()
@@ -407,7 +430,7 @@ class _HomeState extends State<Home> {
   Widget list_category(
     Provider_control themeColor,
   ) {
-    return productMostSale.isEmpty
+    return productMostView.isEmpty
         ? Container()
         : GridView.builder(
             primary: false,
@@ -418,13 +441,13 @@ class _HomeState extends State<Home> {
               childAspectRatio: 0.80,
               crossAxisCount: 3,
             ),
-            itemCount: productMostSale.length,
+            itemCount: productMostView.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: CategoryCard(
                   themeColor: themeColor,
-                  product: productMostSale[index],
+                  product: productMostView[index],
                 ),
               );
             },
