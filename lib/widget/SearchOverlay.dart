@@ -25,7 +25,7 @@ class SearchOverlayState extends State<SearchOverlay>
   FocusNode _focusNode = FocusNode();
   AutoCompleteTextField searchTextField;
   GlobalKey<AutoCompleteTextFieldState<Product>> key = new GlobalKey();
-
+  String search_index;
   @override
   void initState() {
     super.initState();
@@ -66,7 +66,7 @@ class SearchOverlayState extends State<SearchOverlay>
                       children: [
                         InkWell(
                           onTap: () {
-                            Nav.route(context, Products_Page(Url: 'home/all/products',name:" " ,));
+                            search_index ==null? null:search_index.isEmpty? null:Nav.route(context, Products_Page(Url: 'user/search/products?search_index=${search_index??''}',name:"نتائج البحث: ${search_index??''}" ,));
                           },
                           child: Container(
                             margin: const EdgeInsets.all(15.0),
@@ -117,11 +117,10 @@ class SearchOverlayState extends State<SearchOverlay>
                                     });
                                   },
                                   textChanged: (string) {
+                                    search_index=string;
                                     if (string.length >= 1) {
-                                      API(context).post(
-                                          'user/search/products', {
-                                        "search_index": string,
-                                      }).then((value) {
+                                      API(context).get(
+                                          'user/search/products?search_index=$search_index',).then((value) {
                                         if (value != null) {
                                           if (value['status_code'] == 200) {
                                             setState(() {

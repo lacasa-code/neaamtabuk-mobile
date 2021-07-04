@@ -21,6 +21,7 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/category/category_card.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/product/product_card.dart';
 import 'package:flutter_pos/widget/product/product_list_titlebar.dart';
 import 'package:flutter_pos/widget/slider/Banner.dart';
@@ -28,6 +29,7 @@ import 'package:flutter_pos/widget/slider/slider_dotAds.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -86,8 +88,9 @@ class _HomeState extends State<Home> {
                   ? " ${data.cart_model.data == null ? 0 : data.cart_model.data.count_pieces ?? 0} "
                   : '',
               style: TextStyle(
-                height:1,
-                  backgroundColor: Colors.white, color: Colors.orange),
+                  height: 1,
+                  backgroundColor: Colors.white,
+                  color: Colors.orange),
             )),
           ],
         ),
@@ -124,30 +127,37 @@ class _HomeState extends State<Home> {
     });
     super.initState();
   }
-getData(int cartypeId){
-  API(context, Check: false).post('site/new/products', {
-    "cartype_id":cartypeId,
-  }).then((value) {
-    if (value != null) {
-      setState(() {
-        product = Product_model.fromJson(value).data;
-      });
-    }
-  });
-  API(context).get('mostly/viewed/products?cartype_id=$cartypeId').then((value) {
-    if (value != null) {
-      setState(() {
-        productMostView = Product_model.fromJson(value).data;
-      });
-    }
-  }); API(context).get('best/seller/products?cartype_id=$cartypeId').then((value) {
-    if (value != null) {
-      setState(() {
-        productMostSale = Product_model.fromJson(value).data;
-      });
-    }
-  });
-}
+
+  getData(int cartypeId) {
+    API(context, Check: false)
+        .get('site/new/products?cartype_id":$cartypeId')
+        .then((value) {
+      if (value != null) {
+        setState(() {
+          product = Product_model.fromJson(value).data;
+        });
+      }
+    });
+    API(context)
+        .get('mostly/viewed/products?cartype_id=$cartypeId')
+        .then((value) {
+      if (value != null) {
+        setState(() {
+          productMostView = Product_model.fromJson(value).data;
+        });
+      }
+    });
+    API(context)
+        .get('best/seller/products?cartype_id=$cartypeId')
+        .then((value) {
+      if (value != null) {
+        setState(() {
+          productMostSale = Product_model.fromJson(value).data;
+        });
+      }
+    });
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _carouselCurrentPage = 0;
   String pathImage;
@@ -178,7 +188,7 @@ getData(int cartypeId){
         // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: Colors.black12,width: 1),
+          border: Border.all(color: Colors.black12, width: 1),
           colorBehindNavBar: Colors.white,
         ),
         popAllScreensOnTapOfSelectedTab: true,
@@ -242,92 +252,91 @@ getData(int cartypeId){
               children: [
                 cartype == null
                     ? Container()
-                    : Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: GridView.builder(
-                          primary: false,
-                          padding: EdgeInsets.only(top: 20),
-                          shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 1.3,
-                            crossAxisCount: 2,
-                          ),
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: cartype.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            bool selected = checkboxType == index;
-
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    checkboxType = index;
-                                   product=null;
-                                  productMostView=null;
-                                    productMostSale=null;
-                                  });
-
-                                  getData( cartype[index].id);
-                                },
-                                child: Container(
-                                  height: ScreenUtil.getHeight(context) / 10,
-                                  width: ScreenUtil.getWidth(context) / 2.5,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 3.0, color: selected
-                                        ? Colors.orange
-                                        :  Colors.black12),
-                                    image: DecorationImage(
-                                        image: CachedNetworkImageProvider(
-                                            "${cartype[index].image}"
-                                        ),
-                                        fit: BoxFit.cover),
-
-                                    borderRadius: themeColor.local == 'ar'
-                                        ? index.isEven
-                                            ? BorderRadius.only(
-                                                topRight: Radius.circular(15.0),
-                                                bottomRight:
-                                                    Radius.circular(15.0))
-                                            : BorderRadius.only(
-                                                topLeft: Radius.circular(15.0),
-                                                bottomLeft:
-                                                    Radius.circular(15.0))
-                                        : index.isEven
-                                            ? BorderRadius.only(
-                                                topLeft: Radius.circular(15.0),
-                                                bottomLeft:
-                                                    Radius.circular(15.0))
-                                            : BorderRadius.only(
-                                                topRight: Radius.circular(15.0),
-                                                bottomRight:
-                                                    Radius.circular(15.0)),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Card(
-                                      color: Colors.black12,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: AutoSizeText(
-                                            cartype[index].typeName,
-                                            maxLines: 1,
-                                            maxFontSize: 18,
-                                            minFontSize: 10,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                    : ResponsiveGridList(
+                        desiredItemWidth: ScreenUtil.getWidth(context)/2.4,
+                        minSpacing: 10,
+                        rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        scroll: false,
+                        children: cartype
+                            .map((e) {
+                          final selected=checkboxType==cartype.indexOf(e);
+                         return InkWell(
+                           onTap: () {
+                             setState(() {
+                               checkboxType = cartype.indexOf(e);
+                               product = null;
+                               productMostView = null;
+                               productMostSale = null;
+                             });
+                             themeColor
+                                 .setCar_type(e.id);
+                             getData(e.id);
+                           },
+                           child: Container(
+                             height:
+                             ScreenUtil.getHeight(context) /
+                                 7,
+                            // width: ScreenUtil.getWidth(context) / 2.5,
+                             decoration: BoxDecoration(
+                               border: Border.all(
+                                   width: 3.0,
+                                   color: selected
+                                       ? Colors.orange
+                                       : Colors.black12),
+                               image: DecorationImage(
+                                   image: CachedNetworkImageProvider(
+                                       "${e.image}"),
+                                   fit: BoxFit.cover),
+                               borderRadius: themeColor.local ==
+                                   'ar'
+                                   ? cartype.indexOf(e).isEven
+                                   ? BorderRadius.only(
+                                   topRight: Radius.circular(
+                                       15.0),
+                                   bottomRight:
+                                   Radius.circular(
+                                       15.0))
+                                   : BorderRadius.only(
+                                   topLeft: Radius.circular(
+                                       15.0),
+                                   bottomLeft:
+                                   Radius.circular(
+                                       15.0))
+                                   : cartype.indexOf(e).isEven
+                                   ? BorderRadius.only(
+                                   topLeft: Radius.circular(
+                                       15.0),
+                                   bottomLeft:
+                                   Radius.circular(
+                                       15.0))
+                                   : BorderRadius.only(
+                                   topRight:
+                                   Radius.circular(15.0),
+                                   bottomRight: Radius.circular(15.0)),
+                             ),
+                             child: Align(
+                               alignment: Alignment.bottomCenter,
+                               child: Card(
+                                 color: Colors.black12,
+                                 child: Padding(
+                                   padding:
+                                   const EdgeInsets.all(4.0),
+                                   child: AutoSizeText(
+                                       e.typeName,
+                                       maxLines: 1,
+                                       maxFontSize: 18,
+                                       minFontSize: 10,
+                                       style: TextStyle(
+                                           color: Colors.white,
+                                           fontWeight:
+                                           FontWeight.bold)),
+                                 ),
+                               ),
+                             ),
+                           ),
+                         );
+                        })
+                            .toList()),
                 ads == null
                     ? Container()
                     : Padding(
@@ -368,10 +377,10 @@ getData(int cartypeId){
                     : SliderDotAds(_carouselCurrentPage, ads),
                 productMostView == null
                     ? Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: CircularProgressIndicator(),
-                    )
-                    : list_category(themeColor),
+                        padding: const EdgeInsets.all(24.0),
+                        child: Custom_Loading(),
+                      )
+                    : Container(child: list_category(themeColor)),
                 product == null
                     ? Container()
                     : product.isEmpty
@@ -384,6 +393,8 @@ getData(int cartypeId){
                                 themeColor: themeColor,
                                 title: getTransrlate(context, 'offers'),
                                 description: getTransrlate(context, 'showAll'),
+                                url:
+                                    'site/new/products?cartype_id=${cartype[checkboxType].id}',
                               ),
                               list_product(themeColor, product),
                             ],
@@ -412,6 +423,8 @@ getData(int cartypeId){
                                 themeColor: themeColor,
                                 title: getTransrlate(context, 'moresale'),
                                 description: getTransrlate(context, 'showAll'),
+                                url:
+                                    'best/seller/products?cartype_id=${cartype[checkboxType].id}',
                               ),
                               list_product(themeColor, productMostSale),
                               SizedBox(
@@ -432,52 +445,42 @@ getData(int cartypeId){
   ) {
     return productMostView.isEmpty
         ? Container()
-        : GridView.builder(
-            primary: false,
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 0.80,
-              crossAxisCount: 3,
+        : Center(
+            child: ResponsiveGridList(
+              scroll: false,
+              desiredItemWidth: 100,
+              rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              minSpacing: 10,
+              children: productMostView
+                  .map((product) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: CategoryCard(
+                          themeColor: themeColor,
+                          product: product,
+                          cartType: cartype[checkboxType].id,
+                        ),
+                      ))
+                  .toList(),
             ),
-            itemCount: productMostView.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: CategoryCard(
-                  themeColor: themeColor,
-                  product: productMostView[index],
-                ),
-              );
-            },
           );
   }
 
   Widget list_product(Provider_control themeColor, List<Product> product) {
     return product.isEmpty
         ? Container()
-        : GridView.builder(
-            primary: false,
-            padding: EdgeInsets.only(left: 16),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 0.77,
-              crossAxisCount: 2,
-            ),
-            itemCount: product.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16, bottom: 16),
-                  child: ProductCard(
-                    themeColor: themeColor,
-                    product: product[index],
-                  ),
-                ),
-              );
-            },
+        : ResponsiveGridList(
+      scroll: false,
+      desiredItemWidth: ScreenUtil.getWidth(context)/2.2,
+      minSpacing: 10,
+      children: product.map((e) => Center(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 16, bottom: 16),
+          child: ProductCard(
+            themeColor: themeColor,
+            product:e,
+          ),
+        ),
+      )).toList(),
           );
   }
 }

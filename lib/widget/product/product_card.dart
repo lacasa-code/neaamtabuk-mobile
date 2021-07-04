@@ -67,23 +67,22 @@ class _ProductCardState extends State<ProductCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Expanded(
-                    child: CachedNetworkImage(
-                      width: ScreenUtil.getWidth(context) / 2,
-                      imageUrl: (widget.product.photo.isEmpty)
-                          ? 'http://arabimagefoundation.com/images/defaultImage.png'
-                          : widget.product.photo[0].image,
-                      fit: BoxFit.contain,
-                      errorWidget: (context, url, error) => Icon(
-                        Icons.image,
-                        color: Colors.black12,
-                      ),
+                  CachedNetworkImage(
+                    width: ScreenUtil.getWidth(context) / 2,
+                    height: ScreenUtil.getHeight(context) / 5,
+                    imageUrl: (widget.product.photo.isEmpty)
+                        ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                        : widget.product.photo[0].image,
+                    fit: BoxFit.contain,
+                    errorWidget: (context, url, error) => Icon(
+                      Icons.image,
+                      color: Colors.black12,
                     ),
                   ),
                   Container(
                     color: Colors.white,
                     width: ScreenUtil.getWidth(context) / 2.1,
-                    padding: EdgeInsets.only(left: 10, top: 10, right: 10),
+                    padding: EdgeInsets.only(left: 2, top: 10, right: 2),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,36 +106,67 @@ class _ProductCardState extends State<ProductCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            RatingBar.builder(
-                              ignoreGestures: true,
-                              initialRating:
-                                  widget.product.avgValuations.toDouble(),
-                              itemSize: 14.0,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.orange,
+                            Container(
+                              width: ScreenUtil.getWidth(context) /8,
+
+                              child: RatingBar.builder(
+                                ignoreGestures: true,
+                                initialRating:
+                                    widget.product.avgValuations.toDouble(),
+                                itemSize: ScreenUtil.getWidth(context) / 45,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.orange,
+                                ),
+                                onRatingUpdate: (rating) {},
                               ),
-                              onRatingUpdate: (rating) {},
-                            ),
-                            SizedBox(
-                              width: 6,
                             ),
                             Container(
-                              width: ScreenUtil.getWidth(context) / 6.7,
-                              child: AutoSizeText(
-                                "${widget.product.action_price ?? 0} ${getTransrlate(context, 'Currency')}",
+                              width: ScreenUtil.getWidth(context) / 4,
+                              child: widget.product.discount == 0
+                                  ? AutoSizeText(
+                                "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
                                 maxLines: 1,
-                                minFontSize: 14,
-                                maxFontSize: 25,
+                                minFontSize: 10,
+                                maxFontSize: 16,
                                 style: TextStyle(
-                                    color: widget.themeColor.getColor(),
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
+                                    color:Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              )
+                                  : Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    width: ScreenUtil.getWidth(context) / 8,
+
+                                    child: Text(
+                                      "${widget.product.price} ",
+                                      style: TextStyle(
+                                        decoration:  TextDecoration.lineThrough,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ),  Container(
+                                    width: ScreenUtil.getWidth(context) / 8,
+
+                                    child: Text(
+                                      "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+
                           ],
                         ),
                         Row(

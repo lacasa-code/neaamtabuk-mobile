@@ -204,7 +204,7 @@ class _ProductPageState extends State<ProductPage> {
                           child: Row(
                             children: [
                               Icon(Icons.share_outlined,
-                                  size: 25, color: Colors.grey),
+                                  size: 20, color: Colors.grey),
                               SizedBox(
                                 width: 5,
                               ),
@@ -441,7 +441,7 @@ class _ProductPageState extends State<ProductPage> {
                                       name: widget.product.vendorSerial,
                                       id: widget.product.vendorId,
                                       Url:
-                                          'home/vendor/products/${widget.product.vendorId}?cartype_id=1',
+                                          'home/vendor/products/${widget.product.vendorId}?cartype_id=${themeColor.getcar_type()}',
                                     ));
                               },
                               child: Text(
@@ -512,25 +512,27 @@ class _ProductPageState extends State<ProductPage> {
                           ],
                         ),
                       )),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.circle,
-                              size: 15,
+                  widget.product.cartypeName == null
+                      ? Container()
+                      : Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  size: 15,
+                                ),
+                                Text(
+                                  '   ${widget.product.cartypeName}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              ],
                             ),
-                            Text(
-                              '   ${widget.product.cartypeName}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      )),
+                          )),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -923,7 +925,7 @@ class _ProductPageState extends State<ProductPage> {
                                                             width: ScreenUtil
                                                                     .getWidth(
                                                                         context) /
-                                                                4,
+                                                              5,
                                                             child: AutoSizeText(
                                                               'كتابة تقييم',
                                                               overflow:
@@ -1229,7 +1231,6 @@ class _ProductPageState extends State<ProductPage> {
                         const EdgeInsets.only(bottom: 10, left: 2, right: 2),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.black26)),
-                    height: 90,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -1244,7 +1245,7 @@ class _ProductPageState extends State<ProductPage> {
                                 padding: const EdgeInsets.all(3.0),
                                 child: MyTextFormField(
                                   istitle: true,
-                                  intialLabel: '',
+                                  intialLabel: "1",
                                   keyboard_type: TextInputType.number,
                                   labelText: getTransrlate(context, 'quantity'),
                                   hintText: getTransrlate(context, 'quantity'),
@@ -1309,7 +1310,8 @@ class _ProductPageState extends State<ProductPage> {
                               _formKey.currentState.save();
                               API(context).post('add/to/cart', {
                                 "product_id": widget.product.id,
-                                "quantity": dropdownValue
+                                "quantity":
+                                    dropdownValue == 'other' ? 1 : dropdownValue
                               }).then((value) {
                                 if (value != null) {
                                   if (value['status_code'] == 200) {

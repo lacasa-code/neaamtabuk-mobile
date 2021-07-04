@@ -16,6 +16,7 @@ import 'package:flutter_pos/widget/Cart/product_cart.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_svg/svg.dart';
@@ -118,7 +119,7 @@ class _CartScreenState extends State<CartScreen> {
                             ? Center(
                                 child: Padding(
                                 padding: const EdgeInsets.all(24.0),
-                                child: CircularProgressIndicator(),
+                                child: Custom_Loading(),
                               ))
                             : _cart_model.data == null
                                 ? NotFoundProduct()

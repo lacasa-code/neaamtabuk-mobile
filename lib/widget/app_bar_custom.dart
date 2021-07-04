@@ -39,7 +39,7 @@ class _AppBarCustomState extends State<AppBarCustom> {
             },
             icon: Icon(
               Icons.arrow_back_ios,
-              size: 25,
+              size: 20,
             ),
             color: Color(0xffE4E4E4),
           ),
@@ -61,8 +61,8 @@ class _AppBarCustomState extends State<AppBarCustom> {
               fit: BoxFit.contain,
             ),
           ),
-          FlatButton(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               Nav.route(context, MyCars(0));
             },
             child: Row(
@@ -70,7 +70,7 @@ class _AppBarCustomState extends State<AppBarCustom> {
               children: [
                 Icon(CupertinoIcons.car_detailed,color: Colors.white,),
                 SizedBox(
-                  width: 10,
+                  width:5 ,
                 ),
                 Text(
                   themeColor.getCar_made(),

@@ -127,9 +127,11 @@ class _AddAddressState extends State<AddAddress> {
                     itemAsString: (Country u) => u.countryName,
                     onChanged: (Country data) {
                       address.Country_id = data.id;
-
                         code.text=data.phonecode.toString();
-
+                       setState(() {
+                         area=null;
+                         cities=null;
+                       });
                       getArea(data.id);
 
                     },
@@ -151,6 +153,9 @@ class _AddAddressState extends State<AddAddress> {
                     itemAsString: (Area u) => u.areaName,
                     onChanged: (Area data) {
                       address.area_id = data.id;
+                      setState(() {
+                        cities=null;
+                      });
                       getCity(data.id);
 
                     },

@@ -9,11 +9,13 @@ class ProductListTitleBar extends StatelessWidget {
     @required this.themeColor,
     this.title,
     this.description,
+    this.url,
   }) : super(key: key);
 
   final Provider_control themeColor;
   final String title;
   final String description;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class ProductListTitleBar extends StatelessWidget {
           ),
           InkWell(
             onTap: (){
-              Nav.route(context, Products_Page(Url: 'home/all/products',name:"$title" ,));
+              Nav.route(context, Products_Page(Url:url,name:"$title" ,));
             },
             child: Padding(
               padding: EdgeInsets.only(

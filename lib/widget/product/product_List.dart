@@ -72,19 +72,22 @@ class _ProductListState extends State<ProductList> {
                 children: <Widget>[
                   Container(
                     height: 100,
-                    width: ScreenUtil.getWidth(context) / 4,
+                    width: ScreenUtil.getWidth(context) / 4.5,
                     child: CachedNetworkImage(
                       imageUrl: (widget.product.photo.isEmpty)
                           ? 'http://arabimagefoundation.com/images/defaultImage.png'
                           : widget.product.photo[0].image,
-                      errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.image,
+                        color: Colors.black12,
+                      ),
                     ),
                   ),
                   Expanded(
                     child: Container(
                       color: Colors.white,
                       //width: ScreenUtil.getWidth(context) / 1.7,
-                      padding: EdgeInsets.only(left: 10, top: 5, right: 10),
+                      padding: EdgeInsets.only(left: 2, top: 5, right: 5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,7 +110,8 @@ class _ProductListState extends State<ProductList> {
                           ),
                           RatingBar.builder(
                             ignoreGestures: true,
-                            initialRating: widget.product.avgValuations.toDouble(),
+                            initialRating:
+                                widget.product.avgValuations.toDouble(),
                             itemSize: 14.0,
                             minRating: 1,
                             direction: Axis.horizontal,
@@ -125,27 +129,48 @@ class _ProductListState extends State<ProductList> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Container(
-                                width: ScreenUtil.getWidth(context)/3.4,
-                                child: AutoSizeText(
-                                  "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
-                                  maxLines: 1,
-                                  minFontSize: 20,
-                                  maxFontSize: 25,
-                                  style: TextStyle(
-                                      color: widget.themeColor.getColor(),
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
+                                  width: ScreenUtil.getWidth(context) /3,
+                                  child: widget.product.discount == 0
+                                      ? AutoSizeText(
+                                          "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                                          maxLines: 1,
+                                          minFontSize: 14,
+                                          maxFontSize: 16,
+                                          style: TextStyle(
+                                              color:
+                                                  widget.themeColor.getColor(),
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      : Row(
+                                        children: [
+                                          Text(
+                                              "${widget.product.price}  ",
+                                            style: TextStyle(
+                                              decoration:  TextDecoration.lineThrough,
+                                              fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red,
+                                              ),
+                                            ),  Text(
+                                              "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                        ],
+                                      )),
                               Expanded(
                                 child: SizedBox(
                                   height: 6,
                                 ),
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  API(context).post('add/to/cart',{
-                                    "product_id":widget.product.id,
-                                    "quantity":1
+                              InkWell(
+                                onTap: () {
+                                  API(context).post('add/to/cart', {
+                                    "product_id": widget.product.id,
+                                    "quantity": 1
                                   }).then((value) {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
@@ -163,62 +188,62 @@ class _ProductListState extends State<ProductList> {
                                     }
                                   });
                                 },
-                                icon: Icon(CupertinoIcons.cart,
-                                    color: Colors.black,),
-                              ),
-                              SizedBox(
-                                width: 10,
+                                child: Icon(
+                                  CupertinoIcons.cart,
+                                  color: Colors.black,
+                                ),
                               ),
                               IconButton(
                                 onPressed: () {
-                                  print("  FFFFFFFFFFFFFFFFFFFFFF   ${widget.product.inWishlist}");
-                                  widget.product.inWishlist==0? API(context).post('user/add/wishlist',{
-                                    "product_id":widget.product.id
-                                  }).then((value) {
-                                    if (value != null) {
-                                      if (value['status_code'] == 200) {
-                                        setState(() {
-                                          widget.product.inWishlist=1;
-
+                                  print(
+                                      "  FFFFFFFFFFFFFFFFFFFFFF   ${widget.product.inWishlist}");
+                                  widget.product.inWishlist == 0
+                                      ? API(context).post('user/add/wishlist', {
+                                          "product_id": widget.product.id
+                                        }).then((value) {
+                                          if (value != null) {
+                                            if (value['status_code'] == 200) {
+                                              setState(() {
+                                                widget.product.inWishlist = 1;
+                                              });
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) => ResultOverlay(
+                                                      value['message']));
+                                            } else {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) => ResultOverlay(
+                                                      value['message']));
+                                            }
+                                          }
+                                        })
+                                      : API(context).post(
+                                          'user/removeitem/wishlist', {
+                                          "product_id": widget.product.id
+                                        }).then((value) {
+                                          if (value != null) {
+                                            if (value['status_code'] == 200) {
+                                              setState(() {
+                                                widget.product.inWishlist = 0;
+                                              });
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) => ResultOverlay(
+                                                      value['message']));
+                                            } else {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) => ResultOverlay(
+                                                      value['message']));
+                                            }
+                                          }
                                         });
-                                        showDialog(
-                                            context: context,
-                                            builder: (_) => ResultOverlay(
-                                                value['message']));
-                                      } else {
-                                        showDialog(
-                                            context: context,
-                                            builder: (_) => ResultOverlay(
-                                                value['message']));
-                                      }
-                                    }
-                                  }):API(context).post('user/removeitem/wishlist',{
-                                    "product_id":widget.product.id
-                                  })
-                                      .then((value) {
-                                    if (value != null) {
-                                      if (value['status_code'] == 200) {
-                                        setState(() {
-                                          widget.product.inWishlist=0;
-
-                                        });
-                                        showDialog(
-                                            context: context,
-                                            builder: (_) => ResultOverlay(
-                                                value['message']));
-                                      } else {
-                                        showDialog(
-                                            context: context,
-                                            builder: (_) => ResultOverlay(
-                                                value['message']));
-                                      }
-                                    }
-                                  });
                                 },
-                                icon:
-                                Icon(
-                                  widget.product.inWishlist==0?
-                                  Icons.favorite_border:Icons.favorite,
+                                icon: Icon(
+                                  widget.product.inWishlist == 0
+                                      ? Icons.favorite_border
+                                      : Icons.favorite,
                                   color: Colors.grey,
                                 ),
                               ),

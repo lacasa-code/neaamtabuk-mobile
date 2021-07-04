@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 
 import '../../model/product_model.dart';
 import '../../utils/Provider/provider.dart';
@@ -18,26 +20,18 @@ class _grid_productState extends State<grid_product> {
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
 
-    return GridView.builder(
-      primary: false,
-      shrinkWrap: true,
-      padding: EdgeInsets.all(1),
-
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 0.77,
-        crossAxisCount: 2,
+    return ResponsiveGridList(
+        desiredItemWidth: ScreenUtil.getWidth(context)/2.4,
+        minSpacing: 10,
+        //rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        scroll: false,
+    children: widget.product.map((e) =>Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ProductCard(
+        themeColor: themeColor,
+        product: e,
       ),
-      itemCount: widget.product.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ProductCard(
-            themeColor: themeColor,
-            product: widget.product[index],
-          ),
-        );
-      },
+    )).toList()
     );
   }
 }

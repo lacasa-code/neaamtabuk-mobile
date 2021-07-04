@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,7 +22,10 @@ Future<void> main() async {
     ChangeNotifierProvider<Provider_Data>(
       create: (_) => Provider_Data(),
     ),
-  ], child: Phoenix(child: MyApp())));
+  ], child: Phoenix(child: DevicePreview(
+    enabled: false,
+    builder: (context) => MyApp(), // Wrap your app
+  ),)));
 
   // await SentryFlutter.init(
   //

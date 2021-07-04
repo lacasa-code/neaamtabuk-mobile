@@ -10,6 +10,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:provider/provider.dart';
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key key}) : super(key: key);
@@ -53,7 +54,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               child: Container(
                 color: Colors.white70,
                 child: categories == null
-                    ? Center(child: CircularProgressIndicator())
+                    ? Center(child: Custom_Loading())
                     : Container(
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -141,6 +142,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   getList(List<Categories> Categories) {
+    final themeColor = Provider.of<Provider_control>(context);
     return Categories == null
         ? Container()
         : Categories.isEmpty
@@ -167,7 +169,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         Products_Page(
                                           id: Categories[index].id,
                                           name: Categories[index].name,
-                                          Url: "site/part/categories/${Categories[index].id}?cartype_id=1",
+                                          Url: "site/part/categories/${Categories[index].id}?cartype_id=${themeColor.getcar_type()}",
                                         ));
                                   },
                             child: Container(
@@ -210,6 +212,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   getPartCategories(List<PartCategories> partCategories) {
+    final themeColor = Provider.of<Provider_control>(context);
+
     return partCategories == null
         ? Container()
         : partCategories.isEmpty
@@ -230,7 +234,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             Products_Page(
                               id: partCategories[index].id,
                               name: partCategories[index].categoryName,
-                              Url: "site/part/categories/${partCategories[index].id}?cartype_id=1",
+                              Url: "site/part/categories/${partCategories[index].id}?cartype_id=${themeColor.getcar_type()}",
                             ));
                       },
                       child: Container(
