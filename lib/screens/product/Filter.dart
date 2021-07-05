@@ -66,13 +66,13 @@ class _FilterdialogState extends State<Filterdialog> {
                         icon: Icon(Icons.close,
                             size: 35, color: Color(0xff7B7B7B)),
                         onPressed: () {
-                          Navigator.pop(context,{
-                            "part_categories":[],
-                            "manufacturers":[],
-                            "origins": [],
+                          Navigator.pop(
+                            context,
+                            // "part_categories:[],manufacturers:[],origins: [],"
                             //"start_price": [],
-                          //  "end_price": [],
-                          });})
+                            //  "end_price": [],
+                          );
+                        })
                   ],
                 ),
               ),
@@ -98,62 +98,73 @@ class _FilterdialogState extends State<Filterdialog> {
                     child: parts == null
                         ? Container()
                         : parts.isEmpty
-                        ? Container()
-                        : ListView.builder(
-                            primary: false,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: parts.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ExpansionTile(
-                                textColor:Colors.orange ,
-                                iconColor: Colors.orange,
-                                collapsedTextColor: Colors.black,
-                                title: Text("${parts[index].mainCategoryName}"),
-                                children: [
-                                  parts[index].categories==null?Container(): ListView.builder(
-                                      primary: false,
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          parts[index].categories.length,
-                                      itemBuilder:
-                                          (BuildContext context, int i) {
-                                        return Row(
-                                          children: [
-                                            Checkbox(
-                                                value: parts[index]
-                                                    .categories[i]
-                                                    .partsCheck,
-                                                activeColor: Colors.orange,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    parts[index]
-                                                        .categories[i]
-                                                        .partsCheck = value;
-                                                  });
-                                                  value
-                                                      ? partSelect.add(
-                                                          parts[index]
-                                                              .categories[i]
-                                                              .id)
-                                                      : partSelect.remove(
-                                                          parts[index]
-                                                              .categories[i]
-                                                              .id);
-                                                }),
-                                            Text(
-                                              parts[index]
-                                                  .categories[i]
-                                                  .name,
-                                              softWrap: true,
-                                            ),
-                                          ],
-                                        );
-                                      })
-                                ],
-                              );
-                            }),
+                            ? Container()
+                            : ListView.builder(
+                                primary: false,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: parts.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ExpansionTile(
+                                    textColor: Colors.orange,
+                                    iconColor: Colors.orange,
+                                    collapsedTextColor: Colors.black,
+                                    title: Text(
+                                        "${parts[index].mainCategoryName}"),
+                                    children: [
+                                      parts[index].categories == null
+                                          ? Container()
+                                          : ListView.builder(
+                                              primary: false,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              itemCount: parts[index]
+                                                  .categories
+                                                  .length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int i) {
+                                                return Row(
+                                                  children: [
+                                                    Checkbox(
+                                                        value: parts[index]
+                                                            .categories[i]
+                                                            .partsCheck,
+                                                        activeColor:
+                                                            Colors.orange,
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            parts[index]
+                                                                    .categories[i]
+                                                                    .partsCheck =
+                                                                value;
+                                                          });
+                                                          value
+                                                              ? partSelect.add(
+                                                                  parts[index]
+                                                                      .categories[
+                                                                          i]
+                                                                      .id)
+                                                              : partSelect
+                                                                  .remove(parts[
+                                                                          index]
+                                                                      .categories[
+                                                                          i]
+                                                                      .id);
+                                                        }),
+                                                    Text(
+                                                      parts[index]
+                                                          .categories[i]
+                                                          .name,
+                                                      softWrap: true,
+                                                    ),
+                                                  ],
+                                                );
+                                              })
+                                    ],
+                                  );
+                                }),
                   ),
                 ),
               ),
@@ -319,13 +330,13 @@ class _FilterdialogState extends State<Filterdialog> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.pop(context,{
-                        "part_categories": partSelect.toString(),
-                        "manufacturers": manufacturerSelect.toString(),
-                        "origins": originSelect.toString(),
-                        "start_price": _currentRangeValues.start.round().toString(),
-                        "end_price": _currentRangeValues.end.round().toString(),
-                      });
+                      Navigator.pop(context,
+                              "${manufacturerSelect.isEmpty?'':"&manufacturers=${manufacturerSelect.toString()}"}"
+                              "${partSelect.isEmpty?'':"&part_categories=${partSelect.toString()}"}"
+                              "${originSelect.isEmpty?'':"&origins=${originSelect.toString()}"}"
+                              "${_currentRangeValues.start.round().toString().isEmpty?'':"start_price=${_currentRangeValues.start.round().toString()}"}"
+                              "${_currentRangeValues.end.round().toString().isEmpty?'':"&end_price=${_currentRangeValues.end.round().toString()}"}"
+                              );
                     },
                     child: Container(
                       margin: const EdgeInsets.all(15.0),

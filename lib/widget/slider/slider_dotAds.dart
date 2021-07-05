@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/ads.dart';
-import 'package:flutter_pos/model/product_model.dart';
 
 class SliderDotAds extends StatelessWidget {
   final int _current;
-  final List<Ads> images;
+  final List<Carousel> images;
   SliderDotAds(this._current, this.images);
 
   @override

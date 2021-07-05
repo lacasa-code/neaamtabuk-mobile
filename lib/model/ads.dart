@@ -1,19 +1,14 @@
 class Ads_model {
   int statusCode;
   String message;
-  List<Ads> data;
+  Ads data;
 
   Ads_model({this.statusCode, this.message, this.data});
 
   Ads_model.fromJson(Map<String, dynamic> json) {
     statusCode = json['status_code'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = new List<Ads>();
-      json['data'].forEach((v) {
-        data.add(new Ads.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? new Ads.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -21,45 +16,84 @@ class Ads_model {
     data['status_code'] = this.statusCode;
     data['message'] = this.message;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data.toJson();
     }
     return data;
   }
 }
 
 class Ads {
+  List<Carousel> carousel;
+  List<Carousel> bottom;
+  List<Carousel> middle;
+
+  Ads({this.carousel, this.bottom, this.middle});
+
+  Ads.fromJson(Map<String, dynamic> json) {
+    if (json['carousel'] != null) {
+      carousel = new List<Carousel>();
+      json['carousel'].forEach((v) {
+        carousel.add(new Carousel.fromJson(v));
+      });
+    }
+    if (json['bottom'] != null) {
+      bottom = new List<Carousel>();
+      json['bottom'].forEach((v) {
+        bottom.add(new Carousel.fromJson(v));
+      });
+    }
+    if (json['middle'] != null) {
+      middle = new List<Carousel>();
+      json['middle'].forEach((v) {
+        middle.add(new Carousel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.carousel != null) {
+      data['carousel'] = this.carousel.map((v) => v.toJson()).toList();
+    }
+    if (this.bottom != null) {
+      data['bottom'] = this.bottom.map((v) => v.toJson()).toList();
+    }
+    if (this.middle != null) {
+      data['middle'] = this.middle.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Carousel {
   int id;
   String adName;
   int adPosition;
   String adUrl;
+  int status;
   int cartypeId;
+  String platform;
   Photo photo;
-  CarTypeAds carType;
-  AdvPosition advPosition;
 
-  Ads(
+  Carousel(
       {this.id,
         this.adName,
         this.adPosition,
         this.adUrl,
+        this.status,
         this.cartypeId,
-        this.photo,
-        this.carType,
-        this.advPosition});
+        this.platform,
+        this.photo});
 
-  Ads.fromJson(Map<String, dynamic> json) {
+  Carousel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     adName = json['ad_name'];
     adPosition = json['ad_position'];
     adUrl = json['ad_url'];
+    status = json['status'];
     cartypeId = json['cartype_id'];
+    platform = json['platform'];
     photo = json['photo'] != null ? new Photo.fromJson(json['photo']) : null;
-    carType = json['car_type'] != null
-        ? new CarTypeAds.fromJson(json['car_type'])
-        : null;
-    advPosition = json['adv_position'] != null
-        ? new AdvPosition.fromJson(json['adv_position'])
-        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -68,15 +102,11 @@ class Ads {
     data['ad_name'] = this.adName;
     data['ad_position'] = this.adPosition;
     data['ad_url'] = this.adUrl;
+    data['status'] = this.status;
     data['cartype_id'] = this.cartypeId;
+    data['platform'] = this.platform;
     if (this.photo != null) {
       data['photo'] = this.photo.toJson();
-    }
-    if (this.carType != null) {
-      data['car_type'] = this.carType.toJson();
-    }
-    if (this.advPosition != null) {
-      data['adv_position'] = this.advPosition.toJson();
     }
     return data;
   }
@@ -84,7 +114,6 @@ class Ads {
 
 class Photo {
   int id;
-  String modelType;
   int modelId;
   String uuid;
   String collectionName;
@@ -95,46 +124,55 @@ class Photo {
   String conversionsDisk;
   int size;
   int orderColumn;
-  String preview;
+  String createdAt;
+  String updatedAt;
   String image;
+  String url;
+  String thumbnail;
+  String preview;
 
   Photo(
       {this.id,
-        this.modelType,
         this.modelId,
         this.uuid,
         this.collectionName,
         this.name,
-        this.image,
         this.fileName,
         this.mimeType,
         this.disk,
         this.conversionsDisk,
         this.size,
         this.orderColumn,
+        this.createdAt,
+        this.updatedAt,
+        this.image,
+        this.url,
+        this.thumbnail,
         this.preview});
 
   Photo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    modelType = json['model_type'];
     modelId = json['model_id'];
     uuid = json['uuid'];
     collectionName = json['collection_name'];
     name = json['name'];
-    image = json['image'];
     fileName = json['file_name'];
     mimeType = json['mime_type'];
     disk = json['disk'];
     conversionsDisk = json['conversions_disk'];
     size = json['size'];
     orderColumn = json['order_column'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    image = json['image'];
+    url = json['url'];
+    thumbnail = json['thumbnail'];
     preview = json['preview'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['model_type'] = this.modelType;
     data['model_id'] = this.modelId;
     data['uuid'] = this.uuid;
     data['collection_name'] = this.collectionName;
@@ -145,84 +183,18 @@ class Photo {
     data['conversions_disk'] = this.conversionsDisk;
     data['size'] = this.size;
     data['order_column'] = this.orderColumn;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['image'] = this.image;
+    data['url'] = this.url;
+    data['thumbnail'] = this.thumbnail;
     data['preview'] = this.preview;
     return data;
   }
 }
 
-class CarTypeAds {
-  int id;
-  String typeName;
-  String lang;
-  int status;
-  String createdAt;
-  String updatedAt;
-  Null deletedAt;
-
-  CarTypeAds(
-      {this.id,
-        this.typeName,
-        this.lang,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt});
-
-  CarTypeAds.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    typeName = json['type_name'];
-    lang = json['lang'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['type_name'] = this.typeName;
-    data['lang'] = this.lang;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    return data;
-  }
-}
-
-class AdvPosition {
-  int id;
-  String positionName;
-  int status;
-  String lang;
-  String createdAt;
 
 
-  AdvPosition(
-      {this.id,
-        this.positionName,
-        this.status,
-        this.lang,
-        this.createdAt});
 
-  AdvPosition.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    positionName = json['position_name'];
-    status = json['status'];
-    lang = json['lang'];
-    createdAt = json['created_at'];
 
-  }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['position_name'] = this.positionName;
-    data['status'] = this.status;
-    data['lang'] = this.lang;
-    data['created_at'] = this.createdAt;
-
-    return data;
-  }
-}

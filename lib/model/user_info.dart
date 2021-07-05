@@ -31,6 +31,7 @@ class User {
   String lastTransactionTime;
   String lastName;
   String phoneNo;
+  String CountroyCode;
   String birthdate;
   String gender;
   User(

@@ -79,23 +79,26 @@ class _Wish_ListState extends State<Wish_List> {
                   children: [
                     Column(
                       children: [
-                        Container(
-                          width: ScreenUtil.getWidth(context) / 5,
-                          child: RatingBar.builder(
-                            ignoreGestures: true,
-                            initialRating: double.parse('3.5'),
-                            itemSize: 14.0,
-                            minRating: 1,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.orange,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Container(
+                            width: ScreenUtil.getWidth(context) / 5,
+                            child: RatingBar.builder(
+                              ignoreGestures: true,
+                              initialRating: double.parse('3.5'),
+                              itemSize: 14.0,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.orange,
+                              ),
+                              onRatingUpdate: (rating) {
+                                print(rating);
+                              },
                             ),
-                            onRatingUpdate: (rating) {
-                              print(rating);
-                            },
                           ),
                         ),
                         Container(

@@ -63,23 +63,7 @@ class _ProductCartState extends State<ProductCart> {
               ),
               IconButton(
                   onPressed: () {
-                    API(context).post('delete/from/cart', {
-                      "order_id": widget.carts.orderId,
-                      "product_id": widget.carts.productId
-                    }).then((value) {
-                      if (value != null) {
-                        if (value['status_code'] == 200) {
-                          showDialog(
-                              context: context,
-                              builder: (_) => ResultOverlay(value['message']));
-                          ServiceData.getCart(context);
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (_) => ResultOverlay(value['message']));
-                        }
-                      }
-                    });
+                    deleteItem(ServiceData);
                   },
                   icon: Icon(
                     Icons.close,
@@ -351,7 +335,7 @@ class _ProductCartState extends State<ProductCart> {
                                         Icons.remove,
                                         color: Colors.grey,
                                       ),
-                                      onPressed: () {
+                                      onPressed: () {widget.carts.quantity==1?deleteItem(ServiceData) :
                                         API(context).post('add/to/cart', {
                                           "product_id": widget.carts.productId,
                                           "quantity": widget.carts.quantity - 1,
@@ -426,5 +410,25 @@ class _ProductCartState extends State<ProductCart> {
         )
       ],
     );
+  }
+
+  void deleteItem(Provider_Data ServiceData) {
+    API(context).post('delete/from/cart', {
+      "order_id": widget.carts.orderId,
+      "product_id": widget.carts.productId
+    }).then((value) {
+      if (value != null) {
+        if (value['status_code'] == 200) {
+          showDialog(
+              context: context,
+              builder: (_) => ResultOverlay(value['message']));
+          ServiceData.getCart(context);
+        } else {
+          showDialog(
+              context: context,
+              builder: (_) => ResultOverlay(value['message']));
+        }
+      }
+    });
   }
 }

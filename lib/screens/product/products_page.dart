@@ -89,18 +89,18 @@ class _Products_PageState extends State<Products_Page> {
                     showDialog(
                         context: context,
                         builder: (_) => Filterdialog()).then((partSelect){
-                      print(partSelect);
-                      API(context).post('site/checkbox/filter', partSelect).then((value) {
+                         // widget.Url='site/checkbox/filter/mobile?categories?${partSelect}';
+                      print(widget.Url+"&${partSelect}");
+                      API(context).get(widget.Url+"&${partSelect}").then((value) {
                         if (value != null) {
                           if (value['status_code'] == 200) {
                             setState(() {
                               product= Product_model.fromJson(value).data;
-
                             });
                           } else {
                             showDialog(
                                 context: context,
-                                builder: (_) => ResultOverlay(value['message']));
+                                builder: (_) => ResultOverlay("${value['message']}\n${value['errors']}"));
                           }
                         }
                       });

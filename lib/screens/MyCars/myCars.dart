@@ -266,7 +266,6 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (Year u) => u.year,
                                 onChanged: (Year data) {
-                                  print(data.id);
                                   yearsID.text = data.id.toString();
                                 },
                               ),
@@ -438,7 +437,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
   }
 
   void getFavorit() {
-    API(context).get('show/favourite/cars').then((value) {
+    API(context,Check: false).get('show/favourite/cars').then((value) {
       if (value != null) {
         setState(() {
           favourite = Favourite.fromJson(value).data;

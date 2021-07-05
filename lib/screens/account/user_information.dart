@@ -209,26 +209,55 @@ class _UserInfoState extends State<UserInfo> {
                                     Padding(
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 2.0),
-                                        child: TextFormField(
-                                          initialValue: userModal.phoneNo,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(),
-                                          validator: (String value) {
-                                            if (value.isEmpty) {
-                                              return getTransrlate(context, 'phone');
-                                            }else if (value.length<15) {
-                                              return "${getTransrlate(context, 'phone')} = 14";
-                                            }else if (value.length>12) {
-                                              return "${getTransrlate(context, 'phone')} = 14";
-                                            }
-                                            _formKey.currentState.save();
-                                            return null;
-                                          },
-                                          enabled: !_status,
-                                          onSaved: (String val) =>
-                                              userModal.phoneNo = val,
-                                          onChanged: (String val) =>
-                                              userModal.phoneNo = val,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              width: ScreenUtil.getWidth(context)/1.5 ,
+
+                                              child: TextFormField(
+                                                initialValue: userModal.phoneNo,
+                                                keyboardType: TextInputType.number,
+                                                decoration: InputDecoration(),
+                                                validator: (String value) {
+                                                  if (value.isEmpty) {
+                                                    return getTransrlate(context, 'phone');
+                                                  }else if (value.length>15) {
+                                                    return "${getTransrlate(context, 'phone')} > 14";
+                                                  }else if (value.length<9) {
+                                                    return "${getTransrlate(context, 'phone')} < 9";
+                                                  }
+                                                  _formKey.currentState.save();
+                                                  return null;
+                                                },
+                                                enabled: !_status,
+                                                onSaved: (String val) =>
+                                                    userModal.phoneNo = val,
+                                                onChanged: (String val) =>
+                                                    userModal.CountroyCode = val,
+                                              ),
+                                            ),
+                                            userModal.phoneNo!=null?Container():Container(
+                                              width: ScreenUtil.getWidth(context)*0.2 ,
+                                              child: TextFormField(
+                                                initialValue: "966+",
+                                                keyboardType: TextInputType.number,
+                                                decoration: InputDecoration(),
+                                                validator: (String value) {
+                                                  if (value.isEmpty) {
+                                                    return getTransrlate(context, 'CountroyCode');
+                                                  }
+                                                  _formKey.currentState.save();
+                                                  return null;
+                                                },
+                                                enabled: !_status,
+                                                onSaved: (String val) =>
+                                                    userModal.phoneNo = val,
+                                                onChanged: (String val) =>
+                                                    userModal.phoneNo = val,
+                                              ),
+                                            ),
+                                          ],
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
@@ -346,8 +375,7 @@ class _UserInfoState extends State<UserInfo> {
                   onTap: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
+                    //  final SharedPreferences prefs = await SharedPreferences.getInstance();
                       //setState(() => _isLoading = true);
                       API(context).post('user/edit/profile', {
                         "name": userModal.name,

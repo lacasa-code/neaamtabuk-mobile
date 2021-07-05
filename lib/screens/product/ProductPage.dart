@@ -441,7 +441,7 @@ class _ProductPageState extends State<ProductPage> {
                                       name: widget.product.vendorSerial,
                                       id: widget.product.vendorId,
                                       Url:
-                                          'home/vendor/products/${widget.product.vendorId}?cartype_id=${themeColor.getcar_type()}',
+                                          'home/vendor/products/${widget.product.vendorId}?cartype_id=${themeColor.getcar_type()}&',
                                     ));
                               },
                               child: Text(
@@ -1228,7 +1228,7 @@ class _ProductPageState extends State<ProductPage> {
                   key: _formKey,
                   child: Container(
                     margin:
-                        const EdgeInsets.only(bottom: 10, left: 2, right: 2),
+                        const EdgeInsets.only(top: 5,bottom: 10, left: 2, right: 2),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.black26)),
                     child: Row(

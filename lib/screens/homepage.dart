@@ -3,16 +3,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/screens/MyCars/myCars.dart';
 import 'package:flutter_pos/screens/account/Account.dart';
-import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/screens/order/cart.dart';
 import 'package:flutter_pos/screens/account/vendor_information.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/model/ads.dart';
 import 'package:flutter_pos/model/car_type.dart';
-import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/screens/product/category.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -42,7 +39,7 @@ class _HomeState extends State<Home> {
   List<Product> productMostView;
   List<Product> productMostSale;
   List<CarType> cartype;
-  List<Ads> ads;
+  Ads ads;
   int checkboxType = 0;
 
   int complete;
@@ -115,13 +112,7 @@ class _HomeState extends State<Home> {
         });
       }
     });
-    API(context).get('site/ads').then((value) {
-      if (value != null) {
-        setState(() {
-          ads = Ads_model.fromJson(value).data;
-        });
-      }
-    });
+
     SharedPreferences.getInstance().then((value) {
       complete = value.getInt('complete');
     });
@@ -129,8 +120,15 @@ class _HomeState extends State<Home> {
   }
 
   getData(int cartypeId) {
+    API(context).get('site/ads/show/filter?cartype_id=$cartypeId&platform=mobile').then((value) {
+    if (value != null) {
+      setState(() {
+        ads = Ads.fromJson(value['data']);
+      });
+    }
+  });
     API(context, Check: false)
-        .get('site/new/products?cartype_id":$cartypeId')
+        .get('site/new/products?cartype_id=$cartypeId')
         .then((value) {
       if (value != null) {
         setState(() {
@@ -342,7 +340,7 @@ class _HomeState extends State<Home> {
                     : Padding(
                         padding: EdgeInsets.only(top: 10),
                         child: CarouselSlider(
-                          items: ads
+                          items: ads.carousel
                               .map((item) => Banner_item(
                                     item: item.photo.image,
                                   ))
@@ -374,7 +372,7 @@ class _HomeState extends State<Home> {
                 ),
                 ads == null
                     ? Container()
-                    : SliderDotAds(_carouselCurrentPage, ads),
+                    : SliderDotAds(_carouselCurrentPage, ads.carousel),
                 productMostView == null
                     ? Padding(
                         padding: const EdgeInsets.all(24.0),
@@ -405,11 +403,11 @@ class _HomeState extends State<Home> {
                         primary: false,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: ads.length,
+                        itemCount: ads.middle.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Banner_item(item: ads[index].photo.image),
+                            child: Banner_item(item: ads.middle[index].photo.image),
                           );
                         },
                       ),
@@ -423,8 +421,7 @@ class _HomeState extends State<Home> {
                                 themeColor: themeColor,
                                 title: getTransrlate(context, 'moresale'),
                                 description: getTransrlate(context, 'showAll'),
-                                url:
-                                    'best/seller/products?cartype_id=${cartype[checkboxType].id}',
+                                url: 'best/seller/products?cartype_id=${cartype[checkboxType].id}',
                               ),
                               list_product(themeColor, productMostSale),
                               SizedBox(
@@ -432,6 +429,20 @@ class _HomeState extends State<Home> {
                               )
                             ],
                           ),
+                ads == null
+                    ? Container()
+                    : ListView.builder(
+                  primary: false,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: ads.bottom.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Banner_item(item: ads.bottom[index].photo.image),
+                    );
+                  },
+                ),
               ],
             ),
           ),
