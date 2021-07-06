@@ -116,7 +116,7 @@ bool isloading=false;
                       'email': model.email,
                       'password': model.password,
                     }).then((value) {
-                      setState(() => isloading = false);
+                     // setState(() => isloading = false);
                       if (value != null) {
                         if (value['status_code'] == 200) {
                           var user = value['data'];

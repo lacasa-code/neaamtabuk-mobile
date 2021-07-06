@@ -87,10 +87,10 @@ class API {
     var request = http.MultipartRequest(
         'POST', Uri.parse(full_url.toString())); // your server url
     request.fields.addAll(body); // any other fields required by your server
-    request.files.add(await http.MultipartFile.fromPath('commercialDocs', '${commercialDocs.path}')); // file you want to upload
-    request.files.add(await http.MultipartFile.fromPath('taxCardDocs', '${taxCardDocs.path}')); // file you want to upload
-    request.files.add(await http.MultipartFile.fromPath('wholesaleDocs', '${wholesaleDocs.path}')); // file you want to upload
-    request.files.add(await http.MultipartFile.fromPath('bankDocs', '${bankDocs.path}')); // file you want to upload
+    commercialDocs==null?null:  request.files.add(await http.MultipartFile.fromPath('commercialDocs', '${commercialDocs.path}')); // file you want to upload
+    taxCardDocs==null?null: request.files.add(await http.MultipartFile.fromPath('taxCardDocs', '${taxCardDocs.path}')); // file you want to upload
+    wholesaleDocs==null?null: request.files.add(await http.MultipartFile.fromPath('wholesaleDocs', '${wholesaleDocs.path}')); // file you want to upload
+    bankDocs==null?null: request.files.add(await http.MultipartFile.fromPath('bankDocs', '${bankDocs.path}')); // file you want to upload
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     print(await request.files);

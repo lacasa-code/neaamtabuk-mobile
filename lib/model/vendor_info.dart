@@ -39,6 +39,9 @@ class Vendor {
   String taxCardDoc;
   String bankAccount;
   int approved;
+  int compete;
+  int compete_store;
+  int compete_docs;
   int complete;
   int declined;
   int rejected;
@@ -75,7 +78,11 @@ class Vendor {
         this.commercialDocs,
         this.taxCardDocs,
         this.wholesaleDocs,
-        this.bankDocs});
+        this.bankDocs,
+        this.compete,
+        this.compete_docs,
+        this.compete_store,
+      });
 
   Vendor.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -96,6 +103,9 @@ class Vendor {
     complete = json['complete'];
     declined = json['declined'];
     rejected = json['rejected'];
+    compete_docs = json['compete_docs'];
+    compete_store = json['compete_store'];
+    compete = json['complete'];
     companyName = json['company_name'];
     userDetails = json['user_details'] != null
         ? new UserDetails.fromJson(json['user_details'])

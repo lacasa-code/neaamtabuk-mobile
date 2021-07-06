@@ -211,7 +211,7 @@ class _RegisterFormState extends State<RegisterForm> {
         setState(() => _isLoading = false);
         var user = value['data'];
         prefs.setString("user_email", user['email']);
-        prefs.setString("email_verified_at", user['email_verified_at']);
+      //  prefs.setString("email_verified_at", user['email_verified_at']);
         if (user.containsKey('vendor_details')) {
           prefs.setInt(
               "complete", user['vendor_details']['complete']);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/account/Account.dart';
-import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
@@ -223,8 +222,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
         setState(() => _isLoading = false);
         var user = value['data'];
         if (user.containsKey('vendor_details')) {
-          prefs.setInt(
-              "complete", user['vendor_details']['complete']);
+        //  prefs.setInt("complete", user['vendor_details']['complete']);
           prefs.setString("vendor", 'vendor');
         }
         prefs.setString("user_email", user['email']);
