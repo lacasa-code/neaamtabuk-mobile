@@ -78,7 +78,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     child: ListView.builder(
                                       primary: false,
                                       shrinkWrap: true,
-                                      padding: EdgeInsets.all(1),
+                                      padding: EdgeInsets.symmetric(horizontal: 4),
                                       physics: NeverScrollableScrollPhysics(),
                                       itemCount: categories.length,
                                       itemBuilder:
@@ -92,6 +92,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             });
                                           },
                                           child: Container(
+
                                             padding: const EdgeInsets.only(
                                                 top: 20.0,
                                                 bottom: 20.0,
@@ -110,9 +111,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               "${categories[index].mainCategoryName}",
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
-                                              minFontSize: 13,
+                                              minFontSize: 12,
                                               textAlign: TextAlign.center,
-                                              maxFontSize: 14,
+                                              maxFontSize: 13,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
                                             ),

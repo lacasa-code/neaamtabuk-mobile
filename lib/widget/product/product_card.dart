@@ -82,7 +82,7 @@ class _ProductCardState extends State<ProductCard> {
                   Container(
                     color: Colors.white,
                     width: ScreenUtil.getWidth(context) / 2.1,
-                    padding: EdgeInsets.only(left: 2, top: 10, right: 2),
+                    padding: EdgeInsets.only(left: 5, top: 10, right: 5),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,23 +125,61 @@ class _ProductCardState extends State<ProductCard> {
                                 onRatingUpdate: (rating) {},
                               ),
                             ),
-                            Container(
+                            widget.product.producttypeId == 2
+                                ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${widget.product.holesalePrice ?? ' '} ${getTransrlate(context, 'Currency')} ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,fontSize: 11,
+                                      color: Colors.black),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "الحد الادنى : ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,fontSize: 11),
+                                    ),
+                                    Text(
+                                      '${widget.product.noOfOrders ?? ' '} ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,fontSize: 12,
+                                          color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                                : Container(
                               width: ScreenUtil.getWidth(context) / 4,
                               child: widget.product.discount == 0
-                                  ? AutoSizeText(
+                                  ? Column(
+                                    children: [
+                                      AutoSizeText(
                                 "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
                                 maxLines: 1,
-                                minFontSize: 10,
-                                maxFontSize: 16,
+                                maxFontSize: 12,
                                 style: TextStyle(
-                                    color:Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              )
-                                  : Row(
+                                        color:Colors.black,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                                      AutoSizeText(
+                                " ",
+                                maxLines: 1,
+                                maxFontSize: 12,
+                                style: TextStyle(
+                                        color:Colors.black,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                                    ],
+                                  )
+                                  : Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Container(
-                                    width: ScreenUtil.getWidth(context) / 8,
+                                    width: ScreenUtil.getWidth(context) / 4,
 
                                     child: Text(
                                       "${widget.product.price} ",
@@ -153,7 +191,7 @@ class _ProductCardState extends State<ProductCard> {
                                       ),
                                     ),
                                   ),  Container(
-                                    width: ScreenUtil.getWidth(context) / 8,
+                                    width: ScreenUtil.getWidth(context) / 4,
 
                                     child: Text(
                                       "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",

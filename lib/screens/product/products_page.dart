@@ -21,10 +21,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class Products_Page extends StatefulWidget {
-   int id;
-   String name;
-   String Url;
-   Products_Page({ this.id, this.name, this.Url});
+  int id;
+  String name;
+  String Url;
+
+  Products_Page({this.id, this.name, this.Url});
+
   @override
   _Products_PageState createState() => _Products_PageState();
 }
@@ -32,22 +34,21 @@ class Products_Page extends StatefulWidget {
 class _Products_PageState extends State<Products_Page> {
   List<Product> product;
   bool list = false;
+
   @override
   void initState() {
-
-    API(context)
-        .get(widget.Url)
-        .then((value) {
+    API(context).get(widget.Url).then((value) {
       if (value != null) {
         if (value['status_code'] == 200) {
-        setState(() {
-          product= Product_model.fromJson(value).data;
-        });
+          setState(() {
+            product = Product_model.fromJson(value).data;
+          });
         } else {
           //Navigator.pop(context);
           showDialog(
               context: context,
-              builder: (_) => ResultOverlay("${value['message']??''} ${value['errors']??''}"));
+              builder: (_) => ResultOverlay(
+                  "${value['message'] ?? ''} ${value['errors'] ?? ''}"));
         }
       }
     });
@@ -60,115 +61,128 @@ class _Products_PageState extends State<Products_Page> {
     return Scaffold(
       body: Column(
         children: [
-          AppBarCustom(isback: true,title:widget.name ,),
+          AppBarCustom(
+            isback: true,
+            title: widget.name,
+          ),
           product == null
               ? Container()
               : Container(
-            color: Colors.black26,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      list ? list = false : list = true;
-                    });
-                  },
-                  icon: Icon(
-                    list
-                        ? Icons.table_rows_outlined
-                        : Icons.apps_outlined,
-                    color: Colors.black45,
-                    size: 25,
-                  ),
-                  // color: Color(0xffE4E4E4),
-                ),
-                Text('${product.length} ${getTransrlate(context, 'product')} '),
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (_) => Filterdialog()).then((partSelect){
-                         // widget.Url='site/checkbox/filter/mobile?categories?${partSelect}';
-                      print(widget.Url+"&${partSelect}");
-                      API(context).get(widget.Url+"&${partSelect}").then((value) {
-                        if (value != null) {
-                          if (value['status_code'] == 200) {
-                            setState(() {
-                              product= Product_model.fromJson(value).data;
-                            });
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (_) => ResultOverlay("${value['message']}\n${value['errors']}"));
-                          }
-                        }
-                      });
-                    });
-
-                  },
+                  color: Colors.black26,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(' ${getTransrlate(context, 'filter')}'),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        size: 30,
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            list ? list = false : list = true;
+                          });
+                        },
+                        icon: Icon(
+                          list
+                              ? Icons.table_rows_outlined
+                              : Icons.apps_outlined,
+                          color: Colors.black45,
+                          size: 25,
+                        ),
+                        // color: Color(0xffE4E4E4),
+                      ),
+                      Text(
+                          '${product.length} ${getTransrlate(context, 'product')} '),
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                                  context: context,
+                                  builder: (_) => Filterdialog())
+                              .then((partSelect) {
+                            // widget.Url='site/checkbox/filter/mobile?categories?${partSelect}';
+                            print("${partSelect.contains('&',0)}");
+                            print(widget.Url + "${partSelect.contains('&',0)?'${partSelect}':'&${partSelect}'}");
+                            API(context)
+                                .get(widget.Url + "${partSelect.contains('&',0)?'${partSelect}':'&${partSelect}'}")
+                                .then((value) {
+                              if (value != null) {
+                                if (value['status_code'] == 200) {
+                                  setState(() {
+                                    product =
+                                        Product_model.fromJson(value).data;
+                                  });
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => ResultOverlay(
+                                          "${value['message']}\n${value['errors']}"));
+                                }
+                              }
+                            });
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Text(' ${getTransrlate(context, 'filter')}'),
+                            Icon(
+                              Icons.keyboard_arrow_down,
+                              size: 30,
+                            )
+                          ],
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => Sortdialog()).then((val) {
+                            print(val);
+                            API(context)
+                                .get('${widget.Url}&sort_type=${val}')
+                                .then((value) {
+                              if (value != null) {
+                                if (value['status_code'] == 200) {
+                                  setState(() {
+                                    product =
+                                        Product_model.fromJson(value).data;
+                                  });
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) =>
+                                          ResultOverlay(value['message']));
+                                }
+                              }
+                            });
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Text(' ${getTransrlate(context, 'Sort')}'),
+                            Icon(
+                              Icons.keyboard_arrow_down,
+                              size: 30,
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context, builder: (_) => Sortdialog()).then((val){
-                      print(val);
-                      API(context)
-                          .get('${widget.Url}&sort_type=${val}')
-                          .then((value) {
-                        if (value != null) {
-                          if (value['status_code'] == 200) {
-                            setState(() {
-                              product= Product_model.fromJson(value).data;
-
-                            });
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (_) => ResultOverlay(value['message']));
-                          }
-                        }
-                      });
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Text(' ${getTransrlate(context, 'Sort')}'),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        size: 30,
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   product == null
                       ? Custom_Loading()
-                      :product.isEmpty
-                      ? NotFoundProduct()
-                      : list
-                          ? grid_product(
-                              product:product,
-                            )
-                          : List_product(
-                              product:product,
-                            ),
-                  SizedBox(height: 25,)
+                      : product.isEmpty
+                          ? NotFoundProduct()
+                          : list
+                              ? grid_product(
+                                  product: product,
+                                )
+                              : List_product(
+                                  product: product,
+                                ),
+                  SizedBox(
+                    height: 25,
+                  )
                 ],
               ),
             ),
@@ -177,5 +191,4 @@ class _Products_PageState extends State<Products_Page> {
       ),
     );
   }
-
 }

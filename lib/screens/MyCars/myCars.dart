@@ -247,29 +247,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                   padding: const EdgeInsets.only(right: 24, left: 24),
                   child: Column(
                     children: [
-                      years == null
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownSearch<Year>(
-                                showSearchBox: true,
-                                showClearButton: true,
-                                label: "  سنة الصنع ",
-                                validator: (Year item) {
-                                  if (item == null) {
-                                    return "Required field";
-                                  } else
-                                    return null;
-                                },
 
-                                items: years,
-                                //  onFind: (String filter) => getData(filter),
-                                itemAsString: (Year u) => u.year,
-                                onChanged: (Year data) {
-                                  yearsID.text = data.id.toString();
-                                },
-                              ),
-                            ),
                       car_mades == null
                           ? Container()
                           : Padding(
@@ -305,6 +283,29 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                     CarmodelsID.text = data.id.toString(),
                               ),
                             ),
+                      years == null
+                          ? Container()
+                          : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: DropdownSearch<Year>(
+                          showSearchBox: true,
+                          showClearButton: true,
+                          label: "  سنة الصنع ",
+                          validator: (Year item) {
+                            if (item == null) {
+                              return "Required field";
+                            } else
+                              return null;
+                          },
+
+                          items: years,
+                          //  onFind: (String filter) => getData(filter),
+                          itemAsString: (Year u) => u.year,
+                          onChanged: (Year data) {
+                            yearsID.text = data.id.toString();
+                          },
+                        ),
+                      ),
                       transmissions == null
                           ? Container()
                           : Padding(

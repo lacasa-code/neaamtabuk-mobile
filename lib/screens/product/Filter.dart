@@ -334,7 +334,7 @@ class _FilterdialogState extends State<Filterdialog> {
                               "${manufacturerSelect.isEmpty?'':"&manufacturers=${manufacturerSelect.toString()}"}"
                               "${partSelect.isEmpty?'':"&part_categories=${partSelect.toString()}"}"
                               "${originSelect.isEmpty?'':"&origins=${originSelect.toString()}"}"
-                              "${_currentRangeValues.start.round().toString().isEmpty?'':"start_price=${_currentRangeValues.start.round().toString()}"}"
+                              "${_currentRangeValues.start.round().toString().isEmpty?'':"&start_price=${_currentRangeValues.start.round().toString()}"}"
                               "${_currentRangeValues.end.round().toString().isEmpty?'':"&end_price=${_currentRangeValues.end.round().toString()}"}"
                               );
                     },

@@ -93,13 +93,12 @@ class API {
     bankDocs==null?null: request.files.add(await http.MultipartFile.fromPath('bankDocs', '${bankDocs.path}')); // file you want to upload
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-    print(await request.files);
+    //print(await request.files);
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.stream.toString());
-    } else {
-      return jsonDecode(response.stream.toString());
-    }
+    return response.stream.bytesToString().then((value) {
+      print(jsonDecode(value));
+      return jsonDecode(value);
+    } );
   }
   Put(String url, Map<String, dynamic> body) async {
     final full_url =
@@ -137,7 +136,6 @@ class API {
   }
   getAction(http.Response response) {
     print(response.body);
-
     if (Check) {
       if (response.statusCode == 500) {
         Nav.route(

@@ -24,7 +24,7 @@
 
   "good_morning": "Good Morning",
   "good_night": "Good Night",
-  "contact": "Call Naw",
+  "contact": "Contact us",
   "language": "language",
   "allproduct": "all Product",
   "category": "Categories",
@@ -57,11 +57,13 @@
   "Shopping": "Shopping Now",
   "SelectDate": "Select Date",
   "SelectTime": "Select Time",
+  "gender": "Gender",
 
   "day": "day",
   "weekly": "weekly",
   "15day": "two week",
   "month": "monthly",
+  "birthdate": "Birthdate",
   "2month": "two month",
 
 
@@ -75,9 +77,9 @@
 
   "Content": "Content",
 
-  "offers": "Last Product ",
+  "offers": "Last Products ",
   "diconts": "Discount ",
-  "moresale": "Last Service",
+  "moresale": "Most Seller",
   "intersted": "Recent View",
 
 

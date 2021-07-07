@@ -1228,7 +1228,7 @@ class _ProductPageState extends State<ProductPage> {
                   key: _formKey,
                   child: Container(
                     margin:
-                        const EdgeInsets.only(top: 5,bottom: 10, left: 2, right: 2),
+                        const EdgeInsets.only(top: 5,bottom: 25, left: 2, right: 2),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.black26)),
                     child: Row(

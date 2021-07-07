@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
-        title: ("الرئيسية"),
+        title: getTransrlate(context, 'HomePage'),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -154,6 +154,8 @@ class _HomeState extends State<Home> {
         });
       }
     });
+    Provider.of<Provider_Data>(context,listen: false).getShipping(context);
+
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -485,7 +487,7 @@ class _HomeState extends State<Home> {
       minSpacing: 10,
       children: product.map((e) => Center(
         child: Padding(
-          padding: const EdgeInsets.only(right: 16, bottom: 16),
+          padding: const EdgeInsets.only(right: 8, bottom: 8),
           child: ProductCard(
             themeColor: themeColor,
             product:e,

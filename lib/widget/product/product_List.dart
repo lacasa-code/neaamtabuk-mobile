@@ -98,12 +98,13 @@ class _ProductListState extends State<ProductList> {
                           AutoSizeText(
                             widget.product.name,
                             maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 16,
                               color: Color(0xFF5D6A78),
                               fontWeight: FontWeight.w300,
                             ),
-                            minFontSize: 11,
+                            minFontSize: 14,
                           ),
                           SizedBox(
                             height: 5,
@@ -128,7 +129,46 @@ class _ProductListState extends State<ProductList> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
-                              Container(
+                              widget.product.producttypeId == 2
+                                  ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "سعر الجملة  : ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400,fontSize: 11),
+                                      ),
+                                      Text(
+                                        '${widget.product.holesalePrice ?? ' '} ${getTransrlate(context, 'Currency')} ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,fontSize: 11,
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "الحد الادنى للطلب  : ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400,fontSize: 11),
+                                      ),
+                                      Text(
+                                        '${widget.product.noOfOrders ?? ' '} ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,fontSize: 11,
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                                  : Container(
                                   width: ScreenUtil.getWidth(context) /3,
                                   child: widget.product.discount == 0
                                       ? AutoSizeText(

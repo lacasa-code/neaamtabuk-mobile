@@ -308,7 +308,7 @@ class _ProductCartState extends State<ProductCart> {
                                               showDialog(
                                                   context: context,
                                                   builder: (_) => ResultOverlay(
-                                                      value['message']));
+                                                      value['errors']));
                                             }
                                           }
                                         });
@@ -353,7 +353,7 @@ class _ProductCartState extends State<ProductCart> {
                                               showDialog(
                                                   context: context,
                                                   builder: (_) => ResultOverlay(
-                                                      value['message']));
+                                                      value['errors']));
                                             }
                                           }
                                         });
@@ -426,7 +426,7 @@ class _ProductCartState extends State<ProductCart> {
         } else {
           showDialog(
               context: context,
-              builder: (_) => ResultOverlay(value['message']));
+              builder: (_) => ResultOverlay(value['errors']));
         }
       }
     });

@@ -7,6 +7,7 @@ import 'package:flutter_pos/screens/address/add_address.dart';
 import 'package:flutter_pos/model/shipping_address.dart';
 import 'package:flutter_pos/screens/address/edit_address.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -36,6 +37,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
+    final _cart_model = Provider.of<Provider_Data>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -84,7 +86,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                         setState(() {
                                           checkboxValue = value;
                                           API(context).post(
-                                              'user/select/shipping/${address[index].id}',
+                                              'user/mark/default/shipping/${address[index].id}',
                                               {}).then((value) {
                                             if (value != null) {
                                               if (value['status_code'] ==
@@ -95,6 +97,8 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                                     builder: (_) =>
                                                         ResultOverlay(value[
                                                         'message']));
+                                                _cart_model.setShipping(address[index]);
+
                                               } else {
                                                 showDialog(
                                                     context: context,

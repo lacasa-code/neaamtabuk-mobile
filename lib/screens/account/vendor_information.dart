@@ -357,7 +357,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 ),
                                                 Tooltip(
                                                   key: _toolTipKey,
-                                                  message: 'My Account',
+                                                  message: 'رقم السجل التجاري',
                                                   waitDuration:
                                                       Duration(seconds: 2),
                                                   showDuration:
@@ -442,7 +442,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                               return null;
                                             },
                                             onSaved: (String value) {
-                                              userModal.commercialNo = value;
+                                              userModal.taxCardNo = value;
                                             },
                                           ),
                                           SizedBox(
@@ -499,7 +499,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 ),
                                                 Tooltip(
                                                   key: _toolTip1,
-                                                  message: 'My Account',
+                                                  message: 'رقم البطاقة الضريبية',
                                                   waitDuration:
                                                       Duration(seconds: 2),
                                                   showDuration:
@@ -569,16 +569,20 @@ class _VendorInfoState extends State<VendorInfo> {
                                             height: 10,
                                           ),
                                       _value==2?Container():  Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              MyTextFormField(
-                                                keyboard_type:
-                                                    TextInputType.emailAddress,
-                                                labelText: 'تصريح تاجر الجملة',
-                                                hintText: "تصريح تاجر الجملة",
-                                                isPhone: true,
-                                                onSaved: (String value) {
-                                                  userModal.commercialDoc = value;
-                                                },
+                                              AutoSizeText(
+                                                "تصريح تاجر الجملة",
+                                                overflow: TextOverflow
+                                                    .ellipsis,
+                                                maxFontSize: 14,
+                                                maxLines: 1,
+                                                minFontSize: 10,
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold,
+                                                    color:
+                                                    Colors.black54),
                                               ),
                                               SizedBox(
                                                 height: 10,
@@ -634,7 +638,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     ),
                                                     Tooltip(
                                                       key: _toolTip2,
-                                                      message: 'My Account',
+                                                      message: 'تصريح تاجر الجملة',
                                                       waitDuration:
                                                       Duration(seconds: 2),
                                                       showDuration:
@@ -714,9 +718,9 @@ class _VendorInfoState extends State<VendorInfo> {
                                             hintText: "رقم الحساب البنكي",
                                             isPhone: true,
                                             validator: (String value) {
-                                              if (value.isEmpty) {
-                                                return "رقم الحساب البنكي";
-                                              }
+                                              // if (value.isEmpty) {
+                                              //   return "رقم الحساب البنكي";
+                                              // }
                                               _formKey.currentState.save();
                                               return null;
                                             },
@@ -778,7 +782,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 ),
                                                 Tooltip(
                                                   key: _toolTip3,
-                                                  message: 'My Account',
+                                                  message: 'رقم الحساب البنكي',
                                                   waitDuration:
                                                       Duration(seconds: 2),
                                                   showDuration:
@@ -878,13 +882,35 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       {
                                                         "user_id": userModal.useridId.toString(),
                                                         "vendor_id": userModal.id.toString(),
-                                                        "type": _vendor_types[_value].id.toString(),
-                                                        "company_name": userModal.companyName,
+                                                        "type": _value.toString(),
+                                                        "company_name": userModal.companyName??' ',
+                                                        "commercial_no": userModal.commercialNo??' ',
+                                                        "tax_card_no": userModal.taxCardNo??' ',
+                                                        "bank_account": userModal.bankAccount??' ',
                                                       },
                                                       bankDocs: bankDocs,
                                                       commercialDocs: commercialDocs,
                                                       taxCardDocs: taxCardDocs,
-                                                      wholesaleDocs: wholesaleDocs);
+                                                      wholesaleDocs: wholesaleDocs).then((value) {
+                                                        print(value);
+                                                    if (value != null) {
+                                                      if (value['status_code'] ==
+                                                          200) {
+                                                        Navigator.pop(context);
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (_) =>
+                                                                ResultOverlay(value[
+                                                                'message']));
+                                                      } else {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (_) =>
+                                                                ResultOverlay(value[
+                                                                'message']));
+                                                      }
+                                                    }
+                                                  });
                                                 }
                                               },
                                             ),

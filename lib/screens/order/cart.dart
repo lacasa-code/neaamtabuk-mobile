@@ -46,13 +46,17 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
-    final _cart_model = Provider.of<Provider_Data>(context).cart_model;
+    final _cart_model = Provider.of<Provider_Data>(context);
 
     return Scaffold(
       bottomNavigationBar: themeColor.isLogin
           ? _cart_model != null
-              ? _cart_model.data != null
+              ? _cart_model.cart_model != null
+                  ? _cart_model.cart_model.data != null
                   ? Container(
+        height: 1,
+        width: 1,
+      ):Container(
                       height: 90,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black26)),
@@ -65,7 +69,7 @@ class _CartScreenState extends State<CartScreen> {
                                 pushNewScreen(
                                   context,
                                   screen: CheckOutPage(
-                                    carts: _cart_model,
+                                    carts: _cart_model.cart_model,
                                   ),
                                   withNavBar: false, // OPTIONAL VALUE. True by default.
                                   pageTransitionAnimation: PageTransitionAnimation.cupertino,
@@ -121,10 +125,12 @@ class _CartScreenState extends State<CartScreen> {
                                 padding: const EdgeInsets.all(24.0),
                                 child: Custom_Loading(),
                               ))
-                            : _cart_model.data == null
+                            : _cart_model.cart_model == null
+                                ? Container()
+                                :_cart_model.cart_model.data == null
                                 ? NotFoundProduct()
                                 : SingleChildScrollView(
-                                    child: _cart_model.data.orderDetails.isEmpty
+                                    child: _cart_model.cart_model.data.orderDetails.isEmpty
                                         ? NotFoundProduct()
                                         : Container(
                                             child: Column(
@@ -135,7 +141,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Text(
-                                                    '${getTransrlate(context, 'ShoppingCart')} (${_cart_model.data.count_pieces})',
+                                                    '${getTransrlate(context, 'ShoppingCart')} (${_cart_model.cart_model.data.count_pieces})',
                                                     style: TextStyle(
                                                         color: Colors.black,
                                                         fontWeight:
@@ -164,7 +170,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                         context) /
                                                                 1.3,
                                                             child: Text(
-                                                              'توصيل إلى: مبنى 15، تبوك، شارع الأمير سلمان',
+                                                              _cart_model.address==null?'غير محدد حاليا': 'توصيل إلى: ${_cart_model.address.area==null?'':_cart_model.address.area.areaName??''},${_cart_model.address.city==null?'':_cart_model.address.city.cityName??''}.${_cart_model.address.street??''}',
                                                               maxLines: 1,
                                                               overflow:
                                                                   TextOverflow
@@ -197,14 +203,14 @@ class _CartScreenState extends State<CartScreen> {
                                                   padding: EdgeInsets.all(1),
                                                   physics:
                                                       NeverScrollableScrollPhysics(),
-                                                  itemCount: _cart_model
+                                                  itemCount: _cart_model.cart_model
                                                       .data.orderDetails.length,
                                                   itemBuilder:
                                                       (BuildContext context,
                                                           int index) {
                                                     return ProductCart(
                                                         themeColor: themeColor,
-                                                        carts: _cart_model.data
+                                                        carts: _cart_model.cart_model.data
                                                                 .orderDetails[
                                                             index]);
                                                   },
@@ -240,7 +246,7 @@ class _CartScreenState extends State<CartScreen> {
                                                         ),
                                                         Container(
                                                           child: AutoSizeText(
-                                                            " ${_cart_model.data.orderTotal} ${getTransrlate(context, 'Currency')}",
+                                                            " ${_cart_model.cart_model.data.orderTotal} ${getTransrlate(context, 'Currency')}",
                                                             maxLines: 1,
                                                             minFontSize: 20,
                                                             maxFontSize: 25,

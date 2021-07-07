@@ -115,11 +115,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                     'عنوان التوصيل: ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    '${widget.order.address==null?'':widget.order.address.address??''}',
+                  widget.order.address==null?Container():Text(
+                    '${widget.order.address.area==null?'':widget.order.address.area.areaName??''},${widget.order.address.street??''}',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                 ],
@@ -143,6 +140,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                         'إجمالي المنتجات:',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
+                      ),SizedBox(
+                        width: 15,
                       ),
                       Text(
                         '${widget.order.orderTotal} ${getTransrlate(context, 'Currency')}',
@@ -160,6 +159,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                         'رسوم الشحن:',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
+                      ),SizedBox(
+                        width: 15,
                       ),
                       Text(
                         '${widget.order.orderTotal} ${getTransrlate(context, 'Currency')}',
@@ -177,6 +178,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                         'إجمالي الطلب: ',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
+                      ),SizedBox(
+                        width: 15,
                       ),
                       Text(
                         '${widget.order.orderTotal} ${getTransrlate(context, 'Currency')}',

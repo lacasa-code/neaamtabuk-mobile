@@ -8,6 +8,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_pos/widget/product/Wish_List_item.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +48,7 @@ class _WishListState extends State<WishList> {
             Container(
                 width: ScreenUtil.getWidth(context) / 2,
                 child: AutoSizeText(
-                  'قائمة المنتجات المفضلة',
+                  getTransrlate(context, 'MyFav'),
                   minFontSize: 10,
                   maxFontSize: 16,
                   maxLines: 1,
@@ -57,7 +58,7 @@ class _WishListState extends State<WishList> {
       ),
       body:!themeColor.isLogin?Notlogin(): Container(
         child: wishList == null
-            ? Container()
+            ? Center(child: Custom_Loading())
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),

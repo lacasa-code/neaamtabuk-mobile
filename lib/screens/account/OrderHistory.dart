@@ -10,6 +10,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
@@ -66,7 +67,7 @@ class _OrderHistoryState extends State<OrderHistory> {
           ),
         ),
         body:!themeColor.isLogin?Notlogin(): orders == null
-            ? Container()
+            ? Center(child: Custom_Loading())
             : SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.all(ScreenUtil.getWidth(context) / 15),

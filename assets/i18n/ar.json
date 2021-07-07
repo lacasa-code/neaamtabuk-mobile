@@ -146,7 +146,8 @@
   "Cart": "العربة",
   "Shopping": "تسوق الأن",
   "SelectDate": "برجاء تحديد تاريخ الأستلام",
-  "SelectTime": "برجاء تحديد توقيت الأستلام",
+  "gender": "الجنس",
+  "birthdate": "تاريخ الميلاد",
 
   "CartEmpty": "العربة الفارغة",
   "ProfileSettings": "البيانات الشخصية",
@@ -158,7 +159,7 @@
   "Conditions": "شروط وأحكام",
   "return": "سياسة الاسترجاع",
   "Support": "مساعدة",
-  "HomePage": "الصفحة الرئيسية",
+  "HomePage": "الرئيسية",
   "Logout": "تسجيل الخروج",
   "OrderDetails": "طلباتى",
   "MyProfileInfo": "البيانات الشخصية",

@@ -75,8 +75,11 @@ class Order {
     if (json['paymentway'] != null) {
       payment = Payment.fromJson(json['paymentway']);
     }
+    print(json['shipping']);
+
     if (json['shipping'] != null) {
       address = Address.fromJson(json['shipping']);
+      print(json['shipping']);
     }
     if (json['orderDetails'] != null) {
       orderDetails = new List<OrderDetails>();

@@ -524,7 +524,7 @@ class _AccountState extends State<Account> {
                                     width: ScreenUtil.getWidth(context) / 3.1,
                                     child: TextButton(
                                         onPressed: () {
-                                          _launchURL('https://frontend.lacasacode.dev/register');
+                                          Nav.route(context, RegisterPage());
 
                                         },
                                         child: AutoSizeText(

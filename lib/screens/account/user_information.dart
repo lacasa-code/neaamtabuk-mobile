@@ -11,6 +11,7 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,7 +64,8 @@ class _UserInfoState extends State<UserInfo> {
               SizedBox(
                 width: 10,
               ),
-              Text('البيانات الشخصية'),
+              Text(getTransrlate(context, 'ProfileSettings'),
+              ),
             ],
           ),
         ),
@@ -263,7 +265,7 @@ class _UserInfoState extends State<UserInfo> {
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 25.0),
                                         child: Text(
-                                          'تاريخ الميلاد',
+                                          getTransrlate(context, 'birthdate'),
                                         )),
                                     InkWell(
                                       onTap: (){
@@ -287,7 +289,7 @@ class _UserInfoState extends State<UserInfo> {
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 25.0),
                                         child: Text(
-                                          'الجنس',
+                                         getTransrlate(context, 'gender'),
                                         )),
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -319,7 +321,7 @@ class _UserInfoState extends State<UserInfo> {
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 25.0),
                                         child: Text(
-                                          'كلمة المرور',
+                                          getTransrlate(context, 'password'),
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
@@ -354,7 +356,7 @@ class _UserInfoState extends State<UserInfo> {
   }
   Future<void> _selectDateto(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-        context: context,initialDate: DateTime(2005),lastDate: DateTime(2005), firstDate: DateTime(1900));
+        context: context,initialDate: DateTime(2005),lastDate: DateTime(2005), firstDate: DateTime(1930));
     if (picked != null)
       setState(() {
         _tocontroller.text = DateFormat('yyyy-MM-dd').format(picked);
@@ -401,7 +403,7 @@ class _UserInfoState extends State<UserInfo> {
                             showDialog(
                                 context: context,
                                 builder: (_) =>
-                                    ResultOverlay(value['message']));
+                                    ResultOverlay(value['errors'] + value['errors']));
                           }
                         }
                       });
@@ -414,7 +416,7 @@ class _UserInfoState extends State<UserInfo> {
                           border: Border.all(color: Colors.orange)),
                       child: Center(
                         child: Text(
-                          "حفظ",
+                            getTransrlate(context, 'save'),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.orange),
@@ -441,7 +443,7 @@ class _UserInfoState extends State<UserInfo> {
                           BoxDecoration(border: Border.all(color: Colors.grey)),
                       child: Center(
                         child: Text(
-                          "إلغاء",
+    getTransrlate(context, 'cancel'),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.grey),
                         ),
