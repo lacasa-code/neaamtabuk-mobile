@@ -26,7 +26,7 @@ class Reviews {
   List<ReviewsData> reviewsData;
   int reviewsCount;
   int evaluationsCount;
-  int avgValuations;
+  String avgValuations;
 
   Reviews(
       {this.reviewsData,
@@ -43,7 +43,7 @@ class Reviews {
     }
     reviewsCount = json['reviews_count'];
     evaluationsCount = json['evaluations_count'];
-    avgValuations = json['avg_valuations'];
+    avgValuations = json['avg_valuations'].toString();
   }
 
   Map<String, dynamic> toJson() {

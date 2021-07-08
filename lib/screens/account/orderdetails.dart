@@ -34,7 +34,7 @@ class _OrderdetailsState extends State<Orderdetails> {
             Container(
                 width: ScreenUtil.getWidth(context) / 2,
                 child: AutoSizeText(
-                  'الطلبات والمشتريات',
+                  getTransrlate(context, 'Myorders'),
                   minFontSize: 10,
                   maxFontSize: 16,
                   maxLines: 1,
@@ -50,7 +50,7 @@ class _OrderdetailsState extends State<Orderdetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'تفاصيل الطلب',
+                '${getTransrlate(context, 'OrderDitails')} ',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               SizedBox(
@@ -66,9 +66,9 @@ class _OrderdetailsState extends State<Orderdetails> {
               Row(
                 children: [
                   Text(
-                    'رقم الطلب: ',
+                    '${getTransrlate(context, 'OrderNO')} : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                  ),
+                  ), SizedBox(width: 10,),
                   Text(
                     '${widget.order.orderNumber}',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -81,9 +81,9 @@ class _OrderdetailsState extends State<Orderdetails> {
               Row(
                 children: [
                   Text(
-                    'تاريخ الطلب: ',
+                    '${getTransrlate(context, 'OrderDate')} : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                  ),
+                  ), SizedBox(width: 5,),
                   Text(
                     '${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.order.createdAt))}',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -96,7 +96,7 @@ class _OrderdetailsState extends State<Orderdetails> {
               Row(
                 children: [
                   Text(
-                    'طريقة الدفع: ',
+                    '${getTransrlate(context, 'paymentMethod')} : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   Text(
@@ -112,7 +112,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'عنوان التوصيل: ',
+                    '${getTransrlate(context, 'addressShipping')} : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   widget.order.address==null?Container():Text(
@@ -128,7 +128,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                     height: 15,
                   ),
                   Text(
-                    'ملخص الطلب: ',
+                    '${getTransrlate(context, 'OrderPref')} : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
@@ -137,7 +137,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   Row(
                     children: [
                       Text(
-                        'إجمالي المنتجات:',
+                        '${getTransrlate(context, 'total_product')} :',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),SizedBox(
@@ -156,7 +156,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   Row(
                     children: [
                       Text(
-                        'رسوم الشحن:',
+                        '${getTransrlate(context, 'fees_ship')} :',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),SizedBox(
@@ -175,7 +175,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   Row(
                     children: [
                       Text(
-                        'إجمالي الطلب: ',
+                        '${getTransrlate(context, 'total_order')} : ',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),SizedBox(
@@ -195,7 +195,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'حالة الطلب: ',
+                        '${getTransrlate(context, 'OrderState')} : ',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w500),
                       ),
@@ -236,7 +236,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                 height: 5,
               ),
               Text(
-                'الشحنة 1',
+                '${getTransrlate(context, 'Shipping')}  1',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(
@@ -308,7 +308,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                               ));
                                         },
                                         child: AutoSizeText(
-                                          'إبلاغ عن مشكلة',
+                                          '${getTransrlate(context, 'problem')} ',
                                           maxLines: 1,
                                           style: TextStyle(
                                               color: Colors.orange,
@@ -317,7 +317,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                         ),
                                       ),
                                       AutoSizeText(
-                                        "كمية : ${widget.order.orderDetails[i].quantity}",
+                                        "${getTransrlate(context, 'quantity')}  : ${widget.order.orderDetails[i].quantity}",
                                         maxLines: 2,
                                         style: TextStyle(
                                           fontSize: 14,
@@ -326,7 +326,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                         minFontSize: 11,
                                       ),
                                       AutoSizeText(
-                                        "سعر : ${widget.order.orderDetails[i].price}  ${getTransrlate(context, 'Currency')}",
+                                        "${getTransrlate(context, 'price')}  : ${widget.order.orderDetails[i].price}  ${getTransrlate(context, 'Currency')}",
                                         maxLines: 2,
                                         style: TextStyle(
                                           fontSize: 14,
@@ -350,15 +350,15 @@ class _OrderdetailsState extends State<Orderdetails> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'إجمالي المنتجات: ${widget.order.orderTotal ?? '0'} ${getTransrlate(context, 'Currency')} ',
+                    '${getTransrlate(context, 'total_product')} : ${widget.order.orderTotal ?? '0'} ${getTransrlate(context, 'Currency')} ',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    'رسوم الشحن: ${widget.order.orderTotal ?? '0'} ${getTransrlate(context, 'Currency')} ',
+                    '${getTransrlate(context, 'fees_ship')} : ${widget.order.orderTotal ?? '0'} ${getTransrlate(context, 'Currency')} ',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    'إجمالي الطلب: ${widget.order.orderTotal ?? '0'} ${getTransrlate(context, 'Currency')} ',
+                    '${getTransrlate(context, 'total_order')} : ${widget.order.orderTotal ?? '0'} ${getTransrlate(context, 'Currency')} ',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,

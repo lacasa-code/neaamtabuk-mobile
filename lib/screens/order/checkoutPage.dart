@@ -858,6 +858,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                 ),
                                 Text(
                                   '${checkout_model.message}',
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.lightGreen,
                                       fontWeight: FontWeight.bold,

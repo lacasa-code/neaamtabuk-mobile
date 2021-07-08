@@ -52,6 +52,7 @@ class MyTextFormField extends StatelessWidget {
           TextFormField(
             controller: controller,
             focusNode: focus,
+
             autofocus: true,
             onTap: press,
             initialValue: intialLabel,

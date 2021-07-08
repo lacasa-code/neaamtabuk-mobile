@@ -306,27 +306,32 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                 ],
                               )
-                            : Text(
-                                "${widget.product.price} ${getTransrlate(context, 'Currency')} ",
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  decoration: widget.product.discount != 0
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                        widget.product.discount == 0
-                            ? Container()
-                            : Text(
-                                "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
+                            : Row(
+                              children: [
+                                Text(
+                                    "${widget.product.price} ${getTransrlate(context, 'Currency')} ",
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      decoration: widget.product.discount != 0
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                widget.product.discount == 0
+                                    ? Container()
+                                    : Text(
+                                  "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ),
+
                         Expanded(child: SizedBox(height: 10)),
                         Row(
                           children: [

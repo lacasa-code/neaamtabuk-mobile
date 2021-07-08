@@ -124,7 +124,7 @@ class _VendorInfoState extends State<VendorInfo> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 50,
+                      height: 20,
                     ),
                     SvgPicture.asset(
                       "assets/icons/Attention.svg",
@@ -138,6 +138,101 @@ class _VendorInfoState extends State<VendorInfo> {
                       'حسابك كبائع حاليا مفعل',
                       style: TextStyle(color: Colors.green,fontSize: 25),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'نوع التاجر :',
+                          style: TextStyle(color: Colors.green,fontSize: 16),
+                        ),
+                        Text(
+                          '${userModal.venType}',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'الشركة :',
+                          style: TextStyle(color: Colors.green,fontSize: 16),
+                        ),
+                        Text(
+                          '${userModal.companyName}',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'الهاتف :',
+                          style: TextStyle(color: Colors.green,fontSize: 16),
+                        ),
+                        Text(
+                          '${userModal.userDetails.phoneNo}',textDirection: TextDirection.ltr,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'رقم السجل التجارى:',
+                          style: TextStyle(color: Colors.green,fontSize: 16),
+                        ),
+                        Text(
+                          '${userModal.commercialNo}',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'رقم البطاقة الضريبية:',
+                          style: TextStyle(color: Colors.green,fontSize: 16),
+                        ),
+                        Text(
+                          '${userModal.taxCardNo}',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'رقم حساب البنكى :',
+                          style: TextStyle(color: Colors.green,fontSize: 16),
+                        ),
+                        Text(
+                          '${userModal.bankAccount}',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'عنوان المرسلات :',
+                          style: TextStyle(color: Colors.green,fontSize: 16),
+                        ),
+                        Text(
+                          '${userModal.storeDetails.address}',
+                        ),
+                      ],
+                    ),
+
                   ],
                 ),
               )
@@ -403,7 +498,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                                 context) /
                                                             2.5,
                                                         child: Text(
-                                                          "${userModal.commercialDocs.file_name}",
+                                                          "${userModal.commercialDoc}",
                                                           maxLines: 1,
                                                         ),
                                                       ),
@@ -545,7 +640,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                                 context) /
                                                             2.5,
                                                         child: Text(
-                                                          "${userModal.taxCardDocs.file_name}",
+                                                          "${userModal.taxCardDoc}",
                                                           maxLines: 1,
                                                         ),
                                                       ),
@@ -686,7 +781,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                                 context) /
                                                             2.5,
                                                         child: Text(
-                                                          "${userModal.wholesaleDocs.file_name}",
+                                                          "${userModal.wholesaleDocs}",
                                                           maxLines: 1,
                                                         ),
                                                       ),
@@ -828,7 +923,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                                 context) /
                                                             2.5,
                                                         child: Text(
-                                                          "${userModal.bankDocs.file_name}",
+                                                          "${userModal.bankAccount}",
                                                           maxLines: 1,
                                                         ),
                                                       ),
@@ -921,7 +1016,7 @@ class _VendorInfoState extends State<VendorInfo> {
 
                                         ],
                                       ),
-                                    ),     userModal.compete_store==1?Container():
+                                    ),     userModal.competeStore==1?Container():
                                     Form(
                                       key: address_key,
                                       child: Column(
@@ -959,7 +1054,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   return "Required field";
                                                 } else
                                                   return null;
-                                              },
+                                              },selectedItem:contries.where((element) => element.id==userModal.storeDetails.countryId).first,
                                               showSearchBox: true,
                                               items: contries,
                                               //  onFind: (String filter) => getData(filter),

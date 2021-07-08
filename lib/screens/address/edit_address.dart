@@ -120,14 +120,14 @@ class _EditAddressState extends State<EditAddress> {
                     : Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: DropdownSearch<Country>(
-                          // label: getTransrlate(context, 'Countroy'),
+                           label: getTransrlate(context, 'Countroy'),
                           validator: (Country item) {
                             if (item == null) {
                               return "Required field";
                             } else
                               return null;
                           },
-                          selectedItem: widget.address.state,
+                          selectedItem: widget.address.state ,
                           items: contries,
                           //  onFind: (String filter) => getData(filter),
                           itemAsString: (Country u) => u.countryName,
@@ -142,7 +142,7 @@ class _EditAddressState extends State<EditAddress> {
                     : Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: DropdownSearch<Area>(
-                          // label: getTransrlate(context, 'Countroy'),
+                           label: getTransrlate(context, 'area'),
                           validator: (Area item) {
                             if (item == null) {
                               return "Required field";
@@ -165,7 +165,7 @@ class _EditAddressState extends State<EditAddress> {
                     : Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: DropdownSearch<City>(
-                          // label: getTransrlate(context, 'Countroy'),
+                           label: getTransrlate(context, 'City'),
                           validator: (City item) {
                             if (item == null) {
                               return "Required field";
@@ -272,6 +272,8 @@ class _EditAddressState extends State<EditAddress> {
                   keyboard_type: TextInputType.phone,
                   labelText: getTransrlate(context, 'phone'),
                   hintText: getTransrlate(context, 'phone'),
+                  textDirection: TextDirection.ltr,
+
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
@@ -287,6 +289,7 @@ class _EditAddressState extends State<EditAddress> {
                 MyTextFormField(
                   intialLabel: widget.address.telephoneNo,
                   keyboard_type: TextInputType.phone,
+                  textDirection: TextDirection.ltr,
                   labelText: getTransrlate(context, 'telphone'),
                   hintText: getTransrlate(context, 'telphone'),
                   isPhone: true,

@@ -34,7 +34,7 @@ class Products_Page extends StatefulWidget {
 class _Products_PageState extends State<Products_Page> {
   List<Product> product;
   bool list = false;
-
+  String sort='ASC&ordered_by=price';
   @override
   void initState() {
     API(context).get(widget.Url).then((value) {
@@ -131,10 +131,11 @@ class _Products_PageState extends State<Products_Page> {
                         onTap: () {
                           showDialog(
                               context: context,
-                              builder: (_) => Sortdialog()).then((val) {
-                            print(val);
+                              builder: (_) => Sortdialog(character: sort,)).then((val) {
+                            sort=val;
+                            print('${widget.Url}&sort_type=${sort}');
                             API(context)
-                                .get('${widget.Url}&sort_type=${val}')
+                                .get('${widget.Url}&sort_type=${sort}')
                                 .then((value) {
                               if (value != null) {
                                 if (value['status_code'] == 200) {

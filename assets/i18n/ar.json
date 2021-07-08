@@ -33,6 +33,7 @@
 
   "product": "منتجات",
   "filter": "تصفية",
+  "problem": "إبلاغ عن مشكلة",
 
   "shippingTo": "شحن إلى",
   "shipping": "الشحن",
@@ -57,7 +58,8 @@
   "fees_ship": "رسوم الشحن",
   "total_order": "إجالمي الطلب",
   "total_product": "إجالمي المنتجات",
-
+  "last12Month": "آخر 12 شهور",
+  "last6Month": "آخر 6 شهور",
   "allproduct": "كل المنتجات",
   "add": "أضف",
   "OrderNote": "ملاحظات",
@@ -289,6 +291,7 @@
   "shipingclass": "شريحة الشحن",
   "orderTotal": "مدفوعات الطلب",
   "OrderContent": "محتويات الطلب",
+  "OrderPref": "ملخص الطلب",
   "CodeConfirm": "كود التاكيد",
   "Confirm": "تأكيد",
   "Firstname": "الاسم الاول",

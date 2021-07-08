@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 
 class Sortdialog extends StatefulWidget {
-  const Sortdialog({Key key}) : super(key: key);
+  Sortdialog({Key key, this.character}) : super(key: key);
+  String character;
 
   @override
   _SortdialogState createState() => _SortdialogState();
 }
 
 class _SortdialogState extends State<Sortdialog> {
-  List characters=["ASC","DESC"];
-  String _character='ASC';
+  List characters = ["ASC&ordered_by=price", "DESC&ordered_by=price"];
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -47,7 +47,8 @@ class _SortdialogState extends State<Sortdialog> {
                       icon:
                           Icon(Icons.close, size: 35, color: Color(0xff7B7B7B)),
                       onPressed: () {
-                        Navigator.pop(context,"$_character&ordered_by=price");
+                        Navigator.pop(
+                            context, "${widget.character}");
                       })
                 ],
               ),
@@ -59,12 +60,11 @@ class _SortdialogState extends State<Sortdialog> {
               title: const Text('السعر الأقل الى الأعلى'),
               value: characters[0],
               activeColor: Colors.orange,
-              groupValue: _character,
+              groupValue: widget.character,
               onChanged: (String value) {
                 setState(() {
-                  _character = value;
-                  Navigator.pop(context,"${value}&ordered_by=price");
-
+                  widget.character = value;
+                  Navigator.pop(context, "${value}");
                 });
               },
             ),
@@ -75,12 +75,11 @@ class _SortdialogState extends State<Sortdialog> {
               title: const Text('السعر الأعلى الى الأقل'),
               value: characters[1],
               activeColor: Colors.orange,
-
-              groupValue: _character,
+              groupValue: widget.character,
               onChanged: (String value) {
                 setState(() {
-                  _character = value;
-                  Navigator.pop(context,"${value}&ordered_by=price");
+                  widget.character = value;
+                  Navigator.pop(context, "${value}");
                 });
               },
             ),

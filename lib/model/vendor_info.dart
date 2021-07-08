@@ -1,4 +1,3 @@
-
 class Vendor_info {
   int statusCode;
   String message;
@@ -39,18 +38,19 @@ class Vendor {
   String taxCardDoc;
   String bankAccount;
   int approved;
-  int compete;
-  int compete_store;
-  int compete_docs;
   int complete;
   int declined;
   int rejected;
   String companyName;
   UserDetails userDetails;
+  String venType;
+  int competeStore;
+  StoreDetails storeDetails;
+  int competeDocs;
   Images images;
-  CommercialDocs commercialDocs;
-  TaxCardDocs taxCardDocs;
-  WholesaleDocs wholesaleDocs;
+  Images commercialDocs;
+  Images taxCardDocs;
+  Images wholesaleDocs;
   Images bankDocs;
 
   Vendor(
@@ -74,15 +74,15 @@ class Vendor {
         this.rejected,
         this.companyName,
         this.userDetails,
+        this.venType,
+        this.competeStore,
+        this.storeDetails,
+        this.competeDocs,
         this.images,
         this.commercialDocs,
         this.taxCardDocs,
         this.wholesaleDocs,
-        this.bankDocs,
-        this.compete,
-        this.compete_docs,
-        this.compete_store,
-      });
+        this.bankDocs});
 
   Vendor.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -103,23 +103,26 @@ class Vendor {
     complete = json['complete'];
     declined = json['declined'];
     rejected = json['rejected'];
-    compete_docs = json['compete_docs'];
-    compete_store = json['compete_store'];
-    compete = json['complete'];
     companyName = json['company_name'];
     userDetails = json['user_details'] != null
         ? new UserDetails.fromJson(json['user_details'])
         : null;
+    venType = json['ven_type'];
+    competeStore = json['compete_store'];
+    storeDetails = json['store_details'] != null
+        ? new StoreDetails.fromJson(json['store_details'])
+        : null;
+    competeDocs = json['compete_docs'];
     images =
     json['images'] != null ? new Images.fromJson(json['images']) : null;
     commercialDocs = json['commercialDocs'] != null
-        ? new CommercialDocs.fromJson(json['commercialDocs'])
+        ? new Images.fromJson(json['commercialDocs'])
         : null;
     taxCardDocs = json['taxCardDocs'] != null
-        ? new TaxCardDocs.fromJson(json['taxCardDocs'])
+        ? new Images.fromJson(json['taxCardDocs'])
         : null;
     wholesaleDocs = json['wholesaleDocs'] != null
-        ? new WholesaleDocs.fromJson(json['wholesaleDocs'])
+        ? new Images.fromJson(json['wholesaleDocs'])
         : null;
     bankDocs =
     json['bankDocs'] != null ? new Images.fromJson(json['bankDocs']) : null;
@@ -149,6 +152,12 @@ class Vendor {
     if (this.userDetails != null) {
       data['user_details'] = this.userDetails.toJson();
     }
+    data['ven_type'] = this.venType;
+    data['compete_store'] = this.competeStore;
+    if (this.storeDetails != null) {
+      data['store_details'] = this.storeDetails.toJson();
+    }
+    data['compete_docs'] = this.competeDocs;
     if (this.images != null) {
       data['images'] = this.images.toJson();
     }
@@ -173,27 +182,20 @@ class UserDetails {
   String name;
   String email;
   String emailVerifiedAt;
-  String createdAt;
-  String updatedAt;
-  Null deletedAt;
   int addedById;
   String lang;
   String lastName;
   String phoneNo;
   String birthdate;
   String gender;
-  Null facebookId;
-  Null facebookAvatar;
-  List<Roles> roles;
+  String facebookId;
+  String facebookAvatar;
 
   UserDetails(
       {this.id,
         this.name,
         this.email,
         this.emailVerifiedAt,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt,
         this.addedById,
         this.lang,
         this.lastName,
@@ -201,17 +203,13 @@ class UserDetails {
         this.birthdate,
         this.gender,
         this.facebookId,
-        this.facebookAvatar,
-        this.roles});
+        this.facebookAvatar});
 
   UserDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
     addedById = json['added_by_id'];
     lang = json['lang'];
     lastName = json['last_name'];
@@ -220,12 +218,6 @@ class UserDetails {
     gender = json['gender'];
     facebookId = json['facebook_id'];
     facebookAvatar = json['facebook_avatar'];
-    if (json['roles'] != null) {
-      roles = new List<Roles>();
-      json['roles'].forEach((v) {
-        roles.add(new Roles.fromJson(v));
-      });
-    }
   }
 
   Map<String, dynamic> toJson() {
@@ -234,9 +226,6 @@ class UserDetails {
     data['name'] = this.name;
     data['email'] = this.email;
     data['email_verified_at'] = this.emailVerifiedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
     data['added_by_id'] = this.addedById;
     data['lang'] = this.lang;
     data['last_name'] = this.lastName;
@@ -245,259 +234,105 @@ class UserDetails {
     data['gender'] = this.gender;
     data['facebook_id'] = this.facebookId;
     data['facebook_avatar'] = this.facebookAvatar;
-    if (this.roles != null) {
-      data['roles'] = this.roles.map((v) => v.toJson()).toList();
-    }
     return data;
   }
 }
 
-class Roles {
+class StoreDetails {
   int id;
-  String title;
-  String createdAt;
-  String updatedAt;
-  Null deletedAt;
-  int addedById;
+  String name;
+  String address;
+  String lat;
+  String long;
+  int vendorId;
+  String moderatorName;
+  String moderatorPhone;
+  String moderatorAltPhone;
+  int status;
   String lang;
-  Pivot pivot;
+  int headCenter;
+  int countryId;
+  int areaId;
+  int cityId;
+  String serialId;
 
-  Roles(
+  StoreDetails(
       {this.id,
-        this.title,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt,
-        this.addedById,
+        this.name,
+        this.address,
+        this.lat,
+        this.long,
+        this.vendorId,
+        this.moderatorName,
+        this.moderatorPhone,
+        this.moderatorAltPhone,
+        this.status,
         this.lang,
-        this.pivot});
+        this.headCenter,
+        this.countryId,
+        this.areaId,
+        this.cityId,
+        this.serialId});
 
-  Roles.fromJson(Map<String, dynamic> json) {
+  StoreDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    title = json['title'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
-    addedById = json['added_by_id'];
+    name = json['name'];
+    address = json['address'];
+    lat = json['lat'];
+    long = json['long'];
+    vendorId = json['vendor_id'];
+    moderatorName = json['moderator_name'];
+    moderatorPhone = json['moderator_phone'];
+    moderatorAltPhone = json['moderator_alt_phone'];
+    status = json['status'];
     lang = json['lang'];
-    pivot = json['pivot'] != null ? new Pivot.fromJson(json['pivot']) : null;
+    headCenter = json['head_center'];
+    countryId = json['country_id'];
+    areaId = json['area_id'];
+    cityId = json['city_id'];
+    serialId = json['serial_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['title'] = this.title;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    data['added_by_id'] = this.addedById;
+    data['name'] = this.name;
+    data['address'] = this.address;
+    data['lat'] = this.lat;
+    data['long'] = this.long;
+    data['vendor_id'] = this.vendorId;
+    data['moderator_name'] = this.moderatorName;
+    data['moderator_phone'] = this.moderatorPhone;
+    data['moderator_alt_phone'] = this.moderatorAltPhone;
+    data['status'] = this.status;
     data['lang'] = this.lang;
-    if (this.pivot != null) {
-      data['pivot'] = this.pivot.toJson();
-    }
-    return data;
-  }
-}
-
-class Pivot {
-  int userId;
-  int roleId;
-
-  Pivot({this.userId, this.roleId});
-
-  Pivot.fromJson(Map<String, dynamic> json) {
-    userId = json['user_id'];
-    roleId = json['role_id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['role_id'] = this.roleId;
+    data['head_center'] = this.headCenter;
+    data['country_id'] = this.countryId;
+    data['area_id'] = this.areaId;
+    data['city_id'] = this.cityId;
+    data['serial_id'] = this.serialId;
     return data;
   }
 }
 
 class Images {
   int id;
-  int orderColumn;
-  String createdAt;
-  String updatedAt;
+  int modelId;
   String image;
-  String url;
-  String fullurl;
-  String file_name;
-  String preview;
 
-  Images(
-      {this.id,
-        this.orderColumn,
-        this.createdAt,
-        this.updatedAt,
-        this.image,
-        this.url,
-        this.fullurl,
-        this.file_name,
-        this.preview});
+  Images({this.id, this.modelId, this.image});
 
   Images.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    orderColumn = json['order_column'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    modelId = json['model_id'];
     image = json['image'];
-    url = json['url'];
-    fullurl = json['fullurl'];
-    file_name = json['file_name'];
-    preview = json['preview'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['order_column'] = this.orderColumn;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['model_id'] = this.modelId;
     data['image'] = this.image;
-    data['url'] = this.url;
-    data['fullurl'] = this.fullurl;
-    data['thumbnail'] = this.file_name;
-    data['preview'] = this.preview;
-    return data;
-  }
-}
-
-class CommercialDocs {
-  int id;
-  String createdAt;
-  String updatedAt;
-  String image;
-  String url;
-  String fullurl;
-  String file_name;
-  String preview;
-
-  CommercialDocs(
-      {this.id,
-        this.createdAt,
-        this.updatedAt,
-        this.image,
-        this.url,
-        this.fullurl,
-        this.file_name,
-        this.preview});
-
-  CommercialDocs.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    image = json['image'];
-    url = json['url'];
-    fullurl = json['fullurl'];
-    file_name = json['file_name'];
-    preview = json['preview'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['image'] = this.image;
-    data['url'] = this.url;
-    data['fullurl'] = this.fullurl;
-    data['thumbnail'] = this.file_name;
-    data['preview'] = this.preview;
-    return data;
-  }
-}
-
-class TaxCardDocs {
-  int id;
-  String modelType;
-  String createdAt;
-  String updatedAt;
-  String image;
-  String url;
-  String fullurl;
-  String file_name;
-  String preview;
-
-  TaxCardDocs(
-      {this.id,
-        this.modelType,
-        this.createdAt,
-        this.updatedAt,
-        this.image,
-        this.url,
-        this.fullurl,
-        this.file_name,
-        this.preview});
-
-  TaxCardDocs.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    modelType = json['model_type'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    image = json['image'];
-    url = json['url'];
-    fullurl = json['fullurl'];
-    file_name = json['file_name'];
-    preview = json['preview'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['model_type'] = this.modelType;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['image'] = this.image;
-    data['url'] = this.url;
-    data['fullurl'] = this.fullurl;
-    data['thumbnail'] = this.file_name;
-    data['preview'] = this.preview;
-    return data;
-  }
-}
-
-class WholesaleDocs {
-  int id;
-  String updatedAt;
-  String image;
-  String url;
-  String fullurl;
-  String file_name;
-  String preview;
-
-  WholesaleDocs(
-      {this.id,
-        this.updatedAt,
-        this.image,
-        this.url,
-        this.fullurl,
-        this.file_name,
-        this.preview});
-
-  WholesaleDocs.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    updatedAt = json['updated_at'];
-    image = json['image'];
-    url = json['url'];
-    fullurl = json['fullurl'];
-    file_name = json['file_name'];
-    preview = json['preview'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['updated_at'] = this.updatedAt;
-    data['image'] = this.image;
-    data['url'] = this.url;
-    data['fullurl'] = this.fullurl;
-    data['thumbnail'] = this.file_name;
-    data['preview'] = this.preview;
     return data;
   }
 }

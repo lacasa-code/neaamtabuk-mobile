@@ -21,7 +21,7 @@ class WriteRatedialog extends StatefulWidget {
 
 class _WriteRatedialogState extends State<WriteRatedialog> {
   TextEditingController CommentController = TextEditingController();
-  int rating = 5;
+  double rating = 5.0;
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +90,11 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                         width: 5,
                       ),
                       RatingBar.builder(
-                        initialRating: rating.toDouble(),
+                        initialRating: rating,
                         itemSize: 25.0,
                         minRating: 1,
                         direction: Axis.horizontal,
-                        allowHalfRating: false,
+                        allowHalfRating: true,
                         itemCount: 5,
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
@@ -102,7 +102,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                         ),
                         onRatingUpdate: (rating) {
                           setState(() {
-                            this.rating = rating.toInt();
+                            this.rating = rating;
                           });
                         },
                       ),

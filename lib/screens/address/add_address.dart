@@ -271,6 +271,8 @@ class _AddAddressState extends State<AddAddress> {
                     Container(
                       width: ScreenUtil.getWidth(context)/1.5 ,
                       child: MyTextFormField(
+                        textDirection: TextDirection.ltr,
+
                         intialLabel: '',
                         keyboard_type: TextInputType.phone,
                         labelText: getTransrlate(context, 'phone'),
@@ -291,6 +293,8 @@ class _AddAddressState extends State<AddAddress> {
                     Container(
                       width: ScreenUtil.getWidth(context)*0.2 ,
                       child: MyTextFormField(
+                        textDirection: TextDirection.ltr,
+
                         enabled: false,
                         controller: code,
                         keyboard_type: TextInputType.phone,
@@ -313,6 +317,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
+                  textDirection: TextDirection.ltr,
                   keyboard_type: TextInputType.phone,
                   labelText: getTransrlate(context, 'telphone'),
                   hintText: getTransrlate(context, 'telphone'),

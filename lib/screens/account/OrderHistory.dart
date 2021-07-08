@@ -58,7 +58,7 @@ class _OrderHistoryState extends State<OrderHistory> {
               Container(
                   width: ScreenUtil.getWidth(context) / 2,
                   child: AutoSizeText(
-                    'الطلبات والمشتريات',
+                    getTransrlate(context, 'Myorders'),
                     minFontSize: 10,
                     maxFontSize: 16,
                     maxLines: 1,
@@ -135,7 +135,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                         width:
                                             ScreenUtil.getWidth(context) / 2.5,
                                         child: AutoSizeText(
-                                          'طلب رقم  ${orders[index].orderNumber}',
+                                          '${getTransrlate(context, 'OrderNO')} ${orders[index].orderNumber}',
                                           maxLines: 1,
                                         )),
                                     AutoSizeText(
@@ -191,16 +191,21 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                 SizedBox(
                                                   width: 10,
                                                 ),
-                                                AutoSizeText(
-                                                  orders[index]
-                                                      .orderDetails[i]
-                                                      .productName,
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
+                                                Container(
+                                                  width: ScreenUtil.getWidth(
+                                                      context) /
+                                                      2,
+                                                  child: AutoSizeText(
+                                                    orders[index]
+                                                        .orderDetails[i]
+                                                        .productName,
+                                                    maxLines: 2,
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                    minFontSize: 11,
                                                   ),
-                                                  minFontSize: 11,
                                                 ),
                                               ],
                                             ),
@@ -210,7 +215,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                 Container(
                                     width: ScreenUtil.getWidth(context) / 1.5,
                                     child: AutoSizeText(
-                                      ' إجمالي : ${orders[index].orderTotal} ${getTransrlate(context, 'Currency')}',
+                                      '${getTransrlate(context, 'total')}  : ${orders[index].orderTotal} ${getTransrlate(context, 'Currency')}',
                                       maxLines: 1,
                                     )),
                                 SizedBox(
@@ -223,9 +228,10 @@ class _OrderHistoryState extends State<OrderHistory> {
                                     Row(
                                       children: [
                                         AutoSizeText(
-                                          'حالة الطلب : ',
+                                          '${getTransrlate(context, 'OrderState')}  : ',
                                           maxLines: 1,
                                         ),
+
                                         Container(
                                             width:
                                                 ScreenUtil.getWidth(context) /
@@ -254,7 +260,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                             ));
                                       },
                                       child: AutoSizeText(
-                                        'تفاصيل الطلب',
+                                        '${getTransrlate(context, 'OrderDitails')} ',
                                         maxLines: 1,
                                         style: TextStyle(
                                             color: Colors.orange,

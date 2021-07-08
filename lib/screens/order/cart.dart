@@ -52,11 +52,12 @@ class _CartScreenState extends State<CartScreen> {
       bottomNavigationBar: themeColor.isLogin
           ? _cart_model != null
               ? _cart_model.cart_model != null
-                  ? _cart_model.cart_model.data != null
+                  ? _cart_model.cart_model.data == null
                   ? Container(
         height: 1,
         width: 1,
-      ):Container(
+      ):
+      Container(
                       height: 90,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black26)),
