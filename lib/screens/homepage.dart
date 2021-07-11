@@ -389,7 +389,7 @@ class _HomeState extends State<Home> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ProductListTitleBar(
+                              cartype==null?Container(): ProductListTitleBar(
                                 themeColor: themeColor,
                                 title: getTransrlate(context, 'offers'),
                                 description: getTransrlate(context, 'showAll'),

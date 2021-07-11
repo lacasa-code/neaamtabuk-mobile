@@ -27,6 +27,15 @@ class ProductCart extends StatefulWidget {
 }
 
 class _ProductCartState extends State<ProductCart> {
+  List<String> items = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "other",
+  ];
+
   bool other = true;
   final _formKey = GlobalKey<FormState>();
 
@@ -100,33 +109,112 @@ class _ProductCartState extends State<ProductCart> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                other = !other;
-                              });
-                            },
-                            child: Container(
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1, color: Colors.black12)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                          // items == null
+                          //     ? Container()
+                          //     : items.isEmpty
+                          //     ? Container()
+                          //     : widget.carts.quantity == null
+                          //     ? Container()
+                          //     : Container(
+                          //   margin: const EdgeInsets.symmetric(
+                          //       horizontal: 2, vertical: 2),
+                          //   padding: const EdgeInsets.all(3.0),
+                          //   decoration: BoxDecoration(
+                          //       border: Border.all(
+                          //           color: Colors.black12)),
+                          //   child: DropdownButton<String>(
+                          //     value:widget.carts.quantity==6?"other":  widget.carts.quantity.toString(),
+                          //     icon: const Icon(Icons
+                          //         .arrow_drop_down_outlined),
+                          //     iconSize: 24,
+                          //     elevation: 16,
+                          //     underline: Container(),
+                          //     style: const TextStyle(
+                          //         height: 1,
+                          //         color: Colors.deepPurple),
+                          //     onChanged: (String newValue) {
+                          //       setState(() {
+                          //         widget.carts.quantity = int.parse(newValue=="other"?'6':newValue);
+                          //       });
+                          //     },
+                          //     items: items.map<
+                          //         DropdownMenuItem<String>>(
+                          //             (String value) {
+                          //           return DropdownMenuItem<String>(
+                          //             value: value,
+                          //             child: Center(
+                          //                 child: Text(
+                          //                   "$value",
+                          //                   textAlign: TextAlign.center,
+                          //                 )),
+                          //           );
+                          //         }).toList(),
+                          //   ),
+                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    other = !other;
+                                  });
+                                },
+                                child: Container(
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1, color: Colors.black12)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                            width: 50,
+                                            child:
+                                                Text("${widget.carts.quantity}")),
+                                        Icon(Icons.arrow_drop_down)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: ScreenUtil.getWidth(context) / 2.5,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                        width: 50,
-                                        child:
-                                            Text("${widget.carts.quantity}")),
-                                    Icon(Icons.arrow_drop_down)
+                                      child: AutoSizeText(
+                                        getTransrlate(context, 'price'),
+                                        maxLines: 1,
+                                        minFontSize: 18,
+                                        style: TextStyle(fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      child: AutoSizeText(
+                                        " ${widget.carts.total} ${getTransrlate(context, 'Currency')}",
+                                        maxLines: 1,
+                                        minFontSize: 18,
+                                        style: TextStyle(
+                                            color: widget.themeColor.getColor(),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ),
+
+                            ],
                           ),
                           !other
                               ? Container(
@@ -149,6 +237,7 @@ class _ProductCartState extends State<ProductCart> {
                                           Text(
                                             "${getTransrlate(context, 'quantity')} :",
                                           ),
+
                                           Container(
                                             width: 100,
                                             margin: const EdgeInsets.symmetric(

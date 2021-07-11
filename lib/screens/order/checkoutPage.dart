@@ -40,6 +40,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
   List<Payment> payment;
   int checkboxValue;
   int checkboxPay;
+  Address DefaultAddress;
+  Payment DefaultPayment;
   final focusnumber = FocusNode();
   final focusName = FocusNode();
   final focuscvv = FocusNode();
@@ -129,8 +131,9 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                             onChanged: (int value) {
                                               setState(() {
                                                 checkboxValue = value;
+                                                DefaultAddress=address[index];
                                                 API(context).post(
-                                                    'user/select/shipping/${address[index].id}',
+                                                    'user/mark/default/shipping/${address[index].id}',
                                                     {}).then((value) {
                                                   if (value != null) {
                                                     if (value['status_code'] ==
@@ -407,7 +410,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'محمد حسن مبنى 12 ش الملك عبدالله، تبوك، المملكة العربية السعودية+966050412236',
+                            DefaultAddress==null?'غير محدد حاليا': 'توصيل إلى: ${DefaultAddress.area==null?'':DefaultAddress.area.areaName??''},${DefaultAddress.city==null?'':DefaultAddress.city.cityName??''}.${DefaultAddress.street??''},${DefaultAddress.district??''}${DefaultAddress.floorNo??''}${DefaultAddress.apartmentNo??''}',
                             style: TextStyle(
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),
@@ -477,6 +480,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                   onChanged: (int value) {
                                                     setState(() {
                                                       checkboxPay = value;
+                                                      DefaultPayment=payment[index];
                                                     });
                                                     API(context).post(
                                                         'user/select/paymentway',

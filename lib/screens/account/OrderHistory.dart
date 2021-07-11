@@ -135,7 +135,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                         width:
                                             ScreenUtil.getWidth(context) / 2.5,
                                         child: AutoSizeText(
-                                          '${getTransrlate(context, 'OrderNO')} ${orders[index].orderNumber}',
+                                          '${getTransrlate(context, 'OrderNO')} ${orders[index].orderNumber}-${orders[index].id}',
                                           maxLines: 1,
                                         )),
                                     AutoSizeText(

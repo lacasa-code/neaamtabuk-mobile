@@ -80,7 +80,7 @@ class _WishListState extends State<WishList> {
                           ),
                           Positioned(
                              left:  themeColor.local=='ar'?10:null,
-                             right: themeColor.local!='ar'?10:null,
+                             right: themeColor.local=='en'?10:null,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
@@ -170,7 +170,6 @@ class _WishListState extends State<WishList> {
                               ],
                             ),
                           )
-
                         ],
                       );
                     },

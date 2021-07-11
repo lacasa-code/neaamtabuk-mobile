@@ -49,20 +49,14 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
       if (value != null) {
         setState(() {
           cartype = Car_type.fromJson(value).data;
+          getData(cartype[widget.checkboxType].id);
         });
       }
     });
-    API(context).get('car/yearslist').then((value) {
+    API(context).get('car/yearslist}').then((value) {
       if (value != null) {
         setState(() {
           years = Years.fromJson(value).data;
-        });
-      }
-    });
-    API(context).get('car/madeslist').then((value) {
-      if (value != null) {
-        setState(() {
-          car_mades = Car_made.fromJson(value).data;
         });
       }
     });
@@ -80,7 +74,16 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
     transimionsID = TextEditingController();
     super.initState();
   }
+getData(int id){
+  API(context).get('car/madeslist/filter/$id').then((value) {
+    if (value != null) {
+      setState(() {
+        car_mades = Car_made.fromJson(value).data;
+      });
+    }
+  });
 
+}
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
@@ -225,6 +228,8 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                               setState(() {
                                 widget.checkboxType = index;
                               });
+                              getData(cartype[widget.checkboxType].id);
+
                             },
                             child: Container(
                               margin: const EdgeInsets.all(15.0),

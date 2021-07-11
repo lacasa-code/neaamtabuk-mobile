@@ -741,8 +741,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   : ListView.builder(
                                                       primary: false,
                                                       shrinkWrap: true,
-                                                      physics:
-                                                          NeverScrollableScrollPhysics(),
+                                                      physics: NeverScrollableScrollPhysics(),
                                                       itemCount: reviews
                                                                   .reviewsData
                                                                   .length <=

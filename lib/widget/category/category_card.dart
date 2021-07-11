@@ -40,6 +40,7 @@ class _CategoryCardState extends State<CategoryCard> {
       ),
       child: InkWell(
         onTap: () {
+          print('site/categories/${widget.product.categoryId}?cartype_id=${widget.cartType}');
           Nav.route(
               context,
               Products_Page(

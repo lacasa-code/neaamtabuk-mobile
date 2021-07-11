@@ -29,99 +29,101 @@ class _Wish_ListState extends State<Wish_List> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Container(
-          height: 150,
-          width: ScreenUtil.getWidth(context) / 4,
-          child: CachedNetworkImage(
-            imageUrl:widget.product.photo==null?' ':widget.product.photo.isNotEmpty?widget.product.photo[0].image:" ",
-            errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
-          ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.white,
-            //width: ScreenUtil.getWidth(context) / 1.7,
-            padding: EdgeInsets.only(left: 5, top: 10, right: 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: ScreenUtil.getWidth(context) / 2.5,
-                      child: AutoSizeText(
-                        widget.product.productName,
-                        maxLines: 2,
-                        style: TextStyle(
-                          height: 1.5,
-                          fontSize: 16,
-                          color: Color(0xFF5D6A78),
-                          fontWeight: FontWeight.w300,
-                        ),
-                        minFontSize: 11,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Container(
-                            width: ScreenUtil.getWidth(context) / 5,
-                            child: RatingBar.builder(
-                              ignoreGestures: true,
-                              initialRating: double.parse('3.5'),
-                              itemSize: 14.0,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.orange,
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: ScreenUtil.getWidth(context) / 5,
-                          child: AutoSizeText(
-                            "33",
-                            maxLines: 1,
-                            minFontSize: 20,
-                            maxFontSize: 25,
-                            style: TextStyle(
-                                color: widget.themeColor.getColor(),
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+    return Container(
+      color: Colors.white,
+
+      child: Row(
+
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Container(
+            width: ScreenUtil.getWidth(context) / 4,
+            child: CachedNetworkImage(
+              imageUrl:widget.product.photo==null?' ':widget.product.photo.isNotEmpty?widget.product.photo[0].image:" ",
+              errorWidget: (context, url, error) => Icon(Icons.image,color: Colors.black12,),
             ),
           ),
-        )
-      ],
+          Expanded(
+            child: Container(
+              //width: ScreenUtil.getWidth(context) / 1.7,
+              padding: EdgeInsets.only(left: 5, top: 10, right: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: ScreenUtil.getWidth(context) / 2.5,
+                        height: 50,
+                        child: AutoSizeText(
+                          widget.product.productName,
+                          maxLines: 2,
+                          style: TextStyle(
+                            height: 1.5,
+                            fontSize: 16,
+                            color: Color(0xFF5D6A78),
+                            fontWeight: FontWeight.w300,
+                          ),
+                          minFontSize: 11,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Container(
+                              width: ScreenUtil.getWidth(context) / 5,
+                              child: RatingBar.builder(
+                                ignoreGestures: true,
+                                initialRating: double.parse('3.5'),
+                                itemSize: 14.0,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.orange,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  print(rating);
+                                },
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: ScreenUtil.getWidth(context) / 5,
+                            child: AutoSizeText(
+                              "33",
+                              maxLines: 1,
+                              minFontSize: 20,
+                              maxFontSize: 25,
+                              style: TextStyle(
+                                  color: widget.themeColor.getColor(),
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 

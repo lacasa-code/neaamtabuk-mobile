@@ -1,32 +1,9 @@
 {
-  "app_bar": {
-    "title": "مرحباً بك في الصفحة الرئيسية"
-  },
-  "button": {
-    "cancel": "إلغاء",
-    "change_language": "تغيير اللغة"
-  },
+
   "en": "الانجليزية",
-  "en": "الانجليزية",
-  "es": "الاسبانية",
-  "fa": "الفارسية",
   "ar": "العربية",
-
-  "plural": {
-    "demo": {
-      "0": "برجاء البدء في الضغط على زر الإضافة",
-      "1": "لقد ضغطت الزر مرة",
-      "2": "لقد ضغطت الزر مرتين",
-      "else": "لقد ضغطت الزر {{value}} مرة"
-    }
-  },
-  "language": "اللغة",
-
   "gust": "أهلا بك",
-  "good_morning": "صباح الخير",
-  "good_night": "مساء الخير",
   "contact": "تواصل معنا",
-  "allcatery": "كل الفئات",
   "Empty": "لا توجد منتجات",
   "EmptyRate": "لا توجد تقيمات",
   "EmptyQuastion": "لا توجد أسئلة",
@@ -63,14 +40,8 @@
   "allproduct": "كل المنتجات",
   "add": "أضف",
   "OrderNote": "ملاحظات",
-  "OrderHint": "برجاء ادخال ملاحظاتك",
   "couponcode": " كود الخصم",
   "couponApplay": "تفعيل",
-  "ORDERCOMPLETE": "إتمام الطلب",
-  "SelectPhone": "برجات لأدخال رقم الهاتف",
-  "OrderError": "خطأ فى الطلب ",
-  "yourComment": "تعليقك",
-  "avalidComment": "برجاء ادخال تعليق مناسب",
   "Comment": "تعليق",
   "Countroy": "الدولة",
   "CountroyCode": "كود",
@@ -107,7 +78,6 @@
   "Support": "الدعم",
   "Submit": "تأكيد",
   "ThankYou": "شكرا لك",
-  "passwordinvalid": "كلمة مرور غير صحيحة",
   "invalidemail": "برجاء أدخال البريد الالكترونى صالح",
   "PasswordShorter": "كلمة مرور قصيرة جدا",
   "Passwordmatch": "كلمة مرور غير متشابهة",
@@ -298,24 +268,12 @@
   "Lastname": "اسم العائله",
   "Username": "اسم المستخدم",
   "UsernameError": "اسم المستخدم فصير جداً",
-  "RegisterError": "خطأ فى التسجيلً",
-  "bacs": " تحويل بنكى مباشر",
   "cod": "الدفع عند الأستلامً",
-  "paypal": "باي بال",
   "showAll": "عرض الكل",
   "search": " بحث . .  ",
 
-
-  "viewProfile": "عرض الحساب",
-  "vistStore": "زيارة المتجر",
-
-
-  "Dailyopportunity": "العروض اليومية",
-
-  "ProductsLike": "منتجات قد تعجبك",
   "MostRated": "ألاعلى تقيما",
   "Low-PricedProducts": "الاقل سعرا",
-  "Mostrecently": "اخر الزيارات",
 
   "Browse": "تصفح الأن",
   "Shopping": "شراء الأن",

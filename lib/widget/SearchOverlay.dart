@@ -25,6 +25,7 @@ class SearchOverlayState extends State<SearchOverlay>
   FocusNode _focusNode = FocusNode();
   AutoCompleteTextField searchTextField;
   GlobalKey<AutoCompleteTextFieldState<Product>> key = new GlobalKey();
+
   String search_index;
   @override
   void initState() {

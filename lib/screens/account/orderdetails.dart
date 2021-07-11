@@ -202,22 +202,19 @@ class _OrderdetailsState extends State<Orderdetails> {
                       SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              width: ScreenUtil.getWidth(context) / 2,
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey)),
-                              child: Text(
-                                '${widget.order.orderStatus}',
-                                maxLines: 1,
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
-                              )),
-                        ],
-                      ),
+                      Container(
+                          width: ScreenUtil.getWidth(context) / 2,
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          child: Center(
+                            child: Text(
+                              '${widget.order.orderStatus}',
+                              maxLines: 2,
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          )),
                     ],
                   ),
                 ],
@@ -280,7 +277,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                       width: 10,
                                     ),
                                     AutoSizeText(
-                                      widget.order.orderDetails[i].productId
+                                      widget.order.orderDetails[i].productName
                                           .toString(),
                                       maxLines: 2,
                                       style: TextStyle(
