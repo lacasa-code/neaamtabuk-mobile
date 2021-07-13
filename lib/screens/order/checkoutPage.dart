@@ -53,6 +53,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
   @override
   void initState() {
+setState(() {
+  checkboxValue=Provider.of<Provider_Data>(context,listen: false).address.id;
+
+});
     getAddress();
     getpaymentways();
     super.initState();
@@ -123,7 +127,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Radio<int>(
-                                            value: index,
+                                            value:address[index].id,
                                             groupValue: checkboxValue,
                                             activeColor: themeColor.getColor(),
                                             focusColor: themeColor.getColor(),
@@ -133,12 +137,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                 checkboxValue = value;
                                                 DefaultAddress=address[index];
                                                 API(context).post(
-                                                    'user/mark/default/shipping/${address[index].id}',
+                                                    'user/select/shipping/${address[index].id}',
                                                     {}).then((value) {
                                                   if (value != null) {
                                                     if (value['status_code'] ==
-                                                        201) {
-                                                      Navigator.pop(context);
+                                                        200) {
+                                         //             Navigator.pop(context);
                                                       showDialog(
                                                           context: context,
                                                           builder: (_) =>
@@ -149,7 +153,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                                           context: context,
                                                           builder: (_) =>
                                                               ResultOverlay(value[
-                                                                  'message']));
+                                                                  'errors']));
                                                     }
                                                   }
                                                 });
@@ -325,7 +329,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                   ),
                                   Padding(
                                     padding:
-                                        const EdgeInsets.symmetric(vertical: 5),
+                                        const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -353,7 +357,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                         Text(
                                           '0.00 ${getTransrlate(context, 'Currency')}',
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                              fontWeight: FontWeight.bold,fontSize: 14),
                                         ),
                                       ],
                                     ),
@@ -415,12 +419,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'بواسطة ارامكس  ARAMIX ',
+                            DefaultAddress==null?'':'بواسطة ارامكس  ARAMIX ',
                             style: TextStyle(
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'متوقع وصولها يوم 25-6-2021',
+                            DefaultAddress==null?'': 'متوقع وصولها يوم 25-6-2021',
                             style: TextStyle(
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),

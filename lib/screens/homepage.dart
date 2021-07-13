@@ -35,9 +35,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Product> product;
-  List<Product> productMostView;
-  List<Product> productMostSale;
+
   List<CarType> cartype;
   Ads ads;
   int checkboxType = 0;
@@ -127,34 +125,9 @@ class _HomeState extends State<Home> {
       });
     }
   });
-    API(context, Check: false)
-        .get('site/new/products?cartype_id=$cartypeId')
-        .then((value) {
-      if (value != null) {
-        setState(() {
-          product = Product_model.fromJson(value).data;
-        });
-      }
-    });
-    API(context)
-        .get('mostly/viewed/products?cartype_id=$cartypeId')
-        .then((value) {
-      if (value != null) {
-        setState(() {
-          productMostView = Product_model.fromJson(value).data;
-        });
-      }
-    });
-    API(context)
-        .get('best/seller/products?cartype_id=$cartypeId')
-        .then((value) {
-      if (value != null) {
-        setState(() {
-          productMostSale = Product_model.fromJson(value).data;
-        });
-      }
-    });
+
     Provider.of<Provider_Data>(context,listen: false).getShipping(context);
+    Provider.of<Provider_Data>(context,listen: false).getData(cartypeId,context);
 
   }
 
@@ -218,6 +191,8 @@ class _HomeState extends State<Home> {
 
   Widget HomePage() {
     final themeColor = Provider.of<Provider_control>(context);
+    final provider_data = Provider.of<Provider_Data>(context);
+
     return Column(
       children: [
         AppBarCustom(),
@@ -264,9 +239,9 @@ class _HomeState extends State<Home> {
                            onTap: () {
                              setState(() {
                                checkboxType = cartype.indexOf(e);
-                               product = null;
-                               productMostView = null;
-                               productMostSale = null;
+                               provider_data.product = null;
+                               provider_data.productMostView = null;
+                               provider_data.productMostSale = null;
                              });
                              themeColor
                                  .setCar_type(e.id);
@@ -375,15 +350,15 @@ class _HomeState extends State<Home> {
                 ads == null
                     ? Container()
                     : SliderDotAds(_carouselCurrentPage, ads.carousel),
-                productMostView == null
+                provider_data.productMostView == null
                     ? Padding(
                         padding: const EdgeInsets.all(24.0),
                         child: Custom_Loading(),
                       )
                     : Container(child: list_category(themeColor)),
-                product == null
+                provider_data.product == null
                     ? Container()
-                    : product.isEmpty
+                    : provider_data.product.isEmpty
                         ? Container()
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -396,7 +371,7 @@ class _HomeState extends State<Home> {
                                 url:
                                     'site/new/products?cartype_id=${cartype[checkboxType].id}',
                               ),
-                              list_product(themeColor, product),
+                              list_product(themeColor, provider_data.product),
                             ],
                           ),
                 ads == null
@@ -413,9 +388,9 @@ class _HomeState extends State<Home> {
                           );
                         },
                       ),
-                productMostSale == null
+                provider_data.productMostSale == null
                     ? Container()
-                    : productMostSale.isEmpty
+                    : provider_data.productMostSale.isEmpty
                         ? Container()
                         : Column(
                             children: [
@@ -425,7 +400,7 @@ class _HomeState extends State<Home> {
                                 description: getTransrlate(context, 'showAll'),
                                 url: 'best/seller/products?cartype_id=${cartype[checkboxType].id}',
                               ),
-                              list_product(themeColor, productMostSale),
+                              list_product(themeColor,provider_data.productMostSale),
                               SizedBox(
                                 height: 10,
                               )
@@ -456,7 +431,9 @@ class _HomeState extends State<Home> {
   Widget list_category(
     Provider_control themeColor,
   ) {
-    return productMostView.isEmpty
+    final provider_data = Provider.of<Provider_Data>(context);
+
+    return provider_data.productMostView.isEmpty
         ? Container()
         : Center(
             child: ResponsiveGridList(
@@ -464,7 +441,7 @@ class _HomeState extends State<Home> {
               desiredItemWidth: 100,
               rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
               minSpacing: 10,
-              children: productMostView
+              children: provider_data.productMostView
                   .map((product) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: CategoryCard(

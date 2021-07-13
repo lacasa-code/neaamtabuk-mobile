@@ -6,6 +6,7 @@ import 'package:flutter_pos/model/wishlist_model.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -86,7 +87,7 @@ class _Wish_ListState extends State<Wish_List> {
                               width: ScreenUtil.getWidth(context) / 5,
                               child: RatingBar.builder(
                                 ignoreGestures: true,
-                                initialRating: double.parse('3.5'),
+                                initialRating: widget.product.avg_valuations.toDouble(),
                                 itemSize: 14.0,
                                 minRating: 1,
                                 direction: Axis.horizontal,
@@ -105,10 +106,10 @@ class _Wish_ListState extends State<Wish_List> {
                           Container(
                             width: ScreenUtil.getWidth(context) / 5,
                             child: AutoSizeText(
-                              "33",
+                              "${widget.product.product_price} ${getTransrlate(context, 'Currency')} ",
                               maxLines: 1,
-                              minFontSize: 20,
-                              maxFontSize: 25,
+                              minFontSize: 14,
+                              maxFontSize: 16,
                               style: TextStyle(
                                   color: widget.themeColor.getColor(),
                                   fontWeight: FontWeight.w400),

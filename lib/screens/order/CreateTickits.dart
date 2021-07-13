@@ -1,5 +1,9 @@
+
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/category_tickit.dart';
@@ -8,6 +12,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Tickits extends StatefulWidget {
   const Tickits({Key key,this.vendor_id,this.order_id,this.product_id}) : super(key: key);
@@ -21,7 +26,9 @@ class _TickitsState extends State<Tickits> {
   final _formKey = GlobalKey<FormState>();
   String typeTickit, addressTickit, messageTickit,category_id;
   List<Categorytickit> _data;
-@override
+  File attachment;
+
+  @override
   void initState() {
 API(context).get('ticket/categorieslist')..then((value) {
   if (value != null) {
@@ -39,7 +46,7 @@ super.initState();
         title: Row(
           children: [
             Icon(
-              Icons.favorite_border,
+              Icons.local_shipping_outlined,
               color: Colors.white,
             ),
             SizedBox(
@@ -115,6 +122,61 @@ super.initState();
                     typeTickit = value;
                   },
                 ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(onTap: (){
+                    getAttachment();
+                  },
+                    child: Container(
+                      width: ScreenUtil.getWidth(context) /
+                          1.5,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.orange,
+                              width: 1)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        child: Center(child: Row(mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.upload_outlined,color: Colors.orange,),
+                            Text('إرفاق ملف أقصى حجم 1MB',style: TextStyle(color: Colors.orange),),
+                          ],
+                        )),
+                      ),
+                    ),
+                  ),
+                ),
+                attachment == null
+                    ? Container()
+                    : Container(
+                        child: Row(
+                          children: [
+                            Container(
+                              width: ScreenUtil.getWidth(
+                                  context) /
+                                  2.5,
+                              child: Text(
+                                "${attachment
+                                    .path}",
+                                maxLines: 1,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                CupertinoIcons
+                                    .clear_circled,
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  attachment = null;
+                                });
+                              },
+                            ),
+                          ],
+                        )),
                 MyTextFormField(
                   intialLabel: '',
                   keyboard_type: TextInputType.emailAddress,
@@ -160,7 +222,7 @@ super.initState();
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             //setState(() => _isLoading = true);
-                            API(context).post('new/ticket',
+                            API(context).postFile('new/ticket',
                                 {
                                   "title": typeTickit,
                                   "priority": 'low',
@@ -168,8 +230,8 @@ super.initState();
                                   "order_id": widget.order_id,
                                   "vendor_id": widget.vendor_id,
                                   "category_id": category_id,
-                                  "product_id": widget.product_id,
-                                }).then((value) {
+                                  "product_id": widget.product_id
+                                },attachment: attachment).then((value) {
                               if (value != null) {
                                 if (value['status_code'] == 201) {
                                   Navigator.pop(context);
@@ -223,4 +285,13 @@ super.initState();
         ),
       ),);
   }
+  getAttachment() async {
+    FilePickerResult result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      attachment = File(result.files.single.path);
+    } else {
+      // User canceled the picker
+    }
+  }
+
 }

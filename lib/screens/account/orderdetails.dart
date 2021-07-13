@@ -1,13 +1,20 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/order_model.dart';
+import 'package:flutter_pos/model/ticket.dart';
 import 'package:flutter_pos/screens/order/CreateTickits.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Orderdetails extends StatefulWidget {
   Orderdetails({Key key, this.order}) : super(key: key);
@@ -18,6 +25,13 @@ class Orderdetails extends StatefulWidget {
 }
 
 class _OrderdetailsState extends State<Orderdetails> {
+  List<Ticket> _listTicket;
+
+  @override
+  void initState() {
+    getTicket();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +39,7 @@ class _OrderdetailsState extends State<Orderdetails> {
         title: Row(
           children: [
             Icon(
-              Icons.favorite_border,
+              Icons.local_shipping_outlined,
               color: Colors.white,
             ),
             SizedBox(
@@ -68,7 +82,10 @@ class _OrderdetailsState extends State<Orderdetails> {
                   Text(
                     '${getTransrlate(context, 'OrderNO')} : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                  ), SizedBox(width: 10,),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Text(
                     '${widget.order.orderNumber}',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -83,7 +100,10 @@ class _OrderdetailsState extends State<Orderdetails> {
                   Text(
                     '${getTransrlate(context, 'OrderDate')} : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                  ), SizedBox(width: 5,),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
                   Text(
                     '${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.order.createdAt))}',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -100,7 +120,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    '${widget.order.payment==null?'':widget.order.payment.paymentName ?? ' '}',
+                    '${widget.order.payment == null ? '' : widget.order.payment.paymentName ?? ' '}',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                 ],
@@ -115,10 +135,13 @@ class _OrderdetailsState extends State<Orderdetails> {
                     '${getTransrlate(context, 'addressShipping')} : ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
-                  widget.order.address==null?Container():Text(
-                    '${widget.order.address.area==null?'':widget.order.address.area.areaName??''},${widget.order.address.street??''}',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                  ),
+                  widget.order.address == null
+                      ? Container()
+                      : Text(
+                          '${widget.order.address.area == null ? '' : widget.order.address.area.areaName ?? ''},${widget.order.address.street ?? ''}',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400),
+                        ),
                 ],
               ),
               Column(
@@ -140,7 +163,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                         '${getTransrlate(context, 'total_product')} :',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
-                      ),SizedBox(
+                      ),
+                      SizedBox(
                         width: 15,
                       ),
                       Text(
@@ -159,7 +183,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                         '${getTransrlate(context, 'fees_ship')} :',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
-                      ),SizedBox(
+                      ),
+                      SizedBox(
                         width: 15,
                       ),
                       Text(
@@ -178,7 +203,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                         '${getTransrlate(context, 'total_order')} : ',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
-                      ),SizedBox(
+                      ),
+                      SizedBox(
                         width: 15,
                       ),
                       Text(
@@ -229,13 +255,13 @@ class _OrderdetailsState extends State<Orderdetails> {
               SizedBox(
                 height: 15,
               ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                '${getTransrlate(context, 'Shipping')}  1',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              // SizedBox(
+              //   height: 5,
+              // ),
+              // Text(
+              //   '${getTransrlate(context, 'Shipping')}  1',
+              //   style: TextStyle(fontWeight: FontWeight.bold),
+              // ),
               SizedBox(
                 height: 5,
               ),
@@ -258,15 +284,12 @@ class _OrderdetailsState extends State<Orderdetails> {
                                     Container(
                                       width: ScreenUtil.getWidth(context) / 8,
                                       child: CachedNetworkImage(
-                                        imageUrl:  widget.order
-                                          .orderDetails[i]
-                                          .productImage
-                                          .isNotEmpty
-                                      ? widget.order
-                                          .orderDetails[i]
-                                          .productImage[0]
-                                          .image
-                                        : ' ',                                        errorWidget: (context, url, error) =>
+                                        imageUrl: widget.order.orderDetails[i]
+                                                .productImage.isNotEmpty
+                                            ? widget.order.orderDetails[i]
+                                                .productImage[0].image
+                                            : ' ',
+                                        errorWidget: (context, url, error) =>
                                             Icon(
                                           Icons.image,
                                           color: Colors.black12,
@@ -295,14 +318,12 @@ class _OrderdetailsState extends State<Orderdetails> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                  InkWell(
+                                      InkWell(
                                         onTap: () {
-                                          Nav.route(
+                                          _navigate_add_Tikit(
                                               context,
-                                              Tickits(product_id:widget.order.orderDetails[i].productId.toString(),
-                                                order_id: widget.order.id.toString(),
-                                                vendor_id: widget.order.orderDetails[i].vendorId.toString(),
-                                              ));
+                                              widget.order.orderDetails[i],
+                                              widget.order.id.toString());
                                         },
                                         child: AutoSizeText(
                                           '${getTransrlate(context, 'problem')} ',
@@ -310,7 +331,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                                           style: TextStyle(
                                               color: Colors.orange,
                                               fontSize: 16,
-                                              decoration: TextDecoration.underline),
+                                              decoration:
+                                                  TextDecoration.underline),
                                         ),
                                       ),
                                       AutoSizeText(
@@ -373,10 +395,225 @@ class _OrderdetailsState extends State<Orderdetails> {
               SizedBox(
                 height: 25,
               ),
+              _listTicket == null
+                  ? Custom_Loading()
+                  : ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.symmetric(vertical: 4.0),
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: _listTicket.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'نوع الشكوى',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                      '${_listTicket[index].categoryName}'),
+                                ),
+                                Text(
+                                  'عنوان الشكوى',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text('${_listTicket[index].title}'),
+                                ),
+                                Text(
+                                  'تاريخ الشكوى',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child:
+                                      Text('${_listTicket[index].createdAt}'),
+                                ),
+                                Text(
+                                  'نص الشكوى',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('${_listTicket[index].message}'),
+                                ),
+                                _listTicket[index].attachment==null?Container():
+                                Text(
+                                  'ملف الشكوى',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline),
+                                ),
+                                _listTicket[index].attachment==null?Container(): Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      _launchURL(_listTicket[index].attachment.image);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(border: Border.all(
+                                        width: 1,color: Colors.orange
+                                      )),
+                                        child: Container(
+                                          width: ScreenUtil.getWidth(
+                                              context) /
+                                              2.5,
+                                          child: Text(
+                                            "${_listTicket[index].attachment.image}",style: TextStyle(color: Colors.orange),
+                                            maxLines: 1,
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                                Center(
+                                  child: Column(
+                                    // crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          API(context).post('solved/ticket', {
+                                            "id": _listTicket[index].id,
+                                          }).then((value) {
+                                            if (value != null) {
+                                              if (value['status_code'] == 200) {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        ResultOverlay(
+                                                            value['message']));
+                                                getTicket();
+                                              } else {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        ResultOverlay(
+                                                            value['errors']));
+                                              }
+                                            }
+                                          });
+                                        },
+                                        child: Container(
+                                          width: ScreenUtil.getWidth(context) /
+                                              1.5,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.orange,
+                                                  width: 1)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 10),
+                                            child: Center(
+                                              child: Text(
+                                                'تم حل المشكلة، إغلاق الشكوى',
+                                                style: TextStyle(
+                                                    color: Colors.orange),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          API(context).post('to/admin/ticket', {
+                                            "id": _listTicket[index].id,
+                                          }).then((value) {
+                                            if (value != null) {
+                                              if (value['status_code'] == 200) {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        ResultOverlay(
+                                                            value['message']));
+                                                getTicket();
+                                              } else {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        ResultOverlay(
+                                                            value['errors']));
+                                              }
+                                            }
+                                          });
+                                        },
+                                        child: Container(
+                                          width: ScreenUtil.getWidth(context) /
+                                              1.5,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey,
+                                                  width: 1)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 10),
+                                            child: Center(
+                                              child: Text(
+                                                'لم يتم حل المشكلة',
+                                                style: TextStyle(
+                                                    color: Colors.grey),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    )
             ],
           ),
         ),
       ),
     );
   }
+
+  _navigate_add_Tikit(
+      BuildContext context, OrderDetails orderDetails, String orderid) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Tickits(
+                  product_id: orderDetails.productId.toString(),
+                  order_id: orderid,
+                  vendor_id: orderDetails.vendorId.toString(),
+                )));
+    Timer(Duration(seconds: 3), () => getTicket());
+  }
+
+  void getTicket() {
+    API(context).get('specific/order/tickets/${widget.order.id}').then((value) {
+      if (value != null) {
+        setState(() {
+          _listTicket = Ticket_model.fromJson(value).data;
+        });
+      }
+    });
+  }
+  void _launchURL(String _url) async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
 }

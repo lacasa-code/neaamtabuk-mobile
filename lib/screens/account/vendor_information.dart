@@ -11,11 +11,9 @@ import 'package:flutter_pos/model/city_model.dart';
 import 'package:flutter_pos/model/country_model.dart';
 import 'package:flutter_pos/model/vendor_info.dart';
 import 'package:flutter_pos/model/vendors_types.dart';
-import 'package:flutter_pos/screens/account/changePasswordPAge.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
-import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
@@ -120,120 +118,131 @@ class _VendorInfoState extends State<VendorInfo> {
                               themeColor.getColor()))))
               :userModal.approved == 1
               ? Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    SvgPicture.asset(
-                      "assets/icons/Attention.svg",
-                      color: Colors.green,
-                      height: 100,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'حسابك كبائع حاليا مفعل',
-                      style: TextStyle(color: Colors.green,fontSize: 25),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'نوع التاجر :',
-                          style: TextStyle(color: Colors.green,fontSize: 16),
-                        ),
-                        Text(
-                          '${userModal.venType}',
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'الشركة :',
-                          style: TextStyle(color: Colors.green,fontSize: 16),
-                        ),
-                        Text(
-                          '${userModal.companyName}',
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'الهاتف :',
-                          style: TextStyle(color: Colors.green,fontSize: 16),
-                        ),
-                        Text(
-                          '${userModal.userDetails.phoneNo}',textDirection: TextDirection.ltr,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'رقم السجل التجارى:',
-                          style: TextStyle(color: Colors.green,fontSize: 16),
-                        ),
-                        Text(
-                          '${userModal.commercialNo}',
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'رقم البطاقة الضريبية:',
-                          style: TextStyle(color: Colors.green,fontSize: 16),
-                        ),
-                        Text(
-                          '${userModal.taxCardNo}',
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'رقم حساب البنكى :',
-                          style: TextStyle(color: Colors.green,fontSize: 16),
-                        ),
-                        Text(
-                          '${userModal.bankAccount}',
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'عنوان المرسلات :',
-                          style: TextStyle(color: Colors.green,fontSize: 16),
-                        ),
-                        Text(
-                          '${userModal.storeDetails.address}',
-                        ),
-                      ],
-                    ),
+                child: Container(
+            width: ScreenUtil.getWidth(context)/1.5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      SvgPicture.asset(
+                        "assets/icons/Attention.svg",
+                        color: Colors.green,
+                        height: 100,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'حسابك كبائع حاليا مفعل',
+                        style: TextStyle(color: Colors.green,fontSize: 25),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: ScreenUtil.getWidth(context)/2,
+                        child: Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'نوع التاجر :',
+                                  style: TextStyle(color: Colors.green,fontSize: 16),
+                                ),
+                                Text(
+                                  '${userModal.venType}',
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'الشركة :',
+                                  style: TextStyle(color: Colors.green,fontSize: 16),
+                                ),
+                                Text(
+                                  '${userModal.companyName}',
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'الهاتف :',
+                                  style: TextStyle(color: Colors.green,fontSize: 16),
+                                ),
+                                Text(
+                                  '${userModal.userDetails.phoneNo}',textDirection: TextDirection.ltr,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'رقم السجل التجارى:',
+                                  style: TextStyle(color: Colors.green,fontSize: 16),
+                                ),
+                                Text(
+                                  '${userModal.commercialNo}',
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'رقم البطاقة الضريبية:',
+                                  style: TextStyle(color: Colors.green,fontSize: 16),
+                                ),
+                                Text(
+                                  '${userModal.taxCardNo}',
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'رقم حساب البنكى :',
+                                  style: TextStyle(color: Colors.green,fontSize: 16),
+                                ),
+                                Text(
+                                  '${userModal.bankAccount}',
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'عنوان المرسلات :',
+                                  style: TextStyle(color: Colors.green,fontSize: 16),
+                                ),
+                                Text(
+                                  '${userModal.storeDetails.address}',
+                                ),
+                              ],
+                            ),
 
-                  ],
+                          ],
+                        ),
+                      ),
+
+                    ],
+                  ),
                 ),
               )
               : Column(children: [

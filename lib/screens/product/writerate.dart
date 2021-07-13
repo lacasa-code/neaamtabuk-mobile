@@ -92,7 +92,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                       RatingBar.builder(
                         initialRating: rating,
                         itemSize: 25.0,
-                        minRating: 1,
+                        minRating: 0.5,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
                         itemCount: 5,

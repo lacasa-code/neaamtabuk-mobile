@@ -111,6 +111,7 @@ class SearchOverlayState extends State<SearchOverlay>
                                     return a.name.compareTo(b.name);
                                   },
                                   itemSubmitted: (item) {
+
                                     setState(() {
                                       searchTextField.textField.controller
                                           .text =
@@ -144,7 +145,9 @@ class SearchOverlayState extends State<SearchOverlay>
                                         products = [];
                                       });
                                     }
-                                  },
+                                  },onFocusChanged: (f){
+                                    print(f);
+                                },
                                   itemBuilder: (context, item) {
                                     // ui for the autocompelete row
                                     return row(item);
@@ -170,7 +173,7 @@ class SearchOverlayState extends State<SearchOverlay>
                   ),
                 ),
                 List_product(
-                  product: products,
+                  product: products,ctx: context,
                 )
               ],
             ),
@@ -196,5 +199,11 @@ class SearchOverlayState extends State<SearchOverlay>
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    FocusScope.of(context).unfocus();
+
   }
 }

@@ -31,6 +31,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
   @override
   void initState() {
     getAddress();
+    checkboxValue=Provider.of<Provider_Data>(context,listen: false).address.id;
     super.initState();
   }
 
@@ -77,7 +78,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Radio<int>(
-                                      value: index,
+                                      value: address[index].id,
                                       groupValue: checkboxValue,
                                       activeColor: themeColor.getColor(),
                                       focusColor: themeColor.getColor(),

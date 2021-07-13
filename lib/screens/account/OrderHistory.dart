@@ -49,7 +49,7 @@ class _OrderHistoryState extends State<OrderHistory> {
           title: Row(
             children: [
               Icon(
-                Icons.favorite_border,
+                Icons.local_shipping_outlined,
                 color: Colors.white,
               ),
               SizedBox(

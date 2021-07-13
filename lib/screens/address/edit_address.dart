@@ -121,12 +121,7 @@ class _EditAddressState extends State<EditAddress> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: DropdownSearch<Country>(
                            label: getTransrlate(context, 'Countroy'),
-                          validator: (Country item) {
-                            if (item == null) {
-                              return "Required field";
-                            } else
-                              return null;
-                          },
+
                           selectedItem: widget.address.state ,
                           items: contries,
                           //  onFind: (String filter) => getData(filter),
@@ -143,12 +138,7 @@ class _EditAddressState extends State<EditAddress> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: DropdownSearch<Area>(
                            label: getTransrlate(context, 'area'),
-                          validator: (Area item) {
-                            if (item == null) {
-                              return "Required field";
-                            } else
-                              return null;
-                          },
+
                           selectedItem: widget.address.area,
 
                           items: area,
@@ -166,12 +156,7 @@ class _EditAddressState extends State<EditAddress> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: DropdownSearch<City>(
                            label: getTransrlate(context, 'City'),
-                          validator: (City item) {
-                            if (item == null) {
-                              return "Required field";
-                            } else
-                              return null;
-                          },
+
                           selectedItem: widget.address.city,
 
                           items: cities,

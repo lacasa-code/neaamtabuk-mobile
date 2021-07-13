@@ -32,6 +32,9 @@ class WishListItem {
   int userId;
   int productId;
   String userName;
+  String product_price;
+  String actual_price;
+  double avg_valuations;
   String productName;
   List<Photo> photo;
 
@@ -49,6 +52,9 @@ class WishListItem {
     productId = json['product_id'];
     userName = json['user_name'];
     productName = json['product_name'];
+    actual_price = json['actual_price'].toString();
+    avg_valuations = double.parse((json['avg_valuations']??'0').toString());
+    product_price = json['product_price'].toString();
     if (json['photo'] != null) {
       photo = new List<Photo>();
       json['photo'].forEach((v) {

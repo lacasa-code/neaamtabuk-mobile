@@ -101,59 +101,17 @@ class _ProductCartState extends State<ProductCart> {
               SizedBox(
                 height: 10,
               ),
-              widget.carts.quantity >= 5
-                  ? Container(
+            Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 2, vertical: 12),
                       padding: const EdgeInsets.all(3.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // items == null
-                          //     ? Container()
-                          //     : items.isEmpty
-                          //     ? Container()
-                          //     : widget.carts.quantity == null
-                          //     ? Container()
-                          //     : Container(
-                          //   margin: const EdgeInsets.symmetric(
-                          //       horizontal: 2, vertical: 2),
-                          //   padding: const EdgeInsets.all(3.0),
-                          //   decoration: BoxDecoration(
-                          //       border: Border.all(
-                          //           color: Colors.black12)),
-                          //   child: DropdownButton<String>(
-                          //     value:widget.carts.quantity==6?"other":  widget.carts.quantity.toString(),
-                          //     icon: const Icon(Icons
-                          //         .arrow_drop_down_outlined),
-                          //     iconSize: 24,
-                          //     elevation: 16,
-                          //     underline: Container(),
-                          //     style: const TextStyle(
-                          //         height: 1,
-                          //         color: Colors.deepPurple),
-                          //     onChanged: (String newValue) {
-                          //       setState(() {
-                          //         widget.carts.quantity = int.parse(newValue=="other"?'6':newValue);
-                          //       });
-                          //     },
-                          //     items: items.map<
-                          //         DropdownMenuItem<String>>(
-                          //             (String value) {
-                          //           return DropdownMenuItem<String>(
-                          //             value: value,
-                          //             child: Center(
-                          //                 child: Text(
-                          //                   "$value",
-                          //                   textAlign: TextAlign.center,
-                          //                 )),
-                          //           );
-                          //         }).toList(),
-                          //   ),
-                          // ),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               InkWell(
                                 onTap: () {
@@ -184,16 +142,46 @@ class _ProductCartState extends State<ProductCart> {
                                 ),
                               ),
                               Container(
-                                width: ScreenUtil.getWidth(context) / 2.5,
+                                width: ScreenUtil.getWidth(context) / 3.2,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
                                       child: AutoSizeText(
                                         getTransrlate(context, 'price'),
                                         maxLines: 1,
-                                        minFontSize: 18,
+                                        minFontSize: 14,
+                                        style: TextStyle(fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      child: AutoSizeText(
+                                        " ${widget.carts.price} ${getTransrlate(context, 'Currency')}",
+                                        maxLines: 1,
+                                        minFontSize: 14,
+                                        style: TextStyle(
+                                            color: widget.themeColor.getColor(),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: ScreenUtil.getWidth(context) / 3.2,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      child: AutoSizeText(
+                                        getTransrlate(context, 'total'),
+                                        maxLines: 1,
+                                        minFontSize: 14,
                                         style: TextStyle(fontWeight: FontWeight.w400),
                                       ),
                                     ),
@@ -204,7 +192,7 @@ class _ProductCartState extends State<ProductCart> {
                                       child: AutoSizeText(
                                         " ${widget.carts.total} ${getTransrlate(context, 'Currency')}",
                                         maxLines: 1,
-                                        minFontSize: 18,
+                                        minFontSize: 14,
                                         style: TextStyle(
                                             color: widget.themeColor.getColor(),
                                             fontWeight: FontWeight.bold),
@@ -291,6 +279,10 @@ class _ProductCartState extends State<ProductCart> {
 
                                                       ServiceData.getCart(
                                                           context);
+                                                      setState(() {
+                                                        other=!other;
+
+                                                      });
                                                     } else {
                                                       showDialog(
                                                           context: context,
@@ -345,147 +337,8 @@ class _ProductCartState extends State<ProductCart> {
                               : Container(),
                         ],
                       ),
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: ScreenUtil.getWidth(context) / 2.5,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: AutoSizeText(
-                                  getTransrlate(context, 'quantity'),
-                                  maxLines: 1,
-                                  minFontSize: 16,
-                                  maxFontSize: 25,
-                                  style: TextStyle(fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey)),
-                                    height: 50,
-                                    width: 43,
-                                    child: Center(
-                                        child: IconButton(
-                                      icon: Icon(Icons.add, color: Colors.grey),
-                                      onPressed: () {
-                                        API(context).post('add/to/cart', {
-                                          "product_id": widget.carts.productId,
-                                          "quantity": widget.carts.quantity + 1,
-                                          "order_id": widget.carts.orderId
-                                        }).then((value) {
-                                          if (value != null) {
-                                            if (value['status_code'] == 200) {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (_) => ResultOverlay(
-                                                      value['message']));
-
-                                              ServiceData.getCart(context);
-                                            } else {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (_) => ResultOverlay(
-                                                      value['errors']));
-                                            }
-                                          }
-                                        });
-                                      },
-                                    )),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey)),
-                                    height: 50,
-                                    width: 50,
-                                    child: Center(
-                                        child:
-                                            Text("${widget.carts.quantity}")),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey)),
-                                    width: 43,
-                                    height: 50,
-                                    child: Center(
-                                        child: IconButton(
-                                      icon: Icon(
-                                        Icons.remove,
-                                        color: Colors.grey,
-                                      ),
-                                      onPressed: () {widget.carts.quantity==1?deleteItem(ServiceData) :
-                                        API(context).post('add/to/cart', {
-                                          "product_id": widget.carts.productId,
-                                          "quantity": widget.carts.quantity - 1,
-                                          "order_id": widget.carts.orderId
-                                        }).then((value) {
-                                          if (value != null) {
-                                            if (value['status_code'] == 200) {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (_) => ResultOverlay(
-                                                      value['message']));
-
-                                              ServiceData.getCart(context);
-                                            } else {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (_) => ResultOverlay(
-                                                      value['errors']));
-                                            }
-                                          }
-                                        });
-                                      },
-                                    )),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: ScreenUtil.getWidth(context) / 2.5,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: AutoSizeText(
-                                  getTransrlate(context, 'price'),
-                                  maxLines: 1,
-                                  minFontSize: 18,
-                                  style: TextStyle(fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                child: AutoSizeText(
-                                  " ${widget.carts.total} ${getTransrlate(context, 'Currency')}",
-                                  maxLines: 1,
-                                  minFontSize: 18,
-                                  style: TextStyle(
-                                      color: widget.themeColor.getColor(),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
                     ),
+
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),

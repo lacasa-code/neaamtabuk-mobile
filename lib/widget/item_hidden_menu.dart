@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/screen_size.dart';
 
 class ItemHiddenMenu extends StatelessWidget {
   /// name of the menu item
   final String name;
+  final String lable;
 
   final Widget icon;
 
@@ -22,7 +24,7 @@ class ItemHiddenMenu extends StatelessWidget {
   ItemHiddenMenu({
     Key key,
     this.name,
-    this.icon,
+    this.icon,this.lable,
     this.selected = false,
     this.onTap,
     this.colorLineSelected = Colors.blue,
@@ -55,6 +57,22 @@ class ItemHiddenMenu extends StatelessWidget {
                                 TextStyle(color: Colors.black, fontSize: 14)
                             : TextStyle(color: Colors.black, fontSize: 14)),
                   ),
+                ),lable==null?Container():Row(
+                  children: [
+                    Icon(Icons.check,color: Colors.lightGreen,),
+                    Container(
+                      width: ScreenUtil.getWidth(context)/3,
+                      child: Text(
+                        "$lable",maxLines: 1,
+                        style: (this.baseStyle ??
+                                TextStyle(color: Colors.grey, fontSize: 14.0))
+                            .merge(this.selected
+                                ? this.selectedStyle ??
+                                    TextStyle(color: Colors.black, fontSize: 14)
+                                : TextStyle(color: Colors.black, fontSize: 14)),
+                      ),
+                    ),
+                  ],
                 ),
                 onTap == null
                     ? Container()

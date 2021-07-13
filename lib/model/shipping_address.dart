@@ -97,9 +97,9 @@ class Address {
     recipientAltPhone = json['recipient_alt_phone'];
     recipientEmail = json['recipient_email'];
     address = json['address'];
-   // state = json['state'] != null ? new Country.fromJson(json['state']) : null;
-    //area = json['area'] != null ? new Area.fromJson(json['area']) : null;
-   // city = json['city'] != null ? new City.fromJson(json['city']) : null;
+    state = json['state'] != null ? new Country.fromJson(json['state']) : null;
+    area = json['area'] != null ? new Area.fromJson(json['area']) : null;
+    city = json['city'] != null ? new City.fromJson(json['city']) : null;
     lastName = json['last_name'];
     street = json['street'];
     district = json['district'];

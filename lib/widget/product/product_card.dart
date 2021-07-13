@@ -104,16 +104,16 @@ class _ProductCardState extends State<ProductCard> {
                           height: 5,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              width: ScreenUtil.getWidth(context) /8,
+                              width: ScreenUtil.getWidth(context) /6,
 
                               child: RatingBar.builder(
                                 ignoreGestures: true,
                                 initialRating:
                                     widget.product.avgValuations.toDouble(),
-                                itemSize: ScreenUtil.getWidth(context) / 45,
+                                itemSize: ScreenUtil.getWidth(context) / 40,
                                 minRating: 1,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
@@ -125,88 +125,84 @@ class _ProductCardState extends State<ProductCard> {
                                 onRatingUpdate: (rating) {},
                               ),
                             ),
-                            widget.product.producttypeId == 2
-                                ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${widget.product.holesalePrice ?? ' '} ${getTransrlate(context, 'Currency')} ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,fontSize: 11,
-                                      color: Colors.black),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "الحد الادنى : ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,fontSize: 11),
-                                    ),
-                                    Text(
-                                      '${widget.product.noOfOrders ?? ' '} ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,fontSize: 12,
-                                          color: Colors.black),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                                : Container(
-                              width: ScreenUtil.getWidth(context) / 4,
-                              child: widget.product.discount == 0
-                                  ? Column(
-                                    children: [
-                                      AutoSizeText(
-                                "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
-                                maxLines: 1,
-                                maxFontSize: 12,
-                                style: TextStyle(
-                                        color:Colors.black,
-                                        fontWeight: FontWeight.bold),
-                              ),
-                                      AutoSizeText(
-                                " ",
-                                maxLines: 1,
-                                maxFontSize: 12,
-                                style: TextStyle(
-                                        color:Colors.black,
-                                        fontWeight: FontWeight.bold),
-                              ),
-                                    ],
-                                  )
-                                  : Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    width: ScreenUtil.getWidth(context) / 4,
-
-                                    child: Text(
-                                      "${widget.product.price} ",
-                                      style: TextStyle(
-                                        decoration:  TextDecoration.lineThrough,
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ),  Container(
-                                    width: ScreenUtil.getWidth(context) / 4,
-
-                                    child: Text(
-                                      "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )),
-
+                          AutoSizeText(
+                              widget.product.producttypeId == 2?"": "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                            maxLines: 1,
+                            maxFontSize: 12,
+                            style: TextStyle(
+                                color:Colors.black,
+                                fontWeight: FontWeight.bold),
+                          )
                           ],
                         ),
+                        widget.product.producttypeId == 2
+                            ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "الحد الادنى : ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,fontSize: 11),
+                                ),
+                                Text(
+                                  '${widget.product.noOfOrders ?? ' '} ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,fontSize: 12,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              '${widget.product.holesalePrice ?? ' '} ${getTransrlate(context, 'Currency')} ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,fontSize: 11,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        )
+                            : Container(
+                          //  width: ScreenUtil.getWidth(context) / 4,
+                            child: widget.product.discount == 0
+                                ? Container(child:  Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5),
+                              child: Text(
+                                " ",
+                                style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),)
+                                : Container(
+
+                                  // width: ScreenUtil.getWidth(context) / 2,
+                                   child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                     children: [
+                                      SizedBox(width: 10,),
+
+                                       Padding(
+                                         padding: const EdgeInsets.symmetric(horizontal: 5),
+                                         child: Text(
+                                           " ${widget.product.price} ",
+                                           style: TextStyle(
+                                             decoration: TextDecoration.lineThrough,
+                                             fontSize: 12,
+                                             fontWeight: FontWeight.bold,
+                                             color: Colors.red,
+                                           ),
+                                         ),
+                                       ),
+                                     ],
+                                   ),
+                                 )),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[

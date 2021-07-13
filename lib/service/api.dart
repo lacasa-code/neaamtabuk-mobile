@@ -77,6 +77,7 @@ class API {
       {File commercialDocs,
       File taxCardDocs,
       File wholesaleDocs,
+      File attachment,
       File bankDocs}) async {
     final full_url =
         Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
@@ -87,6 +88,7 @@ class API {
     var request = http.MultipartRequest(
         'POST', Uri.parse(full_url.toString())); // your server url
     request.fields.addAll(body); // any other fields required by your server
+    attachment==null?null:  request.files.add(await http.MultipartFile.fromPath('attachment', '${attachment.path}')); // file you want to upload
     commercialDocs==null?null:  request.files.add(await http.MultipartFile.fromPath('commercialDocs', '${commercialDocs.path}')); // file you want to upload
     taxCardDocs==null?null: request.files.add(await http.MultipartFile.fromPath('taxCardDocs', '${taxCardDocs.path}')); // file you want to upload
     wholesaleDocs==null?null: request.files.add(await http.MultipartFile.fromPath('wholesaleDocs', '${wholesaleDocs.path}')); // file you want to upload

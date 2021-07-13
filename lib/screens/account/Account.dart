@@ -10,6 +10,7 @@ import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/screens/account/register_page.dart';
 import 'package:flutter_pos/screens/account/user_information.dart';
 import 'package:flutter_pos/screens/account/vendor_information.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -52,6 +53,8 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
+    final _cart_model = Provider.of<Provider_Data>(context);
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +170,7 @@ class _AccountState extends State<Account> {
                         ],
                       ),
                 SizedBox(
-                  height: ScreenUtil.getWidth(context) /15,
+                  height: ScreenUtil.getWidth(context) / 15,
                 ),
               ],
             ),
@@ -194,23 +197,25 @@ class _AccountState extends State<Account> {
                               },
                               child: Column(
                                 children: <Widget>[
-                                  vendor==null?Container():    ItemHiddenMenu(
-                                    onTap: () {
-                                      Nav.route(context, VendorInfo());
-                                    },
-                                    icon: SvgPicture.asset(
-                                      'assets/icons/store.svg',
-                                      height: 25,
-                                      color: Colors.orange,
-                                    ),
-                                    name:
-                                        getTransrlate(context, 'vendorSettings'),
-                                    baseStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 19.0,
-                                        fontWeight: FontWeight.w800),
-                                    colorLineSelected: Colors.orange,
-                                  ),
+                                  vendor == null
+                                      ? Container()
+                                      : ItemHiddenMenu(
+                                          onTap: () {
+                                            Nav.route(context, VendorInfo());
+                                          },
+                                          icon: SvgPicture.asset(
+                                            'assets/icons/store.svg',
+                                            height: 25,
+                                            color: Colors.orange,
+                                          ),
+                                          name: getTransrlate(
+                                              context, 'vendorSettings'),
+                                          baseStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 19.0,
+                                              fontWeight: FontWeight.w800),
+                                          colorLineSelected: Colors.orange,
+                                        ),
                                   ItemHiddenMenu(
                                     onTap: () {
                                       Nav.route(context, UserInfo());
@@ -219,8 +224,8 @@ class _AccountState extends State<Account> {
                                       'assets/icons/account.svg',
                                       color: Colors.orange,
                                     ),
-                                    name:
-                                        getTransrlate(context, 'ProfileSettings'),
+                                    name: getTransrlate(
+                                        context, 'ProfileSettings'),
                                     baseStyle: TextStyle(
                                         color: Colors.black,
                                         fontSize: 19.0,
@@ -228,6 +233,9 @@ class _AccountState extends State<Account> {
                                     colorLineSelected: Colors.orange,
                                   ),
                                   ItemHiddenMenu(
+                                    lable: _cart_model.address == null
+                                        ? ' '
+                                        : ' ${_cart_model.address.area == null ? '' : _cart_model.address.area.areaName ?? ''},${ _cart_model.address.city == null ? '' :  _cart_model.address.city.cityName ?? ''}.${ _cart_model.address.street ?? ''},${ _cart_model.address.district ?? ''}${ _cart_model.address.floorNo ?? ''}${ _cart_model.address.apartmentNo ?? ''}',
                                     onTap: () {
                                       Nav.route(context, Shipping_Address());
                                     },
@@ -236,7 +244,8 @@ class _AccountState extends State<Account> {
                                       size: 25,
                                       color: Colors.orange,
                                     ),
-                                    name: getTransrlate(context, 'MyAddress')+'',
+                                    name: getTransrlate(context, 'MyAddress') +
+                                        '',
                                     baseStyle: TextStyle(
                                         color: Colors.black,
                                         fontSize: 19.0,
@@ -333,7 +342,6 @@ class _AccountState extends State<Account> {
                             colorLineSelected: Colors.orange,
                           ),
                         ),
-
                         InkWell(
                           onTap: () {
                             Nav.route(context, Info());
@@ -421,7 +429,7 @@ class _AccountState extends State<Account> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   InkWell(
-                                    onTap: (){
+                                    onTap: () {
                                       _launchURL('https://www.instagram.com/');
                                     },
                                     child: SvgPicture.asset(
@@ -431,7 +439,7 @@ class _AccountState extends State<Account> {
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: (){
+                                    onTap: () {
                                       _launchURL('https://www.facebook.com/');
                                     },
                                     child: SvgPicture.asset(
@@ -441,7 +449,7 @@ class _AccountState extends State<Account> {
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: (){
+                                    onTap: () {
                                       _launchURL('https://twitter.com/');
                                     },
                                     child: SvgPicture.asset(
@@ -466,7 +474,8 @@ class _AccountState extends State<Account> {
                               children: [
                                 TextButton(
                                     onPressed: () {
-                                      _launchURL('https://frontend.lacasacode.dev/info/about');
+                                      _launchURL(
+                                          'https://frontend.lacasacode.dev/info/about');
                                     },
                                     child: AutoSizeText(
                                       getTransrlate(context, 'About'),
@@ -476,8 +485,8 @@ class _AccountState extends State<Account> {
                                     )),
                                 TextButton(
                                     onPressed: () {
-                                      _launchURL('https://frontend.lacasacode.dev/info/contact-us');
-
+                                      _launchURL(
+                                          'https://frontend.lacasacode.dev/info/contact-us');
                                     },
                                     child: AutoSizeText(
                                       getTransrlate(context, 'contact'),
@@ -487,8 +496,8 @@ class _AccountState extends State<Account> {
                                     )),
                                 TextButton(
                                     onPressed: () {
-                                      _launchURL('https://frontend.lacasacode.dev/info/FAQs');
-
+                                      _launchURL(
+                                          'https://frontend.lacasacode.dev/info/FAQs');
                                     },
                                     child: AutoSizeText(
                                       getTransrlate(context, 'FAQ'),
@@ -510,8 +519,8 @@ class _AccountState extends State<Account> {
                                     width: ScreenUtil.getWidth(context) / 3.1,
                                     child: TextButton(
                                         onPressed: () {
-                                          _launchURL('https://frontend.lacasacode.dev/sell/why');
-
+                                          _launchURL(
+                                              'https://frontend.lacasacode.dev/sell/why');
                                         },
                                         child: AutoSizeText(
                                           getTransrlate(
@@ -520,26 +529,30 @@ class _AccountState extends State<Account> {
                                           minFontSize: 12,
                                           style: TextStyle(color: Colors.black),
                                         ))),
-                               token!=null?Container(): Container(
-                                    width: ScreenUtil.getWidth(context) / 3.1,
-                                    child: TextButton(
-                                        onPressed: () {
-                                          Nav.route(context, RegisterPage());
-
-                                        },
-                                        child: AutoSizeText(
-                                          getTransrlate(
-                                              context, 'Registerseller'),
-                                          maxLines: 1,
-                                          minFontSize: 12,
-                                          style: TextStyle(color: Colors.black),
-                                        ))),
+                                token != null
+                                    ? Container()
+                                    : Container(
+                                        width:
+                                            ScreenUtil.getWidth(context) / 3.1,
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Nav.route(
+                                                  context, RegisterPage());
+                                            },
+                                            child: AutoSizeText(
+                                              getTransrlate(
+                                                  context, 'Registerseller'),
+                                              maxLines: 1,
+                                              minFontSize: 12,
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ))),
                                 Container(
                                     width: ScreenUtil.getWidth(context) / 3.1,
                                     child: TextButton(
                                         onPressed: () {
-                                          _launchURL('https://frontend.lacasacode.dev/sell/how-to');
-
+                                          _launchURL(
+                                              'https://frontend.lacasacode.dev/sell/how-to');
                                         },
                                         child: AutoSizeText(
                                           getTransrlate(
@@ -589,11 +602,11 @@ class _AccountState extends State<Account> {
             ),
           ),
         ],
-
       ),
     );
-
   }
-  void _launchURL(String _url) async =>
-      await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
+
+  void _launchURL(String _url) async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
 }

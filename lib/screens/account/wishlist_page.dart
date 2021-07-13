@@ -95,6 +95,8 @@ class _WishListState extends State<WishList> {
                                                 builder: (_) =>
                                                     ResultOverlay(value['message']));
                                             getwWISHlIST();
+                                            Provider.of<Provider_Data>(context,listen: false).getData(themeColor.car_type,context);
+
                                           } else {
                                             showDialog(
                                                 context: context,
@@ -185,6 +187,7 @@ class _WishListState extends State<WishList> {
       if (value != null) {
         setState(() {
           wishList = Wishlist_model.fromJson(value).data;
+          print(wishList[1].avg_valuations);
         });
       }
     });

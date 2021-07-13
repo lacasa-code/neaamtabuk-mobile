@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/cart_model.dart';
+import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/model/shipping_address.dart';
 import 'package:flutter_pos/service/api.dart';
 
 class Provider_Data with ChangeNotifier {
   Cart_model cart_model;
   Address address;
+  List<Product> product,productMostView,productMostSale;
 
   Provider_Data();
 
@@ -20,6 +22,31 @@ class Provider_Data with ChangeNotifier {
       }
     });
   }
+  getData(int cartypeId,BuildContext context) {
+    API(context, Check: false)
+        .get('site/new/products?cartype_id=$cartypeId')
+        .then((value) {
+      if (value != null) {
+          product = Product_model.fromJson(value).data;
+      }
+    });
+    API(context)
+        .get('mostly/viewed/products?cartype_id=$cartypeId')
+        .then((value) {
+      if (value != null) {
+          productMostView = Product_model.fromJson(value).data;
+      }
+    });
+    API(context)
+        .get('best/seller/products?cartype_id=$cartypeId')
+        .then((value) {
+      if (value != null) {
+          productMostSale = Product_model.fromJson(value).data;
+      }
+    });
+    notifyListeners();
+  }
+
 
   getShipping(BuildContext context) {
     API(context, Check: false).get('user/get/default/shipping').then((value) {

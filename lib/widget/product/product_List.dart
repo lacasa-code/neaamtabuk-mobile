@@ -19,10 +19,12 @@ class ProductList extends StatefulWidget {
     Key key,
     @required this.themeColor,
     this.product,
+    this.ctx,
   }) : super(key: key);
 
   final Provider_control themeColor;
   final Product product;
+  final BuildContext ctx;
 
   @override
   _ProductListState createState() => _ProductListState();
@@ -31,7 +33,8 @@ class ProductList extends StatefulWidget {
 class _ProductListState extends State<ProductList> {
   @override
   void initState() {
-    super.initState();
+
+  super.initState();
   }
 
   @override
@@ -48,6 +51,7 @@ class _ProductListState extends State<ProductList> {
           ),
           child: InkWell(
             onTap: () {
+              widget.ctx==null?null: Navigator.pop(widget.ctx);
               Nav.route(
                   context,
                   ProductPage(
@@ -223,7 +227,7 @@ class _ProductListState extends State<ProductList> {
                                         showDialog(
                                             context: context,
                                             builder: (_) => ResultOverlay(
-                                                value['message']));
+                                                value['errors']));
                                       }
                                     }
                                   });
@@ -235,8 +239,6 @@ class _ProductListState extends State<ProductList> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  print(
-                                      "  FFFFFFFFFFFFFFFFFFFFFF   ${widget.product.inWishlist}");
                                   widget.product.inWishlist == 0
                                       ? API(context).post('user/add/wishlist', {
                                           "product_id": widget.product.id
@@ -254,7 +256,7 @@ class _ProductListState extends State<ProductList> {
                                               showDialog(
                                                   context: context,
                                                   builder: (_) => ResultOverlay(
-                                                      value['message']));
+                                                      value['errors']));
                                             }
                                           }
                                         })
@@ -275,7 +277,7 @@ class _ProductListState extends State<ProductList> {
                                               showDialog(
                                                   context: context,
                                                   builder: (_) => ResultOverlay(
-                                                      value['message']));
+                                                      value['errors']));
                                             }
                                           }
                                         });
@@ -300,31 +302,5 @@ class _ProductListState extends State<ProductList> {
         ),
       ],
     );
-  }
-
-
-
-  bool onLikeTapped() {
-    // API(context)
-    //     .post('wishlist', {"product_id": widget.product.id}).then((value) => {
-    //           if (value['status'] != 'error')
-    //             {
-    //               setState(() {
-    //                 widget.product.w = false;
-    //               }),
-    //               Scaffold.of(context).showSnackBar(SnackBar(
-    //                   backgroundColor: mainColor,
-    //                   content: Text(value['message'])))
-    //             }
-    //           else
-    //             {
-    //               setState(() {
-    //                 widget.product.is_wishlisted = true;
-    //               }),
-    //               Scaffold.of(context).showSnackBar(SnackBar(
-    //                   backgroundColor: mainColor,
-    //                   content: Text(value['message'])))
-    //             }
-    //         });
   }
 }
