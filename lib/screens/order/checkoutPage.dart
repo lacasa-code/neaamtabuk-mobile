@@ -54,6 +54,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
   @override
   void initState() {
 setState(() {
+  Provider.of<Provider_Data>(context,listen: false).address==null?null:
   checkboxValue=Provider.of<Provider_Data>(context,listen: false).address.id;
 
 });
@@ -137,7 +138,7 @@ setState(() {
                                                 checkboxValue = value;
                                                 DefaultAddress=address[index];
                                                 API(context).post(
-                                                    'user/select/shipping/${address[index].id}',
+                                                   'user/mark/default/shipping/${address[index].id}',
                                                     {}).then((value) {
                                                   if (value != null) {
                                                     if (value['status_code'] ==

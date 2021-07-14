@@ -56,6 +56,10 @@ class _CartScreenState extends State<CartScreen> {
                   ? Container(
         height: 1,
         width: 1,
+      ):_cart_model.cart_model.data.orderDetails.isEmpty
+                  ? Container(
+        height: 1,
+        width: 1,
       ):
       Container(
                       height: 90,

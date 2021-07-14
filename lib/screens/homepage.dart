@@ -102,12 +102,13 @@ class _HomeState extends State<Home> {
   void initState() {
     _controller = PersistentTabController(initialIndex: 0);
 
-    getData(1);
     API(context).get('car/types/list').then((value) {
       if (value != null) {
         setState(() {
           cartype = Car_type.fromJson(value).data;
         });
+        getData(1);
+
       }
     });
 
@@ -447,7 +448,6 @@ class _HomeState extends State<Home> {
                         child: CategoryCard(
                           themeColor: themeColor,
                           product: product,
-                          cartType: cartype[checkboxType].id,
                         ),
                       ))
                   .toList(),

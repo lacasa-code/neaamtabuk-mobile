@@ -14,12 +14,10 @@ class CategoryCard extends StatefulWidget {
     Key key,
     @required this.themeColor,
     this.product,
-    this.cartType,
   }) : super(key: key);
 
   final Provider_control themeColor;
   final Product product;
-  final int  cartType;
 
   @override
   _CategoryCardState createState() => _CategoryCardState();
@@ -40,13 +38,13 @@ class _CategoryCardState extends State<CategoryCard> {
       ),
       child: InkWell(
         onTap: () {
-          print('site/categories/${widget.product.categoryId}?cartype_id=${widget.cartType}');
+          print('site/categories/${widget.product.categoryId}?cartype_id=${widget.themeColor.car_type}');
           Nav.route(
               context,
               Products_Page(
                 id: widget.product.id,
                 name: widget.product.categoryName.name,
-                Url: 'site/categories/${widget.product.categoryId}?cartype_id=${widget.cartType}',
+                Url: 'site/categories/${widget.product.categoryId}?cartype_id=${widget.themeColor.car_type}',
               ));
         },
         child: Column(
