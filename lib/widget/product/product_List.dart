@@ -118,7 +118,7 @@ class _ProductListState extends State<ProductList> {
                             initialRating:
                                 widget.product.avgValuations.toDouble(),
                             itemSize: 14.0,
-                            minRating: 1,
+                            minRating: 0.5,
                             direction: Axis.horizontal,
                             allowHalfRating: true,
                             itemCount: 5,

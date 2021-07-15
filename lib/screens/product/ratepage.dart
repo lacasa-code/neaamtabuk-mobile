@@ -87,7 +87,7 @@ class _RatedialogState extends State<Ratedialog> {
                                           ignoreGestures: true,
                                           initialRating: double.parse('${widget.reviews.avgValuations ?? 0}'),
                                           itemSize: 25.0,
-                                          minRating: 1,
+                                          minRating: 0.5,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 1,
@@ -138,7 +138,7 @@ class _RatedialogState extends State<Ratedialog> {
                                               .reviews.reviewsData[index].evaluationValue
                                               .toDouble(),
                                           itemSize: 20.0,
-                                          minRating: 5,
+                                          minRating: 0.5,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,

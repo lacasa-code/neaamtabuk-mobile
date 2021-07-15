@@ -57,7 +57,7 @@ class ItemHiddenMenu extends StatelessWidget {
                                 TextStyle(color: Colors.black, fontSize: 14)
                             : TextStyle(color: Colors.black, fontSize: 14)),
                   ),
-                ),lable==null?Container():Row(
+                ),lable==null?Container():lable.isEmpty?Container():Row(
                   children: [
                     Icon(Icons.check,color: Colors.lightGreen,),
                     Container(

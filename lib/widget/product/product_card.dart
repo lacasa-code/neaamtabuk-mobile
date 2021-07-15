@@ -114,7 +114,7 @@ class _ProductCardState extends State<ProductCard> {
                                 initialRating:
                                     widget.product.avgValuations.toDouble(),
                                 itemSize: ScreenUtil.getWidth(context) / 40,
-                                minRating: 1,
+                                minRating: 0.5,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemCount: 5,

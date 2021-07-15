@@ -89,7 +89,7 @@ class _Wish_ListState extends State<Wish_List> {
                                 ignoreGestures: true,
                                 initialRating: widget.product.avg_valuations.toDouble(),
                                 itemSize: 14.0,
-                                minRating: 1,
+                                minRating: 0.5,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemCount: 5,

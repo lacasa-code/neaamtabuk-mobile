@@ -31,6 +31,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
   @override
   void initState() {
     getAddress();
+    Provider.of<Provider_Data>(context,listen: false).address==null?null:
     checkboxValue=Provider.of<Provider_Data>(context,listen: false).address.id;
     super.initState();
   }

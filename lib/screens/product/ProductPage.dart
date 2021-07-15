@@ -342,7 +342,7 @@ class _ProductPageState extends State<ProductPage> {
                                     initialRating: double.parse(
                                         "${reviews.avgValuations ?? '0'}"),
                                     itemSize: 25.0,
-                                    minRating: 1,
+                                    minRating: 0.5,
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
                                     itemCount: 1,
@@ -687,7 +687,7 @@ class _ProductPageState extends State<ProductPage> {
                                                               double.parse(
                                                                   '3.5'),
                                                           itemSize: 25.0,
-                                                          minRating: 1,
+                                                          minRating: 0.5,
                                                           direction:
                                                               Axis.horizontal,
                                                           allowHalfRating: true,
@@ -773,7 +773,7 @@ class _ProductPageState extends State<ProductPage> {
                                                                     .evaluationValue
                                                                     .toDouble(),
                                                                 itemSize: 20.0,
-                                                                minRating: 5,
+                                                                minRating: 0.5,
                                                                 direction: Axis
                                                                     .horizontal,
                                                                 allowHalfRating:

@@ -573,7 +573,7 @@ class ProductReviews {
   int productId;
   String userName;
   String productName;
-  int evaluationValue;
+  double evaluationValue;
   String createdAt;
   String timeCreated;
 
@@ -586,7 +586,7 @@ class ProductReviews {
     productId = json['product_id'];
     userName = json['user_name'];
     productName = json['product_name'];
-    evaluationValue = json['evaluation_value'];
+    evaluationValue = double.parse(json['evaluation_value'].toString());
     createdAt = json['created_at'];
     timeCreated = json['time_created'];
   }
