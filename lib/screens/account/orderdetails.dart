@@ -481,7 +481,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                         )),
                                   ),
                                 ),
-                                Center(
+                                _listTicket[index].Case=='solved'?Container(): Center(
                                   child: Column(
                                     // crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
@@ -531,7 +531,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      InkWell(
+                                      _listTicket[index].Case=='to admin'?Container(): InkWell(
                                         onTap: () {
                                           API(context).post('to/admin/ticket', {
                                             "id": _listTicket[index].id,
@@ -578,6 +578,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                                   ),
                                 ),
                                 SizedBox(height: 10),
+                                Container(height: 1,color: Colors.black26,),
+
                               ],
                             ),
                           ),

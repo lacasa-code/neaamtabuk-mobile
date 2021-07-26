@@ -142,7 +142,7 @@ class _ProductPageState extends State<ProductPage> {
                                               showDialog(
                                                   context: context,
                                                   builder: (_) => ResultOverlay(
-                                                      value['data']));
+                                                      value['data']?? value['errors']?? value['message']));
                                             }
                                           }
                                         })
@@ -381,7 +381,27 @@ class _ProductPageState extends State<ProductPage> {
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                             Text(
-                              '${widget.product.carMadeName == null ? 'الجميع' : widget.product.carMadeName.carMade}',
+                              '${widget.product.carMadeName == null ? 'لايتم التحديد' : widget.product.carMadeName.carMade}',
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      )),
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${getTransrlate(context, 'manufacturer')} : ",
+                              style: TextStyle(fontWeight: FontWeight.w400),
+                            ),
+                            Text(
+                              '${widget.product.manufacturerName ?? 'لايتم التحديد'}',
                               maxLines: 1,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -471,7 +491,7 @@ class _ProductPageState extends State<ProductPage> {
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                             Text(
-                              '${widget.product.transmissionName ?? 'الجميع'}',
+                              '${widget.product.transmissionName ?? 'لايتم التحديد'}',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),

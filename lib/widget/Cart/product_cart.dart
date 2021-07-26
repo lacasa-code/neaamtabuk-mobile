@@ -160,7 +160,7 @@ class _ProductCartState extends State<ProductCart> {
                                     ),
                                     Container(
                                       child: AutoSizeText(
-                                        " ${widget.carts.price} ${getTransrlate(context, 'Currency')}",
+                                        " ${widget.carts.actual_price} ${getTransrlate(context, 'Currency')}",
                                         maxLines: 1,
                                         minFontSize: 14,
                                         style: TextStyle(

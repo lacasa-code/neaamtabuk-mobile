@@ -187,7 +187,6 @@ class _WishListState extends State<WishList> {
       if (value != null) {
         setState(() {
           wishList = Wishlist_model.fromJson(value).data;
-          print(wishList[1].avg_valuations);
         });
       }
     });

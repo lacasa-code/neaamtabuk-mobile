@@ -101,6 +101,7 @@ class OrderDetails {
   String vendorName;
   int quantity;
   String price;
+  String actual_price;
   int discount;
   String total;
   int approved;
@@ -118,6 +119,7 @@ class OrderDetails {
         this.vendorName,
         this.quantity,
         this.price,
+        this.actual_price,
         this.discount,
         this.total,
         this.approved});
@@ -140,6 +142,7 @@ class OrderDetails {
     vendorName = json['vendor_name'];
     quantity = json['quantity'];
     price = json['price'].toString();
+    actual_price = json['actual_price'].toString();
     discount = json['discount'];
     total = json['total'].toString();
     approved = json['approved'];

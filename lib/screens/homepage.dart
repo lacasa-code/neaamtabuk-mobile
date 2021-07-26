@@ -394,6 +394,8 @@ class _HomeState extends State<Home> {
                       ? Container()
                       : provider_data.productMostSale.isEmpty
                           ? Container()
+                          :cartype==null
+                          ? Container()
                           : Column(
                               children: [
                                 ProductListTitleBar(

@@ -24,8 +24,9 @@ class Tickits extends StatefulWidget {
 
 class _TickitsState extends State<Tickits> {
   final _formKey = GlobalKey<FormState>();
-  String typeTickit, addressTickit, messageTickit,category_id;
+  String typeTickit, addressTickit, messageTickit, priortyTickit,category_id;
   List<Categorytickit> _data;
+  List<Categorytickit> priorty;
   File attachment;
 
   @override
@@ -34,6 +35,12 @@ API(context).get('ticket/categorieslist')..then((value) {
   if (value != null) {
     setState(() {
       _data = Category_tickit.fromJson(value).data;
+    });
+  }
+});API(context).get('ticket/priority/list')..then((value) {
+  if (value != null) {
+    setState(() {
+      priorty = Category_tickit.fromJson(value).data;
     });
   }
 });
@@ -87,6 +94,23 @@ super.initState();
                       onChanged: (Categorytickit data) =>
                       category_id = data.id.toString(),
                     ),
+                SizedBox(height: 16,),
+                priorty == null
+                    ? Container()
+                    : DropdownSearch<Categorytickit>(
+                  label: " أولية الشكوى ",
+                  validator: (Categorytickit item) {
+                    if (item == null) {
+                      return "Required field";
+                    } else
+                      return null;
+                  },
+                  items: priorty,
+                  //  onFind: (String filter) => getData(filter),
+                  itemAsString: (Categorytickit u) => u.name,
+                  onChanged: (Categorytickit data) =>
+                  priortyTickit = data.id.toString(),
+                ),
                 SizedBox(height: 16,),
                 // MyTextFormField(
                 //   intialLabel: 'low',
@@ -225,7 +249,7 @@ super.initState();
                             API(context).postFile('new/ticket',
                                 {
                                   "title": typeTickit,
-                                  "priority": 'low',
+                                  "ticketpriority_id": priortyTickit,
                                   "message": messageTickit,
                                   "order_id": widget.order_id,
                                   "vendor_id": widget.vendor_id,

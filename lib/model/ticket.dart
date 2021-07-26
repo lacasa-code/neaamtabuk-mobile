@@ -108,7 +108,7 @@ class Ticket {
   Attachment get attachment => _attachment;
   dynamic get answer => _answer;
   List<dynamic> get comments => _comments;
- // String get case => _case;
+  String get Case => _case;
   String get reply => _reply;
   List<dynamic> get orderDetails => _orderDetails;
   int get orderNumber => _orderNumber;
@@ -188,6 +188,7 @@ class Ticket {
       });
     }
     _case = json["case"];
+
     _reply = json["reply"];
     if (json["orderDetails"] != null) {
       _orderDetails = [];

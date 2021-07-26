@@ -109,9 +109,11 @@ class _AccountState extends State<Account> {
                                   SvgPicture.asset(
                                     'assets/icons/account.svg',
                                     color: Colors.orange,
+                                    width: 25,
+
                                   ),
                                   SizedBox(
-                                    width: 5,
+                                    width: 4,
                                   ),
                                   Container(
                                     width: ScreenUtil.getWidth(context) / 4,
@@ -148,7 +150,7 @@ class _AccountState extends State<Account> {
                                     width: 25,
                                   ),
                                   SizedBox(
-                                    width: 5,
+                                    width: 4,
                                   ),
                                   Container(
                                     width: ScreenUtil.getWidth(context) / 4,
