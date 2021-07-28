@@ -1063,7 +1063,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   return "Required field";
                                                 } else
                                                   return null;
-                                              },selectedItem:contries.where((element) => element.id==userModal.storeDetails.countryId).first,
+                                              },selectedItem:userModal.storeDetails==null?Country(countryName: 'الدولة'):userModal.storeDetails.countryId==null?Country(countryName: 'الدولة'):contries.where((element) => element.id==userModal.storeDetails.countryId).first,
                                               showSearchBox: true,
                                               items: contries,
                                               //  onFind: (String filter) => getData(filter),

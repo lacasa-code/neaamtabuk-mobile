@@ -187,22 +187,30 @@ class _ProductListState extends State<ProductList> {
                                         )
                                       : Row(
                                         children: [
-                                          Text(
-                                              "${widget.product.price}  ",
-                                            style: TextStyle(
-                                              decoration:  TextDecoration.lineThrough,
-                                              fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.red,
-                                              ),
-                                            ),  Text(
-                                              "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                                          Container(
+                                            width: ScreenUtil.getWidth(context) /6,
+
+                                            child: Text(
+                                                "${widget.product.price}  ",
                                               style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
+                                                decoration:  TextDecoration.lineThrough,
+                                                fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.red,
+                                                ),
                                               ),
-                                            ),
+                                          ),  Container(
+                                            width: ScreenUtil.getWidth(context) /6,
+
+                                            child: Text(
+                                                "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                          ),
                                         ],
                                       )),
                               Expanded(
@@ -227,7 +235,7 @@ class _ProductListState extends State<ProductList> {
                                         showDialog(
                                             context: context,
                                             builder: (_) => ResultOverlay(
-                                                value['errors']));
+                                                value['errors']??value['message']));
                                       }
                                     }
                                   });

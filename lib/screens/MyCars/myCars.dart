@@ -335,6 +335,7 @@ getData(int id){
                                 Url:
                                     "display/search/results/mobile?"
                                         "car_type_id=${cartype[widget.checkboxType].id}"
+                                "${carMadeID.text.isEmpty?'':'&car_made_id=${carMadeID.text}'}"
                                 "${CarmodelsID.text.isEmpty?'':'&car_model_id=${CarmodelsID.text}'}"
                                 "${yearsID.text.isEmpty?'':'&car_year_id=${yearsID.text}'}"
                                 "${transimionsID.text.isEmpty?'':'&transmission_id=${yearsID.text}'}",

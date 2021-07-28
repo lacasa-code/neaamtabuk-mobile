@@ -9,6 +9,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
+import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_pos/widget/product/Wish_List_item.dart';
 import 'package:provider/provider.dart';
@@ -59,6 +60,8 @@ class _WishListState extends State<WishList> {
       body:!themeColor.isLogin?Notlogin(): Container(
         child: wishList == null
             ? Center(child: Custom_Loading())
+            : wishList.isEmpty
+            ? Center(child: NotFoundProduct())
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),

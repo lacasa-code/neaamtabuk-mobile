@@ -29,7 +29,7 @@ class Product {
   int id;
   String name;
   String description;
-  int discount;
+  String discount;
   String price;
   String action_price;
   int quantity;
@@ -83,7 +83,7 @@ class Product {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    discount = json['discount'];
+    discount = json['discount'].toString();
     price = json['price'];
     action_price = json['actual_price'].toString();
     quantity = json['quantity'];

@@ -485,52 +485,6 @@ class _OrderdetailsState extends State<Orderdetails> {
                                   child: Column(
                                     // crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      InkWell(
-                                        onTap: () {
-                                          API(context).post('solved/ticket', {
-                                            "id": _listTicket[index].id,
-                                          }).then((value) {
-                                            if (value != null) {
-                                              if (value['status_code'] == 200) {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (_) =>
-                                                        ResultOverlay(
-                                                            value['message']));
-                                                getTicket();
-                                              } else {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (_) =>
-                                                        ResultOverlay(
-                                                            value['errors']));
-                                              }
-                                            }
-                                          });
-                                        },
-                                        child: Container(
-                                          width: ScreenUtil.getWidth(context) /
-                                              1.5,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.orange,
-                                                  width: 1)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 10),
-                                            child: Center(
-                                              child: Text(
-                                                'تم حل المشكلة، إغلاق الشكوى',
-                                                style: TextStyle(
-                                                    color: Colors.orange),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
                                       _listTicket[index].Case=='to admin'?Container(): InkWell(
                                         onTap: () {
                                           API(context).post('to/admin/ticket', {
