@@ -403,7 +403,7 @@ class _UserInfoState extends State<UserInfo> {
                             showDialog(
                                 context: context,
                                 builder: (_) =>
-                                    ResultOverlay(value['errors'] + value['errors']));
+                                    ResultOverlay(value['errors'] ));
                           }
                         }
                       });
@@ -527,7 +527,7 @@ class _UserInfoState extends State<UserInfo> {
             setState(() {
               userModal = UserInformation.fromJson(value).data;
             });
-            _tocontroller.text=DateFormat('yyyy-MM-dd').format(DateTime.parse(userModal.birthdate));
+            userModal.birthdate==null?null: _tocontroller.text=DateFormat('yyyy-MM-dd').format(DateTime.parse(userModal.birthdate));
           } else {
             showDialog(
                 context: context,

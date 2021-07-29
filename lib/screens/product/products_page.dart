@@ -37,6 +37,7 @@ class _Products_PageState extends State<Products_Page> {
   String sort='ASC&ordered_by=price';
   @override
   void initState() {
+    print(widget.Url);
     API(context).get(widget.Url).then((value) {
       if (value != null) {
         if (value['status_code'] == 200) {

@@ -319,6 +319,7 @@ class Images {
   int id;
   int modelId;
   String image;
+  String name;
 
   Images({this.id, this.modelId, this.image});
 
@@ -326,6 +327,7 @@ class Images {
     id = json['id'];
     modelId = json['model_id'];
     image = json['image'];
+    name = json['file_name'];
   }
 
   Map<String, dynamic> toJson() {

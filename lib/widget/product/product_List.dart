@@ -174,7 +174,7 @@ class _ProductListState extends State<ProductList> {
                               )
                                   : Container(
                                   width: ScreenUtil.getWidth(context) /3,
-                                  child: widget.product.discount == 0
+                                  child: widget.product.discount == "0"
                                       ? AutoSizeText(
                                           "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
                                           maxLines: 1,
@@ -308,6 +308,21 @@ class _ProductListState extends State<ProductList> {
             ),
           ),
         ),
+        widget.product.producttypeId!=2?Container():Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Color(0xffF2E964),
+            ),
+            margin: EdgeInsets.only(left: 16, top: 8, right: 12, bottom: 2),
+
+            child:Center(
+              child: Text(
+                "جملة : ${widget.product.noOfOrders ?? ' '} قطعة ",
+                style: TextStyle(color: Colors.blueGrey,
+                    fontWeight: FontWeight.bold,fontSize: 11),
+              ),
+            ) )
+
       ],
     );
   }

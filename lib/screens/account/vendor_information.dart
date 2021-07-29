@@ -75,6 +75,8 @@ class _VendorInfoState extends State<VendorInfo> {
               userModal = Vendor_info.fromJson(value).data;
               _status=userModal.approved!=1;
               _value = int.parse(userModal.type);
+              userModal.storeDetails==null?null:userModal.storeDetails.countryId==null?null:getArea(userModal.storeDetails.countryId);
+              userModal.storeDetails==null?null:userModal.storeDetails.areaId==null?null:getCity(userModal.storeDetails.areaId);
             });
           } else {
             showDialog(
@@ -507,7 +509,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                                 context) /
                                                             2.5,
                                                         child: Text(
-                                                          "${userModal.commercialDoc}",
+                                                          "${userModal.commercialDocs.name}",
                                                           maxLines: 1,
                                                         ),
                                                       ),
@@ -649,7 +651,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                                 context) /
                                                             2.5,
                                                         child: Text(
-                                                          "${userModal.taxCardDoc}",
+                                                          "${userModal.taxCardDocs.name}",
                                                           maxLines: 1,
                                                         ),
                                                       ),
@@ -790,7 +792,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                                 context) /
                                                             2.5,
                                                         child: Text(
-                                                          "${userModal.wholesaleDocs}",
+                                                          "${userModal.wholesaleDocs.name}",
                                                           maxLines: 1,
                                                         ),
                                                       ),
@@ -1011,7 +1013,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                             context: context,
                                                             builder: (_) =>
                                                                 ResultOverlay(value[
-                                                                'message']));
+                                                                'errors']));
                                                       }
                                                     }
                                                   });
@@ -1200,6 +1202,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   address_key.currentState.save();
                                                   API(context).post(
                                                       "vendor/add/head/center", {
+
+                                                    "name": 'head center',
                                                     "moderator_phone": phone,
                                                     "user_id": userModal.useridId,
                                                     "vendor_id": userModal.id,
@@ -1211,7 +1215,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   }).then((value) {
                                                     if (value != null) {
                                                       if (value['status_code'] ==
-                                                          200) {
+                                                          201) {
                                                         Navigator.pop(context);
                                                         showDialog(
                                                             context: context,
