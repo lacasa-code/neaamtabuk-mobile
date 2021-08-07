@@ -333,14 +333,14 @@ class _ProductPageState extends State<ProductPage> {
                               "${widget.product.price} ${getTransrlate(context, 'Currency')} ",
                               style: TextStyle(
                                 fontSize: 17,
-                                decoration: widget.product.discount != 0
+                                decoration: widget.product.discount != "0"
                                     ? TextDecoration.lineThrough
                                     : TextDecoration.none,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
                             ),
-                            widget.product.discount == 0
+                            widget.product.discount == "0"
                                 ? Container()
                                 : Text(
                               "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
@@ -687,18 +687,20 @@ class _ProductPageState extends State<ProductPage> {
                       : DefaultTabController(
                         length: 2,
                         child:  ListView(
+                          physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.all(1),
                           shrinkWrap: true,
                           children: [
                             SizedBox(
                               height: 50,
-
                               child: TabBar(
                                 tabs: [
                                   Tab(
                                       icon: Text(
                                         "التقييمات",
                                       )),
-                                  Tab(icon: Text("أسئلة وأجوبة")),
+                                  Tab(
+                                      icon: Text("أسئلة وأجوبة")),
                                 ],
                                 indicatorColor: Colors.orange,
                                 unselectedLabelColor: Colors.grey,
@@ -708,13 +710,14 @@ class _ProductPageState extends State<ProductPage> {
                             SizedBox(
                               height: 300.0,
                               child: TabBarView(
+
                                 children: [
                                   reviews == null
                                       ? Container()
                                       : Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         reviews.avgValuations == null
                                             ? Container()
@@ -771,10 +774,20 @@ class _ProductPageState extends State<ProductPage> {
                                             const EdgeInsets
                                                 .symmetric(
                                                 vertical: 20),
-                                            child: Text(
-                                                getTransrlate(
-                                                    context,
-                                                    'EmptyRate')),
+                                            child: Column(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  "assets/icons/reload.svg",
+                                                  width: ScreenUtil.getWidth(context) / 5,
+                                                  color: Colors.black12,
+                                                ),
+                                                SizedBox(height: 10,),
+                                                Text(
+                                                    getTransrlate(
+                                                        context,
+                                                        'EmptyRate')),
+                                              ],
+                                            ),
                                           ),
                                         )
                                             : ListView.builder(
@@ -997,10 +1010,33 @@ class _ProductPageState extends State<ProductPage> {
                                   _question == null
                                       ? Container()
                                       : Column(
-                                   mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       _question.isEmpty
-                                          ? Container()
+                                          ?  Container(
+                                        child: Padding(
+                                          padding:
+                                          const EdgeInsets
+                                              .symmetric(
+                                              vertical: 20),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(height: 15,),
+
+                                              SvgPicture.asset(
+                                                "assets/icons/reload.svg",
+                                                width: ScreenUtil.getWidth(context) / 5,
+                                                color: Colors.black12,
+                                              ),
+                                              SizedBox(height: 10,),
+                                              Text(
+                                                  getTransrlate(
+                                                      context,
+                                                      'EmptyQuastion')),
+                                            ],
+                                          ),
+                                        ),
+                                      )
                                           : Padding(
                                         padding:
                                         const EdgeInsets.all(

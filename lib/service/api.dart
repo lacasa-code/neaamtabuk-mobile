@@ -40,8 +40,9 @@ class API {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-        //'Accept-Language': Provider.of<Provider_control>(context).getlocal(),
+        'Accept-Language': Provider.of<Provider_control>(context,listen: false).getlocal(),
       });
+      print(full_url);
       return getAction(response);
     } catch (exception, stackTrace) {
       print("exception >>>>>>>>>>>>>>>>>>= ${exception}");
@@ -66,7 +67,7 @@ class API {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-            // 'locale': Provider.of<Provider_control>(context).getlocal(),
+            'Accept-Language': Provider.of<Provider_control>(context,listen: false).getlocal(),
           },
           body: json.encode(body));
       return getAction(response);
@@ -112,7 +113,7 @@ class API {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-            //'locale': Provider.of<Provider_control>(context).getlocal(),
+            'Accept-Language': Provider.of<Provider_control>(context,listen: false).getlocal(),
           },
           body: json.encode(body));
       return getAction(response);
@@ -130,7 +131,7 @@ class API {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-          // 'locale': Provider.of<Provider_control>(context).getlocal(),
+          'Accept-Language': Provider.of<Provider_control>(context,listen: false).getlocal(),
         },
       );
       return getAction(response);

@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/question_model.dart';
 import 'package:flutter_pos/screens/product/writeQuastions.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../utils/screen_size.dart';
 
 class Qeastionsdialog extends StatefulWidget {
-   List<Question> _question;
-   int id;
-   Qeastionsdialog(this._question,this.id);
+  List<Question> _question;
+  int id;
 
-   @override
+  Qeastionsdialog(this._question, this.id);
+
+  @override
   _QeastionsdialogState createState() => _QeastionsdialogState();
 }
 
 class _QeastionsdialogState extends State<Qeastionsdialog> {
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -62,129 +63,143 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  ListView.builder(
-                    primary: false,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: widget._question.length,
-                    itemBuilder:
-                        (BuildContext context, int index) {
-                      return Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.start,
-                        crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
+                  widget._question.isEmpty
+                      ? Container(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Column(
                               children: [
+                                SizedBox(
+                                  height: 15,
+                                ),
                                 SvgPicture.asset(
-                                  'assets/icons/User Icon.svg',
-                                  color: Colors.grey,
-                                  height: 35,
+                                  "assets/icons/reload.svg",
+                                  width: ScreenUtil.getWidth(context) / 3,
+                                  color: Colors.black12,
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  height: 10,
                                 ),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width:
-                                      ScreenUtil.getWidth(
-                                          context) /
-                                          1.4,
-                                      child: Text(
-                                        '${widget._question[index].bodyQuestion}',
-                                        style: TextStyle(
-                                            fontWeight:
-                                            FontWeight.bold,
-                                            color:
-                                            Colors.black),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      '${widget._question[index].createdAt} بواسطة ${widget._question[index].userName}',
-                                      style: TextStyle(
-                                          fontWeight:
-                                          FontWeight.w500,
-                                          color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
+                                Text(getTransrlate(context, 'EmptyQuastion')),
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          widget._question[index].answer==null?Container():
-                          Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Row(
+                        )
+                      : ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: widget._question.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(
-                                  Icons.message_outlined,
-                                  color: Colors.grey,
-                                  size: 35,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Center(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment
-                                        .start,
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
                                     children: [
-                                      Container(
-                                        width:
-                                        ScreenUtil.getWidth(
-                                            context) /
-                                            1.6,
-                                        child: Text(
-                                          '${widget._question[index].answer??''}',
-                                          overflow: TextOverflow
-                                              .ellipsis,
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight
-                                                  .bold,
-                                              color:
-                                              Colors.black),
-                                        ),
+                                      SvgPicture.asset(
+                                        'assets/icons/User Icon.svg',
+                                        color: Colors.grey,
+                                        height: 35,
                                       ),
                                       SizedBox(
-                                        height: 10,
+                                        width: 10,
                                       ),
-                                      Text(
-                                        '${widget._question[index].updatedAt} بواسطة ${widget._question[index].vendor.vendorName}',
-                                        style: TextStyle(
-                                            fontWeight:
-                                            FontWeight.w500,
-                                            color: Colors.grey),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    1.4,
+                                            child: Text(
+                                              '${widget._question[index].bodyQuestion}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            '${widget._question[index].createdAt} بواسطة ${widget._question[index].userName}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.grey),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                widget._question[index].answer == null
+                                    ? Container()
+                                    : Padding(
+                                        padding: const EdgeInsets.all(25.0),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.message_outlined,
+                                              color: Colors.grey,
+                                              size: 35,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Center(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    width: ScreenUtil.getWidth(
+                                                            context) /
+                                                        1.6,
+                                                    child: Text(
+                                                      '${widget._question[index].answer ?? ''}',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                    '${widget._question[index].updatedAt} بواسطة ${widget._question[index].vendor.vendorName}',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Colors.grey),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                Container(
+                                  height: 1,
+                                  color: Colors.black12,
+                                )
                               ],
-                            ),
-                          ),
-                          Container(
-                            height: 1,
-                            color: Colors.black12,
-                          )
-                        ],
-                      );
-                    },
+                            );
+                          },
+                        ),
+                  SizedBox(
+                    height: 25,
                   ),
-                  SizedBox(height: 25,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -192,38 +207,47 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                       InkWell(
                         onTap: () {
                           showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  WriteQuastionsdialog(widget.id)).then((value) {
-                            API(context).get('prod/all/questions/${widget.id}').then((value) {
+                                  context: context,
+                                  builder: (_) =>
+                                      WriteQuastionsdialog(widget.id))
+                              .then((value) {
+                            API(context)
+                                .get('prod/all/questions/${widget.id}')
+                                .then((value) {
                               setState(() {
-                                widget._question = Question_model.fromJson(value).data;
+                                widget._question =
+                                    Question_model.fromJson(value).data;
                               });
                             });
                           });
                         },
                         child: Container(
-                          width: ScreenUtil.getWidth(context)/2.5,
+                          width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:  Colors.grey
-                              )),
+                              border: Border.all(color: Colors.grey)),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.edit_outlined,color: Colors.black,),
-                              SizedBox(width: 5,),
+                              Icon(
+                                Icons.edit_outlined,
+                                color: Colors.black,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
                               Container(
-                                width: ScreenUtil.getWidth(context)/4,
+                                width: ScreenUtil.getWidth(context) / 4,
                                 child: AutoSizeText(
                                   'كتابة سؤال',
                                   overflow: TextOverflow.ellipsis,
                                   maxFontSize: 14,
                                   maxLines: 1,
                                   minFontSize: 10,
-                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
                                 ),
                               ),
                             ],
@@ -240,5 +264,4 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
       ),
     );
   }
-
 }

@@ -307,6 +307,7 @@ class _AccountState extends State<Account> {
                             SharedPreferences.getInstance().then((prefs) {
                               prefs.setString('local', themeColor.local);
                             });
+                            Phoenix.rebirth(context);
                           },
                           child: ItemHiddenMenu(
                             icon: Icon(

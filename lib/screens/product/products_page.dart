@@ -58,7 +58,6 @@ class _Products_PageState extends State<Products_Page> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
-
     return Scaffold(
       body: Column(
         children: [

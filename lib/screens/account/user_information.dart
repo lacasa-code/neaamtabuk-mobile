@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/user_info.dart';
 import 'package:flutter_pos/screens/account/changePasswordPAge.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -218,6 +219,9 @@ class _UserInfoState extends State<UserInfo> {
                                               width: ScreenUtil.getWidth(context)/1.5 ,
 
                                               child: TextFormField(
+                                                inputFormatters: [
+                                                  new LengthLimitingTextInputFormatter(14),
+                                                ],
                                                 initialValue: userModal.phoneNo,
                                                 keyboardType: TextInputType.number,
                                                 decoration: InputDecoration(),

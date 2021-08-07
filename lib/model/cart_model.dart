@@ -102,7 +102,7 @@ class OrderDetails {
   int quantity;
   String price;
   String actual_price;
-  int discount;
+  String discount;
   String total;
   int approved;
 
@@ -143,7 +143,7 @@ class OrderDetails {
     quantity = json['quantity'];
     price = json['price'].toString();
     actual_price = json['actual_price'].toString();
-    discount = json['discount'];
+    discount = json['discount'].toString();
     total = json['total'].toString();
     approved = json['approved'];
   }

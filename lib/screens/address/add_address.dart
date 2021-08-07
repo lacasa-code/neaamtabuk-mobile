@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/area_model.dart';
 import 'package:flutter_pos/model/city_model.dart';
 import 'package:flutter_pos/model/country_model.dart';
@@ -106,11 +107,40 @@ class _AddAddressState extends State<AddAddress> {
                 SizedBox(
                   height: 5,
                 ),
+                MyTextFormField(
+                  intialLabel: '',
+                  keyboard_type: TextInputType.text,
+                  labelText: getTransrlate(context, 'mail'),
+                  hintText: getTransrlate(context, 'mail'),
+                  isPhone: true,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'mail');
+                    }
+                    _formKey.currentState.save();
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    address.recipientEmail = value;
+                  },
+                ),
+                SizedBox(
+                  height: 5,
+                ),
                 Text(
                   getTransrlate(context, 'Countroy'),
                   style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
-                contries==null?Container():Padding(
+                contries==null? Container(
+                  child: DropdownSearch<String>(
+                    showSearchBox: false,
+                    showClearButton: false,
+                    label: " ",
+                    items: [''],
+                    enabled: false,
+                    //  onFind: (String filter) => getData(filter),
+                  ),
+                ):Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: DropdownSearch<Country>(
                     showSearchBox: true,
@@ -126,6 +156,7 @@ class _AddAddressState extends State<AddAddress> {
                     //  onFind: (String filter) => getData(filter),
                     itemAsString: (Country u) => u.countryName,
                     onChanged: (Country data) {
+                      print(data.id);
                       address.Country_id = data.id;
                         code.text=data.phonecode.toString();
                        setState(() {
@@ -137,7 +168,16 @@ class _AddAddressState extends State<AddAddress> {
                     },
                   ),
                 ),
-                area==null?Container():Padding(
+                area==null? Container(
+                  child: DropdownSearch<String>(
+                    showSearchBox: false,
+                    showClearButton: false,
+                    label: " ",
+                    items: [''],
+                    enabled: false,
+                    //  onFind: (String filter) => getData(filter),
+                  ),
+                ):Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: DropdownSearch<Area>(
                     showSearchBox: true,
@@ -153,6 +193,8 @@ class _AddAddressState extends State<AddAddress> {
                     itemAsString: (Area u) => u.areaName,
                     onChanged: (Area data) {
                       address.area_id = data.id;
+                      print(data.id);
+
                       setState(() {
                         cities=null;
                       });
@@ -161,7 +203,16 @@ class _AddAddressState extends State<AddAddress> {
                     },
                   ),
                 ),
-                cities==null?Container():Padding(
+                cities==null? Container(
+                  child: DropdownSearch<String>(
+                    showSearchBox: false,
+                    showClearButton: false,
+                    label: " ",
+                    items: [''],
+                    enabled: false,
+                    //  onFind: (String filter) => getData(filter),
+                  ),
+                ):Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: DropdownSearch<City>(
                     showSearchBox: true,
@@ -176,6 +227,8 @@ class _AddAddressState extends State<AddAddress> {
                     //  onFind: (String filter) => getData(filter),
                     itemAsString: (City u) => u.cityName,
                     onChanged: (City data) {
+                      print(data.id);
+
                       address.city_id = data.id;
                     } ,
                   ),
@@ -276,6 +329,9 @@ class _AddAddressState extends State<AddAddress> {
                         intialLabel: '',
                         keyboard_type: TextInputType.phone,
                         labelText: getTransrlate(context, 'phone'),
+                        inputFormatters: [
+                          new LengthLimitingTextInputFormatter(14),
+                        ],
                         hintText: getTransrlate(context, 'phone'),
                         isPhone: true,
                         validator: (String value) {
@@ -320,6 +376,9 @@ class _AddAddressState extends State<AddAddress> {
                   textDirection: TextDirection.ltr,
                   keyboard_type: TextInputType.phone,
                   labelText: getTransrlate(context, 'telphone'),
+                  inputFormatters: [
+                    new LengthLimitingTextInputFormatter(14),
+                  ],
                   hintText: getTransrlate(context, 'telphone'),
                   isPhone: true,
                   onSaved: (String value) {

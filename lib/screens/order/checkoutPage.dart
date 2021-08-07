@@ -1217,7 +1217,7 @@ setState(() {
                               minFontSize: 11,
                             ),
                             AutoSizeText(
-                              "${getTransrlate(context, 'price')} : ${widget.carts.data.orderDetails[index].total}  ${getTransrlate(context, 'Currency')}",
+                              "${getTransrlate(context, 'price')} : ${widget.carts.data.orderDetails[index].actual_price}  ${getTransrlate(context, 'Currency')}",
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 14,

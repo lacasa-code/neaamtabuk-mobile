@@ -13,6 +13,8 @@ class MyTextFormField extends StatelessWidget {
   final bool isPassword;
   final bool istitle;
   final bool isEmail;
+  final List<TextInputFormatter> inputFormatters;
+
   final bool enabled;
   final bool isPhone;
   final Widget prefix;
@@ -37,6 +39,7 @@ class MyTextFormField extends StatelessWidget {
       this.prefix,
       this.keyboard_type,
       this.intialLabel,
+        this.inputFormatters,
         this.onChange,this.focus,this.controller,
       this.press});
 
@@ -52,7 +55,7 @@ class MyTextFormField extends StatelessWidget {
           TextFormField(
             controller: controller,
             focusNode: focus,
-
+            inputFormatters:inputFormatters,
             autofocus: true,
             onTap: press,
             initialValue: intialLabel,

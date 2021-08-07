@@ -9,23 +9,30 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/AppLocalizations.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:provider/provider.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GlobalConfiguration().loadFromAsset("configurations");
   print("base_url: ${GlobalConfiguration().getString('base_url')}");
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<Provider_control>(
-      create: (_) => Provider_control(),
-    ),
-    ChangeNotifierProvider<Provider_Data>(
-      create: (_) => Provider_Data(),
-    ),
-  ], child: Phoenix(child: DevicePreview(
-    enabled: false,
-    builder: (context) => MyApp(), // Wrap your app
-  ),)));
+  SharedPreferences.getInstance().then((prefs) {
+    String local = 'ar';
+    if (prefs.getString('local') != null) {
+      local = prefs.getString('local');
+    }
+    runApp(MultiProvider(providers: [
+      ChangeNotifierProvider<Provider_control>(
+        create: (_) => Provider_control(local),
+      ),
+      ChangeNotifierProvider<Provider_Data>(
+        create: (_) => Provider_Data(),
+      ),
+    ], child: Phoenix(child: DevicePreview(
+      enabled: false,
+      builder: (context) => MyApp(), // Wrap your app
+    ),)));
+  });
+
 
   // await SentryFlutter.init(
   //
@@ -67,6 +74,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    _locale = Locale(Provider.of<Provider_control>(context, listen: false).local, "");
     super.initState();
   }
 

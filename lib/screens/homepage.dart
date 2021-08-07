@@ -366,7 +366,7 @@ class _HomeState extends State<Home> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                cartype==null?Container(): ProductListTitleBar(
+                                cartype==null?Container(): cartype.isEmpty?Container(): ProductListTitleBar(
                                   themeColor: themeColor,
                                   title: getTransrlate(context, 'offers'),
                                   description: getTransrlate(context, 'showAll'),
@@ -395,6 +395,8 @@ class _HomeState extends State<Home> {
                       : provider_data.productMostSale.isEmpty
                           ? Container()
                           :cartype==null
+                          ? Container()
+                          :cartype.isEmpty
                           ? Container()
                           : Column(
                               children: [

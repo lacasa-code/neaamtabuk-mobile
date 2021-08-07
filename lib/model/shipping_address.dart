@@ -118,16 +118,13 @@ class Address {
     if (this.id != null) {
       data['id'] = this.id;
     }
-   // data['user_id'] = this.userId;
-  //  data['user_name'] = this.userName;
-    //data['status'] = this.status;
     data['recipient_name'] = this.recipientName;
     data['recipient_phone'] = this.recipientPhone;
     data['recipient_email'] = this.recipientEmail;
     data['address'] = this.address;
     data['country_id'] = this.Country_id;
     data['city_id'] = this.city_id;
-    data['area_id'] = this.city_id;
+    data['area_id'] = this.area_id;
     data['last_name'] = this.lastName;
     data['street'] = this.street;
     data['district'] = this.district;

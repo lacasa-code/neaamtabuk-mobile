@@ -117,8 +117,35 @@ class _RatedialogState extends State<Ratedialog> {
                                         ),
                                       ],
                                     ),
-                              SizedBox(height: 5),
-                              ListView.builder(
+                              SizedBox(height: 15),
+                              widget.reviews.reviewsData.isEmpty
+                                  ? Container(
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/icons/reload.svg",
+                                      width:
+                                      ScreenUtil.getWidth(context) /
+                                          3,
+                                      color: Colors.black12,
+                                    ),
+                                    SizedBox(
+                                      height: 25,
+                                    ),
+                                    Text(
+                                      getTransrlate(context, 'EmptyRate'),
+                                      style: TextStyle(
+                                          color: Colors.black45,
+                                          fontSize: 25),
+                                    ),
+                                  ],
+                                ),
+                              )
+                                  :  ListView.builder(
                                 primary: false,
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
@@ -177,36 +204,9 @@ class _RatedialogState extends State<Ratedialog> {
                                 },
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 25,
                               ),
-                              widget.reviews.reviewsData.isEmpty
-                                  ? Container(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/icons/reload.svg",
-                                            width:
-                                                ScreenUtil.getWidth(context) /
-                                                    3,
-                                            color: Colors.black12,
-                                          ),
-                                          SizedBox(
-                                            height: 25,
-                                          ),
-                                          Text(
-                                            getTransrlate(context, 'EmptyRate'),
-                                            style: TextStyle(
-                                                color: Colors.black45,
-                                                fontSize: 25),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : Row(
+                               Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:

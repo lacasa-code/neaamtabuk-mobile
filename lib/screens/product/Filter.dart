@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 
 import '../../model/cart_category.dart';
 import '../../model/manufacturers.dart';
@@ -96,7 +97,7 @@ class _FilterdialogState extends State<Filterdialog> {
                   expanded: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: parts == null
-                        ? Container()
+                        ? Custom_Loading()
                         : parts.isEmpty
                             ? Container()
                             : ListView.builder(
@@ -188,7 +189,7 @@ class _FilterdialogState extends State<Filterdialog> {
                   expanded: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: manufacturer == null
-                        ? Container()
+                        ? Custom_Loading()
                         : ListView.builder(
                             primary: false,
                             shrinkWrap: true,
@@ -240,7 +241,7 @@ class _FilterdialogState extends State<Filterdialog> {
                   expanded: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: origin == null
-                        ? Container()
+                        ? Custom_Loading()
                         : ListView.builder(
                             primary: false,
                             shrinkWrap: true,

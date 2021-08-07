@@ -73,9 +73,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 child: Container(
                                   width: ScreenUtil.getWidth(context) / 2.8,
                                  // height: ScreenUtil.getHeight(context) / 1.25,
-
                                   child: Container(
-
                                     child: ListView.builder(
                                       primary: false,
                                       shrinkWrap: true,
@@ -120,7 +118,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     "${categories[index].mainCategoryName}",
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
-                                                    minFontSize: 13,
+                                                    minFontSize: 12,
                                                     textAlign: TextAlign.start,
                                                     style: TextStyle(
                                                         fontWeight: FontWeight.bold),

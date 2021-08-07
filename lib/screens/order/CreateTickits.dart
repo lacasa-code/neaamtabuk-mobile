@@ -248,13 +248,13 @@ super.initState();
                             //setState(() => _isLoading = true);
                             API(context).postFile('new/ticket',
                                 {
-                                  "title": typeTickit,
-                                  "ticketpriority_id": priortyTickit,
-                                  "message": messageTickit,
-                                  "order_id": widget.order_id,
-                                  "vendor_id": widget.vendor_id,
-                                  "category_id": category_id,
-                                  "product_id": widget.product_id
+                                  "title": typeTickit??' ',
+                                  "ticketpriority_id": priortyTickit??' ',
+                                  "message": messageTickit??' ',
+                                  "order_id": widget.order_id??'',
+                                  "vendor_id": widget.vendor_id??'',
+                                  "category_id": category_id??'',
+                                  "product_id": widget.product_id??''
                                 },attachment: attachment).then((value) {
                               if (value != null) {
                                 if (value['status_code'] == 201) {
