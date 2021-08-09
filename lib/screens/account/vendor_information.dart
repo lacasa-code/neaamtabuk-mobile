@@ -250,24 +250,26 @@ class _VendorInfoState extends State<VendorInfo> {
               : Column(children: [
                   userModal.approved == 0
                       ? Padding(
-                          padding: const EdgeInsets.only(
-                              top: 22, right: 22, left: 22, bottom: 22),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/icons/Attention.svg",
-                                color: Colors.orange,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              "assets/icons/Attention.svg",
+                              color: Colors.orange,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width: ScreenUtil.getWidth(context)/1.2,
+                              child: Text(
                                 'حسابك كبائع حاليا غير مفعليرجى استكمال وإرسال البيانات التالية لتفعيل حسابك',
                                 style: TextStyle(color: Colors.orange),
                               ),
-                            ],
-                          ),
-                        )
+                            ),
+                          ],
+                        ),
+                      )
                       : Padding(
                     padding: const EdgeInsets.only(
                         top: 22, right: 22, left: 22, bottom: 22),
@@ -986,9 +988,9 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   API(context).postFile(
                                                       'vendor/upload/docs',
                                                       {
-                                                        "user_id": userModal.useridId.toString(),
-                                                        "vendor_id": userModal.id.toString(),
-                                                        "type": _value.toString(),
+                                                        "user_id": userModal.useridId.toString()??' ',
+                                                        "vendor_id": userModal.id.toString()??' ',
+                                                        "type": _value.toString()??' ',
                                                         "company_name": userModal.companyName??' ',
                                                         "commercial_no": userModal.commercialNo??' ',
                                                         "tax_card_no": userModal.taxCardNo??' ',

@@ -28,7 +28,7 @@ Future<void> main() async {
         create: (_) => Provider_Data(),
       ),
     ], child: Phoenix(child: DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context) => MyApp(), // Wrap your app
     ),)));
   });

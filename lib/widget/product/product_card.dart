@@ -275,7 +275,7 @@ class _ProductCardState extends State<ProductCard> {
                                             showDialog(
                                                 context: context,
                                                 builder: (_) => ResultOverlay(
-                                                      '${value['data'] ?? ""}',
+                                                      '${value['data'] ?? value['errors']}',
                                                       icon: Icon(
                                                         Icons.info_outline,
                                                         size: 80,
@@ -309,7 +309,7 @@ class _ProductCardState extends State<ProductCard> {
                                             showDialog(
                                                 context: context,
                                                 builder: (_) => ResultOverlay(
-                                                    value['data'],
+                                                    value['data']??value['errors'],
                                                     icon: Icon(
                                                       Icons.info_outline,
                                                       color: Colors.yellow,

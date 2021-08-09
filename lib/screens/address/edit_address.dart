@@ -339,6 +339,7 @@ class _EditAddressState extends State<EditAddress> {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             //setState(() => _isLoading = true);
+                            print(widget.address.toJson());
                             API(context)
                                 .post(
                                     'user/update/shipping/${widget.address.id}',

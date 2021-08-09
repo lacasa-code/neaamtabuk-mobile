@@ -44,7 +44,6 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     _controller = TabController(vsync: this, length: 2,initialIndex: 1);
-
     API(context).get('car/types/list').then((value) {
       if (value != null) {
         setState(() {
@@ -75,14 +74,38 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
     super.initState();
   }
 getData(int id){
+
   API(context).get('car/madeslist/filter/$id').then((value) {
     if (value != null) {
       setState(() {
+        car_mades=null;
         car_mades = Car_made.fromJson(value).data;
       });
     }
   });
 
+  API(context).get('car/types/list').then((value) {
+    if (value != null) {
+      setState(() {
+        cartype = Car_type.fromJson(value).data;
+        getData(cartype[widget.checkboxType].id);
+      });
+    }
+  });
+  API(context).get('car-yearslist').then((value) {
+    if (value != null) {
+      setState(() {
+        years = Years.fromJson(value).data;
+      });
+    }
+  });
+  API(context).get('transmissions/list').then((value) {
+    if (value != null) {
+      setState(() {
+        transmissions = Transmission.fromJson(value).data;
+      });
+    }
+  });
 }
   @override
   Widget build(BuildContext context) {
@@ -227,6 +250,11 @@ getData(int id){
                             onTap: () {
                               setState(() {
                                 widget.checkboxType = index;
+                                car_mades=null;
+                                car_mades_id=null;
+                                carmodels=null;
+                                years=null;
+                                transmissions=null;
                               });
                               getData(cartype[widget.checkboxType].id);
 
@@ -266,21 +294,23 @@ getData(int id){
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (CarMade u) => u.carMade,
                                 onChanged: (CarMade data) {
+                                  setState(() {
+                                    carmodels=null;
+                                  });
                                   getcarModels(data.id);
                                   car_mades_id = data.id;
                                   carMadeID.text = data.id.toString();
                                 },
                               ),
                             ),
-                      carmodels == null
-                          ? Container()
-                          : Padding(
+
+                          Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DropdownSearch<CarModel>(
                                 label: "  الموديل ",
                                 showSearchBox: true,
                                 showClearButton: true,
-
+                                enabled:  carmodels != null,
                                 items: carmodels,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (CarModel u) => u.carmodel,

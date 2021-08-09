@@ -82,6 +82,8 @@ class MyTextFormField extends StatelessWidget {
             ),
             obscureText: isPassword ? true : false,
             validator: validator,
+            autovalidate: true,
+
             textDirection: textDirection,
             onSaved: onSaved,
             enabled: enabled,

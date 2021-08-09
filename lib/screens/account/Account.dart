@@ -235,7 +235,8 @@ class _AccountState extends State<Account> {
                                     colorLineSelected: Colors.orange,
                                   ),
                                   ItemHiddenMenu(
-                                    lable: _cart_model.address == null
+                                    lable:  token == null
+                                        ? '': _cart_model.address == null
                                         ? ''
                                         : ' ${_cart_model.address.area == null ? '' : _cart_model.address.area.areaName ?? ''},${ _cart_model.address.city == null ? '' :  _cart_model.address.city.cityName ?? ''}.${ _cart_model.address.street ?? ''},${ _cart_model.address.district ?? ''}${ _cart_model.address.floorNo ?? ''}${ _cart_model.address.apartmentNo ?? ''}',
                                     onTap: () {
@@ -246,8 +247,7 @@ class _AccountState extends State<Account> {
                                       size: 25,
                                       color: Colors.orange,
                                     ),
-                                    name: getTransrlate(context, 'MyAddress') +
-                                        '',
+                                    name: getTransrlate(context, 'MyAddress') ,
                                     baseStyle: TextStyle(
                                         color: Colors.black,
                                         fontSize: 19.0,
@@ -390,7 +390,7 @@ class _AccountState extends State<Account> {
                                       await SharedPreferences.getInstance();
                                   prefs.clear();
                                   Phoenix.rebirth(context);
-
+                                  _cart_model.setShipping(null);
                                   // Navigator.pushAndRemoveUntil(
                                   //     context, MaterialPageRoute(builder: (_) => LoginPage()), (r) => false);
                                 },

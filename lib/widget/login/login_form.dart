@@ -53,7 +53,7 @@ class _LoginFormState extends State<LoginForm> {
                     isPhone: true,
                     validator: (String value) {
                       if (value.isEmpty) {
-                        return getTransrlate(context, 'mail');
+                        return getTransrlate(context, 'requiredempty');
                       }
                       _formKey.currentState.save();
                       return null;
@@ -83,8 +83,10 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     isPassword: passwordVisible,
                     validator: (String value) {
-                      if (value.length < 7) {
-                        return getTransrlate(context, 'password' + '< 7');
+                      if (value.isEmpty) {
+                        return "${getTransrlate(context, 'requiredempty')}";
+                      }else if (value.length < 7) {
+                        return "${getTransrlate(context, 'PasswordShorter')}";
                       }
                       _formKey.currentState.save();
                       return null;

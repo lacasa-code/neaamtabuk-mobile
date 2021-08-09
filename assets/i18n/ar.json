@@ -78,13 +78,16 @@
   "Support": "الدعم",
   "Submit": "تأكيد",
   "ThankYou": "شكرا لك",
+
   "invalidemail": "برجاء أدخال البريد الالكترونى صالح",
+  "invalidname": "الاسم يحتوى على ارقام عشريه",
+  "requiredempty": "الحقل مطلوب",
+  "requiredlength": "الحقل قصير جدا",
   "PasswordShorter": "كلمة مرور قصيرة جدا",
   "Passwordmatch": "كلمة مرور غير متشابهة",
   "PasswordChanged": "تم تغير كلمة المرور",
   "passwordNotChanged": "لم يتم تغير كلمة المرور",
   "profileChanged": "تم تغير بنجاح",
-  "profileChanged": "تم التغير بنجاح",
 
   "NewPassword": "كلمة المرور الجديدة",
   "ConfirmPassword": "تأكيد كلمة المرور",

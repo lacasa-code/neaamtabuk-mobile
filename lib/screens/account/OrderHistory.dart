@@ -36,7 +36,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     setState(() {
       dropdownValue=durations[0];
     });
-    getOrders("6");
+    getOrders("1");
     super.initState();
   }
 

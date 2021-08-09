@@ -62,155 +62,158 @@ class _Shipping_AddressState extends State<Shipping_Address> {
           : Container(
               child: address == null
                   ? Container()
-                  : Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: ListView.builder(
-                            primary: false,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: address.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
-                                    child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Radio<int>(
-                                      value: address[index].id,
-                                      groupValue: checkboxValue,
-                                      activeColor: themeColor.getColor(),
-                                      focusColor: themeColor.getColor(),
-                                      hoverColor: themeColor.getColor(),
-                                      onChanged: (int value) {
-                                        setState(() {
-                                          checkboxValue = value;
-                                          API(context).post(
-                                              'user/mark/default/shipping/${address[index].id}',
-                                              {}).then((value) {
+                  : SingleChildScrollView(
+                    child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ListView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: address.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                      child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Radio<int>(
+                                        value: address[index].id,
+                                        groupValue: checkboxValue,
+                                        activeColor: themeColor.getColor(),
+                                        focusColor: themeColor.getColor(),
+                                        hoverColor: themeColor.getColor(),
+                                        onChanged: (int value) {
+                                          setState(() {
+                                            checkboxValue = value;
+                                            API(context).post(
+                                                'user/mark/default/shipping/${address[index].id}',
+                                                {}).then((value) {
+                                              if (value != null) {
+                                                if (value['status_code'] ==
+                                                    200) {
+                                                  Navigator.pop(context);
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (_) =>
+                                                          ResultOverlay(value[
+                                                          'message']));
+                                                  _cart_model.setShipping(address[index]);
+
+                                                } else {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (_) =>
+                                                          ResultOverlay(value[
+                                                          'message']));
+                                                }
+                                              }
+                                            });
+                                          });
+                                        },
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            checkboxValue = index;
+                                          });
+                                        },
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              address[index].recipientName,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20),
+                                            ),
+                                            Container(
+                                              width: ScreenUtil.getWidth(context) / 2.3,
+                                              child: Text(
+                                                "${address[index].apartmentNo??' '} /  ${address[index].floorNo??' '} ${address[index].district??' '} ,${address[index].street??' '}},}",
+                                               maxLines: 2,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                          child: SizedBox(
+                                        height: 1,
+                                      )),
+                                      IconButton(
+                                        icon: Icon(Icons.edit),
+                                        onPressed: () {
+                                          Nav.route(context, EditAddress(address[index]));
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.clear),
+                                        onPressed: () {
+                                          API(context)
+                                              .Delete(
+                                                  'user/delete/shipping/${address[index].id}')
+                                              .then((value) {
                                             if (value != null) {
-                                              if (value['status_code'] ==
-                                                  200) {
-                                                Navigator.pop(context);
+                                              if (value['status_code'] == 200) {
                                                 showDialog(
                                                     context: context,
-                                                    builder: (_) =>
-                                                        ResultOverlay(value[
-                                                        'message']));
-                                                _cart_model.setShipping(address[index]);
-
+                                                    builder: (_) => ResultOverlay(
+                                                        value['message']));
+                                                getAddress();
                                               } else {
                                                 showDialog(
                                                     context: context,
-                                                    builder: (_) =>
-                                                        ResultOverlay(value[
-                                                        'message']));
+                                                    builder: (_) => ResultOverlay(
+                                                        value['message']));
                                               }
                                             }
                                           });
-                                        });
-                                      },
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          checkboxValue = index;
-                                        });
-                                      },
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            address[index].recipientName,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20),
-                                          ),
-                                          Container(
-                                            width: ScreenUtil.getWidth(context) / 2.3,
-                                            child: Text(
-                                              "${address[index].apartmentNo??' '} /  ${address[index].floorNo??' '} ${address[index].district??' '} ,${address[index].street??' '}},}",
-                                             maxLines: 2,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                        child: SizedBox(
-                                      height: 1,
-                                    )),
-                                    IconButton(
-                                      icon: Icon(Icons.edit),
-                                      onPressed: () {
-                                        Nav.route(context, EditAddress(address[index]));
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.clear),
-                                      onPressed: () {
-                                        API(context)
-                                            .Delete(
-                                                'user/delete/shipping/${address[index].id}')
-                                            .then((value) {
-                                          if (value != null) {
-                                            if (value['status_code'] == 200) {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (_) => ResultOverlay(
-                                                      value['message']));
-                                              getAddress();
-                                            } else {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (_) => ResultOverlay(
-                                                      value['message']));
-                                            }
-                                          }
-                                        });
-                                      },
-                                    )
-                                  ],
-                                )),
-                              );
-                            },
+                                        },
+                                      )
+                                    ],
+                                  )),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        Center(
-                          child: GestureDetector(
-                            child: Container(
-                              width: ScreenUtil.getWidth(context) / 2.5,
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.orange)),
-                              child: Center(
-                                child: AutoSizeText(
-                                  getTransrlate(context, 'AddNewAddress'),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxFontSize: 14,
-                                  maxLines: 1,
-                                  minFontSize: 10,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.orange),
+                          Center(
+                            child: GestureDetector(
+                              child: Container(
+                                width: ScreenUtil.getWidth(context) / 2.5,
+                                padding: const EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.orange)),
+                                child: Center(
+                                  child: AutoSizeText(
+                                    getTransrlate(context, 'AddNewAddress'),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxFontSize: 14,
+                                    maxLines: 1,
+                                    minFontSize: 10,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.orange),
+                                  ),
                                 ),
                               ),
+                              onTap: () {
+                                _navigateAndDisplaySelection(context);
+                              },
                             ),
-                            onTap: () {
-                              _navigateAndDisplaySelection(context);
-                            },
                           ),
-                        )
-                      ],
-                    ),
+                          SizedBox(width: 1,height: 50,)
+                        ],
+                      ),
+                  ),
             ),
     );
   }

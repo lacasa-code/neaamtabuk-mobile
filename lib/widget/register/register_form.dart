@@ -55,7 +55,10 @@ class _RegisterFormState extends State<RegisterForm> {
                   hintText: getTransrlate(context, 'name'),
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'name');
+                      return getTransrlate(context, 'requiredempty');
+                    }else if (RegExp(
+                        r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                      return getTransrlate(context, 'invalidname');
                     }
                     return null;
                   },
@@ -69,9 +72,9 @@ class _RegisterFormState extends State<RegisterForm> {
                   isEmail: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'Email');
+                      return getTransrlate(context, 'requiredempty');
                     } else if (!RegExp(
-                            r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                            r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
                         .hasMatch(value)) {
                       return getTransrlate(context, 'invalidemail');
                     }
@@ -104,14 +107,12 @@ class _RegisterFormState extends State<RegisterForm> {
                   isPassword: passwordVisible,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'password');
+                      return getTransrlate(context, 'requiredempty');
                     } else if (value.length < 8) {
-                      return getTransrlate(context, 'password') + ' < 8';
+                      return getTransrlate(context, 'PasswordShorter');
                     } else if (!value.contains(new RegExp(
                         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))) {
-                      return "one Uppercase, One Lowercase, One Number and one Special Character";
-                    } else if (value != model.password_confirmation) {
-                      return getTransrlate(context, 'Passwordmatch');
+                      return "Uppercase,Lowercase,Number and Special Character";
                     }
                     _formKey.currentState.save();
 
@@ -141,10 +142,9 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   isPassword: passwordVisible,
                   validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'ConfirmPassword');
+                     if (value != model.password_confirmation) {
+                      return getTransrlate(context, 'Passwordmatch');
                     }
-
                     _formKey.currentState.save();
 
                     return null;
