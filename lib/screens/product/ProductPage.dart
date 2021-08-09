@@ -1018,11 +1018,9 @@ class _ProductPageState extends State<ProductPage> {
                                           padding:
                                           const EdgeInsets
                                               .symmetric(
-                                              vertical: 20),
+                                              vertical: 10),
                                           child: Column(
                                             children: [
-                                              SizedBox(height: 15,),
-
                                               SvgPicture.asset(
                                                 "assets/icons/reload.svg",
                                                 width: ScreenUtil.getWidth(context) / 5,
@@ -1062,7 +1060,7 @@ class _ProductPageState extends State<ProductPage> {
                                               true,
                                               physics:
                                               NeverScrollableScrollPhysics(),
-                                              itemCount: 1,
+                                              itemCount: 1,padding: EdgeInsets.all(1),
                                               itemBuilder:
                                                   (BuildContext
                                               context,

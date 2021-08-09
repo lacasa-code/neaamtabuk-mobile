@@ -120,7 +120,6 @@ class Address {
     }
     data['recipient_name'] = this.recipientName;
     data['recipient_phone'] = this.recipientPhone;
-    data['recipient_email'] = this.recipientEmail;
     data['address'] = this.address;
     data['country_id'] = this.Country_id;
     data['city_id'] = this.city_id;

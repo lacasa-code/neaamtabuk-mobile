@@ -1,9 +1,11 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
+import 'package:flutter_pos/widget/custom_textfield.dart';
 
 import '../../model/cart_category.dart';
 import '../../model/manufacturers.dart';
@@ -26,10 +28,11 @@ class _FilterdialogState extends State<Filterdialog> {
   List<int> partSelect = [];
   List<int> originSelect = [];
   List<int> manufacturerSelect = [];
-  RangeValues _currentRangeValues = const RangeValues(10, 10000);
-
+  RangeValues _currentRangeValues;
+  double min=0 ,max=10000;
   @override
   void initState() {
+    _currentRangeValues =  RangeValues(min, max);
     getData();
   }
 
@@ -289,37 +292,76 @@ class _FilterdialogState extends State<Filterdialog> {
                     'السعر',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  expanded: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  expanded: Column(
                     children: [
-                      Container(
-                          width: ScreenUtil.getWidth(context) * 0.10,
-                          child: Text(
-                              _currentRangeValues.start.round().toString())),
-                      Container(
-                        width: ScreenUtil.getWidth(context) / 1.5,
-                        child: RangeSlider(
-                          activeColor: Colors.orange,
-                          inactiveColor: Colors.black26,
-                          values: _currentRangeValues,
-                          min: 10,
-                          max: 10000,
-                          divisions: 10000,
-                          labels: RangeLabels(
-                            _currentRangeValues.start.round().toString(),
-                            _currentRangeValues.end.round().toString(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              width: ScreenUtil.getWidth(context) * 0.10,
+                              child: Text(
+                                  _currentRangeValues.start.round().toString())),
+                          Container(
+                            width: ScreenUtil.getWidth(context) / 1.5,
+                            child: RangeSlider(
+                              activeColor: Colors.orange,
+                              inactiveColor: Colors.black26,
+                              values: _currentRangeValues,
+                              min: min,
+                              max: max,
+                              divisions: 10000,
+                              labels: RangeLabels(
+                                _currentRangeValues.start.round().toString(),
+                                _currentRangeValues.end.round().toString(),
+                              ),
+                              onChanged: (RangeValues values) {
+                                setState(() {
+                                  _currentRangeValues = values;
+                                });
+                              },
+                            ),
                           ),
-                          onChanged: (RangeValues values) {
-                            setState(() {
-                              _currentRangeValues = values;
-                            });
-                          },
-                        ),
+                          Container(
+                              width: ScreenUtil.getWidth(context) * 0.10,
+                              child:
+                                  Text(_currentRangeValues.end.round().toString())),
+                        ],
                       ),
-                      Container(
-                          width: ScreenUtil.getWidth(context) * 0.10,
-                          child:
-                              Text(_currentRangeValues.end.round().toString())),
+                      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                              width: ScreenUtil.getWidth(context) * 0.10,
+                              child:
+                              Text("${getTransrlate(context, 'from')}")),
+                          Container(
+                            width: ScreenUtil.getWidth(context)/3,
+                            child: MyTextFormField(enabled:false,
+                              intialLabel:min.toString(),
+                            onChange: (v){
+                              setState(() {
+                                _currentRangeValues =  RangeValues(double.parse(v),max);
+                                min=double.parse(v);
+                              });
+                            },),
+                          ),
+                          Container(
+                            width: ScreenUtil.getWidth(context) * 0.10,
+                            child:
+                            Text("${getTransrlate(context, 'to')}")),
+                          Container(
+                            width: ScreenUtil.getWidth(context)/3,
+
+                            child: MyTextFormField(intialLabel: max.toString(),
+                              onChange: (v){
+                                setState(() {
+                                  _currentRangeValues =  RangeValues(min, double.parse(v));
+                                  max=double.parse(v);
+                                });
+                              },),
+                          )
+
+                        ],
+                      ),
                     ],
                   ),
                 ),

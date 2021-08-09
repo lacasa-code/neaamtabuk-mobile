@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/account/Account.dart';
+import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
+import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
@@ -210,19 +212,27 @@ class _RegisterFormState extends State<RegisterForm> {
       if (!value.containsKey('errors')) {
         setState(() => _isLoading = false);
         var user = value['data'];
-        prefs.setString("user_email", user['email']);
-      //  prefs.setString("email_verified_at", user['email_verified_at']);
-        if (user.containsKey('vendor_details')) {
-          prefs.setInt(
-              "complete", user['vendor_details']['complete']);
-          prefs.setString("vendor", 'vendor');
-        }
-        prefs.setString("user_name", user['name']);
-        prefs.setString("token", user['token']);
-        prefs.setInt("user_id", user['id']);
-        themeColor.setLogin(true);
-        Navigator.pushAndRemoveUntil(
-            context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
+      //   prefs.setString("user_email", user['email']);
+      // //  prefs.setString("email_verified_at", user['email_verified_at']);
+      //   if (user.containsKey('vendor_details')) {
+      //     prefs.setInt(
+      //         "complete", user['vendor_details']['complete']);
+      //     prefs.setString("vendor", 'vendor');
+      //   }
+      //   prefs.setString("user_name", user['name']);
+      //   prefs.setString("token", user['token']);
+      //   prefs.setInt("user_id", user['id']);
+      //   themeColor.setLogin(true);
+        showDialog(
+            context: context,
+            builder: (_) =>
+                ResultOverlay('${value['message']}')).whenComplete(() {
+          Nav.routeReplacement(context, LoginPage());
+        });
+
+
+        // Navigator.pushAndRemoveUntil(
+        //     context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
       } else {
         showDialog(
             context: context,

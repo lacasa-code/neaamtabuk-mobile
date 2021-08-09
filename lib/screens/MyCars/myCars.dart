@@ -43,7 +43,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    _controller = TabController(vsync: this, length: 2,initialIndex: 1);
+    _controller = TabController(vsync: this, length: 2, initialIndex: 1);
     API(context).get('car/types/list').then((value) {
       if (value != null) {
         setState(() {
@@ -52,7 +52,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
         });
       }
     });
-    API(context).get('car-yearslist').then((value) {
+    API(context).get('car/yearslist').then((value) {
       if (value != null) {
         setState(() {
           years = Years.fromJson(value).data;
@@ -66,47 +66,27 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
         });
       }
     });
-    getFavorit();
+    Provider.of<Provider_control>(context, listen: false).isLogin
+        ? getFavorit()
+        : null;
     yearsID = TextEditingController();
     carMadeID = TextEditingController();
     CarmodelsID = TextEditingController();
     transimionsID = TextEditingController();
     super.initState();
   }
-getData(int id){
 
-  API(context).get('car/madeslist/filter/$id').then((value) {
-    if (value != null) {
-      setState(() {
-        car_mades=null;
-        car_mades = Car_made.fromJson(value).data;
-      });
-    }
-  });
+  getData(int id) {
+    API(context).get('car/madeslist/filter/$id').then((value) {
+      if (value != null) {
+        setState(() {
+          car_mades = null;
+          car_mades = Car_made.fromJson(value).data;
+        });
+      }
+    });
+  }
 
-  API(context).get('car/types/list').then((value) {
-    if (value != null) {
-      setState(() {
-        cartype = Car_type.fromJson(value).data;
-        getData(cartype[widget.checkboxType].id);
-      });
-    }
-  });
-  API(context).get('car-yearslist').then((value) {
-    if (value != null) {
-      setState(() {
-        years = Years.fromJson(value).data;
-      });
-    }
-  });
-  API(context).get('transmissions/list').then((value) {
-    if (value != null) {
-      setState(() {
-        transmissions = Transmission.fromJson(value).data;
-      });
-    }
-  });
-}
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
@@ -165,7 +145,8 @@ getData(int id){
                                                 id: favourite[index].carMadeId,
                                                 name: favourite[index]
                                                     .carMadeName,
-                                                Url: "user/select/from/favourites/${favourite[index].id}",
+                                                Url:
+                                                    "user/select/from/favourites/${favourite[index].id}",
                                               ));
                                         },
                                       ),
@@ -182,7 +163,8 @@ getData(int id){
                                                 id: favourite[index].carMadeId,
                                                 name: favourite[index]
                                                     .carMadeName,
-                                                Url: "user/select/from/favourites/${favourite[index].id}",
+                                                Url:
+                                                    "user/select/from/favourites/${favourite[index].id}",
                                               ));
                                         },
                                         child: Text(
@@ -250,14 +232,13 @@ getData(int id){
                             onTap: () {
                               setState(() {
                                 widget.checkboxType = index;
-                                car_mades=null;
-                                car_mades_id=null;
-                                carmodels=null;
-                                years=null;
-                                transmissions=null;
+                                car_mades = null;
+                                car_mades_id = null;
+                                carmodels = null;
+                                years = null;
+                                transmissions = null;
                               });
                               getData(cartype[widget.checkboxType].id);
-
                             },
                             child: Container(
                               margin: const EdgeInsets.all(15.0),
@@ -280,7 +261,6 @@ getData(int id){
                   padding: const EdgeInsets.only(right: 24, left: 24),
                   child: Column(
                     children: [
-
                       car_mades == null
                           ? Container()
                           : Padding(
@@ -295,7 +275,7 @@ getData(int id){
                                 itemAsString: (CarMade u) => u.carMade,
                                 onChanged: (CarMade data) {
                                   setState(() {
-                                    carmodels=null;
+                                    carmodels = null;
                                   });
                                   getcarModels(data.id);
                                   car_mades_id = data.id;
@@ -303,44 +283,43 @@ getData(int id){
                                 },
                               ),
                             ),
-
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownSearch<CarModel>(
-                                label: "  الموديل ",
-                                showSearchBox: true,
-                                showClearButton: true,
-                                enabled:  carmodels != null,
-                                items: carmodels,
-                                //  onFind: (String filter) => getData(filter),
-                                itemAsString: (CarModel u) => u.carmodel,
-                                onChanged: (CarModel data) =>
-                                    CarmodelsID.text = data.id.toString(),
-                              ),
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: DropdownSearch<CarModel>(
+                          label: "  الموديل ",
+                          showSearchBox: true,
+                          showClearButton: true,
+                          enabled: carmodels != null,
+                          items: carmodels,
+                          //  onFind: (String filter) => getData(filter),
+                          itemAsString: (CarModel u) => u.carmodel,
+                          onChanged: (CarModel data) =>
+                              CarmodelsID.text = data.id.toString(),
+                        ),
+                      ),
                       years == null
                           ? Container()
                           : Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DropdownSearch<Year>(
-                          showSearchBox: true,
-                          showClearButton: true,
-                          label: "  سنة الصنع ",
-                          validator: (Year item) {
-                            if (item == null) {
-                              return "Required field";
-                            } else
-                              return null;
-                          },
+                              padding: const EdgeInsets.all(8.0),
+                              child: DropdownSearch<Year>(
+                                showSearchBox: true,
+                                showClearButton: true,
+                                label: "  سنة الصنع ",
+                                validator: (Year item) {
+                                  if (item == null) {
+                                    return "Required field";
+                                  } else
+                                    return null;
+                                },
 
-                          items: years,
-                          //  onFind: (String filter) => getData(filter),
-                          itemAsString: (Year u) => u.year,
-                          onChanged: (Year data) {
-                            yearsID.text = data.id.toString();
-                          },
-                        ),
-                      ),
+                                items: years,
+                                //  onFind: (String filter) => getData(filter),
+                                itemAsString: (Year u) => u.year,
+                                onChanged: (Year data) {
+                                  yearsID.text = data.id.toString();
+                                },
+                              ),
+                            ),
                       transmissions == null
                           ? Container()
                           : Padding(
@@ -362,13 +341,12 @@ getData(int id){
                           Nav.routeReplacement(
                               context,
                               Products_Page(
-                                Url:
-                                    "display/search/results/mobile?"
-                                        "car_type_id=${cartype[widget.checkboxType].id}"
-                                "${carMadeID.text.isEmpty?'':'&car_made_id=${carMadeID.text}'}"
-                                "${CarmodelsID.text.isEmpty?'':'&car_model_id=${CarmodelsID.text}'}"
-                                "${yearsID.text.isEmpty?'':'&car_year_id=${yearsID.text}'}"
-                                "${transimionsID.text.isEmpty?'':'&transmission_id=${yearsID.text}'}",
+                                Url: "display/search/results/mobile?"
+                                    "car_type_id=${cartype[widget.checkboxType].id}"
+                                    "${carMadeID.text.isEmpty ? '' : '&car_made_id=${carMadeID.text}'}"
+                                    "${CarmodelsID.text.isEmpty ? '' : '&car_model_id=${CarmodelsID.text}'}"
+                                    "${yearsID.text.isEmpty ? '' : '&car_year_id=${yearsID.text}'}"
+                                    "${transimionsID.text.isEmpty ? '' : '&transmission_id=${yearsID.text}'}",
                               ));
                         },
                         child: Container(
@@ -407,7 +385,8 @@ getData(int id){
                                       ResultOverlay('Please select Car Made'))
                               : API(context).post(
                                   'user/select/products/add/favourite/car', {
-                                  "car_type_id": cartype[widget.checkboxType].id,
+                                  "car_type_id":
+                                      cartype[widget.checkboxType].id,
                                   "car_made_id": car_mades_id,
                                 }).then((value) {
                                   if (value != null) {
@@ -474,7 +453,7 @@ getData(int id){
   }
 
   void getFavorit() {
-    API(context,Check: false).get('show/favourite/cars').then((value) {
+    API(context, Check: false).get('show/favourite/cars').then((value) {
       if (value != null) {
         setState(() {
           favourite = Favourite.fromJson(value).data;

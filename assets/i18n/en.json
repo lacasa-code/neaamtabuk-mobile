@@ -109,6 +109,8 @@
   "ConfirmPassword": "Confirm Password",
   "LostPassword": "Forget  Password ?",
   "passwordinvalid": "password Invalid",
+  "from": "from",
+  "to": "to",
   "invalidemail": "Please enter a valid email",
   "invalidname": "field cannot accept floating point",
   "requiredempty": "Required ",

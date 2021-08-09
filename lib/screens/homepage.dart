@@ -417,6 +417,7 @@ class _HomeState extends State<Home> {
                       : ListView.builder(
                     primary: false,
                     shrinkWrap: true,
+                    padding: EdgeInsets.all(1),
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: ads.bottom.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -426,6 +427,9 @@ class _HomeState extends State<Home> {
                       );
                     },
                   ),
+                  SizedBox(
+                    height: 10,
+                  )
                 ],
               ),
             ),

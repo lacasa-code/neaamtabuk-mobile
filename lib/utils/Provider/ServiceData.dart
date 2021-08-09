@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/cart_model.dart';
 import 'package:flutter_pos/model/product_model.dart';
+import 'package:flutter_pos/model/product_most_view.dart';
 import 'package:flutter_pos/model/shipping_address.dart';
 import 'package:flutter_pos/service/api.dart';
 
 class Provider_Data with ChangeNotifier {
   Cart_model cart_model;
   Address address;
-  List<Product> product,productMostView,productMostSale;
+  List<Product> product,productMostSale;
+  List<ProductMost> productMostView;
 
   Provider_Data();
 
@@ -34,7 +36,7 @@ class Provider_Data with ChangeNotifier {
         .get('mostly/viewed/products?cartype_id=$cartypeId')
         .then((value) {
       if (value != null) {
-          productMostView = Product_model.fromJson(value).data;
+          productMostView = ProductMostView.fromJson(value).data;
       }
     });
     API(context)

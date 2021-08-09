@@ -107,26 +107,7 @@ class _AddAddressState extends State<AddAddress> {
                 SizedBox(
                   height: 5,
                 ),
-                MyTextFormField(
-                  intialLabel: '',
-                  keyboard_type: TextInputType.text,
-                  labelText: getTransrlate(context, 'mail'),
-                  hintText: getTransrlate(context, 'mail'),
-                  isPhone: true,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'mail');
-                    }
-                    _formKey.currentState.save();
-                    return null;
-                  },
-                  onSaved: (String value) {
-                    address.recipientEmail = value;
-                  },
-                ),
-                SizedBox(
-                  height: 5,
-                ),
+
                 Text(
                   getTransrlate(context, 'Countroy'),
                   style: TextStyle(color: Colors.black, fontSize: 16),

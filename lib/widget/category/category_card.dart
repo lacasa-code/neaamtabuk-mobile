@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/product_most_view.dart';
 import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -17,7 +18,7 @@ class CategoryCard extends StatefulWidget {
   }) : super(key: key);
 
   final Provider_control themeColor;
-  final Product product;
+  final ProductMost product;
 
   @override
   _CategoryCardState createState() => _CategoryCardState();
@@ -38,13 +39,13 @@ class _CategoryCardState extends State<CategoryCard> {
       ),
       child: InkWell(
         onTap: () {
-          print('site/categories/${widget.product.categoryId}?cartype_id=${widget.themeColor.car_type}');
+          print('site/categories/${widget.product.id}?cartype_id=${widget.themeColor.car_type}');
           Nav.route(
               context,
               Products_Page(
                 id: widget.product.id,
-                name: widget.product.categoryName.name,
-                Url: 'site/categories/${widget.product.categoryId}?cartype_id=${widget.themeColor.car_type}',
+                name: widget.product.name,
+                Url: 'site/categories/${widget.product.id}?cartype_id=${widget.themeColor.car_type}',
               ));
         },
         child: Column(
@@ -58,9 +59,9 @@ class _CategoryCardState extends State<CategoryCard> {
                 child: CachedNetworkImage(
                   height: ScreenUtil.getHeight(context) / 12,
                   width: ScreenUtil.getWidth(context) / 3.2,
-                  imageUrl: (widget.product.categoryName == null)
+                  imageUrl: (widget.product.photo == null)
                       ? 'http://arabimagefoundation.com/images/defaultImage.png'
-                      : widget.product.categoryName.photo.image,
+                      : widget.product.photo.image,
                   errorWidget: (context, url, error) => Icon(
                     Icons.image,
                     color: Colors.black12,
@@ -69,7 +70,7 @@ class _CategoryCardState extends State<CategoryCard> {
               ),
             ),
             AutoSizeText(
-              "${widget.product.categoryName.name}",
+              "${widget.product.name}",
               maxLines: 2,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

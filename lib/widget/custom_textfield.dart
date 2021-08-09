@@ -56,7 +56,7 @@ class MyTextFormField extends StatelessWidget {
             controller: controller,
             focusNode: focus,
             inputFormatters:inputFormatters,
-            autofocus: true,
+            //autofocus: true,
             onTap: press,
             initialValue: intialLabel,
             decoration: InputDecoration(
@@ -82,7 +82,7 @@ class MyTextFormField extends StatelessWidget {
             ),
             obscureText: isPassword ? true : false,
             validator: validator,
-            autovalidate: true,
+           // autovalidate: true,
 
             textDirection: textDirection,
             onSaved: onSaved,
