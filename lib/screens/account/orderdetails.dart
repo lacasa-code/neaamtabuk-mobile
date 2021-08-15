@@ -318,7 +318,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      InkWell(
+                                      widget.order.orderStatus=='pending'?Container(): InkWell(
                                         onTap: () {
                                           _navigate_add_Tikit(
                                               context,
@@ -326,7 +326,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                               widget.order.id.toString());
                                         },
                                         child: AutoSizeText(
-                                          '${getTransrlate(context, 'problem')} ',
+                                            '${getTransrlate(context, 'problem')} ',
                                           maxLines: 1,
                                           style: TextStyle(
                                               color: Colors.orange,
@@ -481,10 +481,54 @@ class _OrderdetailsState extends State<Orderdetails> {
                                         )),
                                   ),
                                 ),
-                                _listTicket[index].Case=='solved'?Container(): Center(
+                               Center(
                                   child: Column(
                                     // crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
+                                      _listTicket[index].Case=='solved'?Container(): InkWell(
+                                        onTap: () {
+                                          API(context).post('solved/ticket', {
+                                            "id": _listTicket[index].id,
+                                          }).then((value) {
+                                            if (value != null) {
+                                              if (value['status_code'] == 200) {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        ResultOverlay(
+                                                            value['message']));
+                                                getTicket();
+                                              } else {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        ResultOverlay(
+                                                            value['errors']));
+                                              }
+                                            }
+                                          });
+                                        },
+                                        child: Container(
+                                          width: ScreenUtil.getWidth(context) /
+                                              1.5,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.orange,
+                                                  width: 1)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 10),
+                                            child: Center(
+                                              child: Text(
+                                                ' يتم حل المشكلة',
+                                                style: TextStyle(
+                                                    color: Colors.orange),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
                                       _listTicket[index].Case=='to admin'?Container(): InkWell(
                                         onTap: () {
                                           API(context).post('to/admin/ticket', {

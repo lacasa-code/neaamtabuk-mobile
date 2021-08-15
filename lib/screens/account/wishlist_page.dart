@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/model/wishlist_model.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
@@ -22,7 +23,7 @@ class WishList extends StatefulWidget {
 }
 
 class _WishListState extends State<WishList> {
-  List<WishListItem> wishList;
+  List<Product> wishList;
   int checkboxValue;
 
   @override
@@ -76,7 +77,6 @@ class _WishListState extends State<WishList> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Wish_List(
-                              wishList,
                               themeColor,
                               wishList[index],
                             ),
@@ -90,7 +90,7 @@ class _WishListState extends State<WishList> {
                                 IconButton(
                                     onPressed: () {
                                       API(context).post('user/removeitem/wishlist',
-                                          {"product_id": wishList[index].productId}).then((value) {
+                                          {"product_id": wishList[index].id}).then((value) {
                                         if (value != null) {
                                           if (value['status_code'] == 200) {
                                             showDialog(
@@ -117,7 +117,7 @@ class _WishListState extends State<WishList> {
                                 InkWell(
                                   onTap: () {
                                     API(context).post('add/to/cart', {
-                                      "product_id": wishList[index].productId,
+                                      "product_id": wishList[index].id,
                                       "quantity": 1
                                     }).then((value) {
                                       if (value != null) {
@@ -128,7 +128,7 @@ class _WishListState extends State<WishList> {
                                                   ResultOverlay(value['message']));
                                           Provider.of<Provider_Data>(context,listen: false).getCart(context);
                                           API(context).post('user/removeitem/wishlist',
-                                              {"product_id": wishList[index].productId}).then((value) {
+                                              {"product_id": wishList[index].id}).then((value) {
                                             if (value != null) {
                                               if (value['status_code'] == 200) {
                                                 getwWISHlIST();
@@ -189,7 +189,7 @@ class _WishListState extends State<WishList> {
     API(context).get('user/get/wishlist').then((value) {
       if (value != null) {
         setState(() {
-          wishList = Wishlist_model.fromJson(value).data;
+          wishList = Product_model.fromJson(value).data;
         });
       }
     });

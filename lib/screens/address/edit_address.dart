@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/area_model.dart';
 import 'package:flutter_pos/model/city_model.dart';
 import 'package:flutter_pos/model/country_model.dart';
@@ -82,9 +83,13 @@ class _EditAddressState extends State<EditAddress> {
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'Firstname');
+                      return getTransrlate(context, 'requiredempty');
+                    }else   if (value.length<=3) {
+                      return "${getTransrlate(context, 'requiredlength')}";
+                    }else if (RegExp(
+                        r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                      return getTransrlate(context, 'invalidname');
                     }
-                    _formKey.currentState.save();
                     return null;
                   },
                   onSaved: (String value) {
@@ -99,9 +104,13 @@ class _EditAddressState extends State<EditAddress> {
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'Lastname');
+                      return getTransrlate(context, 'requiredempty');
+                    }else   if (value.length<=3) {
+                      return "${getTransrlate(context, 'requiredlength')}";
+                    }else if (RegExp(
+                        r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                      return getTransrlate(context, 'invalidname');
                     }
-                    _formKey.currentState.save();
                     return null;
                   },
                   onSaved: (String value) {
@@ -128,6 +137,9 @@ class _EditAddressState extends State<EditAddress> {
                           itemAsString: (Country u) => u.countryName,
                           onChanged: (Country data) {
                             widget.address.Country_id = data.id ;
+                            setState(() {
+                              area=null;
+                            });
                             getArea(data.id);
                           },
                         ),
@@ -146,6 +158,9 @@ class _EditAddressState extends State<EditAddress> {
                           itemAsString: (Area u) => u.areaName,
                           onChanged: (Area data) {
                             widget.address.area_id = data.id;
+                            setState(() {
+                              cities=null;
+                            });
                             getCity(data.id);
                           },
                         ),
@@ -256,9 +271,11 @@ class _EditAddressState extends State<EditAddress> {
                   intialLabel: widget.address.recipientPhone,
                   keyboard_type: TextInputType.phone,
                   labelText: getTransrlate(context, 'phone'),
+                  inputFormatters: [
+                    new LengthLimitingTextInputFormatter(13),
+                  ],
                   hintText: getTransrlate(context, 'phone'),
                   textDirection: TextDirection.ltr,
-
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
@@ -275,6 +292,9 @@ class _EditAddressState extends State<EditAddress> {
                   intialLabel: widget.address.telephoneNo,
                   keyboard_type: TextInputType.phone,
                   textDirection: TextDirection.ltr,
+                  inputFormatters: [
+                    new LengthLimitingTextInputFormatter(12),
+                  ],
                   labelText: getTransrlate(context, 'telphone'),
                   hintText: getTransrlate(context, 'telphone'),
                   isPhone: true,

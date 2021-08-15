@@ -126,7 +126,7 @@ class _ProductCardState extends State<ProductCard> {
                               ),
                             ),
                           AutoSizeText(
-                              widget.product.producttypeId == 2?"": "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                            "${double.parse(widget.product.action_price).floorToDouble()} ${getTransrlate(context, 'Currency')} ",
                             maxLines: 1,
                             maxFontSize: 12,
                             style: TextStyle(

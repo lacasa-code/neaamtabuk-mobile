@@ -23,6 +23,7 @@ import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:share/share.dart';
@@ -101,7 +102,7 @@ class _ProductPageState extends State<ProductPage> {
                         .toList(),
                     options: CarouselOptions(
                         autoPlay: true,
-                        height: 175,
+                        height: ScreenUtil.getHeight(context)/6,
                         viewportFraction: 1.0,
                         enlargeCenterPage: false,
                         onPageChanged: (index, reason) {
@@ -343,7 +344,7 @@ class _ProductPageState extends State<ProductPage> {
                             widget.product.discount == "0"
                                 ? Container()
                                 : Text(
-                              "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                              "${double.parse(widget.product.action_price).floorToDouble()} ${getTransrlate(context, 'Currency')} ",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -647,7 +648,7 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       )),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 1, right: 1),
+                    padding: const EdgeInsets.only(top: 8, left: 1, right: 1,bottom: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -683,7 +684,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 5,
                   ),
                   reviews == null
-                      ? Container()
+                      ? Custom_Loading()
                       : DefaultTabController(
                         length: 2,
                         child:  ListView(
@@ -713,7 +714,7 @@ class _ProductPageState extends State<ProductPage> {
 
                                 children: [
                                   reviews == null
-                                      ? Container()
+                                      ? Custom_Loading()
                                       : Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Column(
@@ -1008,7 +1009,7 @@ class _ProductPageState extends State<ProductPage> {
                                     ),
                                   ),
                                   _question == null
-                                      ? Container()
+                                      ? Custom_Loading()
                                       : Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [

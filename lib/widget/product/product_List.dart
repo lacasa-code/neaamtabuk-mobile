@@ -176,7 +176,7 @@ class _ProductListState extends State<ProductList> {
                                   width: ScreenUtil.getWidth(context) /3,
                                   child: widget.product.discount == "0"
                                       ? AutoSizeText(
-                                          "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                                          "${double.parse(widget.product.action_price).floorToDouble()} ${getTransrlate(context, 'Currency')} ",
                                           maxLines: 1,
                                           minFontSize: 14,
                                           maxFontSize: 16,
@@ -191,7 +191,7 @@ class _ProductListState extends State<ProductList> {
                                             width: ScreenUtil.getWidth(context) /6,
 
                                             child: Text(
-                                                "${widget.product.price}  ",
+                                                "${double.parse(widget.product.price).floorToDouble()}  ",
                                               style: TextStyle(
                                                 decoration:  TextDecoration.lineThrough,
                                                 fontSize: 12,
@@ -203,9 +203,9 @@ class _ProductListState extends State<ProductList> {
                                             width: ScreenUtil.getWidth(context) /6,
 
                                             child: Text(
-                                                "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
+                                                "${double.parse(widget.product.action_price).floorToDouble()} ${getTransrlate(context, 'Currency')} ",
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 14,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black,
                                                 ),

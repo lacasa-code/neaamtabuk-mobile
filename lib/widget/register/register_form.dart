@@ -58,6 +58,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
+                    }else   if (value.length<=3) {
+                      return "${getTransrlate(context, 'requiredlength')}";
                     }else if (RegExp(
                         r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
                       return getTransrlate(context, 'invalidname');
@@ -87,7 +89,6 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.email = value;
                   },
                 ),
-
                 MyTextFormField(
                   labelText: getTransrlate(context, 'password'),
                   hintText: getTransrlate(context, 'password'),
@@ -114,7 +115,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       return getTransrlate(context, 'PasswordShorter');
                     } else if (!value.contains(new RegExp(
                         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))) {
-                      return "Uppercase,Lowercase,Number and Special Character";
+                      return "${getTransrlate(context, 'invalidpass')}";
                     }
                     _formKey.currentState.save();
 
@@ -144,9 +145,12 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   isPassword: passwordVisible,
                   validator: (String value) {
-                     if (value != model.password_confirmation) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'requiredempty');
+                    }else if (value != model.password) {
                       return getTransrlate(context, 'Passwordmatch');
                     }
+
                     _formKey.currentState.save();
 
                     return null;
@@ -181,7 +185,6 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),

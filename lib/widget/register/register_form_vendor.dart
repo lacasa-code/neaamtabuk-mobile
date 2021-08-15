@@ -57,6 +57,8 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return "${getTransrlate(context, 'requiredempty')}";
+                    }else   if (value.length<=3) {
+                      return "${getTransrlate(context, 'requiredlength')}";
                     }else if (RegExp(
                         r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
                       return getTransrlate(context, 'invalidname');
@@ -86,22 +88,22 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                     model.email = value;
                   },
                 ),
-                MyTextFormField(
-                  labelText: getTransrlate(context, 'company'),
-                  hintText: getTransrlate(context, 'company'),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'requiredempty');
-                    }else if (RegExp(
-                        r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
-                      return getTransrlate(context, 'invalidname');
-                    }
-                    return null;
-                  },
-                  onSaved: (String value) {
-                    model.company = value;
-                  },
-                ),
+                // MyTextFormField(
+                //   labelText: getTransrlate(context, 'company'),
+                //   hintText: getTransrlate(context, 'company'),
+                //   validator: (String value) {
+                //     if (value.isEmpty) {
+                //       return getTransrlate(context, 'requiredempty');
+                //     }else if (RegExp(
+                //         r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                //       return getTransrlate(context, 'invalidname');
+                //     }
+                //     return null;
+                //   },
+                //   onSaved: (String value) {
+                //     model.company = value;
+                //   },
+                // ),
 
                 MyTextFormField(
                   labelText: getTransrlate(context, 'password'),
@@ -129,7 +131,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                       return getTransrlate(context, 'requiredlength');
                     } else if (!value.contains(new RegExp(
                         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))) {
-                      return "Uppercase,Lowercase,Number and Special Character";
+                      return "${getTransrlate(context, 'invalidpass')}";
                     }
                     _formKey.currentState.save();
 
@@ -161,7 +163,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else if (value != model.password_confirmation) {
+                    }else if (value != model.password) {
                       return getTransrlate(context, 'Passwordmatch');
                     }
 

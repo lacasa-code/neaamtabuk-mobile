@@ -124,16 +124,22 @@ class _UserInfoState extends State<UserInfo> {
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
                                           initialValue: userModal.name,
+                                          inputFormatters: [
+                                            new LengthLimitingTextInputFormatter(254),
+                                          ],
                                           decoration: const InputDecoration(
                                             hintText: "أدخل الاسم",
                                           ),
                                           enabled: !_status,
                                           validator: (String value) {
                                             if (value.isEmpty) {
-                                              return getTransrlate(
-                                                  context, 'Firstname');
+                                              return getTransrlate(context, 'requiredempty');
+                                            }else   if (value.length<=3) {
+                                              return "${getTransrlate(context, 'requiredlength')}";
+                                            }else if (RegExp(
+                                                r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                                              return getTransrlate(context, 'invalidname');
                                             }
-                                            _formKey.currentState.save();
                                             return null;
                                           },
                                           autofocus: !_status,
@@ -157,6 +163,9 @@ class _UserInfoState extends State<UserInfo> {
                                           initialValue: userModal.lastName,
                                           decoration: const InputDecoration(),
                                           enabled: !_status,
+                                          inputFormatters: [
+                                            new LengthLimitingTextInputFormatter(254),
+                                          ],
                                           validator: (String value) {
                                             if (value.isEmpty) {
                                               return getTransrlate(
@@ -182,6 +191,9 @@ class _UserInfoState extends State<UserInfo> {
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
+                                          inputFormatters: [
+                                            new LengthLimitingTextInputFormatter(200),
+                                          ],
                                           initialValue: userModal.email,
                                           decoration: const InputDecoration(),
                                           validator: (String value) {
@@ -220,7 +232,7 @@ class _UserInfoState extends State<UserInfo> {
 
                                               child: TextFormField(
                                                 inputFormatters: [
-                                                  new LengthLimitingTextInputFormatter(14),
+                                                  new LengthLimitingTextInputFormatter(userModal.phoneNo!=null?12:10),
                                                 ],
                                                 initialValue: userModal.phoneNo,
                                                 keyboardType: TextInputType.number,
@@ -247,6 +259,9 @@ class _UserInfoState extends State<UserInfo> {
                                               width: ScreenUtil.getWidth(context)*0.2 ,
                                               child: TextFormField(
                                                 initialValue: "966+",
+                                                inputFormatters: [
+                                                  new LengthLimitingTextInputFormatter(8),
+                                                ],
                                                 keyboardType: TextInputType.number,
                                                 decoration: InputDecoration(),
                                                 validator: (String value) {
@@ -273,7 +288,7 @@ class _UserInfoState extends State<UserInfo> {
                                         )),
                                     InkWell(
                                       onTap: (){
-                                        _selectDateto(context);
+                                        _status?null:  _selectDateto(context);
                                       },
                                       child: Padding(
                                           padding: EdgeInsets.only(
@@ -282,7 +297,18 @@ class _UserInfoState extends State<UserInfo> {
                                             controller: _tocontroller,
                                             keyboardType: TextInputType.datetime,
                                             decoration: InputDecoration(),
+                                            inputFormatters: [
+                                              new LengthLimitingTextInputFormatter(254),
+                                            ],
                                             enabled:false,
+                                            validator: (String value) {
+                                              if (value.isEmpty) {
+                                                return getTransrlate(context, 'requiredempty');
+                                              }else   if (value.length<=3) {
+                                                return "${getTransrlate(context, 'requiredlength')}";
+                                              }
+                                              return null;
+                                            },
                                             onSaved: (String val) =>
                                                 userModal.birthdate = val,
                                             onChanged: (String val) =>
@@ -311,6 +337,7 @@ class _UserInfoState extends State<UserInfo> {
                                         },
                                         items: items,
                                         selectedItem: userModal.gender,
+
                                         enabled: !_status,
                                         //  onFind: (String filter) => getData(filter),
                                         itemAsString: (String u) => u,
@@ -334,6 +361,9 @@ class _UserInfoState extends State<UserInfo> {
                                             top: 2.0,
                                             bottom: 10),
                                         child: TextFormField(
+                                          inputFormatters: [
+                                            new LengthLimitingTextInputFormatter(254),
+                                          ],
                                           initialValue: "123456789",
                                           decoration: InputDecoration(
                                               hintText: "أدخل كلمة المرور"),
@@ -360,7 +390,7 @@ class _UserInfoState extends State<UserInfo> {
   }
   Future<void> _selectDateto(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-        context: context,initialDate: DateTime(2005),lastDate: DateTime(2005), firstDate: DateTime(1930));
+        context: context,initialDate:DateTime.parse(userModal.birthdate??"2005"),lastDate: DateTime(2005), firstDate: DateTime(1930));
     if (picked != null)
       setState(() {
         _tocontroller.text = DateFormat('yyyy-MM-dd').format(picked);
@@ -407,7 +437,7 @@ class _UserInfoState extends State<UserInfo> {
                             showDialog(
                                 context: context,
                                 builder: (_) =>
-                                    ResultOverlay(value['errors'] ));
+                                    ResultOverlay("${value['errors']??value['message']}" ));
                           }
                         }
                       });

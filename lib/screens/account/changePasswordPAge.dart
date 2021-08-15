@@ -84,6 +84,7 @@ class _changePasswordState extends State<changePassword> {
                       passwordVisible ? Icons.visibility : Icons.visibility_off,
                       color: Colors.black26,
                     ),
+
                     onPressed: () {
                       // Update the state i.e. toogle the state of passwordVisible variable
                       setState(() {
@@ -124,11 +125,15 @@ class _changePasswordState extends State<changePassword> {
                   isPassword: passwordVisible,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'NewPassword');
+                      return getTransrlate(context, 'requiredempty');
+                    } else if (value.length < 8) {
+                      return getTransrlate(context, 'PasswordShorter');
                     } else if (!value.contains(new RegExp(
-    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))) {
-                      return "one Uppercase, One Lowercase, One Number and one Special Character";
-                    }  _formKey.currentState.save();
+                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))) {
+                      return "Uppercase,Lowercase,Number and Special Character";
+                    }
+                    _formKey.currentState.save();
+
                     return null;
                   },
                   onSaved: (String value) {
@@ -155,7 +160,9 @@ class _changePasswordState extends State<changePassword> {
                   ),
                   isPassword: passwordVisible,
                   validator: (String value) {
-                    if (value!=newPassword) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'requiredempty');
+                    } else if (value!=newPassword) {
                       return getTransrlate(context, 'Passwordmatch');
                     }
                     _formKey.currentState.save();

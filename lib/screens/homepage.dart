@@ -441,7 +441,7 @@ class _HomeState extends State<Home> {
     );
   }
   Future<Null> _refreshLocalGallery() async{
-    getData(cartype[checkboxType].id);
+    getData(1);
 
   }
   Widget list_category(

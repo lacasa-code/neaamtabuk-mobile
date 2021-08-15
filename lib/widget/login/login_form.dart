@@ -86,7 +86,7 @@ class _LoginFormState extends State<LoginForm> {
                       if (value.isEmpty) {
                         return "${getTransrlate(context, 'requiredempty')}";
                       }else if (value.length < 7) {
-                        return "${getTransrlate(context, 'PasswordShorter')}";
+                        return "${getTransrlate(context, 'requiredlength')}";
                       }
                       _formKey.currentState.save();
                       return null;

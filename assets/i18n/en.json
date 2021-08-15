@@ -111,6 +111,7 @@
   "passwordinvalid": "password Invalid",
   "from": "from",
   "to": "to",
+  "invalidpass": "Uppercase,Lowercase,Number and Special Character",
   "invalidemail": "Please enter a valid email",
   "invalidname": "field cannot accept floating point",
   "requiredempty": "Required ",

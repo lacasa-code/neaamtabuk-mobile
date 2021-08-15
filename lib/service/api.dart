@@ -138,13 +138,12 @@ class API {
     } catch (e) {} finally {}
   }
   getAction(http.Response response) {
-    print(response.body);
     if (Check) {
       if (response.statusCode == 500) {
         Nav.route(
             context,
             Maintenance(
-              erorr: jsonDecode(response.body),
+              erorr: response.body.toString()
             ));
       } else if (response.statusCode == 401) {
         Nav.route(context, LoginPage());

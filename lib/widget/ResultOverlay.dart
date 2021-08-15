@@ -71,7 +71,7 @@ class ResultOverlayState extends State<ResultOverlay>
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: themeColor.getColor(),
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,),
                   ),
                 ),

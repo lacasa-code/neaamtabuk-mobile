@@ -21,7 +21,6 @@ class SearchOverlayState extends State<SearchOverlay>
   Animation<double> scaleAnimation;
   List<Product> products = [];
   FocusNode _focusNode = FocusNode();
-
   String search_index;
   @override
   void initState() {
@@ -40,11 +39,9 @@ class SearchOverlayState extends State<SearchOverlay>
     });
     controller.forward();
   }
-
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
-
     return Align(
       alignment: Alignment.topCenter,
       child: Material(
@@ -140,11 +137,8 @@ class SearchOverlayState extends State<SearchOverlay>
       ),
     );
   }
-
-
   @override
   void dispose() {
     FocusScope.of(context).unfocus();
-
   }
 }

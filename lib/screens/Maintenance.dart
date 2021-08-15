@@ -17,7 +17,7 @@ class _MaintenanceState extends State<Maintenance> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        //  backgroundColor: themeColor.getColor(),
+        backgroundColor: Colors.orange,
         title: Text(
           "عطل فنى",
           style: TextStyle(color: Colors.white, fontSize: 20),

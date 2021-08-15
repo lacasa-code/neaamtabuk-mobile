@@ -27,6 +27,8 @@ class _OrderHistoryState extends State<OrderHistory> {
   List<Order> orders;
   Duration_order dropdownValue = Duration_order(' آخر 6 شهور ', 6);
   List<Duration_order> durations = [
+    Duration_order(' آخر  شهر ', 1),
+    Duration_order(' آخر 3 شهور ', 3),
     Duration_order(' آخر 6 شهور ', 6),
     Duration_order(' آخر 12 شهور ', 12)
   ];

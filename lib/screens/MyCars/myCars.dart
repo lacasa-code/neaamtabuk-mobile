@@ -168,7 +168,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                               ));
                                         },
                                         child: Text(
-                                          favourite[index].carMadeName,
+                                          "${favourite[index].carMadeName} ${favourite[index].carModelName??''} ${favourite[index].carYearIdName??''}",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20),
