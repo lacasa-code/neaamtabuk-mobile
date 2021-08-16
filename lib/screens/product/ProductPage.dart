@@ -698,10 +698,10 @@ class _ProductPageState extends State<ProductPage> {
                                 tabs: [
                                   Tab(
                                       icon: Text(
-                                        "التقييمات",
+                                        "${getTransrlate(context, 'Reviews')}",
                                       )),
                                   Tab(
-                                      icon: Text("أسئلة وأجوبة")),
+                                      icon: Text("${getTransrlate(context, 'questions')}")),
                                 ],
                                 indicatorColor: Colors.orange,
                                 unselectedLabelColor: Colors.grey,
@@ -758,7 +758,7 @@ class _ProductPageState extends State<ProductPage> {
                                               ),
                                             ),
                                             Text(
-                                              " (${reviews.reviewsCount} تقييم ) ",
+                                              " (${reviews.reviewsCount} ${getTransrlate(context, 'rate')} ) ",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight:
@@ -926,7 +926,7 @@ class _ProductPageState extends State<ProductPage> {
                                                       4,
                                                   child: Center(
                                                     child: AutoSizeText(
-                                                      "جميع التقييمات",
+                                                      '${getTransrlate(context, 'allrate')}',
                                                       maxFontSize: 16,
                                                       minFontSize: 10,
                                                       style: TextStyle(
@@ -984,7 +984,7 @@ class _ProductPageState extends State<ProductPage> {
                                                           context) /
                                                           5,
                                                       child: AutoSizeText(
-                                                        'كتابة تقييم',
+                                                        '${getTransrlate(context, 'writerate')}',
                                                         overflow:
                                                         TextOverflow
                                                             .ellipsis,
@@ -1212,7 +1212,7 @@ class _ProductPageState extends State<ProductPage> {
                                                     4,
                                                 child: Center(
                                                   child: AutoSizeText(
-                                                    "جميع الأسئلة",
+                                                    "${getTransrlate(context, 'allquestions')}",
                                                     maxFontSize: 16,
                                                     minFontSize: 10,
                                                     style: TextStyle(
@@ -1269,7 +1269,7 @@ class _ProductPageState extends State<ProductPage> {
                                                         context) /
                                                         4,
                                                     child: AutoSizeText(
-                                                      'كتابة سؤال',
+                                                      '${getTransrlate(context, 'writequestions')}',
                                                       overflow:
                                                       TextOverflow
                                                           .ellipsis,

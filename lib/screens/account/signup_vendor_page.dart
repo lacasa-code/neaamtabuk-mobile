@@ -82,7 +82,6 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
                 ),
               ),
               RegisterFormVendor(),
-              routeLoginWidget(themeColor, context),
               SizedBox(
                 height: 50,
               )

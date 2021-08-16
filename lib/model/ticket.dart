@@ -1,284 +1,151 @@
-/// status_code : 200
-/// message : "success"
-/// data : [{"id":11,"ticket_no":"6UZYXC8PEZ","title":"شكوى","priority":"medium","message":"رساله تتضمن شكوى","status":"open","category_id":1,"category_name":"technical","user_id":2,"user_name":"Trkar2Ahmed","vendor_id":54,"vendor_name":"Ahmed","order_id":43,"attachment":{"id":707,"model_id":11,"uuid":"b6d6c6ef-20c9-4bc1-a7cf-e1893e92140e","image":"https://traker.fra1.digitaloceanspaces.com/tickets/attachments/OF03PhSLK3we5RhpDmumYyxlde3k8vM74iZqklPF.png"},"answer":null,"comments":[],"case":"to admin","reply":"no reply yet","orderDetails":[],"order_number":20000042,"order_created_at":"2021-06-27 14:52:06","vendor_email":"ahmed.mohamed@lacasacode.com","created_at":"2021-06-28 11:25:03"}]
+import 'package:flutter_pos/model/product_model.dart';
 
 class Ticket_model {
-  int _statusCode;
-  String _message;
-  List<Ticket> _data;
+  int statusCode;
+  String message;
+  List<Ticket> data;
+  int total;
 
-  int get statusCode => _statusCode;
-  String get message => _message;
-  List<Ticket> get data => _data;
+  Ticket_model({this.statusCode, this.message, this.data, this.total});
 
-  Ticket_model({
-      int statusCode, 
-      String message, 
-      List<Ticket> data}){
-    _statusCode = statusCode;
-    _message = message;
-    _data = data;
-}
-
-  Ticket_model.fromJson(dynamic json) {
-    _statusCode = json["status_code"];
-    _message = json["message"];
-    if (json["data"] != null) {
-      _data = [];
-      json["data"].forEach((v) {
-        _data.add(Ticket.fromJson(v));
-      });
+  Ticket_model.fromJson(Map<String, dynamic> json) {
+    statusCode = json['status_code'];
+    message = json['message'];
+    if (json['data'] != null) {
+      data = new List<Ticket>();
+      json['data'].forEach((v) { data.add(new Ticket.fromJson(v)); });
     }
+    total = json['total'];
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["status_code"] = _statusCode;
-    map["message"] = _message;
-    if (_data != null) {
-      map["data"] = _data.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
 
 }
-
-/// id : 11
-/// ticket_no : "6UZYXC8PEZ"
-/// title : "شكوى"
-/// priority : "medium"
-/// message : "رساله تتضمن شكوى"
-/// status : "open"
-/// category_id : 1
-/// category_name : "technical"
-/// user_id : 2
-/// user_name : "Trkar2Ahmed"
-/// vendor_id : 54
-/// vendor_name : "Ahmed"
-/// order_id : 43
-/// attachment : {"id":707,"model_id":11,"uuid":"b6d6c6ef-20c9-4bc1-a7cf-e1893e92140e","image":"https://traker.fra1.digitaloceanspaces.com/tickets/attachments/OF03PhSLK3we5RhpDmumYyxlde3k8vM74iZqklPF.png"}
-/// answer : null
-/// comments : []
-/// case : "to admin"
-/// reply : "no reply yet"
-/// orderDetails : []
-/// order_number : 20000042
-/// order_created_at : "2021-06-27 14:52:06"
-/// vendor_email : "ahmed.mohamed@lacasacode.com"
-/// created_at : "2021-06-28 11:25:03"
 
 class Ticket {
-  int _id;
-  String _ticketNo;
-  String _title;
-  String _priority;
-  String _message;
-  String _status;
-  int _categoryId;
-  String _categoryName;
-  int _userId;
-  String _userName;
-  int _vendorId;
-  String _vendorName;
-  int _orderId;
-  Attachment _attachment;
-  dynamic _answer;
-  List<dynamic> _comments;
-  String _case;
-  String _reply;
-  List<dynamic> _orderDetails;
-  int _orderNumber;
-  String _orderCreatedAt;
-  String _vendorEmail;
-  String _createdAt;
+  int id;
+  String ticketNo;
+  String title;
+  int ticketpriorityId;
+  String priority;
+  String message;
+  String status;
+  int categoryId;
+  String categoryName;
+  int userId;
+  String userName;
+  String userEmail;
+  String userPhone;
+  int vendorId;
+  String vendorName;
+  int orderId;
+  List<Comments> comments;
+  String Case;
+  String reply;
+  int orderNumber;
+  String orderCreatedAt;
+  String vendorEmail;
+  String createdAt;
+  Photo attachment;
 
-  int get id => _id;
-  String get ticketNo => _ticketNo;
-  String get title => _title;
-  String get priority => _priority;
-  String get message => _message;
-  String get status => _status;
-  int get categoryId => _categoryId;
-  String get categoryName => _categoryName;
-  int get userId => _userId;
-  String get userName => _userName;
-  int get vendorId => _vendorId;
-  String get vendorName => _vendorName;
-  int get orderId => _orderId;
-  Attachment get attachment => _attachment;
-  dynamic get answer => _answer;
-  List<dynamic> get comments => _comments;
-  String get Case => _case;
-  String get reply => _reply;
-  List<dynamic> get orderDetails => _orderDetails;
-  int get orderNumber => _orderNumber;
-  String get orderCreatedAt => _orderCreatedAt;
-  String get vendorEmail => _vendorEmail;
-  String get createdAt => _createdAt;
 
-  Ticket({
-      int id, 
-      String ticketNo, 
-      String title, 
-      String priority, 
-      String message, 
-      String status, 
-      int categoryId, 
-      String categoryName, 
-      int userId, 
-      String userName, 
-      int vendorId, 
-      String vendorName, 
-      int orderId, 
-      Attachment attachment, 
-      dynamic answer, 
-      List<dynamic> comments, 
-      //String case,
-      String reply, 
-      List<dynamic> orderDetails, 
-      int orderNumber, 
-      String orderCreatedAt, 
-      String vendorEmail, 
-      String createdAt}){
-    _id = id;
-    _ticketNo = ticketNo;
-    _title = title;
-    _priority = priority;
-    _message = message;
-    _status = status;
-    _categoryId = categoryId;
-    _categoryName = categoryName;
-    _userId = userId;
-    _userName = userName;
-    _vendorId = vendorId;
-    _vendorName = vendorName;
-    _orderId = orderId;
-    _attachment = attachment;
-    _answer = answer;
-    _comments = comments;
-    //_case = case;
-    _reply = reply;
-    _orderDetails = orderDetails;
-    _orderNumber = orderNumber;
-    _orderCreatedAt = orderCreatedAt;
-    _vendorEmail = vendorEmail;
-    _createdAt = createdAt;
+  Ticket({this.id, this.ticketNo, this.title, this.ticketpriorityId, this.priority, this.message, this.status, this.categoryId, this.categoryName, this.userId, this.userName, this.userEmail, this.userPhone, this.vendorId, this.vendorName, this.orderId, this.comments, this.Case, this.reply, this.orderNumber, this.orderCreatedAt, this.vendorEmail, this.createdAt});
+
+Ticket.fromJson(Map<String, dynamic> json) {
+id = json['id'];
+ticketNo = json['ticket_no'];
+title = json['title'];
+ticketpriorityId = json['ticketpriority_id'];
+priority = json['priority'];
+message = json['message'];
+status = json['status'];
+categoryId = json['category_id'];
+categoryName = json['category_name'];
+userId = json['user_id'];
+userName = json['user_name'];
+userEmail = json['user_email'];
+userPhone = json['user_phone'];
+vendorId = json['vendor_id'];
+vendorName = json['vendor_name'];
+orderId = json['order_id'];
+
+if (json['comments'] != null) {
+comments = new List<Comments>();
+json['comments'].forEach((v) { comments.add(new Comments.fromJson(v)); });
+}
+Case = json['case'];
+reply = json['reply'];
+if (json['orderDetails'] != null) {
+orderNumber = json['order_number'];
+orderCreatedAt = json['order_created_at'];
+vendorEmail = json['vendor_email'];
+createdAt = json['created_at'];
+attachment = json['attachment'] != null?Photo.fromJson(json['attachment']):null;
 }
 
-  Ticket.fromJson(dynamic json) {
-    _id = json["id"];
-    _ticketNo = json["ticket_no"];
-    _title = json["title"];
-    _priority = json["priority"];
-    _message = json["message"];
-    _status = json["status"];
-    _categoryId = json["category_id"];
-    _categoryName = json["category_name"];
-    _userId = json["user_id"];
-    _userName = json["user_name"];
-    _vendorId = json["vendor_id"];
-    _vendorName = json["vendor_name"];
-    _orderId = json["order_id"];
-    _attachment = json["attachment"] != null ? Attachment.fromJson(json["attachment"]) : null;
-    _answer = json["answer"];
-    if (json["comments"] != null) {
-      _comments = [];
-      json["comments"].forEach((v) {
-       // _comments.add(dynamic.fromJson(v));
-      });
-    }
-    _case = json["case"];
+Map<String, dynamic> toJson() {
+  final Map<String, dynamic> data = new Map<String, dynamic>();
+  data['id'] = this.id;
+  data['ticket_no'] = this.ticketNo;
+  data['title'] = this.title;
+  data['ticketpriority_id'] = this.ticketpriorityId;
+  data['priority'] = this.priority;
+  data['message'] = this.message;
+  data['status'] = this.status;
+  data['category_id'] = this.categoryId;
+  data['category_name'] = this.categoryName;
+  data['user_id'] = this.userId;
+  data['user_name'] = this.userName;
+  data['user_email'] = this.userEmail;
+  data['user_phone'] = this.userPhone;
+  data['vendor_id'] = this.vendorId;
+  data['vendor_name'] = this.vendorName;
+  data['order_id'] = this.orderId;
 
-    _reply = json["reply"];
-    if (json["orderDetails"] != null) {
-      _orderDetails = [];
-      json["orderDetails"].forEach((v) {
-       // _orderDetails.add(dynamic.fromJson(v));
-      });
-    }
-    _orderNumber = json["order_number"];
-    _orderCreatedAt = json["order_created_at"];
-    _vendorEmail = json["vendor_email"];
-    _createdAt = json["created_at"];
+  if (this.comments != null) {
+    data['comments'] = this.comments.map((v) => v.toJson()).toList();
+  }
+  data['case'] = this.Case;
+  data['reply'] = this.reply;
+
+  data['order_number'] = this.orderNumber;
+  data['order_created_at'] = this.orderCreatedAt;
+  data['vendor_email'] = this.vendorEmail;
+  data['created_at'] = this.createdAt;
+
+  return data;
+}
+}}
+class Comments {
+  int id;
+  int ticketId;
+  int userId;
+  String userName;
+  String userRole;
+  String comment;
+  String createdAt;
+
+  Comments({this.id, this.ticketId, this.userId, this.userName, this.userRole, this.comment, this.createdAt});
+
+  Comments.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    ticketId = json['ticket_id'];
+    userId = json['user_id'];
+    userName = json['user_name'];
+    userRole = json['user_role'];
+    comment = json['comment'];
+    createdAt = json['created_at'];
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["id"] = _id;
-    map["ticket_no"] = _ticketNo;
-    map["title"] = _title;
-    map["priority"] = _priority;
-    map["message"] = _message;
-    map["status"] = _status;
-    map["category_id"] = _categoryId;
-    map["category_name"] = _categoryName;
-    map["user_id"] = _userId;
-    map["user_name"] = _userName;
-    map["vendor_id"] = _vendorId;
-    map["vendor_name"] = _vendorName;
-    map["order_id"] = _orderId;
-    if (_attachment != null) {
-      map["attachment"] = _attachment.toJson();
-    }
-    map["answer"] = _answer;
-    if (_comments != null) {
-      map["comments"] = _comments.map((v) => v.toJson()).toList();
-    }
-    map["case"] = _case;
-    map["reply"] = _reply;
-    if (_orderDetails != null) {
-      map["orderDetails"] = _orderDetails.map((v) => v.toJson()).toList();
-    }
-    map["order_number"] = _orderNumber;
-    map["order_created_at"] = _orderCreatedAt;
-    map["vendor_email"] = _vendorEmail;
-    map["created_at"] = _createdAt;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['ticket_id'] = this.ticketId;
+    data['user_id'] = this.userId;
+    data['user_name'] = this.userName;
+    data['user_role'] = this.userRole;
+    data['comment'] = this.comment;
+    data['created_at'] = this.createdAt;
+    return data;
   }
-
 }
 
-/// id : 707
-/// model_id : 11
-/// uuid : "b6d6c6ef-20c9-4bc1-a7cf-e1893e92140e"
-/// image : "https://traker.fra1.digitaloceanspaces.com/tickets/attachments/OF03PhSLK3we5RhpDmumYyxlde3k8vM74iZqklPF.png"
-
-class Attachment {
-  int _id;
-  int _modelId;
-  String _uuid;
-  String _image;
-
-  int get id => _id;
-  int get modelId => _modelId;
-  String get uuid => _uuid;
-  String get image => _image;
-
-  Attachment({
-      int id, 
-      int modelId, 
-      String uuid, 
-      String image}){
-    _id = id;
-    _modelId = modelId;
-    _uuid = uuid;
-    _image = image;
-}
-
-  Attachment.fromJson(dynamic json) {
-    _id = json["id"];
-    _modelId = json["model_id"];
-    _uuid = json["uuid"];
-    _image = json["image"];
-  }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["id"] = _id;
-    map["model_id"] = _modelId;
-    map["uuid"] = _uuid;
-    map["image"] = _image;
-    return map;
-  }
-
-}

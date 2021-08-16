@@ -21,7 +21,7 @@ class WriteRatedialog extends StatefulWidget {
 
 class _WriteRatedialogState extends State<WriteRatedialog> {
   TextEditingController CommentController = TextEditingController();
-  double rating = 5.0;
+  double rating = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'كتابة تقييم',
+                      '${getTransrlate(context, 'writerate')}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -69,7 +69,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    " أخبرنا عن رأيك في المنتج ",
+                    " ${getTransrlate(context, 'Tellproduct')}",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -175,7 +175,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                               border: Border.all(color: Colors.grey)),
                           child: Center(
                             child: AutoSizeText(
-                              'إرسال',
+                              '${getTransrlate(context, 'send')}',
                               overflow: TextOverflow.ellipsis,
                               maxFontSize: 14,
                               maxLines: 1,
@@ -198,7 +198,7 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                               border: Border.all(color: Colors.grey)),
                           child: Center(
                             child: AutoSizeText(
-                              'إلغاء',
+                              '${getTransrlate(context, 'cancel')}',
                               overflow: TextOverflow.ellipsis,
                               maxFontSize: 14,
                               maxLines: 1,

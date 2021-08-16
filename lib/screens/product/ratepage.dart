@@ -52,7 +52,7 @@ class _RatedialogState extends State<Ratedialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'التقييمات',
+                      '${getTransrlate(context, 'Reviews')}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -108,7 +108,7 @@ class _RatedialogState extends State<Ratedialog> {
                                           ),
                                         ),
                                         Text(
-                                          " (${widget.reviews.reviewsCount} تقييم ) ",
+                                          " (${widget.reviews.reviewsCount} ${getTransrlate(context, 'Rate')} ) ",
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w500,
@@ -251,7 +251,7 @@ class _RatedialogState extends State<Ratedialog> {
                                                           context) /
                                                       4,
                                                   child: AutoSizeText(
-                                                    'كتابة تقييم',
+                                                    '${getTransrlate(context, 'writerate')}',
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     maxFontSize: 14,

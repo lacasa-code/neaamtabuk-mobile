@@ -28,6 +28,7 @@ class Product_model {
 class Product {
   int id;
   String name;
+  String product_id;
   String description;
   String discount;
   String price;
@@ -95,6 +96,7 @@ class Product {
       json['car_model_name'].forEach((v) { carModelName.add(new CarModelName.fromJson(v)); });
     }
     cartypeId = json['cartype_id'];
+    product_id = "${json['product_id']}";
     cartypeName = json['cartype_name'];
     yearFrom = json['year_from'] != null ? new YearFrom.fromJson(json['year_from']) : null;
     yearTo = json['year_to'] != null ? new YearFrom.fromJson(json['year_to']) : null;
@@ -370,7 +372,6 @@ class Photo {
   Photo({this.id, this.modelType, this.modelId, this.uuid, this.collectionName, this.name, this.fileName, this.mimeType, this.disk, this.conversionsDisk, this.size, this.manipulations, this.customProperties, this.responsiveImages, this.orderColumn, this.createdAt, this.updatedAt, this.image, this.url, this.fullurl, this.thumbnail, this.preview});
 
   Photo.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     modelType = json['model_type'];
     modelId = json['model_id'];
     uuid = json['uuid'];

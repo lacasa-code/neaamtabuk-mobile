@@ -44,7 +44,7 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'كتابة سؤال',
+                      '${getTransrlate(context, 'writequestions')}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -67,7 +67,7 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
 
                 children: [
                   Text(
-                    " أخبرنا عن سؤالك : ",
+                    " ${getTransrlate(context, 'Tellquestions')} : ",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
                               )),
                           child: Center(
                             child: AutoSizeText(
-                              'إرسال',
+                              '${getTransrlate(context, 'send')}',
                               overflow: TextOverflow.ellipsis,
                               maxFontSize: 14,
                               maxLines: 1,
@@ -164,7 +164,7 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
                               )),
                           child: Center(
                             child: AutoSizeText(
-                              'إلغاء',
+                              '${getTransrlate(context, 'cancel')}',
                               overflow: TextOverflow.ellipsis,
                               maxFontSize: 14,
                               maxLines: 1,

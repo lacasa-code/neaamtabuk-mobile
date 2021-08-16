@@ -58,7 +58,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<=3) {
+                    }else   if (value.length<=2) {
                       return "${getTransrlate(context, 'requiredlength')}";
                     }else if (RegExp(
                         r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {

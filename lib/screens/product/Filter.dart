@@ -60,7 +60,7 @@ class _FilterdialogState extends State<Filterdialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'تصفية',
+                      '${getTransrlate(context, 'filter')}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -94,7 +94,7 @@ class _FilterdialogState extends State<Filterdialog> {
                 ),
                 child: ExpandablePanel(
                   header: Text(
-                    'الفئة',
+                    '${getTransrlate(context, 'category')}',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   expanded: Padding(
@@ -186,7 +186,7 @@ class _FilterdialogState extends State<Filterdialog> {
                 ),
                 child: ExpandablePanel(
                   header: Text(
-                    'الجهة المنتجة',
+                    '${getTransrlate(context, 'manufacturers')}',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   expanded: Padding(
@@ -238,7 +238,7 @@ class _FilterdialogState extends State<Filterdialog> {
                 ),
                 child: ExpandablePanel(
                   header: Text(
-                    'بلد المنشأ',
+                    '${getTransrlate(context, 'carmade')}',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   expanded: Padding(
@@ -289,7 +289,7 @@ class _FilterdialogState extends State<Filterdialog> {
                 ),
                 child: ExpandablePanel(
                   header: Text(
-                    'السعر',
+                    '${getTransrlate(context, 'price')}',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   expanded: Column(
@@ -302,7 +302,7 @@ class _FilterdialogState extends State<Filterdialog> {
                               child: Text(
                                   _currentRangeValues.start.round().toString())),
                           Container(
-                            width: ScreenUtil.getWidth(context) / 1.5,
+                            width: ScreenUtil.getWidth(context) / 1.6,
                             child: RangeSlider(
                               activeColor: Colors.orange,
                               inactiveColor: Colors.black26,
@@ -400,7 +400,7 @@ class _FilterdialogState extends State<Filterdialog> {
                             width: 10,
                           ),
                           Text(
-                            'تطبيق',
+                            '${getTransrlate(context, 'Accept')}',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.orange),
@@ -432,7 +432,7 @@ class _FilterdialogState extends State<Filterdialog> {
                             width: 10,
                           ),
                           Text(
-                            'إعادة ضبط',
+                            '${getTransrlate(context, 'ReSet')}',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey),

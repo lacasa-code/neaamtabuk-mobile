@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/screens/product/products_page.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/car_made.dart';
 import 'package:flutter_pos/model/car_type.dart';
@@ -13,8 +14,6 @@ import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/product_model.dart';
 import '../../utils/navigator.dart';
 
 class MyCars extends StatefulWidget {
@@ -44,6 +43,14 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     _controller = TabController(vsync: this, length: 2, initialIndex: 1);
+
+    Provider.of<Provider_control>(context, listen: false).isLogin
+        ? getFavorit()
+        : null;
+    yearsID = TextEditingController();
+    carMadeID = TextEditingController();
+    CarmodelsID = TextEditingController();
+    transimionsID = TextEditingController();
     API(context).get('car/types/list').then((value) {
       if (value != null) {
         setState(() {
@@ -52,6 +59,20 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
         });
       }
     });
+    super.initState();
+  }
+
+  getData(int id) {
+
+    API(context).get('car/madeslist/filter/$id').then((value) {
+      if (value != null) {
+        setState(() {
+          car_mades = null;
+          car_mades = Car_made.fromJson(value).data;
+        });
+      }
+    });
+
     API(context).get('car/yearslist').then((value) {
       if (value != null) {
         setState(() {
@@ -63,25 +84,6 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
       if (value != null) {
         setState(() {
           transmissions = Transmission.fromJson(value).data;
-        });
-      }
-    });
-    Provider.of<Provider_control>(context, listen: false).isLogin
-        ? getFavorit()
-        : null;
-    yearsID = TextEditingController();
-    carMadeID = TextEditingController();
-    CarmodelsID = TextEditingController();
-    transimionsID = TextEditingController();
-    super.initState();
-  }
-
-  getData(int id) {
-    API(context).get('car/madeslist/filter/$id').then((value) {
-      if (value != null) {
-        setState(() {
-          car_mades = null;
-          car_mades = Car_made.fromJson(value).data;
         });
       }
     });
@@ -100,11 +102,11 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
             controller: _controller,
             indicatorColor: Colors.orange,
             tabs: [
-              Tab(icon: Text('مركباتى')),
-              Tab(icon: Text("إختر مركبة جديدة")),
+              Tab(icon: Text('${getTransrlate(context, 'MyCars')}')),
+              Tab(icon: Text("${getTransrlate(context, 'ChooseAnewVehicle')}")),
             ],
           ),
-          title: Text('إختر المركبة'),
+          title: Text('${getTransrlate(context, 'selectCar')}'),
         ),
         body: TabBarView(
           controller: _controller,
@@ -242,7 +244,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                             },
                             child: Container(
                               margin: const EdgeInsets.all(15.0),
-                              padding: const EdgeInsets.all(1.0),
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       color: selected
@@ -251,7 +253,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                               child: Center(
                                   child: Text(
                                 cartype[index].typeName,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
                               )),
                             ),
                           );
@@ -269,7 +271,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 showSearchBox: true,
                                 showClearButton: true,
 
-                                label: "  الماركة",
+                                label: "  ${getTransrlate(context, 'brand')}",
                                 items: car_mades,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (CarMade u) => u.carMade,
@@ -286,7 +288,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: DropdownSearch<CarModel>(
-                          label: "  الموديل ",
+                          label: "  ${getTransrlate(context, 'Model')} ",
                           showSearchBox: true,
                           showClearButton: true,
                           enabled: carmodels != null,
@@ -304,14 +306,13 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                               child: DropdownSearch<Year>(
                                 showSearchBox: true,
                                 showClearButton: true,
-                                label: "  سنة الصنع ",
+                                label: "  ${getTransrlate(context, 'manufacturingYear')} ",
                                 validator: (Year item) {
                                   if (item == null) {
                                     return "Required field";
                                   } else
                                     return null;
                                 },
-
                                 items: years,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (Year u) => u.year,
@@ -327,7 +328,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                               child: DropdownSearch<Transmissions>(
                                 showSearchBox: true,
                                 showClearButton: true,
-                                label: "  ناقل الحركة ",
+                                label: "  ${getTransrlate(context, 'transmissionName')}",
                                 items: transmissions,
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (Transmissions u) =>
@@ -367,7 +368,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 width: 5,
                               ),
                               Text(
-                                'إعرض منتجات المركبة',
+                                '${getTransrlate(context, 'vehicleProducts')}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.orange),
@@ -385,9 +386,11 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                       ResultOverlay('Please select Car Made'))
                               : API(context).post(
                                   'user/select/products/add/favourite/car', {
-                                  "car_type_id":
-                                      cartype[widget.checkboxType].id,
+                                  "car_type_id": cartype[widget.checkboxType].id,
                                   "car_made_id": car_mades_id,
+                                  "car_year_id": yearsID.text,
+                                  "car_model_id": CarmodelsID.text,
+                                  "transmission_id": transimionsID.text,
                                 }).then((value) {
                                   if (value != null) {
                                     if (value['status_code'] == 200) {
@@ -422,7 +425,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 color: Colors.orange,
                               ),
                               Text(
-                                'أضف إلى مركباتي',
+                                '${getTransrlate(context, 'AddtoMyCars')}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.orange),

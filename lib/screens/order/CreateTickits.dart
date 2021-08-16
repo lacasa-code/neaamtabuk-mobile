@@ -165,7 +165,7 @@ super.initState();
                         child: Center(child: Row(mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.upload_outlined,color: Colors.orange,),
-                            Text('إرفاق ملف أقصى حجم 1MB',style: TextStyle(color: Colors.orange),),
+                            Text('${getTransrlate(context, 'Attach')}',style: TextStyle(color: Colors.orange),),
                           ],
                         )),
                       ),

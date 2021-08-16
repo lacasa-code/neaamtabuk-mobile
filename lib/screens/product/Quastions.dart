@@ -43,7 +43,7 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'جميع الأسئلة',
+                      '${getTransrlate(context, 'allquestions')}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -240,7 +240,7 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                               Container(
                                 width: ScreenUtil.getWidth(context) / 4,
                                 child: AutoSizeText(
-                                  'كتابة سؤال',
+                                  '${getTransrlate(context, 'writequestions')}',
                                   overflow: TextOverflow.ellipsis,
                                   maxFontSize: 14,
                                   maxLines: 1,

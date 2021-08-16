@@ -13,6 +13,7 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -65,7 +66,7 @@ class _OrderdetailsState extends State<Orderdetails> {
             children: [
               Text(
                 '${getTransrlate(context, 'OrderDitails')} ',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 15,
@@ -88,7 +89,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   ),
                   Text(
                     '${widget.order.orderNumber}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -99,14 +100,14 @@ class _OrderdetailsState extends State<Orderdetails> {
                 children: [
                   Text(
                     '${getTransrlate(context, 'OrderDate')} : ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
                     width: 5,
                   ),
                   Text(
                     '${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.order.createdAt))}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -117,11 +118,11 @@ class _OrderdetailsState extends State<Orderdetails> {
                 children: [
                   Text(
                     '${getTransrlate(context, 'paymentMethod')} : ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                   ),
                   Text(
                     '${widget.order.payment == null ? '' : widget.order.payment.paymentName ?? ' '}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -133,7 +134,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                 children: [
                   Text(
                     '${getTransrlate(context, 'addressShipping')} : ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                   ),
                   widget.order.address == null
                       ? Container()
@@ -152,7 +153,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   ),
                   Text(
                     '${getTransrlate(context, 'OrderPref')} : ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
                     height: 15,
@@ -223,7 +224,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                       Text(
                         '${getTransrlate(context, 'OrderState')} : ',
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500),
+                            fontSize: 14, fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
                         height: 15,
@@ -299,15 +300,18 @@ class _OrderdetailsState extends State<Orderdetails> {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    AutoSizeText(
-                                      widget.order.orderDetails[i].productName
-                                          .toString(),
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
+                                    Container(
+                                      width: ScreenUtil.getWidth(context)/1.5,
+                                      child: AutoSizeText(
+                                        widget.order.orderDetails[i].productName
+                                            .toString(),
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        minFontSize: 11,
                                       ),
-                                      minFontSize: 11,
                                     ),
                                   ],
                                 ),
@@ -412,7 +416,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'نوع الشكوى',
+                                  '${getTransrlate(context, 'typeTickit')}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       decoration: TextDecoration.underline),
@@ -423,7 +427,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                       '${_listTicket[index].categoryName}'),
                                 ),
                                 Text(
-                                  'عنوان الشكوى',
+                                  '${getTransrlate(context, 'addressTickit')}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       decoration: TextDecoration.underline),
@@ -433,7 +437,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                   child: Text('${_listTicket[index].title}'),
                                 ),
                                 Text(
-                                  'تاريخ الشكوى',
+                                  '${getTransrlate(context, 'dateTickit')}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       decoration: TextDecoration.underline),
@@ -444,7 +448,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                       Text('${_listTicket[index].createdAt}'),
                                 ),
                                 Text(
-                                  'نص الشكوى',
+                                  '${getTransrlate(context, 'contantTickit')}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       decoration: TextDecoration.underline),
@@ -455,7 +459,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                 ),
                                 _listTicket[index].attachment==null?Container():
                                 Text(
-                                  'ملف الشكوى',
+                                  '${getTransrlate(context, 'FileTickit')}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       decoration: TextDecoration.underline),
@@ -481,6 +485,59 @@ class _OrderdetailsState extends State<Orderdetails> {
                                         )),
                                   ),
                                 ),
+                                Text(
+                                  '${_listTicket[index].reply}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline),
+                                ),
+                                _listTicket[index].comments == null
+                                    ? Container()
+                                    : Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListView.builder(
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount:  _listTicket[index].comments.length,
+                                        itemBuilder:
+                                            (BuildContext context, int ind) {
+                                          return Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    "assets/icons/Chat bubble Icon.svg",
+                                                    color: Colors.grey,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Container(
+                                                    width:
+                                                    ScreenUtil.getWidth(context) /
+                                                        1.5,
+                                                    child: Text(
+                                                      '${ _listTicket[index].comments[ind].comment}',
+                                                      style: TextStyle(
+                                                          color: Colors.orange),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Container(
+                                                width:
+                                                ScreenUtil.getWidth(context) /
+                                                    1.5,
+                                                child: Text(
+                                                  '${ _listTicket[index].comments[ind].userName} - ${ _listTicket[index].comments[ind].createdAt}',
+                                                  style: TextStyle(
+                                                      color: Colors.orange,fontSize: 10),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        })),
                                Center(
                                   child: Column(
                                     // crossAxisAlignment: CrossAxisAlignment.center,
@@ -520,7 +577,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                                 horizontal: 10, vertical: 10),
                                             child: Center(
                                               child: Text(
-                                                ' يتم حل المشكلة',
+                                                ' ${getTransrlate(context, 'solutionTickit')}',
                                                 style: TextStyle(
                                                     color: Colors.orange),
                                               ),
@@ -564,7 +621,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                                 horizontal: 10, vertical: 10),
                                             child: Center(
                                               child: Text(
-                                                'لم يتم حل المشكلة',
+                                                '${getTransrlate(context, 'nosolutionTickit')}',
                                                 style: TextStyle(
                                                     color: Colors.grey),
                                               ),

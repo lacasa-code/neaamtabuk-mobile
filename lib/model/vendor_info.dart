@@ -321,7 +321,7 @@ class Images {
   String image;
   String name;
 
-  Images({this.id, this.modelId, this.image});
+  Images({this.id, this.modelId, this.image, this.name});
 
   Images.fromJson(Map<String, dynamic> json) {
     id = json['id'];

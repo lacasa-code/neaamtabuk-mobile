@@ -81,7 +81,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               RegisterForm(),
-              routeLoginWidget(themeColor, context),
               SizedBox(
                 height: 50,
               )

@@ -134,7 +134,7 @@ class _UserInfoState extends State<UserInfo> {
                                           validator: (String value) {
                                             if (value.isEmpty) {
                                               return getTransrlate(context, 'requiredempty');
-                                            }else   if (value.length<=3) {
+                                            }else   if (value.length<=2) {
                                               return "${getTransrlate(context, 'requiredlength')}";
                                             }else if (RegExp(
                                                 r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
@@ -224,61 +224,27 @@ class _UserInfoState extends State<UserInfo> {
                                     Padding(
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 2.0),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              width: ScreenUtil.getWidth(context)/1.5 ,
-
-                                              child: TextFormField(
-                                                inputFormatters: [
-                                                  new LengthLimitingTextInputFormatter(userModal.phoneNo!=null?12:10),
-                                                ],
-                                                initialValue: userModal.phoneNo,
-                                                keyboardType: TextInputType.number,
-                                                decoration: InputDecoration(),
-                                                validator: (String value) {
-                                                  if (value.isEmpty) {
-                                                    return getTransrlate(context, 'phone');
-                                                  }else if (value.length>15) {
-                                                    return "${getTransrlate(context, 'phone')} > 14";
-                                                  }else if (value.length<9) {
-                                                    return "${getTransrlate(context, 'phone')} < 9";
-                                                  }
-                                                  _formKey.currentState.save();
-                                                  return null;
-                                                },
-                                                enabled: !_status,
-                                                onSaved: (String val) =>
-                                                    userModal.phoneNo = val,
-                                                onChanged: (String val) =>
-                                                    userModal.CountroyCode = val,
-                                              ),
-                                            ),
-                                            userModal.phoneNo!=null?Container():Container(
-                                              width: ScreenUtil.getWidth(context)*0.2 ,
-                                              child: TextFormField(
-                                                initialValue: "966+",
-                                                inputFormatters: [
-                                                  new LengthLimitingTextInputFormatter(8),
-                                                ],
-                                                keyboardType: TextInputType.number,
-                                                decoration: InputDecoration(),
-                                                validator: (String value) {
-                                                  if (value.isEmpty) {
-                                                    return getTransrlate(context, 'CountroyCode');
-                                                  }
-                                                  _formKey.currentState.save();
-                                                  return null;
-                                                },
-                                                enabled: !_status,
-                                                onSaved: (String val) =>
-                                                    userModal.phoneNo = val,
-                                                onChanged: (String val) =>
-                                                    userModal.phoneNo = val,
-                                              ),
-                                            ),
+                                        child: TextFormField(
+                                          inputFormatters: [
+                                            new LengthLimitingTextInputFormatter(13),
                                           ],
+                                          initialValue: userModal.phoneNo,
+                                          keyboardType: TextInputType.phone,
+                                          decoration: InputDecoration(),
+                                          validator: (String value) {
+                                            if (value.isEmpty) {
+                                              return getTransrlate(context, 'phone');
+                                            }else if (value.length<13) {
+                                              return "${getTransrlate(context, 'shorterphone')}";
+                                            }
+                                            _formKey.currentState.save();
+                                            return null;
+                                          },
+                                          enabled: !_status,
+                                          onSaved: (String val) =>
+                                              userModal.phoneNo = val,
+                                          onChanged: (String val) =>
+                                              userModal.CountroyCode = val,
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
@@ -304,7 +270,7 @@ class _UserInfoState extends State<UserInfo> {
                                             validator: (String value) {
                                               if (value.isEmpty) {
                                                 return getTransrlate(context, 'requiredempty');
-                                              }else   if (value.length<=3) {
+                                              }else   if (value.length<=2) {
                                                 return "${getTransrlate(context, 'requiredlength')}";
                                               }
                                               return null;
@@ -389,8 +355,9 @@ class _UserInfoState extends State<UserInfo> {
     super.dispose();
   }
   Future<void> _selectDateto(BuildContext context) async {
+print(userModal.birthdate);
     final DateTime picked = await showDatePicker(
-        context: context,initialDate:DateTime.parse(userModal.birthdate??"2005"),lastDate: DateTime(2005), firstDate: DateTime(1930));
+        context: context,initialDate:userModal.birthdate==null? DateTime(2005):userModal.birthdate.isEmpty? DateTime(2005):DateTime.parse(userModal.birthdate),lastDate: DateTime(2005), firstDate: DateTime(1930));
     if (picked != null)
       setState(() {
         _tocontroller.text = DateFormat('yyyy-MM-dd').format(picked);

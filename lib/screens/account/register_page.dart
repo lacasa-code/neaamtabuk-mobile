@@ -224,14 +224,14 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25),
+              padding: const EdgeInsets.symmetric(vertical: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     height: 1,
-                    width: ScreenUtil.getWidth(context) / 4.5,
+                    width: ScreenUtil.getWidth(context) / 8,
                     color: Colors.black12,
                   ),
                   Text(
@@ -243,7 +243,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   Container(
                     height: 1,
-                    width: ScreenUtil.getWidth(context) / 4.5,
+                    width: ScreenUtil.getWidth(context) / 8,
                     color: Colors.black12,
                   )
                 ],

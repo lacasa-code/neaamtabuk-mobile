@@ -126,9 +126,9 @@ class _HomeState extends State<Home> {
       });
     }
   });
+    Provider.of<Provider_Data>(context,listen: false).getData(cartypeId,context);
 
     Provider.of<Provider_Data>(context,listen: false).getShipping(context);
-    Provider.of<Provider_Data>(context,listen: false).getData(cartypeId,context);
 
   }
 
@@ -199,7 +199,7 @@ class _HomeState extends State<Home> {
         AppBarCustom(),
         complete == 0
             ? Padding(
-                padding: const EdgeInsets.only(top: 22, right: 22, left: 22),
+                padding: const EdgeInsets.only(top: 22,bottom: 10, right: 10, left: 10),
                 child: InkWell(
                   onTap: () {
                     Nav.route(context, VendorInfo());
@@ -213,9 +213,11 @@ class _HomeState extends State<Home> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        'حسابك كبائع حاليا غير مفعليرجى استكمال وإرسال البيانات التالية لتفعيل حسابك',
-                        style: TextStyle(color: Colors.orange),
+                      Container(width: ScreenUtil.getWidth(context)/1.2,
+                        child: Text(
+                          '${getTransrlate(context, 'invalidvendor')}',
+                          style: TextStyle(color: Colors.orange),
+                        ),
                       ),
                     ],
                   ),
@@ -245,9 +247,9 @@ class _HomeState extends State<Home> {
                                  provider_data.productMostView = null;
                                  provider_data.productMostSale = null;
                                });
-                               themeColor
-                                   .setCar_type(e.id);
-                               getData(e.id);
+                               themeColor.setCar_type(e.id);
+                               print(e.typeName);
+                               getData(checkboxType==0?1:3);
                              },
                              child: Container(
                                height:
@@ -441,7 +443,7 @@ class _HomeState extends State<Home> {
     );
   }
   Future<Null> _refreshLocalGallery() async{
-    getData(1);
+    getData(checkboxType==0?1:3);
 
   }
   Widget list_category(

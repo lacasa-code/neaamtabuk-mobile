@@ -90,7 +90,7 @@ class _WishListState extends State<WishList> {
                                 IconButton(
                                     onPressed: () {
                                       API(context).post('user/removeitem/wishlist',
-                                          {"product_id": wishList[index].id}).then((value) {
+                                          {"product_id": wishList[index].product_id}).then((value) {
                                         if (value != null) {
                                           if (value['status_code'] == 200) {
                                             showDialog(
@@ -117,7 +117,7 @@ class _WishListState extends State<WishList> {
                                 InkWell(
                                   onTap: () {
                                     API(context).post('add/to/cart', {
-                                      "product_id": wishList[index].id,
+                                      "product_id": wishList[index].product_id,
                                       "quantity": 1
                                     }).then((value) {
                                       if (value != null) {
@@ -128,7 +128,7 @@ class _WishListState extends State<WishList> {
                                                   ResultOverlay(value['message']));
                                           Provider.of<Provider_Data>(context,listen: false).getCart(context);
                                           API(context).post('user/removeitem/wishlist',
-                                              {"product_id": wishList[index].id}).then((value) {
+                                              {"product_id": wishList[index].product_id}).then((value) {
                                             if (value != null) {
                                               if (value['status_code'] == 200) {
                                                 getwWISHlIST();
@@ -144,7 +144,7 @@ class _WishListState extends State<WishList> {
                                           showDialog(
                                               context: context,
                                               builder: (_) =>
-                                                  ResultOverlay(value['message']));
+                                                  ResultOverlay('${value['message']??''}\n${value['errors']}'));
                                         }
                                       }
                                     });
