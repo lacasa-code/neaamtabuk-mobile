@@ -102,6 +102,9 @@ class PartCategories {
   int id;
   String categoryName;
   String lang;
+  String width;
+  String height;
+  String size;
 
   PartCategories({this.id, this.categoryName, this.lang});
 
@@ -109,6 +112,9 @@ class PartCategories {
     id = json['id'];
     categoryName = json['category_name'];
     lang = json['lang'];
+    width = json['width'];
+    height = json['height'];
+    size = json['size'];
   }
 
   Map<String, dynamic> toJson() {

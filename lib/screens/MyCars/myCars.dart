@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
+import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/car_made.dart';
 import 'package:flutter_pos/model/car_type.dart';
@@ -169,11 +170,15 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                                     "user/select/from/favourites/${favourite[index].id}",
                                               ));
                                         },
-                                        child: Text(
-                                          "${favourite[index].carMadeName} ${favourite[index].carModelName??''} ${favourite[index].carYearIdName??''}",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20),
+                                        child: Container(
+                                          width: ScreenUtil.getWidth(context)/2,
+                                          child: Text(
+                                            "${favourite[index].carMadeName} ${favourite[index].carModelName??''} ${favourite[index].carYearIdName??''}",
+
+                                           maxLines: 2, style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20),
+                                          ),
                                         ),
                                       ),
                                       Expanded(
@@ -270,7 +275,6 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                               child: DropdownSearch<CarMade>(
                                 showSearchBox: true,
                                 showClearButton: true,
-
                                 label: "  ${getTransrlate(context, 'brand')}",
                                 items: car_mades,
                                 //  onFind: (String filter) => getData(filter),

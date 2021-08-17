@@ -224,6 +224,7 @@
   "allrate": "جميع التقييمات",
   "writerate": "كتابة تقييم",
   "manufacturer": "المصنع",
+  "frameDimensions": "مقاسات الإطار",
   "manufacturers": "الجهة المنتجة",
   "compatible": "متوافق مع",
   "ShippingBy": "الشحن بواسطة",
@@ -232,6 +233,10 @@
   "questions": "أسئلة وأجوبة",
   "writequestions": "كتابة سؤال",
   "allquestions": "جميع الأسئلة",
+
+  "width": "عرض الإطار",
+  "height": "ارتفاع الإطار",
+  "size": "الجنط",
 
   "DeliveryTime": "موعد التسليم",
   "Tellproduct": "أخبرنا عن رأيك في المنتج",

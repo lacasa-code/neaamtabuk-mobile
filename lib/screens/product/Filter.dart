@@ -1,6 +1,8 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/carmodel.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
@@ -14,7 +16,9 @@ import '../../service/api.dart';
 import '../../utils/screen_size.dart';
 
 class Filterdialog extends StatefulWidget {
-  const Filterdialog({Key key}) : super(key: key);
+   Filterdialog({Key key,this.Istryers}) : super(key: key);
+
+  bool Istryers;
 
   @override
   _FilterdialogState createState() => _FilterdialogState();
@@ -22,12 +26,19 @@ class Filterdialog extends StatefulWidget {
 
 class _FilterdialogState extends State<Filterdialog> {
   List<Category> parts;
+  List<PartCategories> partss;
   List<Origin> origin;
   List<Manufacturer> manufacturer;
   List<Product> product;
   List<int> partSelect = [];
   List<int> originSelect = [];
   List<int> manufacturerSelect = [];
+  List<String> width = [];
+  List<String> height = [];
+  List<String> size = [];
+  String widthID;
+  String heightID ;
+  String sizeID ;
   RangeValues _currentRangeValues;
   double min=0 ,max=10000;
   @override
@@ -81,7 +92,100 @@ class _FilterdialogState extends State<Filterdialog> {
                 ),
               ),
             ),
-            Container(
+            widget.Istryers? Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 8,
+                  top: 8,
+                  left: 24,
+                  right: 24,
+                ),
+                child: ExpandablePanel(
+                  header: Text(
+                    '${getTransrlate(context, 'frameDimensions')}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  expanded: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: ScreenUtil.getWidth(context)/2.5,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DropdownSearch<String>(
+                                  label: " ${getTransrlate(context, 'width')} ",
+                                  showSearchBox: true,
+                                  showClearButton: false,
+                                  items:width,
+                                  validator: (String item) {
+                                    if (item == null) {
+                                      return "${getTransrlate(context, 'width')}";
+                                    } else
+                                      return null;
+                                  },
+                                  onChanged: (String item){
+                                    widthID=item;
+                                  },
+                                  //  onFind: (String filter) => getData(filter),
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DropdownSearch<String>(
+                                  label: " ${getTransrlate(context, 'height')} ",
+                                  showSearchBox: true,
+                                  showClearButton: false,
+                                  items:height,
+                                  validator: (String item) {
+                                    if (item == null) {
+                                      return "${getTransrlate(context, 'height')}";
+                                    } else
+                                      return null;
+                                  },
+                                  onChanged: (String item){
+                                    heightID=item;
+                                  },
+                                  //  onFind: (String filter) => getData(filter),
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DropdownSearch<String>(
+                                  label: " ${getTransrlate(context, 'size')} ",
+                                  showSearchBox: true,
+                                  showClearButton: false,
+                                  items: size,
+                                  validator: (String item) {
+                                    if (item == null) {
+                                      return "${getTransrlate(context, 'size')}";
+                                    } else
+                                      return null;
+                                  },
+                                  onChanged: (String item){
+                                    sizeID=item;
+                                  },
+                                  //  onFind: (String filter) => getData(filter),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Image.asset('assets/images/tire.png',width: ScreenUtil.getWidth(context)/2.5,)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ):  Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black12),
               ),
@@ -374,6 +478,7 @@ class _FilterdialogState extends State<Filterdialog> {
                   InkWell(
                     onTap: () {
                       Navigator.pop(context,
+                              "${!widget.Istryers?'':"&attribute=$widthID/$heightID/$sizeID"}"
                               "${manufacturerSelect.isEmpty?'':"&manufacturers=${manufacturerSelect.toString()}"}"
                               "${partSelect.isEmpty?'':"&part_categories=${partSelect.toString()}"}"
                               "${originSelect.isEmpty?'':"&origins=${originSelect.toString()}"}"
@@ -458,7 +563,27 @@ class _FilterdialogState extends State<Filterdialog> {
       if (value != null) {
         setState(() {
           parts = PartCategory.fromJson(value).data;
-          parts.forEach((element) {});
+          parts.forEach((element) {
+          });
+        });
+      }
+    });  API(context).get('home/category/parts/84').then((value) {
+      if (value != null) {
+        setState(() {
+          if (value['data'] != null) {
+            partss = new List<PartCategories>();
+            value['data'].forEach((v) {
+              partss.add(new PartCategories.fromJson(v));
+            });
+          }
+          width = [];
+          height = [];
+          size = [];
+          partss.forEach((element) {
+            width.add(element.width);
+            height.add(element.height);
+            size.add(element.size);
+          });
         });
       }
     });

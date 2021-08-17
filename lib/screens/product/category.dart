@@ -21,7 +21,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  List<Main_Category> categories;
+  List<Main_Category> Mcategories;
   int checkboxType = 0;
   int checkboxPart = 0;
 
@@ -30,7 +30,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     API(context).get('fetch/categories/nested/part').then((value) {
       if (value != null) {
         setState(() {
-          categories = Category_model.fromJson(value).data;
+          Mcategories = Category_model.fromJson(value).data;
         });
       }
     });
@@ -54,7 +54,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               child: Container(
                 color: Colors.white70,
-                child: categories == null
+                child: Mcategories == null
                     ? Center(child: Custom_Loading())
                     : Container(
                         child: Row(
@@ -79,7 +79,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       shrinkWrap: true,
                                       padding: EdgeInsets.symmetric(horizontal: 2),
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: categories.length,
+                                      itemCount: Mcategories.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         bool selected = checkboxType == index;
@@ -115,7 +115,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   padding: const EdgeInsets.only(
                                                       right: 2,left: 2),
                                                   child: AutoSizeText(
-                                                    "${categories[index].mainCategoryName}",
+                                                    "${Mcategories[index].mainCategoryName}",
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
                                                     minFontSize: 12,
@@ -137,7 +137,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             Expanded(
                               child: SingleChildScrollView(
                                 child: getList(
-                                    categories[checkboxType].categories),
+                                    Mcategories[checkboxType].categories),
                               ),
                             ),
                           ],
@@ -182,6 +182,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               id: Categories[index].id,
                                               name: Categories[index].name,
                                               Url: "site/part/categories/${Categories[index].id}?cartype_id=${themeColor.getcar_type()}",
+                                              Istryers: Mcategories[checkboxType].id==7,
+
                                             ));
                                       },
                                 child: Container(
@@ -250,6 +252,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               id: partCategories[index].id,
                               name: partCategories[index].categoryName,
                               Url: "site/part/categories/${partCategories[index].id}?cartype_id=${themeColor.getcar_type()}",
+                              Istryers: Mcategories[checkboxType].id==7,
                             ));
                       },
                       child: Container(

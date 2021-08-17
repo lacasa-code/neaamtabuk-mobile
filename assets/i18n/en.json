@@ -125,7 +125,10 @@
   "writequestions": "Write questions",
   "allquestions": "all questions",
   "Tellquestions": "Tell us about your question",
-
+  "frameDimensions": "Frame Dimensions",
+  "width": "Width",
+  "height": "Height",
+  "size": "Size",
   "Submit": "Submit",
   "ThankYou": "Thank You",
   "NewPassword": "New Password",
