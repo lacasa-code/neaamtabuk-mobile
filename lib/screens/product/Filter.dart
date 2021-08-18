@@ -18,7 +18,7 @@ import '../../utils/screen_size.dart';
 class Filterdialog extends StatefulWidget {
    Filterdialog({Key key,this.Istryers}) : super(key: key);
 
-  bool Istryers;
+  bool Istryers=false;
 
   @override
   _FilterdialogState createState() => _FilterdialogState();
@@ -478,7 +478,7 @@ class _FilterdialogState extends State<Filterdialog> {
                   InkWell(
                     onTap: () {
                       Navigator.pop(context,
-                              "${!widget.Istryers?'':"&attribute=$widthID/$heightID/$sizeID"}"
+                              "${!widget.Istryers?'':"?attribute=$widthID/$heightID/$sizeID"}"
                               "${manufacturerSelect.isEmpty?'':"&manufacturers=${manufacturerSelect.toString()}"}"
                               "${partSelect.isEmpty?'':"&part_categories=${partSelect.toString()}"}"
                               "${originSelect.isEmpty?'':"&origins=${originSelect.toString()}"}"

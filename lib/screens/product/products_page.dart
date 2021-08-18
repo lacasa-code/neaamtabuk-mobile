@@ -87,16 +87,16 @@ class _Products_PageState extends State<Products_Page> {
                         onTap: () {
                           showDialog(
                                   context: context,
-                                  builder: (_) => Filterdialog(Istryers: widget.Istryers,))
+                                  builder: (_) => Filterdialog(Istryers: widget.Istryers??false,))
                               .then((partSelect) {
 
                             // widget.Url='site/checkbox/filter/mobile?categories?${partSelect}';
                             if(partSelect!=null){
                               print("${partSelect.contains('&', 0)}");
-                              print(widget.Istryers?'search/home/category/parts':widget.Url +
+                              print(widget.Istryers?'search/home/category/parts$partSelect':widget.Url +
                                   "${partSelect.contains('&', 0) ? '${partSelect}' : '&${partSelect}'}");
                               API(context)
-                                  .get(widget.Istryers?'search/home/category/parts':widget.Url +
+                                  .get(widget.Istryers?'search/home/category/parts$partSelect':widget.Url +
                                       "${partSelect.contains('&', 0) ? '${partSelect}' : '&${partSelect}'}")
                                   .then((value) {
                                 if (value != null) {

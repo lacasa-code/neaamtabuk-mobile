@@ -209,7 +209,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   : Container(
                                       padding: EdgeInsets.only(right: 7, left: 10),
                                       child: getPartCategories(
-                                          Categories[index].partCategories),
+                                          Categories[index].partCategories,Categories[index].id),
                                     ),
                             ),
                           ),
@@ -226,7 +226,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             );
   }
 
-  getPartCategories(List<PartCategories> partCategories) {
+  getPartCategories(List<PartCategories> partCategories,int catId) {
     final themeColor = Provider.of<Provider_control>(context);
 
     return partCategories == null
@@ -252,7 +252,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               id: partCategories[index].id,
                               name: partCategories[index].categoryName,
                               Url: "site/part/categories/${partCategories[index].id}?cartype_id=${themeColor.getcar_type()}",
-                              Istryers: Mcategories[checkboxType].id==7,
+                              Istryers:catId==84,
                             ));
                       },
                       child: Container(

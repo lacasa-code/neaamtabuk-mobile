@@ -46,6 +46,7 @@ class _CategoryCardState extends State<CategoryCard> {
                 id: widget.product.id,
                 name: widget.product.name,
                 Url: 'site/categories/${widget.product.id}?cartype_id=${widget.themeColor.car_type}',
+                Istryers: widget.product.id==84,
               ));
         },
         child: Column(

@@ -82,7 +82,7 @@ class SearchOverlayState extends State<SearchOverlay>
                                     search_index=string;
                                     if (string.length >= 1) {
                                       API(context).get(
-                                          'user/search/products?search_index=$search_index',).then((value) {
+                                          'user/search/products?search_index=$search_index&cartype_id=${themeColor.car_type}',).then((value) {
                                         if (value != null) {
                                           if (value['status_code'] == 200) {
                                             setState(() {
@@ -95,8 +95,7 @@ class SearchOverlayState extends State<SearchOverlay>
                                             showDialog(
                                                 context: context,
                                                 builder: (_) =>
-                                                    ResultOverlay(
-                                                        value['message']));
+                                                    ResultOverlay("${value['message']}\n${value['errors']}"));
                                           }
                                         }
                                       });
