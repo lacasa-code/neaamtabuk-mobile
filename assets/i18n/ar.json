@@ -96,6 +96,7 @@
   "validvendor": "حسابك كبائع حاليامفعل",
   "invalidpass": "يجب أن تحتوي على أحرف كبيرة وصغيرة و رموز وارقام",
   "invalidname": "النص يحتوى على ارقام عشريه",
+  "invalidnamber": "النص يحتوى على رموز",
   "requiredempty": "الحقل مطلوب",
   "requiredlength": "الحقل قصير جدا",
   "PasswordShorter": "كلمة مرور قصيرة جدا",

@@ -144,7 +144,7 @@ class _WishListState extends State<WishList> {
                                           showDialog(
                                               context: context,
                                               builder: (_) =>
-                                                  ResultOverlay('${value['message']??''}\n${value['errors']}'));
+                                                  ResultOverlay('${value['message']??value['errors']}'));
                                         }
                                       }
                                     });

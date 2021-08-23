@@ -52,6 +52,7 @@ class _ProductCardState extends State<ProductCard> {
                   context,
                   ProductPage(
                     product: widget.product,
+                    product_id: widget.product.id.toString()
                   ));
             },
             child: Container(

@@ -54,6 +54,10 @@ class _LoginFormState extends State<LoginForm> {
                     validator: (String value) {
                       if (value.isEmpty) {
                         return getTransrlate(context, 'requiredempty');
+                      } else if (!RegExp(
+                          r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                          .hasMatch(value)) {
+                        return getTransrlate(context, 'invalidemail');
                       }
                       _formKey.currentState.save();
                       return null;

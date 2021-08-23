@@ -108,7 +108,7 @@ class _RatedialogState extends State<Ratedialog> {
                                           ),
                                         ),
                                         Text(
-                                          " (${widget.reviews.reviewsCount} ${getTransrlate(context, 'Rate')} ) ",
+                                          " (${widget.reviews.reviewsCount} ${getTransrlate(context, 'rate')} ) ",
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w500,

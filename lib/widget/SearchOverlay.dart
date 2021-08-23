@@ -60,7 +60,7 @@ class SearchOverlayState extends State<SearchOverlay>
                       children: [
                         InkWell(
                           onTap: () {
-                            search_index ==null? null:search_index.isEmpty? null:Nav.route(context, Products_Page(Url: 'user/search/products?search_index=${search_index??''}',name:"نتائج البحث: ${search_index??''}" ,));
+                            search_index ==null? null:search_index.isEmpty? null:Nav.route(context, Products_Page(Url: 'user/search/products?search_index=${search_index??''}&cartype_id=${themeColor.car_type}',name:"نتائج البحث: ${search_index??''}" ,));
                           },
                           child: Container(
                             margin: const EdgeInsets.all(15.0),

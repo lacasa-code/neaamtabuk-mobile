@@ -237,6 +237,11 @@ class _AddAddressState extends State<AddAddress> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
+                    }else   if (value.length<2) {
+                      return "${getTransrlate(context, 'requiredlength')}";
+                    }else if (RegExp(
+                        r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                      return getTransrlate(context, 'invalidname');
                     }
                     return null;
                   },
@@ -253,6 +258,10 @@ class _AddAddressState extends State<AddAddress> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
+                    }else   if (value.length<2) {
+                      return "${getTransrlate(context, 'requiredlength')}";
+                    }else if (RegExp(r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                      return getTransrlate(context, 'invalidname');
                     }
                     return null;
                   },
@@ -268,9 +277,12 @@ class _AddAddressState extends State<AddAddress> {
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'HomeNo');
+                      return getTransrlate(context, 'requiredempty');
+                    }else   if (value.length<=2) {
+                      return "${getTransrlate(context, 'requiredlength')}";
+                    }else if (!RegExp(r"^[0-9]*$").hasMatch(value)) {
+                      return getTransrlate(context, 'invalidnamber');
                     }
-                    _formKey.currentState.save();
                     return null;
                   },
                   onSaved: (String value) {
@@ -285,9 +297,12 @@ class _AddAddressState extends State<AddAddress> {
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'FloorNo');
+                      return getTransrlate(context, 'requiredempty');
+                    }else   if (value.length<=2) {
+                      return "${getTransrlate(context, 'requiredlength')}";
+                    }else if (!RegExp(r"^[0-9]*$").hasMatch(value)) {
+                      return getTransrlate(context, 'invalidnamber');
                     }
-                    _formKey.currentState.save();
                     return null;
                   },
                   onSaved: (String value) {
@@ -302,9 +317,12 @@ class _AddAddressState extends State<AddAddress> {
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return getTransrlate(context, 'apartment_no');
+                      return getTransrlate(context, 'requiredempty');
+                    }else   if (value.length<=2) {
+                      return "${getTransrlate(context, 'requiredlength')}";
+                    }else if (!RegExp(r"^[0-9]*$").hasMatch(value)) {
+                      return getTransrlate(context, 'invalidnamber');
                     }
-                    _formKey.currentState.save();
                     return null;
                   },
                   onSaved: (String value) {
@@ -388,7 +406,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  keyboard_type: TextInputType.emailAddress,
+                  keyboard_type: TextInputType.text,
                   labelText: getTransrlate(context, 'nearest_milestone'),
                   hintText: getTransrlate(context, 'nearest_milestone'),
                   isPhone: true,

@@ -162,7 +162,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                               .Delete(
                                                   'user/delete/shipping/${address[index].id}')
                                               .then((value) {
-                                            if (value != null) {
+                                            if (value != null) {print(value);
                                               if (value['status_code'] == 200) {
                                                 showDialog(
                                                     context: context,
@@ -173,7 +173,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                                 showDialog(
                                                     context: context,
                                                     builder: (_) => ResultOverlay(
-                                                        value['message']));
+                                                        value['message']??value['errors']));
                                               }
                                             }
                                           });

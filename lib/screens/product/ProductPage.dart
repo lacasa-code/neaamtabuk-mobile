@@ -36,8 +36,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../MyCars/myCars.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({Key key, this.product}) : super(key: key);
+  const ProductPage({Key key, this.product, this.product_id}) : super(key: key);
   final Product product;
+  final String product_id;
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -123,13 +124,11 @@ class _ProductPageState extends State<ProductPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        widget.product.wishlistEnable == 0
-                            ? Container()
-                            : InkWell(
+                       InkWell(
                           onTap: () {
                             widget.product.inWishlist == 0
                                 ? API(context).post('user/add/wishlist', {
-                              "product_id": widget.product.id
+                              "product_id": widget.product_id
                             }).then((value) {
                               if (value != null) {
                                 if (value['status_code'] == 200) {
@@ -150,8 +149,9 @@ class _ProductPageState extends State<ProductPage> {
                             })
                                 : API(context).post(
                                 'user/removeitem/wishlist', {
-                              "product_id": widget.product.id
+                              "product_id": widget.product_id
                             }).then((value) {
+                              print(value);
                               if (value != null) {
                                 if (value['status_code'] == 200) {
                                   setState(() {
@@ -165,7 +165,7 @@ class _ProductPageState extends State<ProductPage> {
                                   showDialog(
                                       context: context,
                                       builder: (_) => ResultOverlay(
-                                          value['data']));
+                                          value['message']??''));
                                 }
                               }
                             });
@@ -200,7 +200,7 @@ class _ProductPageState extends State<ProductPage> {
                         InkWell(
                           onTap: () {
                             Share.share(
-                                'https://trkar-frontend-5lqqa.ondigitalocean.app/product-details/${widget.product.id}',
+                                'https://trkar-frontend-5lqqa.ondigitalocean.app/product-details/${widget.product_id}',
                                 subject: 'Trkar');
                           },
                           child: Row(
@@ -1389,7 +1389,7 @@ class _ProductPageState extends State<ProductPage> {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
                         API(context).post('add/to/cart', {
-                          "product_id": widget.product.id,
+                          "product_id": widget.product_id,
                           "quantity":
                           dropdownValue == 'other' ? 1 : dropdownValue
                         }).then((value) {
@@ -1464,7 +1464,7 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   void getreview() {
-    API(context).get('home/review/product/${widget.product.id}').then((value) {
+    API(context).get('home/review/product/${widget.product_id}').then((value) {
       setState(() {
         reviews = Review_model.fromJson(value).data;
       });
@@ -1472,7 +1472,7 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   void getQuastion() {
-    API(context).get('prod/all/questions/${widget.product.id}').then((value) {
+    API(context).get('prod/all/questions/${widget.product_id}').then((value) {
       setState(() {
         _question = Question_model.fromJson(value).data;
       });

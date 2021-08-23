@@ -112,7 +112,7 @@
   "transmissionName": "Transmission",
   "vehicleProducts": "View vehicle products",
   "AddtoMyCars": "Add to MyCars",
-  "Rate": "Rate",
+  "rate": "Rate",
 
   "allrate": "all reviews",
   "writerate": "write review",
@@ -158,6 +158,7 @@
   "invalidemail": "Please enter a valid email",
   "invalidname": "field cannot accept floating point",
   "Accept": "apply",
+  "invalidnamber": "invalid Number",
 
   "requiredempty": "Required ",
   "requiredlength": "The field is too short",

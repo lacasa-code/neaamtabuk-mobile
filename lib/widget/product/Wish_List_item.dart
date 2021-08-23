@@ -34,7 +34,7 @@ class _Wish_ListState extends State<Wish_List> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Nav.route(context, ProductPage(product: widget.product,));
+        Nav.route(context, ProductPage(product: widget.product,product_id:widget.product.product_id ,));
       },
       child: Container(
         color: Colors.white,

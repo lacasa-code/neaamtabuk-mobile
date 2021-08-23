@@ -67,7 +67,7 @@ class ResultOverlayState extends State<ResultOverlay>
                 ),
                 Container(width: ScreenUtil.getWidth(context)/2,
                   child: Text(
-                    '${widget.message}',
+                    '${widget.message??''}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: themeColor.getColor(),
