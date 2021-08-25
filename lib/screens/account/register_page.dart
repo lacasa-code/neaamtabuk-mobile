@@ -25,7 +25,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  String email, facebook_id;
+  String email, name, facebook_id;
   Provider_control themeColor;
 
   @override
@@ -173,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(width: 5),
                   Text(
-                    "دخول عن طريق فيسبوك",
+                    "${getTransrlate(context, 'facebock')}",
                     style: TextStyle(
                       fontSize: 14,
                       color: Color(0xff3D2FA4),
@@ -208,7 +208,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(width: 5),
                   Text(
-                    "دخول عن طريق جوجل",
+                    "${getTransrlate(context, 'google')}",
                     style: TextStyle(
                       fontSize: 14,
                       color: themeColor.getColor(),
@@ -305,7 +305,8 @@ class _RegisterPageState extends State<RegisterPage> {
         final graphResponse = await http.get(full_url);
         final profil = JSON.jsonDecode(graphResponse.body);
         print(graphResponse.body);
-        email = profil['email'];
+        name = profil['name']??'';
+        email = profil['email']??'';
         facebook_id = "${profil['id']}";
         register(themeColor);
         break;
@@ -320,7 +321,7 @@ class _RegisterPageState extends State<RegisterPage> {
   register(Provider_control themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('login/facebook',
-        {'facebook_id': facebook_id, 'email': email}).then((value) {
+        {'facebook_id': facebook_id, 'email': email, 'name': name}).then((value) {
       if (!value.containsKey('errors')) {
         var user = value['data'];
         prefs.setString("user_email", user['email']);

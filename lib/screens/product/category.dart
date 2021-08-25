@@ -115,7 +115,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   padding: const EdgeInsets.only(
                                                       right: 2,left: 2),
                                                   child: AutoSizeText(
-                                                    "${Mcategories[index].mainCategoryName}",
+                                                    "${themeColor.getlocal()=='ar'? Mcategories[index].mainCategoryName??Mcategories[index].nameEn :Mcategories[index].nameEn??Mcategories[index].mainCategoryName}",
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
                                                     minFontSize: 12,
@@ -192,7 +192,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        Categories[index].name,
+                                        "${themeColor.getlocal()=='ar'? Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
                                         maxLines: 2,
                                         textAlign: TextAlign.start,
                                         style: TextStyle(fontWeight: FontWeight.w600,

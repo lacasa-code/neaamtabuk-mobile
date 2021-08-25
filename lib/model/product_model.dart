@@ -28,6 +28,7 @@ class Product_model {
 class Product {
   int id;
   String name;
+  String nameEN;
   String product_id;
   String description;
   String discount;
@@ -83,6 +84,7 @@ class Product {
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    nameEN = json['name_en'];
     description = json['description'];
     discount = json['discount'].toString();
     price = json['price'];

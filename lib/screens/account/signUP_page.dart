@@ -145,7 +145,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(width: 5),
                   Text(
-                    "دخول عن طريق فيسبوك",
+                    "${getTransrlate(context, 'facebock')}",
                     style: TextStyle(
                       fontSize: 14,
                       color: Color(0xff3D2FA4),
@@ -180,7 +180,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(width: 5),
                   Text(
-                    "دخول عن طريق جوجل",
+                    "${getTransrlate(context, 'google')}",
                     style: TextStyle(
                       fontSize: 14,
                       color: themeColor.getColor(),

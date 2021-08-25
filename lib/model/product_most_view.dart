@@ -55,6 +55,7 @@ class ProductMostView {
 class ProductMost {
   int _id;
   String _name;
+  String _name_en;
   String _description;
   String _createdAt;
   String _updatedAt;
@@ -64,6 +65,7 @@ class ProductMost {
 
   int get id => _id;
   String get name => _name;
+  String get name_en => _name_en;
   String get description => _description;
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
@@ -93,6 +95,7 @@ class ProductMost {
   ProductMost.fromJson(dynamic json) {
     _id = json["id"];
     _name = json["name"];
+    _name_en = json["name_en"];
     _description = json["description"];
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];

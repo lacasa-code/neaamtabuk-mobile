@@ -32,6 +32,7 @@ class Category_model {
 class Main_Category {
   int id;
   String mainCategoryName;
+  String nameEn;
   List<Categories> categories;
   String lang;
   int last_level;
@@ -40,6 +41,7 @@ class Main_Category {
   Main_Category(
       {this.id,
         this.mainCategoryName,
+        this.nameEn,
         this.categories,
         this.lang,
         this.last_level,
@@ -48,6 +50,7 @@ class Main_Category {
   Main_Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     mainCategoryName = json['main_category_name'];
+    nameEn = json['name_en'];
     if (json['categories'] != null) {
       categories = new List<Categories>();
       json['categories'].forEach((v) {
@@ -76,6 +79,7 @@ class Main_Category {
 class Categories {
   int id;
   String name;
+  String name_en;
   String description;
   List<PartCategories> partCategories;
   String lang;
@@ -85,6 +89,7 @@ class Categories {
   Categories(
       {this.id,
         this.name,
+        this.name_en,
         this.description,
         this.partCategories,
         this.lang,
@@ -94,6 +99,7 @@ class Categories {
   Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    name_en = json['name_en'];
     description = json['description'];
     if (json['part_categories'] != null) {
       partCategories = new List<PartCategories>();

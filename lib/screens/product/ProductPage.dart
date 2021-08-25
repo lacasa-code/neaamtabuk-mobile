@@ -90,7 +90,7 @@ class _ProductPageState extends State<ProductPage> {
                   Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Text(
-                      "${widget.product.name}",
+                      "${themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name}",
                       style: TextStyle(fontSize: 22),
                     ),
                   ),

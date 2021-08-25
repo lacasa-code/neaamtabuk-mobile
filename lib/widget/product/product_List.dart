@@ -40,6 +40,7 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<Provider_Data>(context);
+    final themeColor = Provider.of<Provider_control>(context);
 
     return Stack(
       children: <Widget>[
@@ -101,7 +102,7 @@ class _ProductListState extends State<ProductList> {
                             height: 5,
                           ),
                           AutoSizeText(
-                            widget.product.name,
+                            themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

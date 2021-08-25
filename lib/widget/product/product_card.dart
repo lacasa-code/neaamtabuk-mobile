@@ -37,6 +37,7 @@ class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     final ServiceData = Provider.of<Provider_Data>(context);
+    final themeColor = Provider.of<Provider_control>(context);
 
     return Stack(
       children: <Widget>[
@@ -91,7 +92,7 @@ class _ProductCardState extends State<ProductCard> {
                         Container(
                           width: ScreenUtil.getWidth(context) / 2.2,
                           child: AutoSizeText(
-                            widget.product.name,
+                            themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
                             maxLines: 1,
                             style: TextStyle(
                               color: Color(0xFF5D6A78),

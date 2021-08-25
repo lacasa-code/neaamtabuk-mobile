@@ -78,8 +78,9 @@ class _SplashScreenState extends State<SplashScreen>
     await SharedPreferences.getInstance();
     API(context,Check: false).post('check/valid/session', {}).then((value) async {
       if (value != null) {
-
+print(value);
         if (value['status_code'] == 200) {
+
           var user = value['data'];
           if (user.containsKey('vendor_details')) {
             prefs.setInt(
@@ -89,8 +90,8 @@ class _SplashScreenState extends State<SplashScreen>
           }
           prefs.setString("user_email", user['email']);
           prefs.setString("user_name", user['name']??' ');
-         // prefs.setString("email_verified_at", user['email_verified_at']);
-        //  prefs.setString("token", user['token']);
+          prefs.setString("email_verified_at", user['email_verified_at']);
+          prefs.setString("token", user['token']);
           prefs.setInt("user_id", user['id']);
           themeColor.setLogin(true);
         } else {

@@ -108,7 +108,6 @@ class _HomeState extends State<Home> {
           cartype = Car_type.fromJson(value).data;
         });
         getData(1);
-
       }
     });
 
@@ -127,7 +126,6 @@ class _HomeState extends State<Home> {
     }
   });
     Provider.of<Provider_Data>(context,listen: false).getData(cartypeId,context);
-
     Provider.of<Provider_Data>(context,listen: false).getShipping(context);
 
   }
@@ -301,7 +299,7 @@ class _HomeState extends State<Home> {
                                      padding:
                                      const EdgeInsets.all(4.0),
                                      child: AutoSizeText(
-                                         e.typeName,
+                                         "${themeColor.getlocal()=='ar'? e.typeName:e.name_en}",
                                          maxLines: 1,
                                          maxFontSize: 18,
                                          minFontSize: 10,

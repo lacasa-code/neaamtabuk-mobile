@@ -7,6 +7,7 @@ import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/navigator.dart';
 
@@ -32,6 +33,7 @@ class _CategoryCardState extends State<CategoryCard> {
 
   @override
   Widget build(BuildContext context) {
+    final themeColor = Provider.of<Provider_control>(context);
     return Container(
       margin: EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 2),
       decoration: BoxDecoration(
@@ -71,7 +73,7 @@ class _CategoryCardState extends State<CategoryCard> {
               ),
             ),
             AutoSizeText(
-              "${widget.product.name}",
+              "${ themeColor.getlocal()=='ar'? widget.product.name??widget.product.name_en :widget.product.name_en??widget.product.name}",
               maxLines: 2,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
