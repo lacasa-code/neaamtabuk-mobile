@@ -63,7 +63,7 @@ class _AppBarCustomState extends State<AppBarCustom> {
           ),
           InkWell(
             onTap: () {
-              Nav.route(context, MyCars(0));
+              Nav.route(context, MyCars(themeColor.getcar_index()));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -46,10 +46,12 @@ class Car_made {
 class CarMade {
   int _id;
   String _carMade;
+  String _name_en;
   int _categoryidId;
 
   int get id => _id;
   String get carMade => _carMade;
+  String get name_en => _name_en;
   int get categoryidId => _categoryidId;
 
   CarMade({int id, String carMade, int categoryidId}) {
@@ -61,6 +63,7 @@ class CarMade {
   CarMade.fromJson(dynamic json) {
     _id = json["id"];
     _carMade = json["car_made"];
+    _name_en = json["name_en"];
     _categoryidId = json["categoryid_id"];
   }
 

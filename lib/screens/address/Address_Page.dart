@@ -152,7 +152,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                       IconButton(
                                         icon: Icon(Icons.edit),
                                         onPressed: () {
-                                          Nav.route(context, EditAddress(address[index]));
+                                          _navigateAndeditSelection(context,address[index]);
                                         },
                                       ),
                                       IconButton(
@@ -234,5 +234,11 @@ class _Shipping_AddressState extends State<Shipping_Address> {
     await Navigator.push(
         context, MaterialPageRoute(builder: (context) => AddAddress()));
     Timer(Duration(seconds: 3), () => getAddress());
+  }  _navigateAndeditSelection(
+    BuildContext context,Address address
+  ) async {
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => EditAddress(address)));
+    Timer(Duration(seconds: 2), () => getAddress());
   }
 }

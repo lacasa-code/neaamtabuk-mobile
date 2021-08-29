@@ -97,17 +97,17 @@ class _AddAddressState extends State<AddAddress> {
                   labelText: getTransrlate(context, 'Lastname'),
                   hintText: getTransrlate(context, 'Lastname'),
                   isPhone: true,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<2) {
-                      return "${getTransrlate(context, 'requiredlength')}";
-                    }else if (RegExp(
-                        r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
-                      return getTransrlate(context, 'invalidname');
-                    }
-                    return null;
-                  },
+                  // validator: (String value) {
+                  //   if (value.isEmpty) {
+                  //     return getTransrlate(context, 'requiredempty');
+                  //   }else   if (value.length<2) {
+                  //     return "${getTransrlate(context, 'requiredlength')}";
+                  //   }else if (RegExp(
+                  //       r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                  //     return getTransrlate(context, 'invalidname');
+                  //   }
+                  //   return null;
+                  // },
                   onSaved: (String value) {
                     address.lastName = value;
                   },
@@ -237,11 +237,8 @@ class _AddAddressState extends State<AddAddress> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<2) {
+                    }else   if (value.length<1) {
                       return "${getTransrlate(context, 'requiredlength')}";
-                    }else if (RegExp(
-                        r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
-                      return getTransrlate(context, 'invalidname');
                     }
                     return null;
                   },
@@ -258,10 +255,8 @@ class _AddAddressState extends State<AddAddress> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<2) {
+                    }else   if (value.length<1) {
                       return "${getTransrlate(context, 'requiredlength')}";
-                    }else if (RegExp(r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
-                      return getTransrlate(context, 'invalidname');
                     }
                     return null;
                   },
@@ -278,7 +273,7 @@ class _AddAddressState extends State<AddAddress> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<=2) {
+                    }else   if (value.length<1) {
                       return "${getTransrlate(context, 'requiredlength')}";
                     }else if (!RegExp(r"^[0-9]*$").hasMatch(value)) {
                       return getTransrlate(context, 'invalidnamber');
@@ -298,10 +293,8 @@ class _AddAddressState extends State<AddAddress> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<=2) {
+                    }else   if (value.length<1) {
                       return "${getTransrlate(context, 'requiredlength')}";
-                    }else if (!RegExp(r"^[0-9]*$").hasMatch(value)) {
-                      return getTransrlate(context, 'invalidnamber');
                     }
                     return null;
                   },
@@ -318,7 +311,7 @@ class _AddAddressState extends State<AddAddress> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<=2) {
+                    }else   if (value.length<1) {
                       return "${getTransrlate(context, 'requiredlength')}";
                     }else if (!RegExp(r"^[0-9]*$").hasMatch(value)) {
                       return getTransrlate(context, 'invalidnamber');
@@ -351,6 +344,9 @@ class _AddAddressState extends State<AddAddress> {
                             validator: (String value) {
                               if (value.isEmpty) {
                                 return getTransrlate(context, 'phone');
+                              }
+                              else   if (value.length<9) {
+                                return "${getTransrlate(context, 'requiredlength')}";
                               }
                               _formKey.currentState.save();
                               return null;
@@ -413,7 +409,7 @@ class _AddAddressState extends State<AddAddress> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<=2) {
+                    }else   if (value.length<2) {
                       return "${getTransrlate(context, 'requiredlength')}";
                     }else if (RegExp(
                         r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {

@@ -226,6 +226,7 @@ class Product {
 class CarMadeName {
   int id;
   String carMade;
+  String name_en;
   String createdAt;
   String updatedAt;
   Null deletedAt;
@@ -237,6 +238,7 @@ class CarMadeName {
   CarMadeName.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     carMade = json['car_made'];
+    name_en = json['name_en'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];

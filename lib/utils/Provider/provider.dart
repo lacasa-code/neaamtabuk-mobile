@@ -6,6 +6,7 @@ class Provider_control with ChangeNotifier {
   String local;
   String car_made =  'إختر المركبة';
   int car_type =  1;
+  int index =  1;
   Color color;
   bool isLogin = false;
   Provider_control(this.local){
@@ -18,6 +19,7 @@ class Provider_control with ChangeNotifier {
   getColor() => _themeData;
   getCar_made() => car_made;
   getcar_type() => car_type;
+  getcar_index() => index;
   getlocal() => local;
 
   setCar_made(String Car_made) async {
@@ -26,6 +28,10 @@ class Provider_control with ChangeNotifier {
   }
 setCar_type(int Car_type) async {
   car_type = Car_type;
+    notifyListeners();
+  }
+  setCar_index(int Car_type) async {
+  index = Car_type;
     notifyListeners();
   }
 

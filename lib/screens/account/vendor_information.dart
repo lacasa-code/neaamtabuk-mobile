@@ -166,7 +166,7 @@ class _VendorInfoState extends State<VendorInfo> {
               : userModal.approved == 1
               ? Center(
             child: Container(
-              width: ScreenUtil.getWidth(context) / 1.5,
+              width: ScreenUtil.getWidth(context) / 1.2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -190,7 +190,7 @@ class _VendorInfoState extends State<VendorInfo> {
                     height: 10,
                   ),
                   Container(
-                    width: ScreenUtil.getWidth(context) / 2,
+                    width: ScreenUtil.getWidth(context) / 1.2,
                     child: Column(
                       children: [
                         Row(
@@ -285,20 +285,26 @@ class _VendorInfoState extends State<VendorInfo> {
                             ),
                           ],
                         ),
-                        Row(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${getTransrlate(context, 'HeadCenter')} :',
-                              style: TextStyle(
-                                  color: Colors.green, fontSize: 16),
-                            ),
-                            Text(
-                              '${userModal.storeDetails.address}',
-                            ),
-                          ],
+                        Container(
+                          width: ScreenUtil.getWidth(context) / 1.2,
+
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  '${getTransrlate(context, 'HeadCenter')} :-',
+                                  style: TextStyle(
+                                      color: Colors.green, fontSize: 16),
+                                ),
+                              ),
+                              Text(
+                                '${userModal.storeDetails.address}',
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

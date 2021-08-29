@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/main.dart';
+import 'package:flutter_pos/screens/account/Conditions.dart';
+import 'package:flutter_pos/screens/account/return.dart';
+import 'package:flutter_pos/screens/account/support.dart';
 import 'package:flutter_pos/screens/address/Address_Page.dart';
 import 'package:flutter_pos/screens/account/OrderHistory.dart';
 import 'package:flutter_pos/screens/account/infoPage.dart';
@@ -329,7 +332,7 @@ class _AccountState extends State<Account> {
                         ),
                         InkWell(
                           onTap: () {
-                            Nav.route(context, Info());
+                            Nav.route(context, Support_Screen());
                           },
                           child: ItemHiddenMenu(
                             icon: Icon(
@@ -347,7 +350,7 @@ class _AccountState extends State<Account> {
                         ),
                         InkWell(
                           onTap: () {
-                            Nav.route(context, Info());
+                            Nav.route(context, Return());
                           },
                           child: ItemHiddenMenu(
                             icon: Icon(
@@ -365,7 +368,7 @@ class _AccountState extends State<Account> {
                         ),
                         InkWell(
                           onTap: () {
-                            Nav.route(context, Info());
+                            Nav.route(context, Conditions());
                           },
                           child: ItemHiddenMenu(
                             icon: Icon(

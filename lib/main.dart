@@ -37,8 +37,6 @@ Future<void> main() async {
 
     );
   });
-
-
   // await SentryFlutter.init(
   //
   //       (options) {

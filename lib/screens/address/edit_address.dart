@@ -103,15 +103,15 @@ class _EditAddressState extends State<EditAddress> {
                   hintText: getTransrlate(context, 'Lastname'),
                   isPhone: true,
                   validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<=2) {
-                      return "${getTransrlate(context, 'requiredlength')}";
-                    }else if (RegExp(
-                        r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
-                      return getTransrlate(context, 'invalidname');
-                    }
-                    return null;
+                    // if (value.isEmpty) {
+                    //   return getTransrlate(context, 'requiredempty');
+                    // }else   if (value.length<=2) {
+                    //   return "${getTransrlate(context, 'requiredlength')}";
+                    // }else if (RegExp(
+                    //     r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                    //   return getTransrlate(context, 'invalidname');
+                    // }
+                    // return null;
                   },
                   onSaved: (String value) {
                     widget.address.lastName = value;
@@ -130,7 +130,6 @@ class _EditAddressState extends State<EditAddress> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: DropdownSearch<Country>(
                            label: getTransrlate(context, 'Countroy'),
-
                           selectedItem: widget.address.state ,
                           items: contries,
                           //  onFind: (String filter) => getData(filter),
@@ -139,6 +138,7 @@ class _EditAddressState extends State<EditAddress> {
                             widget.address.Country_id = data.id ;
                             setState(() {
                               area=null;
+                              widget.address.area=Area();
                             });
                             getArea(data.id);
                           },
@@ -155,11 +155,12 @@ class _EditAddressState extends State<EditAddress> {
 
                           items: area,
                           //  onFind: (String filter) => getData(filter),
-                          itemAsString: (Area u) => u.areaName,
+                          itemAsString: (Area u) => u.areaName??'',
                           onChanged: (Area data) {
                             widget.address.area_id = data.id;
                             setState(() {
                               cities=null;
+                              widget.address.city=City();
                             });
                             getCity(data.id);
                           },
@@ -176,7 +177,7 @@ class _EditAddressState extends State<EditAddress> {
 
                           items: cities,
                           //  onFind: (String filter) => getData(filter),
-                          itemAsString: (City u) => u.cityName,
+                          itemAsString: (City u) => u.cityName??'',
                           onChanged: (City data) {
                             widget.address.city_id = data.id;
                           },

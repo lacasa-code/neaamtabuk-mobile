@@ -403,7 +403,7 @@ class _ProductPageState extends State<ProductPage> {
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                             Text(
-                              '${widget.product.carMadeName == null ? 'لايتم التحديد' : widget.product.carMadeName.carMade}',
+                              '${widget.product.carMadeName == null ? '${getTransrlate(context, 'NoSelect')}' : themeColor.getlocal()=='ar'?widget.product.carMadeName.carMade??widget.product.carMadeName.name_en:widget.product.carMadeName.name_en??widget.product.carMadeName.carMade}',
                               maxLines: 1,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -423,7 +423,7 @@ class _ProductPageState extends State<ProductPage> {
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                             Text(
-                              '${widget.product.manufacturerName ?? 'لايتم التحديد'}',
+                              '${widget.product.manufacturerName ?? '${getTransrlate(context, 'NoSelect')}'}',
                               maxLines: 1,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -513,7 +513,7 @@ class _ProductPageState extends State<ProductPage> {
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                             Text(
-                              '${widget.product.transmissionName ?? 'لايتم التحديد'}',
+                              '${widget.product.transmissionName ?? '${getTransrlate(context, 'NoSelect')}'}',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),

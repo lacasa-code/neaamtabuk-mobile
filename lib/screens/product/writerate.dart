@@ -21,7 +21,7 @@ class WriteRatedialog extends StatefulWidget {
 
 class _WriteRatedialogState extends State<WriteRatedialog> {
   TextEditingController CommentController = TextEditingController();
-  double rating = 0.0;
+  double rating = 0.5;
 
   @override
   Widget build(BuildContext context) {

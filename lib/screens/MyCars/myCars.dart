@@ -33,7 +33,6 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
   List<CarMade> car_mades;
   List<CarModel> carmodels;
   List<Transmissions> transmissions;
-  int checkboxValue;
   TabController _controller;
 
   //int checkboxType = 0;
@@ -43,6 +42,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
+
     _controller = TabController(vsync: this, length: 2, initialIndex: 1);
 
     Provider.of<Provider_control>(context, listen: false).isLogin
@@ -56,6 +56,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
       if (value != null) {
         setState(() {
           cartype = Car_type.fromJson(value).data;
+
           getData(cartype[widget.checkboxType].id);
         });
       }
@@ -131,13 +132,13 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                     children: [
                                       Radio<int>(
                                         value: index,
-                                        groupValue: checkboxValue,
+                                        groupValue: widget.checkboxType,
                                         activeColor: themeColor.getColor(),
                                         focusColor: themeColor.getColor(),
                                         hoverColor: themeColor.getColor(),
                                         onChanged: (int value) {
                                           setState(() {
-                                            checkboxValue = value;
+                                            widget.checkboxType = value;
                                           });
 
                                           themeColor.setCar_made(
@@ -156,7 +157,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                       InkWell(
                                         onTap: () {
                                           setState(() {
-                                            checkboxValue = index;
+                                            widget.checkboxType = index;
                                           });
                                           themeColor.setCar_made(
                                               favourite[index].carMadeName);
@@ -257,7 +258,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                           : Colors.grey)),
                               child: Center(
                                   child: Text(
-                                cartype[index].typeName,
+                                    "${themeColor.getlocal()=='ar'? cartype[index].typeName:cartype[index].name_en}",
                                 style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
                               )),
                             ),
@@ -278,7 +279,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 label: "  ${getTransrlate(context, 'brand')}",
                                 items: car_mades,
                                 //  onFind: (String filter) => getData(filter),
-                                itemAsString: (CarMade u) => u.carMade,
+                                itemAsString: (CarMade u) => themeColor.getlocal()=='ar'?u.carMade??u.name_en:u.name_en??u.carMade,
                                 onChanged: (CarMade data) {
                                   setState(() {
                                     carmodels = null;
@@ -298,7 +299,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                           enabled: carmodels != null,
                           items: carmodels,
                           //  onFind: (String filter) => getData(filter),
-                          itemAsString: (CarModel u) => u.carmodel,
+                          itemAsString: (CarModel u) =>  themeColor.getlocal()=='ar'?u.carmodel??u.name_en:u.name_en??u.carmodel,
                           onChanged: (CarModel data) =>
                               CarmodelsID.text = data.id.toString(),
                         ),
