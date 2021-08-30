@@ -1,4 +1,4 @@
-package com.example.flutter_pos
+package com.lacasa.flutter_pos
 
 import io.flutter.embedding.android.FlutterActivity
 

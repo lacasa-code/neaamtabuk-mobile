@@ -336,8 +336,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 label: "  ${getTransrlate(context, 'transmissionName')}",
                                 items: transmissions,
                                 //  onFind: (String filter) => getData(filter),
-                                itemAsString: (Transmissions u) =>
-                                    u.transmissionName,
+                                itemAsString: (Transmissions u) => themeColor.getlocal()=='ar'?u.transmissionName??u.name_en:u.name_en??u.transmissionName,
                                 onChanged: (Transmissions data) =>
                                     transimionsID.text = data.id.toString(),
                               ),

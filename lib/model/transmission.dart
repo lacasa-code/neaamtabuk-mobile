@@ -46,21 +46,25 @@ class Transmission {
 class Transmissions {
   int _id;
   String _transmissionName;
+  String _name_en;
   int _status;
 
   int get id => _id;
   String get transmissionName => _transmissionName;
+  String get name_en => _name_en;
   int get status => _status;
 
   Transmissions({int id, String transmissionName, int status}) {
     _id = id;
     _transmissionName = transmissionName;
+    _name_en = name_en;
     _status = status;
   }
 
   Transmissions.fromJson(dynamic json) {
     _id = json["id"];
     _transmissionName = json["transmission_name"];
+    _name_en = json["name_en"];
     _status = json["status"];
   }
 
