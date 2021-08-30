@@ -26,6 +26,7 @@ import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
+import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:flutter_pos/widget/slider/slider_dot.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -616,7 +617,7 @@ class _ProductPageState extends State<ProductPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'أراميكس. الوصول المتوقع: الخميس 29 مارس - الثلاثاء 3 ابريل',
+                          '${getTransrlate(context,'shipingditils')} : ${DateFormat(DateFormat.ABBR_MONTH_DAY, '${themeColor.getlocal()}').format(DateTime.now().add(Duration(days: 3)))} - ${DateFormat(DateFormat.ABBR_MONTH_DAY, '${themeColor.getlocal()}').format(DateTime.now().add(Duration(days: 5)))}',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             height: 1.5,

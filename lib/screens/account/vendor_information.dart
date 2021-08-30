@@ -126,9 +126,9 @@ class _VendorInfoState extends State<VendorInfo> {
             });
           });
         } else {
-          showDialog(
-              context: context,
-              builder: (_) => ResultOverlay(value['message']));
+          // showDialog(
+          //     context: context,
+          //     builder: (_) => ResultOverlay(value['message']));
         }
       }
     });

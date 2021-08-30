@@ -46,7 +46,7 @@ class _CategoryCardState extends State<CategoryCard> {
               context,
               Products_Page(
                 id: widget.product.id,
-                name: widget.product.name,
+                name: "${ themeColor.getlocal()=='ar'? widget.product.name??widget.product.name_en :widget.product.name_en??widget.product.name}",
                 Url: 'site/categories/${widget.product.id}?cartype_id=${widget.themeColor.car_type}',
                 Istryers: widget.product.id==84,
               ));

@@ -167,12 +167,12 @@ class _UserInfoState extends State<UserInfo> {
                                             new LengthLimitingTextInputFormatter(254),
                                           ],
                                           validator: (String value) {
-                                            if (value.isEmpty) {
-                                              return getTransrlate(
-                                                  context, 'Lastname');
-                                            }
-                                            _formKey.currentState.save();
-                                            return null;
+                                            // if (value.isEmpty) {
+                                            //   return getTransrlate(
+                                            //       context, 'Lastname');
+                                            // }
+                                            // _formKey.currentState.save();
+                                            // return null;
                                           },
                                           autofocus: !_status,
                                           onSaved: (String val) =>
