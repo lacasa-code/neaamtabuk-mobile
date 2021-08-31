@@ -128,6 +128,7 @@ class Categories {
 class PartCategories {
   int id;
   String categoryName;
+  String name_en;
   String lang;
   String createdAt;
   Photo photo;
@@ -141,6 +142,7 @@ class PartCategories {
   PartCategories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     categoryName = json['category_name'];
+    name_en = json['name_en'];
     if (json['photo'] != null) {
         photo = Photo.fromJson(json['photo']);
     }

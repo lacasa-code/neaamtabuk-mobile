@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/AppLocalizations.dart';
 import 'package:global_configuration/global_configuration.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,21 +37,7 @@ Future<void> main() async {
 
     );
   });
-  // await SentryFlutter.init(
-  //
-  //       (options) {
-  //     options.dsn = 'https://536b9d1a8e014f0dbca91d2f7f5c487a@o551399.ingest.sentry.io/5825146';
-  //   },
-  //   appRunner: () => runApp(MultiProvider(providers: [
-  //     ChangeNotifierProvider<Provider_control>(
-  //       create: (_) => Provider_control(),
-  //     ),
-  //     ChangeNotifierProvider<Provider_Data>(
-  //       create: (_) => Provider_Data(),
-  //     ),
-  //   ], child: Phoenix(child: MyApp()))),
-  //
-  // );
+
 }
 
 class MyApp extends StatefulWidget {
@@ -77,6 +63,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    getIntial();
     _locale = Locale(Provider.of<Provider_control>(context, listen: false).local, "");
     super.initState();
   }
@@ -132,5 +119,19 @@ class _MyAppState extends State<MyApp> {
       ),
       home: SplashScreen(),
     );
+  }
+
+  void getIntial() async {
+//Remove this method to stop OneSignal Debugging
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+    //OneSignal.shared.init("d4f40928-8ba1-4b12-b6a0-f6a1db13a47c");
+    OneSignal.shared.setAppId("d4f40928-8ba1-4b12-b6a0-f6a1db13a47c");
+
+
+// The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+    OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+      print("Accepted permission: $accepted");
+    });
   }
 }

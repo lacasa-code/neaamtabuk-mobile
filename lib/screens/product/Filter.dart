@@ -3,11 +3,13 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/carmodel.dart';
+import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/model/product_model.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/cart_category.dart';
 import '../../model/manufacturers.dart';
@@ -16,9 +18,9 @@ import '../../service/api.dart';
 import '../../utils/screen_size.dart';
 
 class Filterdialog extends StatefulWidget {
-   Filterdialog({Key key,this.Istryers}) : super(key: key);
+  Filterdialog({Key key, this.Istryers}) : super(key: key);
 
-  bool Istryers=false;
+  bool Istryers = false;
 
   @override
   _FilterdialogState createState() => _FilterdialogState();
@@ -37,18 +39,23 @@ class _FilterdialogState extends State<Filterdialog> {
   List<String> height = [];
   List<String> size = [];
   String widthID;
-  String heightID ;
-  String sizeID ;
+  String heightID;
+
+  String sizeID;
+
   RangeValues _currentRangeValues;
-  double min=0 ,max=10000;
+  double min = 0, max = 10000;
+
   @override
   void initState() {
-    _currentRangeValues =  RangeValues(min, max);
+    _currentRangeValues = RangeValues(min, max);
     getData();
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeColor = Provider.of<Provider_control>(context);
+
     return Material(
       child: SingleChildScrollView(
         child: Column(
@@ -92,191 +99,213 @@ class _FilterdialogState extends State<Filterdialog> {
                 ),
               ),
             ),
-            widget.Istryers? Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 8,
-                  top: 8,
-                  left: 24,
-                  right: 24,
-                ),
-                child: ExpandablePanel(
-                  header: Text(
-                    '${getTransrlate(context, 'frameDimensions')}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  expanded: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: ScreenUtil.getWidth(context)/2.5,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DropdownSearch<String>(
-                                  label: " ${getTransrlate(context, 'width')} ",
-                                  showSearchBox: true,
-                                  showClearButton: false,
-                                  items:width,
-                                  validator: (String item) {
-                                    if (item == null) {
-                                      return "${getTransrlate(context, 'width')}";
-                                    } else
-                                      return null;
-                                  },
-                                  onChanged: (String item){
-                                    widthID=item;
-                                  },
-                                  //  onFind: (String filter) => getData(filter),
-                                ),
-                              ),
-                              SizedBox(height: 10,),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DropdownSearch<String>(
-                                  label: " ${getTransrlate(context, 'height')} ",
-                                  showSearchBox: true,
-                                  showClearButton: false,
-                                  items:height,
-                                  validator: (String item) {
-                                    if (item == null) {
-                                      return "${getTransrlate(context, 'height')}";
-                                    } else
-                                      return null;
-                                  },
-                                  onChanged: (String item){
-                                    heightID=item;
-                                  },
-                                  //  onFind: (String filter) => getData(filter),
-                                ),
-                              ),
-                              SizedBox(height: 10,),
+            widget.Istryers
+                ? Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 8,
+                        top: 8,
+                        left: 24,
+                        right: 24,
+                      ),
+                      child: ExpandablePanel(
+                        header: Text(
+                          '${getTransrlate(context, 'frameDimensions')}',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        expanded: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: ScreenUtil.getHeight(context)/3,
+                            width: ScreenUtil.getWidth(context) ,
+                            child: Stack(
 
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DropdownSearch<String>(
-                                  label: " ${getTransrlate(context, 'size')} ",
-                                  showSearchBox: true,
-                                  showClearButton: false,
-                                  items: size,
-                                  validator: (String item) {
-                                    if (item == null) {
-                                      return "${getTransrlate(context, 'size')}";
-                                    } else
-                                      return null;
-                                  },
-                                  onChanged: (String item){
-                                    sizeID=item;
-                                  },
-                                  //  onFind: (String filter) => getData(filter),
+                              children: [
+                                Positioned(
+                                  right: 1,
+                                  child: Container(
+                                    width: ScreenUtil.getWidth(context) / 2.5,
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: DropdownSearch<String>(
+                                            label:
+                                                " ${getTransrlate(context, 'width')} ",
+                                            showSearchBox: true,
+                                            showClearButton: false,
+                                            items: width,
+                                            validator: (String item) {
+                                              if (item == null) {
+                                                return "${getTransrlate(context, 'width')}";
+                                              } else
+                                                return null;
+                                            },
+                                            onChanged: (String item) {
+                                              widthID = item;
+                                            },
+                                            //  onFind: (String filter) => getData(filter),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: DropdownSearch<String>(
+                                            label:
+                                                " ${getTransrlate(context, 'height')} ",
+                                            showSearchBox: true,
+                                            showClearButton: false,
+                                            items: height,
+                                            validator: (String item) {
+                                              if (item == null) {
+                                                return "${getTransrlate(context, 'height')}";
+                                              } else
+                                                return null;
+                                            },
+                                            onChanged: (String item) {
+                                              heightID = item;
+                                            },
+                                            //  onFind: (String filter) => getData(filter),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: DropdownSearch<String>(
+                                            label:
+                                                " ${getTransrlate(context, 'size')} ",
+                                            showSearchBox: true,
+                                            showClearButton: false,
+                                            items: size,
+                                            validator: (String item) {
+                                              if (item == null) {
+                                                return "${getTransrlate(context, 'size')}";
+                                              } else
+                                                return null;
+                                            },
+                                            onChanged: (String item) {
+                                              sizeID = item;
+                                            },
+                                            //  onFind: (String filter) => getData(filter),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                  left: 1,
+                                  child: Image.asset(
+                                    'assets/images/tire.png',
+                                    width: ScreenUtil.getWidth(context) / 2.5,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                        Image.asset('assets/images/tire.png',width: ScreenUtil.getWidth(context)/2.5,)
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ):  Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 8,
-                  top: 8,
-                  left: 24,
-                  right: 24,
-                ),
-                child: ExpandablePanel(
-                  header: Text(
-                    '${getTransrlate(context, 'category')}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  expanded: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: parts == null
-                        ? Custom_Loading()
-                        : parts.isEmpty
-                            ? Container()
-                            : ListView.builder(
-                                primary: false,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: parts.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return ExpansionTile(
-                                    textColor: Colors.orange,
-                                    iconColor: Colors.orange,
-                                    collapsedTextColor: Colors.black,
-                                    title: Text(
-                                        "${parts[index].mainCategoryName}"),
-                                    children: [
-                                      parts[index].categories == null
-                                          ? Container()
-                                          : ListView.builder(
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
-                                              itemCount: parts[index]
-                                                  .categories
-                                                  .length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int i) {
-                                                return Row(
-                                                  children: [
-                                                    Checkbox(
-                                                        value: parts[index]
-                                                            .categories[i]
-                                                            .partsCheck,
-                                                        activeColor:
-                                                            Colors.orange,
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            parts[index]
-                                                                    .categories[i]
-                                                                    .partsCheck =
-                                                                value;
-                                                          });
-                                                          value
-                                                              ? partSelect.add(
+                  )
+                : Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 8,
+                        top: 8,
+                        left: 24,
+                        right: 24,
+                      ),
+                      child: ExpandablePanel(
+                        header: Text(
+                          '${getTransrlate(context, 'category')}',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        expanded: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: parts == null
+                              ? Custom_Loading()
+                              : parts.isEmpty
+                                  ? Container()
+                                  : ListView.builder(
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: parts.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return ExpansionTile(
+                                          textColor: Colors.orange,
+                                          iconColor: Colors.orange,
+                                          collapsedTextColor: Colors.black,
+                                          title: Text(
+                                              "${themeColor.getlocal() == 'ar' ? parts[index].mainCategoryName : parts[index].name_en}"),
+                                          children: [
+                                            parts[index].categories == null
+                                                ? Container()
+                                                : ListView.builder(
+                                                    primary: false,
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    itemCount: parts[index]
+                                                        .categories
+                                                        .length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int i) {
+                                                      return Row(
+                                                        children: [
+                                                          Checkbox(
+                                                              value: parts[
+                                                                      index]
+                                                                  .categories[i]
+                                                                  .partsCheck,
+                                                              activeColor:
+                                                                  Colors.orange,
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState(() {
                                                                   parts[index]
                                                                       .categories[
                                                                           i]
-                                                                      .id)
-                                                              : partSelect
-                                                                  .remove(parts[
-                                                                          index]
-                                                                      .categories[
-                                                                          i]
-                                                                      .id);
-                                                        }),
-                                                    Text(
-                                                      parts[index]
-                                                          .categories[i]
-                                                          .name,
-                                                      softWrap: true,
-                                                    ),
-                                                  ],
-                                                );
-                                              })
-                                    ],
-                                  );
-                                }),
+                                                                      .partsCheck = value;
+                                                                });
+                                                                value
+                                                                    ? partSelect.add(parts[
+                                                                            index]
+                                                                        .categories[
+                                                                            i]
+                                                                        .id)
+                                                                    : partSelect.remove(parts[
+                                                                            index]
+                                                                        .categories[
+                                                                            i]
+                                                                        .id);
+                                                              }),
+                                                          Text(
+                                                            "${themeColor.getlocal() == 'ar' ? parts[index].categories[i].name ?? parts[index].categories[i].name_en : parts[index].categories[i].name_en ?? parts[index].categories[i].name}",
+                                                            softWrap: true,
+                                                          ),
+                                                        ],
+                                                      );
+                                                    })
+                                          ],
+                                        );
+                                      }),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black12),
@@ -403,8 +432,9 @@ class _FilterdialogState extends State<Filterdialog> {
                         children: [
                           Container(
                               width: ScreenUtil.getWidth(context) * 0.10,
-                              child: Text(
-                                  _currentRangeValues.start.round().toString())),
+                              child: Text(_currentRangeValues.start
+                                  .round()
+                                  .toString())),
                           Container(
                             width: ScreenUtil.getWidth(context) / 1.6,
                             child: RangeSlider(
@@ -427,43 +457,46 @@ class _FilterdialogState extends State<Filterdialog> {
                           ),
                           Container(
                               width: ScreenUtil.getWidth(context) * 0.10,
-                              child:
-                                  Text(_currentRangeValues.end.round().toString())),
+                              child: Text(
+                                  _currentRangeValues.end.round().toString())),
                         ],
                       ),
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
                               width: ScreenUtil.getWidth(context) * 0.10,
-                              child:
-                              Text("${getTransrlate(context, 'from')}")),
+                              child: Text("${getTransrlate(context, 'from')}")),
                           Container(
-                            width: ScreenUtil.getWidth(context)/3,
-                            child: MyTextFormField(enabled:false,
-                              intialLabel:min.toString(),
-                            onChange: (v){
-                              setState(() {
-                                _currentRangeValues =  RangeValues(double.parse(v),max);
-                                min=double.parse(v);
-                              });
-                            },),
+                            width: ScreenUtil.getWidth(context) / 3,
+                            child: MyTextFormField(
+                              enabled: false,
+                              intialLabel: min.toString(),
+                              onChange: (v) {
+                                setState(() {
+                                  _currentRangeValues =
+                                      RangeValues(double.parse(v), max);
+                                  min = double.parse(v);
+                                });
+                              },
+                            ),
                           ),
                           Container(
-                            width: ScreenUtil.getWidth(context) * 0.10,
-                            child:
-                            Text("${getTransrlate(context, 'to')}")),
+                              width: ScreenUtil.getWidth(context) * 0.10,
+                              child: Text("${getTransrlate(context, 'to')}")),
                           Container(
-                            width: ScreenUtil.getWidth(context)/3,
-
-                            child: MyTextFormField(intialLabel: max.toString(),
-                              onChange: (v){
+                            width: ScreenUtil.getWidth(context) / 3,
+                            child: MyTextFormField(
+                              intialLabel: max.toString(),
+                              onChange: (v) {
                                 setState(() {
-                                  _currentRangeValues =  RangeValues(min, double.parse(v));
-                                  max=double.parse(v);
+                                  _currentRangeValues =
+                                      RangeValues(min, double.parse(v));
+                                  max = double.parse(v);
                                 });
-                              },),
+                              },
+                            ),
                           )
-
                         ],
                       ),
                     ],
@@ -477,14 +510,14 @@ class _FilterdialogState extends State<Filterdialog> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.pop(context,
-                              "${!widget.Istryers?'':"?attribute=$widthID/$heightID/$sizeID"}"
-                              "${manufacturerSelect.isEmpty?'':"&manufacturers=${manufacturerSelect.toString()}"}"
-                              "${partSelect.isEmpty?'':"&part_categories=${partSelect.toString()}"}"
-                              "${originSelect.isEmpty?'':"&origins=${originSelect.toString()}"}"
-                              "${_currentRangeValues.start.round().toString().isEmpty?'':"&start_price=${_currentRangeValues.start.round().toString()}"}"
-                              "${_currentRangeValues.end.round().toString().isEmpty?'':"&end_price=${_currentRangeValues.end.round().toString()}"}"
-                              );
+                      Navigator.pop(
+                          context,
+                          "${!widget.Istryers ? '' : "?attribute=$widthID/$heightID/$sizeID"}"
+                          "${manufacturerSelect.isEmpty ? '' : "&manufacturers=${manufacturerSelect.toString()}"}"
+                          "${partSelect.isEmpty ? '' : "&part_categories=${partSelect.toString()}"}"
+                          "${originSelect.isEmpty ? '' : "&origins=${originSelect.toString()}"}"
+                          "${_currentRangeValues.start.round().toString().isEmpty ? '' : "&start_price=${_currentRangeValues.start.round().toString()}"}"
+                          "${_currentRangeValues.end.round().toString().isEmpty ? '' : "&end_price=${_currentRangeValues.end.round().toString()}"}");
                     },
                     child: Container(
                       margin: const EdgeInsets.all(15.0),
@@ -563,11 +596,11 @@ class _FilterdialogState extends State<Filterdialog> {
       if (value != null) {
         setState(() {
           parts = PartCategory.fromJson(value).data;
-          parts.forEach((element) {
-          });
+          parts.forEach((element) {});
         });
       }
-    });  API(context).get('home/category/parts/84').then((value) {
+    });
+    API(context).get('home/category/parts/84').then((value) {
       if (value != null) {
         setState(() {
           if (value['data'] != null) {

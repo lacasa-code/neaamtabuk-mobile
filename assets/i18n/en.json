@@ -185,7 +185,7 @@
   "descupdates": "Notify me of New Features",
   "google": "Google",
   "facebook": "Facebook",
-  "send": "ارسال",
+  "send": "Send",
   "Next": "NEXT",
   "Skip": "SKIP",
   "getStart": "Get Start",
@@ -380,9 +380,12 @@
   "bacs": "Direct bank transfer",
   "cod": "Cash on deliveryً",
   "paypal": "PayPal",
+  "SaveAddress": "Save Address",
 
   "showAll": "Show all",
   "search": "Product search..",
+  "massage": "Massage",
+  "Saudi": "A Saudi electronic selling platform for the sale of spare parts for trucks and cars",
 
   "Schedule_order": "Schedule Order",
   "shipingditils": "Aramix time expacted 3-5 day: ",

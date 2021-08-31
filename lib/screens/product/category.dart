@@ -250,7 +250,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             context,
                             Products_Page(
                               id: partCategories[index].id,
-                              name: partCategories[index].categoryName,
+                              name:themeColor.getlocal()=='ar'?partCategories[index].categoryName??partCategories[index].name_en:partCategories[index].name_en??partCategories[index].categoryName,
                               Url: "site/part/categories/${partCategories[index].id}?cartype_id=${themeColor.getcar_type()}",
                               Istryers:catId==84,
                             ));
@@ -261,7 +261,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              partCategories[index].categoryName,
+                              themeColor.getlocal()=='ar'?partCategories[index].categoryName??partCategories[index].name_en:partCategories[index].name_en??partCategories[index].categoryName,
                               maxLines: 2,
                               style: TextStyle(fontWeight: FontWeight.w600,
                                   fontSize: 11),

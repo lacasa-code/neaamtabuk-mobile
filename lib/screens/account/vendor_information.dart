@@ -17,6 +17,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -173,16 +174,14 @@ class _VendorInfoState extends State<VendorInfo> {
                   SizedBox(
                     height: 20,
                   ),
-                  SvgPicture.asset(
-                    "assets/icons/Attention.svg",
-                    color: Colors.green,
-                    height: 100,
-                  ),
+                  Custom_Loading(),
+
                   SizedBox(
                     width: 10,
                   ),
                   Text(
                     '${getTransrlate(context, 'validvendor')}',
+                    textAlign: TextAlign.center,
                     style:
                     TextStyle(color: Colors.green, fontSize: 25),
                   ),
@@ -872,7 +871,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                _value == 2
+                                _value == 1
                                     ? Container()
                                     : Column(
                                   crossAxisAlignment:
@@ -1211,6 +1210,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                             ),
                                             onPressed:
                                                 () {
+
                                               setState(
                                                       () {
                                                     userModal
@@ -1558,6 +1558,14 @@ class _VendorInfoState extends State<VendorInfo> {
                                     address = value;
                                   },
                                 ),
+                                Text(
+                                  getTransrlate(context,
+                                      'phone'),
+                                  style: TextStyle(
+                                      color:
+                                      Colors.black,
+                                      fontSize: 16),
+                                ),
                                 Container(
                                   height: 100,
                                   child: Stack(
@@ -1572,6 +1580,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                               1.5,
                                           child:
                                           TextFormField(
+                                            textAlign: TextAlign.left,
                                             inputFormatters: [
                                               new LengthLimitingTextInputFormatter(
                                                   10),
@@ -1628,6 +1637,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                               0.2,
                                           child:
                                           TextFormField(
+                                            textAlign: TextAlign.right,
                                             controller:
                                             code,
                                             inputFormatters: [

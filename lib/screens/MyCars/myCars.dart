@@ -279,7 +279,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 label: "  ${getTransrlate(context, 'brand')}",
                                 items: car_mades,
                                 //  onFind: (String filter) => getData(filter),
-                                itemAsString: (CarMade u) => themeColor.getlocal()=='ar'?u.carMade??u.name_en:u.name_en??u.carMade,
+                                itemAsString: (CarMade u) => "  ${themeColor.getlocal()=='ar'?u.carMade??u.name_en:u.name_en??u.carMade}",
                                 onChanged: (CarMade data) {
                                   setState(() {
                                     carmodels = null;
@@ -299,7 +299,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                           enabled: carmodels != null,
                           items: carmodels,
                           //  onFind: (String filter) => getData(filter),
-                          itemAsString: (CarModel u) =>  themeColor.getlocal()=='ar'?u.carmodel??u.name_en:u.name_en??u.carmodel,
+                          itemAsString: (CarModel u) =>  "  ${themeColor.getlocal()=='ar'?u.carmodel??u.name_en:u.name_en??u.carmodel}",
                           onChanged: (CarModel data) =>
                               CarmodelsID.text = data.id.toString(),
                         ),
@@ -320,7 +320,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 },
                                 items: years,
                                 //  onFind: (String filter) => getData(filter),
-                                itemAsString: (Year u) => u.year,
+                                itemAsString: (Year u) => "  ${u.year}",
                                 onChanged: (Year data) {
                                   yearsID.text = data.id.toString();
                                 },
@@ -336,7 +336,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 label: "  ${getTransrlate(context, 'transmissionName')}",
                                 items: transmissions,
                                 //  onFind: (String filter) => getData(filter),
-                                itemAsString: (Transmissions u) => themeColor.getlocal()=='ar'?u.transmissionName??u.name_en:u.name_en??u.transmissionName,
+                                itemAsString: (Transmissions u) => "  ${themeColor.getlocal()=='ar'?u.transmissionName??u.name_en:u.name_en??u.transmissionName}",
                                 onChanged: (Transmissions data) =>
                                     transimionsID.text = data.id.toString(),
                               ),
@@ -351,7 +351,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                     "${carMadeID.text.isEmpty ? '' : '&car_made_id=${carMadeID.text}'}"
                                     "${CarmodelsID.text.isEmpty ? '' : '&car_model_id=${CarmodelsID.text}'}"
                                     "${yearsID.text.isEmpty ? '' : '&car_year_id=${yearsID.text}'}"
-                                    "${transimionsID.text.isEmpty ? '' : '&transmission_id=${yearsID.text}'}",
+                                    "${transimionsID.text.isEmpty ? '' : '&transmission_id=${transimionsID.text}'}",
                               ));
                         },
                         child: Container(

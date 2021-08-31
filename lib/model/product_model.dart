@@ -31,6 +31,7 @@ class Product {
   String nameEN;
   String product_id;
   String description;
+  String description_en;
   String discount;
   String price;
   String action_price;
@@ -86,6 +87,7 @@ class Product {
     name = json['name'];
     nameEN = json['name_en'];
     description = json['description'];
+    description_en = json['description_en'];
     discount = json['discount'].toString();
     price = json['price'];
     action_price = json['actual_price'].toString();
@@ -804,6 +806,7 @@ class Data {
 class Category_Name {
   int id;
   String name;
+  String name_en;
   String description;
   String createdAt;
   String updatedAt;
@@ -818,6 +821,7 @@ class Category_Name {
   Category_Name.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    name_en = json['name_en'];
     description = json['description'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

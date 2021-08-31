@@ -30,6 +30,7 @@ class PartCategory {
 class Category {
   int id;
   String mainCategoryName;
+  String name_en;
   List<Categories> categories;
 
   Category({this.id, this.mainCategoryName, this.categories});
@@ -37,6 +38,7 @@ class Category {
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     mainCategoryName = json['main_category_name'];
+    name_en = json['name_en'];
     if (json['categories'] != null) {
       categories = new List<Categories>();
       json['categories'].forEach((v) {
@@ -59,6 +61,7 @@ class Category {
 class Categories {
   int id;
   String name;
+  String name_en;
   String description;
   int lastLevel;
   bool partsCheck=false;
@@ -74,6 +77,7 @@ class Categories {
   Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    name = json['name_en'];
     description = json['description'];
     lastLevel = json['last_level'];
     if (json['part_categories'] != null) {

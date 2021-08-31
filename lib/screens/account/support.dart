@@ -17,6 +17,7 @@ class Support_Screen extends StatelessWidget {
     final themeColor = Provider.of<Provider_control>(context);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Container(
             width: ScreenUtil.getWidth(context) / 2,
             child: AutoSizeText(
@@ -32,18 +33,17 @@ class Support_Screen extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                Text(
-                  'منصة بيع الكترونيه سعودية لبيع قطع غيار الشاحنات والسيارات',
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      ),
-                ),
-                Text(
-                  '${getTransrlate(context, 'Support')}',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      '${getTransrlate(context, 'Saudi')}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          ),
+                    ),
                   ),
                 ),
 
