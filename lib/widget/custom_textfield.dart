@@ -23,10 +23,12 @@ class MyTextFormField extends StatelessWidget {
   final GestureTapCallback press;
   final FocusNode focus ;
   final TextEditingController controller;
+  final TextAlign textAlign;
 
   MyTextFormField(
       {this.hintText,
       this.validator,
+      this.textAlign,
       this.enabled,
       this.onSaved,
       this.isPassword = false,
@@ -53,6 +55,7 @@ class MyTextFormField extends StatelessWidget {
           istitle?Container(): Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16),),
           istitle?Container():SizedBox(height: 4,),
           TextFormField(
+            textAlign:textAlign??TextAlign.start ,
             controller: controller,
             focusNode: focus,
             inputFormatters:inputFormatters??[

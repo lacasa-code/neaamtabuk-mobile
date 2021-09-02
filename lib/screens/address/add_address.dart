@@ -332,6 +332,7 @@ class _AddAddressState extends State<AddAddress> {
                         child: Container(
                           width: ScreenUtil.getWidth(context)/1.5 ,
                           child: MyTextFormField(
+                            textAlign: TextAlign.left,
                             textDirection: TextDirection.ltr,
                             intialLabel: '',
                             keyboard_type: TextInputType.phone,
@@ -362,6 +363,7 @@ class _AddAddressState extends State<AddAddress> {
                         child: Container(
                           width: ScreenUtil.getWidth(context)*0.2 ,
                           child: MyTextFormField(
+                            textAlign: TextAlign.right,
                             textDirection: TextDirection.ltr,
 
                             enabled: false,

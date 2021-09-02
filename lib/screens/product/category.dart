@@ -253,6 +253,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               name:themeColor.getlocal()=='ar'?partCategories[index].categoryName??partCategories[index].name_en:partCategories[index].name_en??partCategories[index].categoryName,
                               Url: "site/part/categories/${partCategories[index].id}?cartype_id=${themeColor.getcar_type()}",
                               Istryers:catId==84,
+
                             ));
                       },
                       child: Container(

@@ -501,6 +501,8 @@ class _ProductPageState extends State<ProductPage> {
                                       id: widget.product.vendorId,
                                       Url:
                                           'home/vendor/products/${widget.product.vendorId}?cartype_id=${themeColor.getcar_type()}&',
+                                      Istryers: false,
+
                                     ));
                               },
                               child: Text(

@@ -137,8 +137,10 @@ class _EditAddressState extends State<EditAddress> {
                           onChanged: (Country data) {
                             widget.address.Country_id = data.id ;
                             setState(() {
+                              widget.address.state=data;
                               area=null;
                               widget.address.area=Area();
+                              widget.address.city=null;
                             });
                             getArea(data.id);
                           },
@@ -159,6 +161,8 @@ class _EditAddressState extends State<EditAddress> {
                           onChanged: (Area data) {
                             widget.address.area_id = data.id;
                             setState(() {
+                              widget.address.area=data;
+
                               cities=null;
                               widget.address.city=City();
                             });
@@ -179,6 +183,10 @@ class _EditAddressState extends State<EditAddress> {
                           //  onFind: (String filter) => getData(filter),
                           itemAsString: (City u) => u.cityName??'',
                           onChanged: (City data) {
+                             setState(() {
+                               widget.address.city=data;
+
+                             });
                             widget.address.city_id = data.id;
                           },
                         ),
@@ -367,7 +375,8 @@ class _EditAddressState extends State<EditAddress> {
                                     widget.address.toJson())
                                 .then((value) {
                               if (value != null) {
-                                if (value['status_code'] == 200) {
+                                print(value);
+                                if (value['status_code'] == 202) {
                                   Navigator.pop(context);
                                   showDialog(
                                       context: context,

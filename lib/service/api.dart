@@ -138,6 +138,7 @@ class API {
     } catch (e) {} finally {}
   }
   getAction(http.Response response) {
+
     if (Check) {
       if (response.statusCode == 500) {
         Nav.route(

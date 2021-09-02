@@ -13,6 +13,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +62,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
           ? Notlogin()
           : Container(
               child: address == null
-                  ? Container()
+                  ? Center(child: Custom_Loading())
                   : SingleChildScrollView(
                     child: Column(
                         children: [
@@ -219,6 +220,9 @@ class _Shipping_AddressState extends State<Shipping_Address> {
   }
 
   void getAddress() {
+    setState(() {
+      address=null;
+    });
     API(context).get('user/all/shippings').then((value) {
       if (value != null) {
         setState(() {

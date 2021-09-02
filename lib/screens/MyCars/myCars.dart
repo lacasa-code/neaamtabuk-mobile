@@ -151,6 +151,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                                     .carMadeName,
                                                 Url:
                                                     "user/select/from/favourites/${favourite[index].id}",
+                                                Istryers: false,
                                               ));
                                         },
                                       ),
@@ -169,6 +170,8 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                                     .carMadeName,
                                                 Url:
                                                     "user/select/from/favourites/${favourite[index].id}",
+                                                Istryers: false,
+
                                               ));
                                         },
                                         child: Container(
@@ -309,6 +312,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                           : Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DropdownSearch<Year>(
+                                enabled: CarmodelsID.text.isNotEmpty,
                                 showSearchBox: true,
                                 showClearButton: true,
                                 label: "  ${getTransrlate(context, 'manufacturingYear')} ",
@@ -333,6 +337,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                               child: DropdownSearch<Transmissions>(
                                 showSearchBox: true,
                                 showClearButton: true,
+                                enabled: yearsID.text.isNotEmpty,
                                 label: "  ${getTransrlate(context, 'transmissionName')}",
                                 items: transmissions,
                                 //  onFind: (String filter) => getData(filter),
@@ -352,6 +357,8 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                     "${CarmodelsID.text.isEmpty ? '' : '&car_model_id=${CarmodelsID.text}'}"
                                     "${yearsID.text.isEmpty ? '' : '&car_year_id=${yearsID.text}'}"
                                     "${transimionsID.text.isEmpty ? '' : '&transmission_id=${transimionsID.text}'}",
+                                Istryers: false,
+
                               ));
                         },
                         child: Container(

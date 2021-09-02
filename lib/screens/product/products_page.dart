@@ -20,7 +20,7 @@ class Products_Page extends StatefulWidget {
   String Url;
   bool Istryers=false;
 
-  Products_Page({this.id, this.name, this.Url, this.Istryers});
+  Products_Page({this.id, this.name, this.Url, this.Istryers=false});
 
   @override
   _Products_PageState createState() => _Products_PageState();
@@ -92,11 +92,14 @@ class _Products_PageState extends State<Products_Page> {
 
                             // widget.Url='site/checkbox/filter/mobile?categories?${partSelect}';
                             if(partSelect!=null){
+                              bool Istryers=widget.Istryers??false;
+
                               print("${partSelect.contains('&', 0)}");
-                              print(widget.Istryers?'search/home/category/parts$partSelect':widget.Url +
+                              print(Istryers?'search/home/category/parts$partSelect':widget.Url +
                                   "${partSelect.contains('&', 0) ? '${partSelect}' : '&${partSelect}'}");
+
                               API(context)
-                                  .get(widget.Istryers?'search/home/category/parts$partSelect':widget.Url +
+                                  .get(Istryers?'search/home/category/parts$partSelect':widget.Url +
                                       "${partSelect.contains('&', 0) ? '${partSelect}' : '&${partSelect}'}")
                                   .then((value) {
                                 if (value != null) {

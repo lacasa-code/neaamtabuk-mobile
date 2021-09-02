@@ -22,6 +22,7 @@ import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../address/add_address.dart';
@@ -420,12 +421,12 @@ setState(() {
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            DefaultAddress==null?'':'بواسطة ارامكس  ARAMIX ',
+                            DefaultAddress==null?'':'${getTransrlate(context, 'ShippingBy')} :',
                             style: TextStyle(
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            DefaultAddress==null?'': 'متوقع وصولها يوم 25-6-2021',
+                            '${getTransrlate(context, 'shipingditils')} : ${DateFormat(DateFormat.ABBR_MONTH_DAY, '${themeColor.getlocal()}').format(DateTime.now().add(Duration(days: 3)))} - ${DateFormat(DateFormat.ABBR_MONTH_DAY, '${themeColor.getlocal()}').format(DateTime.now().add(Duration(days: 5)))}',
                             style: TextStyle(
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),
@@ -805,6 +806,7 @@ setState(() {
                               onTap: () {
                                 API(context)
                                     .post('user/checkout', {}).then((value) {
+                                      print(value);
                                   if (value != null) {
                                     if (value['status_code'] == 200) {
                                       checkout_model =

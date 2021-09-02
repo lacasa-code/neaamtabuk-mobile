@@ -70,6 +70,7 @@ class Categories {
   Categories(
       {this.id,
         this.name,
+        this.name_en,
         this.description,
         this.lastLevel,
         this.partCategories});
@@ -77,7 +78,7 @@ class Categories {
   Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    name = json['name_en'];
+    name_en = json['name_en'];
     description = json['description'];
     lastLevel = json['last_level'];
     if (json['part_categories'] != null) {
