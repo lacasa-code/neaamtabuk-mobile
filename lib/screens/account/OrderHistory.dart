@@ -11,6 +11,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
+import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
@@ -111,7 +112,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                       SizedBox(
                         height: 15,
                       ),
-                      ListView.builder(
+                      orders.isEmpty?NotFoundProduct(title: getTransrlate(context, 'NoOrder'),):  ListView.builder(
                         padding: EdgeInsets.all(1),
                         primary: false,
                         shrinkWrap: true,
