@@ -131,16 +131,16 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                               address[index].recipientName,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 20),
+                                                  fontSize: 16),
                                             ),
                                             Container(
                                               width: ScreenUtil.getWidth(context) / 2.3,
                                               child: Text(
-                                                "${address[index].apartmentNo??' '} /  ${address[index].floorNo??' '} ${address[index].district??' '} ,${address[index].street??' '}},}",
+                                                "${address[index].homeNo??' '} , ${address[index].street??' '} , ${address[index].district??''}, ${address[index].city==null?' ':address[index].city.cityName}",
                                                maxLines: 2,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 14),
+                                                    fontSize: 13),
                                               ),
                                             ),
                                           ],

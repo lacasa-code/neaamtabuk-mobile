@@ -15,6 +15,7 @@ import 'package:flutter_pos/model/vendors_types.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
+import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
@@ -172,18 +173,23 @@ class _VendorInfoState extends State<VendorInfo> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 35,
                   ),
-                  Custom_Loading(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.check_circle_outline,
+                        color: Colors.green,size: 35,),
 
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    '${getTransrlate(context, 'validvendor')}',
-                    textAlign: TextAlign.center,
-                    style:
-                    TextStyle(color: Colors.green, fontSize: 25),
+                      SizedBox(width: 10),
+                      Text(
+                        '${getTransrlate(context, 'validvendor')}',
+                        textAlign: TextAlign.center,
+                        style:
+                        TextStyle(color: Colors.green, fontSize: 20),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 10,
@@ -308,6 +314,42 @@ class _VendorInfoState extends State<VendorInfo> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    '${getTransrlate(context, 'install_vendor_app')}',
+                    textAlign: TextAlign.center,
+                    style:
+                    TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                  SizedBox(
+                    height: 35,
+                  ),
+                  InkWell(
+                      onTap: (){
+                        _launchURL('https://play.google.com/store/apps/details?id=com.lacasacode.trkar_vendor');
+                      },child: Image.asset('assets/images/google play.png')),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    '${getTransrlate(context, 'Orinstall_app')}',
+                    textAlign: TextAlign.center,
+                    style:
+                    TextStyle(color: Colors.black, fontSize: 14),
+                  ),  InkWell(
+                    onTap: (){
+                      _launchURL('dashboard.lacasacode.dev');
+                    },
+                    child: Text(
+                      '${getTransrlate(context, 'thisLink')}',
+                      textAlign: TextAlign.center,
+                      style:
+                      TextStyle(color: Colors.orange,decoration: TextDecoration.underline, fontSize: 14),
+                    ),
+                  ),
+
                 ],
               ),
             ),
@@ -1196,7 +1238,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 context) /
                                                 2.5,
                                             child: Text(
-                                              "${userModal.bankAccount}",
+                                              "${userModal.bankDocs.name}",
                                               maxLines: 1,
                                               style: TextStyle(color:  bankDocss??Colors.black),
 

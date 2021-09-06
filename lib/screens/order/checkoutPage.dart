@@ -512,7 +512,7 @@ setState(() {
                                                 )),
                                               ],
                                             ),
-                                            checkboxPay == 0 && index == 0
+                                            checkboxPay == 0 && payment[index].id == 2
                                                 ? Container(
                                                     child: Column(
                                                       children: [

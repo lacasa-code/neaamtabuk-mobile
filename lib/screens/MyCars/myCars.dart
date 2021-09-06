@@ -75,22 +75,28 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
       }
     });
 
-    API(context).get('car/yearslist').then((value) {
-      if (value != null) {
-        setState(() {
-          years = Years.fromJson(value).data;
-        });
-      }
-    });
-    API(context).get('transmissions/list').then((value) {
-      if (value != null) {
-        setState(() {
-          transmissions = Transmission.fromJson(value).data;
-        });
-      }
-    });
-  }
+    getyearslist();
+    gettransmissions();
 
+  }
+getyearslist(){
+  API(context).get('car/yearslist').then((value) {
+    if (value != null) {
+      setState(() {
+        years = Years.fromJson(value).data;
+      });
+    }
+  });
+}
+gettransmissions(){
+  API(context).get('transmissions/list').then((value) {
+    if (value != null) {
+      setState(() {
+        transmissions = Transmission.fromJson(value).data;
+      });
+    }
+  });
+}
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
@@ -303,8 +309,9 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                           items: carmodels,
                           //  onFind: (String filter) => getData(filter),
                           itemAsString: (CarModel u) =>  "  ${themeColor.getlocal()=='ar'?u.carmodel??u.name_en:u.name_en??u.carmodel}",
-                          onChanged: (CarModel data) =>
-                              CarmodelsID.text = data.id.toString(),
+                          onChanged: (CarModel data) {CarmodelsID.text = data.id.toString();
+                          getyearslist();
+                          }
                         ),
                       ),
                       years == null
@@ -327,6 +334,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                 itemAsString: (Year u) => "  ${u.year}",
                                 onChanged: (Year data) {
                                   yearsID.text = data.id.toString();
+                                  gettransmissions();
                                 },
                               ),
                             ),

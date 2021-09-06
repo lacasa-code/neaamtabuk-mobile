@@ -32,9 +32,6 @@ dependencies:
   flutter_phoenix: ^0.1.0
   status_change: ^2.0.0
   responsive_grid: ^2.0.0
-  google_sign_in: ^5.0.4
-  flutter_facebook_auth: ^3.4.1
-  flutter_facebook_login: ^3.0.0
   plugin_platform_interface: ^2.0.0
   share: ^2.0.4
   jiffy: ^4.1.0

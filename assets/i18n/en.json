@@ -147,6 +147,11 @@
 
   "from": "from",
   "to": "to",
+
+  "install_vendor_app": "You can manage your account through the seller app",
+  "Orinstall_app": "Or through the control panel on",
+  "thisLink": "This Link",
+
   "validvendor": "Your account as a seller is currently active",
   "VendorType": "Vendor Type",
   "commercialNo": "Commercial Registration No",
