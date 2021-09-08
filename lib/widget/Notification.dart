@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:provider/provider.dart';
 
-class ResultOverlay extends StatefulWidget {
+class Alerts extends StatefulWidget {
   String message;
-  Widget icon;
 
-  ResultOverlay(this.message,{this.icon});
+  Alerts(this.message);
 
   @override
-  State<StatefulWidget> createState() => ResultOverlayState();
+  State<StatefulWidget> createState() => AlertsState();
 }
 
-class ResultOverlayState extends State<ResultOverlay>
+class AlertsState extends State<Alerts>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
@@ -40,7 +40,7 @@ class ResultOverlayState extends State<ResultOverlay>
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
     return Align(
-      alignment: Alignment.bottomCenter,
+      alignment: Alignment.center,
       child: Material(
         color: Colors.transparent,
         child: ScaleTransition(
@@ -59,11 +59,7 @@ class ResultOverlayState extends State<ResultOverlay>
               children: [
                 Container(height: 25,color: Colors.orange,),
                 SizedBox(height: 15,),
-                widget.icon??  Icon(
-                Icons.info_outline,
-                  size: 80,
-                  color: Colors.lightGreen,
-                ),
+               Custom_Loading(),
                 Container(width: ScreenUtil.getWidth(context)/2,
                   child: Text(
                     '${widget.message??''}',

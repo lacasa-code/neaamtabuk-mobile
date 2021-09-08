@@ -195,33 +195,102 @@ class _HomeState extends State<Home> {
     return Column(
       children: [
         AppBarCustom(),
-        complete == 0
+        // 1 = approved
+        // 2 = rejected
+        // 3 = declined
+        // 4 = pending
+        themeColor.Complete == 1
+            ?  Container()
+            : themeColor.Complete == 2
             ? Padding(
+          padding: const EdgeInsets.only(top: 22,bottom: 10, right: 10, left: 10),
+          child: InkWell(
+            onTap: () {
+              Nav.route(context, VendorInfo());
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  "assets/icons/Attention.svg",
+                  color: Colors.orange,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(width: ScreenUtil.getWidth(context)/1.2,
+                  child: Text(
+                    '${getTransrlate(context, 'invalidvendor')}',
+                    style: TextStyle(color: Colors.orange),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ):themeColor.Complete == 3?Center(
+          child: Container(
+            width: ScreenUtil.getWidth(context) / 1.2,
+            child:  Row(
+              crossAxisAlignment:
+              CrossAxisAlignment.center,
+              mainAxisAlignment:
+              MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.remove_circle_outline,
+                  color: Colors.red,
+                  size: 35,
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  width:
+                  ScreenUtil.getWidth(context) /
+                      1.5,
+                  child: Text(
+                    '${getTransrlate(context, 'rejectvendor')}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20),
+                  ),
+                ),
+              ],
+            ),
+
+          ),
+        ):themeColor.Complete == 4?Padding(
                 padding: const EdgeInsets.only(top: 22,bottom: 10, right: 10, left: 10),
                 child: InkWell(
                   onTap: () {
                     Nav.route(context, VendorInfo());
                   },
                   child: Row(
+                    crossAxisAlignment:
+                    CrossAxisAlignment.center,
+                    mainAxisAlignment:
+                    MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(
-                        "assets/icons/Attention.svg",
-                        color: Colors.orange,
+                      Icon(
+                        Icons.pause_circle_outline,
+                        color: Colors.blue,
+                        size: 30,
                       ),
+                      SizedBox(width: 10),
                       SizedBox(
-                        width: 10,
-                      ),
-                      Container(width: ScreenUtil.getWidth(context)/1.2,
+                        width:
+                        ScreenUtil.getWidth(context) /
+                            1.5,
                         child: Text(
-                          '${getTransrlate(context, 'invalidvendor')}',
-                          style: TextStyle(color: Colors.orange),
+                          '${getTransrlate(context, 'incompletvendor')}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 16),
                         ),
                       ),
                     ],
                   ),
                 ),
-              )
-            : Container(),
+              ) : Container(),
         Expanded(
           child: RefreshIndicator(color: themeColor.getColor(),
             child: SingleChildScrollView(

@@ -80,6 +80,8 @@ class Categories {
   int id;
   String name;
   String name_en;
+  bool Check=false;
+
   String description;
   List<PartCategories> partCategories;
   String lang;
@@ -131,6 +133,8 @@ class PartCategories {
   String name_en;
   String lang;
   String createdAt;
+  bool partsCheck=false;
+
   Photo photo;
   int last_level;
   PartCategories(

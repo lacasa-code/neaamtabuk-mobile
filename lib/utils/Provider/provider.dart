@@ -5,6 +5,11 @@ class Provider_control with ChangeNotifier {
   Color _themeData = Color(0xff424242);
   String local;
   String car_made =  'إختر المركبة';
+  // 1 = approved
+  // 2 = rejected
+  // 3 = declined
+  // 4 = pending
+  int Complete ;
   int car_type =  1;
   int index =  0;
   Color color;
@@ -22,16 +27,20 @@ class Provider_control with ChangeNotifier {
   getcar_index() => index;
   getlocal() => local;
 
-  setCar_made(String Car_made) async {
-    car_made = Car_made;
+  setComplete(int complete) async {
+    Complete = complete;
     notifyListeners();
   }
-setCar_type(int Car_type) async {
-  car_type = Car_type;
+  setCar_made(String CarMade) async {
+    car_made = CarMade;
     notifyListeners();
   }
-  setCar_index(int Car_type) async {
-  index = Car_type;
+setCar_type(int CarType) async {
+  car_type = CarType;
+    notifyListeners();
+  }
+  setCar_index(int CarType) async {
+  index = CarType;
     notifyListeners();
   }
 

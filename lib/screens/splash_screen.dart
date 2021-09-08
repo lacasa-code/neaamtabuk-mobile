@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () => _auth());
+    Timer(Duration(seconds: 2), () => _auth());
   }
 
   @override
@@ -77,37 +77,41 @@ class _SplashScreenState extends State<SplashScreen>
     final SharedPreferences prefs =
     await SharedPreferences.getInstance();
     API(context,Check: false).post('check/valid/session', {}).then((value) async {
-      if (value != null) {
-        print(value);
-        if (value['status_code'] == 200) {
-          themeColor.setLogin(true);
 
+      if (value != null) {
+        print("dddddddd ${value['data']}");
+
+        if (value['status_code'] == 200) {
+          print("dddddddd ${value['data']}");
+          themeColor.setLogin(true);
           var user = value['data'];
           if (user.containsKey('vendor_details')) {
             prefs.setInt(
                 "complete", user['vendor_details']['complete']);
             prefs.setString("vendor", 'vendor');
 
+
           }
-          prefs.setString("user_email", user['email']);
-          prefs.setString("user_name", user['name']??' ');
-          prefs.setString("email_verified_at", user['email_verified_at']);
-          prefs.setString("token", user['token']);
+          print("token ${value['token']}");
+
+          prefs.setString("user_email", "${user['email']}");
+          prefs.setString("user_name", "${user['name']}");
+       //   prefs.setString("token", "${user['token']}");
           prefs.setInt("user_id", user['id']);
+
+
+          Nav.routeReplacement(context, Home());
+
         } else {
           themeColor.setLogin(false);
+          themeColor.setComplete(1);
           SharedPreferences.getInstance().then((prefs) {
             prefs.clear();
           });
+          Nav.routeReplacement(context, Home());
+
         }
-      } else {
-        themeColor.setLogin(false);
-        SharedPreferences.getInstance().then((prefs) {
-          prefs.clear();
-        });
       }
     });
-    Nav.routeReplacement(context, Home());
   }
-
 }

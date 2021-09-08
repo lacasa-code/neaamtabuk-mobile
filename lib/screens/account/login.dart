@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/screens/account/register_page.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -21,12 +22,17 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
 
         appBar: AppBar(
-          title: Image.asset(
-            'assets/images/logo.png',
-            height: ScreenUtil.getHeight(context) / 10,
-            width: ScreenUtil.getWidth(context) / 4,
-            fit: BoxFit.contain,
-            //color: themeColor.getColor(),
+          title: InkWell(
+            onTap: (){
+              Phoenix.rebirth(context);
+            },
+            child: Image.asset(
+              'assets/images/logo.png',
+              height: ScreenUtil.getHeight(context) / 10,
+              width: ScreenUtil.getWidth(context) / 4,
+              fit: BoxFit.contain,
+              //color: themeColor.getColor(),
+            ),
           ) ,
           leading: Container(),
         ),

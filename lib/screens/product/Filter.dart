@@ -3,6 +3,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/carmodel.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
@@ -18,16 +19,17 @@ import '../../service/api.dart';
 import '../../utils/screen_size.dart';
 
 class Filterdialog extends StatefulWidget {
-  Filterdialog({Key key, this.Istryers}) : super(key: key);
+  Filterdialog({Key key, this.Istryers, this.Category}) : super(key: key);
 
   bool Istryers = false;
+  bool Category = false;
 
   @override
   _FilterdialogState createState() => _FilterdialogState();
 }
 
 class _FilterdialogState extends State<Filterdialog> {
-  List<Category> parts;
+ // List<Category> parts;
   List<PartCategories> partss;
   List<Origin> origin;
   List<Manufacturer> manufacturer;
@@ -55,6 +57,7 @@ class _FilterdialogState extends State<Filterdialog> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
+    final data = Provider.of<Provider_Data>(context);
 
     return Material(
       child: SingleChildScrollView(
@@ -214,7 +217,7 @@ class _FilterdialogState extends State<Filterdialog> {
                       ),
                     ),
                   )
-                : Container(
+                :widget.Category?Container(): Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black12),
                     ),
@@ -232,15 +235,15 @@ class _FilterdialogState extends State<Filterdialog> {
                         ),
                         expanded: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: parts == null
+                          child: data.Mcategories == null
                               ? Custom_Loading()
-                              : parts.isEmpty
+                              : data.Mcategories.isEmpty
                                   ? Container()
                                   : ListView.builder(
                                       primary: false,
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: parts.length,
+                                      itemCount: data.Mcategories.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return ExpansionTile(
@@ -248,16 +251,16 @@ class _FilterdialogState extends State<Filterdialog> {
                                           iconColor: Colors.orange,
                                           collapsedTextColor: Colors.black,
                                           title: Text(
-                                              "${themeColor.getlocal() == 'ar' ? parts[index].mainCategoryName : parts[index].name_en}"),
+                                              "${themeColor.getlocal() == 'ar' ? data.Mcategories[index].mainCategoryName : data.Mcategories[index].nameEn}"),
                                           children: [
-                                            parts[index].categories == null
+                                            data.Mcategories[index].categories == null
                                                 ? Container()
                                                 : ListView.builder(
                                                     primary: false,
                                                     shrinkWrap: true,
                                                     physics:
                                                         NeverScrollableScrollPhysics(),
-                                                    itemCount: parts[index]
+                                                    itemCount: data.Mcategories[index]
                                                         .categories
                                                         .length,
                                                     itemBuilder:
@@ -266,34 +269,34 @@ class _FilterdialogState extends State<Filterdialog> {
                                                       return Row(
                                                         children: [
                                                           Checkbox(
-                                                              value: parts[
+                                                              value: data.Mcategories[
                                                                       index]
                                                                   .categories[i]
-                                                                  .partsCheck,
+                                                                  .Check,
                                                               activeColor:
                                                                   Colors.orange,
                                                               onChanged:
                                                                   (value) {
                                                                 setState(() {
-                                                                  parts[index]
+                                                                  data.Mcategories[index]
                                                                       .categories[
                                                                           i]
-                                                                      .partsCheck = value;
+                                                                      .Check = value;
                                                                 });
                                                                 value
-                                                                    ? partSelect.add(parts[
+                                                                    ? partSelect.add(data.Mcategories[
                                                                             index]
                                                                         .categories[
                                                                             i]
                                                                         .id)
-                                                                    : partSelect.remove(parts[
+                                                                    : partSelect.remove(data.Mcategories[
                                                                             index]
                                                                         .categories[
                                                                             i]
                                                                         .id);
                                                               }),
                                                           Text(
-                                                            "${themeColor.getlocal() == 'ar' ? parts[index].categories[i].name ?? parts[index].categories[i].name_en : parts[index].categories[i].name_en ?? parts[index].categories[i].name}",
+                                                            "${themeColor.getlocal() == 'ar' ? data.Mcategories[index].categories[i].name ?? data.Mcategories[index].categories[i].name_en : data.Mcategories[index].categories[i].name_en ?? data.Mcategories[index].categories[i].name}",
                                                             softWrap: true,
                                                           ),
                                                         ],
@@ -487,6 +490,7 @@ class _FilterdialogState extends State<Filterdialog> {
                           Container(
                             width: ScreenUtil.getWidth(context) / 3,
                             child: MyTextFormField(
+                              keyboard_type:TextInputType.number,
                               intialLabel: max.toString(),
                               onChange: (v) {
                                 setState(() {
@@ -592,34 +596,18 @@ class _FilterdialogState extends State<Filterdialog> {
     partSelect = [];
     originSelect = [];
     manufacturerSelect = [];
-    API(context).get('fetch/categories/nested/part').then((value) {
-      if (value != null) {
-        setState(() {
-          parts = PartCategory.fromJson(value).data;
-          parts.forEach((element) {});
-        });
-      }
-    });
-    API(context).get('home/category/parts/84').then((value) {
+    widget.Category?null:
+   widget.Istryers? API(context).get('part/category/attributes/84').then((value) {
       if (value != null) {
         setState(() {
           if (value['data'] != null) {
-            partss = new List<PartCategories>();
-            value['data'].forEach((v) {
-              partss.add(new PartCategories.fromJson(v));
-            });
+            width = value['data']['width'].cast<String>();
+            height = value['data']['height'].cast<String>();
+            size = value['data']['size'].cast<String>();
           }
-          width = [];
-          height = [];
-          size = [];
-          partss.forEach((element) {
-            width.add(element.width);
-            height.add(element.height);
-            size.add(element.size);
-          });
         });
       }
-    });
+    }):null;
     API(context).get('site/origins/list').then((value) {
       if (value != null) {
         setState(() {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/screens/product/products_page.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/widget/List/listview.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +25,7 @@ class SearchOverlayState extends State<SearchOverlay>
   List<Product> products = [];
   FocusNode _focusNode = FocusNode();
   String search_index;
+
   @override
   void initState() {
     super.initState();
@@ -29,7 +33,8 @@ class SearchOverlayState extends State<SearchOverlay>
       if (!_focusNode.hasFocus) {
         FocusScope.of(context).requestFocus(_focusNode);
       }
-    });    controller =
+    });
+    controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 450));
     scaleAnimation =
         CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
@@ -39,6 +44,7 @@ class SearchOverlayState extends State<SearchOverlay>
     });
     controller.forward();
   }
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
@@ -60,7 +66,18 @@ class SearchOverlayState extends State<SearchOverlay>
                       children: [
                         InkWell(
                           onTap: () {
-                            search_index ==null? null:search_index.isEmpty? null:Nav.route(context, Products_Page(Url: 'user/search/products?search_index=$search_index&cartype_id=${themeColor.car_type}',name:"نتائج البحث: ${search_index??''}" ,));
+                            search_index == null
+                                ? null
+                                : search_index.isEmpty
+                                    ? null
+                                    : Nav.route(
+                                        context,
+                                        Products_Page(
+                                          Url:
+                                              'user/search/products?search_index=$search_index&cartype_id=${themeColor.car_type}',
+                                          name:
+                                              "نتائج البحث: ${search_index ?? ''}",
+                                        ));
                           },
                           child: Container(
                             margin: const EdgeInsets.all(15.0),
@@ -78,35 +95,44 @@ class SearchOverlayState extends State<SearchOverlay>
                             height: 50,
                             color: Colors.white,
                             child: TextFormField(
-                                  onChanged: (string) {
-                                    search_index=string;
-                                    if (string.length >= 1) {
-                                      API(context).get(
-                                          'user/search/products?search_index=$search_index&cartype_id=${themeColor.car_type}',).then((value) {
-                                        if (value != null) {
-                                          if (value['status_code'] == 200) {
-                                            setState(() {
-                                              products =
-                                                  Product_model
-                                                      .fromJson(value)
-                                                      .data;
-                                            });
-                                          } else {
-                                            showDialog(
-                                                context: context,
-                                                builder: (_) =>
-                                                    ResultOverlay("${value['message']}\n${value['errors']}"));
-                                          }
+                              onChanged: (string) {
+                                setState(() {
+                                  products = null;
+                                });
+                                Timer(Duration(seconds: 1), () {
+                                  search_index = string;
+                                  if (string.length >= 2) {
+                                    API(context)
+                                        .get(
+                                      'user/search/products?search_index=$search_index&cartype_id=${themeColor.car_type}',
+                                    )
+                                        .then((value) {
+                                      if (value != null) {
+                                        if (value['status_code'] == 200) {
+                                          setState(() {
+                                            products =
+                                                Product_model.fromJson(value)
+                                                    .data;
+                                          });
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) => ResultOverlay(
+                                                  "${value['message']}\n${value['errors']}"));
                                         }
-                                      });
-                                    } else {
-                                      setState(() {
-                                        products = [];
-                                      });
-                                    }
-                                  },
-
-                                ),
+                                      }
+                                    });
+                                  } else {
+                                    setState(() {
+                                      products = [];
+                                    });
+                                  }
+                                });
+                              },
+                              onFieldSubmitted: (string) {
+                                print("string");
+                              },
+                            ),
                           ),
                         ),
                         Padding(
@@ -126,9 +152,12 @@ class SearchOverlayState extends State<SearchOverlay>
                     ),
                   ),
                 ),
-                List_product(
-                  product: products,ctx: context,
-                )
+                products == null
+                    ? Center(child: Container(height: 100,child: Center(child: CircularProgressIndicator())))
+                    : List_product(
+                        product: products,
+                        ctx: context,
+                      )
               ],
             ),
           ),
@@ -136,6 +165,7 @@ class SearchOverlayState extends State<SearchOverlay>
       ),
     );
   }
+
   @override
   void dispose() {
     FocusScope.of(context).unfocus();

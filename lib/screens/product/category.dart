@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
@@ -21,25 +22,18 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  List<Main_Category> Mcategories;
   int checkboxType = 0;
   int checkboxPart = 0;
 
   @override
   void initState() {
-    API(context).get('fetch/categories/nested/part').then((value) {
-      if (value != null) {
-        setState(() {
-          Mcategories = Category_model.fromJson(value).data;
-        });
-      }
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
+    final data = Provider.of<Provider_Data>(context);
 
     return Scaffold(
       body: Column(
@@ -54,7 +48,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               child: Container(
                 color: Colors.white70,
-                child: Mcategories == null
+                child: data.Mcategories == null
                     ? Center(child: Custom_Loading())
                     : Container(
                         child: Row(
@@ -79,7 +73,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       shrinkWrap: true,
                                       padding: EdgeInsets.symmetric(horizontal: 2),
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: Mcategories.length,
+                                      itemCount: data.Mcategories.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         bool selected = checkboxType == index;
@@ -115,7 +109,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   padding: const EdgeInsets.only(
                                                       right: 2,left: 2),
                                                   child: AutoSizeText(
-                                                    "${themeColor.getlocal()=='ar'? Mcategories[index].mainCategoryName??Mcategories[index].nameEn :Mcategories[index].nameEn??Mcategories[index].mainCategoryName}",
+                                                    "${themeColor.getlocal()=='ar'? data.Mcategories[index].mainCategoryName??data.Mcategories[index].nameEn :data.Mcategories[index].nameEn??data.Mcategories[index].mainCategoryName}",
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
                                                     minFontSize: 12,
@@ -137,7 +131,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             Expanded(
                               child: SingleChildScrollView(
                                 child: getList(
-                                    Mcategories[checkboxType].categories),
+                                    data.Mcategories[checkboxType].categories),
                               ),
                             ),
                           ],
@@ -182,27 +176,39 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               id: Categories[index].id,
                                               name: Categories[index].name,
                                               Url: "site/part/categories/${Categories[index].id}?cartype_id=${themeColor.getcar_type()}",
-                                              Istryers: Mcategories[checkboxType].id==7,
+                                              Istryers: Provider.of<Provider_Data>(context,listen: false).Mcategories[checkboxType].id==7,
 
                                             ));
                                       },
-                                child: Container(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: ScreenUtil.getWidth(context)/3,
+                                      child: Text(
                                         "${themeColor.getlocal()=='ar'? Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
                                         maxLines: 2,
                                         textAlign: TextAlign.start,
                                         style: TextStyle(fontWeight: FontWeight.w600,
-                                            fontSize: 13),
+                                            fontSize: 12),
                                       ),
-
-                                    ],
-                                  ),
+                                    ),
+                                    IconButton(onPressed: (){
+                                      Nav.route(
+                                          context,
+                                          Products_Page(
+                                            id:Categories[index].id,
+                                            name: "${ themeColor.getlocal()=='ar'?Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
+                                            Url: 'site/categories/${Categories[index].id}?cartype_id=${themeColor.car_type}',
+                                            Istryers: Categories[index].id==84,
+                                            Category: true,
+                                          ));
+                                    }, icon: Icon(Icons.search))
+                                  ],
                                 ),
                               ),
+
                               //theme: ExpandableThemeData(hasIcon: Categories[index].partCategories.isNotEmpty),
                               expanded: Categories[index].last_level != 0
                                   ? Container()

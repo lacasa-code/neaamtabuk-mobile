@@ -144,13 +144,17 @@
   "FileTickit": "Ticket File",
   "solutionTickit": "problem has been resolved",
   "nosolutionTickit": "the problem was not solved",
+  "ConnectionFailed": "Connection Failed",
 
   "from": "from",
   "to": "to",
+  "loading": "Uploading , please wait",
 
   "install_vendor_app": "You can manage your account through the seller app",
   "Orinstall_app": "Or through the control panel on",
   "thisLink": "This Link",
+  "incompletvendor": "Your request has been sent successfully, we will respond to you as soon as possible.",
+  "rejectvendor": "Sorry, your request has been rejected",
 
   "validvendor": "Your account as a seller is currently active",
   "VendorType": "Vendor Type",

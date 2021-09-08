@@ -226,7 +226,7 @@ class _UserInfoState extends State<UserInfo> {
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
                                           inputFormatters: [
-                                            new LengthLimitingTextInputFormatter(13),
+                                            new LengthLimitingTextInputFormatter(17),
                                           ],
                                           initialValue: userModal.phoneNo,
                                           keyboardType: TextInputType.phone,
@@ -234,7 +234,7 @@ class _UserInfoState extends State<UserInfo> {
                                           validator: (String value) {
                                             if (value.isEmpty) {
                                               return getTransrlate(context, 'phone');
-                                            }else if (value.length<13) {
+                                            }else if (value.length<10) {
                                               return "${getTransrlate(context, 'shorterphone')}";
                                             }
                                             _formKey.currentState.save();

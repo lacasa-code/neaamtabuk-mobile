@@ -8,7 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/Maintenance.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -45,8 +47,11 @@ class API {
       print(full_url);
       return getAction(response);
     } catch (exception, stackTrace) {
-      print("exception >>>>>>>>>>>>>>>>>>= ${exception}");
-
+      showDialog(
+        context: context,
+        builder: (_) => ResultOverlay(
+            "${getTransrlate(context, 'ConnectionFailed')}"),
+      );
     } finally {}
   }
 
@@ -71,7 +76,14 @@ class API {
           },
           body: json.encode(body));
       return getAction(response);
-    } catch (e) {} finally {}
+    } catch (e) {
+
+      showDialog(
+        context: context,
+        builder: (_) => ResultOverlay(
+            "${getTransrlate(context, 'ConnectionFailed')}"),
+      );
+    } finally {}
   }
 
   postFile(String url, Map<String, String> body,
@@ -86,7 +98,9 @@ class API {
     var headers = {
       'Authorization': 'Bearer  ${prefs.getString('token')}'
     }; // remove headers if not wanted
-    var request = http.MultipartRequest(
+    try {
+
+      var request = http.MultipartRequest(
         'POST', Uri.parse(full_url.toString())); // your server url
     request.fields.addAll(body); // any other fields required by your server
     attachment==null?null:  request.files.add(await http.MultipartFile.fromPath('attachment', '${attachment.path}')); // file you want to upload
@@ -102,6 +116,13 @@ class API {
       print(jsonDecode(value));
       return jsonDecode(value);
     } );
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (_) => ResultOverlay(
+            "${getTransrlate(context, 'ConnectionFailed')}"),
+      );
+    } finally {}
   }
   Put(String url, Map<String, dynamic> body) async {
     final full_url =
@@ -117,7 +138,13 @@ class API {
           },
           body: json.encode(body));
       return getAction(response);
-    } catch (e) {} finally {}
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (_) => ResultOverlay(
+            "${getTransrlate(context, 'ConnectionFailed')}"),
+      );
+    } finally {}
   }
   Delete(String url) async {
 
@@ -135,7 +162,13 @@ class API {
         },
       );
       return getAction(response);
-    } catch (e) {} finally {}
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (_) => ResultOverlay(
+            "${getTransrlate(context, 'ConnectionFailed')}"),
+      );
+    } finally {}
   }
   getAction(http.Response response) {
 

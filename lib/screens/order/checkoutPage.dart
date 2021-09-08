@@ -512,7 +512,7 @@ setState(() {
                                                 )),
                                               ],
                                             ),
-                                            checkboxPay == 0 && payment[index].id == 2
+                                            checkboxPay == 0 && payment[index].id == 1
                                                 ? Container(
                                                     child: Column(
                                                       children: [
@@ -1305,6 +1305,8 @@ setState(() {
         ),
       ],
     );
+
+
   }
 
   _navigate_add_Address(BuildContext context) async {
