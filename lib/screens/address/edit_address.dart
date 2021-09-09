@@ -7,11 +7,13 @@ import 'package:flutter_pos/model/area_model.dart';
 import 'package:flutter_pos/model/city_model.dart';
 import 'package:flutter_pos/model/country_model.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/shipping_address.dart';
 
@@ -382,6 +384,8 @@ class _EditAddressState extends State<EditAddress> {
                                       context: context,
                                       builder: (_) =>
                                           ResultOverlay(value['message']));
+                                  Provider.of<Provider_Data>(context,listen: false).getShipping(context);
+
                                 } else {
                                   showDialog(
                                       context: context,

@@ -186,9 +186,9 @@ setState(() {
                                                 Container(
                                                   width: ScreenUtil.getWidth(
                                                           context) /
-                                                      2,
+                                                      1.5,
                                                   child: Text(
-                                                    "${address[index].apartmentNo ?? ' '} /  ${address[index].floorNo ?? ' '} ${address[index].district ?? ' '} ,${address[index].street ?? ' '},${address[index].city ?? ' '},"
+                                                    "${address[index].apartmentNo ?? ' '} /  ${address[index].floorNo ?? ' '} ${address[index].district ?? ' '} ,${address[index].street ?? ' '} , ${address[index].city !=null?address[index].city.cityName: ' '} , "
                                                         "${address[index].state==null?'':address[index].state.countryName ?? ' '}",
                                                     maxLines: 2,
                                                     style: TextStyle(
@@ -200,7 +200,7 @@ setState(() {
                                                                     .bold
                                                                 : FontWeight
                                                                     .w400,
-                                                        fontSize: 20),
+                                                        fontSize: 13),
                                                   ),
                                                 ),
                                               ],

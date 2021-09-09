@@ -4,7 +4,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 
 class Sortdialog extends StatefulWidget {
   Sortdialog({Key key, this.character}) : super(key: key);
-  String character;
+  String character="ASC&ordered_by=price";
 
   @override
   _SortdialogState createState() => _SortdialogState();

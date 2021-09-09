@@ -92,6 +92,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                             API(context).post(
                                                 'user/mark/default/shipping/${address[index].id}',
                                                 {}).then((value) {
+                                                  print(value);
                                               if (value != null) {
                                                 if (value['status_code'] ==
                                                     200) {
@@ -107,8 +108,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                                   showDialog(
                                                       context: context,
                                                       builder: (_) =>
-                                                          ResultOverlay(value[
-                                                          'message']));
+                                                          ResultOverlay(value['message']??value['errors']));
                                                 }
                                               }
                                             });
@@ -136,7 +136,7 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                             Container(
                                               width: ScreenUtil.getWidth(context) / 2.3,
                                               child: Text(
-                                                "${address[index].homeNo??' '} , ${address[index].street??' '} , ${address[index].district??''}, ${address[index].city==null?' ':address[index].city.cityName}",
+                                                "${address[index].homeNo??' '} , ${address[index].street??' '} , ${address[index].district??''}, ${address[index].city==null?' ':address[index].city.cityName} , ${address[index].area==null?' ':address[index].area.areaName}",
                                                maxLines: 2,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,

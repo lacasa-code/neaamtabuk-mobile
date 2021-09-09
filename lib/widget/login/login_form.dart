@@ -136,6 +136,16 @@ class _LoginFormState extends State<LoginForm> {
                                 if (user.containsKey('vendor_details')) {
                                   prefs.setInt("complete", user['vendor_details']['complete']);
                                   prefs.setString("vendor", 'vendor');
+                                  Provider.of<Provider_control>(context, listen: false)
+                                      .setComplete(user['vendor_details']['approved'] == 1
+                                      ? 1
+                                      :user['vendor_details']['complete'] == 1
+                                      ?user['vendor_details']['rejected']  == 1
+                                      ? 2
+                                      :user['vendor_details']['declined']  == 1
+                                      ? 3
+                                      : 4
+                                      : 2);
                                 }
 
                                 prefs.setString("user_email", "${user['email']}");
@@ -143,16 +153,7 @@ class _LoginFormState extends State<LoginForm> {
                                 prefs.setString("token", "${user['token']}");
                                 prefs.setInt("user_id", user['id']);
                                 themeColor.setLogin(true);
-                                Provider.of<Provider_control>(context, listen: false)
-                                    .setComplete(user['vendor_details']['approved'] == 1
-                                    ? 1
-                                    :user['vendor_details']['complete'] == 1
-                                    ?user['vendor_details']['rejected']  == 1
-                                    ? 2
-                                    :user['vendor_details']['declined']  == 1
-                                    ? 3
-                                    : 4
-                                    : 2);
+
                                 Phoenix.rebirth(context);
 
                                 // Navigator.pushAndRemoveUntil(

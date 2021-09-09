@@ -90,7 +90,6 @@ class _SplashScreenState extends State<SplashScreen>
                 "complete", user['vendor_details']['complete']);
             prefs.setString("vendor", 'vendor');
 
-
           }
           print("token ${value['token']}");
 

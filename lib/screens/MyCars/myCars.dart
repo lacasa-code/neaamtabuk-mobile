@@ -56,7 +56,6 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
       if (value != null) {
         setState(() {
           cartype = Car_type.fromJson(value).data;
-
           getData(cartype[widget.checkboxType].id);
         });
       }
@@ -74,12 +73,8 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
         });
       }
     });
-
-    getyearslist();
-    gettransmissions();
-
   }
-getyearslist(){
+  getyearslist(){
   API(context).get('car/yearslist').then((value) {
     if (value != null) {
       setState(() {
@@ -292,6 +287,8 @@ gettransmissions(){
                                 onChanged: (CarMade data) {
                                   setState(() {
                                     carmodels = null;
+                                    years = null;
+                                    transmissions = null;
                                   });
                                   getcarModels(data.id);
                                   car_mades_id = data.id;
@@ -299,7 +296,9 @@ gettransmissions(){
                                 },
                               ),
                             ),
-                      Padding(
+                      carmodels == null
+                          ? Container()
+                          :  Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: DropdownSearch<CarModel>(
                           label: "  ${getTransrlate(context, 'Model')} ",
@@ -309,7 +308,12 @@ gettransmissions(){
                           items: carmodels,
                           //  onFind: (String filter) => getData(filter),
                           itemAsString: (CarModel u) =>  "  ${themeColor.getlocal()=='ar'?u.carmodel??u.name_en:u.name_en??u.carmodel}",
-                          onChanged: (CarModel data) {CarmodelsID.text = data.id.toString();
+                          onChanged: (CarModel data) {
+                            CarmodelsID.text = data.id.toString();
+                            setState(() {
+                              years = null;
+                              transmissions = null;
+                            });
                           getyearslist();
                           }
                         ),
@@ -334,6 +338,9 @@ gettransmissions(){
                                 itemAsString: (Year u) => "  ${u.year}",
                                 onChanged: (Year data) {
                                   yearsID.text = data.id.toString();
+                                  setState(() {
+                                    transmissions = null;
+                                  });
                                   gettransmissions();
                                 },
                               ),
@@ -465,6 +472,9 @@ gettransmissions(){
   }
 
   void getcarModels(int car_made_id) {
+    setState(() {
+      carmodels=null;
+    });
     API(context).get('car/modelslist/$car_made_id').then((value) {
       if (value != null) {
         setState(() {

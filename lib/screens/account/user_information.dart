@@ -268,12 +268,7 @@ class _UserInfoState extends State<UserInfo> {
                                             ],
                                             enabled:false,
                                             validator: (String value) {
-                                              if (value.isEmpty) {
-                                                return getTransrlate(context, 'requiredempty');
-                                              }else   if (value.length<=2) {
-                                                return "${getTransrlate(context, 'requiredlength')}";
-                                              }
-                                              return null;
+
                                             },
                                             onSaved: (String val) =>
                                                 userModal.birthdate = val,

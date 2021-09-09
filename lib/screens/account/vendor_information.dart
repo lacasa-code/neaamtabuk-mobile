@@ -93,11 +93,7 @@ class _VendorInfoState extends State<VendorInfo> {
                       ? 1
                       : userModal.complete == 1
                           ? userModal.rejected == 1
-                              ? 2
-                              : userModal.declined == 1
-                                  ? 3
-                                  : 4
-                          : 2);
+                              ? 2 : userModal.declined == 1 ? 3 : 4 : 2);
               _status = userModal.approved != 1;
               _value = int.parse(userModal.type);
               userModal.storeDetails == null
@@ -199,11 +195,14 @@ class _VendorInfoState extends State<VendorInfo> {
                                   size: 35,
                                 ),
                                 SizedBox(width: 10),
-                                Text(
-                                  '${getTransrlate(context, 'validvendor')}',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.green, fontSize: 20),
+                                SizedBox(
+                                  width: ScreenUtil.getWidth(context)/1.5,
+                                  child: Text(
+                                    '${getTransrlate(context, 'validvendor')}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.green, fontSize: 20),
+                                  ),
                                 ),
                               ],
                             ),
@@ -1594,11 +1593,12 @@ class _VendorInfoState extends State<VendorInfo> {
                                                         : _statusDocs =
                                                             !_statusDocs;
                                                   });
-                                                  showDialog(
+                                                  userModal.competeStore == 1?
+                                                       showDialog(
                                                       context: context,
                                                       builder: (_) =>
                                                           ResultOverlay(value[
-                                                              'message']));
+                                                              'message'])):null;
                                                 } else {
                                                   showDialog(
                                                       context: context,

@@ -65,11 +65,11 @@ class ItemHiddenMenu extends StatelessWidget {
                       child: Text(
                         "$lable",maxLines: 1,
                         style: (this.baseStyle ??
-                                TextStyle(color: Colors.grey, fontSize: 14.0))
+                                TextStyle(color: Colors.grey, fontSize: 10.0))
                             .merge(this.selected
                                 ? this.selectedStyle ??
-                                    TextStyle(color: Colors.black, fontSize: 14)
-                                : TextStyle(color: Colors.black, fontSize: 14)),
+                                    TextStyle(color: Colors.black, fontSize: 10)
+                                : TextStyle(color: Colors.black, fontSize: 10)),
                       ),
                     ),
                   ],

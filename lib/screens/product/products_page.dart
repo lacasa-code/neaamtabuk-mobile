@@ -134,7 +134,7 @@ class _Products_PageState extends State<Products_Page> {
                         onTap: () {
                           showDialog(
                               context: context,
-                              builder: (_) => Sortdialog(character: sort,)).then((val) {
+                              builder: (_) => Sortdialog()).then((val) {
                             sort=val;
                             print('${widget.Url}&sort_type=${sort}');
                             API(context)
