@@ -138,34 +138,18 @@ class _ProductCardState extends State<ProductCard> {
                           ],
                         ),
                         widget.product.producttypeId == 2
-                            ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "الحد الادنى : ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,fontSize: 11),
-                                ),
-                                Text(
-                                  '${widget.product.noOfOrders ?? ' '} ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,fontSize: 12,
-                                      color: Colors.black),
-                                ),
-                              ],
+                            ?  Container(child:  Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            " ",
+                            style: TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
                             ),
-                            Text(
-                              '${widget.product.holesalePrice ?? ' '} ${getTransrlate(context, 'Currency')} ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,fontSize: 11,
-                                  color: Colors.black),
-                            ),
-                          ],
-                        )
+                          ),
+                        ),)
                             : Container(
                           //  width: ScreenUtil.getWidth(context) / 4,
                             child: widget.product.discount == "0"

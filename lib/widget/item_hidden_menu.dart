@@ -64,6 +64,7 @@ class ItemHiddenMenu extends StatelessWidget {
                       width: ScreenUtil.getWidth(context)/3,
                       child: Text(
                         "$lable",maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: (this.baseStyle ??
                                 TextStyle(color: Colors.grey, fontSize: 10.0))
                             .merge(this.selected

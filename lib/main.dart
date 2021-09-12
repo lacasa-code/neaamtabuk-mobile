@@ -22,7 +22,6 @@ Future<void> main() async {
       local = prefs.getString('local');
     }
     await SentryFlutter.init(
-
           (options) {
         options.dsn = 'https://536b9d1a8e014f0dbca91d2f7f5c487a@o551399.ingest.sentry.io/5825146';
       },
@@ -37,7 +36,6 @@ Future<void> main() async {
 
     );
   });
-
 }
 
 class MyApp extends StatefulWidget {
@@ -102,13 +100,11 @@ class _MyAppState extends State<MyApp> {
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         }),
-        primaryColor: themeColor.getColor(),
+        primaryColor:  Color(0xff424242),
+        appBarTheme: AppBarTheme(color: Color(0xff424242)),
         fontFamily: 'Cairo',
         textTheme: TextTheme(
           caption: TextStyle(
-              height: 1.5
-          ),
-          body1: TextStyle(
               height: 1.5
           ),
         ),
@@ -125,7 +121,6 @@ class _MyAppState extends State<MyApp> {
 //Remove this method to stop OneSignal Debugging
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-    //OneSignal.shared.init("d4f40928-8ba1-4b12-b6a0-f6a1db13a47c");
     OneSignal.shared.setAppId("d4f40928-8ba1-4b12-b6a0-f6a1db13a47c");
 
 

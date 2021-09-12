@@ -61,7 +61,7 @@ class Product {
   int producttypeId;
   String producttypeName;
   String origincountryName;
-  String noOfOrders;
+  int noOfOrders;
   String holesalePrice;
   int countViews;
   double avgValuations;
@@ -121,7 +121,7 @@ class Product {
     producttypeId = json['producttype_id'];
     producttypeName = json['producttype_name'];
     origincountryName = json['origincountry_name'];
-    noOfOrders = json['no_of_orders'].toString();
+    noOfOrders = json['no_of_orders'];
     holesalePrice = json['holesale_price'].toString();
     countViews = json['count_views'];
     avgValuations = double.parse(json['avg_valuations'].toString());

@@ -188,7 +188,7 @@ setState(() {
                                                           context) /
                                                       1.5,
                                                   child: Text(
-                                                    "${address[index].apartmentNo ?? ' '} /  ${address[index].floorNo ?? ' '} ${address[index].district ?? ' '} ,${address[index].street ?? ' '} , ${address[index].city !=null?address[index].city.cityName: ' '} , "
+                                                    "${address[index].district ?? ' '} ,${address[index].street ?? ' '} , ${address[index].city !=null?address[index].city.cityName: ' '} , "
                                                         "${address[index].state==null?'':address[index].state.countryName ?? ' '}",
                                                     maxLines: 2,
                                                     style: TextStyle(
@@ -268,9 +268,9 @@ setState(() {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            width:
-                                                ScreenUtil.getWidth(context) /
-                                                    8,
+                                            width: ScreenUtil.getWidth(context) / 8,
+                                            height:  ScreenUtil.getHeight(context)/20,
+
                                             child: CachedNetworkImage(
                                               imageUrl: widget
                                                       .carts
@@ -950,6 +950,8 @@ setState(() {
                                                 width: ScreenUtil.getWidth(
                                                         context) /
                                                     8,
+                                                height:  ScreenUtil.getHeight(context)/20,
+
                                                 child: CachedNetworkImage(
                                                   imageUrl: checkout_model
                                                           .data
@@ -1174,6 +1176,8 @@ setState(() {
                         children: [
                           Container(
                             width: ScreenUtil.getWidth(context) / 8,
+                            height:  ScreenUtil.getHeight(context)/20,
+
                             child: CachedNetworkImage(
                               imageUrl: widget.carts.data.orderDetails[index]
                                       .productImage.isNotEmpty

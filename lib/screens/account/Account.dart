@@ -241,7 +241,7 @@ class _AccountState extends State<Account> {
                                     lable:  token == null
                                         ? '': _cart_model.address == null
                                         ? ''
-                                        : ' ${_cart_model.address.area == null ? '' : _cart_model.address.area.areaName ?? ''},${ _cart_model.address.city == null ? '' :  _cart_model.address.city.cityName ?? ''},${ _cart_model.address.street ?? ''},${ _cart_model.address.district ?? ''},${ _cart_model.address.floorNo ?? ''},${ _cart_model.address.apartmentNo ?? ''}',
+                                        : '${_cart_model.address.area == null ? '' : _cart_model.address.area.areaName ?? ''},${ _cart_model.address.city == null ? '' :  _cart_model.address.city.cityName ?? ''} , ${ _cart_model.address.street ?? ''}',
                                     onTap: () {
                                       Nav.route(context, Shipping_Address());
                                     },

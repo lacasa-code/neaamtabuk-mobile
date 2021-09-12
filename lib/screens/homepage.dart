@@ -137,6 +137,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final provider_Data = Provider.of<Provider_Data>(context);
+    final theme = Provider.of<Provider_control>(context);
     return Scaffold(
       key: _scaffoldKey,
       // drawer: HiddenMenu(),
@@ -165,8 +166,12 @@ class _HomeState extends State<Home> {
         ),
         popAllScreensOnTapOfSelectedTab: true,
         selectedTabScreenContext: (v) {
+
           if (_controller.index == 3) {
             provider_Data.getCart(context);
+          } else if (_controller.index == 0) {
+            _controller.jumpToTab(0);
+            provider_Data.getData(theme.getcar_type(),context);
           }
         },
         popActionScreens: PopActionScreensType.once,

@@ -140,12 +140,15 @@ class _OrderHistoryState extends State<OrderHistory> {
                                         child: AutoSizeText(
                                           '${getTransrlate(context, 'OrderNO')} ${orders[index].orderNumber}',
                                           maxLines: 1,
+                                          style: TextStyle(fontSize: 13),
                                         )),
                                     AutoSizeText(
                                       DateFormat('yyyy-MM-dd').format(
                                           DateTime.parse(
                                               orders[index].createdAt)),
                                       maxLines: 1,
+                                      style: TextStyle(fontSize: 13),
+
                                     ),
                                   ],
                                 ),
@@ -248,7 +251,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               child: AutoSizeText(
                                                 '${orders[index].orderStatus}',
                                                 maxLines: 1,
-                                                maxFontSize: 20,
+                                                maxFontSize: 16,
                                                 minFontSize: 14,
                                               ),
                                             )),
@@ -267,7 +270,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                         maxLines: 1,
                                         style: TextStyle(
                                             color: Colors.orange,
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             decoration:
                                                 TextDecoration.underline),
                                       ),

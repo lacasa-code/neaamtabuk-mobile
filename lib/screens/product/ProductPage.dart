@@ -64,6 +64,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   void initState() {
+    widget.product.noOfOrders ==null? dropdownValue = '1':dropdownValue = 'other';
     SharedPreferences.getInstance().then((value) {
       setState(() {
         Vendor = value.getString('vendor');
@@ -1378,14 +1379,14 @@ class _ProductPageState extends State<ProductPage> {
                                 padding: const EdgeInsets.all(3.0),
                                 child: MyTextFormField(
                                   istitle: true,
-                                  intialLabel: "1",
+                                  intialLabel: "${widget.product.noOfOrders??'1'}",
                                   keyboard_type: TextInputType.number,
                                   labelText: getTransrlate(context, 'quantity'),
                                   hintText: getTransrlate(context, 'quantity'),
                                   isPhone: true,
                                   validator: (String value) {
                                     if (value.isEmpty) {
-                                      return "كمية";
+                                      return "${getTransrlate(context, 'quantity')}";
                                     }
                                     _formKey.currentState.save();
                                     return null;
