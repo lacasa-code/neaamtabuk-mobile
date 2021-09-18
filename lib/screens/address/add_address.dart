@@ -393,6 +393,15 @@ class _AddAddressState extends State<AddAddress> {
                   textDirection: TextDirection.ltr,
                   keyboard_type: TextInputType.phone,
                   labelText: getTransrlate(context, 'telphone'),
+                  validator: (String value) {
+                    if (value.length>1&&value.length<8) {
+                      return getTransrlate(context, 'requiredlength');
+                    } else  if (value.length>1&&!value.startsWith('0')) {
+                      return getTransrlate(context, 'telphone0');
+                    }
+                    _formKey.currentState.save();
+                    return null;
+                  },
                   inputFormatters: [
                     new LengthLimitingTextInputFormatter(14),
                   ],

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 class MyTextFormField extends StatelessWidget {
   final String hintText;
   final String labelText;
+  final String errorText;
   final Function validator;
   final Function onSaved;
   final Function onChange;
@@ -29,6 +30,7 @@ class MyTextFormField extends StatelessWidget {
       {this.hintText,
       this.validator,
       this.textAlign,
+      this.errorText,
       this.enabled,
       this.onSaved,
       this.isPassword = false,
@@ -53,6 +55,7 @@ class MyTextFormField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           istitle?Container(): Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16),),
+          errorText==null?Container(): Text(errorText??'',style: TextStyle(color: Colors.red,fontSize: 14),),
           istitle?Container():SizedBox(height: 4,),
           TextFormField(
             textAlign:textAlign??TextAlign.start ,

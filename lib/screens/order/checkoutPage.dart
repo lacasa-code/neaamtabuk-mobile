@@ -11,6 +11,7 @@ import 'package:flutter_pos/model/checkout_model.dart';
 import 'package:flutter_pos/model/payment_model.dart';
 import 'package:flutter_pos/model/shipping_address.dart';
 import 'package:flutter_pos/screens/MyCars/myCars.dart';
+import 'package:flutter_pos/screens/account/OrderHistory.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -67,6 +68,8 @@ setState(() {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
+    final _cart_model = Provider.of<Provider_Data>(context);
+
     return Scaffold(
       body: Container(
         child: Column(
@@ -338,23 +341,14 @@ setState(() {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'ARAMIX',
-                                              style: TextStyle(
-                                                  height: 1.5,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                            Text(
-                                              'متوقع وصولها يوم 25-6-2021',
-                                              style: TextStyle(
-                                                  height: 1.5,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                          ],
+                                        SizedBox(
+                                          width: ScreenUtil.getWidth(context)/2,
+                                          child: Text(
+                                            '${getTransrlate(context, 'shipingditils')} : ${DateFormat(DateFormat.ABBR_MONTH_DAY, '${themeColor.getlocal()}').format(DateTime.now().add(Duration(days: 3)))} - ${DateFormat(DateFormat.ABBR_MONTH_DAY, '${themeColor.getlocal()}').format(DateTime.now().add(Duration(days: 5)))}',
+                                            style: TextStyle(
+                                                height: 1.5,
+                                                fontWeight: FontWeight.w700),
+                                          ),
                                         ),
                                         Text(
                                           '0.00 ${getTransrlate(context, 'Currency')}',
@@ -416,6 +410,7 @@ setState(() {
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
+                         //   _cart_model.address==null?'غير محدد حاليا': 'توصيل إلى: ${_cart_model.address.area==null?'':_cart_model.address.area.areaName??''},${_cart_model.address.city==null?'':_cart_model.address.city.cityName??''}.${_cart_model.address.street??''}',
                             DefaultAddress==null?'غير محدد حاليا': 'توصيل إلى: ${DefaultAddress.area==null?'':DefaultAddress.area.areaName??''},${DefaultAddress.city==null?'':DefaultAddress.city.cityName??''}.${DefaultAddress.street??''},${DefaultAddress.district??''}${DefaultAddress.floorNo??''}${DefaultAddress.apartmentNo??''}',
                             style: TextStyle(
                                 height: 1.5, fontWeight: FontWeight.bold),
@@ -904,34 +899,41 @@ setState(() {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
+
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Text(
-                                        '${getTransrlate(context, 'OrderDitails')}',
+                                        "${getTransrlate(context, 'ShippingBy')} : ",
                                         style: TextStyle(
-                                            color: Colors.orange,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 16),
+                                            color: Colors.black),
                                       ),
                                       SizedBox(
-                                        height: 10,
+                                        height: 5,
                                       ),
                                       Text(
-                                        'بواسطة ارامكس  ARAMIX ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        'متوقع وصولها يوم 25-6-2021',
+                                        '${getTransrlate(context, 'shipingditils')} : ${DateFormat(DateFormat.ABBR_MONTH_DAY, '${themeColor.getlocal()}').format(DateTime.now().add(Duration(days: 3)))} - ${DateFormat(DateFormat.ABBR_MONTH_DAY, '${themeColor.getlocal()}').format(DateTime.now().add(Duration(days: 5)))}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                       SizedBox(
                                         height: 25,
+                                      ),
+                                      InkWell(
+                                        onTap: (){
+                                         Nav.routeReplacement(context, OrderHistory());
+                                        },
+                                        child: Text(
+                                          '${getTransrlate(context, 'OrderDitails')}',
+                                          style: TextStyle(
+                                              color: Colors.orange,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
                                       ),
                                       ListView.builder(
                                         padding: EdgeInsets.all(1),

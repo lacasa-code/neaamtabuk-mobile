@@ -17,7 +17,7 @@ Future<void> main() async {
   await GlobalConfiguration().loadFromAsset("configurations");
   print("base_url: ${GlobalConfiguration().getString('base_url')}");
   SharedPreferences.getInstance().then((prefs) async {
-    String local = 'ar';
+    String local = 'en';
     if (prefs.getString('local') != null) {
       local = prefs.getString('local');
     }
@@ -33,7 +33,6 @@ Future<void> main() async {
           create: (_) => Provider_Data(),
         ),
       ], child: Phoenix(child: MyApp()))),
-
     );
   });
 }
@@ -84,10 +83,13 @@ class _MyAppState extends State<MyApp> {
       ],
       locale: _locale,
       localeResolutionCallback: (devicelocale, supportedLocales) {
+        WidgetsBinding.instance.addPostFrameCallback((_){
+          themeColor.setLocal(devicelocale.languageCode);
+        });
         for (var locale in supportedLocales) {
-          if (locale.languageCode == devicelocale.languageCode &&
-              locale.countryCode == devicelocale.countryCode) {
-            return devicelocale;
+          if (locale.languageCode == devicelocale.languageCode ) {
+
+            return Locale(devicelocale.languageCode,'');
           }
         }
         return supportedLocales.first;

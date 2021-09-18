@@ -114,7 +114,7 @@ class _WishListState extends State<WishList> {
                                       color: Colors.grey,
                                     )),
                                 SizedBox(height: 25,),
-                                InkWell(
+                                wishList[index].quantity >= 1?InkWell(
                                   onTap: () {
                                     API(context).post('add/to/cart', {
                                       "product_id": wishList[index].product_id,
@@ -170,8 +170,27 @@ class _WishListState extends State<WishList> {
                                       ],
                                     ),
                                   ),
-                                ),
-
+                                ):
+                                Container(
+                                  padding: const EdgeInsets.all(5.0),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey)),
+                                  child: Padding(
+                                    padding:  EdgeInsets.symmetric(horizontal: 12,vertical: 4),
+                                    child: Container(
+                                      width: ScreenUtil.getWidth(context) / 5,
+                                      child: Center(
+                                        child: AutoSizeText(
+                                          '${getTransrlate(context, 'notavailable')}',
+                                          minFontSize: 10,
+                                          maxFontSize: 16,
+                                          maxLines: 1,
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           )

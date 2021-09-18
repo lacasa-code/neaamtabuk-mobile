@@ -6,6 +6,7 @@ import 'package:flutter_pos/model/cart_model.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/screens/address/Address_Page.dart';
 import 'package:flutter_pos/screens/order/checkoutPage.dart';
+import 'package:flutter_pos/screens/product/ProductPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -71,6 +72,10 @@ class _CartScreenState extends State<CartScreen> {
                           children: [
                             InkWell(
                               onTap: () {
+                                _cart_model.cart_model.mixed? showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                    ResultOverlay('${getTransrlate(context, 'mixed')}')):
                                 pushNewScreen(
                                   context,
                                   screen: CheckOutPage(
@@ -213,11 +218,14 @@ class _CartScreenState extends State<CartScreen> {
                                                   itemBuilder:
                                                       (BuildContext context,
                                                           int index) {
-                                                    return ProductCart(
-                                                        themeColor: themeColor,
-                                                        carts: _cart_model.cart_model.data
-                                                                .orderDetails[
-                                                            index]);
+                                                    return InkWell(
+                                                      onTap: (){
+                                                        Nav.route(context, ProductPage(product_id:_cart_model.cart_model.data.orderDetails[index].productId.toString() ,));
+                                                      },
+                                                      child: ProductCart(
+                                                          themeColor: themeColor,
+                                                          carts: _cart_model.cart_model.data.orderDetails[index]),
+                                                    );
                                                   },
                                                 ),
                                                 Container(

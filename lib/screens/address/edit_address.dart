@@ -303,8 +303,17 @@ class _EditAddressState extends State<EditAddress> {
                   intialLabel: widget.address.telephoneNo,
                   keyboard_type: TextInputType.phone,
                   textDirection: TextDirection.ltr,
+                  validator: (String value) {
+                    if (value.length>1&&value.length<8) {
+                      return getTransrlate(context, 'requiredlength');
+                    } else  if (value.length>1&&!value.startsWith('0')) {
+                      return getTransrlate(context, 'telphone0');
+                    } 
+                    _formKey.currentState.save();
+                    return null;
+                  },
                   inputFormatters: [
-                    new LengthLimitingTextInputFormatter(12),
+                    new LengthLimitingTextInputFormatter(17),
                   ],
                   labelText: getTransrlate(context, 'telphone'),
                   hintText: getTransrlate(context, 'telphone'),

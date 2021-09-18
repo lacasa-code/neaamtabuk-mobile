@@ -47,8 +47,7 @@ class _SortdialogState extends State<Sortdialog> {
                       icon:
                           Icon(Icons.close, size: 35, color: Color(0xff7B7B7B)),
                       onPressed: () {
-                        Navigator.pop(
-                            context, "${widget.character}");
+                        Navigator.pop(context, 'ASC&ordered_by=price');
                       })
                 ],
               ),
@@ -64,7 +63,7 @@ class _SortdialogState extends State<Sortdialog> {
               onChanged: (String value) {
                 setState(() {
                   widget.character = value;
-                  Navigator.pop(context, "${value}");
+                  Navigator.pop(context, "${value??'ASC&ordered_by=price'}");
                 });
               },
             ),

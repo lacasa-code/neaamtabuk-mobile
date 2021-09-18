@@ -38,8 +38,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../MyCars/myCars.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({Key key, this.product, this.product_id}) : super(key: key);
-  final Product product;
+   ProductPage({Key key, this.product, this.product_id}) : super(key: key);
+   Product product;
   final String product_id;
 
   @override
@@ -64,7 +64,15 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   void initState() {
-    widget.product.noOfOrders ==null? dropdownValue = '1':dropdownValue = 'other';
+    API(context).get('home/show/product/${widget.product_id}').then((value) {
+     print(value);
+      setState(() {
+        widget.product = Product.fromJson(value['data']);
+        widget.product.noOfOrders ==null? dropdownValue = '1':dropdownValue = 'other';
+      });
+    });
+    widget.product==null?null: widget.product.producttypeId != 2? dropdownValue = '1':dropdownValue = 'other';
+
     SharedPreferences.getInstance().then((value) {
       setState(() {
         Vendor = value.getString('vendor');
@@ -80,7 +88,7 @@ class _ProductPageState extends State<ProductPage> {
     final themeColor = Provider.of<Provider_control>(context);
     final ServiceData = Provider.of<Provider_Data>(context);
     return Scaffold(
-      body: Column(
+      body:widget.product==null?Center(child: Custom_Loading()): Column(
         children: [
           AppBarCustom(
             isback: true,
@@ -286,7 +294,7 @@ class _ProductPageState extends State<ProductPage> {
                                           color: Colors.red,
                                         ),
                                         Text(
-                                          ' غير متوفر ',
+                                          '${getTransrlate(context, 'available')}',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.red,
@@ -310,7 +318,7 @@ class _ProductPageState extends State<ProductPage> {
                                   Row(
                                     children: [
                                       Text(
-                                        "سعر الجملة  : ",
+                                        "${getTransrlate(context, 'wholesalePrice')}  : ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.w400),
                                       ),
@@ -328,7 +336,7 @@ class _ProductPageState extends State<ProductPage> {
                                   Row(
                                     children: [
                                       Text(
-                                        "الحد الادنى للطلب  : ",
+                                        "${getTransrlate(context, 'minOfOrder')}  : ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.w400),
                                       ),
@@ -886,6 +894,7 @@ class _ProductPageState extends State<ProductPage> {
                                                                       .reviewsData[
                                                                           index]
                                                                       .bodyReview,
+                                                                  maxLines: 2,
                                                                   style: TextStyle(
                                                                       fontWeight:
                                                                           FontWeight
@@ -1179,10 +1188,10 @@ class _ProductPageState extends State<ProductPage> {
                                                                                     Icon(
                                                                                       Icons.message_outlined,
                                                                                       color: Colors.grey,
-                                                                                      size: 35,
+                                                                                      size: 30,
                                                                                     ),
                                                                                     SizedBox(
-                                                                                      width: 10,
+                                                                                      width: 5,
                                                                                     ),
                                                                                     Center(
                                                                                       child: Column(
@@ -1364,8 +1373,28 @@ class _ProductPageState extends State<ProductPage> {
                     margin: const EdgeInsets.only(
                         top: 5, bottom: 25, left: 2, right: 2),
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black26)),
-                    child: Row(
+                        border: Border.all(color:widget.product.inCart==1?  Colors.white: Colors.black26)),
+                    child:  widget.product.inCart==1?   Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.lightGreen)),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 1),
+                      padding: const EdgeInsets.all(12.0),
+                      child: Center(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                getTransrlate(context, 'foundCart'),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.lightGreen),
+                              ),
+                            ],
+                          )),
+                    ) :Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
@@ -1379,7 +1408,7 @@ class _ProductPageState extends State<ProductPage> {
                                 padding: const EdgeInsets.all(3.0),
                                 child: MyTextFormField(
                                   istitle: true,
-                                  intialLabel: "${widget.product.noOfOrders??'1'}",
+                                  intialLabel: "${widget.product.producttypeId == 2?widget.product.noOfOrders??'1':'1'}",
                                   keyboard_type: TextInputType.number,
                                   labelText: getTransrlate(context, 'quantity'),
                                   hintText: getTransrlate(context, 'quantity'),
@@ -1438,7 +1467,7 @@ class _ProductPageState extends State<ProductPage> {
                                               }).toList(),
                                             ),
                                           ),
-                        InkWell(
+                    InkWell(
                           onTap: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
@@ -1460,6 +1489,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 )));
                                     setState(() {
                                       dropdownValue = "1";
+                                        widget.product.inCart=1;
                                     });
                                     ServiceData.getCart(context);
                                   } else {

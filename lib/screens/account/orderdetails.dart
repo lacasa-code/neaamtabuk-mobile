@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/order_model.dart';
 import 'package:flutter_pos/model/ticket.dart';
 import 'package:flutter_pos/screens/order/CreateTickits.dart';
+import 'package:flutter_pos/screens/product/ProductPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -276,7 +277,10 @@ class _OrderdetailsState extends State<Orderdetails> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: widget.order.orderDetails.length,
                         itemBuilder: (BuildContext context, int i) {
-                          return Container(
+                          return InkWell(
+                            onTap: (){
+                              Nav.route(context, ProductPage(product_id:widget.order.orderDetails[i].productId.toString(),));
+                            },
                             child: Column(
                               children: [
                                 Row(

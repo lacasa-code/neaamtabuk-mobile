@@ -39,6 +39,10 @@ class _VendorInfoState extends State<VendorInfo> {
   Vendor userModal;
   Reasons reasons;
   int _value = 0;
+  String commercialNo;
+  String taxCardNo;
+  String company_name;
+  String bankAccount;
   List<Country> contries;
   List<City> cities;
   List<Area> area;
@@ -93,7 +97,11 @@ class _VendorInfoState extends State<VendorInfo> {
                       ? 1
                       : userModal.complete == 1
                           ? userModal.rejected == 1
-                              ? 2 : userModal.declined == 1 ? 3 : 4 : 2);
+                              ? 2
+                              : userModal.declined == 1
+                                  ? 3
+                                  : 4
+                          : 2);
               _status = userModal.approved != 1;
               _value = int.parse(userModal.type);
               userModal.storeDetails == null
@@ -135,6 +143,20 @@ class _VendorInfoState extends State<VendorInfo> {
               element.field == 'bankDocs'
                   ? bankDocss = Colors.red
                   : Colors.black;
+              element.field == 'commercial_no'
+                  ? commercialNo = element.rejReason
+                  : null;
+              element.field == 'tax_card_no'
+                  ? taxCardNo = element.rejReason
+                  : null;
+
+              element.field == 'bank_account'
+                  ? bankAccount = element.rejReason
+                  : null;
+
+              element.field == 'company_name'
+                  ? company_name = element.rejReason
+                  : null;
             });
           });
         } else {
@@ -196,7 +218,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                 ),
                                 SizedBox(width: 10),
                                 SizedBox(
-                                  width: ScreenUtil.getWidth(context)/1.5,
+                                  width: ScreenUtil.getWidth(context) / 1.5,
                                   child: Text(
                                     '${getTransrlate(context, 'validvendor')}',
                                     textAlign: TextAlign.center,
@@ -917,6 +939,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                             ],
                                           ),
                                     MyTextFormField(
+                                      errorText: company_name,
                                       intialLabel: userModal.companyName ?? '',
                                       keyboard_type: TextInputType.emailAddress,
                                       labelText:
@@ -936,6 +959,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                       },
                                     ),
                                     MyTextFormField(
+                                      errorText: commercialNo,
+
                                       intialLabel: userModal.commercialNo,
                                       keyboard_type: TextInputType.emailAddress,
                                       labelText:
@@ -1078,6 +1103,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                       height: 10,
                                     ),
                                     MyTextFormField(
+                                      errorText: taxCardNo,
                                       intialLabel: userModal.taxCardNo,
                                       keyboard_type: TextInputType.emailAddress,
                                       labelText:
@@ -1332,52 +1358,54 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   ],
                                                 ),
                                               ),
+                                              userModal.wholesaleDocs == null
+                                                  ? Container()
+                                                  : InkWell(
+                                                onTap: () {
+                                                  _launchURL(userModal
+                                                      .wholesaleDocs.image);
+                                                },
+                                                child: Container(
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                          width: ScreenUtil.getWidth(
+                                                              context) /
+                                                              2.5,
+                                                          child: Text(
+                                                            "${userModal.wholesaleDocs.name}",
+                                                            maxLines: 1,
+                                                            style: TextStyle(
+                                                                color: wholesaleDocss ??
+                                                                    Colors.black),
+                                                          ),
+                                                        ),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            CupertinoIcons
+                                                                .clear_circled,
+                                                            size: 20,
+                                                          ),
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              userModal.wholesaleDocs =
+                                                              null;
+                                                            });
+                                                          },
+                                                        ),
+                                                      ],
+                                                    )),
+                                              ),
                                             ],
                                           ),
-                                    userModal.wholesaleDocs == null
-                                        ? Container()
-                                        : InkWell(
-                                            onTap: () {
-                                              _launchURL(userModal
-                                                  .wholesaleDocs.image);
-                                            },
-                                            child: Container(
-                                                child: Row(
-                                              children: [
-                                                Container(
-                                                  width: ScreenUtil.getWidth(
-                                                          context) /
-                                                      2.5,
-                                                  child: Text(
-                                                    "${userModal.wholesaleDocs.name}",
-                                                    maxLines: 1,
-                                                    style: TextStyle(
-                                                        color: wholesaleDocss ??
-                                                            Colors.black),
-                                                  ),
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(
-                                                    CupertinoIcons
-                                                        .clear_circled,
-                                                    size: 20,
-                                                  ),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      userModal.wholesaleDocs =
-                                                          null;
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            )),
-                                          ),
+
                                     SizedBox(
                                       height: 10,
                                     ),
                                     MyTextFormField(
+                                      errorText: bankAccount,
                                       intialLabel: userModal.bankAccount,
-                                      keyboard_type: TextInputType.emailAddress,
+                                      keyboard_type: TextInputType.text,
                                       labelText:
                                           '${getTransrlate(context, 'Bankaccountnumber')}',
                                       hintText:
@@ -1547,7 +1575,6 @@ class _VendorInfoState extends State<VendorInfo> {
                                               builder: (_) => Alerts(
                                                   "${getTransrlate(context, 'loading')}"),
                                             );
-
                                             API(context)
                                                 .postFile(
                                                     'vendor/upload/docs',
@@ -1582,23 +1609,25 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     wholesaleDocs:
                                                         wholesaleDocs)
                                                 .then((value) {
-                                              Navigator.pop(context);
                                               if (value != null) {
+                                                Navigator.of(context,rootNavigator:true).pop();
+
                                                 if (value['status_code'] ==
                                                     200) {
-                                                 // Navigator.pop(context);
+                                                  // Navigator.pop(context);
                                                   setState(() {
                                                     userModal.competeStore == 1
                                                         ? Navigator.pop(context)
                                                         : _statusDocs =
                                                             !_statusDocs;
                                                   });
-                                                  userModal.competeStore == 1?
-                                                       showDialog(
-                                                      context: context,
-                                                      builder: (_) =>
-                                                          ResultOverlay(value[
-                                                              'message'])):null;
+                                                  userModal.competeStore == 1
+                                                      ? showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              ResultOverlay(value[
+                                                                  'message']))
+                                                      : null;
                                                 } else {
                                                   showDialog(
                                                       context: context,
@@ -1663,18 +1692,20 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     const EdgeInsets.symmetric(
                                                         vertical: 10),
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      getTransrlate(context, 'Countroy'),
+                                                      getTransrlate(
+                                                          context, 'Countroy'),
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 16),
                                                     ),
-
                                                     DropdownSearch<Country>(
                                                       // label: getTransrlate(context, 'Countroy'),
-                                                      validator: (Country item) {
+                                                      validator:
+                                                          (Country item) {
                                                         if (item == null) {
                                                           return "Required field";
                                                         } else
@@ -1684,16 +1715,19 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       showSearchBox: true,
                                                       items: contries,
                                                       //  onFind: (String filter) => getData(filter),
-                                                      itemAsString: (Country u) =>
-                                                          u.countryName,
-                                                      onChanged: (Country data) {
+                                                      itemAsString:
+                                                          (Country u) =>
+                                                              u.countryName,
+                                                      onChanged:
+                                                          (Country data) {
                                                         country =
                                                             data.id.toString();
                                                         setState(() {
                                                           area = null;
                                                           cities = null;
                                                         });
-                                                        code.text = data.phonecode
+                                                        code.text = data
+                                                            .phonecode
                                                             .toString();
                                                         getArea(data.id);
                                                       },
@@ -1704,19 +1738,20 @@ class _VendorInfoState extends State<VendorInfo> {
                                         area == null
                                             ? Container()
                                             : Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                                          children: [
-                                                Text(
-                                                  getTransrlate(context, 'area'),
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 16),
-                                                ),
-                                                Padding(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                            vertical: 10),
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    getTransrlate(
+                                                        context, 'area'),
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 10),
                                                     child: DropdownSearch<Area>(
                                                       // label: getTransrlate(context, 'Countroy'),
                                                       validator: (Area item) {
@@ -1731,7 +1766,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       itemAsString: (Area u) =>
                                                           u.areaName,
                                                       onChanged: (Area data) {
-                                                        areas = data.id.toString();
+                                                        areas =
+                                                            data.id.toString();
                                                         setState(() {
                                                           cities = null;
                                                         });
@@ -1739,9 +1775,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       },
                                                     ),
                                                   ),
-                                              ],
-                                            ),
-
+                                                ],
+                                              ),
                                         cities == null
                                             ? Container()
                                             : Padding(
@@ -1749,11 +1784,12 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     const EdgeInsets.symmetric(
                                                         vertical: 10),
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      getTransrlate(context, 'City'),
+                                                      getTransrlate(
+                                                          context, 'City'),
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 16),
@@ -1772,7 +1808,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       itemAsString: (City u) =>
                                                           u.cityName,
                                                       onChanged: (City data) {
-                                                        city = data.id.toString();
+                                                        city =
+                                                            data.id.toString();
                                                       },
                                                     ),
                                                   ],
@@ -1818,7 +1855,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     textAlign: TextAlign.left,
                                                     inputFormatters: [
                                                       new LengthLimitingTextInputFormatter(
-                                                          17),
+                                                          11),
                                                     ],
                                                     initialValue: phone,
                                                     keyboardType:
@@ -1831,10 +1868,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                                             context, 'phone');
                                                       } else if (value.length >
                                                           15) {
-                                                        return "${getTransrlate(context, 'phone')} > 14";
+                                                        return "${getTransrlate(context, 'shorterphone')} ";
                                                       } else if (value.length <
                                                           9) {
-                                                        return "${getTransrlate(context, 'phone')} < 9";
+                                                        return "${getTransrlate(context, 'shorterphone')}";
                                                       }
                                                       address_key.currentState
                                                           .save();
@@ -1968,9 +2005,20 @@ class _VendorInfoState extends State<VendorInfo> {
     FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
       bankDocs = File(result.files.single.path);
-      setState(() {
-        userModal.bankDocs = Images(image: bankDocs.path, name: bankDocs.path);
-      });
+      int sizeInBytes = bankDocs.lengthSync();
+      double sizeInMb = sizeInBytes / (1024 * 1024);
+      if (sizeInMb < 1){
+        setState(() {
+          userModal.bankDocs =
+              Images(image: bankDocs.path, name: bankDocs.path);
+        });
+      }else{
+        showDialog(
+          context: context,
+          builder: (_) => ResultOverlay(
+              "${getTransrlate(context, 'Attach')}"),
+        );
+      }
     } else {
       // User canceled the picker
     }
@@ -1979,11 +2027,23 @@ class _VendorInfoState extends State<VendorInfo> {
   gettaxCardDocs() async {
     FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
+
       taxCardDocs = File(result.files.single.path);
-      setState(() {
-        userModal.taxCardDocs =
-            Images(image: taxCardDocs.path, name: taxCardDocs.path);
-      });
+      int sizeInBytes = taxCardDocs.lengthSync();
+      double sizeInMb = sizeInBytes / (1024 * 1024);
+      if (sizeInMb < 1){
+        setState(() {
+          userModal.taxCardDocs =
+              Images(image: taxCardDocs.path, name: taxCardDocs.path);
+        });
+      }else{
+        showDialog(
+          context: context,
+          builder: (_) => ResultOverlay(
+              "${getTransrlate(context, 'Attach')}"),
+        );
+      }
+
     } else {
       // User canceled the picker
     }
@@ -1993,10 +2053,20 @@ class _VendorInfoState extends State<VendorInfo> {
     FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
       commercialDocs = File(result.files.single.path);
-      setState(() {
-        userModal.commercialDocs =
-            Images(image: commercialDocs.path, name: commercialDocs.path);
-      });
+      int sizeInBytes = commercialDocs.lengthSync();
+      double sizeInMb = sizeInBytes / (1024 * 1024);
+      if (sizeInMb < 1){
+        setState(() {
+          userModal.commercialDocs =
+              Images(image: commercialDocs.path, name: commercialDocs.path);
+        });
+      }else{
+        showDialog(
+          context: context,
+          builder: (_) => ResultOverlay(
+              "${getTransrlate(context, 'Attach')}"),
+        );
+      }
     } else {
       // User canceled the picker
     }
@@ -2006,10 +2076,20 @@ class _VendorInfoState extends State<VendorInfo> {
     FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
       wholesaleDocs = File(result.files.single.path);
-      setState(() {
-        userModal.wholesaleDocs =
-            Images(image: wholesaleDocs.path, name: wholesaleDocs.path);
-      });
+      int sizeInBytes = wholesaleDocs.lengthSync();
+      double sizeInMb = sizeInBytes / (1024 * 1024);
+      if (sizeInMb < 1){
+        setState(() {
+          userModal.wholesaleDocs =
+              Images(image: wholesaleDocs.path, name: wholesaleDocs.path);
+        });
+      }else{
+        showDialog(
+          context: context,
+          builder: (_) => ResultOverlay(
+              "${getTransrlate(context, 'Attach')}"),
+        );
+      }
     } else {
       // User canceled the picker
     }

@@ -142,7 +142,7 @@ class _ProductListState extends State<ProductList> {
                                   Row(
                                     children: [
                                       Text(
-                                        "سعر الجملة  : ",
+                                        "${getTransrlate(context, 'wholesalePrice')}  : ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.w400,fontSize: 11),
                                       ),
@@ -160,7 +160,7 @@ class _ProductListState extends State<ProductList> {
                                   Row(
                                     children: [
                                       Text(
-                                        "الحد الادنى للطلب  : ",
+                                        "${getTransrlate(context, 'minOfOrder')}  : ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.w400,fontSize: 11),
                                       ),
@@ -220,7 +220,11 @@ class _ProductListState extends State<ProductList> {
                                   height: 6,
                                 ),
                               ),
-                              InkWell(
+                              widget.product.inCart==1?   Icon(
+                                CupertinoIcons.check_mark_circled,
+                                size: 28,
+                                color: Colors.black87,
+                              ):   InkWell(
                                 onTap: () {
                                   API(context).post('add/to/cart', {
                                     "product_id": widget.product.id,
@@ -228,6 +232,9 @@ class _ProductListState extends State<ProductList> {
                                   }).then((value) {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
+                                        setState(() {
+                                          widget.product.inCart=1;
+                                        });
                                         showDialog(
                                             context: context,
                                             builder: (_) => ResultOverlay(
@@ -242,7 +249,7 @@ class _ProductListState extends State<ProductList> {
                                     }
                                   });
                                 },
-                                child: Icon(
+                                child:    Icon(
                                   CupertinoIcons.cart,
                                   color: Colors.black,
                                 ),
@@ -319,7 +326,7 @@ class _ProductListState extends State<ProductList> {
 
             child:Center(
               child: Text(
-                "جملة : ${widget.product.noOfOrders ?? ' '} قطعة ",
+                "${getTransrlate(context, 'wholesale')} : ${widget.product.noOfOrders ?? ' '} ${getTransrlate(context, 'piece')} ",
                 style: TextStyle(color: Colors.blueGrey,
                     fontWeight: FontWeight.bold,fontSize: 11),
               ),

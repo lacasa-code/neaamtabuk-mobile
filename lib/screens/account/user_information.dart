@@ -209,7 +209,7 @@ class _UserInfoState extends State<UserInfo> {
                                             _formKey.currentState.save();
                                             return null;
                                           },
-                                          enabled: !_status,
+                                          enabled:false,
                                           onSaved: (String val) =>
                                               userModal.email = val,
                                           onChanged: (String val) =>

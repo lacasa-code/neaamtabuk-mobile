@@ -74,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'أرغب في شراء منتجات',
+                        '${getTransrlate(context, 'want_to_buy_products')}',
                         style: TextStyle(
                             color: Colors.orange, fontWeight: FontWeight.bold),
                       ),
@@ -97,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'أرغب في التسجيل كبائع',
+                        '${getTransrlate(context, 'register_as_seller')}',
                         style: TextStyle(
                             color: Colors.orange, fontWeight: FontWeight.bold),
                       ),

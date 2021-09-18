@@ -192,14 +192,21 @@ class _ProductCardState extends State<ProductCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            IconButton(
+                            widget.product.inCart==1?   Icon(
+                              CupertinoIcons.check_mark_circled,
+                              size: 28,
+                              color: Colors.black87,
+                            ):  IconButton(
                               onPressed: () {
                                 API(context).post('add/to/cart', {
                                   "product_id": widget.product.id,
-                                  "quantity": 1
+                                  "quantity": widget.product.producttypeId==2?widget.product.noOfOrders: 1
                                 }).then((value) {
                                   if (value != null) {
                                     print(value);
+                                    setState(() {
+                                      widget.product.inCart=1;
+                                    });
                                     if (value['status_code'] == 200) {
                                       showDialog(
                                           context: context,
@@ -330,9 +337,9 @@ class _ProductCardState extends State<ProductCard> {
           ),
             child:Center(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child:Text(
-              "جملة : ${widget.product.noOfOrders ?? ' '} قطعة ",
+              "${getTransrlate(context, 'wholesale')} : ${widget.product.noOfOrders ?? ' '} ${getTransrlate(context, 'piece')} ",
               style: TextStyle(color: Colors.blueGrey,
                   fontWeight: FontWeight.bold,fontSize: 11),
             ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/duration.dart';
 import 'package:flutter_pos/model/order_model.dart';
 import 'package:flutter_pos/screens/account/orderdetails.dart';
+import 'package:flutter_pos/screens/product/ProductPage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -166,54 +167,60 @@ class _OrderHistoryState extends State<OrderHistory> {
                                             orders[index].orderDetails.length,
                                         itemBuilder:
                                             (BuildContext context, int i) {
-                                          return Container(
-                                            padding: EdgeInsets.all(4),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  width: ScreenUtil.getWidth(
-                                                          context) /
-                                                      8,
-                                                  child: CachedNetworkImage(
-                                                    imageUrl: orders[index]
-                                                            .orderDetails[i]
-                                                            .productImage
-                                                            .isNotEmpty
-                                                        ? orders[index]
-                                                            .orderDetails[i]
-                                                            .productImage[0]
-                                                            .image
-                                                        : ' ',
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Icon(
-                                                      Icons.image,
-                                                      color: Colors.black12,
+                                          return InkWell(
+                                            onTap: (){
+                                              Nav.route(context, ProductPage(product_id:orders[index].orderDetails[i].productId.toString() ,));
+
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.all(4),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    width: ScreenUtil.getWidth(
+                                                            context) /
+                                                        8,
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: orders[index]
+                                                              .orderDetails[i]
+                                                              .productImage
+                                                              .isNotEmpty
+                                                          ? orders[index]
+                                                              .orderDetails[i]
+                                                              .productImage[0]
+                                                              .image
+                                                          : ' ',
+                                                      errorWidget:
+                                                          (context, url, error) =>
+                                                              Icon(
+                                                        Icons.image,
+                                                        color: Colors.black12,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  width: ScreenUtil.getWidth(
-                                                      context) /
-                                                      2,
-                                                  child: AutoSizeText(
-                                                    orders[index]
-                                                        .orderDetails[i]
-                                                        .productName,
-                                                    maxLines: 2,
-                                                    style: TextStyle(
-                                                      fontSize: 13,
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                    minFontSize: 11,
+                                                  SizedBox(
+                                                    width: 10,
                                                   ),
-                                                ),
-                                              ],
+                                                  Container(
+                                                    width: ScreenUtil.getWidth(
+                                                        context) /
+                                                        2,
+                                                    child: AutoSizeText(
+                                                      orders[index]
+                                                          .orderDetails[i]
+                                                          .productName,
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                        fontSize: 13,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                      minFontSize: 11,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           );
                                         },
@@ -250,9 +257,10 @@ class _OrderHistoryState extends State<OrderHistory> {
                                             child: Center(
                                               child: AutoSizeText(
                                                 '${orders[index].orderStatus}',
-                                                maxLines: 1,
-                                                maxFontSize: 16,
-                                                minFontSize: 14,
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                                maxFontSize: 14,
+                                                minFontSize: 12,
                                               ),
                                             )),
                                       ],

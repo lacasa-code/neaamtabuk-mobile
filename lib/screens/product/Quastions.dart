@@ -148,10 +148,10 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                                             Icon(
                                               Icons.message_outlined,
                                               color: Colors.grey,
-                                              size: 35,
+                                              size: 30,
                                             ),
                                             SizedBox(
-                                              width: 10,
+                                              width: 5,
                                             ),
                                             Center(
                                               child: Column(
@@ -166,7 +166,6 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                                                       '${widget._question[index].answer ?? ''}',
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      maxLines: 1,
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,

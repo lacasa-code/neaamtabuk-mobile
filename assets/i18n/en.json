@@ -17,6 +17,8 @@
   "apartment_no": "Apartment Number",
   "FloorNo": "Floor Number",
   "telphone": " Landline phone",
+  "telphone0": "Landline phone must start 0",
+
   "nearest_milestone": "Nearest Milestone",
   "Empty": "No found product !",
   "EmptyRate": "No Found Rate",
@@ -77,9 +79,9 @@
 
   "Content": "Content",
 
-  "offers": "Last Products ",
+  "offers": "Recently Products ",
   "diconts": "Discount ",
-  "moresale": "Most Seller",
+  "moresale": "Best Seller",
   "intersted": "Recent View",
 
 
@@ -203,9 +205,10 @@
   "search_result": "Search Result",
   "SelectVariations": "Please Select Variations",
   "ADDtoCart": "Add to Shopping Cart",
+  "foundCart": "Already in  Shopping Cart",
   "ShoppingCart": "Shopping Cart",
   "CartEmpty": "Cart Empty !",
-  "ProfileSettings": "Profile Settings",
+  "ProfileSettings": "Profile",
   "vendorSettings": "Vendor Profile",
   "FAQ": "F A Q",
 
@@ -251,10 +254,10 @@
   "Support": "Support",
   "HomePage": "Home Page",
   "Logout": "Log out",
-  "Myorders": "My Orders",
+  "Myorders": "Orders",
   "MyProfile": "My Profile",
   "productRateing": "Product ratings",
-  "MyFav": "My Favorites",
+  "MyFav": "Wishlist",
   "MyProfileInfo": "My Profile Info",
   "changePassword": "Change Password",
   "MyAddress": "My Address",
@@ -419,7 +422,15 @@
   "Gaffair_Online_Shopping":"We at the Gaffair Online Shopping Store are always happy to provide the highest levels of service, and to benefit from our return and exchange policy, the following conditions are required: - Our sellers in the Gaffair store accept returns or replacement requests in the event that you receive a product that has a defect, a manufacturer defect, a fracture, or a product that does not match the product You have purchased our products, or there is a defect in the product as a result of shipping or packaging processes, or when you receive a product that does not match your order - the product must be in its original condition, unused, unopened, unlabeled for electronic products, or unworn for T-shirts and shoes.- The product must be wrapped in the original packaging and in the same condition that you received it.- The original purchase invoice must be attached when starting the procedures for replacing or returning the products.- The customer has the right to return the value of the product or replace it with another product of his choice.- Please note that this policy and conditions are not applicable. On the exhibition - when a product is requested to be returned, it is subject to an examination process by the management of the Gefer store to ensure its condition, and the refund is approved after ensuring that the condition of the product matches the return policy.",
   "Review_exchange":"Review the exchange or return request:",
   "event_return":"We can help you and communicate with you during official working hours from Sunday to Thursday from 9 am to 9 pm KSA time.",
+  "wholesale": "Wholesale",
+  "piece": "Piece",
+  "minOfOrder": "Min Of Order",
+  "wholesalePrice": "Wholesale Price",
+  "want_to_buy_products": "I want to buy products",
+  "mixed": "It is not possible to complete the purchase with wholesale and retail products in the same order, please choose only wholesale or retail products",
+  "notavailable": "Not Available",
 
+  "register_as_seller": "I want to register as a seller",
   "Opening_contact":"Opening times and contact",
   "General_conditions":"General conditions for registrationt",
   "Return_Policy":"Return Policy",

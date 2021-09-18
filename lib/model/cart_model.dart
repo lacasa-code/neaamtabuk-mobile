@@ -3,6 +3,7 @@ class Cart_model {
   Cart data;
   int cartTotal;
   String message;
+  bool mixed;
 
   Cart_model({this.statusCode, this.data, this.cartTotal, this.message});
 
@@ -13,6 +14,7 @@ class Cart_model {
     }
     cartTotal = json['cart_total'];
     message = json['message'];
+    mixed = json['mixed'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,6 +23,7 @@ class Cart_model {
 
     data['cart_total'] = this.cartTotal;
     data['message'] = this.message;
+    data['mixed'] = this.mixed;
     return data;
   }
 }

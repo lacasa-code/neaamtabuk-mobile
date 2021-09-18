@@ -39,6 +39,7 @@ class _HomeState extends State<Home> {
   List<CarType> cartype;
   Ads ads;
   int checkboxType = 0;
+  final ScrollController _scrollController = ScrollController();
 
   int complete;
   PersistentTabController _controller;
@@ -165,15 +166,26 @@ class _HomeState extends State<Home> {
           colorBehindNavBar: Colors.white,
         ),
         popAllScreensOnTapOfSelectedTab: true,
+
         selectedTabScreenContext: (v) {
 
           if (_controller.index == 3) {
             provider_Data.getCart(context);
-          } else if (_controller.index == 0) {
-            _controller.jumpToTab(0);
-            provider_Data.getData(theme.getcar_type(),context);
           }
+          // if (_controller.index == 0) {
+          //     _scrollController.animateTo(
+          //         _scrollController.position.minScrollExtent,
+          //         duration: const Duration(milliseconds: 400),
+          //         curve: Curves.fastOutSlowIn);
+          //          }
         },
+        onItemSelected: (i){
+          if (i == 0) {
+            _scrollController.animateTo(
+                _scrollController.position.minScrollExtent,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.fastOutSlowIn);
+          }        },
         popActionScreens: PopActionScreensType.once,
         itemAnimationProperties: ItemAnimationProperties(
           // Navigation Bar's items animation properties.
@@ -299,6 +311,7 @@ class _HomeState extends State<Home> {
         Expanded(
           child: RefreshIndicator(color: themeColor.getColor(),
             child: SingleChildScrollView(
+              controller: _scrollController,
               child: Column(
                 children: [
                   cartype == null
