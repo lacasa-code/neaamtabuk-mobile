@@ -12,6 +12,7 @@ class Provider_Data with ChangeNotifier {
   List<Product> product,productMostSale;
   List<ProductMost> productMostView;
   List<Main_Category> Mcategories;
+  List<Product> wishList;
 
   Provider_Data();
 
@@ -56,7 +57,15 @@ class Provider_Data with ChangeNotifier {
     notifyListeners();
   }
 
+   getWishlist(BuildContext context) {
+    API(context).get('user/get/wishlist').then((value) {
+      if (value != null) {
+          wishList = Product_model.fromJson(value).data;
+          notifyListeners();
 
+      }
+    });
+  }
   getShipping(BuildContext context) {
     API(context, Check: false).get('user/get/default/shipping').then((value) {
       if (value != null) {

@@ -17,7 +17,7 @@ Future<void> main() async {
   await GlobalConfiguration().loadFromAsset("configurations");
   print("base_url: ${GlobalConfiguration().getString('base_url')}");
   SharedPreferences.getInstance().then((prefs) async {
-    String local = 'en';
+    String local ;
     if (prefs.getString('local') != null) {
       local = prefs.getString('local');
     }
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     getIntial();
-    _locale = Locale(Provider.of<Provider_control>(context, listen: false).local, "");
+    _locale=Provider.of<Provider_control>(context, listen: false).local==null?null: Locale(Provider.of<Provider_control>(context, listen: false).local, "");
     super.initState();
   }
 
@@ -95,15 +95,15 @@ class _MyAppState extends State<MyApp> {
         return supportedLocales.first;
       },
       supportedLocales: [
-        Locale("ar", ""),
         Locale("en", ""),
+        Locale("ar", ""),
       ],
       theme: ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         }),
         primaryColor:  Color(0xff424242),
-        appBarTheme: AppBarTheme(color: Color(0xff424242)),
+        appBarTheme: AppBarTheme(color: Color(0xff424242),iconTheme: IconThemeData(color: Colors.white)),
         fontFamily: 'Cairo',
         textTheme: TextTheme(
           caption: TextStyle(
@@ -122,10 +122,7 @@ class _MyAppState extends State<MyApp> {
   void getIntial() async {
 //Remove this method to stop OneSignal Debugging
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
     OneSignal.shared.setAppId("d4f40928-8ba1-4b12-b6a0-f6a1db13a47c");
-
-
 // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
       print("Accepted permission: $accepted");

@@ -228,7 +228,7 @@ class _ProductListState extends State<ProductList> {
                                 onTap: () {
                                   API(context).post('add/to/cart', {
                                     "product_id": widget.product.id,
-                                    "quantity": 1
+                                    "quantity": widget.product.producttypeId==2?widget.product.noOfOrders: 1
                                   }).then((value) {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
@@ -262,6 +262,8 @@ class _ProductListState extends State<ProductList> {
                                         }).then((value) {
                                           if (value != null) {
                                             if (value['status_code'] == 200) {
+                                              data.getWishlist(context);
+
                                               setState(() {
                                                 widget.product.inWishlist = 1;
                                               });
@@ -283,6 +285,8 @@ class _ProductListState extends State<ProductList> {
                                         }).then((value) {
                                           if (value != null) {
                                             if (value['status_code'] == 200) {
+                                              data.getWishlist(context);
+
                                               setState(() {
                                                 widget.product.inWishlist = 0;
                                               });

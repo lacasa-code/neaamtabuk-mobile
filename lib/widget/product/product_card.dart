@@ -254,6 +254,8 @@ class _ProductCardState extends State<ProductCard> {
                                             setState(() {
                                               widget.product.inWishlist = 1;
                                             });
+                                            ServiceData.getWishlist(context);
+
                                             showDialog(
                                                 context: context,
                                                 builder: (_) => ResultOverlay(
@@ -288,6 +290,7 @@ class _ProductCardState extends State<ProductCard> {
                                             setState(() {
                                               widget.product.inWishlist = 0;
                                             });
+                                            ServiceData.getWishlist(context);
                                             showDialog(
                                                 context: context,
                                                 builder: (_) => ResultOverlay(

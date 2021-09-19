@@ -152,6 +152,7 @@ class _ProductPageState extends State<ProductPage> {
                                   }).then((value) {
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
+                                        ServiceData.getWishlist(context);
                                         setState(() {
                                           widget.product.inWishlist = 1;
                                         });
@@ -176,6 +177,8 @@ class _ProductPageState extends State<ProductPage> {
                                     print(value);
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
+                                        ServiceData.getWishlist(context);
+
                                         setState(() {
                                           widget.product.inWishlist = 0;
                                         });

@@ -23,18 +23,18 @@ class WishList extends StatefulWidget {
 }
 
 class _WishListState extends State<WishList> {
-  List<Product> wishList;
   int checkboxValue;
 
   @override
   void initState() {
-    getwWISHlIST();
+    Provider.of<Provider_Data>(context,listen: false).getWishlist(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
+    final data = Provider.of<Provider_Data>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -59,142 +59,25 @@ class _WishListState extends State<WishList> {
         ),
       ),
       body:!themeColor.isLogin?Notlogin(): Container(
-        child: wishList == null
+        child: data.wishList == null
             ? Center(child: Custom_Loading())
-            : wishList.isEmpty
+            : data.wishList.isEmpty
             ? Center(child: NotFoundProduct())
             : SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
                     primary: false,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: wishList.length,
+                    itemCount: data.wishList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Wish_List(
-                              themeColor,
-                              wishList[index],
-                            ),
-                          ),
-                          Positioned(
-                             left:  themeColor.local=='ar'?10:null,
-                             right: themeColor.local=='en'?10:null,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      API(context).post('user/removeitem/wishlist',
-                                          {"product_id": wishList[index].product_id}).then((value) {
-                                        if (value != null) {
-                                          if (value['status_code'] == 200) {
-                                            showDialog(
-                                                context: context,
-                                                builder: (_) =>
-                                                    ResultOverlay(value['message']));
-                                            getwWISHlIST();
-                                            Provider.of<Provider_Data>(context,listen: false).getData(themeColor.car_type,context);
-
-                                          } else {
-                                            showDialog(
-                                                context: context,
-                                                builder: (_) =>
-                                                    ResultOverlay('${value['message']??''}\n${value['errors']}'));
-                                          }
-                                        }
-                                      });
-                                    },
-                                    icon: Icon(
-                                      Icons.close,
-                                      color: Colors.grey,
-                                    )),
-                                SizedBox(height: 25,),
-                                wishList[index].quantity >= 1?InkWell(
-                                  onTap: () {
-                                    API(context).post('add/to/cart', {
-                                      "product_id": wishList[index].product_id,
-                                      "quantity": 1
-                                    }).then((value) {
-                                      if (value != null) {
-                                        if (value['status_code'] == 200) {
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) =>
-                                                  ResultOverlay(value['message']));
-                                          Provider.of<Provider_Data>(context,listen: false).getCart(context);
-                                          API(context).post('user/removeitem/wishlist',
-                                              {"product_id": wishList[index].product_id}).then((value) {
-                                            if (value != null) {
-                                              if (value['status_code'] == 200) {
-                                                getwWISHlIST();
-                                              } else {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (_) =>
-                                                        ResultOverlay('${value['message']??''}\n${value['errors']}'));
-                                              }
-                                            }
-                                          });
-                                        } else {
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) =>
-                                                  ResultOverlay('${value['message']??value['errors']}'));
-                                        }
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(5.0),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.orange)),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Icon(CupertinoIcons.cart, color: Colors.orange),
-                                        Container(
-                                          width: ScreenUtil.getWidth(context) / 5,
-                                          child: AutoSizeText(
-                                            '${getTransrlate(context, 'ADDtoCart')}',
-                                            minFontSize: 10,
-                                            maxFontSize: 16,
-                                            maxLines: 1,
-                                            style: TextStyle(color: Colors.orange),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ):
-                                Container(
-                                  padding: const EdgeInsets.all(5.0),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey)),
-                                  child: Padding(
-                                    padding:  EdgeInsets.symmetric(horizontal: 12,vertical: 4),
-                                    child: Container(
-                                      width: ScreenUtil.getWidth(context) / 5,
-                                      child: Center(
-                                        child: AutoSizeText(
-                                          '${getTransrlate(context, 'notavailable')}',
-                                          minFontSize: 10,
-                                          maxFontSize: 16,
-                                          maxLines: 1,
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Wish_List(
+                          themeColor,
+                          data.wishList[index],
+                        ),
                       );
                     },
                   ),
@@ -204,13 +87,5 @@ class _WishListState extends State<WishList> {
     );
   }
 
-  void getwWISHlIST() {
-    API(context).get('user/get/wishlist').then((value) {
-      if (value != null) {
-        setState(() {
-          wishList = Product_model.fromJson(value).data;
-        });
-      }
-    });
-  }
+
 }
