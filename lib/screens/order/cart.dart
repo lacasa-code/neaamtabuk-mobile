@@ -180,7 +180,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                         context) /
                                                                 1.3,
                                                             child: Text(
-                                                              _cart_model.address==null?'غير محدد حاليا': 'توصيل إلى: ${_cart_model.address.area==null?'':_cart_model.address.area.areaName??''},${_cart_model.address.city==null?'':_cart_model.address.city.cityName??''}.${_cart_model.address.street??''}',
+                                                              _cart_model.address==null?'${getTransrlate(context, 'NoSelect')}': '${getTransrlate(context, 'ShippingTo')}:${_cart_model.address.area==null?'':_cart_model.address.area.areaName??''},${_cart_model.address.city==null?'':_cart_model.address.city.cityName??''}.${_cart_model.address.street??''}',
                                                               maxLines: 1,
                                                               overflow:
                                                                   TextOverflow

@@ -24,7 +24,7 @@ dependencies:
   flutter_svg: ^0.22.0
   carousel_slider: ^3.0.0
   flutter_rating_bar: ^4.0.0
-  dropdown_search: ^0.6.1
+  dropdown_search: ^1.0.0
   autocomplete_textfield: ^1.7.3
   expandable: ^5.0.1
   persistent_bottom_nav_bar: ^4.0.2

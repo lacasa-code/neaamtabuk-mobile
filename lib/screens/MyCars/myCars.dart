@@ -13,10 +13,10 @@ import 'package:flutter_pos/model/transmission.dart';
 import 'package:flutter_pos/model/years.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:provider/provider.dart';
 import '../../utils/navigator.dart';
-
 class MyCars extends StatefulWidget {
   int checkboxType = 0;
 
@@ -118,6 +118,8 @@ gettransmissions(){
                 ? Container(
                     child: favourite == null
                         ? Container()
+                        : favourite.isEmpty
+                        ? NotFoundProduct(title: '${getTransrlate(context, 'founded_Cars')}',)
                         : Padding(
                             padding: const EdgeInsets.all(24.0),
                             child: ListView.builder(
@@ -278,11 +280,10 @@ gettransmissions(){
                           : Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DropdownSearch<CarMade>(
-                                showSearchBox: true,
-                                showClearButton: true,
+                                mode: Mode.MENU,
+                                showSearchBox: true,                                showClearButton: true,
                                 label: "  ${getTransrlate(context, 'brand')}",
                                 items: car_mades,
-                                //  onFind: (String filter) => getData(filter),
                                 itemAsString: (CarMade u) => "  ${themeColor.getlocal()=='ar'?u.carMade??u.name_en:u.name_en??u.carMade}",
                                 onChanged: (CarMade data) {
                                   setState(() {
@@ -304,7 +305,9 @@ gettransmissions(){
                           label: "  ${getTransrlate(context, 'Model')} ",
                           showSearchBox: true,
                           showClearButton: true,
-                          enabled: carmodels != null,
+                            mode: Mode.MENU,
+
+                            enabled: carmodels != null,
                           items: carmodels,
                           //  onFind: (String filter) => getData(filter),
                           itemAsString: (CarModel u) =>  "  ${themeColor.getlocal()=='ar'?u.carmodel??u.name_en:u.name_en??u.carmodel}",
@@ -325,6 +328,8 @@ gettransmissions(){
                               child: DropdownSearch<Year>(
                                 enabled: CarmodelsID.text.isNotEmpty,
                                 showSearchBox: true,
+                                mode: Mode.MENU,
+
                                 showClearButton: true,
                                 label: "  ${getTransrlate(context, 'manufacturingYear')} ",
                                 validator: (Year item) {
@@ -352,6 +357,8 @@ gettransmissions(){
                               child: DropdownSearch<Transmissions>(
                                 showSearchBox: true,
                                 showClearButton: true,
+                                mode: Mode.MENU,
+
                                 enabled: yearsID.text.isNotEmpty,
                                 label: "  ${getTransrlate(context, 'transmissionName')}",
                                 items: transmissions,

@@ -8,10 +8,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/model/cart_model.dart';
 import 'package:flutter_pos/model/checkout_model.dart';
+import 'package:flutter_pos/model/order_model.dart';
 import 'package:flutter_pos/model/payment_model.dart';
 import 'package:flutter_pos/model/shipping_address.dart';
 import 'package:flutter_pos/screens/MyCars/myCars.dart';
 import 'package:flutter_pos/screens/account/OrderHistory.dart';
+import 'package:flutter_pos/screens/account/orderdetails.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -49,7 +51,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
   final focuscvv = FocusNode();
   final focusYear = FocusNode();
   final focusMonth = FocusNode();
-
+  bool loading=false;
   final _formKey = GlobalKey<FormState>();
   Checkout_model checkout_model;
 
@@ -303,11 +305,8 @@ setState(() {
                                                 ScreenUtil.getWidth(context) /
                                                     2,
                                             child: AutoSizeText(
-                                              widget
-                                                  .carts
-                                                  .data
-                                                  .orderDetails[index]
-                                                  .productName,
+                                              "${themeColor.getlocal()=='ar'? widget.carts.data.orderDetails[index].productName??widget.carts.data.orderDetails[index].productNameEn: widget.carts.data.orderDetails[index].productNameEn??widget.carts.data.orderDetails[index].productName}",
+
                                               maxLines: 2,
                                               style: TextStyle(
                                                 fontSize: 14,
@@ -411,7 +410,7 @@ setState(() {
                           ),
                           Text(
                          //   _cart_model.address==null?'غير محدد حاليا': 'توصيل إلى: ${_cart_model.address.area==null?'':_cart_model.address.area.areaName??''},${_cart_model.address.city==null?'':_cart_model.address.city.cityName??''}.${_cart_model.address.street??''}',
-                            DefaultAddress==null?'غير محدد حاليا': 'توصيل إلى: ${DefaultAddress.area==null?'':DefaultAddress.area.areaName??''},${DefaultAddress.city==null?'':DefaultAddress.city.cityName??''}.${DefaultAddress.street??''},${DefaultAddress.district??''}${DefaultAddress.floorNo??''}${DefaultAddress.apartmentNo??''}',
+                            DefaultAddress==null?'${getTransrlate(context, 'NoSelect')}': '${getTransrlate(context, 'ShippingTo')}: ${DefaultAddress.area==null?'':DefaultAddress.area.areaName??''},${DefaultAddress.city==null?'':DefaultAddress.city.cityName??''}.${DefaultAddress.street??''},${DefaultAddress.district??''}${DefaultAddress.floorNo??''}${DefaultAddress.apartmentNo??''}',
                             style: TextStyle(
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),
@@ -797,12 +796,17 @@ setState(() {
                           ),
                           CartList(),
                           Center(
-                            child: InkWell(
+                            child:loading?CircularProgressIndicator(  valueColor:
+                            AlwaysStoppedAnimation<Color>( Colors.lightGreen),): InkWell(
                               onTap: () {
+                                setState(() => loading = true);
+
                                 API(context)
                                     .post('user/checkout', {}).then((value) {
                                       print(value);
-                                  if (value != null) {
+                                      setState(() => loading = false);
+
+                                      if (value != null) {
                                     if (value['status_code'] == 200) {
                                       checkout_model =
                                           Checkout_model.fromJson(value);
@@ -873,8 +877,7 @@ setState(() {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  'شكرا لثقتكم بــتركار .. سوف تصلك رسالة على الهاتف الجوال و البريد الإلكتروني بمعلومات الطلب والتوصيل',
+                                Text("${getTransrlate(context, 'NoteCheckout')}",
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,
@@ -922,7 +925,11 @@ setState(() {
                                       ),
                                       InkWell(
                                         onTap: (){
-                                         Nav.routeReplacement(context, OrderHistory());
+                                          API(context).post('user/show/orders/${checkout_model.data.id}',{}).then((value) {
+                                            if (value != null) {
+                                              Nav.routeReplacement(context, Orderdetails(order: Order.fromJson(value['data'])));
+                                            }
+                                          });
                                         },
                                         child: Text(
                                           '${getTransrlate(context, 'OrderDitails')}',
@@ -984,10 +991,16 @@ setState(() {
                                                             context) /
                                                         2,
                                                     child: AutoSizeText(
-                                                      checkout_model
+                                                      "${themeColor.getlocal()=='ar'?checkout_model
                                                           .data
-                                                          .orderDetails[index]
-                                                          .productName,
+                                                          .orderDetails[index].productName??checkout_model
+                                                          .data
+                                                          .orderDetails[index].productNameEn:checkout_model
+                                                          .data
+                                                          .orderDetails[index].productNameEn??checkout_model
+                                                          .data
+                                                          .orderDetails[index].productName}",
+
                                                       maxLines: 2,
                                                       style: TextStyle(
                                                         fontSize: 14,
@@ -1126,6 +1139,8 @@ setState(() {
   }
 
   CartList() {
+    final themeColor = Provider.of<Provider_control>(context);
+
     return Column(
       children: [
         Row(
@@ -1198,7 +1213,7 @@ setState(() {
                           Container(
                             width: ScreenUtil.getWidth(context) / 2,
                             child: AutoSizeText(
-                              widget.carts.data.orderDetails[index].productName,
+                              "${themeColor.getlocal()=='ar'? widget.carts.data.orderDetails[index].productName??widget.carts.data.orderDetails[index].productNameEn: widget.carts.data.orderDetails[index].productNameEn??widget.carts.data.orderDetails[index].productName}",
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 14,

@@ -38,7 +38,7 @@ class _OrderHistoryState extends State<OrderHistory> {
   @override
   void initState() {
     setState(() {
-      dropdownValue=durations[0];
+      dropdownValue = durations[0];
     });
     getOrders("1");
     super.initState();
@@ -70,237 +70,280 @@ class _OrderHistoryState extends State<OrderHistory> {
             ],
           ),
         ),
-        body:!themeColor.isLogin?Notlogin(): orders == null
-            ? Center(child: Custom_Loading())
-            : SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.all(ScreenUtil.getWidth(context) / 15),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          margin: const EdgeInsets.all(5.0),
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black26)),
-                          child: DropdownButton<Duration_order>(
-                            value: dropdownValue,
-                            icon: Icon(Icons.arrow_drop_down_outlined),
-                            iconSize: 24,
-                            elevation: 16,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Cairo'),
-                            onChanged: (Duration_order newValue) {
-                              setState(() {
-                                dropdownValue = newValue;
-                              });
-                              getOrders("${newValue.lenght}");
-                            },
-                            items: durations
-                                .map<DropdownMenuItem<Duration_order>>(
-                                    (Duration_order value) {
-                              return DropdownMenuItem<Duration_order>(
-                                value: value,
-                                child: Text("${value.name}"),
-                              );
-                            }).toList(),
+        body: !themeColor.isLogin
+            ? Notlogin()
+            : orders == null
+                ? Center(child: Custom_Loading())
+                : SingleChildScrollView(
+                    child: Container(
+                      padding:
+                          EdgeInsets.all(ScreenUtil.getWidth(context) / 15),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              margin: const EdgeInsets.all(5.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black26)),
+                              child: DropdownButton<Duration_order>(
+                                value: dropdownValue,
+                                icon: Icon(Icons.arrow_drop_down_outlined),
+                                iconSize: 24,
+                                elevation: 16,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Cairo'),
+                                onChanged: (Duration_order newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue;
+                                  });
+                                  getOrders("${newValue.lenght}");
+                                },
+                                items: durations
+                                    .map<DropdownMenuItem<Duration_order>>(
+                                        (Duration_order value) {
+                                  return DropdownMenuItem<Duration_order>(
+                                    value: value,
+                                    child: Text("${value.name}"),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      orders.isEmpty?NotFoundProduct(title: getTransrlate(context, 'NoOrder'),):  ListView.builder(
-                        padding: EdgeInsets.all(1),
-                        primary: false,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: orders.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 1,
-                                  color: Colors.black12,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                        width:
-                                            ScreenUtil.getWidth(context) / 2.5,
-                                        child: AutoSizeText(
-                                          '${getTransrlate(context, 'OrderNO')} ${orders[index].orderNumber}',
-                                          maxLines: 1,
-                                          style: TextStyle(fontSize: 13),
-                                        )),
-                                    AutoSizeText(
-                                      DateFormat('yyyy-MM-dd').format(
-                                          DateTime.parse(
-                                              orders[index].createdAt)),
-                                      maxLines: 1,
-                                      style: TextStyle(fontSize: 13),
-
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                orders[index].orderDetails == null
-                                    ? Container()
-                                    : ListView.builder(
-                                        padding: EdgeInsets.all(1),
-                                        primary: false,
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                            orders[index].orderDetails.length,
-                                        itemBuilder:
-                                            (BuildContext context, int i) {
-                                          return InkWell(
-                                            onTap: (){
-                                              Nav.route(context, ProductPage(product_id:orders[index].orderDetails[i].productId.toString() ,));
-
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.all(4),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                          SizedBox(
+                            height: 15,
+                          ),
+                          orders.isEmpty
+                              ? NotFoundProduct(
+                                  title: getTransrlate(context, 'NoOrder'),
+                                )
+                              : ListView.builder(
+                                  padding: EdgeInsets.all(1),
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: orders.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height: 1,
+                                            color: Colors.black12,
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                  width: ScreenUtil.getWidth(
+                                                          context) /
+                                                      2.5,
+                                                  child: AutoSizeText(
+                                                    '${getTransrlate(context, 'OrderNO')} ${orders[index].orderNumber}',
+                                                    maxLines: 1,
+                                                    style:
+                                                        TextStyle(fontSize: 13),
+                                                  )),
+                                              AutoSizeText(
+                                                DateFormat('yyyy-MM-dd').format(
+                                                    DateTime.parse(orders[index]
+                                                        .createdAt)),
+                                                maxLines: 1,
+                                                style: TextStyle(fontSize: 13),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          orders[index].orderDetails == null
+                                              ? Container()
+                                              : ListView.builder(
+                                                  padding: EdgeInsets.all(1),
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(),
+                                                  itemCount: orders[index]
+                                                      .orderDetails
+                                                      .length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int i) {
+                                                    return InkWell(
+                                                      onTap: () {
+                                                        Nav.route(
+                                                            context,
+                                                            ProductPage(
+                                                              product_id: orders[
+                                                                      index]
+                                                                  .orderDetails[
+                                                                      i]
+                                                                  .productId
+                                                                  .toString(),
+                                                            ));
+                                                      },
+                                                      child: Container(
+                                                        padding:
+                                                            EdgeInsets.all(4),
+                                                        child: Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Container(
+                                                              width: ScreenUtil
+                                                                      .getWidth(
+                                                                          context) /
+                                                                  8,
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                imageUrl: orders[
+                                                                            index]
+                                                                        .orderDetails[
+                                                                            i]
+                                                                        .productImage
+                                                                        .isNotEmpty
+                                                                    ? orders[
+                                                                            index]
+                                                                        .orderDetails[
+                                                                            i]
+                                                                        .productImage[
+                                                                            0]
+                                                                        .image
+                                                                    : ' ',
+                                                                errorWidget:
+                                                                    (context,
+                                                                            url,
+                                                                            error) =>
+                                                                        Icon(
+                                                                  Icons.image,
+                                                                  color: Colors
+                                                                      .black12,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Container(
+                                                              width: ScreenUtil
+                                                                      .getWidth(
+                                                                          context) /
+                                                                  2,
+                                                              child:
+                                                                  AutoSizeText(
+                                                                "${themeColor.getlocal() == 'ar' ? orders[index].orderDetails[i].productName ?? orders[index].orderDetails[i].productNameEn : orders[index].orderDetails[i].productNameEn ?? orders[index].orderDetails[i].productName}",
+                                                                maxLines: 2,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 13,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                                minFontSize: 11,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                          Container(
+                                              width:
+                                                  ScreenUtil.getWidth(context) /
+                                                      1.5,
+                                              child: AutoSizeText(
+                                                '${getTransrlate(context, 'total')}  : ${orders[index].orderTotal} ${getTransrlate(context, 'Currency')}',
+                                                maxLines: 1,
+                                              )),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
                                                 children: [
-                                                  Container(
-                                                    width: ScreenUtil.getWidth(
-                                                            context) /
-                                                        8,
-                                                    child: CachedNetworkImage(
-                                                      imageUrl: orders[index]
-                                                              .orderDetails[i]
-                                                              .productImage
-                                                              .isNotEmpty
-                                                          ? orders[index]
-                                                              .orderDetails[i]
-                                                              .productImage[0]
-                                                              .image
-                                                          : ' ',
-                                                      errorWidget:
-                                                          (context, url, error) =>
-                                                              Icon(
-                                                        Icons.image,
-                                                        color: Colors.black12,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
+                                                  AutoSizeText(
+                                                    '${getTransrlate(context, 'OrderState')}  : ',
+                                                    maxLines: 1,
                                                   ),
                                                   Container(
-                                                    width: ScreenUtil.getWidth(
-                                                        context) /
-                                                        2,
-                                                    child: AutoSizeText(
-                                                      orders[index]
-                                                          .orderDetails[i]
-                                                          .productName,
-                                                      maxLines: 2,
-                                                      style: TextStyle(
-                                                        fontSize: 13,
-                                                        fontWeight: FontWeight.bold,
-                                                      ),
-                                                      minFontSize: 11,
-                                                    ),
-                                                  ),
+                                                      width:
+                                                          ScreenUtil.getWidth(
+                                                                  context) /
+                                                              4,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 8,
+                                                              vertical: 5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.blue)),
+                                                      child: Center(
+                                                        child: AutoSizeText(
+                                                          '${orders[index].orderStatus}',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          maxLines: 2,
+                                                          maxFontSize: 14,
+                                                          minFontSize: 12,
+                                                        ),
+                                                      )),
                                                 ],
                                               ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                Container(
-                                    width: ScreenUtil.getWidth(context) / 1.5,
-                                    child: AutoSizeText(
-                                      '${getTransrlate(context, 'total')}  : ${orders[index].orderTotal} ${getTransrlate(context, 'Currency')}',
-                                      maxLines: 1,
-                                    )),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        AutoSizeText(
-                                          '${getTransrlate(context, 'OrderState')}  : ',
-                                          maxLines: 1,
-                                        ),
-
-                                        Container(
-                                            width:
-                                                ScreenUtil.getWidth(context) /
-                                                   4,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 5),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.blue)),
-                                            child: Center(
-                                              child: AutoSizeText(
-                                                '${orders[index].orderStatus}',
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                                maxFontSize: 14,
-                                                minFontSize: 12,
+                                              InkWell(
+                                                onTap: () {
+                                                  Nav.route(
+                                                      context,
+                                                      Orderdetails(
+                                                        order: orders[index],
+                                                      ));
+                                                },
+                                                child: AutoSizeText(
+                                                  '${getTransrlate(context, 'OrderDitails')} ',
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                      color: Colors.orange,
+                                                      fontSize: 14,
+                                                      decoration: TextDecoration
+                                                          .underline),
+                                                ),
                                               ),
-                                            )),
-                                      ],
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Nav.route(
-                                            context,
-                                            Orderdetails(
-                                              order: orders[index],
-                                            ));
-                                      },
-                                      child: AutoSizeText(
-                                        '${getTransrlate(context, 'OrderDitails')} ',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            color: Colors.orange,
-                                            fontSize: 14,
-                                            decoration:
-                                                TextDecoration.underline),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          Container(
+                                            height: 1,
+                                            color: Colors.black12,
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Container(
-                                  height: 1,
-                                  color: Colors.black12,
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ));
+                    ),
+                  ));
   }
 
   void getOrders(String from) {

@@ -53,6 +53,9 @@ class _ProductPageState extends State<ProductPage> {
   List<Question> _question;
   String dropdownValue = "1";
   final _formKey = GlobalKey<FormState>();
+  bool  wloading = false;
+  bool  loading = false;
+
   List<String> items = [
     "1",
     "2",
@@ -144,13 +147,24 @@ class _ProductPageState extends State<ProductPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(
+                        wloading?Container(
+                          width: ScreenUtil.getWidth(context) / 4,
+
+                          child: Center(
+                            child: CircularProgressIndicator(  valueColor:
+                            AlwaysStoppedAnimation<Color>( Colors.orange),),
+                          ),
+                        ):  InkWell(
                           onTap: () {
+                            setState(() => wloading = true);
+
                             widget.product.inWishlist == 0
                                 ? API(context).post('user/add/wishlist', {
                                     "product_id": widget.product_id
                                   }).then((value) {
                                     if (value != null) {
+                                      setState(() => wloading = false);
+
                                       if (value['status_code'] == 200) {
                                         ServiceData.getWishlist(context);
                                         setState(() {
@@ -174,7 +188,9 @@ class _ProductPageState extends State<ProductPage> {
                                     'user/removeitem/wishlist', {
                                     "product_id": widget.product_id
                                   }).then((value) {
-                                    print(value);
+                              setState(() => wloading = false);
+
+                              print(value);
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
                                         ServiceData.getWishlist(context);
@@ -811,7 +827,7 @@ class _ProductPageState extends State<ProductPage> {
                                                           child: Column(
                                                             children: [
                                                               SvgPicture.asset(
-                                                                "assets/icons/reload.svg",
+                                                                "assets/icons/open-cardboard-box.svg",
                                                                 width: ScreenUtil
                                                                         .getWidth(
                                                                             context) /
@@ -1075,7 +1091,7 @@ class _ProductPageState extends State<ProductPage> {
                                                         child: Column(
                                                           children: [
                                                             SvgPicture.asset(
-                                                              "assets/icons/reload.svg",
+                                                              "assets/icons/open-cardboard-box.svg",
                                                               width: ScreenUtil
                                                                       .getWidth(
                                                                           context) /
@@ -1470,15 +1486,20 @@ class _ProductPageState extends State<ProductPage> {
                                               }).toList(),
                                             ),
                                           ),
-                    InkWell(
+                        loading?CircularProgressIndicator(  valueColor:
+                        AlwaysStoppedAnimation<Color>( Colors.lightGreen),):   InkWell(
                           onTap: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
+                              setState(() => loading = true);
+
                               API(context).post('add/to/cart', {
                                 "product_id": widget.product_id,
                                 "quantity":
                                     dropdownValue == 'other' ? 1 : dropdownValue
                               }).then((value) {
+                                setState(() => loading = false);
+
                                 if (value != null) {
                                   if (value['status_code'] == 200) {
                                     showDialog(

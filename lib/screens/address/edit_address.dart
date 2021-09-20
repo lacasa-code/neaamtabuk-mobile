@@ -31,7 +31,7 @@ class _EditAddressState extends State<EditAddress> {
   List<Country> contries;
   List<City> cities;
   List<Area> area;
-
+bool loading=false;
   @override
   void initState() {
     widget.address.Country_id=widget.address.state==null?null:widget.address.state.id;
@@ -356,7 +356,23 @@ class _EditAddressState extends State<EditAddress> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Center(
-                      child: GestureDetector(
+                      child:  loading?FlatButton(
+                        minWidth: ScreenUtil.getWidth(context) / 2.5,
+                        color: Colors.orange,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:Container(
+                            height: 30,
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>( Colors.white),
+                                )),
+                          ),
+                        ),
+                        onPressed: () async {
+                        },
+                      ):GestureDetector(
                         child: Container(
                           width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
@@ -378,7 +394,7 @@ class _EditAddressState extends State<EditAddress> {
                         onTap: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                            //setState(() => _isLoading = true);
+                            setState(() => loading = true);
                             print(widget.address.toJson());
                             API(context)
                                 .post(
@@ -386,7 +402,7 @@ class _EditAddressState extends State<EditAddress> {
                                     widget.address.toJson())
                                 .then((value) {
                               if (value != null) {
-                                print(value);
+                                setState(() => loading = false);
                                 if (value['status_code'] == 202) {
                                   Navigator.pop(context);
                                   showDialog(

@@ -36,6 +36,7 @@ class _VendorInfoState extends State<VendorInfo> {
   bool _statusDocs = true;
   final FocusNode myFocusNode = FocusNode();
   bool _isLoading = false;
+  bool loading = false;
   Vendor userModal;
   Reasons reasons;
   int _value = 0;
@@ -1544,7 +1545,23 @@ class _VendorInfoState extends State<VendorInfo> {
                                       height: 30,
                                     ),
                                     Center(
-                                      child: GestureDetector(
+                                      child: loading?FlatButton(
+                                        minWidth: ScreenUtil.getWidth(context) / 2.5,
+                                        color: Colors.orange,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child:Container(
+                                            height: 30,
+                                            child: Center(
+                                                child: CircularProgressIndicator(
+                                                  valueColor:
+                                                  AlwaysStoppedAnimation<Color>( Colors.white),
+                                                )),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                        },
+                                      ): GestureDetector(
                                         child: Container(
                                           width: ScreenUtil.getWidth(context) /
                                               1.4,
@@ -1575,6 +1592,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                               builder: (_) => Alerts(
                                                   "${getTransrlate(context, 'loading')}"),
                                             );
+                                            setState(() => loading = true);
+
                                             API(context)
                                                 .postFile(
                                                     'vendor/upload/docs',
@@ -1609,6 +1628,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     wholesaleDocs:
                                                         wholesaleDocs)
                                                 .then((value) {
+                                              setState(() => loading = false);
+
                                               if (value != null) {
                                                 Navigator.of(context,rootNavigator:true).pop();
 

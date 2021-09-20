@@ -36,6 +36,7 @@ class _ProductCartState extends State<ProductCart> {
     "other",
   ];
 
+  bool loading = false;
   bool other = true;
   final _formKey = GlobalKey<FormState>();
 
@@ -47,6 +48,7 @@ class _ProductCartState extends State<ProductCart> {
   @override
   Widget build(BuildContext context) {
     final ServiceData = Provider.of<Provider_Data>(context);
+    final Servicetheme = Provider.of<Provider_control>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -70,7 +72,17 @@ class _ProductCartState extends State<ProductCart> {
                   ),
                 ),
               ),
-              IconButton(
+              loading?Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: SizedBox(
+                  height: 20.0,
+                  width: 20.0,
+                  child: Center(
+                    child: CircularProgressIndicator(  valueColor:
+                    AlwaysStoppedAnimation<Color>( Colors.orange),),
+                  ),
+                ),
+              ): IconButton(
                   onPressed: () {
                     deleteItem(ServiceData);
                   },
@@ -90,7 +102,7 @@ class _ProductCartState extends State<ProductCart> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               AutoSizeText(
-                widget.carts.productName,
+                Servicetheme.getlocal()=='ar'? widget.carts.productName?? widget.carts.productNameEn:widget.carts.productNameEn?? widget.carts.productName,
                 maxLines: 3,
                 style: TextStyle(
                   fontSize: 16,
@@ -355,10 +367,14 @@ class _ProductCartState extends State<ProductCart> {
   }
 
   void deleteItem(Provider_Data ServiceData) {
+    setState(() => loading = true);
+
     API(context).post('delete/from/cart', {
       "order_id": widget.carts.orderId,
       "product_id": widget.carts.productId
     }).then((value) {
+      setState(() => loading = false);
+
       if (value != null) {
         if (value['status_code'] == 200) {
           showDialog(

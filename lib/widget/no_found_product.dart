@@ -19,12 +19,12 @@ class NotFoundProduct extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                "assets/icons/reload.svg",
+                "assets/icons/open-cardboard-box.svg",
                 width: ScreenUtil.getWidth(context) / 3,
                 color: Colors.black12,
               ),
               SizedBox(
-                height: 25,
+                height: 15,
               ),
               Text(
                 "${title??getTransrlate(context, 'Empty')}",

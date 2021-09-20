@@ -15,7 +15,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class ProductList extends StatefulWidget {
-  const ProductList({
+   ProductList({
     Key key,
     @required this.themeColor,
     this.product,
@@ -25,15 +25,16 @@ class ProductList extends StatefulWidget {
   final Provider_control themeColor;
   final Product product;
   final BuildContext ctx;
-
   @override
   _ProductListState createState() => _ProductListState();
 }
 
 class _ProductListState extends State<ProductList> {
+  bool loading =false;
+  bool wloading =false;
+
   @override
   void initState() {
-
   super.initState();
   }
 
@@ -224,12 +225,21 @@ class _ProductListState extends State<ProductList> {
                                 CupertinoIcons.check_mark_circled,
                                 size: 28,
                                 color: Colors.black87,
-                              ):   InkWell(
+                              ):   loading?SizedBox(
+                                height: 20.0,
+                                width: 20.0,
+                                child: CircularProgressIndicator(  valueColor:
+                                AlwaysStoppedAnimation<Color>( Colors.orange),),
+                              ):InkWell(
                                 onTap: () {
+                                  setState(() => loading = true);
+
                                   API(context).post('add/to/cart', {
                                     "product_id": widget.product.id,
                                     "quantity": widget.product.producttypeId==2?widget.product.noOfOrders: 1
                                   }).then((value) {
+                                    setState(() => loading = false);
+
                                     if (value != null) {
                                       if (value['status_code'] == 200) {
                                         setState(() {
@@ -254,14 +264,25 @@ class _ProductListState extends State<ProductList> {
                                   color: Colors.black,
                                 ),
                               ),
+                              wloading?SizedBox(
+                                height: 20.0,
+                                width: 20.0,
+                                child: CircularProgressIndicator(  valueColor:
+                                AlwaysStoppedAnimation<Color>( Colors.orange),),
+                              ):
                               IconButton(
                                 onPressed: () {
+                                  setState(() => wloading = true);
                                   widget.product.inWishlist == 0
                                       ? API(context).post('user/add/wishlist', {
                                           "product_id": widget.product.id
                                         }).then((value) {
-                                          if (value != null) {
+                                    setState(() => wloading = false);
+
+                                    if (value != null) {
                                             if (value['status_code'] == 200) {
+                                              setState(() => wloading = false);
+
                                               data.getWishlist(context);
 
                                               setState(() {
@@ -283,10 +304,12 @@ class _ProductListState extends State<ProductList> {
                                           'user/removeitem/wishlist', {
                                           "product_id": widget.product.id
                                         }).then((value) {
-                                          if (value != null) {
+                                    setState(() => wloading = false);
+
+                                    if (value != null) {
                                             if (value['status_code'] == 200) {
                                               data.getWishlist(context);
-
+                                              setState(() => wloading = false);
                                               setState(() {
                                                 widget.product.inWishlist = 0;
                                               });
@@ -327,7 +350,6 @@ class _ProductListState extends State<ProductList> {
               color: Color(0xffF2E964),
             ),
             margin: EdgeInsets.only(left: 16, top: 8, right: 12, bottom: 2),
-
             child:Center(
               child: Text(
                 "${getTransrlate(context, 'wholesale')} : ${widget.product.noOfOrders ?? ' '} ${getTransrlate(context, 'piece')} ",

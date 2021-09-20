@@ -98,6 +98,7 @@ class OrderDetails {
   int storeId;
   int vendorId;
   String productName;
+  String productNameEn;
   List<ProductImage> productImage;
   String productSerial;
   String storeName;
@@ -122,6 +123,7 @@ class OrderDetails {
         this.vendorName,
         this.quantity,
         this.price,
+        this.productNameEn,
         this.actual_price,
         this.discount,
         this.total,
@@ -134,6 +136,7 @@ class OrderDetails {
     storeId = json['store_id'];
     vendorId = json['vendor_id'];
     productName = json['product_name'];
+    productNameEn = json['name_en'];
     if (json['product_image'] != null) {
       productImage = new List<ProductImage>();
       json['product_image'].forEach((v) {

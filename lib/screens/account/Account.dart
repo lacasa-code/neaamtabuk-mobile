@@ -148,7 +148,7 @@ class _AccountState extends State<Account> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(
-                                    'assets/icons/reload.svg',
+                                    'assets/icons/User Icon.svg',
                                     color: Colors.orange,
                                     width: 25,
                                   ),

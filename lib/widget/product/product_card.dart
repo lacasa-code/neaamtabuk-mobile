@@ -29,6 +29,8 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+  bool loading=false;
+  bool wloading=false;
   @override
   void initState() {
     super.initState();
@@ -196,12 +198,17 @@ class _ProductCardState extends State<ProductCard> {
                               CupertinoIcons.check_mark_circled,
                               size: 28,
                               color: Colors.black87,
-                            ):  IconButton(
+                            ): loading?CircularProgressIndicator(  valueColor:
+                            AlwaysStoppedAnimation<Color>( Colors.orange),): IconButton(
                               onPressed: () {
+                                setState(() => loading = true);
+
                                 API(context).post('add/to/cart', {
                                   "product_id": widget.product.id,
                                   "quantity": widget.product.producttypeId==2?widget.product.noOfOrders: 1
                                 }).then((value) {
+                                  setState(() => loading = false);
+
                                   if (value != null) {
                                     print(value);
                                     setState(() {
@@ -242,14 +249,19 @@ class _ProductCardState extends State<ProductCard> {
                             SizedBox(
                               width: 6,
                             ),
-                            IconButton(
+                            wloading?CircularProgressIndicator(  valueColor:
+                            AlwaysStoppedAnimation<Color>( Colors.orange),): IconButton(
                               onPressed: () {
+                                setState(() => wloading = true);
+
                                 print(widget.product.inWishlist);
                                 widget.product.inWishlist == 0
                                     ? API(context).post('user/add/wishlist', {
                                         "product_id": widget.product.id
                                       }).then((value) {
-                                        if (value != null) {
+                                  setState(() => wloading = false);
+
+                                  if (value != null) {
                                           if (value['status_code'] == 200) {
                                             setState(() {
                                               widget.product.inWishlist = 1;
@@ -285,8 +297,9 @@ class _ProductCardState extends State<ProductCard> {
                                         'user/removeitem/wishlist', {
                                         "product_id": widget.product.id
                                       }).then((value) {
-                                        if (value != null) {
-                                          if (value['status_code'] == 200) {
+                                  if (value != null) {
+                                    setState(() => wloading = false);
+                                    if (value['status_code'] == 200) {
                                             setState(() {
                                               widget.product.inWishlist = 0;
                                             });

@@ -9,6 +9,7 @@ import 'package:flutter_pos/model/ticket.dart';
 import 'package:flutter_pos/screens/order/CreateTickits.dart';
 import 'package:flutter_pos/screens/product/ProductPage.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Orderdetails extends StatefulWidget {
@@ -28,6 +30,7 @@ class Orderdetails extends StatefulWidget {
 
 class _OrderdetailsState extends State<Orderdetails> {
   List<Ticket> _listTicket;
+  bool loading=false;
 
   @override
   void initState() {
@@ -36,6 +39,8 @@ class _OrderdetailsState extends State<Orderdetails> {
 
   @override
   Widget build(BuildContext context) {
+    final themeColor = Provider.of<Provider_control>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -140,7 +145,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                   widget.order.address == null
                       ? Container()
                       : Text(
-                          '${widget.order.address.area == null ? '' : widget.order.address.area.areaName ?? ''},${widget.order.address.street ?? ''}',
+                    "${widget.order.address.homeNo??' '} \n ${widget.order.address.street??' '} \n ${widget.order.address.district??''}\n ${widget.order.address.city==null?' ':widget.order.address.city.cityName} \n ${widget.order.address.area==null?' ':widget.order.address.area.areaName} \n ${widget.order.address.state==null?' ':widget.order.address.state.countryName}\n ${widget.order.address.recipientPhone??''}",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w400),
                         ),
@@ -286,7 +291,8 @@ class _OrderdetailsState extends State<Orderdetails> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
+                                    widget.order.orderDetails[i]
+                                        .productImage==null?Container():  Container(
                                       width: ScreenUtil.getWidth(context) / 8,
                                       child: CachedNetworkImage(
                                         imageUrl: widget.order.orderDetails[i]
@@ -307,8 +313,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                     Container(
                                       width: ScreenUtil.getWidth(context)/1.5,
                                       child: AutoSizeText(
-                                        widget.order.orderDetails[i].productName
-                                            .toString(),
+                                        "${themeColor.getlocal()=='ar'? widget.order.orderDetails[i].productName??widget.order.orderDetails[i].productNameEn: widget.order.orderDetails[i].productNameEn??widget.order.orderDetails[i].productName}",
                                         maxLines: 2,
                                         style: TextStyle(
                                           fontSize: 14,
@@ -546,11 +551,29 @@ class _OrderdetailsState extends State<Orderdetails> {
                                   child: Column(
                                     // crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      _listTicket[index].Case=='solved'?Container(): InkWell(
+                                      _listTicket[index].Case=='solved'?Container(): loading?FlatButton(
+                                        minWidth: ScreenUtil.getWidth(context) / 2.5,
+                                        color: Colors.orange,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child:Container(
+                                            height: 30,
+                                            child: Center(
+                                                child: CircularProgressIndicator(
+                                                  valueColor:
+                                                  AlwaysStoppedAnimation<Color>( Colors.white),
+                                                )),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                        },
+                                      ): InkWell(
                                         onTap: () {
+                                          setState(() => loading = true);
                                           API(context).post('solved/ticket', {
                                             "id": _listTicket[index].id,
                                           }).then((value) {
+                                            setState(() => loading = false);
                                             if (value != null) {
                                               if (value['status_code'] == 200) {
                                                 showDialog(
@@ -590,11 +613,31 @@ class _OrderdetailsState extends State<Orderdetails> {
                                         ),
                                       ),
                                       SizedBox(height: 10),
-                                      _listTicket[index].Case=='to admin'?Container(): InkWell(
+                                      _listTicket[index].Case=='to admin'?Container():  loading?FlatButton(
+                                        minWidth: ScreenUtil.getWidth(context) / 2.5,
+                                        color: Colors.orange,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child:Container(
+                                            height: 30,
+                                            child: Center(
+                                                child: CircularProgressIndicator(
+                                                  valueColor:
+                                                  AlwaysStoppedAnimation<Color>( Colors.white),
+                                                )),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                        },
+                                      ):InkWell(
                                         onTap: () {
+                                          setState(() => loading = true);
+
                                           API(context).post('to/admin/ticket', {
                                             "id": _listTicket[index].id,
                                           }).then((value) {
+                                            setState(() => loading = false);
+
                                             if (value != null) {
                                               if (value['status_code'] == 200) {
                                                 showDialog(

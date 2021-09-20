@@ -9,6 +9,7 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_model.dart';
 
@@ -47,7 +48,7 @@ class _RegisterFormState extends State<RegisterForm> {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only( right: 36, left: 48),
+          padding: EdgeInsets.only(right: 36, left: 48),
           child: Form(
             key: _formKey,
             child: Column(
@@ -58,10 +59,10 @@ class _RegisterFormState extends State<RegisterForm> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else   if (value.length<=2) {
+                    } else if (value.length <= 2) {
                       return "${getTransrlate(context, 'requiredlength')}";
-                    }else if (RegExp(
-                        r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
+                    } else if (RegExp(r"^[+-]?([0-9]*[.])?[0-9]+")
+                        .hasMatch(value)) {
                       return getTransrlate(context, 'invalidname');
                     }
                     return null;
@@ -77,8 +78,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    } else if (!RegExp(
-                            r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                    } else if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
                         .hasMatch(value)) {
                       return getTransrlate(context, 'invalidemail');
                     }
@@ -95,9 +95,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      passwordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
                       color: Colors.black26,
                     ),
                     onPressed: () {
@@ -131,9 +129,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      passwordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
                       color: Colors.black26,
                     ),
                     onPressed: () {
@@ -147,7 +143,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else if (value != model.password) {
+                    } else if (value != model.password) {
                       return getTransrlate(context, 'Passwordmatch');
                     }
 
@@ -191,13 +187,10 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
         _isLoading
             ? Container(
-                height: ScreenUtil.getHeight(context),
-                width: double.infinity,
-                color: Colors.black45,
-                child: Center(
-                    child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            themeColor.getColor()))))
+                color: Colors.white,
+                height: ScreenUtil.getHeight(context) / 2,
+                width: ScreenUtil.getWidth(context),
+                child: Custom_Loading())
             : Container()
       ],
     );
@@ -215,24 +208,23 @@ class _RegisterFormState extends State<RegisterForm> {
       if (!value.containsKey('errors')) {
         setState(() => _isLoading = false);
         var user = value['data'];
-      //   prefs.setString("user_email", user['email']);
-      // //  prefs.setString("email_verified_at", user['email_verified_at']);
-      //   if (user.containsKey('vendor_details')) {
-      //     prefs.setInt(
-      //         "complete", user['vendor_details']['complete']);
-      //     prefs.setString("vendor", 'vendor');
-      //   }
-      //   prefs.setString("user_name", user['name']);
-      //   prefs.setString("token", user['token']);
-      //   prefs.setInt("user_id", user['id']);
-      //   themeColor.setLogin(true);
+        //   prefs.setString("user_email", user['email']);
+        // //  prefs.setString("email_verified_at", user['email_verified_at']);
+        //   if (user.containsKey('vendor_details')) {
+        //     prefs.setInt(
+        //         "complete", user['vendor_details']['complete']);
+        //     prefs.setString("vendor", 'vendor');
+        //   }
+        //   prefs.setString("user_name", user['name']);
+        //   prefs.setString("token", user['token']);
+        //   prefs.setInt("user_id", user['id']);
+        //   themeColor.setLogin(true);
         showDialog(
-            context: context,
-            builder: (_) =>
-                ResultOverlay('${value['message']}')).whenComplete(() {
+                context: context,
+                builder: (_) => ResultOverlay('${value['message']}'))
+            .whenComplete(() {
           Nav.routeReplacement(context, LoginPage());
         });
-
 
         // Navigator.pushAndRemoveUntil(
         //     context, MaterialPageRoute(builder: (_) => Account()), (r) => false);

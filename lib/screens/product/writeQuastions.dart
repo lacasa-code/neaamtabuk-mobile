@@ -19,7 +19,7 @@ class WriteQuastionsdialog extends StatefulWidget {
 
 class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
   TextEditingController CommentController=TextEditingController();
-
+bool loading =false;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -107,12 +107,17 @@ class _WriteQuastionsdialogState extends State<WriteQuastionsdialog> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      InkWell(
+                      loading?CircularProgressIndicator(  valueColor:
+                      AlwaysStoppedAnimation<Color>( Colors.orange),):  InkWell(
                         onTap: () {
+                          setState(() => loading = true);
+
                           API(context)
                               .post('user/add/prod/question',
                               {"body_question":CommentController.text,"product_id":widget.id})
                               .then((value) {
+                            setState(() => loading = false);
+
                             if (value != null) {
                               if (value['status_code'] == 201) {
                                 Navigator.pop(context);

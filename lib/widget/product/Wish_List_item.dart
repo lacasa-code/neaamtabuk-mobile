@@ -25,6 +25,9 @@ class Wish_List extends StatefulWidget {
 }
 
 class _Wish_ListState extends State<Wish_List> {
+ bool loading = false;
+ bool dloading = false;
+
   @override
   void initState() {
     super.initState();
@@ -69,7 +72,7 @@ class _Wish_ListState extends State<Wish_List> {
                           width: ScreenUtil.getWidth(context) / 3,
                           height: 50,
                           child: AutoSizeText(
-                            "${widget.product.name}",
+                            "${themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN:widget.product.nameEN??widget.product.name}",
                             maxLines: 2,
                             style: TextStyle(
                               height: 1.5,
@@ -83,7 +86,7 @@ class _Wish_ListState extends State<Wish_List> {
                       ],
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 2,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,11 +138,16 @@ class _Wish_ListState extends State<Wish_List> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                IconButton(
+                dloading?CircularProgressIndicator(  valueColor:
+                AlwaysStoppedAnimation<Color>( Colors.orange),):IconButton(
                     onPressed: () {
+                      setState(() => dloading = true);
+
                       API(context).post('user/removeitem/wishlist',
                           {"product_id": widget.product.product_id}).then((value) {
                         if (value != null) {
+                          setState(() => dloading = false);
+
                           if (value['status_code'] == 200) {
                             showDialog(
                                 context: context,
@@ -240,12 +248,32 @@ class _Wish_ListState extends State<Wish_List> {
                     ),
                   ),
                 ):
-                InkWell(
+                loading?FlatButton(
+                  minWidth: ScreenUtil.getWidth(context) / 4,
+                  color: Colors.orange,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:Container(
+                      height: 28,
+                      child: Center(
+                          child: CircularProgressIndicator(
+                            valueColor:
+                            AlwaysStoppedAnimation<Color>( Colors.white),
+                          )),
+                    ),
+                  ),
+                  onPressed: () async {
+                  },
+                ):  InkWell(
                   onTap: () {
+                    setState(() => loading = true);
+
                     API(context).post('add/to/cart', {
                       "product_id": widget.product.product_id,
                       "quantity": 1
                     }).then((value) {
+                      setState(() => loading = false);
+
                       if (value != null) {
                         if (value['status_code'] == 200) {
                           showDialog(
@@ -288,8 +316,8 @@ class _Wish_ListState extends State<Wish_List> {
                           width: ScreenUtil.getWidth(context) / 5,
                           child: AutoSizeText(
                             '${getTransrlate(context, 'ADDtoCart')}',
-                            minFontSize: 13,
-                            maxFontSize: 13,
+                            minFontSize: 10,
+                            maxFontSize: 12,
                             maxLines: 1,
                             style: TextStyle(color: Colors.orange),
                           ),

@@ -11,6 +11,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,7 @@ class _UserInfoState extends State<UserInfo> {
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
   bool _isLoading = false;
+  bool loading = false;
   User userModal;
   String password;
   final _formKey = GlobalKey<FormState>();
@@ -97,7 +99,7 @@ class _UserInfoState extends State<UserInfo> {
                             valueColor: AlwaysStoppedAnimation<Color>(
                                 themeColor.getColor()))))
                 : userModal == null
-                    ? Container()
+                    ? Custom_Loading()
                     : Container(
                         color: Colors.white,
                         child: Container(
@@ -369,12 +371,28 @@ print(userModal.birthdate);
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(right: 10.0),
-                child: InkWell(
+                child:  loading?FlatButton(
+                  minWidth: ScreenUtil.getWidth(context) / 2.5,
+                  color: Colors.orange,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:Container(
+                      height: 30,
+                      child: Center(
+                          child: CircularProgressIndicator(
+                            valueColor:
+                            AlwaysStoppedAnimation<Color>( Colors.white),
+                          )),
+                    ),
+                  ),
+                  onPressed: () async {
+                  },
+                ):InkWell(
                   onTap: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                     //  final SharedPreferences prefs = await SharedPreferences.getInstance();
-                      //setState(() => _isLoading = true);
+                      setState(() => loading = true);
                       API(context).post('user/edit/profile', {
                         "name": userModal.name,
                         "email": userModal.email,
@@ -384,7 +402,10 @@ print(userModal.birthdate);
                         "gender": userModal.gender,
                       }).then((value) {
                         if (value != null) {
+                          setState(() => loading = false);
+
                           if (value['status_code'] == 200) {
+
                             getUser();
                             showDialog(
                                 context: context,

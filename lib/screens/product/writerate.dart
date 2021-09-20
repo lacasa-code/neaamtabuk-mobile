@@ -22,6 +22,7 @@ class WriteRatedialog extends StatefulWidget {
 class _WriteRatedialogState extends State<WriteRatedialog> {
   TextEditingController CommentController = TextEditingController();
   double rating = 0.5;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -144,49 +145,58 @@ class _WriteRatedialogState extends State<WriteRatedialog> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          API(context).post('user/add/review', {
-                            "body_review": CommentController.text,
-                            "product_id": widget.id,
-                            "evaluation_value": rating
-                          }).then((value) {
-                            if (value != null) {
-                              if (value['status_code'] == 201) {
-                                Navigator.pop(context);
+                      loading
+                          ? CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.orange),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                setState(() => loading = true);
 
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay(value['message']));
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => ResultOverlay(
-                                        '${value['message'] ?? ''}\n${value['errors'] ?? ""}'));
-                              }
-                            }
-                          });
-                        },
-                        child: Container(
-                          width: ScreenUtil.getWidth(context) / 2.5,
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)),
-                          child: Center(
-                            child: AutoSizeText(
-                              '${getTransrlate(context, 'send')}',
-                              overflow: TextOverflow.ellipsis,
-                              maxFontSize: 14,
-                              maxLines: 1,
-                              minFontSize: 10,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                                API(context).post('user/add/review', {
+                                  "body_review": CommentController.text,
+                                  "product_id": widget.id,
+                                  "evaluation_value": rating
+                                }).then((value) {
+                                  setState(() => loading = false);
+
+                                  if (value != null) {
+                                    if (value['status_code'] == 201) {
+                                      Navigator.pop(context);
+
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) =>
+                                              ResultOverlay(value['message']));
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => ResultOverlay(
+                                              '${value['message'] ?? ''}\n${value['errors'] ?? ""}'));
+                                    }
+                                  }
+                                });
+                              },
+                              child: Container(
+                                width: ScreenUtil.getWidth(context) / 2.5,
+                                padding: const EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: AutoSizeText(
+                                    '${getTransrlate(context, 'send')}',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxFontSize: 14,
+                                    maxLines: 1,
+                                    minFontSize: 10,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
                       InkWell(
                         onTap: () {
                           Navigator.pop(context);

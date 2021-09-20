@@ -28,6 +28,8 @@ class _AddAddressState extends State<AddAddress> {
   List<Country> contries;
   List<City> cities;
   List<Area> area;
+  bool loading = false;
+
   TextEditingController code= TextEditingController();
   @override
   void initState() {
@@ -136,7 +138,7 @@ class _AddAddressState extends State<AddAddress> {
                     // label: getTransrlate(context, 'Countroy'),
                     validator: (Country item) {
                       if (item == null) {
-                        return "Required field";
+                        return "${getTransrlate(context, 'Required')}";
                       } else
                         return null;
                     },
@@ -153,7 +155,6 @@ class _AddAddressState extends State<AddAddress> {
                          cities=null;
                        });
                       getArea(data.id);
-
                     },
                   ),
                 ),
@@ -175,7 +176,7 @@ class _AddAddressState extends State<AddAddress> {
                     showSearchBox: true,
                     validator: (Area item) {
                       if (item == null) {
-                        return "Required field";
+                        return "${getTransrlate(context, 'Required')}";
                       } else
                         return null;
                     },
@@ -213,7 +214,7 @@ class _AddAddressState extends State<AddAddress> {
                     showSearchBox: true,
                     validator: (City item) {
                       if (item == null) {
-                        return "Required field";
+                        return "${getTransrlate(context, 'Required')}";
                       } else
                         return null;
                     },
@@ -275,8 +276,6 @@ class _AddAddressState extends State<AddAddress> {
                       return getTransrlate(context, 'requiredempty');
                     }else   if (value.length<1) {
                       return "${getTransrlate(context, 'requiredlength')}";
-                    }else if (!RegExp(r"^[0-9]*$").hasMatch(value)) {
-                      return getTransrlate(context, 'invalidnamber');
                     }
                     return null;
                   },
@@ -313,8 +312,6 @@ class _AddAddressState extends State<AddAddress> {
                       return getTransrlate(context, 'requiredempty');
                     }else   if (value.length<1) {
                       return "${getTransrlate(context, 'requiredlength')}";
-                    }else if (!RegExp(r"^[0-9]*$").hasMatch(value)) {
-                      return getTransrlate(context, 'invalidnamber');
                     }
                     return null;
                   },
@@ -447,7 +444,23 @@ class _AddAddressState extends State<AddAddress> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Center(
-                      child: GestureDetector(
+                      child:  loading?FlatButton(
+                        minWidth: ScreenUtil.getWidth(context) / 2.5,
+                        color: Colors.orange,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:Container(
+                            height: 30,
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>( Colors.white),
+                                )),
+                          ),
+                        ),
+                        onPressed: () async {
+                        },
+                      ):GestureDetector(
                         child: Container(
                           width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
@@ -470,10 +483,14 @@ class _AddAddressState extends State<AddAddress> {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             print( address.toJson());
+                            setState(() => loading = true);
+
                             API(context)
                                 .post('user/add/shipping', address.toJson())
                                 .then((value) {
                               if (value != null) {
+                                setState(() => loading = false);
+
                                 if (value['status_code'] == 201) {
                                   Navigator.pop(context);
                                   showDialog(

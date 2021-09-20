@@ -196,6 +196,7 @@ class OrderDetails {
   int _storeId;
   int _vendorId;
   String _productName;
+  String _productNameEn;
   List<Product_image> _productImage;
   String _productSerial;
   String _storeName;
@@ -213,6 +214,7 @@ class OrderDetails {
   int get storeId => _storeId;
   int get vendorId => _vendorId;
   String get productName => _productName;
+  String get productNameEn => _productName;
   List<Product_image> get productImage => _productImage;
   String get productSerial => _productSerial;
   String get storeName => _storeName;
@@ -231,7 +233,8 @@ class OrderDetails {
       int storeId, 
       int vendorId, 
       String productName, 
-      List<Product_image> productImage, 
+      String productNameEn,
+      List<Product_image> productImage,
       String productSerial, 
       String storeName, 
       String vendorName, 
@@ -247,6 +250,7 @@ class OrderDetails {
     _storeId = storeId;
     _vendorId = vendorId;
     _productName = productName;
+    _productNameEn = productNameEn;
     _productImage = productImage;
     _productSerial = productSerial;
     _storeName = storeName;
@@ -266,6 +270,7 @@ class OrderDetails {
     _storeId = json["store_id"];
     _vendorId = json["vendor_id"];
     _productName = json["product_name"];
+    _productNameEn = json["productNameEn"];
     if (json["product_image"] != null) {
       _productImage = [];
       json["product_image"].forEach((v) {

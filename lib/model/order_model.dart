@@ -116,6 +116,7 @@ class OrderDetails {
   int storeId;
   int vendorId;
   String productName;
+  String productNameEn;
   List<ProductImage> productImage;
   String productSerial;
   String storeName;
@@ -134,6 +135,7 @@ class OrderDetails {
       this.storeId,
       this.vendorId,
       this.productName,
+      this.productNameEn,
       this.productImage,
       this.productSerial,
       this.storeName,
@@ -152,6 +154,7 @@ class OrderDetails {
     storeId = json['store_id'];
     vendorId = json['vendor_id'];
     productName = json['product_name'];
+    productNameEn = json['name_en'];
     if (json['product_image'] != null) {
       productImage = new List<ProductImage>();
       json['product_image'].forEach((v) {

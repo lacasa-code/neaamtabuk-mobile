@@ -28,6 +28,7 @@ class _TickitsState extends State<Tickits> {
   List<Categorytickit> _data;
   List<Categorytickit> priorty;
   File attachment;
+bool    loading = false;
 
   @override
   void initState() {
@@ -62,7 +63,7 @@ super.initState();
             Container(
                 width: ScreenUtil.getWidth(context) / 2,
                 child: AutoSizeText(
-                  'الطلبات والمشتريات',
+                  '${getTransrlate(context, 'Myorders')}',
                   minFontSize: 10,
                   maxFontSize: 16,
                   maxLines: 1,
@@ -81,10 +82,10 @@ super.initState();
                     ? Container()
                     : DropdownSearch<Categorytickit>(
 
-                      label: " نوع الشكوى ",
+                      label:"${getTransrlate(context, 'typeTickit')}",
                       validator: (Categorytickit item) {
                         if (item == null) {
-                          return "Required field";
+                          return "${getTransrlate(context, 'Required')}";
                         } else
                           return null;
                       },
@@ -98,10 +99,10 @@ super.initState();
                 priorty == null
                     ? Container()
                     : DropdownSearch<Categorytickit>(
-                  label: " أولية الشكوى ",
+                  label: " ${getTransrlate(context, 'priortyTickit')} ",
                   validator: (Categorytickit item) {
                     if (item == null) {
-                      return "Required field";
+                      return "${getTransrlate(context, 'Required')}";
                     } else
                       return null;
                   },
@@ -115,12 +116,12 @@ super.initState();
                 // MyTextFormField(
                 //   intialLabel: 'low',
                 //   Keyboard_Type: TextInputType.emailAddress,
-                //   labelText: 'أولية الشكوى',
-                //   hintText: 'أولية الشكوى',
+                //   labelText: '${getTransrlate(context, 'priortyTickit')}',
+                //   hintText: '${getTransrlate(context, 'priortyTickit')}',
                 //   isPhone: true,
                 //   validator: (String value) {
                 //     if (value.isEmpty) {
-                //       return 'أولية الشكوى (low & high)';
+                //       return '${getTransrlate(context, 'priortyTickit')} (low & high)';
                 //     }
                 //     _formKey.currentState.save();
                 //     return null;
@@ -132,12 +133,12 @@ super.initState();
                 MyTextFormField(
                   intialLabel: '',
                   keyboard_type: TextInputType.emailAddress,
-                  labelText: 'عنوان الشكوى',
-                  hintText: 'عنوان الشكوى',
+                  labelText: '${getTransrlate(context, 'addressTickit')}',
+                  hintText: '${getTransrlate(context, 'addressTickit')}',
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return 'عنوان الشكوى';
+                      return '${getTransrlate(context, 'addressTickit')}';
                     }
                     _formKey.currentState.save();
                     return null;
@@ -204,12 +205,12 @@ super.initState();
                 MyTextFormField(
                   intialLabel: '',
                   keyboard_type: TextInputType.emailAddress,
-                  labelText: 'الرسالة',
-                  hintText: 'الرسالة',
+                  labelText: '${getTransrlate(context, 'massage')}',
+                  hintText: '${getTransrlate(context, 'massage')}',
                   isPhone: true,
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return 'الرسالة';
+                      return '${getTransrlate(context, 'massage')}';
                     }
                     _formKey.currentState.save();
                     return null;
@@ -223,7 +224,23 @@ super.initState();
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Center(
-                      child: GestureDetector(
+                      child:  loading?FlatButton(
+                        minWidth: ScreenUtil.getWidth(context) / 2.5,
+                        color: Colors.orange,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:Container(
+                            height: 30,
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>( Colors.white),
+                                )),
+                          ),
+                        ),
+                        onPressed: () async {
+                        },
+                      ):GestureDetector(
                         child: Container(
                           width: ScreenUtil.getWidth(context) / 3,
                           padding: const EdgeInsets.all(5.0),
@@ -245,7 +262,7 @@ super.initState();
                         onTap: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                            //setState(() => _isLoading = true);
+                            setState(() => loading = true);
                             API(context).postFile('new/ticket',
                                 {
                                   "title": typeTickit??' ',
@@ -256,8 +273,11 @@ super.initState();
                                   "category_id": category_id??'',
                                   "product_id": widget.product_id??''
                                 },attachment: attachment).then((value) {
-                              if (value != null) {
-                                if (value['status_code'] == 201) {
+                              if (value != null) {                              setState(() => loading = true);
+
+                              setState(() => loading = false);
+
+                              if (value['status_code'] == 201) {
                                   Navigator.pop(context);
                                   showDialog(
                                       context: context,
