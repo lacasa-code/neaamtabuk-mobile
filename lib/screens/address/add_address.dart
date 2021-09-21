@@ -7,11 +7,13 @@ import 'package:flutter_pos/model/area_model.dart';
 import 'package:flutter_pos/model/city_model.dart';
 import 'package:flutter_pos/model/country_model.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/shipping_address.dart';
 
@@ -38,6 +40,8 @@ class _AddAddressState extends State<AddAddress> {
 
   @override
   Widget build(BuildContext context) {
+    final themeColor = Provider.of<Provider_control>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -145,7 +149,7 @@ class _AddAddressState extends State<AddAddress> {
 
                     items: contries,
                     //  onFind: (String filter) => getData(filter),
-                    itemAsString: (Country u) => u.countryName,
+                    itemAsString: (Country u) => "${themeColor.getlocal()=='ar'? u.countryName??u.countryName_en:u.countryName_en??u.countryName}",
                     onChanged: (Country data) {
                       print(data.id);
                       address.Country_id = data.id;
@@ -157,6 +161,10 @@ class _AddAddressState extends State<AddAddress> {
                       getArea(data.id);
                     },
                   ),
+                ),
+                Text(
+                  getTransrlate(context, 'area'),
+                  style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
                 area==null? Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -183,7 +191,7 @@ class _AddAddressState extends State<AddAddress> {
 
                     items: area,
                     //  onFind: (String filter) => getData(filter),
-                    itemAsString: (Area u) => u.areaName,
+                    itemAsString: (Area u) =>"${themeColor.getlocal()=='ar'? u.areaName??u.areaName_en:u.areaName_en??u.areaName}",
                     onChanged: (Area data) {
                       address.area_id = data.id;
                       print(data.id);
@@ -195,6 +203,10 @@ class _AddAddressState extends State<AddAddress> {
 
                     },
                   ),
+                ),
+                Text(
+                  getTransrlate(context, 'City'),
+                  style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
                 cities==null? Container(
                   child: Padding(
@@ -221,7 +233,7 @@ class _AddAddressState extends State<AddAddress> {
 
                     items: cities,
                     //  onFind: (String filter) => getData(filter),
-                    itemAsString: (City u) => u.cityName,
+                    itemAsString: (City u) => "${themeColor.getlocal()=='ar'? u.cityName??u.cityName_en:u.cityName_en??u.cityName}",
                     onChanged: (City data) {
                       print(data.id);
 

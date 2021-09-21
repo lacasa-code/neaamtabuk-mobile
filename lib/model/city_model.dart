@@ -56,6 +56,7 @@ class City_model {
 class City {
   int _id;
   String _cityName;
+  String _cityName_en;
   int _areaId;
   int _countryId;
   int _status;
@@ -66,6 +67,7 @@ class City {
 
   int get id => _id;
   String get cityName => _cityName;
+  String get cityName_en => _cityName_en;
   int get areaId => _areaId;
   int get countryId => _countryId;
   int get status => _status;
@@ -77,7 +79,8 @@ class City {
   City({
       int id, 
       String cityName, 
-      int areaId, 
+      String cityName_en,
+      int areaId,
       int countryId, 
       int status, 
       String lang, 
@@ -86,6 +89,7 @@ class City {
       dynamic deletedAt}){
     _id = id;
     _cityName = cityName;
+    cityName_en = _cityName_en;
     _areaId = areaId;
     _countryId = countryId;
     _status = status;
@@ -98,6 +102,7 @@ class City {
   City.fromJson(dynamic json) {
     _id = json["id"];
     _cityName = json["city_name"];
+    _cityName_en = json["name_en"];
     _areaId = json["area_id"];
     _countryId = json["country_id"];
     _status = json["status"];

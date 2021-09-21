@@ -79,7 +79,7 @@
 
   "Content": "Content",
 
-  "offers": "Recently Products ",
+  "offers": "Recently Added ",
   "diconts": "Discount ",
   "moresale": "Best Seller",
   "intersted": "Recent View",
@@ -122,6 +122,10 @@
   "allrate": "all reviews",
   "writerate": "write review",
   "typeTickit": "Ticket Type",
+  "selectAddressMsg": "Add your shipping address",
+  "selectAddressPopupMsg": "Please select a shipping address to move to the next step.",
+
+  "ProductTicket": "Product Ticket",
   "addressTickit": "Title Ticket",
   "manufacturers": "Manufacturers",
   "ReSet": "Reset",

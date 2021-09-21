@@ -30,7 +30,6 @@ class Orderdetails extends StatefulWidget {
 
 class _OrderdetailsState extends State<Orderdetails> {
   List<Ticket> _listTicket;
-  bool loading=false;
 
   @override
   void initState() {
@@ -436,6 +435,17 @@ class _OrderdetailsState extends State<Orderdetails> {
                                       '${_listTicket[index].categoryName}'),
                                 ),
                                 Text(
+                                  '${getTransrlate(context, 'ProductTicket')}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                      '${themeColor.getlocal()=='ar'? _listTicket[index].product_name:_listTicket[index].product_name_en}'),
+                                ),
+                                Text(
                                   '${getTransrlate(context, 'addressTickit')}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
@@ -551,29 +561,20 @@ class _OrderdetailsState extends State<Orderdetails> {
                                   child: Column(
                                     // crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      _listTicket[index].Case=='solved'?Container(): loading?FlatButton(
-                                        minWidth: ScreenUtil.getWidth(context) / 2.5,
-                                        color: Colors.orange,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child:Container(
-                                            height: 30,
-                                            child: Center(
-                                                child: CircularProgressIndicator(
-                                                  valueColor:
-                                                  AlwaysStoppedAnimation<Color>( Colors.white),
-                                                )),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                        },
+                                      _listTicket[index].Case=='solved'?Container(): _listTicket[index].loading?Container(
+                                        height: 30,
+                                        child: Center(
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                              AlwaysStoppedAnimation<Color>( Colors.orange),
+                                            )),
                                       ): InkWell(
                                         onTap: () {
-                                          setState(() => loading = true);
+                                          setState(() => _listTicket[index].loading = true);
                                           API(context).post('solved/ticket', {
                                             "id": _listTicket[index].id,
                                           }).then((value) {
-                                            setState(() => loading = false);
+                                            setState(() => _listTicket[index].loading = false);
                                             if (value != null) {
                                               if (value['status_code'] == 200) {
                                                 showDialog(
@@ -613,30 +614,21 @@ class _OrderdetailsState extends State<Orderdetails> {
                                         ),
                                       ),
                                       SizedBox(height: 10),
-                                      _listTicket[index].Case=='to admin'?Container():  loading?FlatButton(
-                                        minWidth: ScreenUtil.getWidth(context) / 2.5,
-                                        color: Colors.orange,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child:Container(
-                                            height: 30,
-                                            child: Center(
-                                                child: CircularProgressIndicator(
-                                                  valueColor:
-                                                  AlwaysStoppedAnimation<Color>( Colors.white),
-                                                )),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                        },
+                                      _listTicket[index].Case=='to admin'?Container():  _listTicket[index].tloading?Container(
+                                        height: 30,
+                                        child: Center(
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                              AlwaysStoppedAnimation<Color>( Colors.orange),
+                                            )),
                                       ):InkWell(
                                         onTap: () {
-                                          setState(() => loading = true);
+                                          setState(() =>  _listTicket[index].tloading = true);
 
                                           API(context).post('to/admin/ticket', {
                                             "id": _listTicket[index].id,
                                           }).then((value) {
-                                            setState(() => loading = false);
+                                            setState(() =>  _listTicket[index].tloading = false);
 
                                             if (value != null) {
                                               if (value['status_code'] == 200) {

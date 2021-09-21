@@ -55,6 +55,7 @@ class Area_model {
 class Area {
   int _id;
   String _areaName;
+  String _areaName_en;
   int _countryId;
   int _status;
   String _lang;
@@ -64,6 +65,7 @@ class Area {
 
   int get id => _id;
   String get areaName => _areaName;
+  String get areaName_en => _areaName_en;
   int get countryId => _countryId;
   int get status => _status;
   String get lang => _lang;
@@ -74,7 +76,8 @@ class Area {
   Area({
       int id, 
       String areaName, 
-      int countryId, 
+      String areaName_en,
+      int countryId,
       int status, 
       String lang, 
       String createdAt, 
@@ -82,6 +85,7 @@ class Area {
       dynamic deletedAt}){
     _id = id;
     _areaName = areaName;
+    _areaName_en = areaName_en;
     _countryId = countryId;
     _status = status;
     _lang = lang;
@@ -93,6 +97,7 @@ class Area {
   Area.fromJson(dynamic json) {
     _id = json["id"];
     _areaName = json["area_name"];
+    _areaName_en = json["name_en"];
     _countryId = json["country_id"];
     _status = json["status"];
     _lang = json["lang"];

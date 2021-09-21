@@ -37,6 +37,7 @@ class _ProductCartState extends State<ProductCart> {
   ];
 
   bool loading = false;
+  bool uloading = false;
   bool other = true;
   final _formKey = GlobalKey<FormState>();
 
@@ -266,11 +267,16 @@ class _ProductCartState extends State<ProductCart> {
                                               },
                                             ),
                                           ),
-                                          InkWell(
+                                          uloading?Center(
+                                            child: CircularProgressIndicator(  valueColor:
+                                            AlwaysStoppedAnimation<Color>( Colors.lightGreen),),
+                                          ):  InkWell(
                                             onTap: () {
                                               if (_formKey.currentState
                                                   .validate()) {
                                                 _formKey.currentState.save();
+                                                setState(() => uloading = true);
+
                                                 API(context)
                                                     .post('add/to/cart', {
                                                   "product_id":
@@ -280,6 +286,8 @@ class _ProductCartState extends State<ProductCart> {
                                                   "order_id":
                                                       widget.carts.orderId
                                                 }).then((value) {
+                                                  setState(() => uloading = true);
+
                                                   if (value != null) {
                                                     if (value['status_code'] ==
                                                         200) {

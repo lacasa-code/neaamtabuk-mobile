@@ -136,9 +136,8 @@ class _Products_PageState extends State<Products_Page> {
                               context: context,
                               builder: (_) => Sortdialog()).then((val) {
                             sort=val;
-                            print('${widget.Url}&sort_type=${sort}');
                             API(context)
-                                .get('${widget.Url}&sort_type=${sort}')
+                                .get('${widget.Url}&sort_type=${sort??'ASC&ordered_by=price'}')
                                 .then((value) {
                               if (value != null) {
                                 if (value['status_code'] == 200) {

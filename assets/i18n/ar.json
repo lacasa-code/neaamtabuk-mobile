@@ -22,9 +22,13 @@
   "next_checkout": "متابعة الشراء",
   "Shipping": "الشحنة",
   "mixed": "لا يمكن إتمام الشراء بمنتجات جملة وتجزئة في نفس الطلب، يرجى إختيار منتجات جملة فقط أو تجزئة فقط",
+  "selectAddressMsg": "يرجي إضافة عنوان شحن",
+  "selectAddressPopupMsg": "يجب أن تختار عنوان للشحن لتتمكن من الذهاب للخطوة التالية",
+
   "backToshoppingCart": "عودة لعربة التسوق",
   "backToshopping": "عودة للتسوق",
   "typeTickit": "نوع الشكوى",
+  "ProductTicket": "اسم المنتج",
   "priortyTickit": " أولية الشكوى",
   "addressTickit": "عنوان الشكوى",
   "dateTickit": "تاريخ الشكوى",
@@ -33,8 +37,6 @@
   "solutionTickit": "تم حل المشكلة",
   "nosolutionTickit": "لم يتم حل المشكلة",
 
-  "CardNumber": "الجهة المنتجة",
-  "CardNumber": "رقم البطاقة",
   "CardName": "الإسم كما يظهر على البطاقة",
   "month": "شهر",
   "year": "سنة",

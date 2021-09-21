@@ -60,7 +60,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
 setState(() {
   Provider.of<Provider_Data>(context,listen: false).address==null?null:
   checkboxValue=Provider.of<Provider_Data>(context,listen: false).address.id;
-
+  DefaultAddress=Provider.of<Provider_Data>(context,listen: false).address;
 });
     getAddress();
     getpaymentways();
@@ -120,6 +120,8 @@ setState(() {
                                     padding: const EdgeInsets.all(24.0),
                                     child: CircularProgressIndicator(),
                                   )
+                                : address.isEmpty
+                                ? Text('${getTransrlate(context, 'selectAddressMsg')}')
                                 : ListView.builder(
                                     padding: EdgeInsets.all(1),
                                     primary: false,
@@ -1111,7 +1113,11 @@ setState(() {
   }
 
   continued() {
-    _currentStep < 2 ? setState(() => _currentStep += 1) : null;
+    DefaultAddress==null? showDialog(
+        context: context,
+        builder: (_) =>
+            ResultOverlay('${getTransrlate(context, 'selectAddressPopupMsg')}'))
+    :_currentStep < 2 ? setState(() => _currentStep += 1) : null;
   }
 
   cancel() {
@@ -1127,6 +1133,7 @@ setState(() {
       }
     });
   }
+
 
   void getpaymentways() {
     API(context).get('all/paymentways').then((value) {
