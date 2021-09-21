@@ -412,7 +412,7 @@ setState(() {
                           ),
                           Text(
                          //   _cart_model.address==null?'غير محدد حاليا': 'توصيل إلى: ${_cart_model.address.area==null?'':_cart_model.address.area.areaName??''},${_cart_model.address.city==null?'':_cart_model.address.city.cityName??''}.${_cart_model.address.street??''}',
-                            DefaultAddress==null?'${getTransrlate(context, 'NoSelect')}': '${getTransrlate(context, 'ShippingTo')}: ${DefaultAddress.area==null?'':DefaultAddress.area.areaName??''},${DefaultAddress.city==null?'':DefaultAddress.city.cityName??''}.${DefaultAddress.street??''},${DefaultAddress.district??''}${DefaultAddress.floorNo??''}${DefaultAddress.apartmentNo??''}',
+                            DefaultAddress==null?'${getTransrlate(context, 'NoSelect')}': ' ${DefaultAddress.area==null?'':DefaultAddress.area.areaName??''},${DefaultAddress.city==null?'':DefaultAddress.city.cityName??''}.${DefaultAddress.street??''},${DefaultAddress.district??''}${DefaultAddress.floorNo??''}${DefaultAddress.apartmentNo??''}',
                             style: TextStyle(
                                 height: 1.5, fontWeight: FontWeight.bold),
                           ),

@@ -203,7 +203,7 @@ class OrderDetails {
   String _vendorName;
   int _quantity;
   String _price;
-  int _discount;
+  String _discount;
   String _total;
   int _approved;
   String _createdAt;
@@ -221,7 +221,7 @@ class OrderDetails {
   String get vendorName => _vendorName;
   int get quantity => _quantity;
   String get price => _price;
-  int get discount => _discount;
+  String get discount => _discount;
   String get total => _total;
   int get approved => _approved;
   String get createdAt => _createdAt;
@@ -240,7 +240,7 @@ class OrderDetails {
       String vendorName, 
       int quantity,
     String price,
-      int discount,
+    String discount,
     String total,
       int approved, 
       String createdAt}){
@@ -282,7 +282,7 @@ class OrderDetails {
     _vendorName = json["vendor_name"];
     _quantity = json["quantity"];
     _price = json["price"].toString();
-    _discount = json["discount"];
+    _discount = json["discount"].toString();
     _total = json["total"].toString();
     _approved = json["approved"];
     _createdAt = json["created_at"];
