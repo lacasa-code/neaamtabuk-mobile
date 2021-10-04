@@ -1,10 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_pos/model/Categories_model.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/screens/product/products_page.dart';
+import 'package:flutter_pos/screens/product/sub_category.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -14,6 +17,7 @@ import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key key}) : super(key: key);
 
@@ -48,7 +52,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               child: Container(
                 color: Colors.white70,
-                child: data.Mcategories == null
+                child: data.categories == null
                     ? Center(child: Custom_Loading())
                     : Container(
                         child: Row(
@@ -73,7 +77,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       shrinkWrap: true,
                                       padding: EdgeInsets.symmetric(horizontal: 2),
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: data.Mcategories.length,
+                                      itemCount: data.categories[themeColor.car_type].categories.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         bool selected = checkboxType == index;
@@ -82,6 +86,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             setState(() {
                                               checkboxType = index;
                                               checkboxPart = 0;
+                                            //  categories= data.categories;
+
                                             });
                                           },
                                           child: Container(
@@ -109,7 +115,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   padding: const EdgeInsets.only(
                                                       right: 2,left: 2),
                                                   child: AutoSizeText(
-                                                    "${themeColor.getlocal()=='ar'? data.Mcategories[index].mainCategoryName??data.Mcategories[index].nameEn :data.Mcategories[index].nameEn??data.Mcategories[index].mainCategoryName}",
+                                                    "${themeColor.getlocal()=='ar'? data.categories[themeColor.car_type].categories[index].name??data.categories[themeColor.car_type].categories[index].nameEn :data.categories[themeColor.car_type].categories[index].nameEn??data.categories[themeColor.car_type].categories[index].name}",
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
                                                     minFontSize: 12,
@@ -131,7 +137,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             Expanded(
                               child: SingleChildScrollView(
                                 child: getList(
-                                    data.Mcategories[checkboxType].categories),
+                                    data.categories[themeColor.car_type].categories[checkboxType].categories),
                               ),
                             ),
                           ],
@@ -145,147 +151,129 @@ class _CategoryScreenState extends State<CategoryScreen> {
     );
   }
 
-  getList(List<Categories> Categories) {
+  getList(List<Categories_item> Categories) {
     final themeColor = Provider.of<Provider_control>(context);
+    final data = Provider.of<Provider_Data>(context);
     return Categories == null
         ? Container()
         : Categories.isEmpty
             ? Container(child: NotFoundProduct())
             : Column(
               children: [
-                ListView.builder(
-                    primary: false,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.all(1),
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: Categories.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      bool selected = checkboxPart == index;
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ExpandablePanel(
-                              header: InkWell(
-                                onTap: Categories[index].last_level == 0
-                                    ? null
-                                    : () {
-                                        Nav.route(
-                                            context,
-                                            Products_Page(
-                                              id: Categories[index].id,
-                                              name: Categories[index].name,
-                                              Url: "site/part/categories/${Categories[index].id}?cartype_id=${themeColor.getcar_type()}",
-                                              Istryers: Provider.of<Provider_Data>(context,listen: false).Mcategories[checkboxType].id==7,
-
-                                            ));
-                                      },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: ScreenUtil.getWidth(context)/3,
-                                      child: Text(
-                                        "${themeColor.getlocal()=='ar'? Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
-                                        maxLines: 2,
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(fontWeight: FontWeight.w600,
-                                            fontSize: 12),
-                                      ),
-                                    ),
-                                    IconButton(onPressed: (){
-                                      Nav.route(
-                                          context,
-                                          Products_Page(
-                                            id:Categories[index].id,
-                                            name: "${ themeColor.getlocal()=='ar'?Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
-                                            Url: 'site/categories/${Categories[index].id}?cartype_id=${themeColor.car_type}',
-                                            Istryers: Categories[index].id==84,
-                                            Category: true,
-                                          ));
-                                    }, icon: Icon(Icons.search))
-                                  ],
-                                ),
+                ResponsiveGridList(
+                    desiredItemWidth: ScreenUtil.getWidth(context)/2,
+                    minSpacing: 10,
+                    //rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    scroll: false,
+                    children: Categories.map((e) =>Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child:InkWell(
+                        onTap:  () {
+                          Nav.route(context, SubCategoryScreen(Categories: Categories[checkboxType].categories=e.categories,));
+                         //setState(() => categories[checkboxType].categories=e.categories);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CachedNetworkImage(imageUrl: '${e.photo!=null?e.photo.image:''}',
+                                     errorWidget: (context, url, error) =>Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset('assets/images/trkar_logo_white (copy).png',color: Colors.grey,),
+                            ),height: 100,width: 100,fit: BoxFit.contain,),
+                            Container(
+                              width: ScreenUtil.getWidth(context)/6,
+                              child: Text(
+                                "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.w600,
+                                    fontSize: 12),
                               ),
-
-                              //theme: ExpandableThemeData(hasIcon: Categories[index].partCategories.isNotEmpty),
-                              expanded: Categories[index].last_level != 0
-                                  ? Container()
-                                  : Container(
-                                      padding: EdgeInsets.only(right: 7, left: 10),
-                                      child: getPartCategories(
-                                          Categories[index].partCategories,Categories[index].id),
-                                    ),
                             ),
-                          ),
-                          Container(
-                            height: 1,
-                            color: Colors.black12,
-                          )
-                        ],
-                      );
-                    },
-                  ),
-                SizedBox(height: 25,)
+                            IconButton(onPressed: (){
+                              Nav.route(
+                                  context,
+                                  Products_Page(
+                                    id:e.id,
+                                    name:
+                                    "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
+                                    Url: "home/allcategories/products/${e.id}",
+                                    Istryers: e.id==84,
+                                    Category: true,
+                                  ));
+                            }, icon: Icon(Icons.search))
+                          ],
+                        ),
+                      ),
+                    )).toList()
+                ),
+                // ListView.builder(
+                //     primary: false,
+                //     shrinkWrap: true,
+                //     padding: EdgeInsets.all(1),
+                //     physics: NeverScrollableScrollPhysics(),
+                //     itemCount: Categories.length,
+                //     itemBuilder: (BuildContext context, int index) {
+                //       bool selected = checkboxPart == index;
+                //       return Column(
+                //         children: [
+                //           Padding(
+                //             padding: const EdgeInsets.all(10),
+                //             child:InkWell(
+                //                 onTap: Categories[index].last_level == 0
+                //                     ? null
+                //                     : () {
+                //                         Nav.route(
+                //                             context,
+                //                             Products_Page(
+                //                               id: Categories[index].id,
+                //                               name: Categories[index].name,
+                //                               Url: "site/part/categories/${Categories[index].id}?cartype_id=${themeColor.getcar_type()}",
+                //                               Istryers: Provider.of<Provider_Data>(context,listen: false).categories[checkboxType].id==7,
+                //
+                //                             ));
+                //                       },
+                //                 child: Row(
+                //                   mainAxisAlignment: MainAxisAlignment.start,
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Container(
+                //                       width: ScreenUtil.getWidth(context)/3,
+                //                       child: Text(
+                //                         "${themeColor.getlocal()=='ar'? Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
+                //                         maxLines: 2,
+                //                         textAlign: TextAlign.start,
+                //                         style: TextStyle(fontWeight: FontWeight.w600,
+                //                             fontSize: 12),
+                //                       ),
+                //                     ),
+                //                     IconButton(onPressed: (){
+                //                       Nav.route(
+                //                           context,
+                //                           Products_Page(
+                //                             id:Categories[index].id,
+                //                             name: "${ themeColor.getlocal()=='ar'?Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
+                //                             Url: 'site/categories/${Categories[index].id}?cartype_id=${themeColor.car_type}',
+                //                             Istryers: Categories[index].id==84,
+                //                             Category: true,
+                //                           ));
+                //                     }, icon: Icon(Icons.search))
+                //                   ],
+                //                 ),
+                //               ),
+                //           ),
+                //           Container(
+                //             height: 1,
+                //             color: Colors.black12,
+                //           )
+                //         ],
+                //       );
+                //     },
+                //   ),
+                // SizedBox(height: 25,)
               ],
             );
   }
 
-  getPartCategories(List<PartCategories> partCategories,int catId) {
-    final themeColor = Provider.of<Provider_control>(context);
-
-    return partCategories == null
-        ? Container()
-        : partCategories.isEmpty
-            ? Container(child: Container(
-      height: ScreenUtil.getWidth(context)/2,
-        child: NotFoundProduct()))
-            : ListView.builder(
-                primary: false,
-                shrinkWrap: true,
-                padding: EdgeInsets.all(1),
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: partCategories.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: InkWell(
-                      onTap: () {
-                        Nav.route(
-                            context,
-                            Products_Page(
-                              id: partCategories[index].id,
-                              name:themeColor.getlocal()=='ar'?partCategories[index].categoryName??partCategories[index].name_en:partCategories[index].name_en??partCategories[index].categoryName,
-                              Url: "site/part/categories/${partCategories[index].id}?cartype_id=${themeColor.getcar_type()}",
-                              Istryers:catId==84,
-
-                            ));
-                      },
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              themeColor.getlocal()=='ar'?partCategories[index].categoryName??partCategories[index].name_en:partCategories[index].name_en??partCategories[index].categoryName,
-                              maxLines: 2,
-                              style: TextStyle(fontWeight: FontWeight.w600,
-                                  fontSize: 11),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Container(
-                                height: 1,
-                                color: Colors.black12,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              );
-  }
 }

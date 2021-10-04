@@ -10,7 +10,7 @@ class Provider_control with ChangeNotifier {
   // 3 = declined
   // 4 = pending
   int Complete ;
-  int car_type =  1;
+  int car_type =  2;
   int index =  0;
   Color color;
   bool isLogin = false;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/Categories_model.dart';
 import 'package:flutter_pos/model/cart_model.dart';
 import 'package:flutter_pos/model/category_model.dart';
 import 'package:flutter_pos/model/product_model.dart';
@@ -12,6 +13,7 @@ class Provider_Data with ChangeNotifier {
   List<Product> product,productMostSale;
   List<ProductMost> productMostView;
   List<Main_Category> Mcategories;
+  List<Categories_item> categories;
   List<Product> wishList;
 
   Provider_Data();
@@ -52,6 +54,11 @@ class Provider_Data with ChangeNotifier {
     API(context).get('fetch/categories/nested/part').then((value) {
       if (value != null) {
           Mcategories = Category_model.fromJson(value).data;
+      }
+    });
+    API(context).get('home/allcategories').then((value) {
+      if (value != null) {
+        categories = Categories_model.fromJson(value).data;
       }
     });
     notifyListeners();
