@@ -130,7 +130,7 @@ class _UserInfoState extends State<UserInfo> {
                                             new LengthLimitingTextInputFormatter(254),
                                           ],
                                           decoration: const InputDecoration(
-                                            hintText: "أدخل الاسم",
+                                            hintText: "ادخل الاسم",
                                           ),
                                           enabled: !_status,
                                           validator: (String value) {
@@ -329,7 +329,7 @@ class _UserInfoState extends State<UserInfo> {
                                           ],
                                           initialValue: "123456789",
                                           decoration: InputDecoration(
-                                              hintText: "أدخل كلمة المرور"),
+                                              hintText: "ادخل كلمة المرور"),
                                           enabled: !_status,
                                           obscureText: true,
                                         )),

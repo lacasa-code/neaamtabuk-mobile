@@ -72,18 +72,6 @@ class AlertsState extends State<Alerts>
                 ),
                 SizedBox(height: 15),
 
-                InkWell(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
-                      color: Colors.orange,
-                      child: Text(getTransrlate(context, 'close'),
-                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
-                ),
-                SizedBox(height: 45),
-
               ],
             ),
           ),

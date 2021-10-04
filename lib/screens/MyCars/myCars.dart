@@ -281,7 +281,8 @@ gettransmissions(){
                               padding: const EdgeInsets.all(8.0),
                               child: DropdownSearch<CarMade>(
                                 mode: Mode.MENU,
-                                showSearchBox: true,                                showClearButton: true,
+                                showSearchBox: true,
+                               showClearButton: true,
                                 label: "  ${getTransrlate(context, 'brand')}",
                                 items: car_mades,
                                 itemAsString: (CarMade u) => "  ${themeColor.getlocal()=='ar'?u.carMade??u.name_en:u.name_en??u.carMade}",

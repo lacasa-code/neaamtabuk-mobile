@@ -168,6 +168,7 @@
   "VendorType": "Vendor Type",
   "commercialNo": "Commercial Registration No",
   "Attach": "Attach file max size 1MB",
+  "AttachError": "Max image size allowed is 1 MB, please choose a different image",
   "taxCardNo": "tax card number",
   "WholesalerPermit": "Wholesaler Permit",
   "Bankaccountnumber": "Bank account number",

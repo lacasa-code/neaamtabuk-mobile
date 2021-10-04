@@ -179,7 +179,7 @@ class API {
               erorr: response.body.toString()
             ));
       } else if (response.statusCode == 401) {
-        Nav.route(context, LoginPage());
+        Nav.routeReplacement(context, LoginPage());
       } else {
         return jsonDecode(response.body);
       }

@@ -18,7 +18,6 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/widget/Notification.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
-import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -70,17 +69,12 @@ class _VendorInfoState extends State<VendorInfo> {
   @override
   void initState() {
     getCountry();
-
-    API(context).get('add-vendors/get/types').then((value) {
+    API(context,Check: false).get('add-vendors/get/types').then((value) {
       if (value != null) {
         if (value['status_code'] == 200) {
           setState(() {
             _vendor_types = Vendors_types.fromJson(value).data;
           });
-        } else {
-          showDialog(
-              context: context,
-              builder: (_) => ResultOverlay(value['message']));
         }
       }
       API(context).get('vendor/saved/docs').then((value) {
@@ -124,7 +118,7 @@ class _VendorInfoState extends State<VendorInfo> {
         }
       });
     });
-    API(context).post('vendor/reject/reasons', {}).then((value) {
+    API(context,Check: false).post('vendor/reject/reasons', {}).then((value) {
       if (value != null) {
         if (value['status_code'] == 200) {
           setState(() {
@@ -1639,6 +1633,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   setState(() {
                                                     userModal.competeStore == 1
                                                         ? Navigator.pop(context)
+                                                        :userModal.competeDocs!= 1
+                                                        ? Navigator.pop(context)
                                                         : _statusDocs =
                                                             !_statusDocs;
                                                   });
@@ -1736,9 +1732,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       showSearchBox: true,
                                                       items: contries,
                                                       //  onFind: (String filter) => getData(filter),
-                                                      itemAsString:
-                                                          (Country u) =>
-                                                              u.countryName,
+                                                      itemAsString: (Country u) => "${themeColor.getlocal()=='ar'? u.countryName??u.countryName_en:u.countryName_en??u.countryName}",
                                                       onChanged:
                                                           (Country data) {
                                                         country =
@@ -1784,8 +1778,7 @@ class _VendorInfoState extends State<VendorInfo> {
 
                                                       items: area,
                                                       //  onFind: (String filter) => getData(filter),
-                                                      itemAsString: (Area u) =>
-                                                          u.areaName,
+                                                      itemAsString: (Area u) =>"${themeColor.getlocal()=='ar'? u.areaName??u.areaName_en:u.areaName_en??u.areaName}",
                                                       onChanged: (Area data) {
                                                         areas =
                                                             data.id.toString();
@@ -1826,8 +1819,7 @@ class _VendorInfoState extends State<VendorInfo> {
 
                                                       items: cities,
                                                       //  onFind: (String filter) => getData(filter),
-                                                      itemAsString: (City u) =>
-                                                          u.cityName,
+                                                      itemAsString: (City u) => "${themeColor.getlocal()=='ar'? u.cityName??u.cityName_en:u.cityName_en??u.cityName}",
                                                       onChanged: (City data) {
                                                         city =
                                                             data.id.toString();
@@ -1855,6 +1847,9 @@ class _VendorInfoState extends State<VendorInfo> {
                                           onSaved: (String value) {
                                             address = value;
                                           },
+                                        ),
+                                        SizedBox(
+                                          height: 10,
                                         ),
                                         Text(
                                           getTransrlate(context, 'phone'),
@@ -2037,7 +2032,7 @@ class _VendorInfoState extends State<VendorInfo> {
         showDialog(
           context: context,
           builder: (_) => ResultOverlay(
-              "${getTransrlate(context, 'Attach')}"),
+              "${getTransrlate(context, 'AttachError')}"),
         );
       }
     } else {
@@ -2061,7 +2056,7 @@ class _VendorInfoState extends State<VendorInfo> {
         showDialog(
           context: context,
           builder: (_) => ResultOverlay(
-              "${getTransrlate(context, 'Attach')}"),
+              "${getTransrlate(context, 'AttachError')}"),
         );
       }
 
@@ -2085,7 +2080,7 @@ class _VendorInfoState extends State<VendorInfo> {
         showDialog(
           context: context,
           builder: (_) => ResultOverlay(
-              "${getTransrlate(context, 'Attach')}"),
+              "${getTransrlate(context, 'AttachError')}"),
         );
       }
     } else {
@@ -2108,7 +2103,7 @@ class _VendorInfoState extends State<VendorInfo> {
         showDialog(
           context: context,
           builder: (_) => ResultOverlay(
-              "${getTransrlate(context, 'Attach')}"),
+              "${getTransrlate(context, 'AttachError')}"),
         );
       }
     } else {
@@ -2134,7 +2129,7 @@ class _VendorInfoState extends State<VendorInfo> {
   }
 
   void getCountry() {
-    API(context).get('countries/list/all').then((value) {
+    API(context,Check: false).get('countries/list/all').then((value) {
       setState(() {
         contries = Country_model.fromJson(value).data;
       });

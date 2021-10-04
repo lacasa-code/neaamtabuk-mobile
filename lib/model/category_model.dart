@@ -79,11 +79,13 @@ class Main_Category {
 class Categories {
   int id;
   String name;
+  Photo photo;
   String name_en;
   bool Check=false;
 
   String description;
   List<PartCategories> partCategories;
+  List<Categories> categories;
   String lang;
   int last_level;
   String createdAt;
@@ -100,7 +102,7 @@ class Categories {
 
   Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
+    name = json['name']??json['category_name'];
     name_en = json['name_en'];
     description = json['description'];
     if (json['part_categories'] != null) {
@@ -108,6 +110,14 @@ class Categories {
       json['part_categories'].forEach((v) {
         partCategories.add(new PartCategories.fromJson(v));
       });
+    }if (json['part_categories'] != null) {
+      categories = new List<Categories>();
+      json['part_categories'].forEach((v) {
+        categories.add(new Categories.fromJson(v));
+      });
+    }
+    if (json['photo'] != null) {
+      photo = Photo.fromJson(json['photo']);
     }
     lang = json['lang'];
     last_level = json['last_level'];
