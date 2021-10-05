@@ -28,6 +28,7 @@ class NotFoundProduct extends StatelessWidget {
               ),
               Text(
                 "${title??getTransrlate(context, 'Empty')}",
+                textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.black45,fontSize: 25),
               ),
             ],

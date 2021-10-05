@@ -264,6 +264,7 @@ class CarMadeName {
 class CarModelName {
   int id;
   String carmodel;
+  String name_en;
   String createdAt;
   String updatedAt;
   Null deletedAt;
@@ -276,6 +277,7 @@ class CarModelName {
   CarModelName.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     carmodel = json['carmodel'];
+    name_en = json['name_en'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];

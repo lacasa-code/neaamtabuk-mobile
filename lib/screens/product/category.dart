@@ -11,6 +11,7 @@ import 'package:flutter_pos/screens/product/sub_category.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
@@ -157,7 +158,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Categories == null
         ? Container()
         : Categories.isEmpty
-            ? Container(child: NotFoundProduct())
+            ? Container(child: NotFoundProduct(title: getTransrlate(context,'EmptyCate'),))
             : Column(
               children: [
                 ResponsiveGridList(

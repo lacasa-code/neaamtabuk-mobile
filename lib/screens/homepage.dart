@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
   final navigatorKey = GlobalKey<NavigatorState>();
 
   List<Widget> _buildScreens() {
-    return [HomePage(), CategoryScreen(), Account(), CartScreen()];
+    return [HomePage(), CategoryScreen(), CartScreen() ,Account()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -62,15 +62,6 @@ class _HomeState extends State<Home> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.apps),
         title: (getTransrlate(context, 'category')),
-        activeColorPrimary: CupertinoColors.activeOrange,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: Icon(
-          CupertinoIcons.person,
-          size: 35,
-        ),
-        title: (getTransrlate(context, 'MyProfile')),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -93,6 +84,15 @@ class _HomeState extends State<Home> {
         iconSize: 35,
         title: (getTransrlate(context, 'Cart')),
         textStyle: TextStyle(height: 1),
+        activeColorPrimary: CupertinoColors.activeOrange,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(
+          Icons.menu,
+          size: 35,
+        ),
+        title: (getTransrlate(context, 'MyProfile')),
         activeColorPrimary: CupertinoColors.activeOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -169,7 +169,7 @@ class _HomeState extends State<Home> {
 
         selectedTabScreenContext: (v) {
 
-          if (_controller.index == 3) {
+          if (_controller.index == 2) {
             provider_Data.getCart(context);
           }
           // if (_controller.index == 0) {
@@ -209,323 +209,326 @@ class _HomeState extends State<Home> {
     final themeColor = Provider.of<Provider_control>(context);
     final provider_data = Provider.of<Provider_Data>(context);
 
-    return Column(
-      children: [
-        AppBarCustom(),
-        // 1 = approved
-        // 2 = rejected
-        // 3 = declined
-        // 4 = pending
-        themeColor.Complete == 1
-            ?  Container()
-            : themeColor.Complete == 2
-            ? Padding(
-          padding: const EdgeInsets.only(top: 22,bottom: 10, right: 10, left: 10),
-          child: InkWell(
-            onTap: () {
-              Nav.route(context, VendorInfo());
-            },
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  "assets/icons/Attention.svg",
-                  color: Colors.orange,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(width: ScreenUtil.getWidth(context)/1.2,
-                  child: Text(
-                    '${getTransrlate(context, 'invalidvendor')}',
-                    style: TextStyle(color: Colors.orange),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ):themeColor.Complete == 3?Center(
-          child: Container(
-            width: ScreenUtil.getWidth(context) / 1.2,
-            child:  Row(
-              crossAxisAlignment:
-              CrossAxisAlignment.center,
-              mainAxisAlignment:
-              MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.remove_circle_outline,
-                  color: Colors.red,
-                  size: 35,
-                ),
-                SizedBox(width: 10),
-                SizedBox(
-                  width:
-                  ScreenUtil.getWidth(context) /
-                      1.5,
-                  child: Text(
-                    '${getTransrlate(context, 'rejectvendor')}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-
-          ),
-        ):themeColor.Complete == 4?Padding(
-                padding: const EdgeInsets.only(top: 22,bottom: 10, right: 10, left: 10),
-                child: InkWell(
-                  onTap: () {
-                    Nav.route(context, VendorInfo());
-                  },
-                  child: Row(
-                    crossAxisAlignment:
-                    CrossAxisAlignment.center,
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.pause_circle_outline,
-                        color: Colors.blue,
-                        size: 30,
-                      ),
-                      SizedBox(width: 10),
-                      SizedBox(
-                        width:
-                        ScreenUtil.getWidth(context) /
-                            1.5,
-                        child: Text(
-                          '${getTransrlate(context, 'incompletvendor')}',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ) : Container(),
-        Expanded(
-          child: RefreshIndicator(color: themeColor.getColor(),
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          AppBarCustom(),
+          // 1 = approved
+          // 2 = rejected
+          // 3 = declined
+          // 4 = pending
+          themeColor.Complete == 1
+              ?  Container()
+              : themeColor.Complete == 2
+              ? Padding(
+            padding: const EdgeInsets.only(top: 22,bottom: 10, right: 10, left: 10),
+            child: InkWell(
+              onTap: () {
+                Nav.route(context, VendorInfo());
+              },
+              child: Row(
                 children: [
-                  cartype == null
-                      ? Container()
-                      : ResponsiveGridList(
-                          desiredItemWidth: ScreenUtil.getWidth(context)/2.4,
-                          minSpacing: 10,
-                          rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          scroll: false,
-                          children: cartype
-                              .map((e) {
-                            final selected=checkboxType==cartype.indexOf(e);
-                           return InkWell(
-                             onTap: () {
-                               setState(() {
-                                 checkboxType = cartype.indexOf(e);
-                                 provider_data.product = null;
-                                 provider_data.productMostView = null;
-                                 provider_data.productMostSale = null;
-                               });
-                               themeColor.setCar_type(e.id==1?2:1);
-                               themeColor.setCar_index(cartype.indexOf(e));
-                               print(e.typeName);
-                               getData(checkboxType==0?1:3);
-                             },
-                             child: Container(
-                               height:
-                               ScreenUtil.getHeight(context) /
-                                   7,
-                              // width: ScreenUtil.getWidth(context) / 2.5,
-                               decoration: BoxDecoration(
-                                 border: Border.all(
-                                     width: 3.0,
-                                     color: selected
-                                         ? Colors.orange
-                                         : Colors.black12),
-                                 image: DecorationImage(
-                                     image: CachedNetworkImageProvider(
-                                         "${e.image}"),
-                                     fit: BoxFit.cover),
-                                 borderRadius: themeColor.local ==
-                                     'ar'
-                                     ? cartype.indexOf(e).isEven
-                                     ? BorderRadius.only(
-                                     topRight: Radius.circular(
-                                         15.0),
-                                     bottomRight:
-                                     Radius.circular(
-                                         15.0))
-                                     : BorderRadius.only(
-                                     topLeft: Radius.circular(
-                                         15.0),
-                                     bottomLeft:
-                                     Radius.circular(
-                                         15.0))
-                                     : cartype.indexOf(e).isEven
-                                     ? BorderRadius.only(
-                                     topLeft: Radius.circular(
-                                         15.0),
-                                     bottomLeft:
-                                     Radius.circular(
-                                         15.0))
-                                     : BorderRadius.only(
-                                     topRight:
-                                     Radius.circular(15.0),
-                                     bottomRight: Radius.circular(15.0)),
-                               ),
-                               child: Align(
-                                 alignment: Alignment.bottomCenter,
-                                 child: Card(
-                                   color: Colors.black12,
-                                   child: Padding(
-                                     padding:
-                                     const EdgeInsets.all(4.0),
-                                     child: AutoSizeText(
-                                         "${themeColor.getlocal()=='ar'? e.typeName:e.name_en}",
-                                         maxLines: 1,
-                                         maxFontSize: 18,
-                                         minFontSize: 10,
-                                         style: TextStyle(
-                                             color: Colors.white,
-                                             fontWeight:
-                                             FontWeight.bold)),
-                                   ),
-                                 ),
-                               ),
-                             ),
-                           );
-                          })
-                              .toList()),
-                  ads == null
-                      ? Container()
-                      : Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: CarouselSlider(
-                            items: ads.carousel
-                                .map((item) => Banner_item(
-                                      item: item.photo.image,
-                                    ))
-                                .toList(),
-                            options: CarouselOptions(
-                                height: ScreenUtil.getHeight(context) / 5,
-                                aspectRatio: 16 / 9,
-                                viewportFraction: 0.8,
-                                initialPage: 0,
-                                enableInfiniteScroll: true,
-                                reverse: false,
-                                autoPlay: true,
-                                autoPlayInterval: Duration(seconds: 3),
-                                autoPlayAnimationDuration:
-                                    Duration(milliseconds: 800),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enlargeCenterPage: true,
-                                //onPageChanged: callbackFunction,
-                                scrollDirection: Axis.horizontal,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    _carouselCurrentPage = index;
-                                  });
-                                }),
-                          ),
-                        ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ads == null
-                      ? Container()
-                      : SliderDotAds(_carouselCurrentPage, ads.carousel),
-                  provider_data.productMostView == null
-                      ? Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Custom_Loading(),
-                        )
-                      : Container(child: list_category(themeColor)),
-                  provider_data.product == null
-                      ? Container()
-                      : provider_data.product.isEmpty
-                          ? Container()
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                cartype==null?Container(): cartype.isEmpty?Container(): ProductListTitleBar(
-                                  themeColor: themeColor,
-                                  title: getTransrlate(context, 'offers'),
-                                  description: getTransrlate(context, 'showAll'),
-                                  url:
-                                      'site/new/products?cartype_id=${cartype[checkboxType].id}',
-                                ),
-                                list_product(themeColor, provider_data.product),
-                              ],
-                            ),
-                  ads == null
-                      ? Container()
-                      : ListView.builder(
-                          primary: false,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: ads.middle.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Banner_item(item: ads.middle[index].photo.image),
-                            );
-                          },
-                        ),
-                  provider_data.productMostSale == null
-                      ? Container()
-                      : provider_data.productMostSale.isEmpty
-                          ? Container()
-                          :cartype==null
-                          ? Container()
-                          :cartype.isEmpty
-                          ? Container()
-                          : Column(
-                              children: [
-                                ProductListTitleBar(
-                                  themeColor: themeColor,
-                                  title: getTransrlate(context, 'moresale'),
-                                  description: getTransrlate(context, 'showAll'),
-                                  url: 'best/seller/products?cartype_id=${cartype[checkboxType].id}',
-                                ),
-                                list_product(themeColor,provider_data.productMostSale),
-                                SizedBox(
-                                  height: 10,
-                                )
-                              ],
-                            ),
-                  ads == null
-                      ? Container()
-                      : ListView.builder(
-                    primary: false,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.all(1),
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: ads.bottom.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Banner_item(item: ads.bottom[index].photo.image),
-                      );
-                    },
+                  SvgPicture.asset(
+                    "assets/icons/Attention.svg",
+                    color: Colors.orange,
                   ),
                   SizedBox(
-                    height: 10,
-                  )
+                    width: 10,
+                  ),
+                  Container(width: ScreenUtil.getWidth(context)/1.2,
+                    child: Text(
+                      '${getTransrlate(context, 'invalidvendor')}',
+                      style: TextStyle(color: Colors.orange),
+                    ),
+                  ),
                 ],
               ),
             ),
-            onRefresh: _refreshLocalGallery,
+          ):themeColor.Complete == 3?Center(
+            child: Container(
+              width: ScreenUtil.getWidth(context) / 1.2,
+              child:  Row(
+                crossAxisAlignment:
+                CrossAxisAlignment.center,
+                mainAxisAlignment:
+                MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.remove_circle_outline,
+                    color: Colors.red,
+                    size: 35,
+                  ),
+                  SizedBox(width: 10),
+                  SizedBox(
+                    width:
+                    ScreenUtil.getWidth(context) /
+                        1.5,
+                    child: Text(
+                      '${getTransrlate(context, 'rejectvendor')}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
 
+            ),
+          ):themeColor.Complete == 4?Padding(
+                  padding: const EdgeInsets.only(top: 22,bottom: 10, right: 10, left: 10),
+                  child: InkWell(
+                    onTap: () {
+                      Nav.route(context, VendorInfo());
+                    },
+                    child: Row(
+                      crossAxisAlignment:
+                      CrossAxisAlignment.center,
+                      mainAxisAlignment:
+                      MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.pause_circle_outline,
+                          color: Colors.blue,
+                          size: 30,
+                        ),
+                        SizedBox(width: 10),
+                        SizedBox(
+                          width:
+                          ScreenUtil.getWidth(context) /
+                              1.5,
+                          child: Text(
+                            '${getTransrlate(context, 'incompletvendor')}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 16),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ) : Container(),
+          Expanded(
+            child: RefreshIndicator(color: themeColor.getColor(),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  children: [
+                    cartype == null
+                        ? Container()
+                        : ResponsiveGridList(
+                            desiredItemWidth: ScreenUtil.getWidth(context)/2.4,
+                            minSpacing: 10,
+                            rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            scroll: false,
+                            children: cartype
+                                .map((e) {
+                              final selected=checkboxType==cartype.indexOf(e);
+                             return InkWell(
+                               onTap: () {
+                                 setState(() {
+                                   checkboxType = cartype.indexOf(e);
+                                   provider_data.product = null;
+                                   provider_data.productMostView = null;
+                                   provider_data.productMostSale = null;
+                                 });
+                                 themeColor.setCar_type(e.id==1?2:1);
+                                 themeColor.setCar_index(cartype.indexOf(e));
+                                 print(e.typeName);
+                                 getData(checkboxType==0?1:3);
+                               },
+                               child: Container(
+                                 height:
+                                 ScreenUtil.getHeight(context) /
+                                     7,
+                                // width: ScreenUtil.getWidth(context) / 2.5,
+                                 decoration: BoxDecoration(
+                                   border: Border.all(
+                                       width: 3.0,
+                                       color: selected
+                                           ? Colors.orange
+                                           : Colors.black12),
+                                   image: DecorationImage(
+                                       image: CachedNetworkImageProvider(
+                                           "${e.image}"),
+                                       fit: BoxFit.cover),
+                                   borderRadius: themeColor.local ==
+                                       'ar'
+                                       ? cartype.indexOf(e).isEven
+                                       ? BorderRadius.only(
+                                       topRight: Radius.circular(
+                                           15.0),
+                                       bottomRight:
+                                       Radius.circular(
+                                           15.0))
+                                       : BorderRadius.only(
+                                       topLeft: Radius.circular(
+                                           15.0),
+                                       bottomLeft:
+                                       Radius.circular(
+                                           15.0))
+                                       : cartype.indexOf(e).isEven
+                                       ? BorderRadius.only(
+                                       topLeft: Radius.circular(
+                                           15.0),
+                                       bottomLeft:
+                                       Radius.circular(
+                                           15.0))
+                                       : BorderRadius.only(
+                                       topRight:
+                                       Radius.circular(15.0),
+                                       bottomRight: Radius.circular(15.0)),
+                                 ),
+                                 child: Align(
+                                   alignment: Alignment.bottomCenter,
+                                   child: Card(
+                                     color: Colors.black12,
+                                     child: Padding(
+                                       padding:
+                                       const EdgeInsets.all(4.0),
+                                       child: AutoSizeText(
+                                           "${themeColor.getlocal()=='ar'? e.typeName:e.name_en}",
+                                           maxLines: 1,
+                                           maxFontSize: 18,
+                                           minFontSize: 10,
+                                           style: TextStyle(
+                                               color: Colors.white,
+                                               fontWeight:
+                                               FontWeight.bold)),
+                                     ),
+                                   ),
+                                 ),
+                               ),
+                             );
+                            })
+                                .toList()),
+                    ads == null
+                        ? Container()
+                        : Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: CarouselSlider(
+                              items: ads.carousel
+                                  .map((item) => Banner_item(
+                                        item: item.photo.image,
+                                      ))
+                                  .toList(),
+                              options: CarouselOptions(
+                                  height: ScreenUtil.getHeight(context) / 5,
+                                  aspectRatio: 16 / 9,
+                                  viewportFraction: 0.8,
+                                  initialPage: 0,
+                                  enableInfiniteScroll: true,
+                                  reverse: false,
+                                  autoPlay: true,
+                                  autoPlayInterval: Duration(seconds: 3),
+                                  autoPlayAnimationDuration:
+                                      Duration(milliseconds: 800),
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                  enlargeCenterPage: true,
+                                  //onPageChanged: callbackFunction,
+                                  scrollDirection: Axis.horizontal,
+                                  onPageChanged: (index, reason) {
+                                    setState(() {
+                                      _carouselCurrentPage = index;
+                                    });
+                                  }),
+                            ),
+                          ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ads == null
+                        ? Container()
+                        : SliderDotAds(_carouselCurrentPage, ads.carousel),
+                    provider_data.productMostView == null
+                        ? Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Custom_Loading(),
+                          )
+                        : Container(child: list_category(themeColor)),
+                    provider_data.product == null
+                        ? Container()
+                        : provider_data.product.isEmpty
+                            ? Container()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  cartype==null?Container(): cartype.isEmpty?Container(): ProductListTitleBar(
+                                    themeColor: themeColor,
+                                    title: getTransrlate(context, 'offers'),
+                                    description: getTransrlate(context, 'showAll'),
+                                    url:
+                                        'site/new/products?cartype_id=${cartype[checkboxType].id}',
+                                  ),
+                                  list_product(themeColor, provider_data.product),
+                                ],
+                              ),
+                    ads == null
+                        ? Container()
+                        : ListView.builder(
+                            primary: false,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: ads.middle.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Banner_item(item: ads.middle[index].photo.image),
+                              );
+                            },
+                          ),
+                    provider_data.productMostSale == null
+                        ? Container()
+                        : provider_data.productMostSale.isEmpty
+                            ? Container()
+                            :cartype==null
+                            ? Container()
+                            :cartype.isEmpty
+                            ? Container()
+                            : Column(
+                                children: [
+                                  ProductListTitleBar(
+                                    themeColor: themeColor,
+                                    title: getTransrlate(context, 'moresale'),
+                                    description: getTransrlate(context, 'showAll'),
+                                    url: 'best/seller/products?cartype_id=${cartype[checkboxType].id}',
+                                  ),
+                                  list_product(themeColor,provider_data.productMostSale),
+                                  SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              ),
+                    ads == null
+                        ? Container()
+                        : ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.all(1),
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: ads.bottom.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Banner_item(item: ads.bottom[index].photo.image),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ],
+                ),
+              ),
+              onRefresh: _refreshLocalGallery,
+
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
   Future<Null> _refreshLocalGallery() async{

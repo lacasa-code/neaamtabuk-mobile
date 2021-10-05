@@ -432,26 +432,7 @@ class _ProductPageState extends State<ProductPage> {
                       ],
                     ),
                   ),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "${getTransrlate(context, 'brand')} : ",
-                              style: TextStyle(fontWeight: FontWeight.w400),
-                            ),
-                            Text(
-                              '${widget.product.carMadeName == null ? '${getTransrlate(context, 'NoSelect')}' : themeColor.getlocal() == 'ar' ? widget.product.carMadeName.carMade ?? widget.product.carMadeName.name_en : widget.product.carMadeName.name_en ?? widget.product.carMadeName.carMade}',
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      )),
+
                   Align(
                       alignment: Alignment.topRight,
                       child: Padding(
@@ -551,11 +532,22 @@ class _ProductPageState extends State<ProductPage> {
                         child: Row(
                           children: [
                             Text(
-                              "${getTransrlate(context, 'auto')} : ",
-                              style: TextStyle(fontWeight: FontWeight.w400),
+                              "${getTransrlate(context, 'compatible')} ",
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
+                          ],
+                        ),
+                      )),
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+
                             Text(
-                              '${widget.product.transmissionName ?? '${getTransrlate(context, 'NoSelect')}'}',
+                              '${widget.product.carMadeName == null ? '' : themeColor.getlocal() == 'ar' ? widget.product.carMadeName.carMade ?? widget.product.carMadeName.name_en : widget.product.carMadeName.name_en ?? widget.product.carMadeName.carMade}${widget.product.carModelName == null ? '' : widget.product.carModelName.map((e) => "${themeColor.getlocal()=='ar'?e.carmodel??e.name_en:e.name_en??e.carmodel} / ").toList()}( ${widget.product.yearFrom == null ?'':widget.product.yearFrom.year} - ${widget.product.yearTo == null ?'':widget.product.yearTo.year}) ${widget.product.transmissionName}',
+                              maxLines: 1,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
