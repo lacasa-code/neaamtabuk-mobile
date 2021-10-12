@@ -334,7 +334,7 @@ class _HomeState extends State<Home> {
                                    provider_data.productMostView = null;
                                    provider_data.productMostSale = null;
                                  });
-                                 themeColor.setCar_type(e.id==1?2:1);
+                                 themeColor.setCar_type(e.id);
                                  themeColor.setCar_index(cartype.indexOf(e));
                                  print(e.typeName);
                                  getData(checkboxType==0?1:3);

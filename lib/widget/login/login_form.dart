@@ -54,8 +54,7 @@ class _LoginFormState extends State<LoginForm> {
                     validator: (String value) {
                       if (value.isEmpty) {
                         return getTransrlate(context, 'requiredempty');
-                      } else if (!RegExp(
-                          r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                      } else if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
                           .hasMatch(value)) {
                         return getTransrlate(context, 'invalidemail');
                       }
@@ -89,7 +88,7 @@ class _LoginFormState extends State<LoginForm> {
                     validator: (String value) {
                       if (value.isEmpty) {
                         return "${getTransrlate(context, 'requiredempty')}";
-                      }else if (value.length < 7) {
+                      } else if (value.length < 7) {
                         return "${getTransrlate(context, 'requiredlength')}";
                       }
                       _formKey.currentState.save();
@@ -134,21 +133,32 @@ class _LoginFormState extends State<LoginForm> {
                               if (value['status_code'] == 200) {
                                 var user = value['data'];
                                 if (user.containsKey('vendor_details')) {
-                                  prefs.setInt("complete", user['vendor_details']['complete']);
+                                  prefs.setInt("complete",
+                                      user['vendor_details']['complete']);
                                   prefs.setString("vendor", 'vendor');
-                                  Provider.of<Provider_control>(context, listen: false)
-                                      .setComplete(user['vendor_details']['approved'] == 1
-                                      ? 1
-                                      :user['vendor_details']['complete'] == 1
-                                      ?user['vendor_details']['rejected']  == 1
-                                      ? 2
-                                      :user['vendor_details']['declined']  == 1
-                                      ? 3
-                                      : 4
-                                      : 2);
+                                  Provider.of<Provider_control>(context,
+                                          listen: false)
+                                      .setComplete(user['vendor_details']
+                                                  ['approved'] ==
+                                              1
+                                          ? 1
+                                          : user['vendor_details']
+                                                      ['complete'] ==
+                                                  1
+                                              ? user['vendor_details']
+                                                          ['rejected'] ==
+                                                      1
+                                                  ? 2
+                                                  : user['vendor_details']
+                                                              ['declined'] ==
+                                                          1
+                                                      ? 3
+                                                      : 4
+                                              : 2);
                                 }
 
-                                prefs.setString("user_email", "${user['email']}");
+                                prefs.setString(
+                                    "user_email", "${user['email']}");
                                 prefs.setString("user_name", "${user['name']}");
                                 prefs.setString("token", "${user['token']}");
                                 prefs.setInt("user_id", user['id']);
@@ -180,11 +190,11 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ],
               ),
-             ! isloading
+              !isloading
                   ? Container()
                   : Container(
                       color: Colors.white,
-                      height: ScreenUtil.getHeight(context)/2,
+                      height: ScreenUtil.getHeight(context) / 2,
                       width: ScreenUtil.getWidth(context),
                       child: Custom_Loading()),
             ],

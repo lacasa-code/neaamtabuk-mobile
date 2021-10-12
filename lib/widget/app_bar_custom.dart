@@ -81,7 +81,7 @@ class _AppBarCustomState extends State<AppBarCustom> {
                   width:5 ,
                 ),
                 Text(
-                  themeColor.getCar_made(),
+                  "${themeColor.getCar_made()}",
                   style: TextStyle(color: Colors.white),
                 )
               ],

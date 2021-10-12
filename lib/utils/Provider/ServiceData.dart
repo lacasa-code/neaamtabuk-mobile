@@ -38,8 +38,9 @@ class Provider_Data with ChangeNotifier {
       }
     });
     API(context)
-        .get('mostly/viewed/products?cartype_id=$cartypeId')
+        .get('most/viewed/products?cartype_id=$cartypeId')
         .then((value) {
+          print(value);
       if (value != null) {
           productMostView = ProductMostView.fromJson(value).data;
       }

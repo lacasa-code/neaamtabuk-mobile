@@ -67,7 +67,6 @@ class Categories_item {
         categories.add(new Categories_item.fromJson(v));
       });
     }
-print('photo $name : ${json['photo'] }');
     photo = json['photo'] != null ? new Photo.fromJson(json['photo']) : null;
     createdAt = json['created_at'];
   }

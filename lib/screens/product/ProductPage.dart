@@ -100,6 +100,22 @@ class _ProductPageState extends State<ProductPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  widget.product.producttypeId!=2?Container():Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xffF2E964),
+                      ),
+                      child:Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child:Text(
+                            "${getTransrlate(context, 'wholesale')} : ${widget.product.noOfOrders ?? ' '} ${getTransrlate(context, 'piece')} ",
+                            style: TextStyle(color: Colors.blueGrey,
+                                fontWeight: FontWeight.bold,fontSize: 11),
+                          ),
+                        ),
+                      ) ),
+
                   Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Text(
@@ -546,7 +562,7 @@ class _ProductPageState extends State<ProductPage> {
                           children: [
 
                             Text(
-                              '${widget.product.carMadeName == null ? '' : themeColor.getlocal() == 'ar' ? widget.product.carMadeName.carMade ?? widget.product.carMadeName.name_en : widget.product.carMadeName.name_en ?? widget.product.carMadeName.carMade}${widget.product.carModelName == null ? '' : widget.product.carModelName.map((e) => "${themeColor.getlocal()=='ar'?e.carmodel??e.name_en:e.name_en??e.carmodel} / ").toList()}( ${widget.product.yearFrom == null ?'':widget.product.yearFrom.year} - ${widget.product.yearTo == null ?'':widget.product.yearTo.year}) ${widget.product.transmissionName}',
+                              '${widget.product.carMadeName == null ? '' : themeColor.getlocal() == 'ar' ? widget.product.carMadeName.carMade ?? widget.product.carMadeName.name_en : widget.product.carMadeName.name_en ?? widget.product.carMadeName.carMade} , ${widget.product.carModelName == null ? '' : widget.product.carModelName.map((e) => "${themeColor.getlocal()=='ar'?e.carmodel??e.name_en:e.name_en??e.carmodel} ${widget.product.carModelName.last.id==e.id?'':'/'}").toList().toString().replaceAll('[', '').replaceAll(']', '')} ${widget.product.yearFrom == null ?'':"( ${widget.product.yearFrom.year} - "}${widget.product.yearTo == null ?'':"${widget.product.yearTo.year} ) "},${widget.product.transmissionName}',
                               maxLines: 1,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,

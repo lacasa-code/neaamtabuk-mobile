@@ -4,25 +4,26 @@ import 'package:flutter/material.dart';
 class Provider_control with ChangeNotifier {
   Color _themeData = Color(0xff424242);
   String local;
-  String car_made =  'إختر المركبة';
-  // 1 = approved
-  // 2 = rejected
-  // 3 = declined
-  // 4 = pending
+  String car_model ;
   int Complete ;
-  int car_type =  2;
+  int car_type =  1;
   int index =  0;
   Color color;
   bool isLogin = false;
   Provider_control(this.local){
-    if(this.local=='en'){
-      car_made='Select Car';
-    }else if(this.local=='ar'){
-      car_made='إختر المركبة';
+    if(car_model==null){
+      if(this.local=='en'){
+      car_model='Select Car';
+    }else {
+      car_model='إختر المركبة';
     }
+      notifyListeners();
+
+    }
+
   }
   getColor() => _themeData;
-  getCar_made() => car_made;
+  getCar_made() => car_model;
   getcar_type() => car_type;
   getcar_index() => index;
   getlocal() => local;
@@ -32,7 +33,7 @@ class Provider_control with ChangeNotifier {
     notifyListeners();
   }
   setCar_made(String CarMade) async {
-    car_made = CarMade;
+    car_model = CarMade;
     notifyListeners();
   }
 setCar_type(int CarType) async {
@@ -56,11 +57,6 @@ setCar_type(int CarType) async {
 
   setLocal(String st) {
     local = st;
-    if(st=='en'){
-      car_made='Select Car';
-    }else if(st=='ar'){
-      car_made='إختر المركبة';
-    }
     notifyListeners();
   }
 }

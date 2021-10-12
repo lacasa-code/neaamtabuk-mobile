@@ -85,9 +85,6 @@ class Support_Screen extends StatelessWidget {
                               validator: (String value) {
                                 if (value.isEmpty) {
                                   return getTransrlate(context, 'requiredempty');
-                                } else if (RegExp(r"^[+-]?([0-9]*[.])?[0-9]+")
-                                    .hasMatch(value)) {
-                                  return getTransrlate(context, 'invalidname');
                                 }
                                 return null;
                               },

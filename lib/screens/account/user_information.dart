@@ -138,9 +138,6 @@ class _UserInfoState extends State<UserInfo> {
                                               return getTransrlate(context, 'requiredempty');
                                             }else   if (value.length<=2) {
                                               return "${getTransrlate(context, 'requiredlength')}";
-                                            }else if (RegExp(
-                                                r"^[+-]?([0-9]*[.])?[0-9]+").hasMatch(value)) {
-                                              return getTransrlate(context, 'invalidname');
                                             }
                                             return null;
                                           },
@@ -294,7 +291,7 @@ class _UserInfoState extends State<UserInfo> {
                                         maxHeight: 120,
                                         validator: (String item) {
                                           if (item == null) {
-                                            return "Required field";
+                                            return "${getTransrlate(context, 'requiredempty')}";
                                           } else
                                             return null;
                                         },

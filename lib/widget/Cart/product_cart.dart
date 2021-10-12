@@ -286,11 +286,12 @@ class _ProductCartState extends State<ProductCart> {
                                                   "order_id":
                                                       widget.carts.orderId
                                                 }).then((value) {
-                                                  setState(() => uloading = true);
+                                                  setState(() => uloading = false);
 
                                                   if (value != null) {
                                                     if (value['status_code'] ==
                                                         200) {
+
                                                       showDialog(
                                                           context: context,
                                                           builder: (_) =>

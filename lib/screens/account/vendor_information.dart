@@ -1724,7 +1724,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       validator:
                                                           (Country item) {
                                                         if (item == null) {
-                                                          return "Required field";
+                                                          return "${getTransrlate(context, 'requiredempty')}";
                                                         } else
                                                           return null;
                                                       },
@@ -1771,7 +1771,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       // label: getTransrlate(context, 'Countroy'),
                                                       validator: (Area item) {
                                                         if (item == null) {
-                                                          return "Required field";
+                                                          return "${getTransrlate(context, 'requiredempty')}";
                                                         } else
                                                           return null;
                                                       },
@@ -1812,7 +1812,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       // label: getTransrlate(context, 'Countroy'),
                                                       validator: (City item) {
                                                         if (item == null) {
-                                                          return "Required field";
+                                                          return "${getTransrlate(context, 'requiredempty')}";
                                                         } else
                                                           return null;
                                                       },

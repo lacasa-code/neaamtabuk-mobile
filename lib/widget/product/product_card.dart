@@ -211,10 +211,11 @@ class _ProductCardState extends State<ProductCard> {
 
                                   if (value != null) {
                                     print(value);
-                                    setState(() {
-                                      widget.product.inCart=1;
-                                    });
+
                                     if (value['status_code'] == 200) {
+                                      setState(() {
+                                        widget.product.inCart=1;
+                                      });
                                       showDialog(
                                           context: context,
                                           builder: (_) =>
