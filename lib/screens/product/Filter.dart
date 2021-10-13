@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/Categories_model.dart';
 import 'package:flutter_pos/model/carmodel.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -19,10 +20,11 @@ import '../../service/api.dart';
 import '../../utils/screen_size.dart';
 
 class Filterdialog extends StatefulWidget {
-  Filterdialog({Key key, this.Istryers, this.Category}) : super(key: key);
+  Filterdialog({Key key, this.Istryers, this.Category, this.Category_id}) : super(key: key);
 
   bool Istryers = false;
   bool Category = false;
+  int Category_id ;
 
   @override
   _FilterdialogState createState() => _FilterdialogState();
@@ -46,7 +48,7 @@ class _FilterdialogState extends State<Filterdialog> {
   String sizeID;
 
   RangeValues _currentRangeValues;
-  double min = 0, max = 10000;
+  double min = 1, max = 10000;
 
   @override
   void initState() {
@@ -237,75 +239,18 @@ class _FilterdialogState extends State<Filterdialog> {
                           ),
                           expanded: Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: data.Mcategories == null
+                            child: data.categories == null
                                 ? Custom_Loading()
-                                : data.Mcategories.isEmpty
+                                : data.categories.isEmpty
                                     ? Container()
                                     : ListView.builder(
                                         primary: false,
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
-                                        itemCount: data.Mcategories.length,
+                                        itemCount: data.categories.firstWhere((element) => element.id==themeColor.car_type).categories.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
-                                          return ExpansionTile(
-                                            textColor: Colors.orange,
-                                            iconColor: Colors.orange,
-                                            collapsedTextColor: Colors.black,
-                                            title: Text(
-                                                "${themeColor.getlocal() == 'ar' ? data.Mcategories[index].mainCategoryName : data.Mcategories[index].nameEn}"),
-                                            children: [
-                                              data.Mcategories[index].categories == null
-                                                  ? Container()
-                                                  : ListView.builder(
-                                                      primary: false,
-                                                      shrinkWrap: true,
-                                                      physics:
-                                                          NeverScrollableScrollPhysics(),
-                                                      itemCount: data.Mcategories[index]
-                                                          .categories
-                                                          .length,
-                                                      itemBuilder:
-                                                          (BuildContext context,
-                                                              int i) {
-                                                        return Row(
-                                                          children: [
-                                                            Checkbox(
-                                                                value: data.Mcategories[
-                                                                        index]
-                                                                    .categories[i]
-                                                                    .Check,
-                                                                activeColor:
-                                                                    Colors.orange,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  setState(() {
-                                                                    data.Mcategories[index]
-                                                                        .categories[
-                                                                            i]
-                                                                        .Check = value;
-                                                                  });
-                                                                  value
-                                                                      ? partSelect.add(data.Mcategories[
-                                                                              index]
-                                                                          .categories[
-                                                                              i]
-                                                                          .id)
-                                                                      : partSelect.remove(data.Mcategories[
-                                                                              index]
-                                                                          .categories[
-                                                                              i]
-                                                                          .id);
-                                                                }),
-                                                            Text(
-                                                              "${themeColor.getlocal() == 'ar' ? data.Mcategories[index].categories[i].name ?? data.Mcategories[index].categories[i].name_en : data.Mcategories[index].categories[i].name_en ?? data.Mcategories[index].categories[i].name}",
-                                                              softWrap: true,
-                                                            ),
-                                                          ],
-                                                        );
-                                                      })
-                                            ],
-                                          );
+                                          return  ExpansionCatgory(data.categories.firstWhere((element) => element.id==themeColor.car_type).categories[index],themeColor);
                                         }),
                           ),
                         ),
@@ -516,16 +461,31 @@ class _FilterdialogState extends State<Filterdialog> {
                   children: [
                     InkWell(
                       onTap: () {
-
-                          Navigator.pop(
-                              context,
-                              "${!widget.Istryers ? '' : "?attribute=${widthID ?? ''}/${heightID ?? ''}/${sizeID ?? ''}"}"
-                              "${manufacturerSelect.isEmpty ? '' : "&manufacturers=${manufacturerSelect.toString()}"}"
-                              "${partSelect.isEmpty ? '' : "&part_categories=${partSelect.toString()}"}"
-                              "${originSelect.isEmpty ? '' : "&origins=${originSelect.toString()}"}"
-                              "${_currentRangeValues.start.round().toString().isEmpty ? '' : "&start_price=${_currentRangeValues.start.round().toString()}"}"
-                              "${_currentRangeValues.end.round().toString().isEmpty ? '' : "&end_price=${_currentRangeValues.end.round().toString()}"}");
-
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                Navigator.pop(
+                    context,
+                    "${!widget.Istryers ? '' : "?width=${widthID ??
+                        ''}&height=${heightID ?? ''}&size=${sizeID ?? ''}"}"
+                        "${manufacturerSelect.isEmpty
+                        ? ''
+                        : "&manufacturers=${manufacturerSelect.toString()}"}"
+                        "${partSelect.isEmpty
+                        ? ''
+                        : "&part_categories=${partSelect.toString()}"}"
+                        "${originSelect.isEmpty ? '' : "&origins=${originSelect
+                        .toString()}"}"
+                        "${_currentRangeValues.start
+                        .round()
+                        .toString()
+                        .isEmpty ? '' : "&start_price=${_currentRangeValues
+                        .start.round().toString()}"}"
+                        "${_currentRangeValues.end
+                        .round()
+                        .toString()
+                        .isEmpty ? '' : "&end_price=${_currentRangeValues.end
+                        .round().toString()}"}");
+              }
                       },
                       child: Container(
                         margin: const EdgeInsets.all(15.0),
@@ -602,7 +562,7 @@ class _FilterdialogState extends State<Filterdialog> {
     originSelect = [];
     manufacturerSelect = [];
 
-   API(context).get('part/category/attributes/84').then((value) {
+  widget.Istryers? API(context).get('part/category/attributes/${widget.Category_id}').then((value) {
      print(value);
 
      if (value != null) {
@@ -614,7 +574,7 @@ class _FilterdialogState extends State<Filterdialog> {
           }
         });
       }
-    });
+    }):null;
     API(context).get('site/origins/list').then((value) {
       if (value != null) {
         setState(() {
@@ -631,5 +591,53 @@ class _FilterdialogState extends State<Filterdialog> {
         });
       }
     });
+  }
+
+  ExpansionCatgory(Categories_item categories_item,Provider_control themeColor){
+    return categories_item.id==1711||categories_item.id==682?Container(): ExpansionTile(
+      textColor: Colors.orange,
+      iconColor: Colors.orange,
+      collapsedTextColor: Colors.black,
+      title: Text(
+          "${themeColor.getlocal() == 'ar' ? categories_item.name : categories_item.nameEn}"),
+      children: [
+        categories_item.categories == null
+            ? Container()
+            : ListView.builder(
+            primary: false,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: categories_item.categories
+                .length,
+            itemBuilder:
+                (BuildContext context,
+                int i) {
+              return categories_item.categories[i].level==0? itemCatgory(categories_item.categories[i],themeColor):ExpansionCatgory(categories_item.categories[i],themeColor);
+            })
+      ],
+    );
+  }
+  itemCatgory(Categories_item categories_item,Provider_control themeColor){
+    return Row(
+      children: [
+        Checkbox(
+            value: categories_item
+                .Check,
+            activeColor:
+            Colors.orange,
+            onChanged: (value) {
+              setState(() {
+                categories_item.Check = value;
+              });
+              value
+                  ? partSelect.add(categories_item.id)
+                  : partSelect.remove(categories_item.id);
+            }),
+        Text(
+          "${themeColor.getlocal() == 'ar' ? categories_item.name ?? categories_item.name : categories_item.nameEn ?? categories_item.name}",
+          softWrap: true,
+        ),
+      ],
+    );
   }
 }

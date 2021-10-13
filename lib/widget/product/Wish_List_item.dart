@@ -174,7 +174,7 @@ class _Wish_ListState extends State<Wish_List> {
                   onTap: () {
                     API(context).post('add/to/cart', {
                       "product_id": widget.product.product_id,
-                      "quantity": 1
+                      "quantity": widget.product.producttypeId==2?widget.product.noOfOrders: 1
                     }).then((value) {
                       if (value != null) {
                         if (value['status_code'] == 200) {
@@ -270,7 +270,7 @@ class _Wish_ListState extends State<Wish_List> {
 
                     API(context).post('add/to/cart', {
                       "product_id": widget.product.product_id,
-                      "quantity": 1
+                      "quantity": widget.product.producttypeId==2?widget.product.noOfOrders: 1
                     }).then((value) {
                       setState(() => loading = false);
 

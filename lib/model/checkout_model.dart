@@ -270,7 +270,7 @@ class OrderDetails {
     _storeId = json["store_id"];
     _vendorId = json["vendor_id"];
     _productName = json["product_name"];
-    _productNameEn = json["productNameEn"];
+    _productNameEn = json["name_en"];
     if (json["product_image"] != null) {
       _productImage = [];
       json["product_image"].forEach((v) {

@@ -96,7 +96,7 @@ class MyTextFormField extends StatelessWidget {
             onSaved: onSaved,
             enabled: enabled,
             onChanged:onChange ,
-            keyboardType: keyboard_type,
+            keyboardType: keyboard_type??TextInputType.multiline,
           ),
         ],
       ),

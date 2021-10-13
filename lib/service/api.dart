@@ -58,6 +58,7 @@ class API {
     String url,
     Map<String, dynamic> body,
   ) async {
+    print(body);
     final full_url =
         Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
 

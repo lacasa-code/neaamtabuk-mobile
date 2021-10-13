@@ -20,8 +20,9 @@ class Products_Page extends StatefulWidget {
   String Url;
   bool Istryers=false;
   bool Category=false;
+  int Category_id;
 
-  Products_Page({this.id, this.name, this.Url, this.Istryers=false, this.Category=false});
+  Products_Page({this.id, this.name, this.Url, this.Istryers=false, this.Category_id, this.Category=false});
 
   @override
   _Products_PageState createState() => _Products_PageState();
@@ -88,7 +89,7 @@ class _Products_PageState extends State<Products_Page> {
                         onTap: () {
                           showDialog(
                                   context: context,
-                                  builder: (_) => Filterdialog(Istryers: widget.Istryers??false,Category: widget.Category??false,))
+                                  builder: (_) => Filterdialog(Istryers: widget.Istryers??false,Category: widget.Category??false,Category_id: widget.Category_id,))
                               .then((partSelect) {
 
                             // widget.Url='site/checkbox/filter/mobile?categories?${partSelect}';

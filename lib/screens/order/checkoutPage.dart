@@ -989,9 +989,7 @@ setState(() {
                                               Column(
                                                 children: [
                                                   Container(
-                                                    width: ScreenUtil.getWidth(
-                                                            context) /
-                                                        2,
+                                                    width: ScreenUtil.getWidth(context) / 2,
                                                     child: AutoSizeText(
                                                       "${themeColor.getlocal()=='ar'?checkout_model
                                                           .data

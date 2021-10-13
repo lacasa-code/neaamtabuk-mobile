@@ -96,7 +96,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 MyTextFormField(
                   intialLabel: '',
-                  keyboard_type: TextInputType.text,
+                  keyboard_type: TextInputType.multiline,
                   labelText: getTransrlate(context, 'Lastname'),
                   hintText: getTransrlate(context, 'Lastname'),
                   isPhone: true,

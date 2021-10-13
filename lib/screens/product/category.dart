@@ -90,7 +90,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             ),
                             Expanded(
                               child: SingleChildScrollView(
-                                child: getList(data.categories.firstWhere((element) => element.id==themeColor.car_type).categories[checkboxType].categories),
+                                child: getList(data.categories.firstWhere((element) => element.id==themeColor.car_type).categories),
                               ),
                             ),
                           ],
@@ -108,7 +108,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
     final data = Provider.of<Provider_Data>(context);
     return Categories == null
         ? Container()
-        : Categories.isEmpty
+        : Categories[checkboxType].categories == null
+        ? Container()
+        : Categories[checkboxType].categories.isEmpty
             ? Container(
                 child: NotFoundProduct(
                 title: getTransrlate(context, 'EmptyCate'),
@@ -120,7 +122,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       minSpacing: 10,
                       //rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       scroll: false,
-                      children: Categories.map((e) => Padding(
+                      children: Categories[checkboxType].categories.map((e) => Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: InkWell(
                               onTap: () {
@@ -138,8 +140,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               "${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
                                           Url:
                                               "home/allcategories/products/${e.id}",
-                                          Istryers: e.id == 84,
+                                          Istryers: e.id == 1711||e.id == 682,
                                           Category: true,
+                                          Category_id: e.id,
                                         ));
                                 //setState(() => categories[checkboxType].categories=e.categories);
                               },
@@ -325,8 +328,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         "${themeColor.getlocal() == 'ar' ? categories_item.name ?? categories_item.nameEn : categories_item.nameEn ?? categories_item.name}",
                         Url:
                         "home/allcategories/products/${categories_item.id}",
-                        Istryers: categories_item.id == 84,
+                        Istryers: categories_item.id == 1711||categories_item.id == 682,
                         Category: true,
+                        Category_id: categories_item.id,
                       ));
                 },
                 icon: Icon(Icons.search))

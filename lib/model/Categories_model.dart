@@ -41,6 +41,7 @@ class Categories_item {
   String catName;
   List<Categories_item> categories;
   Photo photo;
+  bool Check=false;
   String createdAt;
 
   Categories_item(

@@ -115,7 +115,6 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                         ),
                       ) ),
-
                   Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Text(
