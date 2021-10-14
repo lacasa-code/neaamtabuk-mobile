@@ -12,6 +12,7 @@ class Provider_Data with ChangeNotifier {
   List<Product> product,productMostSale;
   List<ProductMost> productMostView;
   List<Categories_item> categories;
+  List<Categories_item> Mostcategories;
   List<Product> wishList;
 
   Provider_Data();
@@ -50,11 +51,11 @@ class Provider_Data with ChangeNotifier {
           productMostSale = Product_model.fromJson(value).data;
       }
     });
-    // API(context).get('fetch/categories/nested/part').then((value) {
-    //   if (value != null) {
-    //       Mcategories = Category_model.fromJson(value).data;
-    //   }
-    // });
+    API(context).get('home/allcategories/navbars/$cartypeId').then((value) {
+      if (value != null) {
+          Mostcategories = Categories_model.fromJson(value).data;
+      }
+    });
     API(context).get('home/allcategories').then((value) {
       if (value != null) {
         categories = Categories_model.fromJson(value).data;

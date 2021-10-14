@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/screens/account/Account.dart';
 import 'package:flutter_pos/screens/order/cart.dart';
 import 'package:flutter_pos/screens/account/vendor_information.dart';
+import 'package:flutter_pos/screens/product/products_page.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/model/ads.dart';
@@ -404,49 +405,59 @@ class _HomeState extends State<Home> {
                              );
                             })
                                 .toList()),
+                    provider_data.Mostcategories == null
+                        ? Container()
+                        : Container(child: list_category_navbar(themeColor)),
+
                     ads == null
                         ? Container()
                         : Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: CarouselSlider(
-                              items: ads.carousel
-                                  .map((item) => Banner_item(
-                                        item: item.photo.image,
-                                      ))
-                                  .toList(),
-                              options: CarouselOptions(
-                                  height: ScreenUtil.getHeight(context) / 5,
-                                  aspectRatio: 16 / 9,
-                                  viewportFraction: 0.8,
-                                  initialPage: 0,
-                                  enableInfiniteScroll: true,
-                                  reverse: false,
-                                  autoPlay: true,
-                                  autoPlayInterval: Duration(seconds: 3),
-                                  autoPlayAnimationDuration:
-                                      Duration(milliseconds: 800),
-                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                  enlargeCenterPage: true,
-                                  //onPageChanged: callbackFunction,
-                                  scrollDirection: Axis.horizontal,
-                                  onPageChanged: (index, reason) {
-                                    setState(() {
-                                      _carouselCurrentPage = index;
-                                    });
-                                  }),
-                            ),
-                          ),
+                      padding: EdgeInsets.only(top: 10),
+                      child: CarouselSlider(
+                        items: ads.carousel
+                            .map((item) => Banner_item(
+                          item: item.photo.image,
+                        ))
+                            .toList(),
+                        options: CarouselOptions(
+                            height: ScreenUtil.getHeight(context) / 5,
+                            aspectRatio: 16 / 9,
+                            viewportFraction: 0.8,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                            Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: true,
+                            //onPageChanged: callbackFunction,
+                            scrollDirection: Axis.horizontal,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _carouselCurrentPage = index;
+                              });
+                            }),
+                      ),
+                    ),
                     SizedBox(
                       height: 10,
                     ),
+
                     ads == null
                         ? Container()
                         : SliderDotAds(_carouselCurrentPage, ads.carousel),
-                    provider_data.productMostView == null
+                    SizedBox(
+                      height: 20,
+                    ),
+
+
+              provider_data.productMostView == null
                         ? Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Custom_Loading(),
-                          )
+                      padding: const EdgeInsets.all(24.0),
+                      child: Custom_Loading(),
+                    )
                         : Container(child: list_category(themeColor)),
                     provider_data.product == null
                         ? Container()
@@ -542,18 +553,104 @@ class _HomeState extends State<Home> {
 
     return provider_data.productMostView.isEmpty
         ? Container()
+        : Column(
+          children: [
+            Text(
+                "${getTransrlate(context, 'DescOpportunities')}",
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                )),
+            Center(
+                child: ResponsiveGridList(
+                  scroll: false,
+                  desiredItemWidth: 100,
+                  rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  minSpacing: 10,
+                  children: provider_data.productMostView
+                      .map((product) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: CategoryCard(
+                              themeColor: themeColor,
+                              product: product,
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ),
+          ],
+        );
+  }  Widget list_category_navbar(
+    Provider_control themeColor,
+  ) {
+    final provider_data = Provider.of<Provider_Data>(context);
+
+    return provider_data.Mostcategories.isEmpty
+        ? Container()
         : Center(
             child: ResponsiveGridList(
               scroll: false,
               desiredItemWidth: 100,
               rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
               minSpacing: 10,
-              children: provider_data.productMostView
+              children: provider_data.Mostcategories
                   .map((product) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: CategoryCard(
-                          themeColor: themeColor,
-                          product: product,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 2),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Nav.route(
+                                  context,
+                                  Products_Page(
+                                    id: product.id,
+                                    name: "${ themeColor.getlocal()=='ar'? product.name??product.nameEn :product.nameEn??product.name}",
+                                    Url: 'home/allcategories/products/${product.id}?cartype_id=${themeColor.car_type}',
+                                    Istryers: product.id==1711||product.id==682,
+                                    Category: true,
+                                    Category_id: product.id,
+                                  ));
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black26),
+                                      color: Colors.white),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: CachedNetworkImage(
+                                      height: ScreenUtil.getHeight(context) / 12,
+                                      width: ScreenUtil.getWidth(context) / 3.2,
+                                      imageUrl: (product.photo == null)
+                                          ? 'http://arabimagefoundation.com/images/defaultImage.png'
+                                          : product.photo.image,
+                                      errorWidget: (context, url, error) => Icon(
+                                        Icons.image,
+                                        color: Colors.black12,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                AutoSizeText(
+                                  "${ themeColor.getlocal()=='ar'? product.name??product.nameEn :product.nameEn??product.name}",
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                       ))
                   .toList(),

@@ -37,6 +37,13 @@ class Product {
   String action_price;
   int quantity;
   String serialNumber;
+
+  int tyres_belong;
+
+  String size;
+  String height;
+  String width;
+
   int carMadeId;
   CarMadeName carMadeName;
   List<CarModelName> carModelName;
@@ -93,6 +100,7 @@ class Product {
     action_price = json['actual_price'].toString();
     quantity = json['quantity'];
     serialNumber = json['serial_number'];
+    tyres_belong = json['tyres_belong'];
     carMadeId = json['car_made_id'];
     carMadeName = json['car_made_name'] != null ? new CarMadeName.fromJson(json['car_made_name']) : null;
     if (json['car_model_name'] != null) {
@@ -151,6 +159,9 @@ class Product {
     inCart = json['in_cart'];
     inWishlist = json['in_wishlist'];
     inFavourites = json['in_favourites'];
+    width = json['width'].toString();
+    height = json['height'].toString();
+    size = json['size'].toString();
   }
 
   Map<String, dynamic> toJson() {

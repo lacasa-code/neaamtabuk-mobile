@@ -211,7 +211,6 @@ class _VendorInfoState extends State<VendorInfo> {
                                   color: Colors.green,
                                   size: 35,
                                 ),
-                                SizedBox(width: 10),
                                 SizedBox(
                                   width: ScreenUtil.getWidth(context) / 1.5,
                                   child: Text(
@@ -224,13 +223,15 @@ class _VendorInfoState extends State<VendorInfo> {
                               ],
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 25,
                             ),
                             Container(
                               width: ScreenUtil.getWidth(context) / 1.2,
                               child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
                                 children: [
-                                  Row(
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -245,7 +246,11 @@ class _VendorInfoState extends State<VendorInfo> {
                                       ),
                                     ],
                                   ),
-                                  Row(
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(height: 1,color: Colors.black12,),
+                                  ),
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -260,7 +265,11 @@ class _VendorInfoState extends State<VendorInfo> {
                                       ),
                                     ],
                                   ),
-                                  Row(
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(height: 1,color: Colors.black12,),
+                                  ),
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -276,7 +285,11 @@ class _VendorInfoState extends State<VendorInfo> {
                                       ),
                                     ],
                                   ),
-                                  Row(
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(height: 1,color: Colors.black12,),
+                                  ),
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -291,7 +304,11 @@ class _VendorInfoState extends State<VendorInfo> {
                                       ),
                                     ],
                                   ),
-                                  Row(
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(height: 1,color: Colors.black12,),
+                                  ),
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -306,7 +323,11 @@ class _VendorInfoState extends State<VendorInfo> {
                                       ),
                                     ],
                                   ),
-                                  Row(
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(height: 1,color: Colors.black12,),
+                                  ),
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -320,6 +341,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                         '${userModal.bankAccount}',
                                       ),
                                     ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(height: 1,color: Colors.black12,),
                                   ),
                                   Container(
                                     width: ScreenUtil.getWidth(context) / 1.2,
@@ -343,6 +368,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                       ],
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(height: 1,color: Colors.black12,),
+                                  ),
                                 ],
                               ),
                             ),
@@ -356,7 +385,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                   TextStyle(color: Colors.black, fontSize: 16),
                             ),
                             SizedBox(
-                              height: 35,
+                              height: 10,
                             ),
                             InkWell(
                                 onTap: () {
@@ -366,7 +395,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                 child: Image.asset(
                                     'assets/images/google play.png')),
                             SizedBox(
-                              height: 30,
+                              height: 20,
                             ),
                             Text(
                               '${getTransrlate(context, 'Orinstall_app')}',
@@ -584,12 +613,12 @@ class _VendorInfoState extends State<VendorInfo> {
                                     width: ScreenUtil.getWidth(context) / 1.2,
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           height: 35,
                                         ),
-                                        Row(
+                                        Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           mainAxisAlignment:
@@ -613,17 +642,20 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     fontSize: 20),
                                               ),
                                             ),
+
                                           ],
                                         ),
                                         SizedBox(
-                                          height: 10,
+                                          height: 25,
                                         ),
                                         Container(
                                           width: ScreenUtil.getWidth(context) /
                                               1.2,
                                           child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                             children: [
-                                              Row(
+                                              Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 mainAxisAlignment:
@@ -640,7 +672,11 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   ),
                                                 ],
                                               ),
-                                              Row(
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Container(height: 1,color: Colors.black12,),
+                                              ),
+                                              Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 mainAxisAlignment:
@@ -657,10 +693,14 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   ),
                                                 ],
                                               ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Container(height: 1,color: Colors.black12,),
+                                              ),
                                               userModal.userDetails.phoneNo ==
                                                       null
                                                   ? Container()
-                                                  : Row(
+                                                  : Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
@@ -682,7 +722,11 @@ class _VendorInfoState extends State<VendorInfo> {
                                                         ),
                                                       ],
                                                     ),
-                                              Row(
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Container(height: 1,color: Colors.black12,),
+                                              ),
+                                              Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 mainAxisAlignment:
@@ -699,7 +743,11 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   ),
                                                 ],
                                               ),
-                                              Row(
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Container(height: 1,color: Colors.black12,),
+                                              ),
+                                              Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 mainAxisAlignment:
@@ -716,7 +764,11 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   ),
                                                 ],
                                               ),
-                                              Row(
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Container(height: 1,color: Colors.black12,),
+                                              ),
+                                              Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 mainAxisAlignment:
@@ -732,6 +784,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     '${userModal.bankAccount}',
                                                   ),
                                                 ],
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Container(height: 1,color: Colors.black12,),
                                               ),
                                               Container(
                                                 width: ScreenUtil.getWidth(

@@ -266,7 +266,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
     final themeColor = Provider.of<Provider_control>(context);
     return InkWell(
       onTap: () {
-        setState(() {
+        categories_item.categories.isEmpty? Nav.route(
+            context,
+            Products_Page(
+              id: categories_item.id,
+              name:
+              "${themeColor.getlocal() == 'ar' ? categories_item.name ?? categories_item.nameEn : categories_item.nameEn ?? categories_item.name}",
+              Url:
+              "home/allcategories/products/${categories_item.id}",
+              Istryers: categories_item.id == 1711||categories_item.id == 682,
+              Category: true,
+              Category_id: categories_item.id,
+            )): setState(() {
           checkboxType = index;
           checkboxPart = 0;
            // categories= data.categories;

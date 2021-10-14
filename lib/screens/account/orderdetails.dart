@@ -443,7 +443,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                 Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Text(
-                                      '${themeColor.getlocal()=='ar'? _listTicket[index].product_name:_listTicket[index].product_name_en}'),
+                                      '${themeColor.getlocal()=='ar'? _listTicket[index].product_name??_listTicket[index].product_name_en:_listTicket[index].product_name_en??_listTicket[index].product_name}'),
                                 ),
                                 Text(
                                   '${getTransrlate(context, 'addressTickit')}',
@@ -709,7 +709,9 @@ class _OrderdetailsState extends State<Orderdetails> {
       }
     });
   }
+
   void _launchURL(String _url) async => await canLaunch(_url)
       ? await launch(_url)
       : throw 'Could not launch $_url';
+
 }

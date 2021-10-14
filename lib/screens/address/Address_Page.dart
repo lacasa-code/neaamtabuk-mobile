@@ -41,7 +41,6 @@ class _Shipping_AddressState extends State<Shipping_Address> {
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
     final _cart_model = Provider.of<Provider_Data>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -127,11 +126,15 @@ class _Shipping_AddressState extends State<Shipping_Address> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              address[index].recipientName,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16),
+                                            Container(
+                                              width: ScreenUtil.getWidth(context) / 2.3,
+                                              child: Text(
+                                                address[index].recipientName,
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16),
+                                              ),
                                             ),
                                             Container(
                                               width: ScreenUtil.getWidth(context) / 2.3,
@@ -218,7 +221,6 @@ class _Shipping_AddressState extends State<Shipping_Address> {
             ),
     );
   }
-
   void getAddress() {
     setState(() {
       address=null;
@@ -231,7 +233,6 @@ class _Shipping_AddressState extends State<Shipping_Address> {
       }
     });
   }
-
   _navigateAndDisplaySelection(
     BuildContext context,
   ) async {

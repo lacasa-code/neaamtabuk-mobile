@@ -148,7 +148,7 @@
   "reminderCart": "تذكير العربة",
   "DescCart": "تذكير بالعربة التسوق",
   "Opportunities": "عروض اليوم",
-  "DescOpportunities": "احدث الفئات",
+  "DescOpportunities": " الفئات الشائعة",
   "SpecialBenefits": "الفوائد الخاصة للاشخاص",
   "DescBenefits": "لك خصومات خاصة",
   "updates": "التحديثاث",
@@ -267,7 +267,7 @@
   "width": "عرض الإطار",
   "height": "ارتفاع الإطار",
   "size": "الجنط",
-  "tayars": "المقاس",
+  "tayars": "مقاس الأطار",
 
   "DeliveryTime": "موعد التسليم",
   "Tellproduct": "اخبرنا عن رايك في المنتج",

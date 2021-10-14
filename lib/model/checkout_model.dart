@@ -269,7 +269,7 @@ class OrderDetails {
     _productId = json["product_id"];
     _storeId = json["store_id"];
     _vendorId = json["vendor_id"];
-    _productName = json["product_name"];
+    _productName = json["product_name"]??json["name"]??'';
     _productNameEn = json["name_en"];
     if (json["product_image"] != null) {
       _productImage = [];

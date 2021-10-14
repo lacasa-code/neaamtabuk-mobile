@@ -91,89 +91,63 @@ class _AccountState extends State<Account> {
                 ),
                 token != null
                     ? Container()
-                    : Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Nav.route(context, LoginPage());
-                            },
-                            child: Container(
-                              width: ScreenUtil.getWidth(context) / 2.5,
-                              //  margin: const EdgeInsets.all(10.0),
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.orange)),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/account.svg',
-                                    color: Colors.orange,
-                                    width: 25,
+                    : Container(
+                  width: ScreenUtil.getWidth(context) ,
+                  child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Nav.route(context, LoginPage());
+                              },
+                              child: Container(
+                                width: ScreenUtil.getWidth(context) / 1.2,
 
+                                padding: const EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.orange)),
+                                child: Center(
+                                  child: AutoSizeText(
+                                    getTransrlate(context, 'login'),
+                                    maxFontSize: 14,
+                                    minFontSize: 12,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.orange),
                                   ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Container(
-                                    width: ScreenUtil.getWidth(context) / 4,
-                                    child: AutoSizeText(
-                                      getTransrlate(context, 'login'),
-                                      maxFontSize: 12,
-                                      minFontSize: 10,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.orange),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Nav.route(context, RegisterPage());
-                            },
-                            child: Container(
-                              width: ScreenUtil.getWidth(context) / 2.5,
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.orange)),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/User Icon.svg',
-                                    color: Colors.orange,
-                                    width: 25,
+                            SizedBox(height: 30,),
+                            InkWell(
+                              onTap: () {
+                                Nav.route(context, RegisterPage());
+                              },
+                              child: Container(
+                                width: ScreenUtil.getWidth(context) / 1.2,
+
+                                padding: const EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.orange)),
+                                child: Center(
+                                  child: AutoSizeText(
+                                    getTransrlate(context, 'AreadyAccount'),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxFontSize: 14,
+                                    maxLines: 1,
+                                    minFontSize: 12,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.orange),
                                   ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Container(
-                                    width: ScreenUtil.getWidth(context) / 4,
-                                    child: AutoSizeText(
-                                      getTransrlate(context, 'AreadyAccount'),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxFontSize: 12,
-                                      maxLines: 1,
-                                      minFontSize: 10,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.orange),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                    ),
                 SizedBox(
                   height: ScreenUtil.getWidth(context) / 15,
                 ),
@@ -185,7 +159,9 @@ class _AccountState extends State<Account> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  token == null
+                      ? Container()
+                      :  Container(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[

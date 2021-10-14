@@ -144,6 +144,8 @@ class _FilterdialogState extends State<Filterdialog> {
                                                   " ${getTransrlate(context, 'width')} ",
                                               showSearchBox: true,
                                               showClearButton: false,
+                                              mode: Mode.MENU,
+
                                               items: width,
                                               validator: (String item) {
                                                 if (item == null) {
@@ -167,6 +169,8 @@ class _FilterdialogState extends State<Filterdialog> {
                                                   " ${getTransrlate(context, 'height')} ",
                                               showSearchBox: true,
                                               showClearButton: false,
+                                              mode: Mode.MENU,
+
                                               items: height,
                                               validator: (String item) {
                                                 if (item == null) {
@@ -190,6 +194,8 @@ class _FilterdialogState extends State<Filterdialog> {
                                                   " ${getTransrlate(context, 'size')} ",
                                               showSearchBox: true,
                                               showClearButton: false,
+                                              mode: Mode.MENU,
+
                                               items: size,
                                               validator: (String item) {
                                                 if (item == null) {
