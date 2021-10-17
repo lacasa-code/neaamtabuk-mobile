@@ -195,7 +195,6 @@ class _FilterdialogState extends State<Filterdialog> {
                                               showSearchBox: true,
                                               showClearButton: false,
                                               mode: Mode.MENU,
-
                                               items: size,
                                               validator: (String item) {
                                                 if (item == null) {
