@@ -79,10 +79,8 @@ class _SplashScreenState extends State<SplashScreen>
     API(context,Check: false).post('check/valid/session', {}).then((value) async {
 
       if (value != null) {
-        print("dddddddd ${value['data']}");
 
         if (value['status_code'] == 200) {
-          print("dddddddd ${value['data']}");
           themeColor.setLogin(true);
           var user = value['data'];
           if (user.containsKey('vendor_details')) {
@@ -91,7 +89,6 @@ class _SplashScreenState extends State<SplashScreen>
             prefs.setString("vendor", 'vendor');
 
           }
-          print("token ${value['token']}");
 
           prefs.setString("user_email", "${user['email']}");
           prefs.setString("user_name", "${user['name']}");

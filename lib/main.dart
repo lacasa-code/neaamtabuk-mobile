@@ -9,7 +9,6 @@ import 'package:flutter_pos/utils/local/AppLocalizations.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {

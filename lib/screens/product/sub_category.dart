@@ -84,42 +84,59 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                     scroll: false,
                     children: Categories.map((e) =>Padding(
                       padding: const EdgeInsets.all(2.0),
+
                       child:InkWell(
                         onTap:  () {
                           Nav.route(context, SubCategoryScreen(Categories: Categories[checkboxType].categories=e.categories,));
                         },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CachedNetworkImage(imageUrl: '${e.photo!=null?e.photo.image:' '}',height: 100,width: 75,fit: BoxFit.contain,
-                            errorWidget: (context, url, error) =>Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset('assets/images/trkar_logo_white (copy).png',color: Colors.grey,),
-                            ),),
-                            Container(
-                              width: ScreenUtil.getWidth(context)/7,
-                              child: Text(
-                                "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontWeight: FontWeight.w600,
-                                    fontSize: 12),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 5.0,
+                                    spreadRadius: 1,
+                                    offset: Offset(0.0, 2)),
+                              ]
+
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CachedNetworkImage(imageUrl: '${e.photo!=null?e.photo.image:' '}',height: 50,width: 50,fit: BoxFit.contain,
+                              errorWidget: (context, url, error) =>Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.asset('assets/images/alt_img_category.png',),
+                              ),),
+                              Container(
+                                width: ScreenUtil.getWidth(context)/7,
+                                child: Text(
+                                  "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
                               ),
-                            ),
-                            IconButton(onPressed: (){
-                              Nav.route(
-                                  context,
-                                  Products_Page(
-                                    id:e.id,
-                                    name:
-                                    "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
-                                    Url: "home/allcategories/products/${e.id}",
-                                    Istryers: e.id==84,
-                                    Category: true,
-                                  ));
-                            }, icon: Icon(Icons.search))
-                          ],
+                              IconButton(onPressed: (){
+                                Nav.route(
+                                    context,
+                                    Products_Page(
+                                      id:e.id,
+                                      name:
+                                      "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
+                                      Url: "home/allcategories/products/${e.id}",
+                                      Istryers: e.id==84,
+                                      Category: true,
+                                    ));
+                              }, icon: Icon(Icons.search,color: Colors.black45,))
+                            ],
+                          ),
                         ),
                       ),
                     )).toList()

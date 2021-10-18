@@ -67,9 +67,11 @@ class _CategoryCardState extends State<CategoryCard> {
                   imageUrl: (widget.product.photo == null)
                       ? 'http://arabimagefoundation.com/images/defaultImage.png'
                       : widget.product.photo.image,
-                  errorWidget: (context, url, error) => Icon(
-                    Icons.image,
-                    color: Colors.black12,
+                  errorWidget: (context, url, error) => Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Image.asset(
+                      'assets/images/alt_img_category.png',
+                    ),
                   ),
                 ),
               ),

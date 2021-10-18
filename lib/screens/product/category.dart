@@ -48,54 +48,64 @@ class _CategoryScreenState extends State<CategoryScreen> {
             child: Container(
               decoration: BoxDecoration(
                 border:
-                    Border.symmetric(vertical: BorderSide(color: Colors.grey)),
+                Border.symmetric(vertical: BorderSide(color: Colors.grey)),
               ),
               child: Container(
                 color: Colors.white70,
                 child: data.categories == null
                     ? Center(child: Custom_Loading())
                     : Container(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: ScreenUtil.getHeight(context) / 1.25,
-                              decoration: BoxDecoration(
-                                border: Border.symmetric(
-                                    vertical: BorderSide(color: Colors.grey)),
-                              ),
-                              child: SingleChildScrollView(
-                                child: Container(
-                                  width: ScreenUtil.getWidth(context) / 2.5,
-                                  // height: ScreenUtil.getHeight(context) / 1.25,
-                                  child: Container(
-                                    child: ListView.builder(
-                                      primary: false,
-                                      shrinkWrap: true,
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 2),
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: data.categories.firstWhere((element) => element.id==themeColor.car_type).categories.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        bool selected = checkboxType == index;
-                                        return item(data.categories.firstWhere((element) => element.id==themeColor.car_type).categories[index], index, selected);
-                                      },
-                                    ),
-                                  ),
-                                ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: ScreenUtil.getHeight(context) / 1.25,
+                        decoration: BoxDecoration(
+                          border: Border.symmetric(
+                              vertical: BorderSide(color: Colors.grey)),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Container(
+                            width: ScreenUtil.getWidth(context) / 2.5,
+                            // height: ScreenUtil.getHeight(context) / 1.25,
+                            child: Container(
+                              child: ListView.builder(
+                                primary: false,
+                                shrinkWrap: true,
+                                padding:
+                                EdgeInsets.symmetric(horizontal: 2),
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: data.categories
+                                    .firstWhere((element) =>
+                                element.id == themeColor.car_type)
+                                    .categories
+                                    .length,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  bool selected = checkboxType == index;
+                                  return item(data.categories
+                                      .firstWhere((element) =>
+                                  element.id == themeColor.car_type)
+                                      .categories[index], index, selected);
+                                },
                               ),
                             ),
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: getList(data.categories.firstWhere((element) => element.id==themeColor.car_type).categories),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: getList(data.categories
+                              .firstWhere((element) =>
+                          element.id == themeColor.car_type)
+                              .categories),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -103,6 +113,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
     );
   }
+
   getList(List<Categories_item> Categories) {
     final themeColor = Provider.of<Provider_control>(context);
     final data = Provider.of<Provider_Data>(context);
@@ -111,176 +122,199 @@ class _CategoryScreenState extends State<CategoryScreen> {
         : Categories[checkboxType].categories == null
         ? Container()
         : Categories[checkboxType].categories.isEmpty
-            ? Container(
-                child: NotFoundProduct(
-                title: getTransrlate(context, 'EmptyCate'),
-              ))
-            : Column(
-                children: [
-                  ResponsiveGridList(
-                      desiredItemWidth: ScreenUtil.getWidth(context) / 2,
-                      minSpacing: 10,
-                      //rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      scroll: false,
-                      children: Categories[checkboxType].categories.map((e) => Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: InkWell(
-                              onTap: () {
-                                e.categories.isNotEmpty
-                                    ? Nav.route(
-                                        context,
-                                        SubCategoryScreen(
-                                          Categories: e.categories,
-                                        ))
-                                    : Nav.route(
-                                        context,
-                                        Products_Page(
-                                          id: e.id,
-                                          name:
-                                              "${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
-                                          Url:
-                                              "home/allcategories/products/${e.id}",
-                                          Istryers: e.id == 1711||e.id == 682,
-                                          Category: true,
-                                          Category_id: e.id,
-                                        ));
-                                //setState(() => categories[checkboxType].categories=e.categories);
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  CachedNetworkImage(
-                                    imageUrl:
-                                        '${e.photo != null ? e.photo.image : ''}',
-                                    errorWidget: (context, url, error) =>
-                                        Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Image.asset(
-                                        'assets/images/trkar_logo_white (copy).png',
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    height: 100,
-                                    width: 100,
-                                    fit: BoxFit.contain,
+        ? Container(
+        child: NotFoundProduct(
+          title: getTransrlate(context, 'EmptyCate'),
+        ))
+        : Column(
+      children: [
+        ResponsiveGridList(
+            desiredItemWidth: ScreenUtil.getWidth(context) / 2,
+            minSpacing: 10,
+            //rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            scroll: false,
+            children: Categories[checkboxType].categories.map((e) =>
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: InkWell(
+                    onTap: () {
+                      e.categories.isNotEmpty
+                          ? Nav.route(
+                          context,
+                          SubCategoryScreen(
+                            Categories: e.categories,
+                          ))
+                          : Nav.route(
+                          context,
+                          Products_Page(
+                            id: e.id,
+                            name:
+                            "${themeColor.getlocal() == 'ar' ? e.name ??
+                                e.nameEn : e.nameEn ?? e.name}",
+                            Url:
+                            "home/allcategories/products/${e.id}",
+                            Istryers: e.id == 1711 || e.id == 682,
+                            Category: true,
+                            Category_id: e.id,
+                          ));
+                      //setState(() => categories[checkboxType].categories=e.categories);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 5.0,
+                                spreadRadius: 1,
+                                offset: Offset(0.0, 2)),
+                          ]
+
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl:
+                            '${e.photo != null ? e.photo.image : ''}',
+                            errorWidget: (context, url, error) =>
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Image.asset(
+                                    'assets/images/alt_img_category.png',
                                   ),
-                                  Container(
-                                    width: ScreenUtil.getWidth(context) / 6,
-                                    child: Text(
-                                      "${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12),
-                                    ),
-                                  ),
-                                  IconButton(
-                                      onPressed: () {
-                                        Nav.route(
-                                            context,
-                                            Products_Page(
-                                              id: e.id,
-                                              name:
-                                                  "${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
-                                              Url:
-                                                  "home/allcategories/products/${e.id}",
-                                              Istryers: e.id == 84,
-                                              Category: true,
-                                            ));
-                                      },
-                                      icon: Icon(Icons.search))
-                                ],
-                              ),
+                                ),
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.contain,
+                          ),
+                          Container(
+                            width: ScreenUtil.getWidth(context) / 6,
+                            child: Text(
+                              "${themeColor.getlocal() == 'ar' ? e.name ??
+                                  e.nameEn : e.nameEn ?? e.name}",
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12),
                             ),
-                          )).toList()),
-                  // ListView.builder(
-                  //     primary: false,
-                  //     shrinkWrap: true,
-                  //     padding: EdgeInsets.all(1),
-                  //     physics: NeverScrollableScrollPhysics(),
-                  //     itemCount: Categories.length,
-                  //     itemBuilder: (BuildContext context, int index) {
-                  //       bool selected = checkboxPart == index;
-                  //       return Column(
-                  //         children: [
-                  //           Padding(
-                  //             padding: const EdgeInsets.all(10),
-                  //             child:InkWell(
-                  //                 onTap: Categories[index].last_level == 0
-                  //                     ? null
-                  //                     : () {
-                  //                         Nav.route(
-                  //                             context,
-                  //                             Products_Page(
-                  //                               id: Categories[index].id,
-                  //                               name: Categories[index].name,
-                  //                               Url: "site/part/categories/${Categories[index].id}?cartype_id=${themeColor.getcar_type()}",
-                  //                               Istryers: Provider.of<Provider_Data>(context,listen: false).categories[checkboxType].id==7,
-                  //
-                  //                             ));
-                  //                       },
-                  //                 child: Row(
-                  //                   mainAxisAlignment: MainAxisAlignment.start,
-                  //                   crossAxisAlignment: CrossAxisAlignment.start,
-                  //                   children: [
-                  //                     Container(
-                  //                       width: ScreenUtil.getWidth(context)/3,
-                  //                       child: Text(
-                  //                         "${themeColor.getlocal()=='ar'? Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
-                  //                         maxLines: 2,
-                  //                         textAlign: TextAlign.start,
-                  //                         style: TextStyle(fontWeight: FontWeight.w600,
-                  //                             fontSize: 12),
-                  //                       ),
-                  //                     ),
-                  //                     IconButton(onPressed: (){
-                  //                       Nav.route(
-                  //                           context,
-                  //                           Products_Page(
-                  //                             id:Categories[index].id,
-                  //                             name: "${ themeColor.getlocal()=='ar'?Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
-                  //                             Url: 'site/categories/${Categories[index].id}?cartype_id=${themeColor.car_type}',
-                  //                             Istryers: Categories[index].id==84,
-                  //                             Category: true,
-                  //                           ));
-                  //                     }, icon: Icon(Icons.search))
-                  //                   ],
-                  //                 ),
-                  //               ),
-                  //           ),
-                  //           Container(
-                  //             height: 1,
-                  //             color: Colors.black12,
-                  //           )
-                  //         ],
-                  //       );
-                  //     },
-                  //   ),
-                  // SizedBox(height: 25,)
-                ],
-              );
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Nav.route(
+                                    context,
+                                    Products_Page(
+                                      id: e.id,
+                                      name:
+                                      "${themeColor.getlocal() == 'ar' ? e
+                                          .name ?? e.nameEn : e.nameEn ??
+                                          e.name}",
+                                      Url:
+                                      "home/allcategories/products/${e.id}",
+                                      Istryers: e.id == 84,
+                                      Category: true,
+                                    ));
+                              },
+                              icon: Icon(Icons.search, color: Colors.black45,))
+                        ],
+                      ),
+                    ),
+                  ),
+                )).toList()),
+        // ListView.builder(
+        //     primary: false,
+        //     shrinkWrap: true,
+        //     padding: EdgeInsets.all(1),
+        //     physics: NeverScrollableScrollPhysics(),
+        //     itemCount: Categories.length,
+        //     itemBuilder: (BuildContext context, int index) {
+        //       bool selected = checkboxPart == index;
+        //       return Column(
+        //         children: [
+        //           Padding(
+        //             padding: const EdgeInsets.all(10),
+        //             child:InkWell(
+        //                 onTap: Categories[index].last_level == 0
+        //                     ? null
+        //                     : () {
+        //                         Nav.route(
+        //                             context,
+        //                             Products_Page(
+        //                               id: Categories[index].id,
+        //                               name: Categories[index].name,
+        //                               Url: "site/part/categories/${Categories[index].id}?cartype_id=${themeColor.getcar_type()}",
+        //                               Istryers: Provider.of<Provider_Data>(context,listen: false).categories[checkboxType].id==7,
+        //
+        //                             ));
+        //                       },
+        //                 child: Row(
+        //                   mainAxisAlignment: MainAxisAlignment.start,
+        //                   crossAxisAlignment: CrossAxisAlignment.start,
+        //                   children: [
+        //                     Container(
+        //                       width: ScreenUtil.getWidth(context)/3,
+        //                       child: Text(
+        //                         "${themeColor.getlocal()=='ar'? Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
+        //                         maxLines: 2,
+        //                         textAlign: TextAlign.start,
+        //                         style: TextStyle(fontWeight: FontWeight.w600,
+        //                             fontSize: 12),
+        //                       ),
+        //                     ),
+        //                     IconButton(onPressed: (){
+        //                       Nav.route(
+        //                           context,
+        //                           Products_Page(
+        //                             id:Categories[index].id,
+        //                             name: "${ themeColor.getlocal()=='ar'?Categories[index].name??Categories[index].name_en :Categories[index].name_en??Categories[index].name}",
+        //                             Url: 'site/categories/${Categories[index].id}?cartype_id=${themeColor.car_type}',
+        //                             Istryers: Categories[index].id==84,
+        //                             Category: true,
+        //                           ));
+        //                     }, icon: Icon(Icons.search))
+        //                   ],
+        //                 ),
+        //               ),
+        //           ),
+        //           Container(
+        //             height: 1,
+        //             color: Colors.black12,
+        //           )
+        //         ],
+        //       );
+        //     },
+        //   ),
+        // SizedBox(height: 25,)
+      ],
+    );
   }
-  item(Categories_item categories_item,int index, bool selected){
+
+  item(Categories_item categories_item, int index, bool selected) {
     final themeColor = Provider.of<Provider_control>(context);
     return InkWell(
       onTap: () {
-        categories_item.categories.isEmpty? Nav.route(
+        categories_item.categories.isEmpty ? Nav.route(
             context,
             Products_Page(
               id: categories_item.id,
               name:
-              "${themeColor.getlocal() == 'ar' ? categories_item.name ?? categories_item.nameEn : categories_item.nameEn ?? categories_item.name}",
+              "${themeColor.getlocal() == 'ar' ? categories_item.name ??
+                  categories_item.nameEn : categories_item.nameEn ??
+                  categories_item.name}",
               Url:
               "home/allcategories/products/${categories_item.id}",
-              Istryers: categories_item.id == 1711||categories_item.id == 682,
+              Istryers: categories_item.id == 1711 || categories_item.id == 682,
               Category: true,
               Category_id: categories_item.id,
-            )): setState(() {
+            )) : setState(() {
           checkboxType = index;
           checkboxPart = 0;
-           // categories= data.categories;
+          // categories= data.categories;
         });
       },
       child: Container(
@@ -317,14 +351,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
               padding:
               const EdgeInsets.only(
                   right: 2, left: 2),
-              child: AutoSizeText(
-                "${themeColor.getlocal() == 'ar' ? categories_item.name ?? categories_item.nameEn : categories_item.nameEn ?? categories_item.name}",
+              child: Text(
+                "${themeColor.getlocal() == 'ar' ? categories_item.name ??
+                    categories_item.nameEn : categories_item.nameEn ??
+                    categories_item.name}",
                 maxLines: 2,
                 overflow:
                 TextOverflow.ellipsis,
-                minFontSize: 12,
                 textAlign: TextAlign.start,
                 style: TextStyle(
+                  fontSize: 13,
                     fontWeight:
                     FontWeight.bold),
               ),
@@ -336,15 +372,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Products_Page(
                         id: categories_item.id,
                         name:
-                        "${themeColor.getlocal() == 'ar' ? categories_item.name ?? categories_item.nameEn : categories_item.nameEn ?? categories_item.name}",
+                        "${themeColor.getlocal() == 'ar' ? categories_item
+                            .name ?? categories_item.nameEn : categories_item
+                            .nameEn ?? categories_item.name}",
                         Url:
                         "home/allcategories/products/${categories_item.id}",
-                        Istryers: categories_item.id == 1711||categories_item.id == 682,
+                        Istryers: categories_item.id == 1711 ||
+                            categories_item.id == 682,
                         Category: true,
                         Category_id: categories_item.id,
                       ));
                 },
-                icon: Icon(Icons.search))
+                icon: Icon(Icons.search,color: Colors.black45,))
 
           ],
         ),

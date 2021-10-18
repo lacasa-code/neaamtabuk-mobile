@@ -618,7 +618,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                         SizedBox(
                                           height: 35,
                                         ),
-                                        Column(
+                                        Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           mainAxisAlignment:

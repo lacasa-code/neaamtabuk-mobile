@@ -408,7 +408,6 @@ class _HomeState extends State<Home> {
                     provider_data.Mostcategories == null
                         ? Container()
                         : Container(child: list_category_navbar(themeColor)),
-
                     ads == null
                         ? Container()
                         : Padding(
@@ -444,15 +443,12 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 10,
                     ),
-
                     ads == null
                         ? Container()
                         : SliderDotAds(_carouselCurrentPage, ads.carousel),
                     SizedBox(
                       height: 20,
                     ),
-
-
               provider_data.productMostView == null
                         ? Padding(
                       padding: const EdgeInsets.all(24.0),
@@ -630,9 +626,11 @@ class _HomeState extends State<Home> {
                                       imageUrl: (product.photo == null)
                                           ? 'http://arabimagefoundation.com/images/defaultImage.png'
                                           : product.photo.image,
-                                      errorWidget: (context, url, error) => Icon(
-                                        Icons.image,
-                                        color: Colors.black12,
+                                      errorWidget: (context, url, error) => Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Image.asset(
+                                          'assets/images/alt_img_category.png',
+                                        ),
                                       ),
                                     ),
                                   ),
