@@ -111,8 +111,7 @@ class _ProductCardState extends State<ProductCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              width: ScreenUtil.getWidth(context) /6,
-
+                              width: 75,
                               child: RatingBar.builder(
                                 ignoreGestures: true,
                                 initialRating:
@@ -129,13 +128,16 @@ class _ProductCardState extends State<ProductCard> {
                                 onRatingUpdate: (rating) {},
                               ),
                             ),
-                          AutoSizeText(
-                            "${double.parse(widget.product.action_price).floorToDouble()} ${getTransrlate(context, 'Currency')} ",
-                            maxLines: 1,
-                            maxFontSize: 12,
-                            style: TextStyle(
-                                color:Colors.black,
-                                fontWeight: FontWeight.bold),
+                          Container(
+                            width: 50,
+                            child: AutoSizeText(
+                              "${widget.product.action_price??0} ${getTransrlate(context, 'Currency')} ",
+                              maxLines: 1,
+                              maxFontSize: 12,
+                              style: TextStyle(
+                                  color:Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           )
                           ],
                         ),

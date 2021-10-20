@@ -200,7 +200,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               maxLines: 2,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w300,
                                   fontSize: 12),
                             ),
                           ),
@@ -342,12 +342,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ? Colors.white
                     : Colors.orange),
             SizedBox(
-              width: 3,
+              width: 2,
             ),
             Container(
-              width: ScreenUtil.getWidth(
-                  context) /
-                  4.1,
+              width: ScreenUtil.getWidth(context) / 4.5,
               padding:
               const EdgeInsets.only(
                   right: 2, left: 2),
@@ -360,9 +358,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 TextOverflow.ellipsis,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                  fontSize: 13,
-                    fontWeight:
-                    FontWeight.bold),
+                  fontSize: 12,
+                    fontWeight: FontWeight.w400),
               ),
             ),
             IconButton(
@@ -384,7 +381,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       ));
                 },
                 icon: Icon(Icons.search,color: Colors.black45,))
-
           ],
         ),
       ),

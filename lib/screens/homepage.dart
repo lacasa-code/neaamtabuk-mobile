@@ -36,18 +36,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   List<CarType> cartype;
   Ads ads;
   int checkboxType = 0;
   final ScrollController _scrollController = ScrollController();
-
   int complete;
   PersistentTabController _controller;
   final navigatorKey = GlobalKey<NavigatorState>();
-
   List<Widget> _buildScreens() {
     return [HomePage(), CategoryScreen(), CartScreen() ,Account()];
+
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -69,7 +67,8 @@ class _HomeState extends State<Home> {
       PersistentBottomNavBarItem(
         icon: Stack(
           children: [
-            Center(child: Icon(CupertinoIcons.cart)),
+            Center(child:
+            Icon(CupertinoIcons.cart)),
             Center(
                 child: Text(
               data.cart_model != null
@@ -578,7 +577,8 @@ class _HomeState extends State<Home> {
               ),
           ],
         );
-  }  Widget list_category_navbar(
+  }
+  Widget list_category_navbar(
     Provider_control themeColor,
   ) {
     final provider_data = Provider.of<Provider_Data>(context);
@@ -655,14 +655,16 @@ class _HomeState extends State<Home> {
             ),
           );
   }
-
-  Widget list_product(Provider_control themeColor, List<Product> product) {
+  Widget list_product(Provider_control themeColor,
+      List<Product> product) {
     return product.isEmpty
         ? Container()
         : ResponsiveGridList(
       scroll: false,
-      desiredItemWidth: ScreenUtil.getWidth(context)/2.2,
+
+      desiredItemWidth: 150,
       minSpacing: 10,
+
       children: product.map((e) => Center(
         child: Padding(
           padding: const EdgeInsets.only(right: 8, bottom: 8),

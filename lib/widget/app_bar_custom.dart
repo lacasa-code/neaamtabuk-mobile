@@ -73,18 +73,23 @@ class _AppBarCustomState extends State<AppBarCustom> {
             onTap: () {
               Nav.route(context, MyCars(themeColor.getcar_index()));
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(CupertinoIcons.car_detailed,color: Colors.white,),
-                SizedBox(
-                  width:5 ,
-                ),
-                Text(
-                  "${themeColor.getCar_made()}",
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(CupertinoIcons.car_detailed,color: Colors.white,),
+                  SizedBox(
+                    width:5 ,
+                  ),
+                  Text(
+                    "${themeColor.getCar_made()}",
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
             ),
           ),
           IconButton(

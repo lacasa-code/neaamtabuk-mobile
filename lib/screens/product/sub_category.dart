@@ -78,7 +78,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
             : Column(
               children: [
                 ResponsiveGridList(
-                    desiredItemWidth: ScreenUtil.getWidth(context)/2.2,
+                    desiredItemWidth:200,
                     minSpacing: 10,
                     //rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     scroll: false,
@@ -87,6 +87,16 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
                       child:InkWell(
                         onTap:  () {
+                          Categories[checkboxType].categories.isEmpty ?  Nav.route(
+                              context,
+                              Products_Page(
+                                id:e.id,
+                                name:
+                                "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
+                                Url: "home/allcategories/products/${e.id}",
+                                Istryers: e.id==84,
+                                Category: true,
+                              )):
                           Nav.route(context, SubCategoryScreen(Categories: Categories[checkboxType].categories=e.categories,));
                         },
                         child: Container(
@@ -114,7 +124,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                                 child: Image.asset('assets/images/alt_img_category.png',),
                               ),),
                               Container(
-                                width: ScreenUtil.getWidth(context)/7,
+                                width: 100,
                                 child: Text(
                                   "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
                                   maxLines: 2,

@@ -5,6 +5,7 @@ class Provider_control with ChangeNotifier {
   Color _themeData = Color(0xff424242);
   String local;
   String car_model ;
+  String car_title ;
   int Complete ;
   int car_type =  1;
   int index =  0;

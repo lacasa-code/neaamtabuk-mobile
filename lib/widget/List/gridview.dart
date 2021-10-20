@@ -21,12 +21,12 @@ class _grid_productState extends State<grid_product> {
     final themeColor = Provider.of<Provider_control>(context);
 
     return ResponsiveGridList(
-        desiredItemWidth: ScreenUtil.getWidth(context)/2.4,
+        desiredItemWidth: 150,
         minSpacing: 10,
         //rowMainAxisAlignment: MainAxisAlignment.spaceEvenly,
         scroll: false,
     children: widget.product.map((e) =>Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(2.0),
       child: ProductCard(
         themeColor: themeColor,
         product: e,

@@ -17,7 +17,7 @@ class Banner_item extends StatelessWidget {
 
     return InkWell(
       onTap: (){
-        Nav.route(context, Products_Page(name: 'عروض ',Url: 'best/seller/products?cartype_id=${themeColor.getcar_type()}'));
+      //  Nav.route(context, Products_Page(name: 'عروض ',Url: 'best/seller/products?cartype_id=${themeColor.getcar_type()}'));
       },
       child: Container(
         width: ScreenUtil.getWidth(context)/1,
@@ -26,7 +26,7 @@ class Banner_item extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
           child: CachedNetworkImage(
             imageUrl: item,
-            fit: BoxFit.fill,
+            fit: BoxFit.contain,
           ),
         ),
       ),
