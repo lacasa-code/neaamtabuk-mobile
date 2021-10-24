@@ -86,23 +86,42 @@ class _ProductCardState extends State<ProductCard> {
                   Container(
                     color: Colors.white,
                     width: ScreenUtil.getWidth(context) / 2.1,
-                    padding: EdgeInsets.only(left: 5, top: 10, right: 5),
+                    padding: EdgeInsets.only(left: 3, top: 10, right: 3),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Container(
-                          width: ScreenUtil.getWidth(context) / 2.2,
-                          child: AutoSizeText(
-                            themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
-                            maxLines: 1,
-                            style: TextStyle(
-                              color: Color(0xFF5D6A78),
-                              fontWeight: FontWeight.w300,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                          children: [
+                            Container(
+                              width: ScreenUtil.getWidth(context) / 4.2,
+                              child: AutoSizeText(
+                                themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: Color(0xFF5D6A78),
+                                  fontWeight: FontWeight.w300,
+                                ),
+                                minFontSize: 13,
+                                maxFontSize: 16,
+                              ),
                             ),
-                            minFontSize: 13,
-                            maxFontSize: 16,
-                          ),
+                            widget.product.tyres_belong != 1?Container():   Container(
+                              width: ScreenUtil.getWidth(context) / 5.5,
+                              child: Text(
+                                "${widget.product.width ?? ''}/ ${widget.product.height ?? ''}/ ${widget.product.size ?? ''}",
+                                maxLines: 1,
+                                textDirection: TextDirection.ltr,
+                                style: TextStyle(
+                                    color: Colors.orange,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 12
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 5,

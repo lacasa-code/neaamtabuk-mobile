@@ -425,14 +425,21 @@ class _FilterdialogState extends State<Filterdialog> {
                             Container(
                               width: ScreenUtil.getWidth(context) / 3,
                               child: MyTextFormField(
-                                enabled: false,
+                                keyboard_type:TextInputType.number,
+                                //enabled: false,
                                 intialLabel: min.toString(),
                                 onChange: (v) {
-                                  setState(() {
-                                    _currentRangeValues =
-                                        RangeValues(double.parse(v), max);
-                                    min = double.parse(v);
-                                  });
+    if(v!=null){
+    if(v.isNotEmpty){
+      setState(() {
+        if(max>=double.parse(v)){
+          _currentRangeValues =
+              RangeValues(double.parse(v), max);
+          min = double.parse(v);
+        }
+      });
+    }}
+
                                 },
                               ),
                             ),
@@ -445,11 +452,19 @@ class _FilterdialogState extends State<Filterdialog> {
                                 keyboard_type:TextInputType.number,
                                 intialLabel: max.toString(),
                                 onChange: (v) {
-                                  setState(() {
-                                    _currentRangeValues =
-                                        RangeValues(min, double.parse(v));
-                                    max = double.parse(v);
-                                  });
+                                  if(v!=null){
+                                    if(v.isNotEmpty){
+                                      setState(() {
+                                        if(min<=double.parse(v)){
+                                          _currentRangeValues =
+                                              RangeValues(min, double.parse(v));
+                                          max = double.parse(v);
+                                        }
+
+                                      });
+                                    }
+                                  }
+
                                 },
                               ),
                             )

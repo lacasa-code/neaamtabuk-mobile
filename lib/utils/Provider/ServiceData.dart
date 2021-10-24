@@ -7,19 +7,16 @@ import 'package:flutter_pos/model/shipping_address.dart';
 import 'package:flutter_pos/service/api.dart';
 
 class Provider_Data with ChangeNotifier {
-  Cart_model cart_model;
-  Address address;
-  List<Product> product,productMostSale;
-  List<ProductMost> productMostView;
-  List<Categories_item> categories;
-  List<Categories_item> Mostcategories;
-  List<Product> wishList;
-
-  Provider_Data();
-
-  getCart_model() => cart_model;
-
-  getCart(BuildContext context) {
+   Cart_model cart_model;
+   Address address;
+   List<Product> product,productMostSale;
+   List<ProductMost> productMostView;
+   List<Categories_item> categories;
+   List<Categories_item> Mostcategories;
+   List<Product> wishList;
+   Provider_Data();
+   getCart_model() => cart_model;
+   getCart(BuildContext context) {
     API(context, Check: false).post('show/cart', {}).then((value) {
       if (value != null) {
         print(value);
@@ -28,9 +25,9 @@ class Provider_Data with ChangeNotifier {
       }
     });
   }
-  getData(int cartypeId,BuildContext context) {
+   getData(int cartypeId,BuildContext context) {
     API(context, Check: false)
-        .get('site/new/products?cartype_id=$cartypeId')
+        .get('site/new/products?cartype_id=$cartypeId&per_page=6')
         .then((value) {
       if (value != null) {
           product = Product_model.fromJson(value).data;
@@ -45,7 +42,7 @@ class Provider_Data with ChangeNotifier {
       }
     });
     API(context)
-        .get('best/seller/products?cartype_id=$cartypeId')
+        .get('best/seller/products?cartype_id=$cartypeId&per_page=6')
         .then((value) {
       if (value != null) {
           productMostSale = Product_model.fromJson(value).data;
@@ -63,7 +60,6 @@ class Provider_Data with ChangeNotifier {
     });
     notifyListeners();
   }
-
    getWishlist(BuildContext context) {
     API(context).get('user/get/wishlist').then((value) {
       if (value != null) {
@@ -73,7 +69,7 @@ class Provider_Data with ChangeNotifier {
       }
     });
   }
-  getShipping(BuildContext context) {
+   getShipping(BuildContext context) {
     API(context, Check: false).get('user/get/default/shipping').then((value) {
       if (value != null) {
         if (value['status_code'] == 200) {
@@ -85,8 +81,7 @@ class Provider_Data with ChangeNotifier {
       }
     });
   }
-
-  setShipping(Address address) {
+   setShipping(Address address) {
     this.address = address;
     notifyListeners();
   }

@@ -102,16 +102,40 @@ class _ProductListState extends State<ProductList> {
                           SizedBox(
                             height: 5,
                           ),
-                          AutoSizeText(
-                            themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Color(0xFF5D6A78),
-                              fontWeight: FontWeight.w300,
-                            ),
-                            minFontSize: 14,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                            children: [
+                              Container(
+                                width: ScreenUtil.getWidth(context) /3,
+
+                                child: AutoSizeText(
+                                  themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFF5D6A78),
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                  minFontSize: 14,
+                                ),
+                              ),
+                              widget.product.tyres_belong != 1?Container():   Container(
+                                width: ScreenUtil.getWidth(context) / 5.5,
+                                child: Text(
+                                  "${widget.product.width ?? ''}/ ${widget.product.height ?? ''}/ ${widget.product.size ?? ''}",
+                                  maxLines: 1,
+                                  textDirection: TextDirection.ltr,
+                                  style: TextStyle(
+                                      color: Colors.orange,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 12
+                                  ),
+                                ),
+                              ),
+
+                            ],
                           ),
                           SizedBox(
                             height: 5,
