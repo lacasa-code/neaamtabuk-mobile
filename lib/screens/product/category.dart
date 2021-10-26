@@ -152,7 +152,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             "${themeColor.getlocal() == 'ar' ? e.name ??
                                 e.nameEn : e.nameEn ?? e.name}",
                             Url:
-                            "home/allcategories/products/${e.id}",
+                            "ahmed/allcategories/products/${e.id}",
                             Istryers: e.id == 1711 || e.id == 682,
                             Category: true,
                             Category_id: e.id,
@@ -175,33 +175,33 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CachedNetworkImage(
-                            imageUrl:
-                            '${e.photo != null ? e.photo.image : ''}',
-                            errorWidget: (context, url, error) =>
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Image.asset(
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                              '${e.photo != null ? e.photo.image : ''}',
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(
                                     'assets/images/alt_img_category.png',
                                   ),
-                                ),
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.contain,
+                              height: 40,
+                              width: 40,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                           Container(
-                            width: ScreenUtil.getWidth(context) / 6,
+                            width: ScreenUtil.getWidth(context) / 4,
                             child: Text(
                               "${themeColor.getlocal() == 'ar' ? e.name ??
                                   e.nameEn : e.nameEn ?? e.name}",
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
+                              maxLines: 5,
+                             // textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.w300,
-                                  fontSize: 12),
+                                  fontSize: 11),
                             ),
                           ),
                           IconButton(
@@ -215,12 +215,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           .name ?? e.nameEn : e.nameEn ??
                                           e.name}",
                                       Url:
-                                      "home/allcategories/products/${e.id}",
+                                      "ahmed/allcategories/products/${e.id}",
                                       Istryers: e.id == 84,
                                       Category: true,
+                                      Category_id: e.id,
+
                                     ));
                               },
-                              icon: Icon(Icons.search, color: Colors.black45,))
+                              icon: Icon(Icons.search, color: Color(0xffc8c8c8),))
                         ],
                       ),
                     ),
@@ -307,7 +309,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   categories_item.nameEn : categories_item.nameEn ??
                   categories_item.name}",
               Url:
-              "home/allcategories/products/${categories_item.id}",
+              "ahmed/allcategories/products/${categories_item.id}",
               Istryers: categories_item.id == 1711 || categories_item.id == 682,
               Category: true,
               Category_id: categories_item.id,
@@ -345,10 +347,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
               width: 2,
             ),
             Container(
-              width: ScreenUtil.getWidth(context) / 4.5,
-              padding:
-              const EdgeInsets.only(
-                  right: 2, left: 2),
+              width: ScreenUtil.getWidth(context) / 4.3,
+
               child: Text(
                 "${themeColor.getlocal() == 'ar' ? categories_item.name ??
                     categories_item.nameEn : categories_item.nameEn ??
@@ -373,14 +373,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             .name ?? categories_item.nameEn : categories_item
                             .nameEn ?? categories_item.name}",
                         Url:
-                        "home/allcategories/products/${categories_item.id}",
+                        "ahmed/allcategories/products/${categories_item.id}",
                         Istryers: categories_item.id == 1711 ||
                             categories_item.id == 682,
                         Category: true,
                         Category_id: categories_item.id,
                       ));
                 },
-                icon: Icon(Icons.search,color: Colors.black45,))
+                icon: Icon(Icons.search,color: Color(0xffc8c8c8),))
           ],
         ),
       ),

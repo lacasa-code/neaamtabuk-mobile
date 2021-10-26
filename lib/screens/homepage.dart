@@ -467,7 +467,7 @@ class _HomeState extends State<Home> {
                                     title: getTransrlate(context, 'offers'),
                                     description: getTransrlate(context, 'showAll'),
                                     url:
-                                        'site/new/products?cartype_id=${cartype[checkboxType].id}',
+                                        'ahmed/new/products?cartype_id=${cartype[checkboxType].id}',
                                   ),
                                   list_product(themeColor, provider_data.product),
                                 ],
@@ -500,7 +500,7 @@ class _HomeState extends State<Home> {
                                     themeColor: themeColor,
                                     title: getTransrlate(context, 'moresale'),
                                     description: getTransrlate(context, 'showAll'),
-                                    url: 'best/seller/products?cartype_id=${cartype[checkboxType].id}',
+                                    url: 'ahmed/best/seller/products?cartype_id=${cartype[checkboxType].id}',
                                   ),
                                   list_product(themeColor,provider_data.productMostSale),
                                   SizedBox(
@@ -606,7 +606,7 @@ class _HomeState extends State<Home> {
                                   Products_Page(
                                     id: product.id,
                                     name: "${ themeColor.getlocal()=='ar'? product.name??product.nameEn :product.nameEn??product.name}",
-                                    Url: 'home/allcategories/products/${product.id}?cartype_id=${themeColor.car_type}',
+                                    Url: 'ahmed/allcategories/products/${product.id}?cartype_id=${themeColor.car_type}',
                                     Istryers: product.id==1711||product.id==682,
                                     Category: true,
                                     Category_id: product.id,

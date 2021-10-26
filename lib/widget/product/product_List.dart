@@ -43,41 +43,56 @@ class _ProductListState extends State<ProductList> {
     final data = Provider.of<Provider_Data>(context);
     final themeColor = Provider.of<Provider_control>(context);
 
-    return Stack(
-      children: <Widget>[
-        Container(
-          //width: ScreenUtil.getWidth(context) / 2,
-          margin: EdgeInsets.only(left: 16, top: 8, right: 12, bottom: 2),
+    return Container(
+      //width: ScreenUtil.getWidth(context) / 2,
+      margin: EdgeInsets.only(left: 16, top: 8, right: 12, bottom: 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: InkWell(
+        onTap: () {
+          widget.ctx==null?null: Navigator.pop(widget.ctx);
+          Nav.route(
+              context,
+              ProductPage(
+                product: widget.product,
+                product_id: widget.product.id.toString(),
+              ));
+        },
+        child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: InkWell(
-            onTap: () {
-              widget.ctx==null?null: Navigator.pop(widget.ctx);
-              Nav.route(
-                  context,
-                  ProductPage(
-                    product: widget.product,
-                    product_id: widget.product.id.toString(),
-                  ));
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey[200],
-                        blurRadius: 5.0,
-                        spreadRadius: 1,
-                        offset: Offset(0.0, 2)),
-                  ]),
-              child: Row(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey[200],
+                    blurRadius: 5.0,
+                    spreadRadius: 1,
+                    offset: Offset(0.0, 2)),
+              ]),
+          child: Column(
+            children: [
+              widget.product.producttypeId!=2?Container():Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Color(0xffF2E964),
+                  ),
+                  padding: EdgeInsets.only(left: 16, top: 2, right: 12, bottom: 2),
+                  child:Center(
+                    child: Text(
+                      "${getTransrlate(context, 'wholesale')} : ${widget.product.noOfOrders ?? ' '} ${getTransrlate(context, 'piece')} ",
+                      style: TextStyle(color: Colors.blueGrey,
+                          fontWeight: FontWeight.bold,fontSize: 11),
+                    ),
+                  ) ),
+
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
+                    padding: EdgeInsets.all(4),
                     height: 100,
                     width: ScreenUtil.getWidth(context) / 4.5,
                     child: CachedNetworkImage(
@@ -179,24 +194,24 @@ class _ProductListState extends State<ProductList> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "${getTransrlate(context, 'minOfOrder')}  : ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,fontSize: 11),
-                                      ),
-                                      Text(
-                                        '${widget.product.noOfOrders ?? ' '} ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,fontSize: 11,
-                                            color: Colors.black),
-                                      ),
-                                    ],
-                                  ),
+                                  // SizedBox(
+                                  //   height: 5,
+                                  // ),
+                                  // Row(
+                                  //   children: [
+                                  //     Text(
+                                  //       "${getTransrlate(context, 'minOfOrder')}  : ",
+                                  //       style: TextStyle(
+                                  //           fontWeight: FontWeight.w400,fontSize: 11),
+                                  //     ),
+                                  //     Text(
+                                  //       '${widget.product.noOfOrders ?? ' '} ',
+                                  //       style: TextStyle(
+                                  //           fontWeight: FontWeight.bold,fontSize: 11,
+                                  //           color: Colors.black),
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               )
                                   : Container(
@@ -221,7 +236,7 @@ class _ProductListState extends State<ProductList> {
                                                 "${double.parse(widget.product.price).floorToDouble()}  ",
                                               style: TextStyle(
                                                 decoration:  TextDecoration.lineThrough,
-                                                fontSize: 12,
+                                                fontSize: 11,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.red,
                                                 ),
@@ -232,8 +247,8 @@ class _ProductListState extends State<ProductList> {
                                             child: Text(
                                                 "${double.parse(widget.product.action_price).floorToDouble()} ${getTransrlate(context, 'Currency')} ",
                                                 style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                 ),
                                               ),
@@ -365,24 +380,10 @@ class _ProductListState extends State<ProductList> {
                   )
                 ],
               ),
-            ),
+            ],
           ),
         ),
-        widget.product.producttypeId!=2?Container():Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Color(0xffF2E964),
-            ),
-            margin: EdgeInsets.only(left: 16, top: 8, right: 12, bottom: 2),
-            child:Center(
-              child: Text(
-                "${getTransrlate(context, 'wholesale')} : ${widget.product.noOfOrders ?? ' '} ${getTransrlate(context, 'piece')} ",
-                style: TextStyle(color: Colors.blueGrey,
-                    fontWeight: FontWeight.bold,fontSize: 11),
-              ),
-            ) )
-
-      ],
+      ),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:flutter_pos/model/Categories_model.dart';
+
 class Product_model {
   int statusCode;
   String message;
@@ -76,6 +78,7 @@ class Product {
   int wishlistEnable;
   List<Media> media;
   List<Photo> photo;
+  List<Categories_item> allcategory;
   String serialId;
   int approved;
   List<ProductTags> productTags;
@@ -106,6 +109,9 @@ class Product {
     if (json['car_model_name'] != null) {
       carModelName = new List<CarModelName>();
       json['car_model_name'].forEach((v) { carModelName.add(new CarModelName.fromJson(v)); });
+    }   if (json['allcategory'] != null) {
+      allcategory = new List<Categories_item>();
+      json['allcategory'].forEach((v) { allcategory.add(new Categories_item.fromJson(v)); });
     }
     cartypeId = json['cartype_id'];
     product_id = "${json['product_id']}";

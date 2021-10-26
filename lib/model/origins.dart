@@ -46,18 +46,21 @@ class Origins {
 
 class Origin {
   int _id;
+  int _count_origins;
   String _countryName;
   String _countryCode;
   String _lang;
   bool check = false;
 
   int get id => _id;
+  int get count_origins => _count_origins;
   String get countryName => _countryName;
   String get countryCode => _countryCode;
   String get lang => _lang;
 
-  Origin({int id, String countryName, String countryCode, String lang}) {
+  Origin({int id, int count_origins, String countryName, String countryCode, String lang}) {
     _id = id;
+    _count_origins = count_origins;
     _countryName = countryName;
     _countryCode = countryCode;
     _lang = lang;
@@ -65,6 +68,7 @@ class Origin {
 
   Origin.fromJson(dynamic json) {
     _id = json["id"];
+    _count_origins = json["count_origins"];
     _countryName = json["country_name"];
     _countryCode = json["country_code"];
     _lang = json["lang"];

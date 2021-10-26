@@ -45,22 +45,26 @@ class Manufacturers {
 
 class Manufacturer {
   int _id;
+  int _count_manufacturers;
   String _manufacturerName;
   String _lang;
   bool check = false;
 
   int get id => _id;
+  int get count_manufacturers => _count_manufacturers;
   String get manufacturerName => _manufacturerName;
   String get lang => _lang;
 
-  Manufacturer({int id, String manufacturerName, String lang}) {
+  Manufacturer({int id, String manufacturerName, int count_manufacturers, String lang}) {
     _id = id;
+    _count_manufacturers = count_manufacturers;
     _manufacturerName = manufacturerName;
     _lang = lang;
   }
 
   Manufacturer.fromJson(dynamic json) {
     _id = json["id"];
+    _count_manufacturers = json["count_manufacturers"];
     _manufacturerName = json["manufacturer_name"];
     _lang = json["lang"];
   }

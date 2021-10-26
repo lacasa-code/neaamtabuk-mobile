@@ -48,12 +48,12 @@ class Provider_Data with ChangeNotifier {
           productMostSale = Product_model.fromJson(value).data;
       }
     });
-    API(context).get('home/allcategories/navbars/$cartypeId').then((value) {
+    API(context).get('ahmed/allcategories/navbars/$cartypeId').then((value) {
       if (value != null) {
           Mostcategories = Categories_model.fromJson(value).data;
       }
     });
-    API(context).get('home/allcategories').then((value) {
+    API(context).get('ahmed/allcategories').then((value) {
       if (value != null) {
         categories = Categories_model.fromJson(value).data;
       }

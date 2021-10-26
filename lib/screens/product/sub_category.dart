@@ -93,9 +93,10 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                                 id:e.id,
                                 name:
                                 "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
-                                Url: "home/allcategories/products/${e.id}",
+                                Url: "ahmed/allcategories/products/${e.id}",
                                 Istryers: e.id==84,
                                 Category: true,
+                                Category_id: e.id,
                               )):
                           Nav.route(context, SubCategoryScreen(Categories: Categories[checkboxType].categories=e.categories,));
                         },
@@ -128,7 +129,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                                 child: Text(
                                   "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
                                   maxLines: 2,
-                                  textAlign: TextAlign.center,
+                                //  textAlign: TextAlign.center,
                                   style: TextStyle(fontWeight: FontWeight.w600,
                                       fontSize: 12),
                                 ),
@@ -140,11 +141,13 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                                       id:e.id,
                                       name:
                                       "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
-                                      Url: "home/allcategories/products/${e.id}",
+                                      Url: "ahmed/allcategories/products/${e.id}",
                                       Istryers: e.id==84,
                                       Category: true,
+                                      Category_id: e.id,
+
                                     ));
-                              }, icon: Icon(Icons.search,color: Colors.black45,))
+                              }, icon: Icon(Icons.search,color: Color(0xffc8c8c8),))
                             ],
                           ),
                         ),

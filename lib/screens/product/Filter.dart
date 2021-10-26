@@ -32,7 +32,6 @@ class Filterdialog extends StatefulWidget {
 
 class _FilterdialogState extends State<Filterdialog> {
   final _formKey = GlobalKey<FormState>();
-  List<PartCategories> partss;
   List<Origin> origin;
   List<Manufacturer> manufacturer;
   List<Product> product;
@@ -42,18 +41,17 @@ class _FilterdialogState extends State<Filterdialog> {
   List<String> width = [];
   List<String> height = [];
   List<String> size = [];
+  List<Categories_item> categories;
   String widthID;
   String heightID;
-
   String sizeID;
-
   RangeValues _currentRangeValues;
   double min = 1, max = 10000;
 
   @override
   void initState() {
     _currentRangeValues = RangeValues(min, max);
-    getData();
+    widget.Category?getDataCategory():getData();
   }
 
   @override
@@ -93,7 +91,7 @@ class _FilterdialogState extends State<Filterdialog> {
                       ),
                       IconButton(
                           icon: Icon(Icons.close,
-                              size: 35, color: Color(0xff7B7B7B)),
+                              size: 30, color: Color(0xff7B7B7B)),
                           onPressed: () {
                             Navigator.pop(
                               context,
@@ -226,7 +224,41 @@ class _FilterdialogState extends State<Filterdialog> {
                         ),
                       ),
                     )
-                  :widget.Category?Container(): Container(
+                  :widget.Category?Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 8,
+                    top: 8,
+                    left: 24,
+                    right: 24,
+                  ),
+                  child:ExpandablePanel(
+                    header: Text(
+                      '${getTransrlate(context, 'category')}',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    expanded: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: categories == null
+                          ? Custom_Loading()
+                          : categories.isEmpty
+                          ? Container()
+                          : ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: categories.length,
+                          itemBuilder:
+                              (BuildContext context, int index) {
+                                return categories[index].level==0? itemCatgory(categories[index],themeColor):ExpansionCatgory(categories[index],themeColor);
+                          }),
+                    ),
+                  ),
+                ),
+              ): Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black12),
                       ),
@@ -303,7 +335,7 @@ class _FilterdialogState extends State<Filterdialog> {
                                                   .remove(manufacturer[index].id);
                                         }),
                                     Text(
-                                      manufacturer[index].manufacturerName,
+                                      "${manufacturer[index].manufacturerName}",
                                       softWrap: true,
                                     ),
                                   ],
@@ -354,7 +386,7 @@ class _FilterdialogState extends State<Filterdialog> {
                                                   .remove(origin[index].id);
                                         }),
                                     Text(
-                                      origin[index].countryName,
+                                      "${origin[index].countryName}",
                                       softWrap: true,
                                     ),
                                   ],
@@ -595,19 +627,64 @@ class _FilterdialogState extends State<Filterdialog> {
         });
       }
     }):null;
-    API(context).get('site/origins/list').then((value) {
+    // API(context).get('site/origins/list').then((value) {
+    //   if (value != null) {
+    //     setState(() {
+    //       origin = Origins.fromJson(value).data;
+    //       origin.forEach((element) {});
+    //     });
+    //   }
+    // });
+    // API(context).get('site/manufacturers/list').then((value) {
+    //   if (value != null) {
+    //     setState(() {
+    //       manufacturer = Manufacturers.fromJson(value).data;
+    //       manufacturer.forEach((element) {});
+    //     });
+    //   }
+    // });
+  }
+
+  void getDataCategory() {
+    partSelect = [];
+    originSelect = [];
+    manufacturerSelect = [];
+
+    widget.Istryers? API(context).get('part/category/attributes/${widget.Category_id}').then((value) {
+      print(value);
+
       if (value != null) {
         setState(() {
-          origin = Origins.fromJson(value).data;
-          origin.forEach((element) {});
+          if (value['data'] != null) {
+            width = value['data']['width'].cast<String>();
+            height = value['data']['height'].cast<String>();
+            size = value['data']['size'].cast<String>();
+          }
         });
       }
-    });
-    API(context).get('site/manufacturers/list').then((value) {
+    }):null;
+    API(context).get('category/filterations/${widget.Category_id}').then((value) {
       if (value != null) {
+        value=value['data'];
         setState(() {
-          manufacturer = Manufacturers.fromJson(value).data;
-          manufacturer.forEach((element) {});
+          if (value['categories'] != null) {
+            categories = new List<Categories_item>();
+            value['categories'].forEach((v) {
+              categories.add(new Categories_item.fromJson(v));
+            });
+          }
+          if (value['origins'] != null) {
+            origin = [];
+            value['origins'].forEach((v) {
+              origin.add(Origin.fromJson(v));
+            });
+          }
+          if (value['manufacturers'] != null) {
+            manufacturer = [];
+            value['manufacturers'].forEach((v) {
+              manufacturer.add(Manufacturer.fromJson(v));
+            });
+          }
         });
       }
     });

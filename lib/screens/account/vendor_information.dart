@@ -416,6 +416,9 @@ class _VendorInfoState extends State<VendorInfo> {
                                     fontSize: 14),
                               ),
                             ),
+                            SizedBox(
+                              height: 50,
+                            ),
                           ],
                         ),
                       ),

@@ -127,8 +127,25 @@ class _ProductPageState extends State<ProductPage> {
                                     ),
                                   ),
                                 )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Align(
+                            alignment: Alignment.topRight,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric( horizontal: 24.0),
+                              child: Text(
+                                '${widget.product.allcategory.map((e) => "${themeColor.getlocal()=='ar'? e.name:e.nameEn} >> ").toList().toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '').trim()} ${themeColor.getlocal()=='ar'? widget.product.name:widget.product.nameEN}',
+                                maxLines: 1,
+                                textDirection: TextDirection.ltr,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            )),
+
                         Padding(
-                          padding: const EdgeInsets.all(24.0),
+                          padding: const EdgeInsets.symmetric( vertical: 10.0),
                           child: Text(
                             "${themeColor.getlocal() == 'ar' ? widget.product.name ?? widget.product.nameEN : widget.product.nameEN ?? widget.product.name}",
                             style: TextStyle(fontSize: 22),
@@ -567,8 +584,9 @@ class _ProductPageState extends State<ProductPage> {
                                             name: widget.product.vendorSerial,
                                             id: widget.product.vendorId,
                                             Url:
-                                                'home/vendor/products/${widget.product.vendorId}?cartype_id=${themeColor.getcar_type()}&',
+                                                'ahmed/vendor/products/${widget.product.vendorId}?cartype_id=${themeColor.getcar_type()}&',
                                             Istryers: false,
+
                                           ));
                                     },
                                     child: Text(

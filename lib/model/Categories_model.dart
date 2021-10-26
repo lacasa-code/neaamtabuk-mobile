@@ -9,8 +9,8 @@ class Categories_model {
   Categories_model({this.statusCode, this.message, this.data, this.total});
 
   Categories_model.fromJson(Map<String, dynamic> json) {
-    statusCode = json['status_code'];
-    message = json['message'];
+   // statusCode = json['status_code'];
+    //message = json['message'];
     if (json['data'] != null) {
       data = new List<Categories_item>();
       json['data'].forEach((v) {
@@ -38,6 +38,7 @@ class Categories_item {
   String nameEn;
   int allcategoryId;
   int level;
+  int count_cats;
   String catName;
   List<Categories_item> categories;
   Photo photo;
@@ -59,6 +60,7 @@ class Categories_item {
     id = json['id'];
     name = json['name'];
     nameEn = json['name_en'];
+    count_cats = json['count_cats'];
     allcategoryId = json['allcategory_id'];
     level = json['level'];
     catName = json['catName'];
