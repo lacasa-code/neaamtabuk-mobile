@@ -412,7 +412,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                             Nav.routeReplacement(
                                 context,
                                 Products_Page(
-                                  Url: "display/search/results/mobile?"
+                                  Url: "ahmed/display/search/results?"
                                       "car_type_id=${cartype[widget.checkboxType].id}"
                                       "${carMadeID.text.isEmpty ? '' : '&car_made_id=${carMadeID.text}'}"
                                       "${CarmodelsID.text.isEmpty ? '' : '&car_model_id=${CarmodelsID.text}'}"

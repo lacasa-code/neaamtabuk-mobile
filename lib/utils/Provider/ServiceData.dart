@@ -27,7 +27,7 @@ class Provider_Data with ChangeNotifier {
   }
    getData(int cartypeId,BuildContext context) {
     API(context, Check: false)
-        .get('site/new/products?cartype_id=$cartypeId&per_page=6')
+        .get('ahmed/new/products?cartype_id=$cartypeId&per_page=6')
         .then((value) {
       if (value != null) {
           product = Product_model.fromJson(value).data;
@@ -42,13 +42,13 @@ class Provider_Data with ChangeNotifier {
       }
     });
     API(context)
-        .get('best/seller/products?cartype_id=$cartypeId&per_page=6')
+        .get('ahmed/best/seller/products?cartype_id=$cartypeId&per_page=6')
         .then((value) {
       if (value != null) {
           productMostSale = Product_model.fromJson(value).data;
       }
     });
-    API(context).get('ahmed/allcategories/navbars/$cartypeId').then((value) {
+    API(context).get('home/allcategories/navbars/$cartypeId').then((value) {
       if (value != null) {
           Mostcategories = Categories_model.fromJson(value).data;
       }

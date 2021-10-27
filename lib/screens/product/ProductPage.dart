@@ -130,19 +130,53 @@ class _ProductPageState extends State<ProductPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric( horizontal: 24.0),
-                              child: Text(
-                                '${widget.product.allcategory.map((e) => "${themeColor.getlocal()=='ar'? e.name:e.nameEn} >> ").toList().toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '').trim()} ${themeColor.getlocal()=='ar'? widget.product.name:widget.product.nameEN}',
-                                maxLines: 1,
-                                textDirection: TextDirection.ltr,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            )),
+                        Row(
+                          children: [
+                            Row(
+                              children: widget.product.allcategory.map((e) =>  InkWell(
+                                onTap: (){
+                                  Nav.route(
+                                      context,
+                                      Products_Page(
+                                        id: widget.product.id,
+                                        name: "${ themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
+                                        Url: 'ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}',
+                                        Istryers: e.id==1711||e.id==682,
+                                        Category: true,
+                                        Category_id: e.id,
+                                      ));
+                                },
+                                child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric( horizontal: 3.0),
+                                      child: Text(
+                                        "${themeColor.getlocal()=='ar'? e.name??e.nameEn:e.nameEn??e.name} >> ",
+                                        maxLines: 1,
+                                        textDirection: TextDirection.ltr,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black),
+                                      ),
+                                    )),
+                              )).toList(),
+                            ),
+                            Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric( horizontal: 1.0),
+                                  child: Text(
+                                    '${themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN:widget.product.nameEN??widget.product.name}',
+                                    maxLines: 1,
+                                    textDirection: TextDirection.ltr,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.orange),
+                                  ),
+                                )),
+
+                          ],
+                        ),
 
                         Padding(
                           padding: const EdgeInsets.symmetric( vertical: 10.0),
