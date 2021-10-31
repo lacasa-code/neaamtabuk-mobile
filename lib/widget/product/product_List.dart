@@ -117,41 +117,38 @@ class _ProductListState extends State<ProductList> {
                           SizedBox(
                             height: 5,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Container(
+                            width: ScreenUtil.getWidth(context) /2,
 
-                            children: [
-                              Container(
-                                width: ScreenUtil.getWidth(context) /3,
-
-                                child: AutoSizeText(
-                                  themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xFF5D6A78),
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                  minFontSize: 14,
-                                ),
+                            child: AutoSizeText(
+                              themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF5D6A78),
+                                fontWeight: FontWeight.w300,
                               ),
-                              widget.product.tyres_belong != 1?Container():   Container(
-                                width: ScreenUtil.getWidth(context) / 5.5,
-                                child: Text(
-                                  "${widget.product.width ?? ''}/ ${widget.product.height ?? ''}/ ${widget.product.size ?? ''}",
-                                  maxLines: 1,
-                                  textDirection: TextDirection.ltr,
-                                  style: TextStyle(
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 12
-                                  ),
-                                ),
-                              ),
-
-                            ],
+                              minFontSize: 14,
+                            ),
                           ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          widget.product.tyres_belong != 1?Container():   Container(
+                            width: ScreenUtil.getWidth(context) / 5.5,
+                            child: Text(
+                              "${widget.product.width ?? ''}/ ${widget.product.height ?? ''}/ ${widget.product.size ?? ''}",
+                              maxLines: 1,
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                  color: Colors.orange,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 12
+                              ),
+                            ),
+                          ),
+
                           SizedBox(
                             height: 5,
                           ),
@@ -218,7 +215,7 @@ class _ProductListState extends State<ProductList> {
                                   width: ScreenUtil.getWidth(context) /3,
                                   child: widget.product.discount == "0"
                                       ? AutoSizeText(
-                                          "${double.parse(widget.product.action_price).floorToDouble()} ${getTransrlate(context, 'Currency')} ",
+                                          "${widget.product.action_price.floorToDouble()} ${getTransrlate(context, 'Currency')} ",
                                           maxLines: 1,
                                           minFontSize: 14,
                                           maxFontSize: 16,
@@ -245,7 +242,7 @@ class _ProductListState extends State<ProductList> {
                                             width: ScreenUtil.getWidth(context) /6,
 
                                             child: Text(
-                                                "${double.parse(widget.product.action_price).floorToDouble()} ${getTransrlate(context, 'Currency')} ",
+                                                "${widget.product.action_price.floorToDouble()} ${getTransrlate(context, 'Currency')} ",
                                                 style: TextStyle(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w400,

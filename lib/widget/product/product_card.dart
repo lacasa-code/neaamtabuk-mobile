@@ -91,38 +91,48 @@ class _ProductCardState extends State<ProductCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                          children: [
-                            Container(
-                              width: ScreenUtil.getWidth(context) / 4.2,
-                              child: AutoSizeText(
-                                themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  color: Color(0xFF5D6A78),
-                                  fontWeight: FontWeight.w300,
-                                ),
-                                minFontSize: 13,
-                                maxFontSize: 16,
-                              ),
+                        Container(
+                       //   width: ScreenUtil.getWidth(context) / 4.2,
+                          child: AutoSizeText(
+                            themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN :widget.product.nameEN??widget.product.name,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: Color(0xFF5D6A78),
+                              fontWeight: FontWeight.w300,
                             ),
-                            widget.product.tyres_belong != 1?Container():   Container(
-                              width: ScreenUtil.getWidth(context) / 5.5,
-                              child: Text(
-                                "${widget.product.width ?? ''}/ ${widget.product.height ?? ''}/ ${widget.product.size ?? ''}",
-                                maxLines: 1,
-                                textDirection: TextDirection.ltr,
-                                style: TextStyle(
-                                    color: Colors.orange,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 12
-                                ),
-                              ),
-                            ),
-                          ],
+                            minFontSize: 13,
+                            maxFontSize: 16,
+                          ),
                         ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        widget.product.tyres_belong != 1?Container(
+                          width: ScreenUtil.getWidth(context) / 5.5,
+                          child: Text(
+                            "",
+                            maxLines: 1,
+                            textDirection: TextDirection.ltr,
+                            style: TextStyle(
+                                color: Colors.orange,
+                                fontWeight: FontWeight.w300,
+                                fontSize: 12
+                            ),
+                          ),
+                        ):   Container(
+                          width: ScreenUtil.getWidth(context) / 5.5,
+                          child: Text(
+                            "${widget.product.width ?? ''}/ ${widget.product.height ?? ''}/ ${widget.product.size ?? ''}",
+                            maxLines: 1,
+                            textDirection: TextDirection.ltr,
+                            style: TextStyle(
+                                color: Colors.orange,
+                                fontWeight: FontWeight.w300,
+                                fontSize: 12
+                            ),
+                          ),
+                        ),
+
                         SizedBox(
                           height: 5,
                         ),
@@ -148,10 +158,11 @@ class _ProductCardState extends State<ProductCard> {
                               ),
                             ),
                           Container(
-                            width: 50,
+                            width: ScreenUtil.getWidth(context) / 5.5,
                             child: AutoSizeText(
                               "${widget.product.action_price??0} ${getTransrlate(context, 'Currency')} ",
                               maxLines: 1,
+                              minFontSize: 10,
                               maxFontSize: 12,
                               style: TextStyle(
                                   color:Colors.black,

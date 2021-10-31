@@ -36,7 +36,7 @@ class Product {
   String description_en;
   String discount;
   String price;
-  String action_price;
+  double action_price;
   int quantity;
   String serialNumber;
 
@@ -100,7 +100,7 @@ class Product {
     description_en = json['description_en'];
     discount = json['discount'].toString();
     price = json['price'];
-    action_price = json['actual_price'].toString();
+    action_price = double.parse(json['actual_price']?.toString());
     quantity = json['quantity'];
     serialNumber = json['serial_number'];
     tyres_belong = json['tyres_belong'];

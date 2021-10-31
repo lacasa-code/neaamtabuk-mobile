@@ -104,7 +104,7 @@ class SearchOverlayState extends State<SearchOverlay>
                                   if (string.length >= 2) {
                                     API(context)
                                         .get(
-                                      'user/search/products?search_index=$search_index&cartype_id=${themeColor.car_type}',
+                                      'ahmed/search/products?search_index=$search_index&cartype_id=${themeColor.car_type}',
                                     )
                                         .then((value) {
                                       if (value != null) {

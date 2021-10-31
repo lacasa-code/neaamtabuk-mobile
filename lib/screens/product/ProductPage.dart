@@ -130,56 +130,55 @@ class _ProductPageState extends State<ProductPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        Row(
-                          children: [
-                            Row(
-                              children: widget.product.allcategory.map((e) =>  InkWell(
-                                onTap: (){
-                                  Nav.route(
-                                      context,
-                                      Products_Page(
-                                        id: widget.product.id,
-                                        name: "${ themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
-                                        Url: 'ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}',
-                                        Istryers: e.id==1711||e.id==682,
-                                        Category: true,
-                                        Category_id: e.id,
-                                      ));
-                                },
-                                child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric( horizontal: 3.0),
-                                      child: Text(
-                                        "${themeColor.getlocal()=='ar'? e.name??e.nameEn:e.nameEn??e.name} >> ",
-                                        maxLines: 1,
-                                        textDirection: TextDirection.ltr,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w300,
-                                            color: Colors.black),
-                                      ),
-                                    )),
-                              )).toList(),
-                            ),
-                            Align(
-                                alignment: Alignment.topRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric( horizontal: 1.0),
-                                  child: Text(
-                                    '${themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN:widget.product.nameEN??widget.product.name}',
-                                    maxLines: 1,
-                                    textDirection: TextDirection.ltr,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.orange),
-                                  ),
-                                )),
-
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric( horizontal: 2.0),
+                          child: Row(
+                            children: widget.product.allcategory.map((e) =>  InkWell(
+                              onTap: (){
+                                Nav.route(
+                                    context,
+                                    Products_Page(
+                                      id: widget.product.id,
+                                      name: "${ themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
+                                      Url: 'ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}',
+                                      Istryers: e.id==1711||e.id==682,
+                                      Category: true,
+                                      Category_id: e.id,
+                                    ));
+                              },
+                              child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric( horizontal: 1.0),
+                                    child: Text(
+                                      " ${themeColor.getlocal()=='ar'? e.name??e.nameEn:e.nameEn??e.name} >",
+                                      maxLines: 2,
+                                      textDirection: TextDirection.ltr,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black),
+                                    ),
+                                  )),
+                            )).toList(),
+                          ),
                         ),
+                        // Align(
+                        //     alignment: Alignment.topRight,
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric( horizontal: 1.0),
+                        //       child: Text(
+                        //         '${themeColor.getlocal()=='ar'? widget.product.name??widget.product.nameEN:widget.product.nameEN??widget.product.name}',
+                        //         maxLines: 1,
+                        //         textDirection: TextDirection.ltr,
+                        //         style: TextStyle(
+                        //             fontWeight: FontWeight.w300,
+                        //             color: Colors.orange),
+                        //       ),
+                        //     )),
 
                         Padding(
-                          padding: const EdgeInsets.symmetric( vertical: 10.0),
+                          padding: const EdgeInsets.symmetric( vertical: 10.0,horizontal:5.0),
                           child: Text(
                             "${themeColor.getlocal() == 'ar' ? widget.product.name ?? widget.product.nameEN : widget.product.nameEN ?? widget.product.name}",
                             style: TextStyle(fontSize: 22),
@@ -491,7 +490,7 @@ class _ProductPageState extends State<ProductPage> {
                                         widget.product.discount == "0"
                                             ? Container()
                                             : Text(
-                                                "${double.parse(widget.product.action_price).floorToDouble()} ${getTransrlate(context, 'Currency')} ",
+                                                "${widget.product.action_price.floorToDouble()} ${getTransrlate(context, 'Currency')} ",
                                                 style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
@@ -679,16 +678,12 @@ class _ProductPageState extends State<ProductPage> {
                                       alignment: Alignment.topRight,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              '${widget.product.carMadeName == null ? '' : themeColor.getlocal() == 'ar' ? widget.product.carMadeName.carMade ?? widget.product.carMadeName.name_en : widget.product.carMadeName.name_en ?? widget.product.carMadeName.carMade} , ${widget.product.carModelName == null ? '' : widget.product.carModelName.map((e) => "${themeColor.getlocal() == 'ar' ? e.carmodel ?? e.name_en : e.name_en ?? e.carmodel} ${widget.product.carModelName.last.id == e.id ? '' : '/'}").toList().toString().replaceAll('[', '').replaceAll(']', '')} ${widget.product.yearFrom == null ? '' : "( ${widget.product.yearFrom.year} - "}${widget.product.yearTo == null ? '' : "${widget.product.yearTo.year} ) "},${widget.product.transmissionName ?? ''}',
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black),
-                                            ),
-                                          ],
+                                        child: Text(
+                                          '${widget.product.carMadeName == null ? '' : themeColor.getlocal() == 'ar' ? widget.product.carMadeName.carMade ?? widget.product.carMadeName.name_en : widget.product.carMadeName.name_en ?? widget.product.carMadeName.carMade} , ${widget.product.carModelName == null ? '' : widget.product.carModelName.map((e) => "${themeColor.getlocal() == 'ar' ? e.carmodel ?? e.name_en : e.name_en ?? e.carmodel} ${widget.product.carModelName.last.id == e.id ? '' : '/'}").toList().toString().replaceAll('[', '').replaceAll(']', '')} ${widget.product.yearFrom == null ? '' : "( ${widget.product.yearFrom.year} - "}${widget.product.yearTo == null ? '' : "${widget.product.yearTo.year} ) "},${widget.product.transmissionName ?? ''}',
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
                                         ),
                                       )),
                                 ],
