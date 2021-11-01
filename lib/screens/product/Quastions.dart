@@ -73,7 +73,7 @@ class _QeastionsdialogState extends State<Qeastionsdialog> {
                                   height: 15,
                                 ),
                                 SvgPicture.asset(
-                                  "assets/icons/reload.svg",
+                                  "assets/icons/open-cardboard-box.svg",
                                   width: ScreenUtil.getWidth(context) / 3,
                                   color: Colors.black12,
                                 ),

@@ -212,7 +212,7 @@ class _ProductListState extends State<ProductList> {
                                 ],
                               )
                                   : Container(
-                                  width: ScreenUtil.getWidth(context) /3,
+                                  width: ScreenUtil.getWidth(context) /2.5,
                                   child: widget.product.discount == "0"
                                       ? AutoSizeText(
                                           "${widget.product.action_price.floorToDouble()} ${getTransrlate(context, 'Currency')} ",
@@ -227,24 +227,24 @@ class _ProductListState extends State<ProductList> {
                                       : Row(
                                         children: [
                                           Container(
-                                            width: ScreenUtil.getWidth(context) /6,
+                                            width: ScreenUtil.getWidth(context) /7,
 
                                             child: Text(
                                                 "${double.parse(widget.product.price).floorToDouble()}  ",
                                               style: TextStyle(
                                                 decoration:  TextDecoration.lineThrough,
-                                                fontSize: 11,
+                                                fontSize: 10,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.red,
                                                 ),
                                               ),
                                           ),  Container(
-                                            width: ScreenUtil.getWidth(context) /6,
+                                            width: ScreenUtil.getWidth(context) /5,
 
                                             child: Text(
                                                 "${widget.product.action_price.floorToDouble()} ${getTransrlate(context, 'Currency')} ",
                                                 style: TextStyle(
-                                                  fontSize: 13,
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                 ),
@@ -261,7 +261,8 @@ class _ProductListState extends State<ProductList> {
                                 CupertinoIcons.check_mark_circled,
                                 size: 28,
                                 color: Colors.black87,
-                              ):   loading?SizedBox(
+                              ):   loading?
+                              SizedBox(
                                 height: 20.0,
                                 width: 20.0,
                                 child: CircularProgressIndicator(  valueColor:

@@ -150,14 +150,22 @@ class _ProductPageState extends State<ProductPage> {
                                   alignment: Alignment.topRight,
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric( horizontal: 1.0),
-                                    child: Text(
-                                      " ${themeColor.getlocal()=='ar'? e.name??e.nameEn:e.nameEn??e.name} >",
-                                      maxLines: 2,
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.black),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "  ${themeColor.getlocal()=='ar'? e.name??e.nameEn:e.nameEn??e.name}",
+                                          maxLines: 2,
+                                          textDirection: TextDirection.ltr,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                              fontWeight: FontWeight.w300,
+                                              color: Colors.black),
+                                        ),
+                                        SizedBox(width: 10,),
+                                        widget.product.allcategory.last.id==e.id?Container():   Icon(Icons.arrow_forward_ios, size: 12,color: Colors.black45,),
+                                        SizedBox(width: 10,),
+
+                                      ],
                                     ),
                                   )),
                             )).toList(),
@@ -900,9 +908,11 @@ class _ProductPageState extends State<ProductPage> {
                                               icon: Text(
                                                   "${getTransrlate(context, 'questions')}")),
                                         ],
+
                                         indicatorColor: Colors.orange,
                                         unselectedLabelColor: Colors.grey,
                                         labelColor: Colors.orange,
+
                                       ),
                                     ),
                                     SizedBox(
@@ -1553,6 +1563,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   ],
                                                 ),
                                         ],
+
                                       ),
                                     ),
                                   ],

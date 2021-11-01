@@ -158,15 +158,15 @@ class _ProductCardState extends State<ProductCard> {
                               ),
                             ),
                           Container(
-                            width: ScreenUtil.getWidth(context) / 5.5,
-                            child: AutoSizeText(
+                            width: ScreenUtil.getWidth(context) / 5,
+                            child: Text(
                               "${widget.product.action_price??0} ${getTransrlate(context, 'Currency')} ",
                               maxLines: 1,
-                              minFontSize: 10,
-                              maxFontSize: 12,
+
                               style: TextStyle(
                                   color:Colors.black,
-                                  fontWeight: FontWeight.bold),
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w400),
                             ),
                           )
                           ],
@@ -215,7 +215,7 @@ class _ProductCardState extends State<ProductCard> {
                                            style: TextStyle(
                                              decoration: TextDecoration.lineThrough,
                                              fontSize: 12,
-                                             fontWeight: FontWeight.bold,
+                                             fontWeight: FontWeight.w400,
                                              color: Colors.red,
                                            ),
                                          ),

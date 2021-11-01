@@ -33,14 +33,7 @@ class Provider_Data with ChangeNotifier {
           product = Product_model.fromJson(value).data;
       }
     });
-    API(context)
-        .get('most/viewed/products?cartype_id=$cartypeId')
-        .then((value) {
-          print(value);
-      if (value != null) {
-          productMostView = ProductMostView.fromJson(value).data;
-      }
-    });
+
     API(context)
         .get('ahmed/best/seller/products?cartype_id=$cartypeId&per_page=6')
         .then((value) {
@@ -53,7 +46,7 @@ class Provider_Data with ChangeNotifier {
           Mostcategories = Categories_model.fromJson(value).data;
       }
     });
-    API(context).get('ahmed/allcategories').then((value) {
+    API(context).get('home/allcategories').then((value) {
       if (value != null) {
         categories = Categories_model.fromJson(value).data;
       }

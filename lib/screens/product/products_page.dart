@@ -54,6 +54,7 @@ class _Products_PageState extends State<Products_Page> {
   RangeValues _currentRangeValues;
   double min = 1, max = 10000;
   double filterPrice;
+  double minPrice;
   List<Origin> origin;
   List<Manufacturer> manufacturer;
   List<int> partSelect = [];
@@ -241,97 +242,94 @@ class _Products_PageState extends State<Products_Page> {
                                                                   child: Stack(
                                                                     children: [
                                                                       Positioned(
-                                                                        right:
-                                                                            1,
-                                                                        child:
-                                                                            Container(
-                                                                          width:
-                                                                              ScreenUtil.getWidth(context) / 2.5,
-                                                                          child:
-                                                                              Column(
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.all(8.0),
-                                                                                child: DropdownSearch<String>(
-                                                                                  label: " ${getTransrlate(context, 'width')} ",
-                                                                                  showSearchBox: true,
-                                                                                  selectedItem: widthID,
-                                                                                  showClearButton: false,
-                                                                                  mode: Mode.MENU,
+                                                                        right: 1,
+                                                                        child: Container(
+                                                                          width: ScreenUtil.getWidth(context) / 2.5,
+                                                                          child: Padding(
+                                                                            padding: const EdgeInsets.only(top: 20),
+                                                                            child: Column(
+                                                                              children: [
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.all(8.0),
+                                                                                  child: DropdownSearch<String>(
+                                                                                    label: " ${getTransrlate(context, 'width')} ",
+                                                                                    showSearchBox: true,
+                                                                                    selectedItem: widthID,
+                                                                                    showClearButton: false,
+                                                                                    mode: Mode.MENU,
 
-                                                                                  items: width,
-                                                                                  validator: (String item) {
-                                                                                    if (item == null) {
-                                                                                      return "${getTransrlate(context, 'width')}";
-                                                                                    } else
-                                                                                      return null;
-                                                                                  },
-                                                                                  onChanged: (String item) {
-                                                                                    widthID = item;
-                                                                                  },
-                                                                                  //  onFind: (String filter) => getData(filter),
+                                                                                    items: width,
+                                                                                    validator: (String item) {
+                                                                                      if (item == null) {
+                                                                                        return "${getTransrlate(context, 'width')}";
+                                                                                      } else
+                                                                                        return null;
+                                                                                    },
+                                                                                    onChanged: (String item) {
+                                                                                      widthID = item;
+                                                                                    },
+                                                                                    //  onFind: (String filter) => getData(filter),
+                                                                                  ),
                                                                                 ),
-                                                                              ),
-                                                                              SizedBox(
-                                                                                height: 10,
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.all(8.0),
-                                                                                child: DropdownSearch<String>(
-                                                                                  label: " ${getTransrlate(context, 'height')} ",
-                                                                                  showSearchBox: true,
-                                                                                  showClearButton: false,
-                                                                                  selectedItem: heightID,
-                                                                                  mode: Mode.MENU,
+                                                                                SizedBox(
+                                                                                  height: 10,
+                                                                                ),
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.all(8.0),
+                                                                                  child: DropdownSearch<String>(
+                                                                                    label: " ${getTransrlate(context, 'height')} ",
+                                                                                    showSearchBox: true,
+                                                                                    showClearButton: false,
+                                                                                    selectedItem: heightID,
+                                                                                    mode: Mode.MENU,
 
-                                                                                  items: height,
-                                                                                  validator: (String item) {
-                                                                                    if (item == null) {
-                                                                                      return "${getTransrlate(context, 'height')}";
-                                                                                    } else
-                                                                                      return null;
-                                                                                  },
-                                                                                  onChanged: (String item) {
-                                                                                    heightID = item;
-                                                                                  },
-                                                                                  //  onFind: (String filter) => getData(filter),
+                                                                                    items: height,
+                                                                                    validator: (String item) {
+                                                                                      if (item == null) {
+                                                                                        return "${getTransrlate(context, 'height')}";
+                                                                                      } else
+                                                                                        return null;
+                                                                                    },
+                                                                                    onChanged: (String item) {
+                                                                                      heightID = item;
+                                                                                    },
+                                                                                    //  onFind: (String filter) => getData(filter),
+                                                                                  ),
                                                                                 ),
-                                                                              ),
-                                                                              SizedBox(
-                                                                                height: 10,
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.all(8.0),
-                                                                                child: DropdownSearch<String>(
-                                                                                  label: " ${getTransrlate(context, 'size')} ",
-                                                                                  showSearchBox: true,
-                                                                                  showClearButton: false,
-                                                                                  selectedItem: sizeID,
-                                                                                  mode: Mode.MENU,
-                                                                                  items: size,
-                                                                                  validator: (String item) {
-                                                                                    if (item == null) {
-                                                                                      return "${getTransrlate(context, 'size')}";
-                                                                                    } else
-                                                                                      return null;
-                                                                                  },
-                                                                                  onChanged: (String item) {
-                                                                                    sizeID = item;
-                                                                                  },
-                                                                                  //  onFind: (String filter) => getData(filter),
+                                                                                SizedBox(
+                                                                                  height: 10,
                                                                                 ),
-                                                                              ),
-                                                                            ],
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.all(8.0),
+                                                                                  child: DropdownSearch<String>(
+                                                                                    label: " ${getTransrlate(context, 'size')} ",
+                                                                                    showSearchBox: true,
+                                                                                    showClearButton: false,
+                                                                                    selectedItem: sizeID,
+                                                                                    mode: Mode.MENU,
+                                                                                    items: size,
+                                                                                    validator: (String item) {
+                                                                                      if (item == null) {
+                                                                                        return "${getTransrlate(context, 'size')}";
+                                                                                      } else
+                                                                                        return null;
+                                                                                    },
+                                                                                    onChanged: (String item) {
+                                                                                      sizeID = item;
+                                                                                    },
+                                                                                    //  onFind: (String filter) => getData(filter),
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),
                                                                       Positioned(
                                                                         left: 1,
-                                                                        child: Image
-                                                                            .asset(
+                                                                        child: Image.asset(
                                                                           'assets/images/tire.png',
-                                                                          width:
-                                                                              ScreenUtil.getWidth(context) / 2.5,
+                                                                          width: ScreenUtil.getWidth(context) / 2.5,
                                                                         ),
                                                                       )
                                                                     ],
@@ -690,6 +688,20 @@ class _Products_PageState extends State<Products_Page> {
                                                                     keyboard_type: TextInputType.number,
                                                                     //enabled: false,
                                                                     intialLabel: min.roundToDouble().toString(),
+                                                                    validator: (String item) {
+                                                                      if (item != null) {
+                                                                        if (double.parse(item) < minPrice)
+                                                                        {
+                                                                          return "${getTransrlate(context, 'from')} < $minPrice";
+                                                                        } else if (double.parse(item) > filterPrice)
+                                                                        {
+                                                                          return "${getTransrlate(context, 'from')} > $filterPrice";
+                                                                        }
+                                                                      }else
+                                                                        _formKey.currentState.save();
+
+                                                                      return null;
+                                                                    },
                                                                     onChange: (v) {
                                                                       if (v != null) {
                                                                         if (v.isNotEmpty) {
@@ -1191,7 +1203,7 @@ class _Products_PageState extends State<Products_Page> {
                     current.action_price.compareTo(next.action_price));
                 print("min ${min} max ${max}");
                 max =filterPrice = product.last.action_price;
-                min = product.first.action_price;
+                min =minPrice= product.first.action_price;
                 _currentRangeValues = RangeValues(min, max);
               }
             }
@@ -1255,12 +1267,15 @@ class _Products_PageState extends State<Products_Page> {
         if (value['status_code'] == 200) {
           setState(() {
             product = Product_model.fromJson(value).data;
-            product?.sort((current, next) =>
-                current.action_price.compareTo(next.action_price));
-            max =filterPrice= product.last.action_price;
-            min = product.first.action_price;
+            if(product!=null){
+              if(product.isNotEmpty){
+                product?.sort((current, next) =>
+                    current.action_price.compareTo(next.action_price));
+                max =filterPrice= product.last.action_price;
+                min =minPrice= product.first.action_price;
+                _currentRangeValues = RangeValues(min, max);
+              }}
 
-            _currentRangeValues = RangeValues(min, max);
 
             if (value['cats_data'] != null) {
               categories = new List<Categories_item>();

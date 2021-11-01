@@ -127,7 +127,7 @@ class _RatedialogState extends State<Ratedialog> {
                                   MainAxisAlignment.center,
                                   children: [
                                     SvgPicture.asset(
-                                      "assets/icons/reload.svg",
+                                      "assets/icons/open-cardboard-box.svg",
                                       width:
                                       ScreenUtil.getWidth(context) /
                                           3,

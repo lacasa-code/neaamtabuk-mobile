@@ -467,45 +467,9 @@ class _HomeState extends State<Home> {
                                     title: getTransrlate(context, 'offers'),
                                     description: getTransrlate(context, 'showAll'),
                                     url:
-                                        'ahmed/new/products?cartype_id=${cartype[checkboxType].id}',
+                                        'ahmed/new/products?cartype_id=${cartype[checkboxType].id}&per_page=50',
                                   ),
                                   list_product(themeColor, provider_data.product),
-                                ],
-                              ),
-                    ads == null
-                        ? Container()
-                        : ListView.builder(
-                            primary: false,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: ads.middle.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Banner_item(item: ads.middle[index].photo.image),
-                              );
-                            },
-                          ),
-                    provider_data.productMostSale == null
-                        ? Container()
-                        : provider_data.productMostSale.isEmpty
-                            ? Container()
-                            :cartype==null
-                            ? Container()
-                            :cartype.isEmpty
-                            ? Container()
-                            : Column(
-                                children: [
-                                  ProductListTitleBar(
-                                    themeColor: themeColor,
-                                    title: getTransrlate(context, 'moresale'),
-                                    description: getTransrlate(context, 'showAll'),
-                                    url: 'ahmed/best/seller/products?cartype_id=${cartype[checkboxType].id}',
-                                  ),
-                                  list_product(themeColor,provider_data.productMostSale),
-                                  SizedBox(
-                                    height: 10,
-                                  )
                                 ],
                               ),
                     ads == null
@@ -523,6 +487,29 @@ class _HomeState extends State<Home> {
                         );
                       },
                     ),
+                    provider_data.productMostSale == null
+                        ? Container()
+                        : provider_data.productMostSale.isEmpty
+                            ? Container()
+                            :cartype==null
+                            ? Container()
+                            :cartype.isEmpty
+                            ? Container()
+                            : Column(
+                                children: [
+                                  ProductListTitleBar(
+                                    themeColor: themeColor,
+                                    title: getTransrlate(context, 'moresale'),
+                                    description: getTransrlate(context, 'showAll'),
+                                    url: 'ahmed/best/seller/products?cartype_id=${cartype[checkboxType].id}&per_page=50',
+                                  ),
+                                  list_product(themeColor,provider_data.productMostSale),
+                                  SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              ),
+
                     SizedBox(
                       height: 10,
                     )
