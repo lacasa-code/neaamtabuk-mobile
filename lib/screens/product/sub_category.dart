@@ -93,7 +93,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                                 id:e.id,
                                 name:
                                 "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
-                                Url: "ahmed/allcategories/products/${e.id}",
+                                Url: "ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}",
                                 Istryers: e.id==84,
                                 Category: true,
                                 Category_id: e.id,
@@ -141,7 +141,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                                       id:e.id,
                                       name:
                                       "${themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
-                                      Url: "ahmed/allcategories/products/${e.id}",
+                                      Url: "ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}",
                                       Istryers: e.id==84,
                                       Category: true,
                                       Category_id: e.id,

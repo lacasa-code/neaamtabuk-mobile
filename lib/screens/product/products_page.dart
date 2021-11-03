@@ -453,9 +453,13 @@ class _Products_PageState extends State<Products_Page> {
                                                                                             });
                                                                                             value ? partSelect.add(categories[index].id) : partSelect.remove(categories[index].id);
                                                                                           }),
-                                                                                      Text(
-                                                                                        "${themeColor.getlocal() == 'ar' ? categories[index].name ?? categories[index].name : categories[index].nameEn ?? categories[index].name} (${categories[index].count_cats})",
-                                                                                        softWrap: true,
+                                                                                      Container(
+                                                                                        width: ScreenUtil.getWidth(context)/1.5,
+                                                                                        child: Text(
+                                                                                          "${themeColor.getlocal() == 'ar' ? categories[index].name ?? categories[index].name : categories[index].nameEn ?? categories[index].name} (${categories[index].count_cats})",
+                                                                                          softWrap: true,
+                                                                                          maxLines: 2,
+                                                                                        ),
                                                                                       ),
                                                                                     ],
                                                                                   );
@@ -644,15 +648,8 @@ class _Products_PageState extends State<Products_Page> {
                                                                     divisions:
                                                                         10000,
                                                                     labels:
-                                                                        RangeLabels(
-                                                                      _currentRangeValues
-                                                                          .start
-                                                                          .round()
-                                                                          .toString(),
-                                                                      _currentRangeValues
-                                                                          .end
-                                                                          .round()
-                                                                          .toString(),
+                                                                        RangeLabels(_currentRangeValues.start.round().toString(),
+                                                                      _currentRangeValues.end.round().toString(),
                                                                     ),
                                                                     onChanged: (RangeValues values) {
                                                                       setState(() {
@@ -687,7 +684,7 @@ class _Products_PageState extends State<Products_Page> {
                                                                   child: MyTextFormField(
                                                                     keyboard_type: TextInputType.number,
                                                                     //enabled: false,
-                                                                    intialLabel: min.roundToDouble().toString(),
+                                                                    intialLabel: min.toString(),
                                                                     validator: (String item) {
                                                                       if (item != null) {
                                                                         if (double.parse(item) < minPrice)
@@ -727,7 +724,7 @@ class _Products_PageState extends State<Products_Page> {
                                                                   child:
                                                                       MyTextFormField(
                                                                     keyboard_type: TextInputType.number,
-                                                                    intialLabel: max.roundToDouble().toString(),
+                                                                    intialLabel: max.floor().toString(),
                                                                         validator: (String item) {
                                                                           if (item != null) {
                                                                             if (double.parse(item) > filterPrice)
@@ -822,8 +819,8 @@ class _Products_PageState extends State<Products_Page> {
                                                                   "${manufacturerSelect.isEmpty ? '' : "&manufacturers=${manufacturerSelect.toString()}"}"
                                                                   "${partSelect.isEmpty ? '' : "&categories=${partSelect.toString()}"}"
                                                                   "${originSelect.isEmpty ? '' : "&origins=${originSelect.toString()}"}"
-                                                                  "${_currentRangeValues.start.round().toString().isEmpty ? '' : "&start_price=${_currentRangeValues.start.round().toString()}"}"
-                                                                  "${_currentRangeValues.end.round().toString().isEmpty ? '' : "&end_price=${_currentRangeValues.end.round().toString()}"}";
+                                                                  "${_currentRangeValues.start.toString().isEmpty ? '' : "&start_price=${_currentRangeValues.start.floor().toString()}"}"
+                                                                  "${_currentRangeValues.end.toString().isEmpty ? '' : "&end_price=${_currentRangeValues.end.floor().toString()}"}";
                                                               print(Filtration);
                                                               Navigator.pop(
                                                                   context);
@@ -1087,14 +1084,23 @@ class _Products_PageState extends State<Products_Page> {
                             // }
                           });
                         },
-                        child: Row(
-                          children: [
-                            Text(' ${getTransrlate(context, 'filter')}'),
-                            Icon(
-                              Icons.keyboard_arrow_down,
-                              size: 30,
-                            )
-                          ],
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color:Colors.orangeAccent ,borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.orange)) ,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              children: [
+                                Text(' ${getTransrlate(context, 'filter')}',style: TextStyle(color: Colors.white),),
+                                Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 20,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                       InkWell(

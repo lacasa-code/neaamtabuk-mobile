@@ -215,7 +215,7 @@ class _ProductListState extends State<ProductList> {
                                   width: ScreenUtil.getWidth(context) /2.5,
                                   child: widget.product.discount == "0"
                                       ? AutoSizeText(
-                                          "${widget.product.action_price.floorToDouble()} ${getTransrlate(context, 'Currency')} ",
+                                          "${widget.product.action_price} ${getTransrlate(context, 'Currency')} ",
                                           maxLines: 1,
                                           minFontSize: 14,
                                           maxFontSize: 16,
@@ -242,7 +242,7 @@ class _ProductListState extends State<ProductList> {
                                             width: ScreenUtil.getWidth(context) /5,
 
                                             child: Text(
-                                                "${widget.product.action_price.floorToDouble()} ${getTransrlate(context, 'Currency')} ",
+                                                "${widget.product.action_price?.floor()} ${getTransrlate(context, 'Currency')} ",
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w400,

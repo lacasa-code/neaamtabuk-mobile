@@ -152,7 +152,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             "${themeColor.getlocal() == 'ar' ? e.name ??
                                 e.nameEn : e.nameEn ?? e.name}",
                             Url:
-                            "ahmed/allcategories/products/${e.id}",
+                            "ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}",
                             Istryers: e.id == 1711 || e.id == 682,
                             Category: true,
                             Category_id: e.id,
@@ -215,7 +215,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           .name ?? e.nameEn : e.nameEn ??
                                           e.name}",
                                       Url:
-                                      "ahmed/allcategories/products/${e.id}",
+                                      "ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}",
                                       Istryers: e.id == 84,
                                       Category: true,
                                       Category_id: e.id,
@@ -309,7 +309,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   categories_item.nameEn : categories_item.nameEn ??
                   categories_item.name}",
               Url:
-              "ahmed/allcategories/products/${categories_item.id}",
+              "ahmed/allcategories/products/${categories_item.id}?cartype_id=${themeColor.car_type}",
               Istryers: categories_item.id == 1711 || categories_item.id == 682,
               Category: true,
               Category_id: categories_item.id,
@@ -373,7 +373,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             .name ?? categories_item.nameEn : categories_item
                             .nameEn ?? categories_item.name}",
                         Url:
-                        "ahmed/allcategories/products/${categories_item.id}",
+                        "ahmed/allcategories/products/${categories_item.id}?cartype_id=${themeColor.car_type}",
                         Istryers: categories_item.id == 1711 ||
                             categories_item.id == 682,
                         Category: true,

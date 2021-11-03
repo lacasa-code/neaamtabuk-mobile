@@ -28,6 +28,7 @@ import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:share/share.dart';
 import 'package:flutter_pos/widget/slider/slider_dot.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -127,50 +128,132 @@ class _ProductPageState extends State<ProductPage> {
                                     ),
                                   ),
                                 )),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric( horizontal: 2.0),
-                          child: Row(
-                            children: widget.product.allcategory.map((e) =>  InkWell(
-                              onTap: (){
-                                Nav.route(
-                                    context,
-                                    Products_Page(
-                                      id: widget.product.id,
-                                      name: "${ themeColor.getlocal()=='ar'? e.name??e.nameEn :e.nameEn??e.name}",
-                                      Url: 'ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}',
-                                      Istryers: e.id==1711||e.id==682,
-                                      Category: true,
-                                      Category_id: e.id,
-                                    ));
-                              },
-                              child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric( horizontal: 1.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "  ${themeColor.getlocal()=='ar'? e.name??e.nameEn:e.nameEn??e.name}",
-                                          maxLines: 2,
-                                          textDirection: TextDirection.ltr,
-                                          style: TextStyle(
+                        ResponsiveGridList(
+                          maxItemsPerRow: 10,
+                        horizontalGridSpacing: 1, // Vertical space between grid items
+                        horizontalGridMargin: 10, // Horizontal space around the grid
+                        verticalGridMargin: 10,
+                       verticalGridSpacing: 10,
+                        minItemWidth: ScreenUtil.getWidth(context)/4, // The minimum item width (can be smaller, if the layout constraints are smaller)maxItemsPerRow, // The maximum items to show in a single row. Can be useful on large screens
+                        shrinkWrap: true, // shrinkWrap property of the ListView.builder()
+                          children: widget.product.allcategory
+                              .map((e) => InkWell(
+                            onTap: () {
+                              Nav.route(
+                                  context,
+                                  Products_Page(
+                                    id: widget.product.id,
+                                    name:
+                                    "${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
+                                    Url:
+                                    'ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}',
+                                    Istryers:
+                                    e.id == 1711 || e.id == 682,
+                                    Category: true,
+                                    Category_id: e.id,
+                                  ));
+                            },
+                            child: Align(
+                                alignment: Alignment.topRight,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: ScreenUtil.getWidth(context)/4.5,
+                                      child: Text(
+                                        "  ${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
+                                        maxLines: 2,
+                                        textDirection:
+                                        TextDirection.ltr,
+                                        style: TextStyle(
                                             fontSize: 12,
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.black),
-                                        ),
-                                        SizedBox(width: 10,),
-                                        widget.product.allcategory.last.id==e.id?Container():   Icon(Icons.arrow_forward_ios, size: 12,color: Colors.black45,),
-                                        SizedBox(width: 10,),
-
-                                      ],
+                                            fontWeight:
+                                            FontWeight.w300,
+                                            color: Colors.black),
+                                      ),
                                     ),
-                                  )),
-                            )).toList(),
-                          ),
+                                    SizedBox(
+                                      width: 1,
+                                    ),
+                                    widget.product.allcategory.last
+                                        .id ==
+                                        e.id
+                                        ? Container()
+                                        : Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 12,
+                                      color: Colors.black45,
+                                    ),
+                                    SizedBox(
+                                      width: 1,
+                                    ),
+                                  ],
+                                )),
+                          ))
+                              .toList(),
                         ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        //   child: Row(
+                        //     children: widget.product.allcategory
+                        //         .map((e) => InkWell(
+                        //               onTap: () {
+                        //                 Nav.route(
+                        //                     context,
+                        //                     Products_Page(
+                        //                       id: widget.product.id,
+                        //                       name:
+                        //                           "${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
+                        //                       Url:
+                        //                           'ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}',
+                        //                       Istryers:
+                        //                           e.id == 1711 || e.id == 682,
+                        //                       Category: true,
+                        //                       Category_id: e.id,
+                        //                     ));
+                        //               },
+                        //               child: Align(
+                        //                   alignment: Alignment.topRight,
+                        //                   child: Padding(
+                        //                     padding: const EdgeInsets.symmetric(
+                        //                         horizontal: 1.0),
+                        //                     child: Row(
+                        //                       children: [
+                        //                         Text(
+                        //                           "  ${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
+                        //                           maxLines: 2,
+                        //                           textDirection:
+                        //                               TextDirection.ltr,
+                        //                           style: TextStyle(
+                        //                               fontSize: 12,
+                        //                               fontWeight:
+                        //                                   FontWeight.w300,
+                        //                               color: Colors.black),
+                        //                         ),
+                        //                         SizedBox(
+                        //                           width: 10,
+                        //                         ),
+                        //                         widget.product.allcategory.last
+                        //                                     .id ==
+                        //                                 e.id
+                        //                             ? Container()
+                        //                             : Icon(
+                        //                                 Icons.arrow_forward_ios,
+                        //                                 size: 12,
+                        //                                 color: Colors.black45,
+                        //                               ),
+                        //                         SizedBox(
+                        //                           width: 10,
+                        //                         ),
+                        //                       ],
+                        //                     ),
+                        //                   )),
+                        //             ))
+                        //         .toList(),
+                        //   ),
+                        // ),
                         // Align(
                         //     alignment: Alignment.topRight,
                         //     child: Padding(
@@ -184,9 +267,9 @@ class _ProductPageState extends State<ProductPage> {
                         //             color: Colors.orange),
                         //       ),
                         //     )),
-
                         Padding(
-                          padding: const EdgeInsets.symmetric( vertical: 10.0,horizontal:5.0),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 5.0),
                           child: Text(
                             "${themeColor.getlocal() == 'ar' ? widget.product.name ?? widget.product.nameEN : widget.product.nameEN ?? widget.product.name}",
                             style: TextStyle(fontSize: 22),
@@ -419,7 +502,7 @@ class _ProductPageState extends State<ProductPage> {
                                         : Row(
                                             children: [
                                               Icon(
-                                                Icons.remove_circle_outline,
+                                                Icons.cancel_outlined,
                                                 size: 30,
                                                 color: Colors.red,
                                               ),
@@ -627,7 +710,6 @@ class _ProductPageState extends State<ProductPage> {
                                             Url:
                                                 'ahmed/vendor/products/${widget.product.vendorId}?cartype_id=${themeColor.getcar_type()}&',
                                             Istryers: false,
-
                                           ));
                                     },
                                     child: Text(
@@ -696,7 +778,6 @@ class _ProductPageState extends State<ProductPage> {
                                       )),
                                 ],
                               ),
-
                         // Align(
                         //     alignment: Alignment.topRight,
                         //     child: Padding(
@@ -908,11 +989,9 @@ class _ProductPageState extends State<ProductPage> {
                                               icon: Text(
                                                   "${getTransrlate(context, 'questions')}")),
                                         ],
-
                                         indicatorColor: Colors.orange,
                                         unselectedLabelColor: Colors.grey,
                                         labelColor: Colors.orange,
-
                                       ),
                                     ),
                                     SizedBox(
@@ -1563,7 +1642,6 @@ class _ProductPageState extends State<ProductPage> {
                                                   ],
                                                 ),
                                         ],
-
                                       ),
                                     ),
                                   ],

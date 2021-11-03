@@ -26,17 +26,15 @@ class _AppBarCustomState extends State<AppBarCustom> {
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
-
     return Container(
       height: ScreenUtil.getHeight(context) / 7,
-
       color: themeColor.getColor(),
       padding: const EdgeInsets.only(top: 35),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-         ! widget.isback?Container():IconButton(
+         !widget.isback?Container(): IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
@@ -46,7 +44,8 @@ class _AppBarCustomState extends State<AppBarCustom> {
             ),
             color: Color(0xffE4E4E4),
           ),
-         widget.title!=null? Container(
+          widget.title!=null?
+          Container(
            width: ScreenUtil.getWidth(context) / 4,
            child: AutoSizeText(
              '${widget.title}',
@@ -56,7 +55,7 @@ class _AppBarCustomState extends State<AppBarCustom> {
              overflow: TextOverflow.ellipsis,
              style: TextStyle(color: Colors.white),
            ),
-         ):Center(
+         ) :Center(
             child: InkWell(
               onTap: (){
                 Phoenix.rebirth(context);
@@ -85,7 +84,7 @@ class _AppBarCustomState extends State<AppBarCustom> {
                     width:5 ,
                   ),
                   Text(
-                    "${themeColor.getCar_made()}",
+                    "${themeColor.car_model.isEmpty?themeColor.getlocal() == 'ar' ?'إختر المركبة':'Select Car':themeColor.getCar_made()}",
                     style: TextStyle(color: Colors.white),
                   )
                 ],
