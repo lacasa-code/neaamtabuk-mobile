@@ -33,6 +33,8 @@ class VendorInfo extends StatefulWidget {
 class _VendorInfoState extends State<VendorInfo> {
   bool _status = true;
   bool _statusDocs = true;
+  bool _statusNext = true;
+  bool _statusSave = true;
   final FocusNode myFocusNode = FocusNode();
   bool _isLoading = false;
   bool loading = false;
@@ -69,7 +71,7 @@ class _VendorInfoState extends State<VendorInfo> {
   @override
   void initState() {
     getCountry();
-    API(context,Check: false).get('add-vendors/get/types').then((value) {
+    API(context, Check: false).get('add-vendors/get/types').then((value) {
       if (value != null) {
         if (value['status_code'] == 200) {
           setState(() {
@@ -118,7 +120,7 @@ class _VendorInfoState extends State<VendorInfo> {
         }
       });
     });
-    API(context,Check: false).post('vendor/reject/reasons', {}).then((value) {
+    API(context, Check: false).post('vendor/reject/reasons', {}).then((value) {
       if (value != null) {
         if (value['status_code'] == 200) {
           setState(() {
@@ -228,8 +230,7 @@ class _VendorInfoState extends State<VendorInfo> {
                             Container(
                               width: ScreenUtil.getWidth(context) / 1.2,
                               child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Column(
                                     crossAxisAlignment:
@@ -248,7 +249,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(height: 1,color: Colors.black12,),
+                                    child: Container(
+                                      height: 1,
+                                      color: Colors.black12,
+                                    ),
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -267,7 +271,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(height: 1,color: Colors.black12,),
+                                    child: Container(
+                                      height: 1,
+                                      color: Colors.black12,
+                                    ),
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -287,7 +294,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(height: 1,color: Colors.black12,),
+                                    child: Container(
+                                      height: 1,
+                                      color: Colors.black12,
+                                    ),
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -306,7 +316,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(height: 1,color: Colors.black12,),
+                                    child: Container(
+                                      height: 1,
+                                      color: Colors.black12,
+                                    ),
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -325,7 +338,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(height: 1,color: Colors.black12,),
+                                    child: Container(
+                                      height: 1,
+                                      color: Colors.black12,
+                                    ),
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -344,7 +360,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(height: 1,color: Colors.black12,),
+                                    child: Container(
+                                      height: 1,
+                                      color: Colors.black12,
+                                    ),
                                   ),
                                   Container(
                                     width: ScreenUtil.getWidth(context) / 1.2,
@@ -370,7 +389,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(height: 1,color: Colors.black12,),
+                                    child: Container(
+                                      height: 1,
+                                      color: Colors.black12,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -628,7 +650,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Icon(
-                                              Icons.pause_circle_outline,
+                                              Icons.info_outline,
                                               color: Colors.blue,
                                               size: 35,
                                             ),
@@ -645,7 +667,6 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     fontSize: 20),
                                               ),
                                             ),
-
                                           ],
                                         ),
                                         SizedBox(
@@ -656,7 +677,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                               1.2,
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Column(
                                                 crossAxisAlignment:
@@ -676,8 +697,12 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 ],
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(height: 1,color: Colors.black12,),
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 1,
+                                                  color: Colors.black12,
+                                                ),
                                               ),
                                               Column(
                                                 crossAxisAlignment:
@@ -697,8 +722,12 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 ],
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(height: 1,color: Colors.black12,),
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 1,
+                                                  color: Colors.black12,
+                                                ),
                                               ),
                                               userModal.userDetails.phoneNo ==
                                                       null
@@ -726,8 +755,12 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       ],
                                                     ),
                                               Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(height: 1,color: Colors.black12,),
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 1,
+                                                  color: Colors.black12,
+                                                ),
                                               ),
                                               Column(
                                                 crossAxisAlignment:
@@ -747,8 +780,12 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 ],
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(height: 1,color: Colors.black12,),
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 1,
+                                                  color: Colors.black12,
+                                                ),
                                               ),
                                               Column(
                                                 crossAxisAlignment:
@@ -768,8 +805,12 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 ],
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(height: 1,color: Colors.black12,),
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 1,
+                                                  color: Colors.black12,
+                                                ),
                                               ),
                                               Column(
                                                 crossAxisAlignment:
@@ -789,8 +830,12 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 ],
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Container(height: 1,color: Colors.black12,),
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 1,
+                                                  color: Colors.black12,
+                                                ),
                                               ),
                                               Container(
                                                 width: ScreenUtil.getWidth(
@@ -885,31 +930,42 @@ class _VendorInfoState extends State<VendorInfo> {
               ? Container()
               : Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                      primary: false,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: reasons.data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          children: [
-                            SvgPicture.asset(
-                              "assets/icons/Attention.svg",
-                              color: Colors.orange,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: ScreenUtil.getWidth(context) / 1.2,
-                              child: Text(
-                                '${reasons.data[index].field} : ${reasons.data[index].rejReason}',
-                                style: TextStyle(color: Colors.orange),
-                              ),
-                            ),
-                          ],
-                        );
-                      })),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: reasons.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/Attention.svg",
+                                  color: Colors.orange,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: ScreenUtil.getWidth(context) / 1.2,
+                                  child: Text(
+                                    '${reasons.data[index].field} ',
+                                    style: TextStyle(color: Colors.orange),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24,vertical: 10),
+                        child: Text('${reasons.data?.isNotEmpty?reasons.data.first.rejReason:''}',
+                          style: TextStyle(color: Colors.orange),
+                        ),
+                      )
+                    ],
+                  )),
       _isLoading
           ? Container(
               // height: double.infinity,
@@ -993,7 +1049,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                             ],
                                           ),
                                     MyTextFormField(
-                                      errorText: company_name,
+                                      errorText: company_name??'',
                                       intialLabel: userModal.companyName ?? '',
                                       keyboard_type: TextInputType.emailAddress,
                                       labelText:
@@ -1013,8 +1069,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                       },
                                     ),
                                     MyTextFormField(
-                                      errorText: commercialNo,
-
+                                      errorText: commercialNo??'',
                                       intialLabel: userModal.commercialNo,
                                       keyboard_type: TextInputType.emailAddress,
                                       labelText:
@@ -1034,7 +1089,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                       },
                                     ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 25,
                                     ),
                                     Center(
                                       child: Row(
@@ -1154,10 +1209,10 @@ class _VendorInfoState extends State<VendorInfo> {
                                             )),
                                           ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 25,
                                     ),
                                     MyTextFormField(
-                                      errorText: taxCardNo,
+                                      errorText: taxCardNo??'',
                                       intialLabel: userModal.taxCardNo,
                                       keyboard_type: TextInputType.emailAddress,
                                       labelText:
@@ -1177,7 +1232,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                       },
                                     ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 25,
                                     ),
                                     Center(
                                       child: Row(
@@ -1296,7 +1351,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                             )),
                                           ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 25,
                                     ),
                                     _value == 1
                                         ? Container()
@@ -1315,7 +1370,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                     color: Colors.black54),
                                               ),
                                               SizedBox(
-                                                height: 10,
+                                                height: 25,
                                               ),
                                               Center(
                                                 child: Row(
@@ -1415,49 +1470,52 @@ class _VendorInfoState extends State<VendorInfo> {
                                               userModal.wholesaleDocs == null
                                                   ? Container()
                                                   : InkWell(
-                                                onTap: () {
-                                                  _launchURL(userModal
-                                                      .wholesaleDocs.image);
-                                                },
-                                                child: Container(
-                                                    child: Row(
-                                                      children: [
-                                                        Container(
-                                                          width: ScreenUtil.getWidth(
-                                                              context) /
-                                                              2.5,
-                                                          child: Text(
-                                                            "${userModal.wholesaleDocs.name}",
-                                                            maxLines: 1,
-                                                            style: TextStyle(
-                                                                color: wholesaleDocss ??
-                                                                    Colors.black),
+                                                      onTap: () {
+                                                        _launchURL(userModal
+                                                            .wholesaleDocs
+                                                            .image);
+                                                      },
+                                                      child: Container(
+                                                          child: Row(
+                                                        children: [
+                                                          Container(
+                                                            width: ScreenUtil
+                                                                    .getWidth(
+                                                                        context) /
+                                                                2.5,
+                                                            child: Text(
+                                                              "${userModal.wholesaleDocs.name}",
+                                                              maxLines: 1,
+                                                              style: TextStyle(
+                                                                  color: wholesaleDocss ??
+                                                                      Colors
+                                                                          .black),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        IconButton(
-                                                          icon: Icon(
-                                                            CupertinoIcons
-                                                                .clear_circled,
-                                                            size: 20,
+                                                          IconButton(
+                                                            icon: Icon(
+                                                              CupertinoIcons
+                                                                  .clear_circled,
+                                                              size: 20,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                userModal
+                                                                        .wholesaleDocs =
+                                                                    null;
+                                                              });
+                                                            },
                                                           ),
-                                                          onPressed: () {
-                                                            setState(() {
-                                                              userModal.wholesaleDocs =
-                                                              null;
-                                                            });
-                                                          },
-                                                        ),
-                                                      ],
-                                                    )),
-                                              ),
+                                                        ],
+                                                      )),
+                                                    ),
                                             ],
                                           ),
-
                                     SizedBox(
-                                      height: 10,
+                                      height: 25,
                                     ),
                                     MyTextFormField(
-                                      errorText: bankAccount,
+                                      errorText: bankAccount??'',
                                       intialLabel: userModal.bankAccount,
                                       keyboard_type: TextInputType.text,
                                       labelText:
@@ -1477,7 +1535,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                       },
                                     ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 25,
                                     ),
                                     Center(
                                       child: Row(
@@ -1598,123 +1656,196 @@ class _VendorInfoState extends State<VendorInfo> {
                                       height: 30,
                                     ),
                                     Center(
-                                      child: loading?FlatButton(
-                                        minWidth: ScreenUtil.getWidth(context) / 2.5,
-                                        color: Colors.orange,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child:Container(
-                                            height: 30,
-                                            child: Center(
-                                                child: CircularProgressIndicator(
-                                                  valueColor:
-                                                  AlwaysStoppedAnimation<Color>( Colors.white),
-                                                )),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                        },
-                                      ): GestureDetector(
-                                        child: Container(
-                                          width: ScreenUtil.getWidth(context) /
-                                              1.4,
-                                          padding: const EdgeInsets.all(10.0),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.orange)),
-                                          child: Center(
-                                            child: AutoSizeText(
-                                              "${getTransrlate(context, 'continueLater')}",
-                                              overflow: TextOverflow.ellipsis,
-                                              maxFontSize: 14,
-                                              maxLines: 1,
-                                              minFontSize: 10,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.orange),
+                                      child: loading
+                                          ? FlatButton(
+                                              minWidth:
+                                                  ScreenUtil.getWidth(context) /
+                                                      2.5,
+                                              color: Colors.orange,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 30,
+                                                  child: Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                                Color>(
+                                                            Colors.white),
+                                                  )),
+                                                ),
+                                              ),
+                                              onPressed: () async {},
+                                            )
+                                          : Column(
+                                              children: [
+                                                GestureDetector(
+                                                  child: Container(
+                                                    width: ScreenUtil.getWidth(
+                                                            context) /
+                                                        1.4,
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10.0),
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color:
+                                                            !_statusSave ?Colors.grey:Colors.orange)),
+                                                    child: Center(
+                                                      child: AutoSizeText(
+                                                        "${getTransrlate(context, 'continueLater')}",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxFontSize: 14,
+                                                        maxLines: 1,
+                                                        minFontSize: 10,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: !_statusSave ?Colors.grey:Colors.orange),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onTap:!_statusSave?null: () {
+                                                    if (_formKey.currentState
+                                                        .validate()) {
+                                                      _formKey.currentState
+                                                          .save();
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (_) => Alerts(
+                                                            "${getTransrlate(context, 'loading')}"),
+                                                      );
+                                                      setState(
+                                                          () => loading = true);
+
+                                                      API(context)
+                                                          .postFile(
+                                                              'vendor/upload/docs',
+                                                              {
+                                                                "user_id": userModal
+                                                                        .useridId
+                                                                        .toString() ??
+                                                                    ' ',
+                                                                "vendor_id":
+                                                                    userModal.id
+                                                                            .toString() ??
+                                                                        ' ',
+                                                                "type": _value
+                                                                        .toString() ??
+                                                                    ' ',
+                                                                "company_name":
+                                                                    userModal
+                                                                            .companyName ??
+                                                                        ' ',
+                                                                "commercial_no":
+                                                                    userModal
+                                                                            .commercialNo ??
+                                                                        ' ',
+                                                                "tax_card_no":
+                                                                    userModal
+                                                                            .taxCardNo ??
+                                                                        ' ',
+                                                                "bank_account":
+                                                                    userModal
+                                                                            .bankAccount ??
+                                                                        ' ',
+                                                              },
+                                                              bankDocs:
+                                                                  bankDocs,
+                                                              commercialDocs:
+                                                                  commercialDocs,
+                                                              taxCardDocs:
+                                                                  taxCardDocs,
+                                                              wholesaleDocs:
+                                                                  wholesaleDocs)
+                                                          .then((value) {
+                                                        setState(() =>
+                                                            loading = false);
+
+                                                        if (value != null) {
+                                                          Navigator.of(context, rootNavigator: true).pop();
+
+                                                          if (value[
+                                                                  'status_code'] ==
+                                                              200) {
+                                                            // Navigator.pop(context);
+                                                            setState(() {
+                                                              userModal.competeStore == 1
+                                                                  ? Navigator.pop(context)
+                                                                  : _statusNext = !_statusNext;
+                                                              _statusSave = !_statusSave;
+                                                              //     userModal.competeStore == 1
+                                                                  // ? Navigator.pop(context)
+                                                                  // : userModal.competeDocs != 1
+                                                                  //     ? Navigator.pop(context)
+                                                                  //     : _statusDocs = !_statusDocs;
+                                                            });
+                                                            userModal.competeStore ==
+                                                                    1
+                                                                ? showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (_) =>
+                                                                        ResultOverlay(
+                                                                            value['message']))
+                                                                : null;
+                                                          } else {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder: (_) =>
+                                                                    ResultOverlay(
+                                                                        "${value['errors'] ?? value['message']}"));
+                                                          }
+                                                        }
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                                SizedBox(
+                                                  height: 25,
+                                                ),
+                                                userModal.competeStore == 1?Container():  GestureDetector(
+                                                  child: Container(
+                                                    width: ScreenUtil.getWidth(
+                                                            context) /
+                                                        1.4,
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10.0),
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: _statusNext ?Colors.grey:Colors.orange)),
+                                                    child: Center(
+                                                      child: AutoSizeText(
+                                                        "${getTransrlate(context, 'Next')}",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxFontSize: 14,
+                                                        maxLines: 1,
+                                                        minFontSize: 10,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                            _statusNext ?Colors.grey:Colors.orange
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onTap: _statusNext?null:() {
+                                                setState(() {
+
+                                                  _statusDocs = !_statusDocs;
+                                                });
+                                                  },
+
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            _formKey.currentState.save();
-
-                                            showDialog(
-                                              context: context,
-                                              builder: (_) => Alerts(
-                                                  "${getTransrlate(context, 'loading')}"),
-                                            );
-                                            setState(() => loading = true);
-
-                                            API(context)
-                                                .postFile(
-                                                    'vendor/upload/docs',
-                                                    {
-                                                      "user_id": userModal
-                                                              .useridId
-                                                              .toString() ??
-                                                          ' ',
-                                                      "vendor_id": userModal.id
-                                                              .toString() ??
-                                                          ' ',
-                                                      "type":
-                                                          _value.toString() ??
-                                                              ' ',
-                                                      "company_name": userModal
-                                                              .companyName ??
-                                                          ' ',
-                                                      "commercial_no": userModal
-                                                              .commercialNo ??
-                                                          ' ',
-                                                      "tax_card_no":
-                                                          userModal.taxCardNo ??
-                                                              ' ',
-                                                      "bank_account": userModal
-                                                              .bankAccount ??
-                                                          ' ',
-                                                    },
-                                                    bankDocs: bankDocs,
-                                                    commercialDocs:
-                                                        commercialDocs,
-                                                    taxCardDocs: taxCardDocs,
-                                                    wholesaleDocs:
-                                                        wholesaleDocs)
-                                                .then((value) {
-                                              setState(() => loading = false);
-
-                                              if (value != null) {
-                                                Navigator.of(context,rootNavigator:true).pop();
-
-                                                if (value['status_code'] ==
-                                                    200) {
-                                                  // Navigator.pop(context);
-                                                  setState(() {
-                                                    userModal.competeStore == 1
-                                                        ? Navigator.pop(context)
-                                                        :userModal.competeDocs!= 1
-                                                        ? Navigator.pop(context)
-                                                        : _statusDocs =
-                                                            !_statusDocs;
-                                                  });
-                                                  userModal.competeStore == 1
-                                                      ? showDialog(
-                                                          context: context,
-                                                          builder: (_) =>
-                                                              ResultOverlay(value[
-                                                                  'message']))
-                                                      : null;
-                                                } else {
-                                                  showDialog(
-                                                      context: context,
-                                                      builder: (_) => ResultOverlay(
-                                                          "${value['errors'] ?? value['message']}"));
-                                                }
-                                              }
-                                            });
-                                          }
-                                        },
-                                      ),
                                     ),
                                     SizedBox(
                                       height: 30,
@@ -1791,7 +1922,9 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       showSearchBox: true,
                                                       items: contries,
                                                       //  onFind: (String filter) => getData(filter),
-                                                      itemAsString: (Country u) => "${themeColor.getlocal()=='ar'? u.countryName??u.countryName_en:u.countryName_en??u.countryName}",
+                                                      itemAsString: (Country
+                                                              u) =>
+                                                          "${themeColor.getlocal() == 'ar' ? u.countryName ?? u.countryName_en : u.countryName_en ?? u.countryName}",
                                                       onChanged:
                                                           (Country data) {
                                                         country =
@@ -1837,7 +1970,8 @@ class _VendorInfoState extends State<VendorInfo> {
 
                                                       items: area,
                                                       //  onFind: (String filter) => getData(filter),
-                                                      itemAsString: (Area u) =>"${themeColor.getlocal()=='ar'? u.areaName??u.areaName_en:u.areaName_en??u.areaName}",
+                                                      itemAsString: (Area u) =>
+                                                          "${themeColor.getlocal() == 'ar' ? u.areaName ?? u.areaName_en : u.areaName_en ?? u.areaName}",
                                                       onChanged: (Area data) {
                                                         areas =
                                                             data.id.toString();
@@ -1878,7 +2012,8 @@ class _VendorInfoState extends State<VendorInfo> {
 
                                                       items: cities,
                                                       //  onFind: (String filter) => getData(filter),
-                                                      itemAsString: (City u) => "${themeColor.getlocal()=='ar'? u.cityName??u.cityName_en:u.cityName_en??u.cityName}",
+                                                      itemAsString: (City u) =>
+                                                          "${themeColor.getlocal() == 'ar' ? u.cityName ?? u.cityName_en : u.cityName_en ?? u.cityName}",
                                                       onChanged: (City data) {
                                                         city =
                                                             data.id.toString();
@@ -2009,7 +2144,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                       color: Colors.orange)),
                                               child: Center(
                                                 child: AutoSizeText(
-                                                  "${getTransrlate(context, 'SaveAddress')}",
+                                                  "${getTransrlate(context, 'send')}",
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxFontSize: 14,
@@ -2082,16 +2217,16 @@ class _VendorInfoState extends State<VendorInfo> {
       bankDocs = File(result.files.single.path);
       int sizeInBytes = bankDocs.lengthSync();
       double sizeInMb = sizeInBytes / (1024 * 1024);
-      if (sizeInMb < 1){
+      if (sizeInMb < 1) {
         setState(() {
           userModal.bankDocs =
               Images(image: bankDocs.path, name: bankDocs.path);
         });
-      }else{
+      } else {
         showDialog(
           context: context,
-          builder: (_) => ResultOverlay(
-              "${getTransrlate(context, 'AttachError')}"),
+          builder: (_) =>
+              ResultOverlay("${getTransrlate(context, 'AttachError')}"),
         );
       }
     } else {
@@ -2102,23 +2237,21 @@ class _VendorInfoState extends State<VendorInfo> {
   gettaxCardDocs() async {
     FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
-
       taxCardDocs = File(result.files.single.path);
       int sizeInBytes = taxCardDocs.lengthSync();
       double sizeInMb = sizeInBytes / (1024 * 1024);
-      if (sizeInMb < 1){
+      if (sizeInMb < 1) {
         setState(() {
           userModal.taxCardDocs =
               Images(image: taxCardDocs.path, name: taxCardDocs.path);
         });
-      }else{
+      } else {
         showDialog(
           context: context,
-          builder: (_) => ResultOverlay(
-              "${getTransrlate(context, 'AttachError')}"),
+          builder: (_) =>
+              ResultOverlay("${getTransrlate(context, 'AttachError')}"),
         );
       }
-
     } else {
       // User canceled the picker
     }
@@ -2130,16 +2263,16 @@ class _VendorInfoState extends State<VendorInfo> {
       commercialDocs = File(result.files.single.path);
       int sizeInBytes = commercialDocs.lengthSync();
       double sizeInMb = sizeInBytes / (1024 * 1024);
-      if (sizeInMb < 1){
+      if (sizeInMb < 1) {
         setState(() {
           userModal.commercialDocs =
               Images(image: commercialDocs.path, name: commercialDocs.path);
         });
-      }else{
+      } else {
         showDialog(
           context: context,
-          builder: (_) => ResultOverlay(
-              "${getTransrlate(context, 'AttachError')}"),
+          builder: (_) =>
+              ResultOverlay("${getTransrlate(context, 'AttachError')}"),
         );
       }
     } else {
@@ -2153,16 +2286,16 @@ class _VendorInfoState extends State<VendorInfo> {
       wholesaleDocs = File(result.files.single.path);
       int sizeInBytes = wholesaleDocs.lengthSync();
       double sizeInMb = sizeInBytes / (1024 * 1024);
-      if (sizeInMb < 1){
+      if (sizeInMb < 1) {
         setState(() {
           userModal.wholesaleDocs =
               Images(image: wholesaleDocs.path, name: wholesaleDocs.path);
         });
-      }else{
+      } else {
         showDialog(
           context: context,
-          builder: (_) => ResultOverlay(
-              "${getTransrlate(context, 'AttachError')}"),
+          builder: (_) =>
+              ResultOverlay("${getTransrlate(context, 'AttachError')}"),
         );
       }
     } else {
@@ -2188,7 +2321,7 @@ class _VendorInfoState extends State<VendorInfo> {
   }
 
   void getCountry() {
-    API(context,Check: false).get('countries/list/all').then((value) {
+    API(context, Check: false).get('countries/list/all').then((value) {
       setState(() {
         contries = Country_model.fromJson(value).data;
       });

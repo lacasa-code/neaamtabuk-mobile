@@ -131,10 +131,10 @@ class _ProductPageState extends State<ProductPage> {
                         ResponsiveGridList(
                           maxItemsPerRow: 10,
                         horizontalGridSpacing: 1, // Vertical space between grid items
-                        horizontalGridMargin: 10, // Horizontal space around the grid
+                        horizontalGridMargin: 5, // Horizontal space around the grid
                         verticalGridMargin: 10,
                        verticalGridSpacing: 10,
-                        minItemWidth: ScreenUtil.getWidth(context)/4, // The minimum item width (can be smaller, if the layout constraints are smaller)maxItemsPerRow, // The maximum items to show in a single row. Can be useful on large screens
+                        minItemWidth: ScreenUtil.getWidth(context)/3.5, // The minimum item width (can be smaller, if the layout constraints are smaller)maxItemsPerRow, // The maximum items to show in a single row. Can be useful on large screens
                         shrinkWrap: true, // shrinkWrap property of the ListView.builder()
                           children: widget.product.allcategory
                               .map((e) => InkWell(
@@ -158,10 +158,10 @@ class _ProductPageState extends State<ProductPage> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      width: ScreenUtil.getWidth(context)/4.5,
+                                      width: ScreenUtil.getWidth(context)/3.5,
                                       child: Text(
                                         "  ${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
-                                        maxLines: 2,
+                                        maxLines: 3,
                                         textDirection:
                                         TextDirection.ltr,
                                         style: TextStyle(

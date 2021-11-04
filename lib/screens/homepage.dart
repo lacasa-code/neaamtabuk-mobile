@@ -289,7 +289,7 @@ class _HomeState extends State<Home> {
                       MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.pause_circle_outline,
+                          Icons.info_outline,
                           color: Colors.blue,
                           size: 30,
                         ),

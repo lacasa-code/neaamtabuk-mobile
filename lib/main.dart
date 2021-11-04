@@ -19,7 +19,6 @@ Future<void> main() async {
     String local ;
     if (prefs.getString('local') != null) {
       local = prefs.getString('local');
-
     }
     await runApp(MultiProvider(providers: [
       ChangeNotifierProvider<Provider_control>(
