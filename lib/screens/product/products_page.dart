@@ -684,12 +684,12 @@ class _Products_PageState extends State<Products_Page> {
                                                                   child: MyTextFormField(
                                                                     keyboard_type: TextInputType.number,
                                                                     //enabled: false,
-                                                                    intialLabel: min.toString(),
+                                                                    intialLabel: min.floor().toString(),
                                                                     validator: (String item) {
                                                                       if (item != null) {
-                                                                        if (double.parse(item) < minPrice)
+                                                                        if (double.parse(item) < minPrice.floor())
                                                                         {
-                                                                          return "${getTransrlate(context, 'from')} < $minPrice";
+                                                                          return "${getTransrlate(context, 'from')} < ${minPrice.floor()}";
                                                                         } else if (double.parse(item) > filterPrice)
                                                                         {
                                                                           return "${getTransrlate(context, 'from')} > $filterPrice";
@@ -820,10 +820,9 @@ class _Products_PageState extends State<Products_Page> {
                                                                   "${partSelect.isEmpty ? '' : "&categories=${partSelect.toString()}"}"
                                                                   "${originSelect.isEmpty ? '' : "&origins=${originSelect.toString()}"}"
                                                                   "${_currentRangeValues.start.toString().isEmpty ? '' : "&start_price=${_currentRangeValues.start.floor().toString()}"}"
-                                                                  "${_currentRangeValues.end.toString().isEmpty ? '' : "&end_price=${_currentRangeValues.end.floor().toString()}"}";
+                                                                  "${_currentRangeValues.end.toString().isEmpty ? '' : "&end_price=${_currentRangeValues.end.round().toString()}"}";
                                                               print(Filtration);
-                                                              Navigator.pop(
-                                                                  context);
+                                                              Navigator.pop(context);
                                                             }
                                                           },
                                                           child: Container(

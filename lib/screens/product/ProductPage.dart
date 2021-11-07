@@ -133,6 +133,7 @@ class _ProductPageState extends State<ProductPage> {
                         horizontalGridSpacing: 1, // Vertical space between grid items
                         horizontalGridMargin: 5, // Horizontal space around the grid
                         verticalGridMargin: 10,
+                       rowMainAxisAlignment: MainAxisAlignment.center,
                        verticalGridSpacing: 10,
                         minItemWidth: ScreenUtil.getWidth(context)/3.5, // The minimum item width (can be smaller, if the layout constraints are smaller)maxItemsPerRow, // The maximum items to show in a single row. Can be useful on large screens
                         shrinkWrap: true, // shrinkWrap property of the ListView.builder()
