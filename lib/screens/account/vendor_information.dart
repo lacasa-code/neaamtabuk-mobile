@@ -1200,8 +1200,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   ),
                                                   onPressed: () {
                                                     setState(() {
-                                                      userModal.commercialDocs =
-                                                          null;
+                                                      userModal.commercialDocs = null;
+                                                      commercialDocs = null;
                                                     });
                                                   },
                                                 ),
@@ -1342,8 +1342,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                                   ),
                                                   onPressed: () {
                                                     setState(() {
-                                                      userModal.taxCardDocs =
-                                                          null;
+                                                      userModal.taxCardDocs = null;
+                                                      taxCardDocs = null;
                                                     });
                                                   },
                                                 ),
@@ -1500,9 +1500,8 @@ class _VendorInfoState extends State<VendorInfo> {
                                                             ),
                                                             onPressed: () {
                                                               setState(() {
-                                                                userModal
-                                                                        .wholesaleDocs =
-                                                                    null;
+                                                                userModal.wholesaleDocs = null;
+                                                                wholesaleDocs = null;
                                                               });
                                                             },
                                                           ),
@@ -1639,13 +1638,13 @@ class _VendorInfoState extends State<VendorInfo> {
                                                 ),
                                                 IconButton(
                                                   icon: Icon(
-                                                    CupertinoIcons
-                                                        .clear_circled,
+                                                    CupertinoIcons.clear_circled,
                                                     size: 20,
                                                   ),
                                                   onPressed: () {
                                                     setState(() {
                                                       userModal.bankDocs = null;
+                                                      bankDocs=null;
                                                     });
                                                   },
                                                 ),
@@ -1725,9 +1724,7 @@ class _VendorInfoState extends State<VendorInfo> {
                                                           .postFile(
                                                               'vendor/upload/docs',
                                                               {
-                                                                "user_id": userModal
-                                                                        .useridId
-                                                                        .toString() ??
+                                                                "user_id": userModal.useridId.toString() ??
                                                                     ' ',
                                                                 "vendor_id":
                                                                     userModal.id
