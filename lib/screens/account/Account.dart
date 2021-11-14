@@ -111,7 +111,7 @@ class _AccountState extends State<Account> {
                                   child: AutoSizeText(
                                     getTransrlate(context, 'login'),
                                     maxFontSize: 14,
-                                    minFontSize: 12,
+                                    minFontSize: 10,
                                     maxLines: 1,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _AccountState extends State<Account> {
                                     overflow: TextOverflow.ellipsis,
                                     maxFontSize: 14,
                                     maxLines: 1,
-                                    minFontSize: 12,
+                                    minFontSize: 10,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.orange),
@@ -462,7 +462,7 @@ class _AccountState extends State<Account> {
                                     child: AutoSizeText(
                                       getTransrlate(context, 'About'),
                                       maxLines: 1,
-                                      minFontSize: 12,
+                                      minFontSize: 10,
                                       style: TextStyle(color: Colors.black),
                                     )),
                                 TextButton(
@@ -473,7 +473,7 @@ class _AccountState extends State<Account> {
                                     child: AutoSizeText(
                                       getTransrlate(context, 'contact'),
                                       maxLines: 1,
-                                      minFontSize: 12,
+                                      minFontSize: 10,
                                       style: TextStyle(color: Colors.black),
                                     )),
                                 TextButton(
@@ -484,7 +484,7 @@ class _AccountState extends State<Account> {
                                     child: AutoSizeText(
                                       getTransrlate(context, 'FAQ'),
                                       maxLines: 1,
-                                      minFontSize: 12,
+                                      minFontSize: 10,
                                       style: TextStyle(color: Colors.black),
                                     )),
                               ],
@@ -508,7 +508,7 @@ class _AccountState extends State<Account> {
                                           getTransrlate(
                                               context, 'sellonTurkar'),
                                           maxLines: 1,
-                                          minFontSize: 12,
+                                          minFontSize: 11,
                                           style: TextStyle(color: Colors.black),
                                         ))),
                                 token != null
@@ -525,7 +525,7 @@ class _AccountState extends State<Account> {
                                               getTransrlate(
                                                   context, 'Registerseller'),
                                               maxLines: 1,
-                                              minFontSize: 12,
+                                              minFontSize: 10,
                                               style: TextStyle(
                                                   color: Colors.black),
                                             ))),
@@ -540,7 +540,7 @@ class _AccountState extends State<Account> {
                                           getTransrlate(
                                               context, 'HowtosellTurkar'),
                                           maxLines: 1,
-                                          minFontSize: 12,
+                                          minFontSize: 10,
                                           style: TextStyle(color: Colors.black),
                                         ))),
                               ],

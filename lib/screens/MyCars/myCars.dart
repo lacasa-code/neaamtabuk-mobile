@@ -13,6 +13,7 @@ import 'package:flutter_pos/model/transmission.dart';
 import 'package:flutter_pos/model/years.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
 import 'package:provider/provider.dart';
@@ -152,7 +153,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                               });
 
                                               themeColor.setCar_made(
-                                                  "${favourite[index].carModelName} - ${favourite[index].carYearIdName??''}");
+                                                  "${favourite[index].carModelName} - ${favourite[index].carYearIdName ?? ''}");
                                               Nav.route(
                                                   context,
                                                   Products_Page(
@@ -172,7 +173,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                                 widget.checkboxType = index;
                                               });
                                               themeColor.setCar_made(
-                                                  "${favourite[index].carModelName} - ${favourite[index].carYearIdName??''}");
+                                                  "${favourite[index].carModelName} - ${favourite[index].carYearIdName ?? ''}");
                                               Nav.route(
                                                   context,
                                                   Products_Page(
@@ -237,284 +238,288 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                               ),
                   )
                 : Notlogin(),
-            Column(
-              children: [
-                cartype == null
-                    ? Container()
-                    : GridView.builder(
-                        primary: false,
-                        padding: const EdgeInsets.only(right: 20, left: 20),
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 2.3,
-                          crossAxisCount: 2,
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  cartype == null
+                      ? Container()
+                      : GridView.builder(
+                          primary: false,
+                          padding: const EdgeInsets.only(right: 20, left: 20),
+                          shrinkWrap: true,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 2.3,
+                            crossAxisCount: 2,
+                          ),
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: cartype.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            bool selected = widget.checkboxType == index;
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  widget.checkboxType = index;
+                                  car_mades = null;
+                                  car_mades_id = null;
+                                  carmodels = null;
+                                  years = null;
+                                  transmissions = null;
+                                });
+                                getData(cartype[widget.checkboxType].id);
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(15.0),
+                                padding: const EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: selected
+                                            ? Colors.orange
+                                            : Colors.grey)),
+                                child: Center(
+                                    child: Text(
+                                  "${themeColor.getlocal() == 'ar' ? cartype[index].typeName : cartype[index].name_en}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 12),
+                                )),
+                              ),
+                            );
+                          },
                         ),
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: cartype.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          bool selected = widget.checkboxType == index;
-                          return InkWell(
-                            onTap: () {
-                              setState(() {
-                                widget.checkboxType = index;
-                                car_mades = null;
-                                car_mades_id = null;
-                                carmodels = null;
-                                years = null;
-                                transmissions = null;
-                              });
-                              getData(cartype[widget.checkboxType].id);
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(15.0),
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: selected
-                                          ? Colors.orange
-                                          : Colors.grey)),
-                              child: Center(
-                                  child: Text(
-                                "${themeColor.getlocal() == 'ar' ? cartype[index].typeName : cartype[index].name_en}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 12),
-                              )),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 24, left: 24),
+                    child: Form(
+                      key: _formKey,
+                      child:car_mades==null?Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Custom_Loading(),
+                      ): Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DropdownSearch<CarMade>(
+                              mode: Mode.DIALOG,
+                              showSearchBox: true,
+                              validator: (CarMade item) {
+                                if (item == null) {
+                                  return "${getTransrlate(context, 'requiredempty')}";
+                                } else
+                                  return null;
+                              },
+                              searchFieldProps: TextFieldProps(
+                                  decoration: InputDecoration(
+                                      suffixIcon: Icon(Icons.search))),
+                              showClearButton: true,
+                              label: "  ${getTransrlate(context, 'brand')}",
+                              items: car_mades,
+                              itemAsString: (CarMade u) =>
+                                  "  ${themeColor.getlocal() == 'ar' ? u.carMade ?? u.name_en : u.name_en ?? u.carMade}",
+                              onChanged: (CarMade data) {
+                                setState(() {
+                                  carmodels = null;
+                                  years = null;
+                                  transmissions = null;
+                                });
+                                getcarModels(data.id);
+                                car_mades_id = data.id;
+                                carMadeID.text = data.id.toString();
+                              },
                             ),
-                          );
-                        },
-                      ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 24, left: 24),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        car_mades == null
-                            ? Container()
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DropdownSearch<CarMade>(
-                                  mode: Mode.MENU,
-                                  showSearchBox: true,
-                                  validator: (CarMade item) {
-                                    if (item == null) {
-                                      return "${getTransrlate(context, 'requiredempty')}";
-                                    } else
-                                      return null;
-                                  },
-                                  showClearButton: true,
-                                  label: "  ${getTransrlate(context, 'brand')}",
-                                  items: car_mades,
-                                  itemAsString: (CarMade u) =>
-                                      "  ${themeColor.getlocal() == 'ar' ? u.carMade ?? u.name_en : u.name_en ?? u.carMade}",
-                                  onChanged: (CarMade data) {
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DropdownSearch<CarModel>(
+                                label: "  ${getTransrlate(context, 'Model')} ",
+                                showSearchBox: true,
+                                showClearButton: true,
+                                validator: (CarModel item) {
+                                  if (item == null) {
+                                    return "${getTransrlate(context, 'requiredempty')}";
+                                  } else
+                                    return null;
+                                },
+                                mode: Mode.DIALOG,
+                                enabled: carmodels != null,
+                                items: carmodels,
+                                //  onFind: (String filter) => getData(filter),
+                                itemAsString: (CarModel u) =>
+                                    "  ${themeColor.getlocal() == 'ar' ? u.carmodel ?? u.name_en : u.name_en ?? u.carmodel}",
+                                onChanged: (CarModel data) {
+                                  if (data == null) {
                                     setState(() {
-                                      carmodels = null;
                                       years = null;
                                       transmissions = null;
+
                                     });
-                                    getcarModels(data.id);
-                                    car_mades_id = data.id;
-                                    carMadeID.text = data.id.toString();
-                                  },
-                                ),
-                              ),
-                        carmodels == null
-                            ? Container()
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DropdownSearch<CarModel>(
-                                    label:
-                                        "  ${getTransrlate(context, 'Model')} ",
-                                    showSearchBox: true,
-                                    showClearButton: true,
-                                    validator: (CarModel item) {
-                                      if (item == null) {
-                                        return "${getTransrlate(context, 'requiredempty')}";
-                                      } else
-                                        return null;
-                                    },
-                                    mode: Mode.MENU,
-                                    enabled: carmodels != null,
-                                    items: carmodels,
-                                    //  onFind: (String filter) => getData(filter),
-                                    itemAsString: (CarModel u) =>
-                                        "  ${themeColor.getlocal() == 'ar' ? u.carmodel ?? u.name_en : u.name_en ?? u.carmodel}",
-                                    onChanged: (CarModel data) {
-                                      if(data==null){
-                                        setState(() {
-                                        years = null;
-                                        transmissions = null;
-                                      });}else{
-                                        CarmodelsID.text = data.id.toString();
-                                        getyearslist();
-                                      }
-                                    }),
-                              ),
-                        years == null
-                            ? Container()
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DropdownSearch<Year>(
-                                  enabled: CarmodelsID.text.isNotEmpty,
-                                  showSearchBox: true,
-                                  mode: Mode.MENU,
-                                  showClearButton: true,
-                                  label: "${getTransrlate(context, 'manufacturingYear')} ",
-                                  validator: (Year item) {
-                                    if (item == null) {
-                                      return "${getTransrlate(context, 'requiredempty')}";
-                                    } else
-                                      return null;
-                                  },
-                                  items: years,
-                                  //  onFind: (String filter) => getData(filter),
-                                  itemAsString: (Year u) => "  ${u.year}",
-                                  onChanged: (Year data) {
-                                    if(data==null){ setState(() {
-                                      transmissions = null;
-                                    });}else{
-                                      yearsID.text = data.id.toString();
-                                      gettransmissions();
-                                    }
-
-                                  },
-                                ),
-                              ),
-                        transmissions == null
-                            ? Container()
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DropdownSearch<Transmissions>(
-                                  showSearchBox: true,
-                                  showClearButton: true,
-                                  mode: Mode.MENU,
-                                  validator: (Transmissions item) {
-                                    if (item == null) {
-                                      return "${getTransrlate(context, 'requiredempty')}";
-                                    } else
-                                      return null;
-                                  },
-                                  enabled: yearsID.text.isNotEmpty,
-
-                                  label:
-                                      "  ${getTransrlate(context, 'transmissionName')}",
-                                  items: transmissions,
-                                  //  onFind: (String filter) => getData(filter),
-                                  itemAsString: (Transmissions u) =>
-                                      "  ${themeColor.getlocal() == 'ar' ? u.transmissionName ?? u.name_en : u.name_en ?? u.transmissionName}",
-                                  onChanged: (Transmissions data) =>
-                                      transimionsID.text = data.id.toString(),
-                                ),
-                              ),
-                        InkWell(
-                          onTap: () {
-                            Nav.routeReplacement(
-                                context,
-                                Products_Page(
-                                  Url: "ahmed/display/search/results?"
-                                      "car_type_id=${cartype[widget.checkboxType].id}"
-                                      "${carMadeID.text.isEmpty ? '' : '&car_made_id=${carMadeID.text}'}"
-                                      "${CarmodelsID.text.isEmpty ? '' : '&car_model_id=${CarmodelsID.text}'}"
-                                      "${yearsID.text.isEmpty ? '' : '&car_year_id=${yearsID.text}'}"
-                                      "${transimionsID.text.isEmpty ? '' : '&transmission_id=${transimionsID.text}'}",
-                                  Istryers: false,
-                                ));
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.all(8.0),
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.orange)),
-                            child: Center(
-                                child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.search,
-                                  color: Colors.orange,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '${getTransrlate(context, 'vehicleProducts')}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.orange),
-                                ),
-                              ],
-                            )),
+                                  } else {
+                                    CarmodelsID.text = data.id.toString();
+                                    getyearslist();
+                                  }
+                                }),
                           ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
-                              car_mades_id == null
-                                  ? showDialog(
-                                      context: context,
-                                      builder: (_) => ResultOverlay(
-                                          'Please select Car Made'))
-                                  : API(context).post(
-                                      'user/select/products/add/favourite/car',
-                                      {
-                                          "car_type_id":
-                                              cartype[widget.checkboxType].id,
-                                          "car_made_id": car_mades_id,
-                                          "car_year_id": yearsID.text,
-                                          "car_model_id": CarmodelsID.text,
-                                          "transmission_id": transimionsID.text,
-                                        }).then((value) {
-                                      if (value != null) {
-                                        if (value['status_code'] == 200) {
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) => ResultOverlay(
-                                                  value['message']));
-                                          _controller.index = 0;
-                                          getFavorit();
-                                        } else {
-                                          _controller.index = 0;
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) => ResultOverlay(
-                                                  value['message']));
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DropdownSearch<Year>(
+                              enabled: CarmodelsID.text.isNotEmpty,
+                              showSearchBox: true,
+                              mode: Mode.DIALOG,
+                              showClearButton: true,
+                              label:
+                                  "${getTransrlate(context, 'manufacturingYear')} ",
+                              validator: (Year item) {
+                                if (item == null) {
+                                  return "${getTransrlate(context, 'requiredempty')}";
+                                } else
+                                  return null;
+                              },
+                              items: years,
+                              //  onFind: (String filter) => getData(filter),
+                              itemAsString: (Year u) => "  ${u.year}",
+                              onChanged: (Year data) {
+                                if (data == null) {
+                                  setState(() {
+                                    transmissions = null;
+                                  });
+                                } else {
+                                  yearsID.text = data.id.toString();
+                                  gettransmissions();
+                                }
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DropdownSearch<Transmissions>(
+                              showSearchBox: true,
+                              showClearButton: true,
+                              mode: Mode.DIALOG,
+                              validator: (Transmissions item) {
+                                if (item == null) {
+                                  return "${getTransrlate(context, 'requiredempty')}";
+                                } else
+                                  return null;
+                              },
+                              enabled: yearsID.text.isNotEmpty,
+
+                              label:
+                                  "  ${getTransrlate(context, 'transmissionName')}",
+                              items: transmissions,
+                              //  onFind: (String filter) => getData(filter),
+                              itemAsString: (Transmissions u) =>
+                                  "  ${themeColor.getlocal() == 'ar' ? u.transmissionName ?? u.name_en : u.name_en ?? u.transmissionName}",
+                              onChanged: (Transmissions data) {
+                                transimionsID.text = data.id.toString();
+                              }
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Nav.routeReplacement(
+                                  context,
+                                  Products_Page(
+                                    Url: "ahmed/display/search/results?"
+                                        "car_type_id=${cartype[widget.checkboxType].id}"
+                                        "${carMadeID.text.isEmpty ? '' : '&car_made_id=${carMadeID.text}'}"
+                                        "${CarmodelsID.text.isEmpty ? '' : '&car_model_id=${CarmodelsID.text}'}"
+                                        "${yearsID.text.isEmpty ? '' : '&car_year_id=${yearsID.text}'}"
+                                        "${transimionsID.text.isEmpty ? '' : '&transmission_id=${transimionsID.text}'}",
+                                    Istryers: false,
+                                  ));
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.orange)),
+                              child: Center(
+                                  child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.search,
+                                    color: Colors.orange,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    '${getTransrlate(context, 'vehicleProducts')}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.orange),
+                                  ),
+                                ],
+                              )),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              if (_formKey.currentState.validate()) {
+                                _formKey.currentState.save();
+                                car_mades_id == null
+                                    ? showDialog(
+                                        context: context,
+                                        builder: (_) => ResultOverlay(
+                                            'Please select Car Made'))
+                                    : API(context).post(
+                                        'user/select/products/add/favourite/car',
+                                        {
+                                            "car_type_id":
+                                                cartype[widget.checkboxType].id,
+                                            "car_made_id": car_mades_id,
+                                            "car_year_id": yearsID.text,
+                                            "car_model_id": CarmodelsID.text,
+                                            "transmission_id": transimionsID.text,
+                                          }).then((value) {
+                                        if (value != null) {
+                                          if (value['status_code'] == 200) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) => ResultOverlay(
+                                                    value['message']));
+                                            _controller.index = 0;
+                                            getFavorit();
+                                          } else {
+                                            _controller.index = 0;
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) => ResultOverlay(
+                                                    value['message']));
+                                          }
                                         }
-                                      }
-                                    });
-                            }
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.all(8.0),
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.orange)),
-                            child: Center(
-                                child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.add,
-                                  color: Colors.orange,
-                                ),
-                                Text(
-                                  '${getTransrlate(context, 'AddtoMyCars')}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.orange),
-                                ),
-                              ],
-                            )),
-                          ),
-                        )
-                      ],
+                                      });
+                              }
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.orange)),
+                              child: Center(
+                                  child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    color: Colors.orange,
+                                  ),
+                                  Text(
+                                    '${getTransrlate(context, 'AddtoMyCars')}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.orange),
+                                  ),
+                                ],
+                              )),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

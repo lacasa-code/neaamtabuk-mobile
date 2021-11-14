@@ -111,7 +111,6 @@ class _HomeState extends State<Home> {
         getData(1);
       }
     });
-
     SharedPreferences.getInstance().then((value) {
       complete = value.getInt('complete');
     });
@@ -316,6 +315,21 @@ class _HomeState extends State<Home> {
                 controller: _scrollController,
                 child: Column(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        "منتجات خاصة بـ ",
+                        maxLines: 3,
+                        textAlign: TextAlign.center,
+                        textDirection:
+                        TextDirection.ltr,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight:
+                            FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                    ),
                     cartype == null
                         ? Container()
                         : ResponsiveGridList(
@@ -333,6 +347,7 @@ class _HomeState extends State<Home> {
                                    provider_data.product = null;
                                    provider_data.productMostView = null;
                                    provider_data.productMostSale = null;
+                                   provider_data.Mostcategories = null;
                                  });
                                  themeColor.setCar_type(e.id);
                                  themeColor.setCar_index(cartype.indexOf(e));
@@ -405,7 +420,10 @@ class _HomeState extends State<Home> {
                             })
                                 .toList()),
                     provider_data.Mostcategories == null
-                        ? Container()
+                        ?  Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Custom_Loading(),
+                    )
                         : Container(child: list_category_navbar(themeColor)),
                     ads == null
                         ? Container()
@@ -444,7 +462,8 @@ class _HomeState extends State<Home> {
                     ),
                     ads == null
                         ? Container()
-                        : SliderDotAds(_carouselCurrentPage, ads.carousel),
+                        : SliderDotAds(
+                        _carouselCurrentPage, ads.carousel),
                     SizedBox(
                       height: 20,
                     ),
@@ -509,7 +528,6 @@ class _HomeState extends State<Home> {
                                   )
                                 ],
                               ),
-
                     SizedBox(
                       height: 10,
                     )

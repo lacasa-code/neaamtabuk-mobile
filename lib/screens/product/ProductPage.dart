@@ -163,10 +163,11 @@ class _ProductPageState extends State<ProductPage> {
                                       child: Text(
                                         "  ${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
                                         maxLines: 3,
+                                        textAlign: TextAlign.center,
                                         textDirection:
                                         TextDirection.ltr,
                                         style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 11,
                                             fontWeight:
                                             FontWeight.w300,
                                             color: Colors.black),
@@ -411,7 +412,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   ? Icons.favorite_border
                                                   : Icons.favorite,
                                               size: 25,
-                                              color: Colors.grey),
+                                              color: Colors.orange),
                                           SizedBox(
                                             width: 5,
                                           ),
@@ -425,7 +426,7 @@ class _ProductPageState extends State<ProductPage> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 14,
-                                                  color: Colors.grey),
+                                                  color: Colors.orange),
                                             ),
                                           ),
                                         ],
@@ -440,7 +441,7 @@ class _ProductPageState extends State<ProductPage> {
                                 child: Row(
                                   children: [
                                     Icon(Icons.share_outlined,
-                                        size: 20, color: Colors.grey),
+                                        size: 20, color: Colors.orange),
                                     SizedBox(
                                       width: 5,
                                     ),
@@ -450,7 +451,7 @@ class _ProductPageState extends State<ProductPage> {
                                         getTransrlate(context, 'share'),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.grey),
+                                            color: Colors.orange),
                                       ),
                                     ),
                                   ],
@@ -479,43 +480,22 @@ class _ProductPageState extends State<ProductPage> {
                                         ],
                                       )
                                     : widget.product.quantity >= 1
-                                        ? Row(
-                                            children: [
-                                              Icon(
-                                                Icons
-                                                    .check_circle_outline_sharp,
-                                                size: 25,
-                                                color: Colors.lightGreen,
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                getTransrlate(
-                                                    context, 'available'),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.lightGreen,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        : Row(
-                                            children: [
-                                              Icon(
-                                                Icons.cancel_outlined,
-                                                size: 30,
-                                                color: Colors.red,
-                                              ),
-                                              Text(
-                                                '${getTransrlate(context, 'available')}',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                            ],
+                                        ? Text(
+                                          getTransrlate(
+                                              context, 'available'),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.lightGreen,
                                           ),
+                                        )
+                                        : Text(
+                                          '${getTransrlate(context, 'available')}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                          ),
+                                        ),
                               )
                             ],
                           ),
