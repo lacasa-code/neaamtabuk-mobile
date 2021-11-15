@@ -468,10 +468,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                     ),
               provider_data.productMostView == null
-                        ? Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Custom_Loading(),
-                    )
+                        ?Container()
                         : Container(child: list_category(themeColor)),
                     provider_data.product == null
                         ? Container()
