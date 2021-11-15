@@ -297,7 +297,7 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: DropdownSearch<CarMade>(
-                              mode: Mode.DIALOG,
+                              mode: Mode.MENU,
                               showSearchBox: true,
                               validator: (CarMade item) {
                                 if (item == null) {
@@ -337,9 +337,12 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                                   } else
                                     return null;
                                 },
-                                mode: Mode.DIALOG,
+                                mode: Mode.MENU,
                                 enabled: carmodels != null,
                                 items: carmodels,
+                                searchFieldProps: TextFieldProps(
+                                    decoration: InputDecoration(
+                                        suffixIcon: Icon(Icons.search))),
                                 //  onFind: (String filter) => getData(filter),
                                 itemAsString: (CarModel u) =>
                                     "  ${themeColor.getlocal() == 'ar' ? u.carmodel ?? u.name_en : u.name_en ?? u.carmodel}",
@@ -361,7 +364,10 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                             child: DropdownSearch<Year>(
                               enabled: CarmodelsID.text.isNotEmpty,
                               showSearchBox: true,
-                              mode: Mode.DIALOG,
+                              mode: Mode.MENU,
+                              searchFieldProps: TextFieldProps(
+                                  decoration: InputDecoration(
+                                      suffixIcon: Icon(Icons.search))),
                               showClearButton: true,
                               label:
                                   "${getTransrlate(context, 'manufacturingYear')} ",
@@ -387,11 +393,15 @@ class _MyCarsState extends State<MyCars> with SingleTickerProviderStateMixin {
                             ),
                           ),
                           Padding(
+
                             padding: const EdgeInsets.all(8.0),
                             child: DropdownSearch<Transmissions>(
                               showSearchBox: true,
                               showClearButton: true,
-                              mode: Mode.DIALOG,
+                              mode: Mode.MENU,
+                                searchFieldProps: TextFieldProps(
+                                    decoration: InputDecoration(
+                                        suffixIcon: Icon(Icons.search))),
                               validator: (Transmissions item) {
                                 if (item == null) {
                                   return "${getTransrlate(context, 'requiredempty')}";

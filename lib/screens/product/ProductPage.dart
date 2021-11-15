@@ -149,9 +149,7 @@ class _ProductPageState extends State<ProductPage> {
                                     Url:
                                     'ahmed/allcategories/products/${e.id}?cartype_id=${themeColor.car_type}',
                                     Istryers:
-                                    e.id == 1711 || e.id == 682,
-                                    Category: true,
-                                    Category_id: e.id,
+                                    e.id == 1711 || e.id == 682, Category: true, Category_id: e.id,
                                   ));
                             },
                             child: Align(
@@ -159,7 +157,7 @@ class _ProductPageState extends State<ProductPage> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      width: ScreenUtil.getWidth(context)/3.5,
+                                    //  width: ScreenUtil.getWidth(context)/3.5,
                                       child: Text(
                                         "  ${themeColor.getlocal() == 'ar' ? e.name ?? e.nameEn : e.nameEn ?? e.name}",
                                         maxLines: 3,
@@ -460,25 +458,15 @@ class _ProductPageState extends State<ProductPage> {
                               Container(
                                 width: ScreenUtil.getWidth(context) / 4,
                                 child: widget.product.producttypeId == 2
-                                    ? Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check_circle_outline_sharp,
-                                            size: 25,
-                                            color: Colors.lightGreen,
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            getTransrlate(context, 'available'),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.lightGreen,
-                                            ),
-                                          ),
-                                        ],
-                                      )
+                                    ? Text(
+                                      getTransrlate(context, 'available'),
+                                  textAlign: TextAlign.center,
+
+                                  style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.lightGreen,
+                                      ),
+                                    )
                                     : widget.product.quantity >= 1
                                         ? Text(
                                           getTransrlate(
@@ -490,7 +478,7 @@ class _ProductPageState extends State<ProductPage> {
                                           ),
                                         )
                                         : Text(
-                                          '${getTransrlate(context, 'available')}',
+                                          '${getTransrlate(context, 'notavailable')}',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.red,
@@ -883,7 +871,6 @@ class _ProductPageState extends State<ProductPage> {
                             height: 1,
                           ),
                         ),
-
                         Align(
                             alignment: Alignment.topRight,
                             child: Padding(
@@ -948,7 +935,6 @@ class _ProductPageState extends State<ProductPage> {
                             height: 1,
                           ),
                         ),
-
                         reviews == null
                             ? Custom_Loading()
                             : DefaultTabController(

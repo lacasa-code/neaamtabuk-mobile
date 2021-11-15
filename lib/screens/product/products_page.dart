@@ -67,13 +67,16 @@ class _Products_PageState extends State<Products_Page> {
   String widthID;
   String heightID;
   String sizeID;
-  ExpandableController tayrsController=ExpandableController(initialExpanded:true );
+  ExpandableController tayrsController =
+      ExpandableController(initialExpanded: true);
+
   @override
   void initState() {
     url = widget.Url;
     _currentRangeValues = RangeValues(min, max);
     widget.Category ? getDataCategory() : getData();
   }
+
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<Provider_Data>(context);
@@ -200,297 +203,296 @@ class _Products_PageState extends State<Products_Page> {
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  height:ScreenUtil.getHeight(context)/1.4,
+                                                  height: ScreenUtil.getHeight(
+                                                          context) /
+                                                      1.4,
                                                   child: SingleChildScrollView(
                                                     child: Column(
                                                       children: [
                                                         widget.Istryers
                                                             ? Container(
-                                                          decoration:
-                                                          BoxDecoration(
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .black12),
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                              bottom: 8,
-                                                              top: 8,
-                                                              left: 24,
-                                                              right: 24,
-                                                            ),
-                                                            child:
-                                                            ExpandablePanel(
-                                                              controller: tayrsController,
-                                                              header: Text(
-                                                                '${getTransrlate(context, 'frameDimensions')}',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                              ),
-                                                              expanded: Padding(
-                                                                padding:
-                                                                const EdgeInsets
-                                                                    .all(
-                                                                    8.0),
-                                                                child:
-                                                                Container(
-                                                                  height: ScreenUtil
-                                                                      .getHeight(
-                                                                      context) /
-                                                                      3,
-                                                                  width: ScreenUtil
-                                                                      .getWidth(
-                                                                      context),
-                                                                  child: Stack(
-                                                                    children: [
-                                                                      Positioned(
-                                                                        right: 1,
-                                                                        child: Container(
-                                                                          width: ScreenUtil.getWidth(context) / 2.5,
-                                                                          child: Padding(
-                                                                            padding: const EdgeInsets.only(top: 20),
-                                                                            child: Column(
-                                                                              children: [
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.all(8.0),
-                                                                                  child: DropdownSearch<String>(
-                                                                                    label: " ${getTransrlate(context, 'width')} ",
-                                                                                    showSearchBox: true,
-                                                                                    selectedItem: widthID,
-                                                                                    showClearButton: false,
-                                                                                    mode: Mode.MENU,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  border: Border.all(
+                                                                      color: Colors
+                                                                          .black12),
+                                                                ),
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                    bottom: 8, top: 8,
+                                                                    left: 24, right: 24,
+                                                                  ),
+                                                                  child:
+                                                                      ExpandablePanel(
+                                                                    controller:
+                                                                        tayrsController,
+                                                                    header:
+                                                                        Text(
+                                                                      '${getTransrlate(context, 'frameDimensions')}',
+                                                                      style: TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                                    expanded:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets.all(8.0),
+                                                                          child: Container(
+                                                                        height:
+                                                                            ScreenUtil.getHeight(context) /
+                                                                                3,
+                                                                        width: ScreenUtil.getWidth(
+                                                                            context),
+                                                                        child:
+                                                                            Stack(
+                                                                          children: [
+                                                                            Positioned(
+                                                                              right: 1,
+                                                                              child: Container(
+                                                                                width: ScreenUtil.getWidth(context) / 2.5,
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsets.all(8.0),
+                                                                                      child: DropdownSearch<String>(
+                                                                                        label: " ${getTransrlate(context, 'width')} ",
+                                                                                        showSearchBox: true,
+                                                                                        selectedItem: widthID,
+                                                                                        showClearButton: false,
+                                                                                        mode: Mode.MENU,
+                                                                                        items: width,
+                                                                                        validator: (String item) {
+                                                                                          if (item == null) {
+                                                                                            return "${getTransrlate(context, 'width')}";
+                                                                                          } else
+                                                                                            return null;
+                                                                                        },
 
-                                                                                    items: width,
-                                                                                    validator: (String item) {
-                                                                                      if (item == null) {
-                                                                                        return "${getTransrlate(context, 'width')}";
-                                                                                      } else
-                                                                                        return null;
-                                                                                    },
-                                                                                    onChanged: (String item) {
-                                                                                      widthID = item;
-                                                                                    },
-                                                                                    //  onFind: (String filter) => getData(filter),
-                                                                                  ),
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  height: 10,
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.all(8.0),
-                                                                                  child: DropdownSearch<String>(
-                                                                                    label: " ${getTransrlate(context, 'height')} ",
-                                                                                    showSearchBox: true,
-                                                                                    showClearButton: false,
-                                                                                    selectedItem: heightID,
-                                                                                    mode: Mode.MENU,
+                                                                                        onChanged: (String item) {
+                                                                                          widthID = item;
+                                                                                        },
+                                                                                        //  onFind: (String filter) => getData(filter),
+                                                                                      ),
+                                                                                    ),
+                                                                                    SizedBox(
+                                                                                      height: 10,
+                                                                                    ),
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsets.all(8.0),
+                                                                                      child: DropdownSearch<String>(
+                                                                                        label: " ${getTransrlate(context, 'height')} ",
+                                                                                        showSearchBox: true,
+                                                                                        showClearButton: false,
+                                                                                        selectedItem: heightID,
+                                                                                        mode: Mode.MENU,
 
-                                                                                    items: height,
-                                                                                    validator: (String item) {
-                                                                                      if (item == null) {
-                                                                                        return "${getTransrlate(context, 'height')}";
-                                                                                      } else
-                                                                                        return null;
-                                                                                    },
-                                                                                    onChanged: (String item) {
-                                                                                      heightID = item;
-                                                                                    },
-                                                                                    //  onFind: (String filter) => getData(filter),
-                                                                                  ),
+                                                                                        items: height,
+                                                                                        validator: (String item) {
+                                                                                          if (item == null) {
+                                                                                            return "${getTransrlate(context, 'height')}";
+                                                                                          } else
+                                                                                            return null;
+                                                                                        },
+                                                                                        onChanged: (String item) {
+                                                                                          heightID = item;
+                                                                                        },
+                                                                                        //  onFind: (String filter) => getData(filter),
+                                                                                      ),
+                                                                                    ),
+                                                                                    SizedBox(
+                                                                                      height: 10,
+                                                                                    ),
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsets.all(8.0),
+                                                                                      child: DropdownSearch<String>(
+                                                                                        label: " ${getTransrlate(context, 'size')} ",
+                                                                                        showSearchBox: true,
+                                                                                        showClearButton: false,
+                                                                                        selectedItem: sizeID,
+                                                                                        mode: Mode.MENU,
+                                                                                        items: size,
+                                                                                        validator: (String item) {
+                                                                                          if (item == null) {
+                                                                                            return "${getTransrlate(context, 'size')}";
+                                                                                          } else
+                                                                                            return null;
+                                                                                        },
+                                                                                        onChanged: (String item) {
+                                                                                          sizeID = item;
+                                                                                        },
+                                                                                        //  onFind: (String filter) => getData(filter),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
                                                                                 ),
-                                                                                SizedBox(
-                                                                                  height: 10,
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.all(8.0),
-                                                                                  child: DropdownSearch<String>(
-                                                                                    label: " ${getTransrlate(context, 'size')} ",
-                                                                                    showSearchBox: true,
-                                                                                    showClearButton: false,
-                                                                                    selectedItem: sizeID,
-                                                                                    mode: Mode.MENU,
-                                                                                    items: size,
-                                                                                    validator: (String item) {
-                                                                                      if (item == null) {
-                                                                                        return "${getTransrlate(context, 'size')}";
-                                                                                      } else
-                                                                                        return null;
-                                                                                    },
-                                                                                    onChanged: (String item) {
-                                                                                      sizeID = item;
-                                                                                    },
-                                                                                    //  onFind: (String filter) => getData(filter),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
+                                                                              ),
                                                                             ),
-                                                                          ),
+                                                                            Positioned(
+                                                                              left: 1,
+                                                                              child: Image.asset(
+                                                                                'assets/images/tire.png',
+                                                                                width: ScreenUtil.getWidth(context) / 2.5,
+                                                                              ),
+                                                                            )
+                                                                          ],
                                                                         ),
                                                                       ),
-                                                                      Positioned(
-                                                                        left: 1,
-                                                                        child: Image.asset(
-                                                                          'assets/images/tire.png',
-                                                                          width: ScreenUtil.getWidth(context) / 2.5,
-                                                                        ),
-                                                                      )
-                                                                    ],
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-
-
-                                                            ),
-                                                          ),
-                                                        )
+                                                              )
                                                             : widget.Category
-                                                            ? Container(
-                                                          decoration:
-                                                          BoxDecoration(
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .black12),
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                              bottom: 8,
-                                                              top: 8,
-                                                              left: 24,
-                                                              right: 24,
-                                                            ),
-                                                            child:
-                                                            ExpandablePanel(
-                                                              header: Text(
-                                                                '${getTransrlate(context, 'category')}',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                    FontWeight.bold),
-                                                              ),
-                                                              expanded:
-                                                              Padding(
-                                                                padding: const EdgeInsets
-                                                                    .all(
-                                                                    16.0),
-                                                                child: categories ==
-                                                                    null
-                                                                    ? Custom_Loading()
-                                                                    : categories.isEmpty
-                                                                    ? Container()
-                                                                    : ListView.builder(
-                                                                    primary: false,
-                                                                    shrinkWrap: true,
-                                                                    physics: NeverScrollableScrollPhysics(),
-                                                                    itemCount: categories.length,
-                                                                    itemBuilder: (BuildContext context, int index) {
-                                                                      return Row(
-                                                                        children: [
-                                                                          Checkbox(
-                                                                              value: categories[index].Check,
-                                                                              activeColor: Colors.orange,
-                                                                              onChanged: (value) {
-                                                                                setState(() {
-                                                                                  categories[index].Check = value;
-                                                                                });
-                                                                                value ? partSelect.add(categories[index].id) : partSelect.remove(categories[index].id);
-                                                                              }),
-                                                                          Text(
-                                                                            "${themeColor.getlocal() == 'ar' ? categories[index].name ?? categories[index].name : categories[index].nameEn ?? categories[index].name} (${categories[index].count_cats})",
-                                                                            softWrap: true,
-                                                                          ),
-                                                                        ],
-                                                                      );
-                                                                    }),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                            : Container(
-                                                          decoration:
-                                                          BoxDecoration(
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .black12),
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                              bottom: 8,
-                                                              top: 8,
-                                                              left: 24,
-                                                              right: 24,
-                                                            ),
-                                                            child:
-                                                            ExpandablePanel(
-                                                              header: Text(
-                                                                '${getTransrlate(context, 'category')}',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                    FontWeight.bold),
-                                                              ),
-                                                              expanded:
-                                                              Padding(
-                                                                padding: const EdgeInsets
-                                                                    .all(
-                                                                    16.0),
-                                                                child: categories ==
-                                                                    null
-                                                                    ? Custom_Loading()
-                                                                    : categories.isEmpty
-                                                                    ? Container()
-                                                                    : ListView.builder(
-                                                                    primary: false,
-                                                                    shrinkWrap: true,
-                                                                    physics: NeverScrollableScrollPhysics(),
-                                                                    itemCount: categories.length,
-                                                                    itemBuilder: (BuildContext context, int index) {
-                                                                      return Row(
-                                                                        children: [
-                                                                          Checkbox(
-                                                                              value: categories[index].Check,
-                                                                              activeColor: Colors.orange,
-                                                                              onChanged: (value) {
-                                                                                setState(() {
-                                                                                  categories[index].Check = value;
-                                                                                });
-                                                                                value ? partSelect.add(categories[index].id) : partSelect.remove(categories[index].id);
-                                                                              }),
-                                                                          Container(
-                                                                            width: ScreenUtil.getWidth(context)/1.5,
-                                                                            child: Text(
-                                                                              "${themeColor.getlocal() == 'ar' ? categories[index].name ?? categories[index].name : categories[index].nameEn ?? categories[index].name} (${categories[index].count_cats})",
-                                                                              softWrap: true,
-                                                                              maxLines: 2,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      );
-                                                                    }),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
+                                                                ? Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              Colors.black12),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .only(
+                                                                        bottom:
+                                                                            8,
+                                                                        top: 8,
+                                                                        left:
+                                                                            24,
+                                                                        right:
+                                                                            24,
+                                                                      ),
+                                                                      child:
+                                                                          ExpandablePanel(
+                                                                        header:
+                                                                            Text(
+                                                                          '${getTransrlate(context, 'category')}',
+                                                                          style:
+                                                                              TextStyle(fontWeight: FontWeight.bold),
+                                                                        ),
+                                                                        expanded:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(16.0),
+                                                                          child: categories == null
+                                                                              ? Custom_Loading()
+                                                                              : categories.isEmpty
+                                                                                  ? Container()
+                                                                                  : ListView.builder(
+                                                                                      primary: false,
+                                                                                      shrinkWrap: true,
+                                                                                      physics: NeverScrollableScrollPhysics(),
+                                                                                      itemCount: categories.length,
+                                                                                      itemBuilder: (BuildContext context, int index) {
+                                                                                        return Row(
+                                                                                          children: [
+                                                                                            Checkbox(
+                                                                                                value: categories[index].Check,
+                                                                                                activeColor: Colors.orange,
+                                                                                                onChanged: (value) {
+                                                                                                  setState(() {
+                                                                                                    categories[index].Check = value;
+                                                                                                  });
+                                                                                                  value ? partSelect.add(categories[index].id) : partSelect.remove(categories[index].id);
+                                                                                                }),
+                                                                                            Text(
+                                                                                              "${themeColor.getlocal() == 'ar' ? categories[index].name ?? categories[index].name : categories[index].nameEn ?? categories[index].name} (${categories[index].count_cats})",
+                                                                                              softWrap: true,
+                                                                                            ),
+                                                                                          ],
+                                                                                        );
+                                                                                      }),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                : Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              Colors.black12),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .only(
+                                                                        bottom:
+                                                                            8,
+                                                                        top: 8,
+                                                                        left:
+                                                                            24,
+                                                                        right:
+                                                                            24,
+                                                                      ),
+                                                                      child:
+                                                                          ExpandablePanel(
+                                                                        header:
+                                                                            Text(
+                                                                          '${getTransrlate(context, 'category')}',
+                                                                          style:
+                                                                              TextStyle(fontWeight: FontWeight.bold),
+                                                                        ),
+                                                                        expanded:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(16.0),
+                                                                          child: categories == null
+                                                                              ? Custom_Loading()
+                                                                              : categories.isEmpty
+                                                                                  ? Container()
+                                                                                  : ListView.builder(
+                                                                                      primary: false,
+                                                                                      shrinkWrap: true,
+                                                                                      physics: NeverScrollableScrollPhysics(),
+                                                                                      itemCount: categories.length,
+                                                                                      itemBuilder: (BuildContext context, int index) {
+                                                                                        return Row(
+                                                                                          children: [
+                                                                                            Checkbox(
+                                                                                                value: categories[index].Check,
+                                                                                                activeColor: Colors.orange,
+                                                                                                onChanged: (value) {
+                                                                                                  setState(() {
+                                                                                                    categories[index].Check = value;
+                                                                                                  });
+                                                                                                  value ? partSelect.add(categories[index].id) : partSelect.remove(categories[index].id);
+                                                                                                }),
+                                                                                            Container(
+                                                                                              width: ScreenUtil.getWidth(context) / 1.5,
+                                                                                              child: Text(
+                                                                                                "${themeColor.getlocal() == 'ar' ? categories[index].name ?? categories[index].name : categories[index].nameEn ?? categories[index].name} (${categories[index].count_cats})",
+                                                                                                softWrap: true,
+                                                                                                maxLines: 2,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        );
+                                                                                      }),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                         Container(
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                                color:
-                                                                    Colors.black12),
+                                                                color: Colors
+                                                                    .black12),
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                                const EdgeInsets.only(
+                                                                const EdgeInsets
+                                                                    .only(
                                                               bottom: 8,
                                                               top: 8,
                                                               left: 24,
                                                               right: 24,
                                                             ),
-                                                            child: ExpandablePanel(
+                                                            child:
+                                                                ExpandablePanel(
                                                               header: Text(
                                                                 '${getTransrlate(context, 'manufacturers')}',
                                                                 style: TextStyle(
@@ -501,37 +503,93 @@ class _Products_PageState extends State<Products_Page> {
                                                               expanded: Padding(
                                                                 padding:
                                                                     const EdgeInsets
-                                                                        .all(16.0),
+                                                                            .all(
+                                                                        16.0),
                                                                 child: manufacturer ==
                                                                         null
                                                                     ? Custom_Loading()
-                                                                    : ListView
-                                                                        .builder(
-                                                                            primary:
-                                                                                false,
-                                                                            shrinkWrap:
-                                                                                true,
-                                                                            physics:
-                                                                                NeverScrollableScrollPhysics(),
-                                                                            itemCount:
-                                                                                manufacturer
-                                                                                    .length,
-                                                                            itemBuilder:
-                                                                                (BuildContext context,
-                                                                                    int index) {
+                                                                    : ListView.builder(
+                                                                        primary: false,
+                                                                        shrinkWrap: true,
+                                                                        physics: NeverScrollableScrollPhysics(),
+                                                                        itemCount: manufacturer.length,
+                                                                        itemBuilder: (BuildContext context, int index) {
+                                                                          return Row(
+                                                                            children: [
+                                                                              Checkbox(
+                                                                                  activeColor: Colors.orange,
+                                                                                  value: manufacturer[index].check,
+                                                                                  onChanged: (value) {
+                                                                                    setState(() {
+                                                                                      manufacturer[index].check = value;
+                                                                                    });
+                                                                                    value ? manufacturerSelect.add(manufacturer[index].id) : manufacturerSelect.remove(manufacturer[index].id);
+                                                                                  }),
+                                                                              Text(
+                                                                                "${manufacturer[index].manufacturerName} (${manufacturer[index].count_manufacturers ?? ''})",
+                                                                                softWrap: true,
+                                                                              ),
+                                                                            ],
+                                                                          );
+                                                                        }),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .black12),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                              bottom: 8,
+                                                              top: 8,
+                                                              left: 24,
+                                                              right: 24,
+                                                            ),
+                                                            child:
+                                                                ExpandablePanel(
+                                                              header: Text(
+                                                                '${getTransrlate(context, 'carmade')}',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              expanded: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        16.0),
+                                                                child: origin ==
+                                                                        null
+                                                                    ? Custom_Loading()
+                                                                    : origin.isEmpty
+                                                                        ? Container()
+                                                                        : ListView.builder(
+                                                                            primary: false,
+                                                                            shrinkWrap: true,
+                                                                            physics: NeverScrollableScrollPhysics(),
+                                                                            itemCount: origin.length,
+                                                                            itemBuilder: (BuildContext context, int index) {
                                                                               return Row(
                                                                                 children: [
                                                                                   Checkbox(
+                                                                                      value: origin[index].check,
                                                                                       activeColor: Colors.orange,
-                                                                                      value: manufacturer[index].check,
                                                                                       onChanged: (value) {
                                                                                         setState(() {
-                                                                                          manufacturer[index].check = value;
+                                                                                          origin[index].check = value;
                                                                                         });
-                                                                                        value ? manufacturerSelect.add(manufacturer[index].id) : manufacturerSelect.remove(manufacturer[index].id);
+                                                                                        value ? originSelect.add(origin[index].id) : originSelect.remove(origin[index].id);
                                                                                       }),
                                                                                   Text(
-                                                                                    "${manufacturer[index].manufacturerName} (${manufacturer[index].count_manufacturers ?? ''})",
+                                                                                    "${origin[index].countryName} (${origin[index].count_origins ?? ''})",
                                                                                     softWrap: true,
                                                                                   ),
                                                                                 ],
@@ -542,124 +600,68 @@ class _Products_PageState extends State<Products_Page> {
                                                           ),
                                                         ),
                                                         Container(
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                                color:
-                                                                Colors.black12),
+                                                                color: Colors
+                                                                    .black12),
                                                           ),
                                                           child: Padding(
                                                             padding:
-                                                            const EdgeInsets.only(
-                                                              bottom: 8,
-                                                              top: 8,
-                                                              left: 24,
-                                                              right: 24,
-                                                            ),
-                                                            child: ExpandablePanel(
-                                                              header: Text(
-                                                                '${getTransrlate(context, 'carmade')}',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                              ),
-                                                              expanded: Padding(
-                                                                padding:
                                                                 const EdgeInsets
-                                                                    .all(16.0),
-                                                                child: origin == null
-                                                                    ? Custom_Loading()
-                                                                    : origin.isEmpty
-                                                                    ? Container()
-                                                                    : ListView.builder(
-                                                                    primary: false,
-                                                                    shrinkWrap: true,
-                                                                    physics: NeverScrollableScrollPhysics(),
-                                                                    itemCount: origin.length,
-                                                                    itemBuilder: (BuildContext context, int index) {
-                                                                      return Row(
-                                                                        children: [
-                                                                          Checkbox(
-                                                                              value: origin[index].check,
-                                                                              activeColor: Colors.orange,
-                                                                              onChanged: (value) {
-                                                                                setState(() {
-                                                                                  origin[index].check = value;
-                                                                                });
-                                                                                value ? originSelect.add(origin[index].id) : originSelect.remove(origin[index].id);
-                                                                              }),
-                                                                          Text(
-                                                                            "${origin[index].countryName} (${origin[index].count_origins ?? ''})",
-                                                                            softWrap: true,
-                                                                          ),
-                                                                        ],
-                                                                      );
-                                                                    }),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color:
-                                                                Colors.black12),
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                            const EdgeInsets.only(
+                                                                    .only(
                                                               bottom: 8,
                                                               top: 8,
                                                               left: 24,
                                                               right: 24,
                                                             ),
-                                                            child: ExpandablePanel(
+                                                            child:
+                                                                ExpandablePanel(
                                                               header: Text(
                                                                 '${getTransrlate(context, 'price')}',
                                                                 style: TextStyle(
                                                                     fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                                        FontWeight
+                                                                            .bold),
                                                               ),
                                                               expanded: Column(
                                                                 children: [
                                                                   Row(
                                                                     mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
                                                                     children: [
                                                                       Container(
-                                                                          width: ScreenUtil.getWidth(
-                                                                              context) *
+                                                                          width: ScreenUtil.getWidth(context) *
                                                                               0.10,
                                                                           child: Text(_currentRangeValues
                                                                               .start
                                                                               .round()
                                                                               .toString())),
                                                                       Container(
-                                                                        width: ScreenUtil
-                                                                            .getWidth(
-                                                                            context) /
+                                                                        width: ScreenUtil.getWidth(context) /
                                                                             1.6,
                                                                         child:
-                                                                        RangeSlider(
+                                                                            RangeSlider(
                                                                           activeColor:
-                                                                          Colors
-                                                                              .orange,
+                                                                              Colors.orange,
                                                                           inactiveColor:
-                                                                          Colors
-                                                                              .black26,
+                                                                              Colors.black26,
                                                                           values:
-                                                                          _currentRangeValues,
-                                                                          min: min,
-                                                                          max: max,
+                                                                              _currentRangeValues,
+                                                                          min:
+                                                                              min,
+                                                                          max:
+                                                                              max,
                                                                           divisions:
-                                                                          10000,
+                                                                              10000,
                                                                           labels:
-                                                                          RangeLabels(_currentRangeValues.start.round().toString(),
+                                                                              RangeLabels(
+                                                                            _currentRangeValues.start.round().toString(),
                                                                             _currentRangeValues.end.round().toString(),
                                                                           ),
-                                                                          onChanged: (RangeValues values) {
+                                                                          onChanged:
+                                                                              (RangeValues values) {
                                                                             setState(() {
                                                                               _currentRangeValues = values;
                                                                             });
@@ -667,8 +669,7 @@ class _Products_PageState extends State<Products_Page> {
                                                                         ),
                                                                       ),
                                                                       Container(
-                                                                          width: ScreenUtil.getWidth(
-                                                                              context) *
+                                                                          width: ScreenUtil.getWidth(context) *
                                                                               0.10,
                                                                           child: Text(_currentRangeValues
                                                                               .end
@@ -678,37 +679,44 @@ class _Products_PageState extends State<Products_Page> {
                                                                   ),
                                                                   Row(
                                                                     mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceEvenly,
+                                                                        MainAxisAlignment
+                                                                            .spaceEvenly,
                                                                     children: [
                                                                       Container(
-                                                                          width: ScreenUtil.getWidth(
-                                                                              context) *
+                                                                          width: ScreenUtil.getWidth(context) *
                                                                               0.10,
-                                                                          child: Text(
-                                                                              "${getTransrlate(context, 'from')}")),
+                                                                          child:
+                                                                              Text("${getTransrlate(context, 'from')}")),
                                                                       Container(
-                                                                        width: ScreenUtil.getWidth(context) / 3,
-                                                                        child: MyTextFormField(
-                                                                          keyboard_type: TextInputType.number,
+                                                                        width:
+                                                                            ScreenUtil.getWidth(context) /
+                                                                                3,
+                                                                        child:
+                                                                            MyTextFormField(
+                                                                          keyboard_type:
+                                                                              TextInputType.number,
                                                                           //enabled: false,
-                                                                          intialLabel: min.floor().toString(),
-                                                                          validator: (String item) {
-                                                                            if (item != null) {
-                                                                              if (double.parse(item) < minPrice.floor())
-                                                                              {
+                                                                          intialLabel: min
+                                                                              .floor()
+                                                                              .toString(),
+                                                                          validator:
+                                                                              (String item) {
+                                                                            if (item !=
+                                                                                null) {
+                                                                              if (double.parse(item) < minPrice.floor()) {
                                                                                 return "${getTransrlate(context, 'from')} < ${minPrice.floor()}";
-                                                                              } else if (double.parse(item) > filterPrice)
-                                                                              {
+                                                                              } else if (double.parse(item) > filterPrice) {
                                                                                 return "${getTransrlate(context, 'from')} > $filterPrice";
                                                                               }
-                                                                            }else
+                                                                            } else
                                                                               _formKey.currentState.save();
 
                                                                             return null;
                                                                           },
-                                                                          onChange: (v) {
-                                                                            if (v != null) {
+                                                                          onChange:
+                                                                              (v) {
+                                                                            if (v !=
+                                                                                null) {
                                                                               if (v.isNotEmpty) {
                                                                                 setState(() {
                                                                                   if (max >= double.parse(v)) {
@@ -722,31 +730,39 @@ class _Products_PageState extends State<Products_Page> {
                                                                         ),
                                                                       ),
                                                                       Container(
-                                                                          width: ScreenUtil.getWidth(
-                                                                              context) *
+                                                                          width: ScreenUtil.getWidth(context) *
                                                                               0.10,
-                                                                          child: Text(
-                                                                              "${getTransrlate(context, 'to')}")),
+                                                                          child:
+                                                                              Text("${getTransrlate(context, 'to')}")),
                                                                       Container(
-                                                                        width: ScreenUtil.getWidth(context) / 3,
+                                                                        width:
+                                                                            ScreenUtil.getWidth(context) /
+                                                                                3,
                                                                         child:
-                                                                        MyTextFormField(
-                                                                          keyboard_type: TextInputType.number,
-                                                                          intialLabel: max.floor().toString(),
-                                                                          validator: (String item) {
-                                                                            if (item != null) {
-                                                                              if (double.parse(item) > filterPrice)
-                                                                              {
+                                                                            MyTextFormField(
+                                                                          keyboard_type:
+                                                                              TextInputType.number,
+                                                                          intialLabel: max
+                                                                              .floor()
+                                                                              .toString(),
+                                                                          validator:
+                                                                              (String item) {
+                                                                            if (item !=
+                                                                                null) {
+                                                                              if (double.parse(item) > filterPrice) {
                                                                                 return "${getTransrlate(context, 'from')} > $filterPrice";
-                                                                              } }else
+                                                                              }
+                                                                            } else
                                                                               _formKey.currentState.save();
 
                                                                             return null;
                                                                           },
-                                                                          onChange: (v) {
-                                                                            if (v != null) {
+                                                                          onChange:
+                                                                              (v) {
+                                                                            if (v !=
+                                                                                null) {
                                                                               if (v.isNotEmpty) {
-                                                                                if (double.parse(v) >=min)  {
+                                                                                if (double.parse(v) >= min) {
                                                                                   setState(() {
                                                                                     // if (min <= double.parse(v)) {
                                                                                     // }
@@ -770,11 +786,9 @@ class _Products_PageState extends State<Products_Page> {
                                                     ),
                                                   ),
                                                 ),
-
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.all(
-                                                          4.0),
+                                                      const EdgeInsets.all(4.0),
                                                   child: Row(
                                                     children: [
                                                       InkWell(
@@ -835,7 +849,8 @@ class _Products_PageState extends State<Products_Page> {
                                                                 "${_currentRangeValues.start.toString().isEmpty ? '' : "&start_price=${_currentRangeValues.start.floor().toString()}"}"
                                                                 "${_currentRangeValues.end.toString().isEmpty ? '' : "&end_price=${_currentRangeValues.end.round().toString()}"}";
                                                             print(Filtration);
-                                                            Navigator.pop(context);
+                                                            Navigator.pop(
+                                                                context);
                                                           }
                                                         },
                                                         child: Container(
@@ -886,15 +901,16 @@ class _Products_PageState extends State<Products_Page> {
                                                       ),
                                                       InkWell(
                                                         onTap: () async {
-                                                           widthID=null;heightID=null;sizeID=null;
+                                                          widthID = null;
+                                                          heightID = null;
+                                                          sizeID = null;
                                                           min = 1;
                                                           max = 10000;
                                                           _currentRangeValues =
                                                               RangeValues(
                                                                   min, max);
                                                           Filtration = '';
-                                                          await widget
-                                                                  .Category
+                                                          await widget.Category
                                                               ? getDataCategory()
                                                               : getData();
                                                           Navigator.pop(
@@ -926,13 +942,12 @@ class _Products_PageState extends State<Products_Page> {
                                                             children: [
                                                               Icon(
                                                                 Icons.refresh,
-                                                                color: Colors
-                                                                    .grey,
+                                                                color:
+                                                                    Colors.grey,
                                                               ),
                                                               SizedBox(
                                                                 width: 10,
                                                               ),
-
                                                               Text(
                                                                 '${getTransrlate(context, 'ReSet')}',
                                                                 style: TextStyle(
@@ -1097,18 +1112,22 @@ class _Products_PageState extends State<Products_Page> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color:Colors.orangeAccent ,borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.orange)) ,
+                              color: Colors.orangeAccent,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.orange)),
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Row(
                               children: [
                                 Icon(
-                                  Icons.filter,
+                                  Icons.filter_alt,
                                   size: 20,
                                   color: Colors.white,
                                 ),
-                                Text(' ${getTransrlate(context, 'filter')}',style: TextStyle(color: Colors.white),),
+                                Text(
+                                  ' ${getTransrlate(context, 'filter')}',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                                 Icon(
                                   Icons.keyboard_arrow_down,
                                   size: 20,
@@ -1130,8 +1149,8 @@ class _Products_PageState extends State<Products_Page> {
                             });
                             API(context)
                                 .get(widget.Istryers
-                                    ? 'search/ahmed/category/parts${"${!widget.Istryers ? '' : "?width=${widthID ?? ''}&height=${heightID ?? ''}&size=${sizeID ?? ''}"}"}' +
-                                        "${Filtration.contains('&', 0) ? '${Filtration}' : '&${Filtration}'}"
+                                    ?widthID==null? 'ahmed/allcategories/products/682?sort_type=${sort ?? 'ASC&ordered_by=price'}' :  'search/ahmed/category/parts${"${!widget.Istryers ? '' :"?width=${widthID ?? ''}&height=${heightID ?? ''}&size=${sizeID ?? ''}"}"}' +
+                                        "${Filtration == null ? '' : Filtration.contains('&', 0) ? '${Filtration}' : '&${Filtration}'}"
                                     : '${url + "${Filtration == null ? '' : Filtration.contains('&', 0) ? '${Filtration}' : '&${Filtration}'}"}&sort_type=${sort ?? 'ASC&ordered_by=price'}')
                                 .then((value) {
                               if (value != null) {
@@ -1190,6 +1209,7 @@ class _Products_PageState extends State<Products_Page> {
       ),
     );
   }
+
   void getData() {
     partSelect = [];
     originSelect = [];
@@ -1219,13 +1239,13 @@ class _Products_PageState extends State<Products_Page> {
         if (value['status_code'] == 200) {
           setState(() {
             product = Product_model.fromJson(value).data;
-            if(product!=null){
-              if(product.isNotEmpty){
+            if (product != null) {
+              if (product.isNotEmpty) {
                 product?.sort((current, next) =>
                     current.action_price.compareTo(next.action_price));
                 print("min ${min} max ${max}");
-                max =filterPrice = product.last.action_price;
-                min =minPrice= product.first.action_price;
+                max = filterPrice = product.last.action_price;
+                min = minPrice = product.first.action_price;
                 _currentRangeValues = RangeValues(min, max);
               }
             }
@@ -1288,15 +1308,15 @@ class _Products_PageState extends State<Products_Page> {
         if (value['status_code'] == 200) {
           setState(() {
             product = Product_model.fromJson(value).data;
-            if(product!=null){
-              if(product.isNotEmpty){
+            if (product != null) {
+              if (product.isNotEmpty) {
                 product?.sort((current, next) =>
                     current.action_price.compareTo(next.action_price));
-                max =filterPrice= product.last.action_price;
-                min =minPrice= product.first.action_price;
+                max = filterPrice = product.last.action_price;
+                min = minPrice = product.first.action_price;
                 _currentRangeValues = RangeValues(min, max);
-              }}
-
+              }
+            }
 
             if (value['cats_data'] != null) {
               categories = new List<Categories_item>();
@@ -1355,51 +1375,50 @@ class _Products_PageState extends State<Products_Page> {
     //   }
     // });
   }
-  ExpansionCatgory(
-      Categories_item categories_item, Provider_control themeColor) {
-    return categories_item.id == 1711 || categories_item.id == 682
+  ExpandableCategory(Categories_item categoriesItem, Provider_control themeColor) {
+    return categoriesItem.id == 1711 || categoriesItem.id == 682
         ? Container()
         : ExpansionTile(
             textColor: Colors.orange,
             iconColor: Colors.orange,
             collapsedTextColor: Colors.black,
             title: Text(
-                "${themeColor.getlocal() == 'ar' ? categories_item.name : categories_item.nameEn}"),
+                "${themeColor.getlocal() == 'ar' ? categoriesItem.name : categoriesItem.nameEn}"),
             children: [
-              categories_item.categories == null
+              categoriesItem.categories == null
                   ? Container()
                   : ListView.builder(
                       primary: false,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: categories_item.categories.length,
+                      itemCount: categoriesItem.categories.length,
                       itemBuilder: (BuildContext context, int i) {
-                        return categories_item.categories[i].level == 0
+                        return categoriesItem.categories[i].level == 0
                             ? Row(
                                 children: [
                                   Checkbox(
                                       value:
-                                          categories_item.categories[i].Check,
+                                          categoriesItem.categories[i].Check,
                                       activeColor: Colors.orange,
                                       onChanged: (value) {
                                         setState(() {
-                                          categories_item.categories[i].Check =
+                                          categoriesItem.categories[i].Check =
                                               value;
                                         });
                                         value
-                                            ? partSelect.add(categories_item
+                                            ? partSelect.add(categoriesItem
                                                 .categories[i].id)
-                                            : partSelect.remove(categories_item
+                                            : partSelect.remove(categoriesItem
                                                 .categories[i].id);
                                       }),
                                   Text(
-                                    "${themeColor.getlocal() == 'ar' ? categories_item.categories[i].name ?? categories_item.categories[i].name : categories_item.categories[i].nameEn ?? categories_item.categories[i].name}",
+                                    "${themeColor.getlocal() == 'ar' ? categoriesItem.categories[i].name ?? categoriesItem.categories[i].name : categoriesItem.categories[i].nameEn ?? categoriesItem.categories[i].name}",
                                     softWrap: true,
                                   ),
                                 ],
                               )
-                            : ExpansionCatgory(
-                                categories_item.categories[i], themeColor);
+                            : ExpandableCategory(
+                                categoriesItem.categories[i], themeColor);
                       })
             ],
           );
