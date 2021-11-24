@@ -56,8 +56,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale;
-  final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   void setlocal(Locale locale) {
     setState(() {
@@ -125,7 +124,6 @@ class _MyAppState extends State<MyApp> {
       home: SplashScreen(),
     );
   }
-
   void getIntial() async {
 //Remove this method to stop OneSignal Debugging
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
