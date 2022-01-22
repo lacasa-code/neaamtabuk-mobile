@@ -97,7 +97,7 @@ setState(() {
                   onStepTapped: (step) => tapped(step),
                   onStepContinue: _currentStep == 2 ? null : continued,
                   onStepCancel: cancel,
-                  controlsBuilder: _createEventControlBuilder,
+              //    controlsBuilder: _createEventControlBuilder,
                   steps: <Step>[
                     Step(
                       title: Text(
