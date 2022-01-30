@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/duration.dart';
 import 'package:flutter_pos/model/order_model.dart';
-import 'package:flutter_pos/screens/account/orderdetails.dart';
-import 'package:flutter_pos/screens/product/ProductPage.dart';
+
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -18,15 +17,15 @@ import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 
-class OrderHistory extends StatefulWidget {
-  const OrderHistory({Key key}) : super(key: key);
+class Orders extends StatefulWidget {
+  const Orders({Key key}) : super(key: key);
 
   @override
-  _OrderHistoryState createState() => _OrderHistoryState();
+  _OrdersState createState() => _OrdersState();
 }
 
-class _OrderHistoryState extends State<OrderHistory> {
-  List<Order> orders;
+class _OrdersState extends State<Orders> {
+  List<Order> orders=[Order(id: 1,approved: '')];
   Duration_order dropdownValue = Duration_order(' آخر 6 شهور ', 6);
   List<Duration_order> durations = [
     Duration_order(' آخر  شهر ', 1),
@@ -80,40 +79,40 @@ class _OrderHistoryState extends State<OrderHistory> {
                           EdgeInsets.all(ScreenUtil.getWidth(context) / 15),
                       child: Column(
                         children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Container(
-                              margin: const EdgeInsets.all(5.0),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black26)),
-                              child: DropdownButton<Duration_order>(
-                                value: dropdownValue,
-                                icon: Icon(Icons.arrow_drop_down_outlined),
-                                iconSize: 24,
-                                elevation: 16,
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Cairo'),
-                                onChanged: (Duration_order newValue) {
-                                  setState(() {
-                                    dropdownValue = newValue;
-                                  });
-                                  getOrders("${newValue.lenght}");
-                                },
-                                items: durations
-                                    .map<DropdownMenuItem<Duration_order>>(
-                                        (Duration_order value) {
-                                  return DropdownMenuItem<Duration_order>(
-                                    value: value,
-                                    child: Text("${value.name}"),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
+                          // Align(
+                          //   alignment: Alignment.topLeft,
+                          //   child: Container(
+                          //     margin: const EdgeInsets.all(5.0),
+                          //     padding:
+                          //         const EdgeInsets.symmetric(horizontal: 10),
+                          //     decoration: BoxDecoration(
+                          //         border: Border.all(color: Colors.black26)),
+                          //     child: DropdownButton<Duration_order>(
+                          //       value: dropdownValue,
+                          //       icon: Icon(Icons.arrow_drop_down_outlined),
+                          //       iconSize: 24,
+                          //       elevation: 16,
+                          //       style: const TextStyle(
+                          //           color: Colors.black,
+                          //           fontWeight: FontWeight.bold,
+                          //           fontFamily: 'Cairo'),
+                          //       onChanged: (Duration_order newValue) {
+                          //         setState(() {
+                          //           dropdownValue = newValue;
+                          //         });
+                          //         getOrders("${newValue.lenght}");
+                          //       },
+                          //       items: durations
+                          //           .map<DropdownMenuItem<Duration_order>>(
+                          //               (Duration_order value) {
+                          //         return DropdownMenuItem<Duration_order>(
+                          //           value: value,
+                          //           child: Text("${value.name}"),
+                          //         );
+                          //       }).toList(),
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 15,
                           ),
@@ -157,8 +156,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                   )),
                                               AutoSizeText(
                                                 DateFormat('yyyy-MM-dd').format(
-                                                    DateTime.parse(orders[index]
-                                                        .createdAt)),
+                                                    DateTime.tryParse(orders[index].createdAt??'2020-10-10')),
                                                 maxLines: 1,
                                                 style: TextStyle(fontSize: 13),
                                               ),
@@ -183,16 +181,6 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                           int i) {
                                                     return InkWell(
                                                       onTap: () {
-                                                        Nav.route(
-                                                            context,
-                                                            ProductPage(
-                                                              product_id: orders[
-                                                                      index]
-                                                                  .orderDetails[
-                                                                      i]
-                                                                  .productId
-                                                                  .toString(),
-                                                            ));
                                                       },
                                                       child: Container(
                                                         padding:
@@ -310,17 +298,13 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               ),
                                               InkWell(
                                                 onTap: () {
-                                                  Nav.route(
-                                                      context,
-                                                      Orderdetails(
-                                                        order: orders[index],
-                                                      ));
+
                                                 },
                                                 child: AutoSizeText(
                                                   '${getTransrlate(context, 'OrderDitails')} ',
                                                   maxLines: 1,
                                                   style: TextStyle(
-                                                      color: Colors.orange,
+                                                      color: themeColor.getColor(),
                                                       fontSize: 14,
                                                       decoration: TextDecoration
                                                           .underline),
@@ -347,12 +331,12 @@ class _OrderHistoryState extends State<OrderHistory> {
   }
 
   void getOrders(String from) {
-    API(context).post('user/show/orders', {"from": from}).then((value) {
-      if (value != null) {
-        setState(() {
-          orders = Order_model.fromJson(value).data;
-        });
-      }
-    });
-  }
+  //   API(context).post('user/show/orders', {"from": from}).then((value) {
+  //     if (value != null) {
+  //       setState(() {
+  //         orders = Order_model.fromJson(value).data;
+  //       });
+  //     }
+  //   });
+   }
 }

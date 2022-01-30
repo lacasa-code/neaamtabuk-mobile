@@ -32,10 +32,9 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Image.asset(
-            'assets/images/logo.png',
-            height: ScreenUtil.getHeight(context) / 10,
-            width: ScreenUtil.getWidth(context) / 4,
-            fit: BoxFit.contain,
+            'assets/images/trkar_logo_white (copy).png',
+            fit: BoxFit.fill,
+            height: 50,
             //color: themeColor.getColor(),
           ),
         ),

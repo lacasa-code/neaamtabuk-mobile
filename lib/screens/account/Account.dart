@@ -6,28 +6,22 @@ import 'package:flutter_pos/main.dart';
 import 'package:flutter_pos/screens/account/Conditions.dart';
 import 'package:flutter_pos/screens/account/return.dart';
 import 'package:flutter_pos/screens/account/support.dart';
-import 'package:flutter_pos/screens/address/Address_Page.dart';
-import 'package:flutter_pos/screens/account/OrderHistory.dart';
 import 'package:flutter_pos/screens/account/infoPage.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/screens/account/register_page.dart';
 import 'package:flutter_pos/screens/account/user_information.dart';
-import 'package:flutter_pos/screens/account/vendor_information.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
-import 'package:flutter_pos/widget/SearchOverlay.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/item_hidden_menu.dart';
-import 'package:flutter_pos/screens/account/wishlist_page.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../MyCars/myCars.dart';
 
 class Account extends StatefulWidget {
   const Account({Key key}) : super(key: key);
@@ -57,7 +51,6 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
     final _cart_model = Provider.of<Provider_Data>(context);
-
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,32 +171,13 @@ class _AccountState extends State<Account> {
                               },
                               child: Column(
                                 children: <Widget>[
-                                  vendor == null
-                                      ? Container()
-                                      : ItemHiddenMenu(
-                                          onTap: () {
-                                            Nav.route(context, VendorInfo());
-                                          },
-                                          icon: SvgPicture.asset(
-                                            'assets/icons/store.svg',
-                                            height: 25,
-                                            color: Colors.orange,
-                                          ),
-                                          name: getTransrlate(
-                                              context, 'vendorSettings'),
-                                          baseStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 19.0,
-                                              fontWeight: FontWeight.w800),
-                                          colorLineSelected: Colors.orange,
-                                        ),
                                   ItemHiddenMenu(
                                     onTap: () {
                                       Nav.route(context, UserInfo());
                                     },
                                     icon: SvgPicture.asset(
                                       'assets/icons/account.svg',
-                                      color: Colors.orange,
+                                      color: Colors.white,
                                     ),
                                     name: getTransrlate(
                                         context, 'ProfileSettings'),
@@ -211,60 +185,9 @@ class _AccountState extends State<Account> {
                                         color: Colors.black,
                                         fontSize: 19.0,
                                         fontWeight: FontWeight.w800),
-                                    colorLineSelected: Colors.orange,
+                                    colorLineSelected: Colors.white,
                                   ),
-                                  ItemHiddenMenu(
-                                    lable:  token == null
-                                        ? '': _cart_model.address == null
-                                        ? ''
-                                        : '${_cart_model.address.area == null ? '' : _cart_model.address.area.areaName ?? ''},${ _cart_model.address.city == null ? '' :  _cart_model.address.city.cityName ?? ''} , ${ _cart_model.address.street ?? ''}',
-                                    onTap: () {
-                                      Nav.route(context, Shipping_Address());
-                                    },
-                                    icon: Icon(
-                                      Icons.location_on_outlined,
-                                      size: 25,
-                                      color: Colors.orange,
-                                    ),
-                                    name: getTransrlate(context, 'MyAddress') ,
-                                    baseStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 19.0,
-                                        fontWeight: FontWeight.w800),
-                                    colorLineSelected: Colors.orange,
-                                  ),
-                                  ItemHiddenMenu(
-                                    onTap: () {
-                                      Nav.route(context, OrderHistory());
-                                    },
-                                    icon: Icon(
-                                      Icons.local_shipping_outlined,
-                                      size: 25,
-                                      color: Colors.orange,
-                                    ),
-                                    name: getTransrlate(context, 'Myorders'),
-                                    baseStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 19.0,
-                                        fontWeight: FontWeight.w800),
-                                    colorLineSelected: Colors.orange,
-                                  ),
-                                  ItemHiddenMenu(
-                                    onTap: () {
-                                      Nav.route(context, WishList());
-                                    },
-                                    icon: Icon(
-                                      Icons.favorite_border,
-                                      size: 25,
-                                      color: Colors.orange,
-                                    ),
-                                    name: getTransrlate(context, 'MyFav'),
-                                    baseStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 19.0,
-                                        fontWeight: FontWeight.w800),
-                                    colorLineSelected: Colors.orange,
-                                  ),
+
                                 ],
                               ),
                             ),
@@ -292,7 +215,7 @@ class _AccountState extends State<Account> {
                             icon: Icon(
                               Icons.language,
                               size: 25,
-                              color: Colors.orange,
+                              color: Colors.white,
                             ),
                             name:
                                 Provider.of<Provider_control>(context).local ==
@@ -303,7 +226,7 @@ class _AccountState extends State<Account> {
                                 color: Colors.black,
                                 fontSize: 19.0,
                                 fontWeight: FontWeight.w800),
-                            colorLineSelected: Colors.orange,
+                            colorLineSelected: Colors.white,
                           ),
                         ),
                         InkWell(
@@ -314,14 +237,14 @@ class _AccountState extends State<Account> {
                             icon: Icon(
                               Icons.help_outline_rounded,
                               size: 25,
-                              color: Colors.orange,
+                              color: Colors.white,
                             ),
                             name: getTransrlate(context, 'Support'),
                             baseStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 19.0,
                                 fontWeight: FontWeight.w800),
-                            colorLineSelected: Colors.orange,
+                            colorLineSelected: Colors.white,
                           ),
                         ),
                         InkWell(
@@ -332,14 +255,14 @@ class _AccountState extends State<Account> {
                             icon: Icon(
                               Icons.info_outline,
                               size: 25,
-                              color: Colors.orange,
+                              color: Colors.white,
                             ),
                             name: getTransrlate(context, 'return'),
                             baseStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 19.0,
                                 fontWeight: FontWeight.w800),
-                            colorLineSelected: Colors.orange,
+                            colorLineSelected: Colors.white,
                           ),
                         ),
                         InkWell(
@@ -350,14 +273,14 @@ class _AccountState extends State<Account> {
                             icon: Icon(
                               Icons.contact_page_outlined,
                               size: 25,
-                              color: Colors.orange,
+                              color: Colors.white,
                             ),
                             name: getTransrlate(context, 'Conditions'),
                             baseStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 19.0,
                                 fontWeight: FontWeight.w800),
-                            colorLineSelected: Colors.orange,
+                            colorLineSelected: Colors.white,
                           ),
                         ),
                         token == null
@@ -377,14 +300,14 @@ class _AccountState extends State<Account> {
                                   icon: Icon(
                                     Icons.exit_to_app,
                                     size: 19,
-                                    color: Colors.orange,
+                                    color: Colors.white,
                                   ),
                                   name: getTransrlate(context, 'Logout'),
                                   baseStyle: TextStyle(
                                       color: Colors.black,
                                       fontSize: 19.0,
                                       fontWeight: FontWeight.w800),
-                                  colorLineSelected: Colors.orange,
+                                  colorLineSelected: Colors.white,
                                 ),
                               ),
                       ],

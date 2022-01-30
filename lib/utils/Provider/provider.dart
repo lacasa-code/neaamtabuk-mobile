@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class Provider_control with ChangeNotifier {
-  Color _themeData = Color(0xff424242);
+  Color _themeData = Color(0xff078c25);
   String local;
   String car_model='' ;
   String car_title ;
@@ -10,19 +10,8 @@ class Provider_control with ChangeNotifier {
   int car_type =  1;
   int index =  0;
   Color color;
-  bool isLogin = false;
-  Provider_control(this.local){
-    // if(car_model==null){
-    //   if(this.local=='en'){
-    //   car_model='Select Car';
-    // }else {
-    //   car_model='إختر المركبة';
-    // }
-    //   notifyListeners();
-    //
-    // }
-
-  }
+  bool isLogin = true;
+  Provider_control(this.local);
   getColor() => _themeData;
   getCar_made() => car_model;
   getcar_type() => car_type;

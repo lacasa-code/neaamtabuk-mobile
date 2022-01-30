@@ -1,4 +1,4 @@
-package com.lacasa.trkar;
+package com.lacasa.neaamtabuk;
 
 import io.flutter.embedding.android.FlutterActivity;
 

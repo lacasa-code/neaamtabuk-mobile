@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen>
                   height: ScreenUtil.getHeight(context) / 2,
                   width: ScreenUtil.getWidth(context) / 1.5,
                   child: Image.asset(
-                    'assets/images/splashscreen-trkar-logo-white.gif',
+                    'assets/images/logo.png',
                   ),
                 ),
               ],
@@ -99,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen>
           Nav.routeReplacement(context, Home());
 
         } else {
-          themeColor.setLogin(false);
+          themeColor.setLogin(true);
           themeColor.setComplete(1);
           SharedPreferences.getInstance().then((prefs) {
             prefs.clear();

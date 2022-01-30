@@ -124,6 +124,7 @@ class _MyAppState extends State<MyApp> {
       home: SplashScreen(),
     );
   }
+
   void getIntial() async {
 //Remove this method to stop OneSignal Debugging
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);

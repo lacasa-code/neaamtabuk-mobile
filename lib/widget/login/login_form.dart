@@ -117,7 +117,7 @@ class _LoginFormState extends State<LoginForm> {
                       shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(1.0),
                       ),
-                      color: Colors.orange,
+                      color: themeColor.getColor(),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();

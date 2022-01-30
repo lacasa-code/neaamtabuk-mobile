@@ -37,7 +37,7 @@ class Order {
   int orderNumber;
   String orderTotal;
   int expired;
-  Null approved;
+  String approved;
   int paid;
   String status;
   String createdAt;

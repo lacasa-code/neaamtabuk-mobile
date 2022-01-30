@@ -20,22 +20,6 @@ class _LoginPageState extends State<LoginPage> {
     final themeColor = Provider.of<Provider_control>(context);
 
     return Scaffold(
-
-        appBar: AppBar(
-          title: InkWell(
-            onTap: (){
-              Phoenix.rebirth(context);
-            },
-            child: Image.asset(
-              'assets/images/logo.png',
-              height: ScreenUtil.getHeight(context) / 10,
-              width: ScreenUtil.getWidth(context) / 4,
-              fit: BoxFit.contain,
-              //color: themeColor.getColor(),
-            ),
-          ) ,
-          leading: Container(),
-        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -43,6 +27,14 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    'assets/images/trkar_logo_white (copy).png',
+                    fit: BoxFit.contain,
+                    //color: themeColor.getColor(),
+                  ),
+                ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical : 30,horizontal: 30),

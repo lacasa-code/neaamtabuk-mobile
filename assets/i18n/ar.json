@@ -1,5 +1,6 @@
 {
-
+  "good_morning": "صباح الخير",
+  "good_night": "مساء الخير",
   "en": "الانجليزية",
   "ar": "العربية",
   "gust": "اهلا بك",
@@ -125,8 +126,8 @@
   "minOfOrder": "الحد الادنى للطلب",
   "wholesalePrice": "سعر الجملة",
 
-  "want_to_buy_products": "ارغب في شراء منتجات",
-  "register_as_seller": "ارغب في التسجيل كبائع",
+  "want_to_buy_products": "أسجل كـ تطوع",
+  "register_as_seller": "أسجل كـ مستفيد",
   "NewPassword": "كلمة المرور الجديدة",
   "taxCardNo": "رقم البطاقة الضريبية",
   "WholesalerPermit": "تصريح تاجر الجملة",
@@ -201,7 +202,7 @@
   "MyAddress": "عناوين الشحن ",
   "Notification": "اعدادت الاشعارات",
   "AddressTitle": "اسم العنوان",
-  "Myorders": "الطلبات والمشتريات السابقة",
+  "Myorders": "الطلبات ",
   "MyProfile": "القائمة",
   "productRateing": "تقيماتك",
   "MyFav": "قائمة المنتجات المفضلة",
@@ -245,7 +246,7 @@
 
   "banklist": "قائمة البنوك",
   "carmade": "بلد المنشا",
-  "saller": "البائع",
+  "volunteer": "تبرع",
   "Productsaller": "عرض منتجات البائع",
   "auto": "المحرك",
   "brand": "العلامة التجارية",

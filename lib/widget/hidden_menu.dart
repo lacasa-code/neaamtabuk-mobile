@@ -45,7 +45,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
     final themeColor = Provider.of<Provider_control>(context);
     return Drawer(
       child: Container(
-        color: Colors.blueAccent,
+        color: themeColor.getColor(),
         child: SingleChildScrollView(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,14 +99,14 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.person,
                             size: 25,
-                            color: Colors.orange,
+                            color: Colors.white,
                           ),
                           name: getTransrlate(context, 'ProfileSettings'),
                           baseStyle: TextStyle(
                               color: Colors.black,
                               fontSize: 19.0,
                               fontWeight: FontWeight.w800),
-                          colorLineSelected: Colors.orange,
+                          colorLineSelected: Colors.white,
                         ),
                       ),
 
@@ -117,14 +117,14 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.call,
                             size: 25,
-                            color: Colors.orange,
+                            color: Colors.white,
                           ),
                           name: getTransrlate(context, 'contact'),
                           baseStyle: TextStyle(
                               color: Colors.black,
                               fontSize: 19.0,
                               fontWeight: FontWeight.w800),
-                          colorLineSelected: Colors.orange,
+                          colorLineSelected: Colors.white,
                         ),
                       ),
                       InkWell(
@@ -134,14 +134,14 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.info_outline,
                             size: 25,
-                            color: Colors.orange,
+                            color: Colors.white,
                           ),
                           name: getTransrlate(context, 'About'),
                           baseStyle: TextStyle(
                               color: Colors.black,
                               fontSize: 19.0,
                               fontWeight: FontWeight.w800),
-                          colorLineSelected: Colors.orange,
+                          colorLineSelected: Colors.white,
                         ),
                       ),
                       InkWell(
@@ -158,16 +158,16 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           icon: Icon(
                             Icons.exit_to_app,
                             size: 19,
-                            color: Colors.orange,
-                          ),
-                          name: themeColor.isLogin
-                              ? getTransrlate(context, 'Logout')
+                          color: Colors.white,
+
+                        ), name: themeColor.isLogin
+                            ? getTransrlate(context, 'Logout')
                               : getTransrlate(context, 'login'),
                           baseStyle: TextStyle(
                               color: Colors.black,
                               fontSize: 19.0,
                               fontWeight: FontWeight.w800),
-                          colorLineSelected: Colors.orange,
+                          colorLineSelected: Colors.white,
                         ),
                       ),
                       Container(
@@ -204,7 +204,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                                   icon: Icon(
                                     Icons.language,
                                     size: 25,
-                                    color: Colors.orange,
+                                    color: Colors.white,
                                   ),
                                   name: Provider.of<Provider_control>(context)
                                               .local ==
@@ -215,7 +215,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                                       color: Colors.black,
                                       fontSize: 19.0,
                                       fontWeight: FontWeight.w800),
-                                  colorLineSelected: Colors.orange,
+                                  colorLineSelected: Colors.white,
                                 ),
                               ),
                             ],

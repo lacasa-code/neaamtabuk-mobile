@@ -34,21 +34,18 @@ class _RegisterPageState extends State<RegisterPage> {
         statusBarColor: themeColor.getColor(),
       ),
       child: Scaffold(
-        appBar: AppBar(
-          title: Image.asset(
-            'assets/images/logo.png',
-            height: ScreenUtil.getHeight(context) / 10,
-            width: ScreenUtil.getWidth(context) / 4,
-            fit: BoxFit.contain,
-            //color: themeColor.getColor(),
-          ),
-          leading: Container(),
-        ),
-        // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  'assets/images/trkar_logo_white (copy).png',
+                  fit: BoxFit.contain,
+                  //color: themeColor.getColor(),
+                ),
+              ),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
@@ -69,14 +66,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Container(
                   width: ScreenUtil.getWidth(context)/1.3,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.orange, width: 1)),
+                      border: Border.all(color:themeColor.getColor(), width: 1)),
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         '${getTransrlate(context, 'want_to_buy_products')}',
                         style: TextStyle(
-                            color: Colors.orange, fontWeight: FontWeight.bold),
+                            color: themeColor.getColor(), fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -92,14 +89,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Container(
                   width: ScreenUtil.getWidth(context)/1.3,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.orange, width: 1)),
+                      border: Border.all(color:themeColor.getColor(), width: 1)),
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         '${getTransrlate(context, 'register_as_seller')}',
                         style: TextStyle(
-                            color: Colors.orange, fontWeight: FontWeight.bold),
+                            color:themeColor.getColor(), fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

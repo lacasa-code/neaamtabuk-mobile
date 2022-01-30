@@ -54,8 +54,8 @@ class ItemHiddenMenu extends StatelessWidget {
                             TextStyle(color: Colors.grey, fontSize: 14.0))
                         .merge(this.selected
                             ? this.selectedStyle ??
-                                TextStyle(color: Colors.black, fontSize: 14)
-                            : TextStyle(color: Colors.black, fontSize: 14)),
+                                TextStyle(color: Colors.white, fontSize: 14)
+                            : TextStyle(color: Colors.white, fontSize: 14)),
                   ),
                 ),lable==null?Container():lable.isEmpty?Container():Row(
                   children: [
