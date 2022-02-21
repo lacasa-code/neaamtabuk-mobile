@@ -87,6 +87,68 @@ class _RegisterFormState extends State<RegisterForm> {
                   },
                 ),
                 MyTextFormField(
+                  labelText: getTransrlate(context, 'phone'),
+                  hintText: getTransrlate(context, 'phone'),
+                  isEmail: true,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'requiredempty');
+                    }
+                    _formKey.currentState.save();
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    model.mobile = value;
+                  },
+                ),
+                MyTextFormField(
+                  labelText: getTransrlate(context, 'AddressTitle'),
+                  hintText: getTransrlate(context, 'AddressTitle'),
+                  isEmail: true,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'requiredempty');
+                    }
+                    _formKey.currentState.save();
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    model.address = value;
+                  },
+                ),
+                MyTextFormField(
+                  labelText: getTransrlate(context, 'area'),
+                  hintText: getTransrlate(context, 'area'),
+                  isEmail: true,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'requiredempty');
+                    }
+                    _formKey.currentState.save();
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    model.region = value;
+                  },
+                ),
+
+                MyTextFormField(
+                  labelText: getTransrlate(context, 'gender'),
+                  hintText: getTransrlate(context, 'gender'),
+                  isEmail: true,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'requiredempty');
+                    }
+                    _formKey.currentState.save();
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    model.gender = value;
+                  },
+                ),
+
+                MyTextFormField(
                   labelText: getTransrlate(context, 'password'),
                   hintText: getTransrlate(context, 'password'),
                   suffixIcon: IconButton(
@@ -196,11 +258,11 @@ class _RegisterFormState extends State<RegisterForm> {
   register(Provider_control themeColor) async {
     model.gender = checkboxValueA.toString();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    API(context).post('user/register', {
-      'name': model.Name,
+    API(context).post('register', {
+      'username': model.Name,
       'email': model.email,
       'password': model.password,
-      "password_confirmation": model.password_confirmation,
+
     }).then((value) {
       if (!value.containsKey('errors')) {
         setState(() => _isLoading = false);

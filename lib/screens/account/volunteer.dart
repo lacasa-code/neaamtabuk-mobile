@@ -77,7 +77,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only( right: 16, left: 16),
+                padding: EdgeInsets.only(right: 16, left: 16),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -88,109 +88,115 @@ class _VolunteerPageState extends State<VolunteerPage> {
                         validator: (String value) {
                           if (value.isEmpty) {
                             return "${getTransrlate(context, 'requiredempty')}";
-                          }else   if (value.length<=2) {
+                          } else if (value.length <= 2) {
                             return "${getTransrlate(context, 'requiredlength')}";
                           }
                           return null;
                         },
-                        onSaved: (String value) {
-                        },
+                        onSaved: (String value) {},
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       Align(
-                        alignment: Alignment.topRight,
+                          alignment: Alignment.topRight,
                           child: Text(" هل الطعام جاهز للتوزيع ؟")),
                       Container(
-                  width: ScreenUtil.getWidth(context),
-                  height: ScreenUtil.getHeight(context)/10,
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: ScreenUtil.getWidth(context)/2.5,
-                        child: ListTile(
-                          title:  Text('لا'),
-                          leading: Radio<SingingCharacter>(
-                            value: SingingCharacter.lafayette,
-                            groupValue: _character,
-                            onChanged: (SingingCharacter value) {
-                              setState(() {
-                                _character = value;
-                              });
-                            },
-                          ),
+                        width: ScreenUtil.getWidth(context),
+                        height: ScreenUtil.getHeight(context) / 10,
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: ScreenUtil.getWidth(context) / 2.5,
+                              child: ListTile(
+                                title: Text('لا'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.lafayette,
+                                  groupValue: _character,
+                                  activeColor: themeColor.getColor(),
+
+                                  onChanged: (SingingCharacter value) {
+                                    setState(() {
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: ScreenUtil.getWidth(context) / 2.5,
+                              child: ListTile(
+                                title: Text('نعم'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.jefferson,
+                                  activeColor: themeColor.getColor(),
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter value) {
+                                    setState(() {
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Container(
-                        width: ScreenUtil.getWidth(context)/2.5,
-                        child: ListTile(
-                          title:  Text('نعم'),
-                          leading: Radio<SingingCharacter>(
-                            value: SingingCharacter.jefferson,
-                            groupValue: _character,
-                            onChanged: (SingingCharacter value) {
-                              setState(() {
-                                _character = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                       SizedBox(
                         height: 20,
-                      ),  Align(
-                        alignment: Alignment.topRight,
+                      ),
+                      Align(
+                          alignment: Alignment.topRight,
                           child: Text(" هل الطعام جاهز للتغليف ؟")),
                       Container(
-                  width: ScreenUtil.getWidth(context),
-                  height: ScreenUtil.getHeight(context)/10,
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: ScreenUtil.getWidth(context)/2.5,
-                        child: ListTile(
-                          title:  Text('لا'),
-                          leading: Radio<SingingCharacter>(
-                            value: SingingCharacter.lafayette,
-                            groupValue: _character,
-                            onChanged: (SingingCharacter value) {
-                              setState(() {
-                                _character = value;
-                              });
-                            },
-                          ),
+                        width: ScreenUtil.getWidth(context),
+                        height: ScreenUtil.getHeight(context) / 10,
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: ScreenUtil.getWidth(context) / 2.5,
+                              child: ListTile(
+                                title: Text('لا'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.lafayette,
+                                  activeColor: themeColor.getColor(),
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter value) {
+                                    setState(() {
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: ScreenUtil.getWidth(context) / 2.5,
+                              child: ListTile(
+                                title: Text('نعم'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.jefferson,
+                                  activeColor: themeColor.getColor(),
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter value) {
+                                    setState(() {
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Container(
-                        width: ScreenUtil.getWidth(context)/2.5,
-                        child: ListTile(
-                          title:  Text('نعم'),
-                          leading: Radio<SingingCharacter>(
-                            value: SingingCharacter.jefferson,
-                            groupValue: _character,
-                            onChanged: (SingingCharacter value) {
-                              setState(() {
-                                _character = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                       SizedBox(
                         height: 20,
                       ),
                       Container(
                         height: 40,
                         width: ScreenUtil.getWidth(context),
-                        margin: EdgeInsets.only(top: 12, bottom: 0, right: 16, left: 16),
-                        padding: EdgeInsets.only( right: 16, left: 16),
+                        margin: EdgeInsets.only(
+                            top: 12, bottom: 0, right: 16, left: 16),
+                        padding: EdgeInsets.only(right: 16, left: 16),
                         child: FlatButton(
                           shape: RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(1.0),
@@ -213,7 +219,6 @@ class _VolunteerPageState extends State<VolunteerPage> {
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -318,6 +323,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
       ),
     );
   }
+
   register(Provider_control themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('login/facebook',
@@ -330,7 +336,6 @@ class _VolunteerPageState extends State<VolunteerPage> {
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);
         Phoenix.rebirth(context);
-
       } else {
         showDialog(
             context: context,
@@ -340,4 +345,5 @@ class _VolunteerPageState extends State<VolunteerPage> {
     });
   }
 }
+
 enum SingingCharacter { lafayette, jefferson }

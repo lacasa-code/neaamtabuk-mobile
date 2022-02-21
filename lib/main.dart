@@ -101,8 +101,8 @@ class _MyAppState extends State<MyApp> {
         return supportedLocales.first;
       },
       supportedLocales: [
-        Locale("en", ""),
         Locale("ar", ""),
+        Locale("en", "")
       ],
       theme: ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {
@@ -127,11 +127,11 @@ class _MyAppState extends State<MyApp> {
 
   void getIntial() async {
 //Remove this method to stop OneSignal Debugging
-    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-    OneSignal.shared.setAppId("d4f40928-8ba1-4b12-b6a0-f6a1db13a47c");
+//     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+//     OneSignal.shared.setAppId("d4f40928-8ba1-4b12-b6a0-f6a1db13a47c");
 // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-    OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-      print("Accepted permission: $accepted");
-    });
+//     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+//       print("Accepted permission: $accepted");
+//     });
   }
 }

@@ -46,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   MyTextFormField(
-                    intialLabel: '',
+                    intialLabel: 'noortaher@gmail.com',
                     keyboard_type: TextInputType.emailAddress,
                     labelText: getTransrlate(context, 'mail'),
                     hintText: getTransrlate(context, 'mail'),
@@ -66,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
                     },
                   ),
                   MyTextFormField(
-                    intialLabel: '',
+                    intialLabel: '12345678',
                     labelText: getTransrlate(context, 'password'),
                     hintText: getTransrlate(context, 'password'),
                     suffixIcon: IconButton(
@@ -124,39 +124,15 @@ class _LoginFormState extends State<LoginForm> {
                           setState(() => isloading = true);
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          API(context, Check: false).post('user/login', {
+                          API(context, Check: false).post('login', {
                             'email': model.email,
                             'password': model.password,
                           }).then((value) {
+                            print(value);
                             setState(() => isloading = false);
                             if (value != null) {
                               if (value['status_code'] == 200) {
                                 var user = value['data'];
-                                if (user.containsKey('vendor_details')) {
-                                  prefs.setInt("complete",
-                                      user['vendor_details']['complete']);
-                                  prefs.setString("vendor", 'vendor');
-                                  Provider.of<Provider_control>(context,
-                                          listen: false)
-                                      .setComplete(user['vendor_details']
-                                                  ['approved'] ==
-                                              1
-                                          ? 1
-                                          : user['vendor_details']
-                                                      ['complete'] ==
-                                                  1
-                                              ? user['vendor_details']
-                                                          ['rejected'] ==
-                                                      1
-                                                  ? 2
-                                                  : user['vendor_details']
-                                                              ['declined'] ==
-                                                          1
-                                                      ? 3
-                                                      : 4
-                                              : 2);
-                                }
-
                                 prefs.setString(
                                     "user_email", "${user['email']}");
                                 prefs.setString("user_name", "${user['name']}");
@@ -172,7 +148,7 @@ class _LoginFormState extends State<LoginForm> {
                                 showDialog(
                                     context: context,
                                     builder: (_) =>
-                                        ResultOverlay('${value['errors']}'));
+                                        ResultOverlay('${value['message']}'));
                               }
                             }
                           });

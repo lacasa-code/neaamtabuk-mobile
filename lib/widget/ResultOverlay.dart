@@ -41,54 +41,56 @@ class ResultOverlayState extends State<ResultOverlay>
     final themeColor = Provider.of<Provider_control>(context);
     return Align(
       alignment: Alignment.bottomCenter,
-      child: Material(
-        color: Colors.transparent,
-        child: ScaleTransition(
-          scale: scaleAnimation,
-          child: Container(
-            width: ScreenUtil.getWidth(context),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          color: Colors.transparent,
+          child: ScaleTransition(
+            scale: scaleAnimation,
+            child: Container(
+              width: ScreenUtil.getWidth(context),
 
-            decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(1.0))),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(height: 25,color: Colors.orange,),
-                SizedBox(height: 15,),
-                widget.icon??  Icon(
-                Icons.info_outline,
-                  size: 80,
-                  color: Colors.lightGreen,
-                ),
-                Container(width: ScreenUtil.getWidth(context)/2,
-                  child: Text(
-                    '${widget.message??''}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: themeColor.getColor(),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,),
+              decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(1.0))),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(height: 15,),
+                  widget.icon??  Icon(
+                  Icons.info_outline,
+                    size: 80,
+                    color: Colors.lightGreen,
                   ),
-                ),
-                SizedBox(height: 15),
+                  Container(width: ScreenUtil.getWidth(context)/2,
+                    child: Text(
+                      '${widget.message??''}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: themeColor.getColor(),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,),
+                    ),
+                  ),
+                  SizedBox(height: 15),
 
-                InkWell(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
-                      color: Colors.orange,
-                      child: Text(getTransrlate(context, 'close'),
-                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
-                ),
-                SizedBox(height: 45),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
+                        color: themeColor.getColor(),
+                        child: Text(getTransrlate(context, 'close'),
+                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
+                  ),
+                  SizedBox(height: 45),
 
-              ],
+                ],
+              ),
             ),
           ),
         ),
