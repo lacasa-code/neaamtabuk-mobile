@@ -19,12 +19,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/category_model.dart';
 
-class VolunteerPage extends StatefulWidget {
+class AddOrderPage extends StatefulWidget {
   @override
-  _VolunteerPageState createState() => _VolunteerPageState();
+  _AddOrderPageState createState() => _AddOrderPageState();
 }
 
-class _VolunteerPageState extends State<VolunteerPage> {
+class _AddOrderPageState extends State<AddOrderPage> {
   String email, facebook_id;
   Provider_control themeColor;
   final _formKey = GlobalKey<FormState>();
@@ -362,7 +362,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
 
   register(Provider_control themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    API(context).post('donate',
+    API(context).post('order',
         {
           'category_id': categories_item.id,
           'ready_to_distribute': ready_to_distribute,

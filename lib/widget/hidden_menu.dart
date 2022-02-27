@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/main.dart';
+import 'package:flutter_pos/screens/account/user_information.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -71,9 +72,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                             fontWeight: FontWeight.bold),
                       ),
                       AutoSizeText(
-                        name == null
-                            ? getTransrlate(context, 'gust')
-                            : name,
+                        name ?? getTransrlate(context, 'gust'),
                         style: TextStyle(
                             fontSize: 17,
                             color: Colors.white,
@@ -94,6 +93,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     children: <Widget>[
                       InkWell(
                         onTap: () {
+                          Nav.route(context, UserInfo());
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(

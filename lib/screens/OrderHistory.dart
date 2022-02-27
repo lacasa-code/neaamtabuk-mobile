@@ -2,8 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/nearDonors.dart';
 import 'package:flutter_pos/model/order_model.dart';
+import 'package:flutter_pos/screens/account/addOrder.dart';
 import 'package:flutter_pos/screens/map_sample.dart';
+import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -21,7 +24,7 @@ class Orders extends StatefulWidget {
 }
 
 class _OrdersState extends State<Orders> {
-  List<Order> orders = [Order(id: 1, approved: '',orderNumber: 1234)];
+  List<NearDonor> orders = [];
   @override
   void initState() {
     getOrders("1");
@@ -52,6 +55,9 @@ class _OrdersState extends State<Orders> {
             ],
           ),
         ),
+        // floatingActionButton: FlatButton(color: themeColor.getColor(),child: Text("Add Order",style: TextStyle(color: Colors.white)),onPressed: (){
+        //   Nav.route(context, AddOrderPage());
+        // },),
         body: !themeColor.isLogin
             ? Notlogin()
             : orders == null
@@ -87,109 +93,21 @@ class _OrdersState extends State<Orders> {
                                                         context) /
                                                     2.5,
                                                 child: AutoSizeText(
-                                                  '${orders[index].orderNumber}رقم الطلب : ',
+                                                  '#${orders[index].id}',
                                                   maxLines: 1,
                                                   style:
                                                       TextStyle(fontSize: 13),
                                                 )),
-                                            AutoSizeText(
-                                              DateFormat('yyyy-MM-dd').format(
-                                                  DateTime.tryParse(
-                                                      orders[index].createdAt ??
-                                                          '2020-10-10')),
-                                              maxLines: 1,
-                                              style: TextStyle(fontSize: 13),
-                                            ),
                                           ],
                                         ),
-                                        orders[index].orderDetails == null
-                                            ? Container()
-                                            : ListView.builder(
-                                                padding: EdgeInsets.all(1),
-                                                primary: false,
-                                                shrinkWrap: true,
-                                                physics:
-                                                    NeverScrollableScrollPhysics(),
-                                                itemCount: orders[index]
-                                                    .orderDetails
-                                                    .length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int i) {
-                                                  return InkWell(
-                                                    onTap: () {},
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(4),
-                                                      child: Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
-                                                            width: ScreenUtil
-                                                                    .getWidth(
-                                                                        context) /
-                                                                8,
-                                                            child:
-                                                                CachedNetworkImage(
-                                                              imageUrl: orders[
-                                                                          index]
-                                                                      .orderDetails[
-                                                                          i]
-                                                                      .productImage
-                                                                      .isNotEmpty
-                                                                  ? orders[
-                                                                          index]
-                                                                      .orderDetails[
-                                                                          i]
-                                                                      .productImage[
-                                                                          0]
-                                                                      .image
-                                                                  : ' ',
-                                                              errorWidget:
-                                                                  (context, url,
-                                                                          error) =>
-                                                                      Icon(
-                                                                Icons.image,
-                                                                color: Colors
-                                                                    .black12,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            width: ScreenUtil
-                                                                    .getWidth(
-                                                                        context) /
-                                                                2,
-                                                            child: AutoSizeText(
-                                                              "${themeColor.getlocal() == 'ar' ? orders[index].orderDetails[i].productName ?? orders[index].orderDetails[i].productNameEn : orders[index].orderDetails[i].productNameEn ?? orders[index].orderDetails[i].productName}",
-                                                              maxLines: 2,
-                                                              style: TextStyle(
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                              minFontSize: 11,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
                                         SizedBox(
-                                          height: 15,
+                                          height: 5,
                                         ),
                                         Container(
                                             width: ScreenUtil.getWidth(context) / 1.5,
                                             child: AutoSizeText(
-                                              'حالة التجهيز : جاهز ',
+                                              '${orders[index].username}',
+                                              style: TextStyle(color: themeColor.getColor()),
                                               maxLines: 1,
                                             )),
                                         SizedBox(
@@ -198,7 +116,22 @@ class _OrdersState extends State<Orders> {
                                         Container(
                                             width: ScreenUtil.getWidth(context) / 1.5,
                                             child: AutoSizeText(
-                                              'حالة التغليف :غير جاهز ',
+                                              '${orders[index].mobile} ',
+                                              maxLines: 1,
+                                            )),
+                                        Container(
+                                            width: ScreenUtil.getWidth(context) / 1.5,
+                                            child: AutoSizeText(
+                                              '${orders[index].address} ',
+                                              maxLines: 1,
+                                            )),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Container(
+                                            width: ScreenUtil.getWidth(context) / 1.5,
+                                            child: AutoSizeText(
+                                              '${orders[index].distance} Km',
                                               maxLines: 1,
                                             )),
                                         SizedBox(
@@ -234,7 +167,7 @@ class _OrdersState extends State<Orders> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                Nav.route(context, MapSample());
+                                                Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
                                               },
                                               child: AutoSizeText(
                                                 '${getTransrlate(context, 'OrderTrack')} ',
@@ -267,12 +200,12 @@ class _OrdersState extends State<Orders> {
   }
 
   void getOrders(String from) {
-    //   API(context).post('user/show/orders', {"from": from}).then((value) {
-    //     if (value != null) {
-    //       setState(() {
-    //         orders = Order_model.fromJson(value).data;
-    //       });
-    //     }
-    //   });
+      API(context).get('nearDonors').then((value) {
+        if (value != null) {
+          setState(() {
+            orders = NearDonors.fromJson(value).data;
+          });
+        }
+      });
   }
 }

@@ -57,7 +57,7 @@ class AlertsState extends State<Alerts>
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(height: 25,color: Colors.orange,),
+                Container(height: 25,color: Colors.green,),
                 SizedBox(height: 15,),
                Custom_Loading(),
                 Container(width: ScreenUtil.getWidth(context)/2,

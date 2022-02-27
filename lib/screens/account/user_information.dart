@@ -26,7 +26,7 @@ class UserInfo extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInfo> {
-  String name, email;
+  String name, email,role_id;
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
   bool _isLoading = false;
@@ -118,66 +118,24 @@ class _UserInfoState extends State<UserInfo> {
                                       padding: EdgeInsets.only(
                                           left: 25.0, right: 25.0, top: 25.0),
                                       child: Text(
-                                        getTransrlate(context, 'Firstname'),
+                                        getTransrlate(context, 'AddressTitle'),
                                       ),
                                     ),
                                     Padding(
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
-                                          initialValue: userModal.name,
-                                          inputFormatters: [
-                                            new LengthLimitingTextInputFormatter(254),
-                                          ],
-                                          decoration: const InputDecoration(
-                                            hintText: "ادخل الاسم",
-                                          ),
-                                          enabled: !_status,
-                                          validator: (String value) {
-                                            if (value.isEmpty) {
-                                              return getTransrlate(context, 'requiredempty');
-                                            }else   if (value.length<=2) {
-                                              return "${getTransrlate(context, 'requiredlength')}";
-                                            }
-                                            return null;
-                                          },
-                                          autofocus: !_status,
-                                          onSaved: (String val) =>
-                                              userModal.name = val,
-                                          onChanged: (String val) {
-                                            userModal.name = val;
-                                          },
-                                        )),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 25.0),
-                                      child: Text(
-                                        getTransrlate(context, 'Lastname'),
-                                      ),
-                                    ),
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 2.0),
-                                        child: TextFormField(
-                                          initialValue: userModal.lastName,
+                                          initialValue: userModal.address,
                                           decoration: const InputDecoration(),
                                           enabled: !_status,
                                           inputFormatters: [
                                             new LengthLimitingTextInputFormatter(254),
                                           ],
-                                          validator: (String value) {
-                                            // if (value.isEmpty) {
-                                            //   return getTransrlate(
-                                            //       context, 'Lastname');
-                                            // }
-                                            // _formKey.currentState.save();
-                                            // return null;
-                                          },
                                           autofocus: !_status,
                                           onSaved: (String val) =>
-                                              userModal.lastName = val,
+                                              userModal.address = val,
                                           onChanged: (String val) {
-                                            userModal.lastName = val;
+                                            userModal.address = val;
                                           },
                                         )),
                                     Padding(
@@ -216,7 +174,7 @@ class _UserInfoState extends State<UserInfo> {
                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 25.0),
+                                            left: 25.0, right: 25.0, top: 1.0),
                                         child: Text(
                                           getTransrlate(context, 'phone'),
                                         )),
@@ -242,39 +200,7 @@ class _UserInfoState extends State<UserInfo> {
                                           enabled: !_status,
                                           onSaved: (String val) =>
                                               userModal.phoneNo = val,
-                                          onChanged: (String val) =>
-                                              userModal.CountroyCode = val,
-                                        )),
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 25.0),
-                                        child: Text(
-                                          getTransrlate(context, 'birthdate'),
-                                        )),
-                                    InkWell(
-                                      onTap: (){
-                                        _status?null:  _selectDateto(context);
-                                      },
-                                      child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 25.0, right: 25.0, top: 2.0),
-                                          child: TextFormField(
-                                            controller: _tocontroller,
-                                            keyboardType: TextInputType.datetime,
-                                            decoration: InputDecoration(),
-                                            inputFormatters: [
-                                              new LengthLimitingTextInputFormatter(254),
-                                            ],
-                                            enabled:false,
-                                            validator: (String value) {
-
-                                            },
-                                            onSaved: (String val) =>
-                                                userModal.birthdate = val,
-                                            onChanged: (String val) =>
-                                                userModal.birthdate = val,
-                                          )),
-                                    ),
+                                         )),
                                     Padding(
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 25.0),
@@ -308,29 +234,6 @@ class _UserInfoState extends State<UserInfo> {
                                     _status
                                         ? _getEditIcon()
                                         : _getActionButtons(),
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 25.0),
-                                        child: Text(
-                                          getTransrlate(context, 'password'),
-                                        )),
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 25.0,
-                                            right: 25.0,
-                                            top: 2.0,
-                                            bottom: 10),
-                                        child: TextFormField(
-                                          inputFormatters: [
-                                            new LengthLimitingTextInputFormatter(254),
-                                          ],
-                                          initialValue: "123456789",
-                                          decoration: InputDecoration(
-                                              hintText: "ادخل كلمة المرور"),
-                                          enabled: !_status,
-                                          obscureText: true,
-                                        )),
-                                    _getChangePassword(),
                                   SizedBox(height: 20,)
                                   ],
                                 ),
@@ -348,15 +251,6 @@ class _UserInfoState extends State<UserInfo> {
     myFocusNode.dispose();
     super.dispose();
   }
-  Future<void> _selectDateto(BuildContext context) async {
-print(userModal.birthdate);
-    final DateTime picked = await showDatePicker(
-        context: context,initialDate:userModal.birthdate==null? DateTime(2005):userModal.birthdate.isEmpty? DateTime(2005):DateTime.parse(userModal.birthdate),lastDate: DateTime(2005), firstDate: DateTime(1930));
-    if (picked != null)
-      setState(() {
-        _tocontroller.text = DateFormat('yyyy-MM-dd').format(picked);
-      });
-  }
   Widget _getActionButtons() {
     return Center(
       child: Padding(
@@ -370,7 +264,7 @@ print(userModal.birthdate);
                 padding: EdgeInsets.only(right: 10.0),
                 child:  loading?FlatButton(
                   minWidth: ScreenUtil.getWidth(context) / 2.5,
-                  color: Colors.orange,
+                  color: Colors.green,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child:Container(
@@ -390,18 +284,25 @@ print(userModal.birthdate);
                       _formKey.currentState.save();
                     //  final SharedPreferences prefs = await SharedPreferences.getInstance();
                       setState(() => loading = true);
-                      API(context).post('user/edit/profile', {
-                        "name": userModal.name,
+                      API(context).post('update', {
+                        "username": userModal.name,
                         "email": userModal.email,
-                        "last_name": userModal.lastName,
-                        "phone_no": userModal.phoneNo,
-                        "birthdate": userModal.birthdate,
+                        "address": userModal.address,
+                        "mobile": userModal.phoneNo,
                         "gender": userModal.gender,
-                      }).then((value) {
-                        if (value != null) {
-                          setState(() => loading = false);
+                        "region": userModal.email,
+                        "longitude": userModal.longitude??30.3,
+                        "latitude": userModal.latitude??30.3,
+                        "status": userModal.status??1,
+                        "donation_type_id": 1,
+                        "role_id": role_id,
 
-                          if (value['status_code'] == 200) {
+                      }).then((value) {
+                        setState(() => loading = false);
+
+                        if (value != null) {
+
+                          if (value['status'] == true) {
 
                             getUser();
                             showDialog(
@@ -417,7 +318,7 @@ print(userModal.birthdate);
                             showDialog(
                                 context: context,
                                 builder: (_) =>
-                                    ResultOverlay("${value['errors']??value['message']}" ));
+                                    ResultOverlay("${value['message']}" ));
                           }
                         }
                       });
@@ -427,13 +328,13 @@ print(userModal.birthdate);
                       width: ScreenUtil.getWidth(context) / 2.5,
                       padding: const EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.orange)),
+                          border: Border.all(color: Colors.green)),
                       child: Center(
                         child: Text(
                             getTransrlate(context, 'save'),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.orange),
+                              color: Colors.green),
                         ),
                       )),
                 ),
@@ -478,7 +379,7 @@ print(userModal.birthdate);
         child: Container(
           width: ScreenUtil.getWidth(context) / 2.5,
           padding: const EdgeInsets.all(10.0),
-          decoration: BoxDecoration(border: Border.all(color: Colors.orange)),
+          decoration: BoxDecoration(border: Border.all(color: Colors.green)),
           child: Center(
             child: AutoSizeText(
               getTransrlate(context, 'edit'),
@@ -487,7 +388,7 @@ print(userModal.birthdate);
               maxLines: 1,
               minFontSize: 10,
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
             ),
           ),
         ),
@@ -506,7 +407,7 @@ print(userModal.birthdate);
         child: Container(
           width: ScreenUtil.getWidth(context) / 2.5,
           padding: const EdgeInsets.all(10.0),
-          decoration: BoxDecoration(border: Border.all(color: Colors.orange)),
+          decoration: BoxDecoration(border: Border.all(color: Colors.green)),
           child: Center(
             child: AutoSizeText(
               getTransrlate(context, 'changePassword'),
@@ -515,7 +416,7 @@ print(userModal.birthdate);
               maxLines: 1,
               minFontSize: 10,
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
             ),
           ),
         ),
@@ -530,18 +431,20 @@ print(userModal.birthdate);
     SharedPreferences.getInstance().then((pref) => {
       setState(() {
         name = pref.getString('user_name');
+        role_id = pref.getString('role_id');
         email = pref.getString('user_email');
       }),
-      API(context).get('user/profile/info').then((value) {
+    print(pref.getString('token')),
+        API(context).get('userProfile').then((value) {
         if (value != null) {
-          if (value['status_code'] == 200) {
+          print(value);
+          if (value['status'] == true) {
             var user = value['data'];
             pref.setString("user_email", user['email']??' ');
-            pref.setString("user_name", user['name']??' ');
+            pref.setString("user_name", user['username']??' ');
             setState(() {
               userModal = UserInformation.fromJson(value).data;
             });
-            userModal.birthdate==null?null: _tocontroller.text=DateFormat('yyyy-MM-dd').format(DateTime.parse(userModal.birthdate));
           } else {
             showDialog(
                 context: context,

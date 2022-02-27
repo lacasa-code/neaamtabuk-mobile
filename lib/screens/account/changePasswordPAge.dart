@@ -182,7 +182,7 @@ class _changePasswordState extends State<changePassword> {
                     Center(
                       child: loading?FlatButton(
                         minWidth: ScreenUtil.getWidth(context) / 2.5,
-                        color: Colors.orange,
+                        color: Colors.green,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child:Container(
@@ -200,7 +200,7 @@ class _changePasswordState extends State<changePassword> {
                         child: Container(
                           width: ScreenUtil.getWidth(context) / 2.5,
                           padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.orange)),
+                          decoration: BoxDecoration(border: Border.all(color: Colors.green)),
                           child: Center(
                             child: AutoSizeText(
                               getTransrlate(context, 'save'),
@@ -209,7 +209,7 @@ class _changePasswordState extends State<changePassword> {
                               maxLines: 1,
                               minFontSize: 10,
                               style:
-                              TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+                              TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
                             ),
                           ),
                         ),

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_pos/screens/account/Account.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -76,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
               ),
-              RegisterForm(),
+              RegisterForm(1),
               SizedBox(
                 height: 50,
               )

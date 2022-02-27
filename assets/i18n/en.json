@@ -383,6 +383,8 @@
   "orderTotal": "Total",
   "OrderContent": "View product specifications",
   "OrderPref": "Order Pref",
+  "register_as_delegate": "Register as Delegate",
+  "nearRecipent": "Near Recipent",
 
   "CodeConfirm": "Code Confirm",
   "Confirm": "Confirm",
@@ -445,7 +447,7 @@
   "mixed": "It is not possible to complete the purchase with wholesale and retail products in the same order, please choose only wholesale or retail products",
   "notavailable": "Not Available",
 
-  "register_as_seller": "I want to register as a beneficial",
+  "register_as_seller": "I want to register as recipent",
   "Opening_contact":"Opening times and contact",
   "General_conditions":"General conditions for registrationt",
   "Return_Policy":"Return Policy",

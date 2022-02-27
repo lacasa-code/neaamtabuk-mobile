@@ -44,6 +44,7 @@ class API {
         'Accept-Language': Provider.of<Provider_control>(context,listen: false).getlocal(),
       });
       print(full_url);
+      print(response.body);
       return getAction(response);
     } catch (exception, stackTrace) {
       showDialog(
@@ -64,7 +65,6 @@ class API {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    //print("body =${body}");
 
     try {
       http.Response response = await http.post(full_url,
@@ -75,6 +75,8 @@ class API {
             'Accept-Language': Provider.of<Provider_control>(context,listen: false).getlocal(),
           },
           body: json.encode(body));
+      print("body =${response.body}");
+
       return getAction(response);
     } catch (e) {
 

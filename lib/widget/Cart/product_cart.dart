@@ -80,7 +80,7 @@ class _ProductCartState extends State<ProductCart> {
                   width: 20.0,
                   child: Center(
                     child: CircularProgressIndicator(  valueColor:
-                    AlwaysStoppedAnimation<Color>( Colors.orange),),
+                    AlwaysStoppedAnimation<Color>( Colors.green),),
                   ),
                 ),
               ): IconButton(

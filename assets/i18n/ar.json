@@ -78,6 +78,7 @@
   "intersted": "اهتماماتك",
 
   "category": "الفئات",
+  "nearRecipent": "اقرب المستفيدين",
 
   "SeeAllComments": "عرض جميع التعليقات",
   "SaveAddress": "حفظ العنوان",
@@ -128,6 +129,7 @@
 
   "want_to_buy_products": "أسجل كـ تطوع",
   "register_as_seller": "أسجل كـ مستفيد",
+  "register_as_delegate": "أسجل كـ مندوب",
   "NewPassword": "كلمة المرور الجديدة",
   "taxCardNo": "رقم البطاقة الضريبية",
   "WholesalerPermit": "تصريح تاجر الجملة",

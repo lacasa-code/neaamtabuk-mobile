@@ -46,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   MyTextFormField(
-                    intialLabel: 'noortaher@gmail.com',
+                    intialLabel: 'ali@gmail.com',
                     keyboard_type: TextInputType.emailAddress,
                     labelText: getTransrlate(context, 'mail'),
                     hintText: getTransrlate(context, 'mail'),
@@ -131,19 +131,16 @@ class _LoginFormState extends State<LoginForm> {
                             print(value);
                             setState(() => isloading = false);
                             if (value != null) {
-                              if (value['status_code'] == 200) {
+                              if (value['status'] == true) {
+                                print("${value['access_token']}");
                                 var user = value['data'];
-                                prefs.setString(
-                                    "user_email", "${user['email']}");
-                                prefs.setString("user_name", "${user['name']}");
-                                prefs.setString("token", "${user['token']}");
+                                prefs.setString("token", "${value['access_token']}");
+                                prefs.setString("role_id", "${user['role_id']}");
+                                prefs.setString("user_email", "${user['email']}");
+                                prefs.setString("user_name", "${user['username']}");
                                 prefs.setInt("user_id", user['id']);
                                 themeColor.setLogin(true);
-
                                 Phoenix.rebirth(context);
-
-                                // Navigator.pushAndRemoveUntil(
-                                //     context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
                               } else {
                                 showDialog(
                                     context: context,

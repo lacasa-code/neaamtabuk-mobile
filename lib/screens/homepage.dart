@@ -11,6 +11,7 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/app_bar_custom.dart';
 import 'package:flutter_pos/widget/hidden_menu.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -23,7 +24,13 @@ class _HomeState extends State<Home> {
 
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  String role_id;
 
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final provider_Data = Provider.of<Provider_Data>(context);
@@ -68,7 +75,7 @@ class _HomeState extends State<Home> {
                     ),
                     SizedBox(height: 20,),
 
-                    InkWell(
+                    role_id=='1'? InkWell(
                       onTap: (){
                         Nav.route(context, VolunteerPage());
                       },
@@ -87,9 +94,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 20,),
-
+                    ):  role_id=='2'?
                     InkWell(
                       onTap: (){
                         Nav.route(context, Orders());
@@ -109,7 +114,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                    ),
+                    ):Container(),
 
                   ],
                 ),
@@ -124,6 +129,17 @@ class _HomeState extends State<Home> {
   }
 
   Future<Null> _refreshLocalGallery() async{
+  }
+
+  void getUser() {
+    SharedPreferences.getInstance().then((pref) => {
+      setState(() {
+        role_id = pref.getString('role_id');
+      }),
+      print(pref.getString('role_id')),
+    });
 
   }
+
+
 }

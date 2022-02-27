@@ -61,7 +61,7 @@ class _LostPasswordState extends State<LostPassword> {
                       width: ScreenUtil.getWidth(context) / 3,
                       padding: const EdgeInsets.all(5.0),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.orange)),
+                          border: Border.all(color: Colors.green)),
                       child: Center(
                         child: AutoSizeText(
                           getTransrlate(context, 'changePassword'),
@@ -71,7 +71,7 @@ class _LostPasswordState extends State<LostPassword> {
                           minFontSize: 10,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.orange),
+                              color: Colors.green),
                         ),
                       ),
                     ),

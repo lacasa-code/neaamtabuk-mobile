@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_pos/screens/account/Account.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -19,6 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
 
 class RegisterForm extends StatefulWidget {
+  int role_id;
+  RegisterForm(this.role_id);
   @override
   _RegisterFormState createState() => _RegisterFormState();
 }
@@ -262,22 +263,28 @@ class _RegisterFormState extends State<RegisterForm> {
       'username': model.Name,
       'email': model.email,
       'password': model.password,
+      'address': model.address,
+      'mobile': model.mobile,
+      'region': model.region,
+      'gender': model.gender,
+      'role_id': widget.role_id,
+      'donation_type_id':1,
+      'status':"active",
+      'longitude':30.222,
+      'latitude':30.2525,
 
     }).then((value) {
-      if (!value.containsKey('errors')) {
+      print(value);
+      if (value['status'] == true) {
         setState(() => _isLoading = false);
         var user = value['data'];
-        //   prefs.setString("user_email", user['email']);
-        // //  prefs.setString("email_verified_at", user['email_verified_at']);
-        //   if (user.containsKey('vendor_details')) {
-        //     prefs.setInt(
-        //         "complete", user['vendor_details']['complete']);
-        //     prefs.setString("vendor", 'vendor');
-        //   }
-        //   prefs.setString("user_name", user['name']);
-        //   prefs.setString("token", user['token']);
-        //   prefs.setInt("user_id", user['id']);
-        //   themeColor.setLogin(true);
+          prefs.setString("user_email", user['email']);
+          prefs.setString("user_name", user['username']);
+          // prefs.setString("token", user['token']??'');
+          prefs.setString("mobile", user['mobile']);
+          prefs.setString("role_id", "${user['role_id']}");
+          prefs.setInt("user_id", user['id']);
+          themeColor.setLogin(true);
         showDialog(
                 context: context,
                 builder: (_) => ResultOverlay('${value['message']}'))
@@ -285,8 +292,6 @@ class _RegisterFormState extends State<RegisterForm> {
           Nav.routeReplacement(context, LoginPage());
         });
 
-        // Navigator.pushAndRemoveUntil(
-        //     context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
       } else {
         showDialog(
             context: context,

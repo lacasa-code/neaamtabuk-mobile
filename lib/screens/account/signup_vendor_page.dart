@@ -9,6 +9,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/register/register_form.dart';
 import 'package:flutter_pos/widget/register/register_form_vendor.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -72,7 +73,7 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
                   ),
                 ),
               ),
-              RegisterFormVendor(),
+              RegisterForm(2),
               SizedBox(
                 height: 50,
               )

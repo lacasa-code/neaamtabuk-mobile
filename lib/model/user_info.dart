@@ -25,37 +25,29 @@ class UserInformation {
 class User {
   String name;
   String email;
-  int wishlistsCount;
-  int historyCount;
-  String paymentMethod;
-  String lastTransactionTime;
-  String lastName;
+  String address;
   String phoneNo;
-  String CountroyCode;
-  String birthdate;
+  String region;
+  String longitude;
+  String latitude;
+  String status;
+  String role_id;
+  String donation_type_id;
   String gender;
   User(
       {this.name,
         this.email,
-        this.wishlistsCount,
-        this.historyCount,
-        this.paymentMethod,
-        this.lastTransactionTime,
-        this.lastName,
+        this.address,
         this.phoneNo,
-        this.birthdate,
+        this.region,
         this.gender});
 
   User.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    name = json['username'];
     email = json['email'];
-    wishlistsCount = json['wishlists_count'];
-    historyCount = json['history_count'];
-    paymentMethod = json['payment_method'];
-    lastTransactionTime = json['last_transaction_time'];
-    lastName = json['last_name'];
-    phoneNo = json['phone_no'];
-    birthdate = json['birthdate'];
+    address = json['address'];
+    phoneNo = json['mobile'];
+    region = json['region'];
     gender = json['gender'];
   }
 
@@ -63,13 +55,9 @@ class User {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     data['email'] = this.email;
-    data['wishlists_count'] = this.wishlistsCount;
-    data['history_count'] = this.historyCount;
-    data['payment_method'] = this.paymentMethod;
-    data['last_transaction_time'] = this.lastTransactionTime;
-    data['last_name'] = this.lastName;
+    data['last_name'] = this.address;
     data['phone_no'] = this.phoneNo;
-    data['birthdate'] = this.birthdate;
+    data['region'] = this.region;
     data['gender'] = this.gender;
     return data;
   }

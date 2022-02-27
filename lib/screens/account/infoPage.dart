@@ -38,11 +38,11 @@ class Info extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
                   children: [
-                    Icon(Icons.circle, color: Colors.orange,size: 14,),
+                    Icon(Icons.circle, color: Colors.green,size: 14,),
                     SizedBox(width: 5,),
                     Text(
                       'هذا النص هو مثال',
-                      style: TextStyle(fontSize: 16,color: Colors.orange, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 16,color: Colors.green, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(width: 5,),
 
@@ -53,11 +53,11 @@ class Info extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
                   children: [
-                    Icon(Icons.circle, color: Colors.orange,size: 14,),
+                    Icon(Icons.circle, color: Colors.green,size: 14,),
                     SizedBox(width: 5,),
                     Text(
                       'هذا النص هو مثال',
-                      style: TextStyle(fontSize: 16,color: Colors.orange, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 16,color: Colors.green, fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
@@ -66,11 +66,11 @@ class Info extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
                   children: [
-                    Icon(Icons.circle, color: Colors.orange,size: 14,),
+                    Icon(Icons.circle, color: Colors.green,size: 14,),
                     SizedBox(width: 5,),
                     Text(
                       'هذا النص هو مثال',
-                      style: TextStyle(fontSize: 16,color: Colors.orange, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 16,color: Colors.green, fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
@@ -79,11 +79,11 @@ class Info extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
                   children: [
-                    Icon(Icons.circle, color: Colors.orange,size: 14,),
+                    Icon(Icons.circle, color: Colors.green,size: 14,),
                     SizedBox(width: 5,),
                     Text(
                       'هذا النص هو مثال',
-                      style: TextStyle(fontSize: 16,color: Colors.orange, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 16,color: Colors.green, fontWeight: FontWeight.w500),
                     ),
 
                   ],
