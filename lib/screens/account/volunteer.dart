@@ -32,7 +32,8 @@ class _VolunteerPageState extends State<VolunteerPage> {
   int ready_to_pack = 0;
   int ready_to_distribute = 0;
   Categories_item categories_item;
-  List<Categories_item>catedories;
+  List<Categories_item> catedories;
+
   @override
   void initState() {
     API(context).get('categories').then((value) {
@@ -43,7 +44,8 @@ class _VolunteerPageState extends State<VolunteerPage> {
             catedories = Categories_model.fromJson(value).data;
           });
         }
-  }});
+      }
+    });
   }
 
   @override
@@ -96,42 +98,48 @@ class _VolunteerPageState extends State<VolunteerPage> {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                    padding: EdgeInsets.only(
-                        left: 25.0, right: 25.0, top: 25.0),
-                    child: Text(
-                      getTransrlate(context, 'category'),
-                    )),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 25.0,
-                    right: 25.0,
-                    top: 10.0,
-                    bottom: 10),
-                child: DropdownSearch<Categories_item>(
-                  maxHeight: 120,
-                  validator: (Categories_item item) {
-                    if (item == null) {
-                      return "${getTransrlate(context, 'requiredempty')}";
-                    } else
-                      return null;
-                  },
-                  items: catedories,
-                  //  onFind: (String filter) => getData(filter),
-                  itemAsString: (Categories_item u) => u.name,
-                  onChanged: (Categories_item data) =>
-                  categories_item = data,
-                ),
-              ),
+
               Container(
                 padding: EdgeInsets.only(right: 16, left: 16),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Text(
+                              getTransrlate(context, 'category'),
+                            )),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 25.0, right: 25.0, top: 10.0, bottom: 10),
+                        child: DropdownSearch<Categories_item>(
+                          maxHeight: 120,
+                          validator: (Categories_item item) {
+                            if (item == null) {
+                              return "${getTransrlate(context, 'requiredempty')}";
+                            } else
+                              return null;
+                          },
+                          items: catedories,
+                          dropdownBuilder: (context, item) {
+                            return item == null
+                                ? Container()
+                                : Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(" ${item?.name} "),
+                                  );
+                          },
+                          //  onFind: (String filter) => getData(filter),
+                          itemAsString: (Categories_item u) => u.name,
+                          onChanged: (Categories_item data) =>
+                              categories_item = data,
+                        ),
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -151,7 +159,6 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                   value: 0,
                                   groupValue: ready_to_distribute,
                                   activeColor: themeColor.getColor(),
-
                                   onChanged: (int value) {
                                     setState(() {
                                       ready_to_distribute = value;
@@ -195,7 +202,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                               child: ListTile(
                                 title: Text('لا'),
                                 leading: Radio<int>(
-                                  value:0,
+                                  value: 0,
                                   activeColor: themeColor.getColor(),
                                   groupValue: ready_to_pack,
                                   onChanged: (int value) {
@@ -211,7 +218,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                               child: ListTile(
                                 title: Text('نعم'),
                                 leading: Radio<int>(
-                                  value:1,
+                                  value: 1,
                                   activeColor: themeColor.getColor(),
                                   groupValue: ready_to_pack,
                                   onChanged: (int value) {
@@ -362,26 +369,23 @@ class _VolunteerPageState extends State<VolunteerPage> {
 
   register(Provider_control themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    API(context).post('donate',
-        {
-          'category_id': categories_item.id,
-          'ready_to_distribute': ready_to_distribute,
-          'ready_to_pack': ready_to_pack,
-          'status_id': 1,
-        }).then((value) {
+    API(context).post('donate', {
+      'category_id': categories_item.id,
+      'ready_to_distribute': ready_to_distribute,
+      'ready_to_pack': ready_to_pack,
+      'status_id': 1,
+    }).then((value) {
       print(value);
       if (value['status'] == true) {
         Navigator.pop(context);
 
         showDialog(
             context: context,
-            builder: (_) =>
-                ResultOverlay('${value['message']}'));
+            builder: (_) => ResultOverlay('${value['message']}'));
       } else {
         showDialog(
             context: context,
-            builder: (_) =>
-                ResultOverlay('${value['message']}'));
+            builder: (_) => ResultOverlay('${value['message']}'));
       }
     });
   }

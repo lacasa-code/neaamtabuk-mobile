@@ -1,8 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/screens/DonorOrders.dart';
 import 'package:flutter_pos/screens/OrderHistory.dart';
+import 'package:flutter_pos/screens/RecipentOrders.dart';
 import 'package:flutter_pos/screens/account/volunteer.dart';
+import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -75,29 +78,98 @@ class _HomeState extends State<Home> {
                     ),
                     SizedBox(height: 20,),
 
-                    role_id=='1'? InkWell(
-                      onTap: (){
-                        Nav.route(context, VolunteerPage());
-                      },
-                      child: Container(
-                        width: ScreenUtil.getWidth(context)/1.3,
-                        decoration: BoxDecoration(
-                            border: Border.all(color:theme.getColor(), width: 1)),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              '${getTransrlate(context, 'volunteer')}',
-                              style: TextStyle(
-                                  color:theme.getColor(), fontWeight: FontWeight.bold),
+                    role_id=='1'? Column(
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            Nav.route(context, VolunteerPage());
+                          },
+                          child: Container(
+                            width: ScreenUtil.getWidth(context)/1.3,
+                            decoration: BoxDecoration(
+                                border: Border.all(color:theme.getColor(), width: 1)),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  '${getTransrlate(context, 'volunteer')}',
+                                  style: TextStyle(
+                                      color:theme.getColor(), fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        SizedBox(height: 10),
+                        InkWell(
+                          onTap: (){
+                            Nav.route(context, DonorOrders());
+                          },
+                          child: Container(
+                            width: ScreenUtil.getWidth(context)/1.3,
+                            decoration: BoxDecoration(
+                                border: Border.all(color:theme.getColor(), width: 1)),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  '${getTransrlate(context, 'orders')}',
+                                  style: TextStyle(
+                                      color:theme.getColor(), fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ):  role_id=='2'?
-                    InkWell(
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            Nav.route(context, Orders());
+                          },
+                          child: Container(
+                            width: ScreenUtil.getWidth(context)/1.3,
+                            decoration: BoxDecoration(
+                                border: Border.all(color:theme.getColor(), width: 1)),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  '${getTransrlate(context, 'Myorders')}',
+                                  style: TextStyle(
+                                      color:theme.getColor(), fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        InkWell(
+                          onTap: (){
+                            Nav.route(context, Delegate());
+                          },
+                          child: Container(
+                            width: ScreenUtil.getWidth(context)/1.3,
+                            decoration: BoxDecoration(
+                                border: Border.all(color:theme.getColor(), width: 1)),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  '${getTransrlate(context, 'orders')}',
+                                  style: TextStyle(
+                                      color:theme.getColor(), fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ): InkWell(
                       onTap: (){
-                        Nav.route(context, Orders());
+                        Nav.route(context, RecipentOrders());
                       },
                       child: Container(
                         width: ScreenUtil.getWidth(context)/1.3,
@@ -107,14 +179,14 @@ class _HomeState extends State<Home> {
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              '${getTransrlate(context, 'Myorders')}',
+                              '${getTransrlate(context, 'orders')}',
                               style: TextStyle(
                                   color:theme.getColor(), fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
                       ),
-                    ):Container(),
+                    ),
 
                   ],
                 ),

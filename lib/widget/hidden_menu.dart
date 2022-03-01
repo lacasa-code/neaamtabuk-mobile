@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 // ignore: must_be_immutable
@@ -51,35 +52,40 @@ class _HiddenMenuState extends State<HiddenMenu> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-              SizedBox(
-                height: ScreenUtil.getHeight(context)/10,
-              ),
+                  Container(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'assets/images/trkar_logo_white (copy).png',
+                        fit: BoxFit.contain,
+                        //color: themeColor.getColor(),
+                      ),
+                    ),
+                  ),
               Padding(
                 padding: const EdgeInsets.all(12),
-                child: ListTile(
-                  title: Column (
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AutoSizeText(
-                        //  getTransrlate(context, 'welcome'),
-                        am_pm == 'am'
-                            ? getTransrlate(context, 'good_morning')
-                            : getTransrlate(context, 'good_night'),
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      AutoSizeText(
-                        name ?? getTransrlate(context, 'gust'),
-                        style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400),
-                      )
-                    ],
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AutoSizeText(
+                      //  getTransrlate(context, 'welcome'),
+                      am_pm == 'am'
+                          ? getTransrlate(context, 'good_morning')
+                          : getTransrlate(context, 'good_night'),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    AutoSizeText(
+                      name ?? getTransrlate(context, 'gust'),
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400),
+                    )
+                  ],
                 ),
               ),
               Container(
@@ -112,6 +118,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
 
                       InkWell(
                         onTap: () {
+                          _launchURL('https://neaamtabuk.org/%d8%a7%d8%aa%d8%b5%d9%84-%d8%a8%d9%86%d8%a7/');
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
@@ -129,6 +136,8 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       ),
                       InkWell(
                         onTap: () {
+                          _launchURL('https://neaamtabuk.org/%d9%85%d9%86-%d9%86%d8%ad%d9%86/');
+
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
@@ -242,5 +251,9 @@ class _HiddenMenuState extends State<HiddenMenu> {
             ])),
       ),
     );
+  }
+
+  void _launchURL(String _url) async {
+    if (!await launch(_url)) throw 'Could not launch $_url';
   }
 }

@@ -1,8 +1,10 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter_pos/model/RecipentModel.dart';
+import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
+import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:flutter/material.dart';
@@ -242,6 +244,8 @@ class MapSampleState extends State<MapSample> {
                                   print(value);
                                   if (value['status'] == true) {
                                     Navigator.pop(context);
+                                    Nav.routeReplacement(context, Delegate());
+
                                     showDialog(
                                         context: context,
                                         builder: (_) => ResultOverlay(
