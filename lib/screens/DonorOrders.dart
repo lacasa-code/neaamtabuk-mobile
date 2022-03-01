@@ -2,8 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/model/nearDonors.dart';
-import 'package:flutter_pos/model/order_model.dart';
+import 'package:flutter_pos/model/OrdersModel.dart';
 import 'package:flutter_pos/screens/account/addOrder.dart';
 import 'package:flutter_pos/screens/map_sample.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -24,7 +23,7 @@ class DonorOrders extends StatefulWidget {
 }
 
 class _DonorOrdersState extends State<DonorOrders> {
-  NearDonor orders ;
+  List<Order> orders ;
   @override
   void initState() {
     getOrders();
@@ -47,7 +46,7 @@ class _DonorOrdersState extends State<DonorOrders> {
               Container(
                   width: ScreenUtil.getWidth(context) / 2,
                   child: AutoSizeText(
-                    getTransrlate(context, 'Myorders'),
+                    getTransrlate(context, 'orders'),
                     minFontSize: 10,
                     maxFontSize: 16,
                     maxLines: 1,
@@ -69,101 +68,111 @@ class _DonorOrdersState extends State<DonorOrders> {
                               ? NotFoundProduct(
                                   title: getTransrlate(context, 'NoOrder'),
                                 )
-                              : Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                              : ListView.builder(
+                            padding: EdgeInsets.all(1),
+                            primary: false,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: orders.length,
+                            itemBuilder:
+                                (BuildContext context, int index) {
+                              return Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
                                 children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   Container(
                                       width: ScreenUtil.getWidth(
                                           context) /
                                           2.5,
                                       child: AutoSizeText(
-                                        '#${orders.id}',
+                                        '${getTransrlate(context, 'OrderNO')}  #${orders[index].id} ',
                                         maxLines: 1,
                                         style:
                                         TextStyle(fontSize: 13),
                                       )),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                  width: ScreenUtil.getWidth(context) / 1.5,
-                                  child: AutoSizeText(
-                                    '${orders.username}',
-                                    style: TextStyle(color: themeColor.getColor()),
-                                    maxLines: 1,
-                                  )),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
-                                  width: ScreenUtil.getWidth(context) / 1.5,
-                                  child: AutoSizeText(
-                                    '${orders.mobile} ',
-                                    maxLines: 1,
-                                  )),
-                              Container(
-                                  width: ScreenUtil.getWidth(context) / 1.5,
-                                  child: AutoSizeText(
-                                    '${orders.address} ',
-                                    maxLines: 1,
-                                  )),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
-                                  width: ScreenUtil.getWidth(context) / 1.5,
-                                  child: AutoSizeText(
-                                    '${orders.distance} Km',
-                                    maxLines: 1,
-                                  )),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
+
+                                  SizedBox(
+                                    height: 15,
+                                  ),
                                   Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      AutoSizeText(
-                                        '${getTransrlate(context, 'OrderState')}  : ',
-                                        maxLines: 1,
-                                      ),
                                       Container(
-                                          width: ScreenUtil.getWidth(
-                                              context) / 4,
-                                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.blue)),
-                                          child: Center(
+                                          decoration: BoxDecoration(color: themeColor.getColor(),borderRadius: BorderRadius.circular(9.0) ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
                                             child: AutoSizeText(
-                                              'تم الاستلام',
+                                              '${orders[index].readyToPack=='1'?"مغلف":"غير مغلف"} ',
+                                              maxLines: 1,
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                          )),
+                                      Container(
+                                          decoration: BoxDecoration(color: themeColor.getColor(),borderRadius: BorderRadius.circular(9.0) ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: AutoSizeText(
+                                              '${orders[index].readyToDistribute=='1'?"جاهز للتوزيع":"غير جاهز للتوزيع"} ',
+                                              maxLines: 1,
+                                              style: TextStyle(color: Colors.white),
+
+                                            ),
+                                          )),
+
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                      width: ScreenUtil.getWidth(context) / 1.5,
+                                      child: AutoSizeText(
+                                        ' Donation Number :${orders[index].donationNumber} ',
+                                        maxLines: 1,
+                                      )),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          AutoSizeText(
+                                            '${getTransrlate(context, 'OrderState')}  : ',
+                                            maxLines: 1,
+                                          ),
+                                          Center(
+                                            child: AutoSizeText(
+                                              '${orders[index].nameEn}',
                                               textAlign:
                                               TextAlign.center,
                                               maxLines: 2,
-                                              maxFontSize: 14,
-                                              minFontSize: 12,
+                                              maxFontSize: 13,
+                                              minFontSize: 10,
+                                              style: TextStyle(color:themeColor.getColor()),
+
                                             ),
-                                          )),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    height: 1,
+                                    color: Colors.black12,
+                                  ),
                                 ],
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
-                                height: 1,
-                                color: Colors.black12,
-                              ),
-                            ],
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -175,7 +184,7 @@ class _DonorOrdersState extends State<DonorOrders> {
       API(context).get('donorOrders').then((value) {
         if (value != null) {
           setState(() {
-            orders = NearDonor.fromJson(value);
+            orders = OrdersModel.fromJson(value).data;
           });
         }
       });

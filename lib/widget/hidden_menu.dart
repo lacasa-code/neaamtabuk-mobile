@@ -27,7 +27,7 @@ class HiddenMenu extends StatefulWidget {
 class _HiddenMenuState extends State<HiddenMenu> {
   bool isconfiguredListern = false;
   int id;
-  String username, name, last, photo;
+  String username, name, role_id, photo;
   String am_pm;
 
   @override
@@ -37,6 +37,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
       setState(() {
         id = prefs.getInt('user_id');
         name = prefs.getString('user_name');
+        role_id = prefs.getString('role_id');
       });
     });
     super.initState();
@@ -65,8 +66,9 @@ class _HiddenMenuState extends State<HiddenMenu> {
                   ),
               Padding(
                 padding: const EdgeInsets.all(12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AutoSizeText(
                       //  getTransrlate(context, 'welcome'),
@@ -78,12 +80,40 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
+                    SizedBox(height: 10,),
                     AutoSizeText(
-                      name ?? getTransrlate(context, 'gust'),
+                      "اسم المستخدم :  ${name}" ,
                       style: TextStyle(
                           fontSize: 17,
                           color: Colors.white,
                           fontWeight: FontWeight.w400),
+                    ) ,
+                    SizedBox(height: 10,),
+
+                    Row(
+                      children: [
+                        AutoSizeText(
+                          " نوع الحساب : " ,
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400),
+                        ),
+
+                        Container(
+                          decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(9.0) ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: AutoSizeText(
+                              " ${role_id=='1'?"متبرع":role_id=='2'?"مندوب":"مستفيد"}" ,
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: themeColor.getColor(),
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),
