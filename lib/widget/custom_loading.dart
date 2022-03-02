@@ -9,7 +9,7 @@ class Custom_Loading extends StatelessWidget {
       height: ScreenUtil.getHeight(context) / 4,
       width: ScreenUtil.getWidth(context) / 1.5,
       child: Image.asset(
-        'assets/images/logo.png',
+        'assets/images/asd.gif',
       ),
     );
   }
