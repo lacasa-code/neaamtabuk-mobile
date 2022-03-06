@@ -31,7 +31,9 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   GoogleMapController _googleMapController;
-  var initialCameraPosition;
+  var initialCameraPosition =CameraPosition(
+      zoom: 11.5,
+      target: LatLng(30.44, 30.4));
   static const kGoogleApiKey = "AIzaSyCExg6JM8XtlBiccaYYssvALQujX9NA3xs";
   Marker _origin;
   Marker _destination;
@@ -51,14 +53,17 @@ class _MapPageState extends State<MapPage> {
       }
     });
     location.onLocationChanged.listen((LocationData currentLocation) {
-      if (this.mounted) { // check whether the state object is in tree
+
         setState(() {
+          initialCameraPosition = CameraPosition(
+              zoom: 11.5,
+              target: LatLng(currentLocation.latitude, currentLocation.latitude));
           _origin = Marker(
               markerId: MarkerId('start'),
               position:
               LatLng(currentLocation.latitude, currentLocation.latitude));
         });
-      }
+
 
 
       DirectionsRepository();
