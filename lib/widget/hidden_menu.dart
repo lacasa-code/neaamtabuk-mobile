@@ -2,7 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/main.dart';
+import 'package:flutter_pos/screens/about_page.dart';
 import 'package:flutter_pos/screens/account/user_information.dart';
+import 'package:flutter_pos/screens/contact_page.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -148,7 +150,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
 
                       InkWell(
                         onTap: () {
-                          _launchURL('https://neaamtabuk.org/%d8%a7%d8%aa%d8%b5%d9%84-%d8%a8%d9%86%d8%a7/');
+                          Nav.route(context, ContactPage());
                         },
                         child: ItemHiddenMenu(
                           icon: Icon(
@@ -166,7 +168,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                       ),
                       InkWell(
                         onTap: () {
-                          _launchURL('https://neaamtabuk.org/%d9%85%d9%86-%d9%86%d8%ad%d9%86/');
+                          Nav.route(context, Setting());
 
                         },
                         child: ItemHiddenMenu(
@@ -283,7 +285,5 @@ class _HiddenMenuState extends State<HiddenMenu> {
     );
   }
 
-  void _launchURL(String _url) async {
-    if (!await launch(_url)) throw 'Could not launch $_url';
-  }
+
 }

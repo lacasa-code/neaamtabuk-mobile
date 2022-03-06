@@ -11,6 +11,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_vendor.dart';
 import 'package:intl/intl.dart';
@@ -99,7 +100,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                 ),
               ),
 
-              Container(
+              catedories==null?Custom_Loading(): Container(
                 padding: EdgeInsets.only(right: 16, left: 16),
                 child: Form(
                   key: _formKey,
@@ -112,7 +113,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                       SizedBox(
                         height: 10,
                       ),
-                      DropdownSearch<Categories_item>(
+                      catedories.isEmpty?Container():   DropdownSearch<Categories_item>(
                         maxHeight: 120,
                         validator: (Categories_item item) {
                           if (item == null) {
@@ -129,6 +130,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                   child: Text(" ${item?.name} "),
                                 );
                         },
+                        selectedItem:catedories[0] ,
                         //  onFind: (String filter) => getData(filter),
                         itemAsString: (Categories_item u) => u.name,
                         onChanged: (Categories_item data) =>

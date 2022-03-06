@@ -58,7 +58,7 @@ class _SignUpRecipentrPageState extends State<SignUpRecipentrPage> {
                         color: Colors.black12,
                       ),
                       Text(
-                        getTransrlate(context, 'AreadyAccount'),
+                        '${getTransrlate(context, 'register_as_seller')}',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

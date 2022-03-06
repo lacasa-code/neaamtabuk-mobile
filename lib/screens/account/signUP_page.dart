@@ -60,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         color: Colors.black12,
                       ),
                       Text(
-                        getTransrlate(context, 'AreadyAccount'),
+                        '${getTransrlate(context, 'want_to_buy_products')}',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

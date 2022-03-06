@@ -37,10 +37,10 @@ class MapSampleState extends State<MapSample> {
   final Set<Polyline> _polyline = {};
   Map<PolylineId, Polyline> polylines = {};
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final formKey = GlobalKey<FormState>();
   Marker m;
   PolylinePoints polylinePoints = PolylinePoints();
   PolylineResult result;
+  final formKey = GlobalKey<FormState>();
   Recipent trakers;
   List<LatLng> latlng = List();
   Position currentLocation;

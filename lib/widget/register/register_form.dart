@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pos/model/area_model.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -32,9 +33,9 @@ class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
   Model model = Model();
   bool PhoneStatue = false;
-  bool passwordVisible = false;
+  bool passwordVisible = true;
   bool _isLoading = false;
-  String CountryNo = '+20';
+  String CountryNo = '+996';
   String verificationId;
   String errorMessage = '';
   String smsOTP;
@@ -42,9 +43,16 @@ class _RegisterFormState extends State<RegisterForm> {
   final formKey = GlobalKey<FormState>();
   List<String> country = [];
   List<String> items = ["male", "female"];
-
+  List<Area> area;
   @override
   void initState() {
+    API(context).get('areas').then((value) {
+      if (value != null) {
+        setState(() {
+          area = AreaModel.fromJson(value).data;
+        });
+      }
+    });
     getLocation();
     super.initState();
   }
@@ -97,6 +105,12 @@ class _RegisterFormState extends State<RegisterForm> {
                   labelText: getTransrlate(context, 'phone'),
                   hintText: getTransrlate(context, 'phone'),
                   isEmail: true,
+                  prefix:IconButton(
+                    icon: Center(child: Text("$CountryNo")),
+                    onPressed: () {
+
+                    },
+                  ) ,
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
@@ -107,6 +121,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   onSaved: (String value) {
                     model.mobile = value;
                   },
+                  keyboard_type: TextInputType.phone,
                 ),
                 MyTextFormField(
                   labelText: getTransrlate(context, 'AddressTitle'),
@@ -123,20 +138,28 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.address = value;
                   },
                 ),
-                MyTextFormField(
-                  labelText: getTransrlate(context, 'area'),
-                  hintText: getTransrlate(context, 'area'),
-                  isEmail: true,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'requiredempty');
-                    }
-                    _formKey.currentState.save();
-                    return null;
+                Row(
+                  children: [
+                    Text(
+                      getTransrlate(context, 'area'),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10,),
+                DropdownSearch<Area>(
+                  mode: Mode.MENU,
+                  validator: (Area item) {
+                    if (item == null) {
+                      return "${getTransrlate(context, 'requiredempty')}";
+                    } else
+                      return null;
                   },
-                  onSaved: (String value) {
-                    model.region = value;
-                  },
+                  items: area,
+                  //  onFind: (String filter) => getData(filter),
+                  itemAsString: (Area u) => u.nameAr,
+
+                  onChanged: (Area data) =>
+                  model.region = data.nameAr,
                 ),
                 SizedBox(height: 10,),
                 Row(
@@ -149,6 +172,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
                 SizedBox(height: 10,),
                 DropdownSearch<String>(
+                  mode: Mode.MENU,
                   maxHeight: 120,
                   validator: (String item) {
                     if (item == null) {

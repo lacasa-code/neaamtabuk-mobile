@@ -58,7 +58,7 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
                         color: Colors.black12,
                       ),
                       Text(
-                        getTransrlate(context, 'AreadyAccount'),
+                        '${getTransrlate(context, 'register_as_delegate')}',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

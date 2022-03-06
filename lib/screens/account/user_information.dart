@@ -3,6 +3,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pos/model/area_model.dart';
 import 'package:flutter_pos/model/user_info.dart';
 import 'package:flutter_pos/screens/account/changePasswordPAge.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -33,6 +34,7 @@ class _UserInfoState extends State<UserInfo> {
   bool loading = false;
   User userModal;
   String password;
+  List<Area> area;
   final _formKey = GlobalKey<FormState>();
   List<String> items = ["male", "female"];
   TextEditingController _tocontroller = TextEditingController();
@@ -48,6 +50,13 @@ class _UserInfoState extends State<UserInfo> {
 
   @override
   void initState() {
+    API(context).get('areas').then((value) {
+      if (value != null) {
+        setState(() {
+          area = AreaModel.fromJson(value).data;
+        });
+      }
+    });
     getUser();
     super.initState();
   }
@@ -138,9 +147,38 @@ class _UserInfoState extends State<UserInfo> {
                                             userModal.address = val;
                                           },
                                         )),
+
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25.0, right: 25.0, top: 25.0),                                      child: Row(
+                                        children: [
+                                          Text(
+                                            getTransrlate(context, 'area'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25.0, right: 25.0, top: 10.0),                                      child: DropdownSearch<Area>(
+                                        mode: Mode.MENU,
+                                        validator: (Area item) {
+                                          if (item == null) {
+                                            return "${getTransrlate(context, 'requiredempty')}";
+                                          } else
+                                            return null;
+                                        },
+                                        items: area,
+                                        //  onFind: (String filter) => getData(filter),
+                                        itemAsString: (Area u) => u.nameAr,
+
+                                        onChanged: (Area data) =>
+                                        userModal.region = data.nameAr,
+                                      ),
+                                    ),
                                     Padding(
                                         padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 25.0),
+                                            left: 25.0, right: 25.0, top: 10.0),
                                         child: Text(
                                           getTransrlate(context, 'mail'),
                                         )),
@@ -290,11 +328,9 @@ class _UserInfoState extends State<UserInfo> {
                         "address": userModal.address,
                         "mobile": userModal.phoneNo,
                         "gender": userModal.gender,
-                        "region": userModal.email,
+                        "region": userModal.region,
                         // "longitude": userModal.longitude??30.3,
                         // "latitude": userModal.latitude??30.3,
-                        "status": userModal.status??1,
-                        "donation_type_id": 1,
                         "role_id": role_id,
 
                       }).then((value) {
