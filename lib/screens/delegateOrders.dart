@@ -24,7 +24,7 @@ class Delegate extends StatefulWidget {
 }
 
 class _DelegateState extends State<Delegate> {
-  List<NearDonor> orders = [];
+  List<NearDonor> orders ;
   @override
   void initState() {
     getOrders("1");

@@ -104,137 +104,135 @@ class _VolunteerPageState extends State<VolunteerPage> {
                 child: Form(
                   key: _formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                            padding: EdgeInsets.only(
-                                left: 25.0, right: 25.0, top: 25.0),
-                            child: Text(
-                              getTransrlate(context, 'category'),
-                            )),
+                      Text(
+                        getTransrlate(context, 'category'),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 25.0, right: 25.0, top: 10.0, bottom: 10),
-                        child: DropdownSearch<Categories_item>(
-                          maxHeight: 120,
-                          validator: (Categories_item item) {
-                            if (item == null) {
-                              return "${getTransrlate(context, 'requiredempty')}";
-                            } else
-                              return null;
-                          },
-                          items: catedories,
-                          dropdownBuilder: (context, item) {
-                            return item == null
-                                ? Container()
-                                : Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(" ${item?.name} "),
-                                  );
-                          },
-                          //  onFind: (String filter) => getData(filter),
-                          itemAsString: (Categories_item u) => u.name,
-                          onChanged: (Categories_item data) =>
-                              categories_item = data,
-                        ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      DropdownSearch<Categories_item>(
+                        maxHeight: 120,
+                        validator: (Categories_item item) {
+                          if (item == null) {
+                            return "${getTransrlate(context, 'requiredempty')}";
+                          } else
+                            return null;
+                        },
+                        items: catedories,
+                        dropdownBuilder: (context, item) {
+                          return item == null
+                              ? Container()
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(" ${item?.name} "),
+                                );
+                        },
+                        //  onFind: (String filter) => getData(filter),
+                        itemAsString: (Categories_item u) => u.name,
+                        onChanged: (Categories_item data) =>
+                            categories_item = data,
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      Align(
-                          alignment: Alignment.topRight,
-                          child: Text(" هل الطعام جاهز للتوزيع ؟")),
-                      Container(
-                        width: ScreenUtil.getWidth(context),
-                        height: ScreenUtil.getHeight(context) / 10,
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: ScreenUtil.getWidth(context) / 2.5,
-                              child: ListTile(
-                                title: Text('لا'),
-                                leading: Radio<int>(
-                                  value: 0,
-                                  groupValue: ready_to_distribute,
-                                  activeColor: themeColor.getColor(),
-                                  onChanged: (int value) {
-                                    setState(() {
-                                      ready_to_distribute = value;
-                                    });
-                                  },
+
+                     categories_item?.id==2?Container(): Column(
+                       crossAxisAlignment: CrossAxisAlignment.start,
+
+                       children: [
+                          Text(" ${getTransrlate(context,'ready_to_distribute')}"),
+                          Container(
+                            width: ScreenUtil.getWidth(context),
+                            height: ScreenUtil.getHeight(context) / 10,
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  width: ScreenUtil.getWidth(context) / 2.5,
+                                  child: ListTile(
+                                    title: Text('${getTransrlate(context,'yes')}'),
+                                    leading: Radio<int>(
+                                      value: 0,
+                                      groupValue: ready_to_distribute,
+                                      activeColor: themeColor.getColor(),
+                                      onChanged: (int value) {
+                                        setState(() {
+                                          ready_to_distribute = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Container(
-                              width: ScreenUtil.getWidth(context) / 2.5,
-                              child: ListTile(
-                                title: Text('نعم'),
-                                leading: Radio<int>(
-                                  value: 1,
-                                  activeColor: themeColor.getColor(),
-                                  groupValue: ready_to_distribute,
-                                  onChanged: (int value) {
-                                    setState(() {
-                                      ready_to_distribute = value;
-                                    });
-                                  },
+                                Container(
+                                  width: ScreenUtil.getWidth(context) / 2.5,
+                                  child: ListTile(
+                                    title: Text('${getTransrlate(context,'no')}'),
+                                    leading: Radio<int>(
+                                      value: 1,
+                                      activeColor: themeColor.getColor(),
+                                      groupValue: ready_to_distribute,
+                                      onChanged: (int value) {
+                                        setState(() {
+                                          ready_to_distribute = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Align(
-                          alignment: Alignment.topRight,
-                          child: Text(" هل الطعام جاهز للتغليف ؟")),
-                      Container(
-                        width: ScreenUtil.getWidth(context),
-                        height: ScreenUtil.getHeight(context) / 10,
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: ScreenUtil.getWidth(context) / 2.5,
-                              child: ListTile(
-                                title: Text('لا'),
-                                leading: Radio<int>(
-                                  value: 0,
-                                  activeColor: themeColor.getColor(),
-                                  groupValue: ready_to_pack,
-                                  onChanged: (int value) {
-                                    setState(() {
-                                      ready_to_pack = value;
-                                    });
-                                  },
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("${getTransrlate(context,'ready_to_pack')}"),
+                          Container(
+                            width: ScreenUtil.getWidth(context),
+                            height: ScreenUtil.getHeight(context) / 10,
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  width: ScreenUtil.getWidth(context) / 2.5,
+                                  child: ListTile(
+                                    title: Text('${getTransrlate(context,'yes')}'),
+                                    leading: Radio<int>(
+                                      value: 0,
+                                      activeColor: themeColor.getColor(),
+                                      groupValue: ready_to_pack,
+                                      onChanged: (int value) {
+                                        setState(() {
+                                          ready_to_pack = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Container(
-                              width: ScreenUtil.getWidth(context) / 2.5,
-                              child: ListTile(
-                                title: Text('نعم'),
-                                leading: Radio<int>(
-                                  value: 1,
-                                  activeColor: themeColor.getColor(),
-                                  groupValue: ready_to_pack,
-                                  onChanged: (int value) {
-                                    setState(() {
-                                      ready_to_pack = value;
-                                    });
-                                  },
+                                Container(
+                                  width: ScreenUtil.getWidth(context) / 2.5,
+                                  child: ListTile(
+                                    title: Text('${getTransrlate(context,'no')}'),
+                                    leading: Radio<int>(
+                                      value: 1,
+                                      activeColor: themeColor.getColor(),
+                                      groupValue: ready_to_pack,
+                                      onChanged: (int value) {
+                                        setState(() {
+                                          ready_to_pack = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
+
                       Container(
                         height: 40,
                         width: ScreenUtil.getWidth(context),

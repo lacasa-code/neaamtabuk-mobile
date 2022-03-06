@@ -52,7 +52,7 @@ class Order {
       this.nameEn,});
 
   Order.fromJson(dynamic json) {
-    id = json['id'];
+    id = json['id'].toString();
     donationId = json['donation_id'];
     delegateId = json['delegate_id'];
     recipientId = json['recipient_id'];
@@ -67,7 +67,7 @@ class Order {
     readyToPack = json['ready_to_pack'];
     nameEn = json['name_en'];
   }
-  int id;
+  String id;
   String donationId;
   String delegateId;
   String recipientId;

@@ -176,25 +176,4 @@ class _SignUpPageState extends State<SignUpPage> {
 
 
 
-  register(Provider_control themeColor) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    API(context).post('login/facebook',
-        {'facebook_id': facebook_id, 'email': email}).then((value) {
-      if (!value.containsKey('errors')) {
-        var user = value['data'];
-        prefs.setString("user_email", user['email']);
-        prefs.setString("user_name", user['name']);
-        prefs.setString("token", user['token']);
-        prefs.setInt("user_id", user['id']);
-        themeColor.setLogin(true);
-        Phoenix.rebirth(context);
-
-      } else {
-        showDialog(
-            context: context,
-            builder: (_) =>
-                ResultOverlay('${value['message']}\n${value['errors']}'));
-      }
-    });
-  }
 }

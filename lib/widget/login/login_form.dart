@@ -46,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   MyTextFormField(
-                    intialLabel: 'ali@gmail.com',
+                    intialLabel: '',
                     keyboard_type: TextInputType.emailAddress,
                     labelText: getTransrlate(context, 'mail'),
                     hintText: getTransrlate(context, 'mail'),
@@ -66,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
                     },
                   ),
                   MyTextFormField(
-                    intialLabel: '12345678',
+                    intialLabel: '',
                     labelText: getTransrlate(context, 'password'),
                     hintText: getTransrlate(context, 'password'),
                     suffixIcon: IconButton(

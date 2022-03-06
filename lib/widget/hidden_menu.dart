@@ -82,7 +82,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     ),
                     SizedBox(height: 10,),
                     AutoSizeText(
-                      "اسم المستخدم :  ${name}" ,
+                      "${getTransrlate(context, 'Username')} :  ${name}" ,
                       style: TextStyle(
                           fontSize: 17,
                           color: Colors.white,
@@ -93,7 +93,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                     Row(
                       children: [
                         AutoSizeText(
-                          " نوع الحساب : " ,
+                          " ${getTransrlate(context, 'AccountType')} : " ,
                           style: TextStyle(
                               fontSize: 17,
                               color: Colors.white,
@@ -105,7 +105,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: AutoSizeText(
-                              " ${role_id=='1'?"متبرع":role_id=='2'?"مندوب":"مستفيد"}" ,
+                              " ${role_id=='1'?"${getTransrlate(context, 'Donor')}":role_id=='2'?"${getTransrlate(context, 'representative')}":"${getTransrlate(context, 'Beneficiary')}"}" ,
                               style: TextStyle(
                                   fontSize: 17,
                                   color: themeColor.getColor(),

@@ -46,7 +46,7 @@ class NearDonor {
       this.distance,});
 
   NearDonor.fromJson(dynamic json) {
-    id = json['id'];
+    id = json['id'].toString();
     username = json['username'];
     mobile = json['mobile'];
     gender = json['gender'];
@@ -55,7 +55,7 @@ class NearDonor {
     latitude = json['latitude'];
     distance = json['distance'];
   }
-  int id;
+  String id;
   String username;
   String mobile;
   String gender;

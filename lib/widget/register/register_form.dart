@@ -1,3 +1,5 @@
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/screens/account/login.dart';
@@ -11,6 +13,8 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_model.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,9 +41,11 @@ class _RegisterFormState extends State<RegisterForm> {
   int checkboxValueA = 1;
   final formKey = GlobalKey<FormState>();
   List<String> country = [];
+  List<String> items = ["male", "female"];
 
   @override
   void initState() {
+    getLocation();
     super.initState();
   }
 
@@ -132,23 +138,30 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.region = value;
                   },
                 ),
+                SizedBox(height: 10,),
+                Row(
+                  children: [
+                    Text(
+                      getTransrlate(context, 'gender'),
+                    ),
 
-                MyTextFormField(
-                  labelText: getTransrlate(context, 'gender'),
-                  hintText: getTransrlate(context, 'gender'),
-                  isEmail: true,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'requiredempty');
-                    }
-                    _formKey.currentState.save();
-                    return null;
-                  },
-                  onSaved: (String value) {
-                    model.gender = value;
-                  },
+                  ],
                 ),
-
+                SizedBox(height: 10,),
+                DropdownSearch<String>(
+                  maxHeight: 120,
+                  validator: (String item) {
+                    if (item == null) {
+                      return "${getTransrlate(context, 'requiredempty')}";
+                    } else
+                      return null;
+                  },
+                  items: items,
+                  //  onFind: (String filter) => getData(filter),
+                  itemAsString: (String u) => u,
+                  onChanged: (String data) =>
+                  model.gender = data,
+                ),
                 MyTextFormField(
                   labelText: getTransrlate(context, 'password'),
                   hintText: getTransrlate(context, 'password'),
@@ -247,10 +260,10 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
         _isLoading
             ? Container(
-                color: Colors.white,
-                height: ScreenUtil.getHeight(context) / 2,
-                width: ScreenUtil.getWidth(context),
-                child: Custom_Loading())
+            color: Colors.white,
+            height: ScreenUtil.getHeight(context) / 2,
+            width: ScreenUtil.getWidth(context),
+            child: Custom_Loading())
             : Container()
       ],
     );
@@ -268,30 +281,29 @@ class _RegisterFormState extends State<RegisterForm> {
       'region': model.region,
       'gender': model.gender,
       'role_id': widget.role_id,
-      'donation_type_id':1,
-      'status':"active",
-      'longitude':30.222,
-      'latitude':30.2525,
+      'donation_type_id': 1,
+      'status': "active",
+      'longitude': model.longitude??'',
+      'latitude': model.longitude??'',
 
     }).then((value) {
       print(value);
       if (value['status'] == true) {
         setState(() => _isLoading = false);
         var user = value['data'];
-          prefs.setString("user_email", user['email']);
-          prefs.setString("user_name", user['username']);
-          // prefs.setString("token", user['token']??'');
-          prefs.setString("mobile", user['mobile']);
-          prefs.setString("role_id", "${user['role_id']}");
-          prefs.setInt("user_id", user['id']);
-          themeColor.setLogin(true);
+        prefs.setString("user_email", user['email']);
+        prefs.setString("user_name", user['username']);
+        // prefs.setString("token", user['token']??'');
+        prefs.setString("mobile", user['mobile']);
+        prefs.setString("role_id", "${user['role_id']}");
+        prefs.setInt("user_id", user['id']);
+        themeColor.setLogin(true);
         showDialog(
-                context: context,
-                builder: (_) => ResultOverlay('${value['message']}'))
+            context: context,
+            builder: (_) => ResultOverlay('${value['message']}'))
             .whenComplete(() {
           Nav.routeReplacement(context, LoginPage());
         });
-
       } else {
         showDialog(
             context: context,
@@ -300,6 +312,34 @@ class _RegisterFormState extends State<RegisterForm> {
 
         setState(() => _isLoading = false);
       }
+    });
+  }
+
+  Future<void> getLocation() async {
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    _locationData = await location.getLocation();
+    setState(() {
+      model.longitude="${_locationData.longitude}";
+      model.latitude="${_locationData.latitude}";
     });
   }
 }

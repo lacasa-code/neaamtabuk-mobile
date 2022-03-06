@@ -127,7 +127,7 @@
   "minOfOrder": "الحد الادنى للطلب",
   "wholesalePrice": "سعر الجملة",
 
-  "want_to_buy_products": "أسجل كـ تطوع",
+  "want_to_buy_products": "أسجل كـ متبرع",
   "register_as_seller": "أسجل كـ مستفيد",
   "register_as_delegate": "أسجل كـ مندوب",
   "NewPassword": "كلمة المرور الجديدة",
@@ -232,12 +232,22 @@
   "Alert": "تنبية",
   "AskDelete": "هل تريد حذف المنتج من العربة",
   "yes": "نعم",
+  "no": "لا",
   "browsing": "تصفح الان",
   "login": "تسجيل دخول",
   "RegisterNew": "إنشاء حساب",
   "phone": "رقم الجوال",
   "hintphone": "ادخل رقم الهاتف",
   "Register": "تسجيل",
+  "AccountType": "نوع الحساب",
+
+  "Donor": "متبرع",
+  "representative": "مندوب",
+  "Beneficiary": "مستفيد",
+
+  "ready_to_distribute": "هل الطعام جاهز للتوزيع ؟",
+  "ready_to_pack": "هل الطعام جاهز للتغليف ؟",
+
   "AreadyAccount": "انشئ حسابًا جديدًا",
   "invildpassword": "رقم الهاتف او كلمة السر غير صالح",
   "Email": "الايميل ",

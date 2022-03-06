@@ -303,7 +303,8 @@
 
 
 
-  "yes": "Delete",
+  "yes": "Yes",
+  "no": "No",
   "ok": "OK",
   "or": "Or",
   "welcome": "Welcome",
@@ -367,7 +368,10 @@
   "PleaseLogin": "Please Login Now !",
   "product": "Products",
   "allcatery": "All Category",
-
+  "AccountType": "Account Type",
+  "Donor": "Donor",
+  "representative": "Representative",
+  "Beneficiary": "Beneficiary",
   "LocationSelected": "Location",
   "SaveNaw": "Shipping this",
   "OrderDone": "Done ! \n Thank you for using the app!\n ",
@@ -386,6 +390,9 @@
   "register_as_delegate": "Register as Delegate",
   "nearRecipent": "Near Recipent",
   "orders": "Confirmed Orders",
+
+  "ready_to_distribute": "Do you are ready for distribution ?",
+  "ready_to_pack": "Is the food ready for packaging ?",
 
   "CodeConfirm": "Code Confirm",
   "Confirm": "Confirm",

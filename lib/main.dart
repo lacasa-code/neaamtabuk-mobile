@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
       },
       supportedLocales: [
         Locale("ar", ""),
-        Locale("ar", "")
+        Locale("en", "")
       ],
       theme: ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {

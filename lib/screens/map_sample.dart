@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 class MapSample extends StatefulWidget {
   MapSample(this.donation_id,this.longitude, this.latitude);
 
-  int donation_id;
+  String donation_id;
   String longitude;
   String latitude;
 
@@ -61,11 +61,7 @@ class MapSampleState extends State<MapSample> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
+
         return Future.error('Location permissions are denied');
       }
     }
@@ -121,18 +117,6 @@ class MapSampleState extends State<MapSample> {
     }
   }
 
-  Widget button(Function function, IconData icon) {
-    return FloatingActionButton(
-      heroTag: 'location',
-      onPressed: function,
-      materialTapTargetSize: MaterialTapTargetSize.padded,
-      backgroundColor: Provider.of<Provider_control>(context).getColor(),
-      child: Icon(
-        icon,
-        size: 36.0,
-      ),
-    );
-  }
 
   @override
   void initState() {
@@ -239,7 +223,7 @@ class MapSampleState extends State<MapSample> {
                                 API(context).post('order', {
                                   'donation_id': widget.donation_id,
                                   'recipient_id': trakers.id,
-                                  'status_id': 1,
+                                  'status_id': 2,
                                 }).then((value) {
                                   print(value);
                                   if (value['status'] == true) {
@@ -279,62 +263,6 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  getUserLocationAddress(LatLng latLng) async {
-    //call this async method from whereever you need
-    try {
-      final coordinates = new Coordinates(latLng.latitude, latLng.longitude);
-      var addresses =
-          await Geocoder.local.findAddressesFromCoordinates(coordinates);
-      var first = addresses.first;
-
-      //address_shiping=new Addresses(city:first.adminArea,address:first.addressLine,);
-
-      return first;
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  getUserLocation() async {
-    //   print('fooooo');
-    //   //call this async method from whereever you need
-    //   String error;
-    //   Location location = new Location();
-    //   try {
-    //   //  myLocation = await location.getLocation();
-    //   } on PlatformException catch (e) {
-    //     if (e.code == 'PERMISSION_DENIED') {
-    //       error = 'please grant permission';
-    //       print(error);
-    //     }
-    //     if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
-    //       error = 'permission denied- please enable it from app settings';
-    //       print(error);
-    //     }
-    //     myLocation = null;
-    //   }
-    //
-    //   LatLng latLng=new LatLng(myLocation.latitude, myLocation.longitude);
-    //   setState(() {
-    //     _markers.add(Marker(markerId: MarkerId('1'), icon: customIcon, position:latLng ));
-    //   });
-    //   _goToPosition1(myLocation.latitude, myLocation.longitude);
-    //   getUserLocationAddress(latLng);
-  }
-
-  getUserinformation() async {
-    //call this async method from whereever you need
-    String error;
-    Location location = new Location();
-
-    //
-    // LatLng latLng=new LatLng(widget.address_shiping.lat, widget.address_shiping.lang);
-    // setState(() {
-    //   _markers.add(Marker(markerId: MarkerId('1'), icon: customIcon, position:latLng ));
-    // });
-    // _goToPosition1(widget.address_shiping., widget.address_shiping.lang);
-    // getUserLocationAddress(latLng);
-  }
 
   Widget _customPopupItemBuilderExample(
       BuildContext context, Recipent item, bool isSelected) {
@@ -358,11 +286,4 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  _navigateAndDisplaySelection(BuildContext context) async {
-    // address_shiping= await Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => EditAddressPage(address_shiping))
-    // );
-    Navigator.pop(context);
-  }
 }
