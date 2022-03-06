@@ -51,12 +51,16 @@ class _MapPageState extends State<MapPage> {
       }
     });
     location.onLocationChanged.listen((LocationData currentLocation) {
-      setState(() {
-        _origin = Marker(
-            markerId: MarkerId('start'),
-            position:
-                LatLng(currentLocation.latitude, currentLocation.latitude));
-      });
+      if (this.mounted) { // check whether the state object is in tree
+        setState(() {
+          _origin = Marker(
+              markerId: MarkerId('start'),
+              position:
+              LatLng(currentLocation.latitude, currentLocation.latitude));
+        });
+      }
+
+
       DirectionsRepository();
     });
     setState(() {
