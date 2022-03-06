@@ -20,8 +20,10 @@ class ResultOverlayState extends State<ResultOverlay>
   AnimationController controller;
   Animation<double> scaleAnimation;
 
+
   @override
   void initState() {
+
     super.initState();
 
     controller =

@@ -169,6 +169,7 @@ class _OrdersState extends State<Orders> {
                                             InkWell(
                                               onTap: () {
                                               //  Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
+                                              //  Nav.route(context, MapPage(orders[index].id,orders[index].latitude,orders[index].longitude));
                                                 Nav.route(context, MapPage(orders[index].id,orders[index].latitude,orders[index].longitude));
                                               },
                                               child: AutoSizeText(
