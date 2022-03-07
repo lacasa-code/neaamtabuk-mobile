@@ -8,12 +8,19 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class MapScreen extends StatefulWidget {
+
+  String donation_id;
+  String longitude;
+  String latitude;
+
+  MapScreen(this.donation_id, this.longitude, this.latitude);
+
   @override
   _MapScreenState createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
-  static const _initialCameraPosition = CameraPosition(
+  var  _initialCameraPosition = CameraPosition(
     target: LatLng(37.773972, -122.431297),
     zoom: 11.5,
   );
@@ -28,6 +35,18 @@ class _MapScreenState extends State<MapScreen> {
   void dispose() {
     _googleMapController.dispose();
     super.dispose();
+  }
+  @override
+  void initState() {
+    setState(() {
+      _initialCameraPosition = CameraPosition(
+        target: LatLng(double.parse(widget.latitude), double.parse(widget.latitude)),
+        zoom: 15.5,
+      );
+    });
+
+    // _addMarker(LatLng(double.parse(widget.latitude), double.parse(widget.latitude)));
+    super.initState();
   }
 
   @override

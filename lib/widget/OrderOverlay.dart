@@ -140,9 +140,7 @@ class OrderOverlayState extends State<OrderOverlay>
                           if (formKey.currentState
                               .validate()) {
                             formKey.currentState.save();
-                            API(context).post('order', {
-                              'donation_id':
-                              widget.donation_id,
+                            API(context).post('orderRecipent/${widget.donation_id}', {
                               'recipient_id': trakers.id,
                               'status_id': 2,
                             }).then((value) {
