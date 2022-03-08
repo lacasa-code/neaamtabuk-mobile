@@ -142,7 +142,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
                     }
-                    if (value.isEmpty) {
+                    if (model.latitude==null && model.longitude==null) {
                       return getTransrlate(context, 'LocationSelected');
                     }
                     _formKey.currentState.save();
