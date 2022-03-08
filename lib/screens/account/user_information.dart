@@ -141,7 +141,6 @@ class _UserInfoState extends State<UserInfo> {
                                           decoration:  InputDecoration(
                                             suffixIcon: IconButton( icon: Icon(Icons.location_pin),
                                            onPressed: (){
-
                                               getLocation();
                                            })
                                           ),
@@ -283,7 +282,8 @@ class _UserInfoState extends State<UserInfo> {
                                     _status
                                         ? _getEditIcon()
                                         : _getActionButtons(),
-                                  SizedBox(height: 20,)
+                                  SizedBox(height: 20,),
+                                    _getChangePassword()
                                   ],
                                 ),
                               ),
@@ -340,8 +340,8 @@ class _UserInfoState extends State<UserInfo> {
                         "mobile": userModal.phoneNo,
                         "gender": userModal.gender,
                         "region": userModal.region,
-                        // "longitude": userModal.longitude??30.3,
-                        // "latitude": userModal.latitude??30.3,
+                        "longitude": userModal.longitude,
+                        "latitude": userModal.latitude,
                         "role_id": role_id,
 
                       }).then((value) {
@@ -525,6 +525,8 @@ class _UserInfoState extends State<UserInfo> {
     }
 
     Geolocator.getCurrentPosition().then((value) async {
+      userModal.latitude="${value.latitude}";
+      userModal.longitude="${value.longitude}";
       final coordinates = new Coordinates(
           value.latitude, value.longitude);
       var addresses = await Geocoder.local.findAddressesFromCoordinates(
