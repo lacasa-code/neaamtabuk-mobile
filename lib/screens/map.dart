@@ -14,6 +14,7 @@ import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/widget/OrderOverlay.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -296,7 +297,6 @@ class _MapPageState extends State<MapPage> {
   Future<void> getLocation() async {
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
-    LocationData _locationData;
 
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
@@ -313,7 +313,7 @@ class _MapPageState extends State<MapPage> {
       }
     }
 
-    _locationData = await location.getLocation();
+    var _locationData = await  Geolocator.getCurrentPosition();
 
     _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         zoom: 11.5,
@@ -322,7 +322,7 @@ class _MapPageState extends State<MapPage> {
       _origin = Marker(
           markerId: MarkerId('start'),
           position: LatLng(_locationData.latitude, _locationData.latitude));
-      
+
       print('${_locationData.latitude}');
     });
 

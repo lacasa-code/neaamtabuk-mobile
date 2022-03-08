@@ -15,6 +15,7 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
@@ -140,6 +141,7 @@ class _UserInfoState extends State<UserInfo> {
                                           decoration:  InputDecoration(
                                             suffixIcon: IconButton( icon: Icon(Icons.location_pin),
                                            onPressed: (){
+
                                               getLocation();
                                            })
                                           ),
@@ -522,15 +524,16 @@ class _UserInfoState extends State<UserInfo> {
       }
     }
 
-    _locationData = await location.getLocation();
-    userModal.latitude="${_locationData.latitude}";
-    userModal.longitude="${_locationData.longitude}";
-    final coordinates = new Coordinates(
-        _locationData.latitude, _locationData.longitude);
-    var addresses = await Geocoder.local.findAddressesFromCoordinates(
-        coordinates);
-    var first = addresses.first;
-    addressController.text="${first.locality??''}, ${first.adminArea??''},${first.subLocality??''}, ${first.subAdminArea??''},${first.addressLine??''}, ${first.featureName??''},${first.thoroughfare??''}, ${first.subThoroughfare??''}";
-  }
+    Geolocator.getCurrentPosition().then((value) async {
+      final coordinates = new Coordinates(
+          value.latitude, value.longitude);
+      var addresses = await Geocoder.local.findAddressesFromCoordinates(
+          coordinates);
+      var first = addresses.first;
+      addressController.text="${first.locality??''}, ${first.adminArea??''},${first.subLocality??''}, ${first.subAdminArea??''},${first.addressLine??''}, ${first.featureName??''},${first.thoroughfare??''}, ${first.subThoroughfare??''}";
+
+    });
+
+   }
 
 }

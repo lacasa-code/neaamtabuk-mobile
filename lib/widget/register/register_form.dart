@@ -351,7 +351,7 @@ class _RegisterFormState extends State<RegisterForm> {
   Future<void> getLocation() async {
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
-    LocationData _locationData;
+    var _locationData;
     Location location = new Location();
 
     _serviceEnabled = await location.serviceEnabled();
@@ -369,7 +369,7 @@ class _RegisterFormState extends State<RegisterForm> {
       }
     }
 
-    _locationData = await location.getLocation();
+     _locationData = await  Geolocator.getCurrentPosition();
     model.latitude="${_locationData.latitude}";
     model.longitude="${_locationData.longitude}";
     final coordinates = new Coordinates(
