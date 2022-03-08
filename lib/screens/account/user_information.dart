@@ -11,8 +11,10 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/MapOverlay.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
+import 'package:flutter_pos/widget/register/register_form_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:http/http.dart';
@@ -35,6 +37,7 @@ class _UserInfoState extends State<UserInfo> {
   bool _isLoading = false;
   bool loading = false;
   User userModal;
+  Model model = Model();
   String password;
   List<Area> area;
   final _formKey = GlobalKey<FormState>();
@@ -140,7 +143,13 @@ class _UserInfoState extends State<UserInfo> {
                                           decoration:  InputDecoration(
                                             suffixIcon: IconButton( icon: Icon(Icons.location_pin),
                                            onPressed: (){
-                                              getLocation();
+                                             showDialog(context: context,
+                                                 builder: (_) => MapOverlay(this.model)).whenComplete(() {
+                                               userModal.latitude=this.model.latitude;
+                                               userModal.longitude=this.model.longitude;
+                                               addressController.text =
+                                               '${this.model.address ?? ''}';
+                                             });
                                            })
                                           ),
                                           enabled: !_status,
@@ -158,7 +167,8 @@ class _UserInfoState extends State<UserInfo> {
 
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 25.0),                                      child: Row(
+                                          left: 25.0, right: 25.0, top: 25.0),
+                                      child: Row(
                                         children: [
                                           Text(
                                             getTransrlate(context, 'area'),
@@ -338,8 +348,8 @@ class _UserInfoState extends State<UserInfo> {
                         "mobile": userModal.phoneNo,
                         "gender": userModal.gender,
                         "region": userModal.region,
-                        // "longitude": userModal.longitude??30.3,
-                        // "latitude": userModal.latitude??30.3,
+                        "longitude": userModal.longitude,
+                        "latitude": userModal.latitude,
                         "role_id": role_id,
 
                       }).then((value) {
@@ -500,37 +510,6 @@ class _UserInfoState extends State<UserInfo> {
       })
     });
 
-  }
-  Future<void> getLocation() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-    Location location = new Location();
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationData = await location.getLocation();
-    userModal.latitude="${_locationData.latitude}";
-    userModal.longitude="${_locationData.longitude}";
-    final coordinates = new Coordinates(
-        _locationData.latitude, _locationData.longitude);
-    var addresses = await Geocoder.local.findAddressesFromCoordinates(
-        coordinates);
-    var first = addresses.first;
-    addressController.text="${first.locality??''}, ${first.adminArea??''},${first.subLocality??''}, ${first.subAdminArea??''},${first.addressLine??''}, ${first.featureName??''},${first.thoroughfare??''}, ${first.subThoroughfare??''}";
   }
 
 }
