@@ -102,7 +102,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-              ),           SizedBox(
+              ),
+              SizedBox(
                 height: 25,
               ),
               InkWell(
