@@ -43,6 +43,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
         if (value['status'] == true) {
           setState(() {
             catedories = Categories_model.fromJson(value).data;
+            catedories.isNotEmpty?categories_item=catedories[0]:null;
           });
         }
       }

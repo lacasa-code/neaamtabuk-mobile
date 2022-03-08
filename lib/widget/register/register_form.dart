@@ -14,6 +14,7 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_model.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
@@ -44,6 +45,8 @@ class _RegisterFormState extends State<RegisterForm> {
   List<String> country = [];
   List<String> items = ["male", "female"];
   List<Area> area;
+  TextEditingController addressController = TextEditingController();
+
   @override
   void initState() {
     API(context).get('areas').then((value) {
@@ -124,9 +127,16 @@ class _RegisterFormState extends State<RegisterForm> {
                   keyboard_type: TextInputType.phone,
                 ),
                 MyTextFormField(
+                  controller: addressController,
                   labelText: getTransrlate(context, 'AddressTitle'),
                   hintText: getTransrlate(context, 'AddressTitle'),
                   isEmail: true,
+                  suffixIcon: IconButton(
+                    onPressed: (){
+                      getLocation();
+                    },
+                    icon: Icon(Icons.location_pin),
+                  ),
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
@@ -294,7 +304,6 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   register(Provider_control themeColor) async {
-    model.gender = checkboxValueA.toString();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('register', {
       'username': model.Name,
@@ -340,11 +349,10 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   Future<void> getLocation() async {
-    Location location = new Location();
-
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
     LocationData _locationData;
+    Location location = new Location();
 
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
@@ -360,10 +368,15 @@ class _RegisterFormState extends State<RegisterForm> {
         return;
       }
     }
+
     _locationData = await location.getLocation();
-    setState(() {
-      model.longitude="${_locationData.longitude}";
-      model.latitude="${_locationData.latitude}";
-    });
+    model.latitude="${_locationData.latitude}";
+    model.longitude="${_locationData.longitude}";
+    final coordinates = new Coordinates(
+        _locationData.latitude, _locationData.longitude);
+    var addresses = await Geocoder.local.findAddressesFromCoordinates(
+        coordinates);
+    var first = addresses.first;
+    addressController.text="${first.locality??''}, ${first.adminArea??''},${first.subLocality??''}, ${first.subAdminArea??''},${first.addressLine??''}, ${first.featureName??''},${first.thoroughfare??''}, ${first.subThoroughfare??''}";
   }
 }

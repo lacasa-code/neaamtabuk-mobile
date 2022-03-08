@@ -39,9 +39,14 @@ class _OrdersState extends State<Orders> {
         appBar: AppBar(
           title: Row(
             children: [
-              Icon(
-                Icons.local_shipping_outlined,
-                color: Colors.white,
+              InkWell(
+                onTap: (){
+                  Nav.route(context, MapPage("37"," 30.431297","37.773972"));
+                },
+                child: Icon(
+                  Icons.local_shipping_outlined,
+                  color: Colors.white,
+                ),
               ),
               SizedBox(
                 width: 10,

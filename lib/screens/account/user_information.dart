@@ -14,8 +14,10 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,7 +39,7 @@ class _UserInfoState extends State<UserInfo> {
   List<Area> area;
   final _formKey = GlobalKey<FormState>();
   List<String> items = ["male", "female"];
-  TextEditingController _tocontroller = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   submitForm() async {
     FocusScope.of(context).requestFocus(new FocusNode());
     _isLoading = true;
@@ -134,18 +136,24 @@ class _UserInfoState extends State<UserInfo> {
                                         padding: EdgeInsets.only(
                                             left: 25.0, right: 25.0, top: 2.0),
                                         child: TextFormField(
-                                          initialValue: userModal.address,
-                                          decoration: const InputDecoration(),
+                                          controller: addressController,
+                                          decoration:  InputDecoration(
+                                            suffixIcon: IconButton( icon: Icon(Icons.location_pin),
+                                           onPressed: (){
+                                              getLocation();
+                                           })
+                                          ),
                                           enabled: !_status,
                                           inputFormatters: [
                                             new LengthLimitingTextInputFormatter(254),
                                           ],
-                                          autofocus: !_status,
+                                            autofocus: !_status,
                                           onSaved: (String val) =>
                                               userModal.address = val,
                                           onChanged: (String val) {
                                             userModal.address = val;
                                           },
+
                                         )),
 
                                     Padding(
@@ -160,7 +168,8 @@ class _UserInfoState extends State<UserInfo> {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 10.0),                                      child: DropdownSearch<Area>(
+                                          left: 25.0, right: 25.0, top: 10.0),
+                                      child: DropdownSearch<Area>(
                                         mode: Mode.MENU,
                                         validator: (Area item) {
                                           if (item == null) {
@@ -171,7 +180,7 @@ class _UserInfoState extends State<UserInfo> {
                                         items: area,
                                         //  onFind: (String filter) => getData(filter),
                                         itemAsString: (Area u) => u.nameAr,
-
+                                        selectedItem:Area(nameAr: userModal.region) ,
                                         onChanged: (Area data) =>
                                         userModal.region = data.nameAr,
                                       ),
@@ -229,7 +238,7 @@ class _UserInfoState extends State<UserInfo> {
                                           validator: (String value) {
                                             if (value.isEmpty) {
                                               return getTransrlate(context, 'phone');
-                                            }else if (value.length<10) {
+                                            }else if (value.length<9) {
                                               return "${getTransrlate(context, 'shorterphone')}";
                                             }
                                             _formKey.currentState.save();
@@ -481,6 +490,7 @@ class _UserInfoState extends State<UserInfo> {
             setState(() {
               userModal = UserInformation.fromJson(value).data;
             });
+            addressController = TextEditingController(text: userModal.address);
           } else {
             showDialog(
                 context: context,
@@ -491,4 +501,36 @@ class _UserInfoState extends State<UserInfo> {
     });
 
   }
+  Future<void> getLocation() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+    Location location = new Location();
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+    userModal.latitude="${_locationData.latitude}";
+    userModal.longitude="${_locationData.longitude}";
+    final coordinates = new Coordinates(
+        _locationData.latitude, _locationData.longitude);
+    var addresses = await Geocoder.local.findAddressesFromCoordinates(
+        coordinates);
+    var first = addresses.first;
+    addressController.text="${first.locality??''}, ${first.adminArea??''},${first.subLocality??''}, ${first.subAdminArea??''},${first.addressLine??''}, ${first.featureName??''},${first.thoroughfare??''}, ${first.subThoroughfare??''}";
+  }
+
 }

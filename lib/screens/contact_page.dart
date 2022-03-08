@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -42,202 +43,124 @@ String phone='0559751131',email='info@neaamtabuk.org';
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: IntrinsicHeight(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
+                child: Row(
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('$phone'),
+                        Text(
+                          getTransrlate(context, 'phone'),
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(child: Container(height: 10,)),
+                    InkWell(
+                      onTap: (){
+                        _launchURL('sms:'+phone);
+                      },
+                      child: SizedBox(
+                        child: Icon(
+                          Icons.message,
+                          color: themeColor.getColor(),
+                        ),
+                        height: 60,
+                        width: 60,
                       ),
                     ),
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text('$phone'),
-                                      Text(
-                                        getTransrlate(context, 'phone'),
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: (){
-                                    _launchURL('sms:'+phone);
-                                  },
-                                  child: SizedBox(
-                                    child: Icon(
-                                      Icons.message,
-                                      color: themeColor.getColor(),
-                                    ),
-                                    height: 60,
-                                    width: 60,
-                                  ),
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    InkWell(
-                                      child: SizedBox(
-                                        child: Icon(
-                                          Icons.call,
-                                          color: themeColor.getColor(),
-                                        ),
-                                        height: 60,
-                                      ),
-                                      onTap: (){
-                                        _launchURL('tel:'+phone);
-                                      },
-                                    )
-                                  ],
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                ),
-
-                              ],
-                            ),
-                            // Row(
-                            //   children: <Widget>[
-                            //     Expanded(
-                            //       child: Column(
-                            //         crossAxisAlignment: CrossAxisAlignment.start,
-                            //         children: <Widget>[
-                            //           Text(phone),
-                            //           Text(
-                            //             getTransrlate(context, 'phone'),
-                            //             style: TextStyle(
-                            //               fontSize: 11,
-                            //               color: Colors.grey,
-                            //             ),
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //     SizedBox(
-                            //       child: InkWell(
-                            //         onTap: (){
-                            //           _launchURL('sms:'+phone);
-                            //
-                            //         },
-                            //         child: Icon(
-                            //           Icons.message,
-                            //           color: themeColor.getColor(),
-                            //         ),
-                            //       ),
-                            //       height: 60,
-                            //       width: 60,
-                            //     ),
-                            //     Column(
-                            //       children: <Widget>[
-                            //         InkWell(
-                            //           onTap: (){
-                            //             _launchURL('tel:'+phone);
-                            //           },
-                            //           child: SizedBox(
-                            //             child: Icon(
-                            //               Icons.call,
-                            //               color: themeColor.getColor(),
-                            //             ),
-                            //             height: 60,
-                            //           ),
-                            //         )
-                            //       ],
-                            //       mainAxisAlignment: MainAxisAlignment.start,
-                            //     ),
-                            //
-                            //   ],
-                            // ),
-
-                          ],
+                    InkWell(
+                      child: SizedBox(
+                        child: Icon(
+                          Icons.call,
+                          color: themeColor.getColor(),
                         ),
+                        height: 60,
                       ),
-                    ],
-                  ),
+                      onTap: (){
+                        _launchURL('tel:'+phone);
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: IntrinsicHeight(
-                child: Expanded(
-                  flex: 4,
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Expanded(child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
 
-                            children: <Widget>[
-                              Text(email),
-                              Text(
-                                getTransrlate(context, 'Email'),
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey,
-                                ),
+                          children: <Widget>[
+                            Text(email),
+                            Text(
+                              getTransrlate(context, 'Email'),
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.grey,
                               ),
-
-                            ],
-                          )),
-                          InkWell(
-                            onTap: (){
-                              _launchURL('mailto:'+email);
-                            },
-                            child: SizedBox(
-                              child: Icon(
-                                Icons.email,
-                                 color: themeColor.getColor(),
-                              ),
-                              height: 60,
-                              width: 60,
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
 
-                            children: <Widget>[
-                              Text(phone),
-                              Text(
-                                "whats app",
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey,
-                                ),
-                              ),
-
-                            ],
-                          )),
-                          InkWell(
-                            onTap: (){
-                              _launchURL("https://api.whatsapp.com/send?phone=559751131&text=%D9%85%D8%B1%D8%AD%D8%A8%20%D8%A8%D9%83%D9%85");
-                            },
-                            child: SizedBox(
-                              child: Icon(
-                                Icons.phone_android,
-                                 color: themeColor.getColor(),
-                              ),
-                              height: 60,
-                              width: 60,
+                          ],
+                        ),
+                        InkWell(
+                          onTap: (){
+                            _launchURL('mailto:'+email);
+                          },
+                          child: SizedBox(
+                            child: Icon(
+                              Icons.email,
+                               color: themeColor.getColor(),
                             ),
+                            height: 60,
+                            width: 60,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: <Widget>[
+                            Text(phone),
+                            Text(
+                              "whats app",
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.grey,
+                              ),
+                            ),
+
+                          ],
+                        ),
+                        InkWell(
+                          onTap: (){
+                            _launchURL("https://api.whatsapp.com/send?phone=559751131&text=%D9%85%D8%B1%D8%AD%D8%A8%20%D8%A8%D9%83%D9%85");
+                          },
+                          child: SizedBox(
+                            child: Icon(
+                              Icons.phone_android,
+                               color: themeColor.getColor(),
+                            ),
+                            height: 60,
+                            width: 60,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

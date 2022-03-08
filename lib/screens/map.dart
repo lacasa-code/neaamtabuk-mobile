@@ -44,19 +44,19 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
 
-    location.onLocationChanged.listen((LocationData currentLocation) {
-      setState(() {
-        initialCameraPosition = CameraPosition(
-            zoom: 11.5,
-            target: LatLng(currentLocation.latitude, currentLocation.latitude));
-        _origin = Marker(
-            markerId: MarkerId('start'),
-            position:
-            LatLng(currentLocation.latitude, currentLocation.latitude));
-      });
-
-      DirectionsRepository();
-    });
+    // location.onLocationChanged.listen((LocationData currentLocation) {
+    //   setState(() {
+    //     initialCameraPosition = CameraPosition(
+    //         zoom: 11.5,
+    //         target: LatLng(currentLocation.latitude, currentLocation.latitude));
+    //     _origin = Marker(
+    //         markerId: MarkerId('start'),
+    //         position:
+    //         LatLng(currentLocation.latitude, currentLocation.latitude));
+    //   });
+    //
+    //   DirectionsRepository();
+    // });
     setState(() {
       _destination = Marker(
           markerId: MarkerId('Place'),
@@ -314,13 +314,16 @@ class _MapPageState extends State<MapPage> {
     }
 
     _locationData = await location.getLocation();
+
+    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        zoom: 11.5,
+        target: LatLng(_locationData.latitude, _locationData.latitude))));
     setState(() {
-      initialCameraPosition = CameraPosition(
-          zoom: 11.5,
-          target: LatLng(_locationData.latitude, _locationData.latitude));
       _origin = Marker(
           markerId: MarkerId('start'),
           position: LatLng(_locationData.latitude, _locationData.latitude));
+      
+      print('${_locationData.latitude}');
     });
 
     DirectionsRepository();
