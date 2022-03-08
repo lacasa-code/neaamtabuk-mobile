@@ -10,6 +10,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/widget/MapOverlay.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
@@ -56,7 +57,6 @@ class _RegisterFormState extends State<RegisterForm> {
         });
       }
     });
-    getLocation();
     super.initState();
   }
 
@@ -133,13 +133,17 @@ class _RegisterFormState extends State<RegisterForm> {
                   isEmail: true,
                   suffixIcon: IconButton(
                     onPressed: (){
-                      getLocation();
+                      showDialog(context: context,
+                          builder: (_) => MapOverlay(this.model)).whenComplete(() => addressController.text='${model.address??''}');
                     },
                     icon: Icon(Icons.location_pin),
                   ),
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
+                    }
+                    if (value.isEmpty) {
+                      return getTransrlate(context, 'LocationSelected');
                     }
                     _formKey.currentState.save();
                     return null;
@@ -346,37 +350,5 @@ class _RegisterFormState extends State<RegisterForm> {
         setState(() => _isLoading = false);
       }
     });
-  }
-
-  Future<void> getLocation() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    var _locationData;
-    Location location = new Location();
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-     _locationData = await  Geolocator.getCurrentPosition();
-    model.latitude="${_locationData.latitude}";
-    model.longitude="${_locationData.longitude}";
-    final coordinates = new Coordinates(
-        _locationData.latitude, _locationData.longitude);
-    var addresses = await Geocoder.local.findAddressesFromCoordinates(
-        coordinates);
-    var first = addresses.first;
-    addressController.text="${first.locality??''}, ${first.adminArea??''},${first.subLocality??''}, ${first.subAdminArea??''},${first.addressLine??''}, ${first.featureName??''},${first.thoroughfare??''}, ${first.subThoroughfare??''}";
   }
 }
