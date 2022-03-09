@@ -306,7 +306,6 @@ class _RegisterFormState extends State<RegisterForm> {
       ],
     );
   }
-
   register(Provider_control themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('register', {

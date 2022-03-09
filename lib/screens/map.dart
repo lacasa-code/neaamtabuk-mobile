@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:flutter_pos/model/RecipentModel.dart';
+import 'package:flutter_pos/model/neerRecipentModel.dart';
 import 'package:flutter_pos/model/direction_model.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -34,7 +34,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   GoogleMapController _googleMapController;
   var initialCameraPosition =CameraPosition(
-      zoom: 11.5,
+      zoom: 15.5,
       target: LatLng(30.44, 30.4));
   static const kGoogleApiKey = "AIzaSyCExg6JM8XtlBiccaYYssvALQujX9NA3xs";
   Marker _origin;
@@ -226,27 +226,112 @@ class _MapPageState extends State<MapPage> {
             ),
           Positioned(
             bottom: 10,
-            child: Container(
-              margin: EdgeInsets.only(top: 12, bottom: 0),
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(1.0),
-                ),
-                color: theme.getColor(),
-                onPressed: () async {
-                  showDialog(
-                      context: context,
-                      builder: (_) => OrderOverlay(donation_id: widget.donation_id,));
-                },
-                child: Text(
-                  "تم الوصول الى المتطوع",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 12, bottom: 0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(1.0),
+                    ),
+                    color: theme.getColor(),
+                    onPressed: () async {
+                      API(context).post('status/${widget.donation_id}', {
+                      }).then((value) {
+                        print(value);
+                        if (value['status'] == true) {
+                          Navigator.pop(context);
+                          Nav.routeReplacement(
+                              context, Delegate());
+
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay(
+                                      '${value['message']}'));
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay(
+                                      '${value['message']}'));
+                        }
+                      });
+                    },
+                    child: Text(
+                      "تغير الحالة",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Container(
+                  margin: EdgeInsets.only(top: 12, bottom: 0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(1.0),
+                    ),
+                    color: theme.getColor(),
+                    onPressed: () async {
+                      API(context).post('orderDelegate/${widget.donation_id}', {
+                      }).then((value) {
+                        print(value);
+                        if (value['status'] == true) {
+                          Navigator.pop(context);
+                          Nav.routeReplacement(
+                              context, Delegate());
+
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay(
+                                      '${value['message']}'));
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay(
+                                      '${value['message']}'));
+                        }
+                      });
+                    },
+                    child: Text(
+                      "استلام الطلب",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 12, bottom: 0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(1.0),
+                    ),
+                    color: theme.getColor(),
+                    onPressed: () async {
+                      showDialog(
+                          context: context,
+                          builder: (_) => OrderOverlay(donation_id: widget.donation_id,));
+                    },
+                    child: Text(
+                      "تم الوصول الى المتطوع",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ),
+
+              ],
             ),
           )
         ],
@@ -316,7 +401,7 @@ class _MapPageState extends State<MapPage> {
     var _locationData = await  Geolocator.getCurrentPosition();
 
     _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: 11.5,
+        zoom: 15.5,
         target: LatLng(_locationData.latitude, _locationData.latitude))));
     setState(() {
       _origin = Marker(

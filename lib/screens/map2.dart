@@ -22,7 +22,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   var  _initialCameraPosition = CameraPosition(
     target: LatLng(37.773972, -122.431297),
-    zoom: 11.5,
+    zoom: 15.0,
   );
 
   GoogleMapController _googleMapController;

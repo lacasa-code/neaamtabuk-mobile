@@ -1,5 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter_pos/model/RecipentModel.dart';
+import 'package:flutter_pos/model/neerRecipentModel.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -41,10 +41,10 @@ class MapSampleState extends State<MapSample> {
   PolylinePoints polylinePoints = PolylinePoints();
   PolylineResult result;
   final formKey = GlobalKey<FormState>();
-  Recipent trakers;
+  NeerRecipent trakers;
   List<LatLng> latlng = List();
   Position currentLocation;
-  List<Recipent> recipent;
+  List<NeerRecipent> recipent;
 
   _onMapCreated(GoogleMapController controller) async {
     bool serviceEnabled;
@@ -123,7 +123,7 @@ class MapSampleState extends State<MapSample> {
     API(context).get('nearRecipent').then((value) {
       if (value != null) {
         setState(() {
-          recipent = RecipentModel.fromJson(value).data;
+          recipent = NeerRecipentModel.fromJson(value).data;
         });
       }
     });
@@ -149,7 +149,7 @@ class MapSampleState extends State<MapSample> {
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(
                 target: _lastMapPosition,
-                zoom: 9.0,
+                zoom: 15.0,
               ),
               mapType: _currentMapType,
               markers: _markers,
@@ -178,7 +178,7 @@ class MapSampleState extends State<MapSample> {
                       : Padding(
                           padding: EdgeInsets.only(
                               left: 25.0, right: 25.0, top: 10.0, bottom: 10),
-                          child: DropdownSearch<Recipent>(
+                          child: DropdownSearch<NeerRecipent>(
                             maxHeight: 120,
                             dropdownBuilder: (context, item) {
                               return item == null
@@ -188,7 +188,7 @@ class MapSampleState extends State<MapSample> {
                                       child: Text(" ${item?.username} "),
                                     );
                             },
-                            validator: (Recipent item) {
+                            validator: (NeerRecipent item) {
                               if (item == null) {
                                 return "${getTransrlate(context, 'requiredempty')}";
                               } else
@@ -197,14 +197,14 @@ class MapSampleState extends State<MapSample> {
                             items: recipent,
                             popupItemBuilder: _customPopupItemBuilderExample,
                             //  onFind: (String filter) => getData(filter),
-                            onChanged: (Recipent u) {
+                            onChanged: (NeerRecipent u) {
                               setState(() {
                                 trakers = u;
                                 widget.latitude = trakers.latitude;
                                 widget.longitude = trakers.longitude;
                               });
                             },
-                            itemAsString: (Recipent u) => " ${u.username} ",
+                            itemAsString: (NeerRecipent u) => " ${u.username} ",
                           )),
                   trakers == null
                       ? Container()
@@ -265,7 +265,7 @@ class MapSampleState extends State<MapSample> {
 
 
   Widget _customPopupItemBuilderExample(
-      BuildContext context, Recipent item, bool isSelected) {
+      BuildContext context, NeerRecipent item, bool isSelected) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8),
       decoration: !isSelected

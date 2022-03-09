@@ -1,25 +1,25 @@
-class RecipentModel {
-  RecipentModel({
+class NeerRecipentModel {
+  NeerRecipentModel({
       this.status, 
       this.message, 
       this.code, 
       this.data,});
 
-  RecipentModel.fromJson(dynamic json) {
+  NeerRecipentModel.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
     code = json['code'];
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(Recipent.fromJson(v));
+        data.add(NeerRecipent.fromJson(v));
       });
     }
   }
   bool status;
   String message;
   int code;
-  List<Recipent> data;
+  List<NeerRecipent> data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -34,8 +34,8 @@ class RecipentModel {
 
 }
 
-class Recipent {
-  Recipent({
+class NeerRecipent {
+  NeerRecipent({
       this.id, 
       this.username, 
       this.mobile, 
@@ -45,7 +45,7 @@ class Recipent {
       this.latitude, 
       this.distance,});
 
-  Recipent.fromJson(dynamic json) {
+  NeerRecipent.fromJson(dynamic json) {
     id = json['id'];
     username = json['username'];
     mobile = json['mobile'];

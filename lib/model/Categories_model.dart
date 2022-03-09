@@ -40,7 +40,7 @@ class Categories_item {
 
   Categories_item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name_en'];
+    name = json['name'];
     slug_en = json['slug_en'];
 
   }

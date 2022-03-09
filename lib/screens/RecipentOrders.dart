@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/OrdersModel.dart';
-import 'package:flutter_pos/model/recipentOrders.dart';
+import 'package:flutter_pos/model/RecipentOrdersModel.dart';
 import 'package:flutter_pos/screens/map_sample.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -107,7 +107,7 @@ class _RecipentOrdersState extends State<RecipentOrders> {
                                             ),
                                             Center(
                                               child: AutoSizeText(
-                                                '${orders[index].donationUsername}',
+                                                '${orders[index].delegateUsername}',
                                                 textAlign:
                                                 TextAlign.center,
                                                 maxLines: 2,
@@ -130,7 +130,7 @@ class _RecipentOrdersState extends State<RecipentOrders> {
                                             ),
                                             Center(
                                               child: AutoSizeText(
-                                                '${orders[index].donationEmail}',
+                                                '${orders[index].delegateEmail}',
                                                 textAlign:
                                                 TextAlign.center,
                                                 maxLines: 2,
@@ -153,7 +153,7 @@ class _RecipentOrdersState extends State<RecipentOrders> {
                                             ),
                                             Center(
                                               child: AutoSizeText(
-                                                '${orders[index].donationMobile}',
+                                                '${orders[index].delegateMobile}',
                                                 textAlign:
                                                 TextAlign.center,
                                                 maxLines: 2,
@@ -176,7 +176,7 @@ class _RecipentOrdersState extends State<RecipentOrders> {
                                             ),
                                             Center(
                                               child: AutoSizeText(
-                                                '${orders[index].donationregion}',
+                                                '${orders[index].delegateregion}',
                                                 textAlign:
                                                 TextAlign.center,
                                                 maxLines: 2,
@@ -233,6 +233,7 @@ class _RecipentOrdersState extends State<RecipentOrders> {
         if (value != null) {
           setState(() {
             orders = RecipentOrdersModel.fromJson(value).data;
+
           });
         }
       });

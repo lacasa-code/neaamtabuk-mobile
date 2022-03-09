@@ -1,7 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/model/RecipentModel.dart';
+import 'package:flutter_pos/model/neerRecipentModel.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -32,7 +32,7 @@ class MapOverlayState extends State<MapOverlay>
   TextEditingController addressController = TextEditingController();
 
   var initialCameraPosition =CameraPosition(
-      zoom: 11.5,
+      zoom: 15,
       target: LatLng(30.44, 30.4));
   Marker _origin;
   Location location = new Location();
@@ -64,81 +64,83 @@ class MapOverlayState extends State<MapOverlay>
         color: Colors.transparent,
         child: ScaleTransition(
           scale: scaleAnimation,
-          child:Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("${getTransrlate(context, "LocationSelected")}"),
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Container(
-                        height: ScreenUtil.getWidth(context)/2,
-                        child: GoogleMap(
-                          myLocationEnabled: true,
-                          compassEnabled: true,
-                          tiltGesturesEnabled: false,
-                          zoomControlsEnabled: false,
-                          mapType: MapType.normal,
-                          onLongPress: _addMarker,
-                          onTap: _addMarker,
-                          markers: {
-                            if (_origin != null) _origin,
-                          },
-                          initialCameraPosition: initialCameraPosition,
-                          onMapCreated: (controller) =>
-                          _googleMapController = controller,
+          child:SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("${getTransrlate(context, "LocationSelected")}"),
+                      Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Container(
+                          height: ScreenUtil.getWidth(context)/2,
+                          child: GoogleMap(
+                            myLocationEnabled: true,
+                            compassEnabled: true,
+                            tiltGesturesEnabled: false,
+                            zoomControlsEnabled: false,
+                            mapType: MapType.normal,
+                            onLongPress: _addMarker,
+                            onTap: _addMarker,
+                            markers: {
+                              if (_origin != null) _origin,
+                            },
+                            initialCameraPosition: initialCameraPosition,
+                            onMapCreated: (controller) =>
+                            _googleMapController = controller,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: MyTextFormField(
-                        controller: addressController,
-                        labelText: getTransrlate(context, 'AddressTitle'),
-                        hintText: getTransrlate(context, 'AddressTitle'),
-                        isEmail: true,
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return getTransrlate(context, 'requiredempty');
-                          }
-                          return null;
-                        },
-                        onSaved: (String value) {
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 40,
-                        width: ScreenUtil.getWidth(context),
-                        margin: EdgeInsets.only(top: 12, bottom: 0),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(1.0),
-                          ),
-                          color: Colors.green,
-                          onPressed: () async {
-                            Navigator.pop(context);
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: MyTextFormField(
+                          controller: addressController,
+                          labelText: getTransrlate(context, 'AddressTitle'),
+                          hintText: getTransrlate(context, 'AddressTitle'),
+                          isEmail: true,
+                          validator: (String value) {
+                            if (value.isEmpty) {
+                              return getTransrlate(context, 'requiredempty');
+                            }
+                            return null;
                           },
-                          child: Text(
-                            getTransrlate(context, 'SaveAddress'),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
+                          onSaved: (String value) {
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 40,
+                          width: ScreenUtil.getWidth(context),
+                          margin: EdgeInsets.only(top: 12, bottom: 0),
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(1.0),
+                            ),
+                            color: Colors.green,
+                            onPressed: () async {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              getTransrlate(context, 'SaveAddress'),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
 
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -171,16 +173,12 @@ Location location=new Location();
     _locationData = await location.getLocation();
 
     _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: 11.5,
+        zoom: 15,
         target: LatLng(_locationData.latitude, _locationData.latitude))));
-    setState(() {
-      _origin = Marker(
-          markerId: MarkerId('start'),
-          position: LatLng(_locationData.latitude, _locationData.latitude));
+    _addMarker(LatLng(_locationData.latitude, _locationData.latitude));
 
-      print('${_locationData.latitude}');
-    });
   }
+
   void _addMarker(LatLng pos) async {
       setState(() {
         _origin = Marker(

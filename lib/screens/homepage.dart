@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Text(
-                                  '${getTransrlate(context, 'orders')}',
+                                  '${getTransrlate(context, 'Myorders')}',
                                   style: TextStyle(
                                       color:theme.getColor(), fontWeight: FontWeight.bold),
                                 ),
@@ -167,7 +167,8 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ],
-                    ): InkWell(
+                    ):
+                    InkWell(
                       onTap: (){
                         Nav.route(context, RecipentOrders());
                       },

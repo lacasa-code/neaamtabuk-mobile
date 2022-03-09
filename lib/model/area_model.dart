@@ -39,9 +39,11 @@ class Area {
       this.nameAr,});
 
   Area.fromJson(dynamic json) {
-    nameAr = json['name_ar'];
+    nameAr = json['name'];
+    id = "${json['id']}";
   }
   String nameAr;
+  String id;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

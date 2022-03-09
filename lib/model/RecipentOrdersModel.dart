@@ -37,14 +37,8 @@ class RecipentOrdersModel {
 class RecipentOrder {
   RecipentOrder({
       this.id, 
-      this.donationUsername, 
-      this.donationEmail, 
-      this.donationMobile, 
-      this.donationGender, 
-      this.donationAddress, 
-      this.donationLongitude, 
-      this.donationLatitude, 
-      this.donationregion, 
+      this.donationNumber, 
+      this.category, 
       this.delegateUsername, 
       this.delegateEmail, 
       this.delegateMobile, 
@@ -58,14 +52,8 @@ class RecipentOrder {
 
   RecipentOrder.fromJson(dynamic json) {
     id = json['id'];
-    donationUsername = json['donationUsername'];
-    donationEmail = json['donationEmail'];
-    donationMobile = json['donationMobile'];
-    donationGender = json['donationGender'];
-    donationAddress = json['donationAddress'];
-    donationLongitude = json['donationLongitude'];
-    donationLatitude = json['donationLatitude'];
-    donationregion = json['donationregion'];
+    donationNumber = json['donation_number'];
+    category = json['category'];
     delegateUsername = json['delegateUsername'];
     delegateEmail = json['delegateEmail'];
     delegateMobile = json['delegateMobile'];
@@ -78,14 +66,8 @@ class RecipentOrder {
     close = json['close'];
   }
   String id;
-  String donationUsername;
-  String donationEmail;
-  String donationMobile;
-  String donationGender;
-  String donationAddress;
-  String donationLongitude;
-  String donationLatitude;
-  String donationregion;
+  String donationNumber;
+  String category;
   String delegateUsername;
   String delegateEmail;
   String delegateMobile;
@@ -100,14 +82,8 @@ class RecipentOrder {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
-    map['donationUsername'] = donationUsername;
-    map['donationEmail'] = donationEmail;
-    map['donationMobile'] = donationMobile;
-    map['donationGender'] = donationGender;
-    map['donationAddress'] = donationAddress;
-    map['donationLongitude'] = donationLongitude;
-    map['donationLatitude'] = donationLatitude;
-    map['donationregion'] = donationregion;
+    map['donation_number'] = donationNumber;
+    map['category'] = category;
     map['delegateUsername'] = delegateUsername;
     map['delegateEmail'] = delegateEmail;
     map['delegateMobile'] = delegateMobile;

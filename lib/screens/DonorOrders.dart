@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/OrdersModel.dart';
+import 'package:flutter_pos/model/donorOrdersModel.dart';
 import 'package:flutter_pos/screens/account/addOrder.dart';
 import 'package:flutter_pos/screens/map_sample.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -23,7 +24,7 @@ class DonorOrders extends StatefulWidget {
 }
 
 class _DonorOrdersState extends State<DonorOrders> {
-  List<Order> orders ;
+  List<DonorOrder> orders ;
   @override
   void initState() {
     getOrders();
@@ -83,12 +84,26 @@ class _DonorOrdersState extends State<DonorOrders> {
                                   SizedBox(
                                     height: 10,
                                   ),
+                                  // Container(
+                                  //     width: ScreenUtil.getWidth(
+                                  //         context) /
+                                  //         2.5,
+                                  //     child: AutoSizeText(
+                                  //       '${getTransrlate(context, 'OrderNO')}  #${orders[index].donorId} ',
+                                  //       maxLines: 1,
+                                  //       style:
+                                  //       TextStyle(fontSize: 13),
+                                  //     )),
+                                  //
+                                  // SizedBox(
+                                  //   height: 15,
+                                  // ),
                                   Container(
                                       width: ScreenUtil.getWidth(
                                           context) /
                                           2.5,
                                       child: AutoSizeText(
-                                        '${getTransrlate(context, 'OrderNO')}  #${orders[index].id} ',
+                                        '${getTransrlate(context, 'category')}  ${orders[index].category} ',
                                         maxLines: 1,
                                         style:
                                         TextStyle(fontSize: 13),
@@ -128,15 +143,6 @@ class _DonorOrdersState extends State<DonorOrders> {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  Container(
-                                      width: ScreenUtil.getWidth(context) / 1.5,
-                                      child: AutoSizeText(
-                                        ' Donation Number :${orders[index].donationNumber} ',
-                                        maxLines: 1,
-                                      )),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
                                   Row(
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -149,7 +155,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                                           ),
                                           Center(
                                             child: AutoSizeText(
-                                              '${orders[index].nameEn}',
+                                              '${orders[index].status}',
                                               textAlign:
                                               TextAlign.center,
                                               maxLines: 2,
@@ -184,7 +190,7 @@ class _DonorOrdersState extends State<DonorOrders> {
       API(context).get('donorOrders').then((value) {
         if (value != null) {
           setState(() {
-            orders = OrdersModel.fromJson(value).data;
+            orders = DonorOrdersModel.fromJson(value).data;
           });
         }
       });

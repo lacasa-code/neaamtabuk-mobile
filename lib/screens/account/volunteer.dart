@@ -10,9 +10,11 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/MapOverlay.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
+import 'package:flutter_pos/widget/register/register_form_model.dart';
 import 'package:flutter_pos/widget/register/register_form_vendor.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +36,8 @@ class _VolunteerPageState extends State<VolunteerPage> {
   int ready_to_distribute = 0;
   Categories_item categories_item;
   List<Categories_item> catedories;
+  Model model = Model();
+  TextEditingController addressController = TextEditingController();
 
   @override
   void initState() {
@@ -137,6 +141,40 @@ class _VolunteerPageState extends State<VolunteerPage> {
                         onChanged: (Categories_item data) =>
                             categories_item = data,
                       ),
+                      MyTextFormField(
+                        labelText: '${getTransrlate(context, "AddressTitle")}',
+                        controller: addressController,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return getTransrlate(context, 'requiredempty');
+                          }
+                          if (model.latitude==null && model.longitude==null) {
+                            return getTransrlate(context, 'LocationSelected');
+                          }
+                          _formKey.currentState.save();
+                          return null;
+                        },
+                        suffixIcon:IconButton( icon: Icon(Icons.location_pin),
+                            onPressed: (){
+                              showDialog(context: context,
+                                  builder: (_) => MapOverlay(this.model)).whenComplete(() {
+                                model.latitude=this.model.latitude;
+                                model.longitude=this.model.longitude;
+                                addressController.text =
+                                '${this.model.address ?? ''}';
+                              });
+                            }),
+                        inputFormatters: [
+                          new LengthLimitingTextInputFormatter(254),
+                        ],
+                        onSaved: (String val) =>
+                        model.address = val,
+                        onChange: (String val) {
+                          model.address = val;
+                        },
+
+                      ),
+
                       SizedBox(
                         height: 20,
                       ),
@@ -252,6 +290,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                               _formKey.currentState.save();
                               setState(() => _isLoading = true);
                               register(themeColor);
+
                             }
                           },
                           child: Text(
@@ -374,6 +413,9 @@ class _VolunteerPageState extends State<VolunteerPage> {
       'category_id': categories_item.id,
       'ready_to_distribute': ready_to_distribute,
       'ready_to_pack': ready_to_pack,
+      'latitude': model.latitude,
+      'longitude': model.longitude,
+      'address': model.address,
       'status_id': 1,
     }).then((value) {
       print(value);

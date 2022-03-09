@@ -17,6 +17,8 @@ import 'package:flutter_pos/widget/not_login.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../model/DelegateOrders.dart';
+
 class Delegate extends StatefulWidget {
   const Delegate({Key key}) : super(key: key);
   @override
@@ -24,7 +26,7 @@ class Delegate extends StatefulWidget {
 }
 
 class _DelegateState extends State<Delegate> {
-  List<NearDonor> orders ;
+  List<DelegateOrder> orders ;
   @override
   void initState() {
     getOrders("1");
@@ -103,81 +105,22 @@ class _DelegateState extends State<Delegate> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Container(
-                                            width: ScreenUtil.getWidth(context) / 1.5,
-                                            child: AutoSizeText(
-                                              '${orders[index].username}',
-                                              style: TextStyle(color: themeColor.getColor()),
-                                              maxLines: 1,
-                                            )),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Container(
-                                            width: ScreenUtil.getWidth(context) / 1.5,
-                                            child: AutoSizeText(
-                                              '${orders[index].mobile} ',
-                                              maxLines: 1,
-                                            )),
-                                        Container(
-                                            width: ScreenUtil.getWidth(context) / 1.5,
-                                            child: AutoSizeText(
-                                              '${orders[index].address} ',
-                                              maxLines: 1,
-                                            )),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Container(
-                                            width: ScreenUtil.getWidth(context) / 1.5,
-                                            child: AutoSizeText(
-                                              '${orders[index].distance} Km',
-                                              maxLines: 1,
-                                            )),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Row(
-                                              children: [
-                                                AutoSizeText(
-                                                  '${getTransrlate(context, 'OrderState')}  : ',
-                                                  maxLines: 1,
-                                                ),
-                                                Container(
-                                                    width: ScreenUtil.getWidth(
-                                                            context) / 4,
-                                                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.blue)),
-                                                    child: Center(
-                                                      child: AutoSizeText(
-                                                        'تم الاستلام',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        maxLines: 2,
-                                                        maxFontSize: 14,
-                                                        minFontSize: 12,
-                                                      ),
-                                                    )),
-                                              ],
+                                            AutoSizeText(
+                                              'Username  : ',
+                                              maxLines: 1,
                                             ),
-                                            InkWell(
-                                              onTap: () {
-                                                Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
-                                              },
+                                            Center(
                                               child: AutoSizeText(
-                                                '${getTransrlate(context, 'OrderTrack')} ',
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                    color:
-                                                        themeColor.getColor(),
-                                                    fontSize: 14,
-                                                    decoration: TextDecoration
-                                                        .underline),
+                                                '${orders[index].donationUsername}',
+                                                textAlign:
+                                                TextAlign.center,
+                                                maxLines: 2,
+                                                maxFontSize: 13,
+                                                minFontSize: 10,
+                                                style: TextStyle(color:themeColor.getColor()),
+
                                               ),
                                             ),
                                           ],
@@ -185,10 +128,163 @@ class _DelegateState extends State<Delegate> {
                                         SizedBox(
                                           height: 15,
                                         ),
+                                        Row(
+                                          children: [
+                                            AutoSizeText(
+                                              'Email  : ',
+                                              maxLines: 1,
+                                            ),
+                                            Center(
+                                              child: AutoSizeText(
+                                                '${orders[index].donationEmail}',
+                                                textAlign:
+                                                TextAlign.center,
+                                                maxLines: 2,
+                                                maxFontSize: 13,
+                                                minFontSize: 10,
+                                                style: TextStyle(color:themeColor.getColor()),
+
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Row(
+                                          children: [
+                                            AutoSizeText(
+                                              'Mobile  : ',
+                                              maxLines: 1,
+                                            ),
+                                            Center(
+                                              child: AutoSizeText(
+                                                '${orders[index].donationMobile}',
+                                                textAlign:
+                                                TextAlign.center,
+                                                maxLines: 2,
+                                                maxFontSize: 13,
+                                                minFontSize: 10,
+                                                style: TextStyle(color:themeColor.getColor()),
+
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Row(
+                                          children: [
+                                            AutoSizeText(
+                                              'region  : ',
+                                              maxLines: 1,
+                                            ),
+                                            Center(
+                                              child: AutoSizeText(
+                                                '${orders[index].donationregion}',
+                                                textAlign:
+                                                TextAlign.center,
+                                                maxLines: 2,
+                                                maxFontSize: 13,
+                                                minFontSize: 10,
+                                                style: TextStyle(color:themeColor.getColor()),
+
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                            width: ScreenUtil.getWidth(context) / 1.5,
+                                            child: AutoSizeText(
+                                              '${orders[index].donationAddress}',
+                                              style: TextStyle(color: themeColor.getColor()),
+                                            )),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Row(
+                                          children: [
+                                            AutoSizeText(
+                                              '${getTransrlate(context, 'OrderState')}  : ',
+                                              maxLines: 1,
+                                            ),
+                                            Center(
+                                              child: AutoSizeText(
+                                                '${orders[index].status}',
+                                                textAlign:
+                                                TextAlign.center,
+                                                maxLines: 2,
+                                                maxFontSize: 13,
+                                                minFontSize: 10,
+                                                style: TextStyle(color:themeColor.getColor()),
+
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     Row(
+                                        //       children: [
+                                        //         AutoSizeText(
+                                        //           '${getTransrlate(context, 'OrderState')}  : ',
+                                        //           maxLines: 1,
+                                        //         ),
+                                        //         Container(
+                                        //             width: ScreenUtil.getWidth(
+                                        //                     context) / 4,
+                                        //             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                                        //             decoration: BoxDecoration(
+                                        //                 border: Border.all(color: Colors.blue)),
+                                        //             child: Center(
+                                        //               child: AutoSizeText(
+                                        //                 'تم الاستلام',
+                                        //                 textAlign:
+                                        //                     TextAlign.center,
+                                        //                 maxLines: 2,
+                                        //                 maxFontSize: 14,
+                                        //                 minFontSize: 12,
+                                        //               ),
+                                        //             )),
+                                        //       ],
+                                        //     ),
+                                        //     InkWell(
+                                        //       onTap: () {
+                                        //         Nav.route(context, MapSample(orders[index].id,orders[index].donationLatitude,orders[index].donationLongitude));
+                                        //       },
+                                        //       child: AutoSizeText(
+                                        //         '${getTransrlate(context, 'OrderTrack')} ',
+                                        //         maxLines: 1,
+                                        //         style: TextStyle(
+                                        //             color:
+                                        //                 themeColor.getColor(),
+                                        //             fontSize: 14,
+                                        //             decoration: TextDecoration
+                                        //                 .underline),
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 15,
+                                        // ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
                                         Container(
                                           height: 1,
                                           color: Colors.black12,
                                         ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+
                                       ],
                                     );
                                   },
@@ -203,7 +299,7 @@ class _DelegateState extends State<Delegate> {
       API(context).get('delegateOrders').then((value) {
         if (value != null) {
           setState(() {
-            orders = NearDonors.fromJson(value).data;
+            orders = DelegateOrders.fromJson(value).data;
           });
         }
       });

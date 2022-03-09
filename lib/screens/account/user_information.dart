@@ -176,10 +176,11 @@ class _UserInfoState extends State<UserInfo> {
                                         ],
                                       ),
                                     ),
-                                    Padding(
+                                    area==null?Custom_Loading():   Padding(
                                       padding: EdgeInsets.only(
                                           left: 25.0, right: 25.0, top: 10.0),
                                       child: DropdownSearch<Area>(
+                                        enabled: !_status,
                                         mode: Mode.MENU,
                                         validator: (Area item) {
                                           if (item == null) {
@@ -190,9 +191,11 @@ class _UserInfoState extends State<UserInfo> {
                                         items: area,
                                         //  onFind: (String filter) => getData(filter),
                                         itemAsString: (Area u) => u.nameAr,
-                                        selectedItem:Area(nameAr: userModal.region) ,
+                                        selectedItem:area.firstWhere((element) => element.id==userModal.region,orElse: ()=>Area(nameAr:userModal.region)) ,
                                         onChanged: (Area data) =>
-                                        userModal.region = data.nameAr,
+                                        userModal.region = data.id,
+                                        onSaved: (Area data) =>
+                                        userModal.region = data.id,
                                       ),
                                     ),
                                     Padding(

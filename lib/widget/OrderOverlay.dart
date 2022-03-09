@@ -1,7 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/model/RecipentModel.dart';
+import 'package:flutter_pos/model/neerRecipentModel.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -24,15 +24,15 @@ class OrderOverlayState extends State<OrderOverlay>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
-  List<Recipent> recipent;
+  List<NeerRecipent> recipent;
   final formKey = GlobalKey<FormState>();
-  Recipent trakers;
+  NeerRecipent trakers;
   @override
   void initState() {
     API(context).get('nearRecipent').then((value) {
       if (value != null) {
         setState(() {
-          recipent = RecipentModel.fromJson(value).data;
+          recipent = NeerRecipentModel.fromJson(value).data;
         });
       }
     });
@@ -90,7 +90,7 @@ class OrderOverlayState extends State<OrderOverlay>
                             right: 25.0,
                             top: 10.0,
                             bottom: 10),
-                        child: DropdownSearch<Recipent>(
+                        child: DropdownSearch<NeerRecipent>(
                           mode: Mode.MENU,
 
                           dropdownBuilder: (context, item) {
@@ -104,7 +104,7 @@ class OrderOverlayState extends State<OrderOverlay>
                                   " ${item?.username} "),
                             );
                           },
-                          validator: (Recipent item) {
+                          validator: (NeerRecipent item) {
                             if (item == null) {
                               return "${getTransrlate(context, 'requiredempty')}";
                             } else
@@ -114,68 +114,121 @@ class OrderOverlayState extends State<OrderOverlay>
                           popupItemBuilder:
                           _customPopupItemBuilderExample,
                           //  onFind: (String filter) => getData(filter),
-                          onChanged: (Recipent u) {
+                          onChanged: (NeerRecipent u) {
                             setState(() {
                               trakers = u;
                             });
                           },
-                          itemAsString: (Recipent u) =>
+                          itemAsString: (NeerRecipent u) =>
                           " ${u.username} ",
                         )),
                     trakers == null
                         ? Container()
-                        : Container(
+                        : Column(
+                          children: [
+                            Container(
                       height: 40,
                       //width: ScreenUtil.getWidth(context),
                       margin: EdgeInsets.only(
-                          top: 12, bottom: 0),
+                              top: 12, bottom: 0),
                       child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                          new BorderRadius.circular(
-                              1.0),
-                        ),
-                        color: theme.getColor(),
-                        onPressed: () async {
-                          if (formKey.currentState
-                              .validate()) {
-                            formKey.currentState.save();
-                            API(context).post('orderRecipent/${widget.donation_id}', {
-                              'recipient_id': trakers.id,
-                              'status_id': 2,
-                            }).then((value) {
-                              print(value);
-                              if (value['status'] == true) {
-                                Navigator.pop(context);
-                                Nav.routeReplacement(
-                                    context, Delegate());
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                              new BorderRadius.circular(
+                                  1.0),
+                            ),
+                            color: theme.getColor(),
+                            onPressed: () async {
+                              if (formKey.currentState
+                                  .validate()) {
+                                formKey.currentState.save();
+                                API(context).post('orderRecipent/${widget.donation_id}', {
+                                  'recipient_id': trakers.id,
+                                  'status_id': 2,
+                                }).then((value) {
+                                  print(value);
+                                  if (value['status'] == true) {
+                                    Navigator.pop(context);
+                                    Nav.routeReplacement(
+                                        context, Delegate());
 
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay(
-                                            '${value['message']}'));
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay(
-                                            '${value['message']}'));
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) =>
+                                            ResultOverlay(
+                                                '${value['message']}'));
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) =>
+                                            ResultOverlay(
+                                                '${value['message']}'));
+                                  }
+                                });
                               }
-                            });
-                          }
-                        },
-                        child: Text(
-                          getTransrlate(
-                              context, 'placeorder'),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
+                            },
+                            child: Text(
+                              getTransrlate(
+                                  context, 'placeorder'),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
                       ),
-                    )
+                    ),
+                            Container(
+                      height: 40,
+                      //width: ScreenUtil.getWidth(context),
+                      margin: EdgeInsets.only(
+                              top: 12, bottom: 0),
+                      child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                              new BorderRadius.circular(
+                                  1.0),
+                            ),
+                            color: theme.getColor(),
+                            onPressed: () async {
+                              if (formKey.currentState
+                                  .validate()) {
+                                formKey.currentState.save();
+                                API(context).post('closeAt/${widget.donation_id}', {
+                                }).then((value) {
+                                  print(value);
+                                  if (value['status'] == true) {
+                                    Navigator.pop(context);
+                                    Nav.routeReplacement(
+                                        context, Delegate());
+
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) =>
+                                            ResultOverlay(
+                                                '${value['message']}'));
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) =>
+                                            ResultOverlay(
+                                                '${value['message']}'));
+                                  }
+                                });
+                              }
+                            },
+                            child: Text(
+                             "قفل الطلب",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                      ),
+                    ),
+                          ],
+                        )
                   ],
                 ),
               ),
@@ -186,7 +239,7 @@ class OrderOverlayState extends State<OrderOverlay>
     );
   }
   Widget _customPopupItemBuilderExample(
-      BuildContext context, Recipent item, bool isSelected) {
+      BuildContext context, NeerRecipent item, bool isSelected) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8),
       decoration: !isSelected
