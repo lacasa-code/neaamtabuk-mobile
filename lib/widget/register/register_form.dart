@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/area_model.dart';
+import 'package:flutter_pos/model/city_model.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_model.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 
 import 'package:provider/provider.dart';
@@ -26,7 +28,9 @@ import '../../main.dart';
 
 class RegisterForm extends StatefulWidget {
   int role_id;
+
   RegisterForm(this.role_id);
+
   @override
   _RegisterFormState createState() => _RegisterFormState();
 }
@@ -46,6 +50,7 @@ class _RegisterFormState extends State<RegisterForm> {
   List<String> country = [];
   List<String> items = ["male", "female"];
   List<Area> area;
+  List<City> cities;
   TextEditingController addressController = TextEditingController();
 
   @override
@@ -108,12 +113,10 @@ class _RegisterFormState extends State<RegisterForm> {
                   labelText: getTransrlate(context, 'phone'),
                   hintText: getTransrlate(context, 'phone'),
                   isEmail: true,
-                  prefix:IconButton(
+                  prefix: IconButton(
                     icon: Center(child: Text("$CountryNo")),
-                    onPressed: () {
-
-                    },
-                  ) ,
+                    onPressed: () {},
+                  ),
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
@@ -132,9 +135,12 @@ class _RegisterFormState extends State<RegisterForm> {
                   hintText: getTransrlate(context, 'AddressTitle'),
                   isEmail: true,
                   suffixIcon: IconButton(
-                    onPressed: (){
-                      showDialog(context: context,
-                          builder: (_) => MapOverlay(this.model)).whenComplete(() => addressController.text='${model.address??''}');
+                    onPressed: () {
+                      showDialog(
+                              context: context,
+                              builder: (_) => MapOverlay(this.model))
+                          .whenComplete(() => addressController.text =
+                              '${model.address ?? ''}');
                     },
                     icon: Icon(Icons.location_pin),
                   ),
@@ -142,7 +148,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
                     }
-                    if (model.latitude==null && model.longitude==null) {
+                    if (model.latitude == null && model.longitude == null) {
                       return getTransrlate(context, 'LocationSelected');
                     }
                     _formKey.currentState.save();
@@ -159,7 +165,9 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 DropdownSearch<Area>(
                   mode: Mode.MENU,
                   validator: (Area item) {
@@ -172,19 +180,69 @@ class _RegisterFormState extends State<RegisterForm> {
                   //  onFind: (String filter) => getData(filter),
                   itemAsString: (Area u) => u.nameAr,
 
-                  onChanged: (Area data) =>
-                  model.region = data.nameAr,
+                  onChanged: (Area data) {
+                    model.region = data.nameAr;
+                  API(context).get('cities/${data.id}').then((value) {
+                    if (value != null) {
+                      setState(() {
+                        cities = City_model.fromJson(value).data;
+                      });
+                    }
+                  });
+                  },
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
+                cities == null
+                    ? Container()
+                    : Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                getTransrlate(context, 'City'),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          DropdownSearch<City>(
+                            mode: Mode.MENU,
+                            validator: (City item) {
+                              if (item == null) {
+                                return "${getTransrlate(context, 'requiredempty')}";
+                              } else
+                                return null;
+                            },
+                            items: cities,
+                            //  onFind: (String filter) => getData(filter),
+                            itemAsString: (City u) => u.cityName,
+//                                        selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
+                            onChanged: (City data) {
+                              model.city = "${data.id}";
+                            },
+                            onSaved: (City data) => model.city = "${data.id}",
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     Text(
                       getTransrlate(context, 'gender'),
                     ),
-
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 DropdownSearch<String>(
                   mode: Mode.MENU,
                   maxHeight: 120,
@@ -197,8 +255,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   items: items,
                   //  onFind: (String filter) => getData(filter),
                   itemAsString: (String u) => u,
-                  onChanged: (String data) =>
-                  model.gender = data,
+                  onChanged: (String data) => model.gender = data,
                 ),
                 MyTextFormField(
                   labelText: getTransrlate(context, 'password'),
@@ -298,14 +355,15 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
         _isLoading
             ? Container(
-            color: Colors.white,
-            height: ScreenUtil.getHeight(context) / 2,
-            width: ScreenUtil.getWidth(context),
-            child: Custom_Loading())
+                color: Colors.white,
+                height: ScreenUtil.getHeight(context) / 2,
+                width: ScreenUtil.getWidth(context),
+                child: Custom_Loading())
             : Container()
       ],
     );
   }
+
   register(Provider_control themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('register', {
@@ -319,9 +377,8 @@ class _RegisterFormState extends State<RegisterForm> {
       'role_id': widget.role_id,
       'donation_type_id': 1,
       'status': "active",
-      'longitude': model.longitude??'',
-      'latitude': model.longitude??'',
-
+      'longitude': model.longitude ?? '',
+      'latitude': model.longitude ?? '',
     }).then((value) {
       print(value);
       if (value['status'] == true) {
@@ -335,8 +392,8 @@ class _RegisterFormState extends State<RegisterForm> {
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);
         showDialog(
-            context: context,
-            builder: (_) => ResultOverlay('${value['message']}'))
+                context: context,
+                builder: (_) => ResultOverlay('${value['message']}'))
             .whenComplete(() {
           Nav.routeReplacement(context, LoginPage());
         });

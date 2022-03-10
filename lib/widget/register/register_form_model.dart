@@ -5,6 +5,7 @@ class Model {
   String address;
   String mobile;
   String region;
+  String city;
   String password_confirmation;
   String gender;
   String longitude;
@@ -18,6 +19,7 @@ class Model {
         this.password,
         this.mobile,
         this.region,
+        this.city,
         this.address,
         this.password_confirmation,
         this.gender,

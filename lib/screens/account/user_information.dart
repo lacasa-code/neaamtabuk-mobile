@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/area_model.dart';
+import 'package:flutter_pos/model/city_model.dart';
 import 'package:flutter_pos/model/user_info.dart';
 import 'package:flutter_pos/screens/account/changePasswordPAge.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -40,6 +41,7 @@ class _UserInfoState extends State<UserInfo> {
   Model model = Model();
   String password;
   List<Area> area;
+  List<City> city;
   final _formKey = GlobalKey<FormState>();
   List<String> items = ["male", "female"];
   TextEditingController addressController = TextEditingController();
@@ -192,10 +194,51 @@ class _UserInfoState extends State<UserInfo> {
                                         //  onFind: (String filter) => getData(filter),
                                         itemAsString: (Area u) => u.nameAr,
                                         selectedItem:area.firstWhere((element) => element.id==userModal.region,orElse: ()=>Area(nameAr:userModal.region)) ,
-                                        onChanged: (Area data) =>
-                                        userModal.region = data.id,
+                                        onChanged: (Area data) {
+                                          userModal.region = data.id;
+                                          API(context).get('cities/${data.id}').then((value) {
+                                            if (value != null) {
+                                              setState(() {
+                                                city = City_model.fromJson(value).data;
+                                              });
+                                            }
+                                          });
+                                        },
                                         onSaved: (Area data) =>
                                         userModal.region = data.id,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25.0, right: 25.0, top: 10.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            getTransrlate(context, 'City'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    city==null?Container():   Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25.0, right: 25.0, top: 10.0),
+                                      child: DropdownSearch<City>(
+                                        enabled: !_status,
+                                        mode: Mode.MENU,
+                                        validator: (City item) {
+                                          if (item == null) {
+                                            return "${getTransrlate(context, 'requiredempty')}";
+                                          } else
+                                            return null;
+                                        },
+                                        items: city,
+                                        //  onFind: (String filter) => getData(filter),
+                                        itemAsString: (City u) => u.cityName,
+//                                        selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
+                                        onChanged: (City data) =>
+                                        userModal.city = "${data.id}",
+                                        onSaved: (City data) =>
+                                        userModal.city = "${data.id}",
                                       ),
                                     ),
                                     Padding(
