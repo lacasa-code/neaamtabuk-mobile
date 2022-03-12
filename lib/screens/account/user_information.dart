@@ -137,35 +137,46 @@ class _UserInfoState extends State<UserInfo> {
                                         getTransrlate(context, 'AddressTitle'),
                                       ),
                                     ),
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 25.0, right: 25.0, top: 2.0),
-                                        child: TextFormField(
-                                          controller: addressController,
-                                          decoration:  InputDecoration(
-                                            suffixIcon: IconButton( icon: Icon(Icons.location_pin),
-                                           onPressed: (){
-                                             showDialog(context: context,
-                                                 builder: (_) => MapOverlay(this.model)).whenComplete(() {
-                                               userModal.latitude=this.model.latitude;
-                                               userModal.longitude=this.model.longitude;
-                                               addressController.text =
-                                               '${this.model.address ?? ''}';
-                                             });
-                                           })
-                                          ),
-                                          enabled: !_status,
-                                          inputFormatters: [
-                                            new LengthLimitingTextInputFormatter(254),
-                                          ],
-                                            autofocus: !_status,
-                                          onSaved: (String val) =>
-                                              userModal.address = val,
-                                          onChanged: (String val) {
-                                            userModal.address = val;
-                                          },
+                                    InkWell(
+                                      onTap: (){
+                                        showDialog(context: context,
+                                            builder: (_) => MapOverlay(this.model)).whenComplete(() {
+                                          userModal.latitude=this.model.latitude;
+                                          userModal.longitude=this.model.longitude;
+                                          addressController.text =
+                                          '${this.model.address ?? ''}';
+                                        });
+                                      },
+                                      child: Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 25.0, right: 25.0, top: 2.0),
+                                          child: TextFormField(
+                                            controller: addressController,
+                                            decoration:  InputDecoration(
+                                              suffixIcon: IconButton( icon: Icon(Icons.location_pin),
+                                             onPressed: (){
+                                               showDialog(context: context,
+                                                   builder: (_) => MapOverlay(this.model)).whenComplete(() {
+                                                 userModal.latitude=this.model.latitude;
+                                                 userModal.longitude=this.model.longitude;
+                                                 addressController.text =
+                                                 '${this.model.address ?? ''}';
+                                               });
+                                             })
+                                            ),
+                                            enabled:false,
+                                            inputFormatters: [
+                                              new LengthLimitingTextInputFormatter(254),
+                                            ],
+                                              autofocus: !_status,
+                                            onSaved: (String val) =>
+                                                userModal.address = val,
+                                            onChanged: (String val) {
+                                              userModal.address = val;
+                                            },
 
-                                        )),
+                                          )),
+                                    ),
 
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -236,9 +247,9 @@ class _UserInfoState extends State<UserInfo> {
                                         itemAsString: (City u) => u.cityName,
 //                                        selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
                                         onChanged: (City data) =>
-                                        userModal.city = "${data.id}",
+                                        userModal.city = "${data?.id}",
                                         onSaved: (City data) =>
-                                        userModal.city = "${data.id}",
+                                        userModal.city = "${data?.id}",
                                       ),
                                     ),
                                     Padding(
@@ -543,6 +554,9 @@ class _UserInfoState extends State<UserInfo> {
             var user = value['data'];
             pref.setString("user_email", user['email']??' ');
             pref.setString("user_name", user['username']??' ');
+            pref.setString("address", "${user['address']}");
+            pref.setString("lat", "${user['latitude']}");
+            pref.setString("lang", "${user['longitude']}");
             setState(() {
               userModal = UserInformation.fromJson(value).data;
             });

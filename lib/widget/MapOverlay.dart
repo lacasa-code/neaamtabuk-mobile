@@ -9,6 +9,7 @@ import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
+import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_model.dart';
 import 'package:geocoder/geocoder.dart';
@@ -31,9 +32,7 @@ class MapOverlayState extends State<MapOverlay>
   GoogleMapController _googleMapController;
   TextEditingController addressController = TextEditingController();
 
-  var initialCameraPosition =CameraPosition(
-      zoom: 15,
-      target: LatLng(30.44, 30.4));
+  var initialCameraPosition ;
   Marker _origin;
   Location location = new Location();
   final formKey = GlobalKey<FormState>();
@@ -75,7 +74,7 @@ class MapOverlayState extends State<MapOverlay>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text("${getTransrlate(context, "LocationSelected")}"),
-                      Padding(
+                      initialCameraPosition==null?Custom_Loading():  Padding(
                         padding: const EdgeInsets.all(24.0),
                         child: Container(
                           height: ScreenUtil.getWidth(context)/2,
@@ -103,6 +102,7 @@ class MapOverlayState extends State<MapOverlay>
                           labelText: getTransrlate(context, 'AddressTitle'),
                           hintText: getTransrlate(context, 'AddressTitle'),
                           isEmail: true,
+                          enabled: false,
                           validator: (String value) {
                             if (value.isEmpty) {
                               return getTransrlate(context, 'requiredempty');
@@ -171,7 +171,11 @@ Location location=new Location();
     }
 
     _locationData = await location.getLocation();
-
+    setState(() {
+      initialCameraPosition=CameraPosition(
+          zoom: 15,
+          target: LatLng(_locationData.latitude, _locationData.latitude));
+    });
     _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         zoom: 15,
         target: LatLng(_locationData.latitude, _locationData.latitude))));
@@ -203,4 +207,8 @@ Location location=new Location();
 
   }
 
+  @override
+  void dispose() {
+    _googleMapController.dispose();
+  }
 }

@@ -342,6 +342,11 @@
   "ShippingBy": "Shipping By",
   "quantity": "Quantity",
 
+  "distribute": "Distribution",
+  "pack": "Packing",
+  "nondistribute": "non distribution",
+  "nonpack": "non packing ",
+
   "totaldiscount": "Total discount",
   "total": "Total",
   "placeorder": " Order",
@@ -354,6 +359,9 @@
   "Countroy": "Country",
   "CountroyCode": "Code",
   "City": "City",
+  "LocationUsage": "Location Usage",
+  "myLocation": "my Location ",
+  "otherLocation": "Other Location ",
   "Addres": "Address",
   "Street": "Street",
   "Building": "Building No",

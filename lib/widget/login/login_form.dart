@@ -137,6 +137,9 @@ class _LoginFormState extends State<LoginForm> {
                                 prefs.setString("token", "${value['access_token']}");
                                 prefs.setString("role_id", "${user['role_id']}");
                                 prefs.setString("user_email", "${user['email']}");
+                                prefs.setString("address", "${user['address']}");
+                                prefs.setString("lat", "${user['latitude']}");
+                                prefs.setString("lang", "${user['longitude']}");
                                 prefs.setString("user_name", "${user['username']}");
                                 prefs.setInt("user_id", user['id']);
                                 themeColor.setLogin(true);

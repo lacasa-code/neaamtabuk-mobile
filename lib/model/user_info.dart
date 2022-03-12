@@ -50,6 +50,8 @@ class User {
     phoneNo = json['mobile'];
     region = json['region'];
     gender = json['gender'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
   }
 
   Map<String, dynamic> toJson() {

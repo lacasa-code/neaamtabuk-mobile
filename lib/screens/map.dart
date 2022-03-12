@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_pos/model/neerRecipentModel.dart';
@@ -17,8 +18,8 @@ import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MapPage extends StatefulWidget {
   String donation_id;
@@ -33,17 +34,25 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   GoogleMapController _googleMapController;
-  var initialCameraPosition =CameraPosition(
-      zoom: 15.5,
-      target: LatLng(30.44, 30.4));
+  var initialCameraPosition =
+      CameraPosition(zoom: 15.5, target: LatLng(30.44, 30.4));
   static const kGoogleApiKey = "AIzaSyCExg6JM8XtlBiccaYYssvALQujX9NA3xs";
   Marker _origin;
   Marker _destination;
   Directions _info;
-  Location location = new Location();
+
+  bool accept = false;
+  bool received = false;
+  bool arrived = false;
+  int id;
 
   @override
   void initState() {
+    SharedPreferences.getInstance().then((pref) => {
+          setState(() {
+            id = pref.getInt('user_id');
+          }),
+        });
 
     // location.onLocationChanged.listen((LocationData currentLocation) {
     //   setState(() {
@@ -59,6 +68,7 @@ class _MapPageState extends State<MapPage> {
     //   DirectionsRepository();
     // });
     setState(() {
+      accept=true;
       _destination = Marker(
           markerId: MarkerId('Place'),
           position: LatLng(
@@ -73,7 +83,7 @@ class _MapPageState extends State<MapPage> {
     final theme = Provider.of<Provider_control>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(getTransrlate(context, 'LocationSelected'))),
+        //  title: Center(child: Text(getTransrlate(context, 'LocationSelected'))),
         backgroundColor: theme.getColor(),
       ),
       body: Stack(
@@ -83,30 +93,30 @@ class _MapPageState extends State<MapPage> {
             child: initialCameraPosition == null
                 ? Custom_Loading()
                 : GoogleMap(
-              myLocationEnabled: true,
-              compassEnabled: true,
-              tiltGesturesEnabled: false,
-              zoomControlsEnabled: false,
-              mapType: MapType.normal,
-              markers: {
-                if (_origin != null) _origin,
-                if (_destination != null) _destination
-              },
-              polylines: {
-                if (_info != null)
-                  Polyline(
-                    polylineId: const PolylineId('طريق الى المستفيد'),
-                    color: theme.getColor(),
-                    width: 5,
-                    points: _info.polylinePoints
-                        .map((e) => LatLng(e.latitude, e.longitude))
-                        .toList(),
+                    myLocationEnabled: true,
+                    compassEnabled: true,
+                    tiltGesturesEnabled: false,
+                    zoomControlsEnabled: false,
+                    mapType: MapType.normal,
+                    markers: {
+                      if (_origin != null) _origin,
+                      if (_destination != null) _destination
+                    },
+                    polylines: {
+                      if (_info != null)
+                        Polyline(
+                          polylineId: const PolylineId('طريق الى المستفيد'),
+                          color: theme.getColor(),
+                          width: 5,
+                          points: _info.polylinePoints
+                              .map((e) => LatLng(e.latitude, e.longitude))
+                              .toList(),
+                        ),
+                    },
+                    initialCameraPosition: initialCameraPosition,
+                    onMapCreated: (controller) =>
+                        _googleMapController = controller,
                   ),
-              },
-              initialCameraPosition: initialCameraPosition,
-              onMapCreated: (controller) =>
-              _googleMapController = controller,
-            ),
           ),
           if (_info != null)
             Positioned(
@@ -145,7 +155,7 @@ class _MapPageState extends State<MapPage> {
                             style: TextButton.styleFrom(
                               primary: Colors.green,
                               textStyle:
-                              const TextStyle(fontWeight: FontWeight.w600),
+                                  const TextStyle(fontWeight: FontWeight.w600),
                             ),
                             child: const Text('مندوب'),
                           ),
@@ -166,7 +176,7 @@ class _MapPageState extends State<MapPage> {
                             style: TextButton.styleFrom(
                               primary: Colors.blue,
                               textStyle:
-                              const TextStyle(fontWeight: FontWeight.w600),
+                                  const TextStyle(fontWeight: FontWeight.w600),
                             ),
                             child: const Text('مستفيد'),
                           ),
@@ -225,117 +235,125 @@ class _MapPageState extends State<MapPage> {
               ),
             ),
           Positioned(
-            bottom: 10,
-            child: Column(
+            bottom: 5,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  margin: EdgeInsets.only(top: 12, bottom: 0),
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(1.0),
-                    ),
-                    color: theme.getColor(),
-                    onPressed: () async {
-                      API(context).post('status/${widget.donation_id}', {
-                      }).then((value) {
-                        print(value);
-                        if (value['status'] == true) {
-                          Navigator.pop(context);
-                          Nav.routeReplacement(
-                              context, Delegate());
+                accept
+                    ? Container(
+                        margin: EdgeInsets.only(top: 12, bottom: 0),
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(1.0),
+                          ),
+                          color: theme.getColor(),
+                          onPressed: () async {
+                            API(context).post(
+                                'status/$id', {"status_id": "3"}).then((value) {
+                              print(value);
+                              if (value['status'] == true) {
+                                setState(() {
+                                  accept=false;
+                                  received=true;
+                                });
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message']}'));
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message']}'));
+                              }
+                            });
+                          },
+                          child: Text(
+                            "قبول الطلب",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(),
+                received
+                    ? Container(
+                        margin: EdgeInsets.only(top: 12, bottom: 0),
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(1.0),
+                          ),
+                          color: theme.getColor(),
+                          onPressed: () async {
+                            API(context).post(
+                                'orderDelegate/${widget.donation_id}',
+                                {}).then((value) {
+                              print(value);
+                              if (value['status'] == true) {
+                                setState(() {
+                                  received=false;
+                                  arrived=true;
+                                });
 
-                          showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  ResultOverlay(
-                                      '${value['message']}'));
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  ResultOverlay(
-                                      '${value['message']}'));
-                        }
-                      });
-                    },
-                    child: Text(
-                      "تغير الحالة",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 12, bottom: 0),
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(1.0),
-                    ),
-                    color: theme.getColor(),
-                    onPressed: () async {
-                      API(context).post('orderDelegate/${widget.donation_id}', {
-                      }).then((value) {
-                        print(value);
-                        if (value['status'] == true) {
-                          Navigator.pop(context);
-                          Nav.routeReplacement(
-                              context, Delegate());
-
-                          showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  ResultOverlay(
-                                      '${value['message']}'));
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  ResultOverlay(
-                                      '${value['message']}'));
-                        }
-                      });
-                    },
-                    child: Text(
-                      "استلام الطلب",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 12, bottom: 0),
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(1.0),
-                    ),
-                    color: theme.getColor(),
-                    onPressed: () async {
-                      showDialog(
-                          context: context,
-                          builder: (_) => OrderOverlay(donation_id: widget.donation_id,));
-                    },
-                    child: Text(
-                      "تم الوصول الى المتطوع",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message']}'));
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message']}'));
+                              }
+                            });
+                          },
+                          child: Text(
+                            "استلام الطلب",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(),
+                arrived
+                    ? Container(
+                        margin: EdgeInsets.only(top: 12, bottom: 0),
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(1.0),
+                          ),
+                          color: theme.getColor(),
+                          onPressed: () async {
+                            showDialog(
+                                context: context,
+                                builder: (_) => OrderOverlay(
+                                      donation_id: widget.donation_id,
+                                    ));
+                          },
+                          child: Text(
+                            "تم الوصول",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(),
               ],
             ),
           )
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterTop,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
@@ -353,7 +371,6 @@ class _MapPageState extends State<MapPage> {
   @override
   void dispose() {
     _googleMapController.dispose();
-    location = null;
     super.dispose();
   }
 
@@ -380,29 +397,43 @@ class _MapPageState extends State<MapPage> {
   }
 
   Future<void> getLocation() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+    bool serviceEnabled;
+    LocationPermission permission;
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
     }
 
-    var _locationData = await  Geolocator.getCurrentPosition();
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
 
-    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: 15.5,
-        target: LatLng(_locationData.latitude, _locationData.latitude))));
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    var _locationData = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+            zoom: 15.5,
+            target: LatLng(_locationData.latitude, _locationData.latitude))));
+
     setState(() {
       _origin = Marker(
           markerId: MarkerId('start'),
@@ -413,6 +444,4 @@ class _MapPageState extends State<MapPage> {
 
     DirectionsRepository();
   }
-
-
 }

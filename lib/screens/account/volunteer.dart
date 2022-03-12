@@ -33,6 +33,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   int ready_to_pack = 0;
+  int location = 0;
   int ready_to_distribute = 0;
   Categories_item categories_item;
   List<Categories_item> catedories;
@@ -41,6 +42,15 @@ class _VolunteerPageState extends State<VolunteerPage> {
 
   @override
   void initState() {
+    SharedPreferences.getInstance().then((pref) => {
+      setState(() {
+        model.longitude = pref.getString('lang');
+        model.latitude = pref.getString('lat');
+        model.address = pref.getString('address');
+      }),
+      addressController.text=pref.getString('address')??''
+    });
+
     API(context).get('categories').then((value) {
       if (value != null) {
         print(value);
@@ -141,7 +151,54 @@ class _VolunteerPageState extends State<VolunteerPage> {
                         onChanged: (Categories_item data) =>
                             categories_item = data,
                       ),
-                      MyTextFormField(
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text("${getTransrlate(context,'LocationUsage')}"),
+                      Container(
+                        width: ScreenUtil.getWidth(context),
+                        height: ScreenUtil.getHeight(context) / 10,
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              width: ScreenUtil.getWidth(context) / 2.5,
+                              child: ListTile(
+                                title: Text('${getTransrlate(context,'myLocation')}'),
+                                leading: Radio<int>(
+                                  value: 0,
+                                  activeColor: themeColor.getColor(),
+                                  groupValue: location,
+                                  onChanged: (int value) {
+                                    setState(() {
+                                      location = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: ScreenUtil.getWidth(context) / 2.5,
+                              child: ListTile(
+                                title: Text('${getTransrlate(context,'otherLocation')}'),
+                                leading: Radio<int>(
+                                  value: 1,
+                                  activeColor: themeColor.getColor(),
+                                  groupValue: location,
+                                  onChanged: (int value) {
+                                    setState(() {
+                                      location = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      location==0?Container() :MyTextFormField(
                         labelText: '${getTransrlate(context, "AddressTitle")}',
                         controller: addressController,
                         validator: (String value) {

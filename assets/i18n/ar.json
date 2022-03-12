@@ -248,6 +248,11 @@
   "ready_to_distribute": "هل الطعام جاهز للتوزيع ؟",
   "ready_to_pack": "هل الطعام جاهز للتغليف ؟",
 
+  "distribute": " جاهز للتوزيع",
+  "pack": " جاهز للتغليف ",
+  "nondistribute": " غير جاهز للتوزيع",
+  "nonpack": "غير جاهز للتغليف ",
+
   "AreadyAccount": "انشئ حسابًا جديدًا",
   "invildpassword": "رقم الهاتف او كلمة السر غير صالح",
   "Email": "الايميل ",
@@ -342,6 +347,9 @@
   "Reviews": "تقيمات",
   "NoReviews": "لا توجد تقيمات",
   "LocationSelected": "تحديد موقعك",
+  "LocationUsage": "مكان التبرع ",
+  "myLocation": "موقعى ",
+  "otherLocation": "موقع اخر ",
   "SaveNaw": "حفظ الان",
   "OrderDone": "تم إتمام الطلب بنجاح\n شكرا لاستخدامك التطبيق !",
   "OrderNO": "رقم الطلب",

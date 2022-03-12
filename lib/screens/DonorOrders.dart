@@ -121,7 +121,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: AutoSizeText(
-                                              '${orders[index].readyToPack=='1'?"مغلف":"غير مغلف"} ',
+                                              '${orders[index].readyToPack=='1'?getTransrlate(context, 'pack'):getTransrlate(context, 'nonpack')} ',
                                               maxLines: 1,
                                               style: TextStyle(color: Colors.white),
                                             ),
@@ -131,13 +131,12 @@ class _DonorOrdersState extends State<DonorOrders> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: AutoSizeText(
-                                              '${orders[index].readyToDistribute=='1'?"جاهز للتوزيع":"غير جاهز للتوزيع"} ',
+                                              '${orders[index].readyToDistribute=='1'?getTransrlate(context, 'distribute'):getTransrlate(context, 'nondistribute')} ',
                                               maxLines: 1,
                                               style: TextStyle(color: Colors.white),
 
                                             ),
                                           )),
-
                                     ],
                                   ),
                                   SizedBox(

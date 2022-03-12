@@ -129,34 +129,44 @@ class _RegisterFormState extends State<RegisterForm> {
                   },
                   keyboard_type: TextInputType.phone,
                 ),
-                MyTextFormField(
-                  controller: addressController,
-                  labelText: getTransrlate(context, 'AddressTitle'),
-                  hintText: getTransrlate(context, 'AddressTitle'),
-                  isEmail: true,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      showDialog(
-                              context: context,
-                              builder: (_) => MapOverlay(this.model))
-                          .whenComplete(() => addressController.text =
-                              '${model.address ?? ''}');
+                InkWell(
+                  onTap: (){
+                    showDialog(
+                        context: context,
+                        builder: (_) => MapOverlay(this.model))
+                        .whenComplete(() => addressController.text =
+                    '${model.address ?? ''}');
+                  },
+                  child: MyTextFormField(
+                    controller: addressController,
+                    labelText: getTransrlate(context, 'AddressTitle'),
+                    hintText: getTransrlate(context, 'AddressTitle'),
+                    isEmail: true,
+                    enabled: false,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        showDialog(
+                                context: context,
+                                builder: (_) => MapOverlay(this.model))
+                            .whenComplete(() => addressController.text =
+                                '${model.address ?? ''}');
+                      },
+                      icon: Icon(Icons.location_pin),
+                    ),
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return getTransrlate(context, 'requiredempty');
+                      }
+                      if (model.latitude == null && model.longitude == null) {
+                        return getTransrlate(context, 'LocationSelected');
+                      }
+                      _formKey.currentState.save();
+                      return null;
                     },
-                    icon: Icon(Icons.location_pin),
+                    onSaved: (String value) {
+                      model.address = value;
+                    },
                   ),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'requiredempty');
-                    }
-                    if (model.latitude == null && model.longitude == null) {
-                      return getTransrlate(context, 'LocationSelected');
-                    }
-                    _formKey.currentState.save();
-                    return null;
-                  },
-                  onSaved: (String value) {
-                    model.address = value;
-                  },
                 ),
                 Row(
                   children: [
@@ -373,6 +383,7 @@ class _RegisterFormState extends State<RegisterForm> {
       'address': model.address,
       'mobile': model.mobile,
       'region': model.region,
+      'city': model.city,
       'gender': model.gender,
       'role_id': widget.role_id,
       'donation_type_id': 1,

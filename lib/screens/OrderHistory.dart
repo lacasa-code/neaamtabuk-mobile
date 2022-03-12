@@ -91,24 +91,24 @@ class _OrdersState extends State<Orders> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                                width: ScreenUtil.getWidth(
-                                                        context) /
-                                                    2.5,
-                                                child: AutoSizeText(
-                                                  '#${orders[index].id}',
-                                                  maxLines: 1,
-                                                  style:
-                                                      TextStyle(fontSize: 13),
-                                                )),
-                                          ],
-                                        ),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     Container(
+                                        //         width: ScreenUtil.getWidth(
+                                        //                 context) /
+                                        //             2.5,
+                                        //         child: AutoSizeText(
+                                        //           '#${orders[index].id}',
+                                        //           maxLines: 1,
+                                        //           style:
+                                        //               TextStyle(fontSize: 13),
+                                        //         )),
+                                        //   ],
+                                        // ),
                                         SizedBox(
-                                          height: 5,
+                                          height: 15,
                                         ),
                                         Container(
                                             width: ScreenUtil.getWidth(context) / 1.5,
@@ -118,7 +118,7 @@ class _OrdersState extends State<Orders> {
                                               maxLines: 1,
                                             )),
                                         SizedBox(
-                                          height: 15,
+                                          height: 5,
                                         ),
                                         Container(
                                             width: ScreenUtil.getWidth(context) / 1.5,
@@ -133,7 +133,7 @@ class _OrdersState extends State<Orders> {
                                               maxLines: 1,
                                             )),
                                         SizedBox(
-                                          height: 15,
+                                          height: 5,
                                         ),
                                         Container(
                                             width: ScreenUtil.getWidth(context) / 1.5,
@@ -142,54 +142,24 @@ class _OrdersState extends State<Orders> {
                                               maxLines: 1,
                                             )),
                                         SizedBox(
-                                          height: 15,
+                                          height: 10,
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                AutoSizeText(
-                                                  '${getTransrlate(context, 'OrderState')}  : ',
-                                                  maxLines: 1,
-                                                ),
-                                                Container(
-                                                    width: ScreenUtil.getWidth(
-                                                            context) / 4,
-                                                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.blue)),
-                                                    child: Center(
-                                                      child: AutoSizeText(
-                                                        'تم الاستلام',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        maxLines: 2,
-                                                        maxFontSize: 14,
-                                                        minFontSize: 12,
-                                                      ),
-                                                    )),
-                                              ],
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                              //  Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
-                                                Nav.route(context, MapPage(orders[index].id,orders[index].latitude,orders[index].longitude));
-                                               // Nav.route(context, MapScreen(orders[index].id,orders[index].latitude,orders[index].longitude));
-                                              },
-                                              child: AutoSizeText(
-                                                '${getTransrlate(context, 'OrderTrack')} ',
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                    color:
-                                                        themeColor.getColor(),
-                                                    fontSize: 14,
-                                                    decoration: TextDecoration
-                                                        .underline),
-                                              ),
-                                            ),
-                                          ],
+                                        InkWell(
+                                          onTap: () {
+                                          //  Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
+                                            Nav.route(context, MapPage(orders[index].id,orders[index].latitude,orders[index].longitude));
+                                           // Nav.route(context, MapScreen(orders[index].id,orders[index].latitude,orders[index].longitude));
+                                          },
+                                          child: AutoSizeText(
+                                            '${getTransrlate(context, 'OrderTrack')} ',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                color:
+                                                    themeColor.getColor(),
+                                                fontSize: 14,
+                                                decoration: TextDecoration
+                                                    .underline),
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 15,
