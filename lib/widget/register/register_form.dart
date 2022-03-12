@@ -113,6 +113,9 @@ class _RegisterFormState extends State<RegisterForm> {
                   labelText: getTransrlate(context, 'phone'),
                   hintText: getTransrlate(context, 'phone'),
                   isEmail: true,
+                  inputFormatters:[
+                    new LengthLimitingTextInputFormatter(10),
+                  ],
                   prefix: IconButton(
                     icon: Center(child: Text("$CountryNo")),
                     onPressed: () {},
@@ -120,6 +123,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
+                    }else if (value.length<8) {
+                      return "${getTransrlate(context, 'shorterphone')}";
                     }
                     _formKey.currentState.save();
                     return null;
@@ -273,7 +278,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      passwordVisible ? Icons.visibility_off : Icons.visibility,
                       color: Colors.black26,
                     ),
                     onPressed: () {
@@ -307,7 +312,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      passwordVisible ? Icons.visibility_off:Icons.visibility,
                       color: Colors.black26,
                     ),
                     onPressed: () {

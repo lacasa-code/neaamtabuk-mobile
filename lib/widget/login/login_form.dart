@@ -73,8 +73,8 @@ class _LoginFormState extends State<LoginForm> {
                       icon: Icon(
                         // Based on passwordVisible state choose the icon
                         passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                         color: Colors.black26,
                       ),
                       onPressed: () {
