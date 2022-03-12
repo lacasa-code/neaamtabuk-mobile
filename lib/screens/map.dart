@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_pos/model/neerRecipentModel.dart';
 import 'package:flutter_pos/model/direction_model.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,6 +42,7 @@ class _MapPageState extends State<MapPage> {
   Marker _origin;
   Marker _destination;
   Directions _info;
+  LocationData myLocation;
 
   bool accept = false;
   bool received = false;
@@ -74,7 +77,7 @@ class _MapPageState extends State<MapPage> {
           position: LatLng(
               double.parse(widget.latitude), double.parse(widget.longitude)));
     });
-    getLocation();
+    getUserLocation();
     super.initState();
   }
 
@@ -368,11 +371,6 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  @override
-  void dispose() {
-    _googleMapController.dispose();
-    super.dispose();
-  }
 
   DirectionsRepository() async {
     String url =
@@ -396,52 +394,58 @@ class _MapPageState extends State<MapPage> {
     } finally {}
   }
 
-  Future<void> getLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
 
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    var _locationData = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(
-            zoom: 15.5,
-            target: LatLng(_locationData.latitude, _locationData.latitude))));
-
+  void _addMarker(LatLng pos) async {
     setState(() {
       _origin = Marker(
-          markerId: MarkerId('start'),
-          position: LatLng(_locationData.latitude, _locationData.latitude));
-
-      print('${_locationData.latitude}');
+        markerId: const MarkerId('origin'),
+        infoWindow: const InfoWindow(title: 'Origin'),
+        icon:
+        BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        position: pos,
+      );
     });
-
     DirectionsRepository();
+  }
+
+  getUserLocation() async {
+
+    String error;
+    Location location = new Location();
+    try {
+      myLocation = await location.getLocation();
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        error = 'please grant permission';
+        print(error);
+      }
+      if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
+        error = 'permission denied- please enable it from app settings';
+        print(error);
+      }
+      myLocation = null;
+    }
+
+    LatLng latLng=new LatLng(myLocation.latitude, myLocation.longitude);
+    _goToPosition1(latLng);
+
+  }
+
+  @override
+  void dispose() {
+    _googleMapController.dispose();
+    super.dispose();
+  }
+
+  void _goToPosition1(LatLng latLng) {
+    setState(() {
+      initialCameraPosition=CameraPosition(
+          zoom: 15,
+          target:latLng);
+    });
+    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        zoom: 15,
+        target: latLng)));
+    _addMarker(latLng);
   }
 }

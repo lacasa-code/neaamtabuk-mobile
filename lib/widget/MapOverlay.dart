@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/neerRecipentModel.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -31,8 +32,11 @@ class MapOverlayState extends State<MapOverlay>
   Animation<double> scaleAnimation;
   GoogleMapController _googleMapController;
   TextEditingController addressController = TextEditingController();
+   LocationData myLocation;
 
-  var initialCameraPosition ;
+  var initialCameraPosition=CameraPosition(
+      zoom: 15,
+      target: LatLng(33.0,30)) ;
   Marker _origin;
   Location location = new Location();
   final formKey = GlobalKey<FormState>();
@@ -49,8 +53,8 @@ class MapOverlayState extends State<MapOverlay>
     controller.addListener(() {
 
     });
-    getLocation();
-
+    //getLocation();
+    getUserLocation();
     controller.forward();
   }
 
@@ -150,38 +154,6 @@ class MapOverlayState extends State<MapOverlay>
     );
   }
 
-  Future<void> getLocation() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-Location location=new Location();
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationData = await location.getLocation();
-    setState(() {
-      initialCameraPosition=CameraPosition(
-          zoom: 15,
-          target: LatLng(_locationData.latitude, _locationData.latitude));
-    });
-    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: 15,
-        target: LatLng(_locationData.latitude, _locationData.latitude))));
-    _addMarker(LatLng(_locationData.latitude, _locationData.latitude));
-
-  }
 
   void _addMarker(LatLng pos) async {
       setState(() {
@@ -207,8 +179,44 @@ Location location=new Location();
 
   }
 
+  getUserLocation() async {
+    print('fooooo');
+    //call this async method from whereever you need
+    String error;
+    Location location = new Location();
+    try {
+      myLocation = await location.getLocation();
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        error = 'please grant permission';
+        print(error);
+      }
+      if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
+        error = 'permission denied- please enable it from app settings';
+        print(error);
+      }
+      myLocation = null;
+    }
+
+    LatLng latLng=new LatLng(myLocation.latitude, myLocation.longitude);
+    _goToPosition1(latLng);
+  }
+
   @override
   void dispose() {
     _googleMapController.dispose();
+    super.dispose();
+  }
+
+  void _goToPosition1(LatLng latLng) {
+    setState(() {
+      initialCameraPosition=CameraPosition(
+          zoom: 15,
+          target:latLng);
+    });
+    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        zoom: 15,
+        target: latLng)));
+    _addMarker(latLng);
   }
 }
