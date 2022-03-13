@@ -178,55 +178,55 @@ class OrderOverlayState extends State<OrderOverlay>
                             ),
                       ),
                     ),
-                            Container(
-                      height: 40,
-                      //width: ScreenUtil.getWidth(context),
-                      margin: EdgeInsets.only(
-                              top: 12, bottom: 0),
-                      child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                              new BorderRadius.circular(
-                                  1.0),
-                            ),
-                            color: theme.getColor(),
-                            onPressed: () async {
-                              if (formKey.currentState
-                                  .validate()) {
-                                formKey.currentState.save();
-                                API(context).post('closeAt/${widget.donation_id}', {
-                                }).then((value) {
-                                  print(value);
-                                  if (value['status'] == true) {
-                                    Navigator.pop(context);
-                                    Nav.routeReplacement(
-                                        context, Delegate());
-
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) =>
-                                            ResultOverlay(
-                                                '${value['message']}'));
-                                  } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) =>
-                                            ResultOverlay(
-                                                '${value['message']}'));
-                                  }
-                                });
-                              }
-                            },
-                            child: Text(
-                             "قفل الطلب",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                      ),
-                    ),
+                    //         Container(
+                    //   height: 40,
+                    //   //width: ScreenUtil.getWidth(context),
+                    //   margin: EdgeInsets.only(
+                    //           top: 12, bottom: 0),
+                    //   child: FlatButton(
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius:
+                    //           new BorderRadius.circular(
+                    //               1.0),
+                    //         ),
+                    //         color: theme.getColor(),
+                    //         onPressed: () async {
+                    //           if (formKey.currentState
+                    //               .validate()) {
+                    //             formKey.currentState.save();
+                    //             API(context).post('closeAt/${widget.donation_id}', {
+                    //             }).then((value) {
+                    //               print(value);
+                    //               if (value['status'] == true) {
+                    //                 Navigator.pop(context);
+                    //                 Nav.routeReplacement(
+                    //                     context, Delegate());
+                    //
+                    //                 showDialog(
+                    //                     context: context,
+                    //                     builder: (_) =>
+                    //                         ResultOverlay(
+                    //                             '${value['message']}'));
+                    //               } else {
+                    //                 showDialog(
+                    //                     context: context,
+                    //                     builder: (_) =>
+                    //                         ResultOverlay(
+                    //                             '${value['message']}'));
+                    //               }
+                    //             });
+                    //           }
+                    //         },
+                    //         child: Text(
+                    //          "قفل الطلب",
+                    //           style: TextStyle(
+                    //             fontSize: 16,
+                    //             color: Colors.white,
+                    //             fontWeight: FontWeight.w400,
+                    //           ),
+                    //         ),
+                    //   ),
+                    // ),
                           ],
                         )
                   ],

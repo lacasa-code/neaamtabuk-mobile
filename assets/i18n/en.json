@@ -375,6 +375,10 @@
   "notlogin": "No have Account",
   "PleaseLogin": "Please Login Now !",
   "product": "Products",
+
+  "status_distribute": "Status Distribute",
+  "status_pack": "Status packing ",
+
   "allcatery": "All Category",
   "AccountType": "Account Type",
   "Donor": "Donor",

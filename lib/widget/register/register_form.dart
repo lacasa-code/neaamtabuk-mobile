@@ -18,7 +18,6 @@ import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_model.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 
 import 'package:provider/provider.dart';
@@ -105,6 +104,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     _formKey.currentState.save();
                     return null;
                   },
+                  textDirection: TextDirection.ltr,
                   onSaved: (String value) {
                     model.email = value;
                   },
@@ -147,7 +147,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     labelText: getTransrlate(context, 'AddressTitle'),
                     hintText: getTransrlate(context, 'AddressTitle'),
                     isEmail: true,
-                    enabled: false,
+                    enabled: true,
                     suffixIcon: IconButton(
                       onPressed: () {
                         showDialog(
@@ -188,8 +188,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   validator: (Area item) {
                     if (item == null) {
                       return "${getTransrlate(context, 'requiredempty')}";
-                    } else
-                      return null;
+                    } else return null;
                   },
                   items: area,
                   //  onFind: (String filter) => getData(filter),
@@ -197,6 +196,9 @@ class _RegisterFormState extends State<RegisterForm> {
 
                   onChanged: (Area data) {
                     model.region = data.nameAr;
+                    setState(() {
+                      cities=null;
+                    });
                   API(context).get('cities/${data.id}').then((value) {
                     if (value != null) {
                       setState(() {
@@ -228,17 +230,19 @@ class _RegisterFormState extends State<RegisterForm> {
                             validator: (City item) {
                               if (item == null) {
                                 return "${getTransrlate(context, 'requiredempty')}";
-                              } else
-                                return null;
+                              } else return null;
                             },
                             items: cities,
+
                             //  onFind: (String filter) => getData(filter),
                             itemAsString: (City u) => u.cityName,
 //                                        selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
                             onChanged: (City data) {
                               model.city = "${data.id}";
                             },
-                            onSaved: (City data) => model.city = "${data.id}",
+                            onSaved: (City data) {
+
+                              },
                           ),
                           SizedBox(
                             height: 10,

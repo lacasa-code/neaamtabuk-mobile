@@ -250,6 +250,9 @@
 
   "distribute": " جاهز للتوزيع",
   "pack": " جاهز للتغليف ",
+  "status_distribute": " حالة التوزيع",
+  "status_pack": "حالة التغليف ",
+
   "nondistribute": " غير جاهز للتوزيع",
   "nonpack": "غير جاهز للتغليف ",
 

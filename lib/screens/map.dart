@@ -199,6 +199,7 @@ class _MapPageState extends State<MapPage> {
                             ),
                             Text(
                               '${_info.totalDuration}',
+                              textDirection: TextDirection.ltr,
                               style: const TextStyle(
                                 fontSize: 18.0,
                                 //  color: Colors.white,

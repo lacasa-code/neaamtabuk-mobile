@@ -84,20 +84,20 @@ class _DonorOrdersState extends State<DonorOrders> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  // Container(
-                                  //     width: ScreenUtil.getWidth(
-                                  //         context) /
-                                  //         2.5,
-                                  //     child: AutoSizeText(
-                                  //       '${getTransrlate(context, 'OrderNO')}  #${orders[index].donorId} ',
-                                  //       maxLines: 1,
-                                  //       style:
-                                  //       TextStyle(fontSize: 13),
-                                  //     )),
-                                  //
-                                  // SizedBox(
-                                  //   height: 15,
-                                  // ),
+                                  Container(
+                                      width: ScreenUtil.getWidth(
+                                          context) /
+                                          2.5,
+                                      child: AutoSizeText(
+                                        '${getTransrlate(context, 'OrderNO')}  #${orders[index].donorId} ',
+                                        maxLines: 1,
+                                        style:
+                                        TextStyle(fontSize: 13),
+                                      )),
+
+                                  SizedBox(
+                                    height: 5,
+                                  ),
                                   Container(
                                       width: ScreenUtil.getWidth(
                                           context) /
@@ -108,39 +108,61 @@ class _DonorOrdersState extends State<DonorOrders> {
                                         style:
                                         TextStyle(fontSize: 13),
                                       )),
-
                                   SizedBox(
-                                    height: 15,
+                                    height: 5,
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                  orders[index].category=="Home furniture"||orders[index].category=="أثاث منزلي"?Container():Column(
                                     children: [
-                                      Container(
-                                          decoration: BoxDecoration(color: themeColor.getColor(),borderRadius: BorderRadius.circular(9.0) ),
-                                          child: Padding(
+                                      Row(
+                                        children: [
+                                          Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: AutoSizeText(
-                                              '${orders[index].readyToPack=='1'?getTransrlate(context, 'pack'):getTransrlate(context, 'nonpack')} ',
+                                              '${getTransrlate(context, 'status_pack')} :',
                                               maxLines: 1,
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(color: themeColor.getColor()),
                                             ),
-                                          )),
-                                      Container(
-                                          decoration: BoxDecoration(color: themeColor.getColor(),borderRadius: BorderRadius.circular(9.0) ),
-                                          child: Padding(
+                                          ),
+                                          Container(
+                                              decoration: BoxDecoration(color: themeColor.getColor(),borderRadius: BorderRadius.circular(9.0) ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: AutoSizeText(
+                                                  '${orders[index].readyToDistribute=='1'?getTransrlate(context, 'pack'):getTransrlate(context, 'nonpack')} ',
+                                                  maxLines: 1,
+                                                  style: TextStyle(color: Colors.white),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(height:10,),
+                                      Row(
+                                        children: [
+                                          Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: AutoSizeText(
-                                              '${orders[index].readyToDistribute=='1'?getTransrlate(context, 'distribute'):getTransrlate(context, 'nondistribute')} ',
+                                              '${getTransrlate(context, 'status_distribute')}  : ',
                                               maxLines: 1,
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(color: themeColor.getColor()),
+                                            ),
+                                          ),
+                                          Container(
+                                              decoration: BoxDecoration(color: themeColor.getColor(),borderRadius: BorderRadius.circular(9.0) ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: AutoSizeText(
+                                                  '${orders[index].readyToDistribute=='1'?getTransrlate(context, 'distribute'):getTransrlate(context, 'nondistribute')} ',
+                                                  maxLines: 1,
+                                                  style: TextStyle(color: Colors.white),
 
-                                            ),
-                                          )),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 15,
+                                    height: 5,
                                   ),
                                   Row(
                                     mainAxisAlignment:
@@ -169,7 +191,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 15,
+                                    height: 5,
                                   ),
                                   Container(
                                     height: 1,

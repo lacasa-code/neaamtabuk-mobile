@@ -11,6 +11,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
@@ -21,17 +22,20 @@ import '../model/DelegateOrders.dart';
 
 class Delegate extends StatefulWidget {
   const Delegate({Key key}) : super(key: key);
+
   @override
   _DelegateState createState() => _DelegateState();
 }
 
 class _DelegateState extends State<Delegate> {
-  List<DelegateOrder> orders ;
+  List<DelegateOrder> orders;
+
   @override
   void initState() {
     getOrders("1");
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
@@ -114,13 +118,13 @@ class _DelegateState extends State<Delegate> {
                                             Center(
                                               child: AutoSizeText(
                                                 '${orders[index].donationUsername}',
-                                                textAlign:
-                                                TextAlign.center,
+                                                textAlign: TextAlign.center,
                                                 maxLines: 2,
                                                 maxFontSize: 13,
                                                 minFontSize: 10,
-                                                style: TextStyle(color:themeColor.getColor()),
-
+                                                style: TextStyle(
+                                                    color:
+                                                        themeColor.getColor()),
                                               ),
                                             ),
                                           ],
@@ -137,13 +141,13 @@ class _DelegateState extends State<Delegate> {
                                             Center(
                                               child: AutoSizeText(
                                                 '${orders[index].donationEmail}',
-                                                textAlign:
-                                                TextAlign.center,
+                                                textAlign: TextAlign.center,
                                                 maxLines: 2,
                                                 maxFontSize: 13,
                                                 minFontSize: 10,
-                                                style: TextStyle(color:themeColor.getColor()),
-
+                                                style: TextStyle(
+                                                    color:
+                                                        themeColor.getColor()),
                                               ),
                                             ),
                                           ],
@@ -160,13 +164,13 @@ class _DelegateState extends State<Delegate> {
                                             Center(
                                               child: AutoSizeText(
                                                 '${orders[index].donationMobile}',
-                                                textAlign:
-                                                TextAlign.center,
+                                                textAlign: TextAlign.center,
                                                 maxLines: 2,
                                                 maxFontSize: 13,
                                                 minFontSize: 10,
-                                                style: TextStyle(color:themeColor.getColor()),
-
+                                                style: TextStyle(
+                                                    color:
+                                                        themeColor.getColor()),
                                               ),
                                             ),
                                           ],
@@ -183,13 +187,13 @@ class _DelegateState extends State<Delegate> {
                                             Center(
                                               child: AutoSizeText(
                                                 '${orders[index].donationregion}',
-                                                textAlign:
-                                                TextAlign.center,
+                                                textAlign: TextAlign.center,
                                                 maxLines: 2,
                                                 maxFontSize: 13,
                                                 minFontSize: 10,
-                                                style: TextStyle(color:themeColor.getColor()),
-
+                                                style: TextStyle(
+                                                    color:
+                                                        themeColor.getColor()),
                                               ),
                                             ),
                                           ],
@@ -198,10 +202,13 @@ class _DelegateState extends State<Delegate> {
                                           height: 10,
                                         ),
                                         Container(
-                                            width: ScreenUtil.getWidth(context) / 1.5,
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    1.5,
                                             child: AutoSizeText(
                                               '${orders[index].donationAddress}',
-                                              style: TextStyle(color: themeColor.getColor()),
+                                              style: TextStyle(
+                                                  color: themeColor.getColor()),
                                             )),
                                         SizedBox(
                                           height: 5,
@@ -215,65 +222,70 @@ class _DelegateState extends State<Delegate> {
                                             Center(
                                               child: AutoSizeText(
                                                 '${orders[index].status}',
-                                                textAlign:
-                                                TextAlign.center,
+                                                textAlign: TextAlign.center,
                                                 maxLines: 2,
                                                 maxFontSize: 13,
                                                 minFontSize: 10,
-                                                style: TextStyle(color:themeColor.getColor()),
-
+                                                style: TextStyle(
+                                                    color:
+                                                        themeColor.getColor()),
                                               ),
                                             ),
                                           ],
                                         ),
-                                        // Row(
-                                        //   mainAxisAlignment:
-                                        //       MainAxisAlignment.spaceBetween,
-                                        //   children: [
-                                        //     Row(
-                                        //       children: [
-                                        //         AutoSizeText(
-                                        //           '${getTransrlate(context, 'OrderState')}  : ',
-                                        //           maxLines: 1,
-                                        //         ),
-                                        //         Container(
-                                        //             width: ScreenUtil.getWidth(
-                                        //                     context) / 4,
-                                        //             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                                        //             decoration: BoxDecoration(
-                                        //                 border: Border.all(color: Colors.blue)),
-                                        //             child: Center(
-                                        //               child: AutoSizeText(
-                                        //                 'تم الاستلام',
-                                        //                 textAlign:
-                                        //                     TextAlign.center,
-                                        //                 maxLines: 2,
-                                        //                 maxFontSize: 14,
-                                        //                 minFontSize: 12,
-                                        //               ),
-                                        //             )),
-                                        //       ],
-                                        //     ),
-                                        //     InkWell(
-                                        //       onTap: () {
-                                        //         Nav.route(context, MapSample(orders[index].id,orders[index].donationLatitude,orders[index].donationLongitude));
-                                        //       },
-                                        //       child: AutoSizeText(
-                                        //         '${getTransrlate(context, 'OrderTrack')} ',
-                                        //         maxLines: 1,
-                                        //         style: TextStyle(
-                                        //             color:
-                                        //                 themeColor.getColor(),
-                                        //             fontSize: 14,
-                                        //             decoration: TextDecoration
-                                        //                 .underline),
-                                        //       ),
-                                        //     ),
-                                        //   ],
-                                        // ),
-                                        // SizedBox(
-                                        //   height: 15,
-                                        // ),
+                                        Center(
+                                          child: Container(
+                                            height: 40,
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    2,
+                                            margin: EdgeInsets.only(
+                                                top: 12, bottom: 0),
+                                            child: FlatButton(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        1.0),
+                                              ),
+                                              color: themeColor.getColor(),
+                                              onPressed: () async {
+                                                API(context).Put(
+                                                    'closeAt/${orders[index].id}',
+                                                    {}).then((value) {
+                                                  print(value);
+                                                  if (value['status'] == true) {
+                                                    Navigator.pop(context);
+                                                    Nav.routeReplacement(
+                                                        context, Delegate());
+
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (_) =>
+                                                            ResultOverlay(
+                                                                '${value['message']}'));
+                                                  } else {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (_) =>
+                                                            ResultOverlay(
+                                                                '${value['message']}'));
+                                                  }
+                                                });
+                                              },
+                                              child: Center(
+                                                child: Text(
+                                                  "قفل الطلب",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                         SizedBox(
                                           height: 10,
                                         ),
@@ -284,7 +296,6 @@ class _DelegateState extends State<Delegate> {
                                         SizedBox(
                                           height: 15,
                                         ),
-
                                       ],
                                     );
                                   },
@@ -296,12 +307,12 @@ class _DelegateState extends State<Delegate> {
   }
 
   void getOrders(String from) {
-      API(context).get('delegateOrders').then((value) {
-        if (value != null) {
-          setState(() {
-            orders = DelegateOrders.fromJson(value).data;
-          });
-        }
-      });
+    API(context).get('delegateOrders').then((value) {
+      if (value != null) {
+        setState(() {
+          orders = DelegateOrders.fromJson(value).data;
+        });
+      }
+    });
   }
 }
