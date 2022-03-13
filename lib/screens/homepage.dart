@@ -6,6 +6,7 @@ import 'package:flutter_pos/screens/OrderHistory.dart';
 import 'package:flutter_pos/screens/RecipentOrders.dart';
 import 'package:flutter_pos/screens/account/volunteer.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
+import 'package:flutter_pos/screens/delegateOrdersCompleated.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -159,6 +160,27 @@ class _HomeState extends State<Home> {
                                 padding: const EdgeInsets.all(16.0),
                                 child: Text(
                                   '${getTransrlate(context, 'orders')}',
+                                  style: TextStyle(
+                                      color:theme.getColor(), fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        InkWell(
+                          onTap: (){
+                            Nav.route(context, DelegateCompleated());
+                          },
+                          child: Container(
+                            width: ScreenUtil.getWidth(context)/1.3,
+                            decoration: BoxDecoration(
+                                border: Border.all(color:theme.getColor(), width: 1)),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  '${getTransrlate(context, 'ordersCompleated')}',
                                   style: TextStyle(
                                       color:theme.getColor(), fontWeight: FontWeight.bold),
                                 ),

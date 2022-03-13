@@ -20,14 +20,14 @@ import 'package:provider/provider.dart';
 
 import '../model/DelegateOrders.dart';
 
-class Delegate extends StatefulWidget {
-  const Delegate({Key key}) : super(key: key);
+class DelegateCompleated extends StatefulWidget {
+  const DelegateCompleated({Key key}) : super(key: key);
 
   @override
-  _DelegateState createState() => _DelegateState();
+  _DelegateCompleatedState createState() => _DelegateCompleatedState();
 }
 
-class _DelegateState extends State<Delegate> {
+class _DelegateCompleatedState extends State<DelegateCompleated> {
   List<DelegateOrder> orders;
 
   @override
@@ -233,57 +233,57 @@ class _DelegateState extends State<Delegate> {
                                             ),
                                           ],
                                         ),
-                                        // orders[index].close!=null?Container():Center(
-                                        //   child: Container(
-                                        //     height: 40,
-                                        //     width:
-                                        //         ScreenUtil.getWidth(context) /
-                                        //             2,
-                                        //     margin: EdgeInsets.only(
-                                        //         top: 12, bottom: 0),
-                                        //     child: FlatButton(
-                                        //       shape: RoundedRectangleBorder(
-                                        //         borderRadius:
-                                        //             new BorderRadius.circular(
-                                        //                 1.0),
-                                        //       ),
-                                        //       color: themeColor.getColor(),
-                                        //       onPressed: () async {
-                                        //         API(context).Put(
-                                        //             'closeAt/${orders[index].id}',
-                                        //             {}).then((value) {
-                                        //           print(value);
-                                        //           if (value['status'] == true) {
-                                        //    getOrders();
-                                        //
-                                        //             showDialog(
-                                        //                 context: context,
-                                        //                 builder: (_) =>
-                                        //                     ResultOverlay(
-                                        //                         '${value['message']}'));
-                                        //           } else {
-                                        //             showDialog(
-                                        //                 context: context,
-                                        //                 builder: (_) =>
-                                        //                     ResultOverlay(
-                                        //                         '${value['message']}'));
-                                        //           }
-                                        //         });
-                                        //       },
-                                        //       child: Center(
-                                        //         child: Text(
-                                        //           "قفل الطلب",
-                                        //           textAlign: TextAlign.center,
-                                        //           style: TextStyle(
-                                        //             fontSize: 16,
-                                        //             color: Colors.white,
-                                        //             fontWeight: FontWeight.w400,
-                                        //           ),
-                                        //         ),
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ),
+                                        orders[index].close!=null?Container():    Center(
+                                          child: Container(
+                                            height: 40,
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    2,
+                                            margin: EdgeInsets.only(
+                                                top: 12, bottom: 0),
+                                            child: FlatButton(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        1.0),
+                                              ),
+                                              color: themeColor.getColor(),
+                                              onPressed: () async {
+                                                API(context).Put(
+                                                    'closeAt/${orders[index].id}',
+                                                    {}).then((value) {
+                                                  print(value);
+                                                  if (value['status'] == true) {
+                                                    getOrders();
+
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (_) =>
+                                                            ResultOverlay(
+                                                                '${value['message']}'));
+                                                  } else {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (_) =>
+                                                            ResultOverlay(
+                                                                '${value['message']}'));
+                                                  }
+                                                });
+                                              },
+                                              child: Center(
+                                                child: Text(
+                                                  "قفل الطلب",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                         SizedBox(
                                           height: 10,
                                         ),
@@ -305,7 +305,7 @@ class _DelegateState extends State<Delegate> {
   }
 
   void getOrders() {
-    API(context).get('nonCompleteOrders').then((value) {
+    API(context).get('delegateOrders').then((value) {
       if (value != null) {
         setState(() {
           orders = DelegateOrders.fromJson(value).data;

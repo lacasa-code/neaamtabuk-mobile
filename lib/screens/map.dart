@@ -27,8 +27,9 @@ class MapPage extends StatefulWidget {
   String donation_id;
   String longitude;
   String latitude;
+  String status_id;
 
-  MapPage(this.donation_id, this.longitude, this.latitude);
+  MapPage(this.status_id,this.donation_id, this.longitude, this.latitude);
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -253,7 +254,7 @@ class _MapPageState extends State<MapPage> {
                           color: theme.getColor(),
                           onPressed: () async {
                             API(context).post(
-                                'status/$id', {"status_id": "3"}).then((value) {
+                                'status/${widget.donation_id}', {"status_id": "3"}).then((value) {
                               print(value);
                               if (value['status'] == true) {
                                 setState(() {

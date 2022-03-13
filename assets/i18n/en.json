@@ -263,7 +263,7 @@
   "Support": "Support",
   "HomePage": "Home Page",
   "Logout": "Log out",
-  "Myorders": "Orders",
+  "Myorders": "Donors Orders",
   "MyProfile": "Menu",
   "productRateing": "Product ratings",
   "MyFav": "Wishlist",
@@ -401,8 +401,8 @@
   "OrderPref": "Order Pref",
   "register_as_delegate": "Register as Delegate",
   "nearRecipent": "Near Recipent",
-  "orders": "Confirmed Orders",
-
+  "orders": " Orders",
+  "ordersCompleated": "Compleated Orders",
   "ready_to_distribute": "Do you are ready for distribution ?",
   "ready_to_pack": "Is the food ready for packaging ?",
 

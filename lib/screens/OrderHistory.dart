@@ -1,13 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/nearDonors.dart';
-import 'package:flutter_pos/model/order_model.dart';
-import 'package:flutter_pos/screens/account/addOrder.dart';
 import 'package:flutter_pos/screens/map.dart';
-import 'package:flutter_pos/screens/map2.dart';
-import 'package:flutter_pos/screens/map_sample.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -16,7 +10,6 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/no_found_product.dart';
 import 'package:flutter_pos/widget/not_login.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class Orders extends StatefulWidget {
@@ -41,7 +34,7 @@ class _OrdersState extends State<Orders> {
             children: [
               InkWell(
                 onTap: (){
-                  Nav.route(context, MapPage("37"," 30.431297","37.773972"));
+                  Nav.route(context, MapPage('30',"37"," 30.431297","37.773972"));
                 },
                 child: Icon(
                   Icons.local_shipping_outlined,
@@ -91,24 +84,27 @@ class _OrdersState extends State<Orders> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        // Row(
-                                        //   mainAxisAlignment:
-                                        //       MainAxisAlignment.spaceBetween,
-                                        //   children: [
-                                        //     Container(
-                                        //         width: ScreenUtil.getWidth(
-                                        //                 context) /
-                                        //             2.5,
-                                        //         child: AutoSizeText(
-                                        //           '#${orders[index].id}',
-                                        //           maxLines: 1,
-                                        //           style:
-                                        //               TextStyle(fontSize: 13),
-                                        //         )),
-                                        //   ],
-                                        // ),
                                         SizedBox(
-                                          height: 15,
+                                          height: 5,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                                width: ScreenUtil.getWidth(
+                                                        context) /
+                                                    2.5,
+                                                child: AutoSizeText(
+                                                  '#${orders[index].id}',
+                                                  maxLines: 1,
+                                                  style:
+                                                      TextStyle(fontSize: 13),
+                                                )),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 5,
                                         ),
                                         Container(
                                             width: ScreenUtil.getWidth(context) / 1.5,
@@ -147,7 +143,7 @@ class _OrdersState extends State<Orders> {
                                         InkWell(
                                           onTap: () {
                                           //  Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
-                                            Nav.route(context, MapPage(orders[index].id,orders[index].latitude,orders[index].longitude));
+                                            Nav.route(context, MapPage(orders[index].id,orders[index].id,orders[index].latitude,orders[index].longitude));
                                            // Nav.route(context, MapScreen(orders[index].id,orders[index].latitude,orders[index].longitude));
                                           },
                                           child: AutoSizeText(
