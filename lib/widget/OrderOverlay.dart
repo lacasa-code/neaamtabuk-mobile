@@ -11,6 +11,8 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/delegateOrdersCompleated.dart';
+
 class OrderOverlay extends StatefulWidget {
   String donation_id;
 
@@ -150,8 +152,7 @@ class OrderOverlayState extends State<OrderOverlay>
                                   if (value['status'] == true) {
                                     Navigator.pop(context);
                                     Nav.routeReplacement(
-                                        context, Delegate());
-
+                                        context, DelegateCompleated());
                                     showDialog(
                                         context: context,
                                         builder: (_) =>

@@ -28,8 +28,10 @@ class MapPage extends StatefulWidget {
   String longitude;
   String latitude;
   String status_id;
-
-  MapPage(this.status_id,this.donation_id, this.longitude, this.latitude);
+  bool accept = false;
+  bool arrived = false;
+  MapPage(this.status_id,this.donation_id, this.longitude, this.latitude,
+      {this.arrived, this.accept});
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -45,9 +47,7 @@ class _MapPageState extends State<MapPage> {
   Directions _info;
   LocationData myLocation;
 
-  bool accept = false;
-  bool received = false;
-  bool arrived = false;
+
   int id;
 
   @override
@@ -72,7 +72,6 @@ class _MapPageState extends State<MapPage> {
     //   DirectionsRepository();
     // });
     setState(() {
-      accept=true;
       _destination = Marker(
           markerId: MarkerId('Place'),
           position: LatLng(
@@ -244,115 +243,116 @@ class _MapPageState extends State<MapPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                accept
+                widget.accept
                     ? Container(
-                        margin: EdgeInsets.only(top: 12, bottom: 0),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(1.0),
-                          ),
-                          color: theme.getColor(),
-                          onPressed: () async {
-                            API(context).post(
-                                'status/${widget.donation_id}', {"status_id": "3"}).then((value) {
-                              print(value);
-                              if (value['status'] == true) {
-                                setState(() {
-                                  accept=false;
-                                  received=true;
-                                });
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay('${value['message']}'));
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay('${value['message']}'));
-                              }
-                            });
-                          },
-                          child: Text(
-                            "قبول الطلب",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      )
-                    : Container(),
-                received
-                    ? Container(
-                        margin: EdgeInsets.only(top: 12, bottom: 0),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(1.0),
-                          ),
-                          color: theme.getColor(),
-                          onPressed: () async {
-                            API(context).post(
-                                'orderDelegate/${widget.donation_id}',
-                                {}).then((value) {
-                              print(value);
-                              if (value['status'] == true) {
-                                setState(() {
-                                  received=false;
-                                  arrived=true;
-                                });
+                  margin: EdgeInsets.only(top: 12, bottom: 0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(1.0),
+                    ),
+                    color: theme.getColor(),
+                    onPressed: () async {
+                      API(context).post(
+                          'orderDelegate/${widget.donation_id}',
+                          {}).then((value) {
+                        print(value);
+                        if (value['status'] == true) {
+                          setState(() {
+                            widget.accept=false;
+                            widget.arrived=true;
+                          });
 
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay('${value['message']}'));
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay('${value['message']}'));
-                              }
-                            });
-                          },
-                          child: Text(
-                            "استلام الطلب",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay('${value['message']}'));
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay('${value['message']}'));
+                        }
+                      });
+                    },
+                    child: Center(
+                      child: Text(
+                        "قبول الطلب",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
                         ),
-                      )
-                    : Container(),
-                arrived
-                    ? Container(
-                        margin: EdgeInsets.only(top: 12, bottom: 0),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(1.0),
-                          ),
-                          color: theme.getColor(),
-                          onPressed: () async {
-                            showDialog(
-                                context: context,
-                                builder: (_) => OrderOverlay(
-                                      donation_id: widget.donation_id,
-                                    ));
-                          },
-                          child: Text(
-                            "تم الوصول",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      )
-                    : Container(),
+                      ),
+                    ),
+                  ),
+                )
+                    : widget.status_id=="4"
+                    ?  Container(
+                  margin: EdgeInsets.only(top: 12, bottom: 0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(1.0),
+                    ),
+                    color: theme.getColor(),
+                    onPressed: () async {
+                      API(context).post(
+                          'status/${widget.donation_id}', {"status_id": "1"}).then((value) {
+                        print(value);
+                        if (value['status'] == true) {
+                          setState(() {
+                            widget.accept=false;
+                            widget.arrived=false;
+                            widget.status_id="1";
+                          });
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay('${value['message']}'));
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  ResultOverlay('${value['message']}'));
+                        }
+                      });
+                    },
+                    child: Text(
+                      "أستلام الطلب",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                )
+                    : Container(
+                  margin: EdgeInsets.only(top: 12, bottom: 0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(1.0),
+                    ),
+                    color: theme.getColor(),
+                    onPressed: () async {
+                      showDialog(
+                          context: context,
+                          builder: (_) => OrderOverlay(
+                            donation_id: widget.donation_id,
+                          ));
+                    },
+                    child: Text(
+                      "تم الوصول",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ),
+
               ],
             ),
           )

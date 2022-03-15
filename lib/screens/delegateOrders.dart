@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/nearDonors.dart';
 import 'package:flutter_pos/model/order_model.dart';
 import 'package:flutter_pos/screens/account/addOrder.dart';
+import 'package:flutter_pos/screens/map.dart';
 import 'package:flutter_pos/screens/map_sample.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -53,7 +54,7 @@ class _DelegateState extends State<Delegate> {
               Container(
                   width: ScreenUtil.getWidth(context) / 2,
                   child: AutoSizeText(
-                    getTransrlate(context, 'Myorders'),
+                    getTransrlate(context, 'orders'),
                     minFontSize: 10,
                     maxFontSize: 16,
                     maxLines: 1,
@@ -233,57 +234,80 @@ class _DelegateState extends State<Delegate> {
                                             ),
                                           ],
                                         ),
-                                        // orders[index].close!=null?Container():Center(
-                                        //   child: Container(
-                                        //     height: 40,
-                                        //     width:
-                                        //         ScreenUtil.getWidth(context) /
-                                        //             2,
-                                        //     margin: EdgeInsets.only(
-                                        //         top: 12, bottom: 0),
-                                        //     child: FlatButton(
-                                        //       shape: RoundedRectangleBorder(
-                                        //         borderRadius:
-                                        //             new BorderRadius.circular(
-                                        //                 1.0),
-                                        //       ),
-                                        //       color: themeColor.getColor(),
-                                        //       onPressed: () async {
-                                        //         API(context).Put(
-                                        //             'closeAt/${orders[index].id}',
-                                        //             {}).then((value) {
-                                        //           print(value);
-                                        //           if (value['status'] == true) {
-                                        //    getOrders();
-                                        //
-                                        //             showDialog(
-                                        //                 context: context,
-                                        //                 builder: (_) =>
-                                        //                     ResultOverlay(
-                                        //                         '${value['message']}'));
-                                        //           } else {
-                                        //             showDialog(
-                                        //                 context: context,
-                                        //                 builder: (_) =>
-                                        //                     ResultOverlay(
-                                        //                         '${value['message']}'));
-                                        //           }
-                                        //         });
-                                        //       },
-                                        //       child: Center(
-                                        //         child: Text(
-                                        //           "قفل الطلب",
-                                        //           textAlign: TextAlign.center,
-                                        //           style: TextStyle(
-                                        //             fontSize: 16,
-                                        //             color: Colors.white,
-                                        //             fontWeight: FontWeight.w400,
-                                        //           ),
-                                        //         ),
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            //  Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
+                                            Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].donationLongitude,orders[index].donationLongitude,accept: false,arrived: true,));
+                                            // Nav.route(context, MapScreen(orders[index].id,orders[index].latitude,orders[index].longitude));
+                                          },
+                                          child: AutoSizeText(
+                                            '${getTransrlate(context, 'OrderTrack')} ',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                color:
+                                                themeColor.getColor(),
+                                                fontSize: 14,
+                                                decoration: TextDecoration
+                                                    .underline),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        orders[index].close!=null?Container():Center(
+                                          child: Container(
+                                            height: 40,
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    2,
+                                            margin: EdgeInsets.only(
+                                                top: 12, bottom: 0),
+                                            child: FlatButton(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        1.0),
+                                              ),
+                                              color: themeColor.getColor(),
+                                              onPressed: () async {
+                                                API(context).Put(
+                                                    'closeAt/${orders[index].id}',
+                                                    {}).then((value) {
+                                                  print(value);
+                                                  if (value['status'] == true) {
+                                           getOrders();
+
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (_) =>
+                                                            ResultOverlay(
+                                                                '${value['message']}'));
+                                                  } else {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (_) =>
+                                                            ResultOverlay(
+                                                                '${value['message']}'));
+                                                  }
+                                                });
+                                              },
+                                              child: Center(
+                                                child: Text(
+                                                  "${getTransrlate(context, 'closeOrder')}",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                         SizedBox(
                                           height: 10,
                                         ),

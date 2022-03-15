@@ -38,7 +38,8 @@ class NearDonor {
   NearDonor({
       this.id, 
       this.username, 
-      this.mobile, 
+      this.status_id,
+      this.mobile,
       this.gender, 
       this.address, 
       this.longitude, 
@@ -51,12 +52,14 @@ class NearDonor {
     mobile = json['mobile'];
     gender = json['gender'];
     address = json['address'];
+    status_id = json['status_id'];
     longitude = json['longitude'];
     latitude = json['latitude'];
     distance = json['distance'];
   }
   String id;
   String username;
+  String status_id;
   String mobile;
   String gender;
   String address;
