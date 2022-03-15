@@ -1,3 +1,4 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/nearDonors.dart';
@@ -22,7 +23,7 @@ class _OrdersState extends State<Orders> {
   List<NearDonor> orders ;
   @override
   void initState() {
-    getOrders("1");
+    getOrders();
     super.initState();
   }
   @override
@@ -33,8 +34,9 @@ class _OrdersState extends State<Orders> {
           title: Row(
             children: [
               InkWell(
-                onTap: (){
-                  Nav.route(context, MapPage('30',"37"," 30.431297","37.773972"));
+                onTap: () async {
+                  await Nav.route(context, MapPage('30',"37"," 30.431297","37.773972"));
+
                 },
                 child: Icon(
                   Icons.local_shipping_outlined,
@@ -141,9 +143,9 @@ class _OrdersState extends State<Orders> {
                                           height: 10,
                                         ),
                                         InkWell(
-                                          onTap: () {
+                                          onTap: ()  {
                                           //  Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
-                                            Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].latitude,orders[index].longitude));
+                                            Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].latitude,orders[index].longitude,arrived: false,accept: true,));
                                            // Nav.route(context, MapScreen(orders[index].id,orders[index].latitude,orders[index].longitude));
                                           },
                                           child: AutoSizeText(
@@ -174,7 +176,7 @@ class _OrdersState extends State<Orders> {
                   ));
   }
 
-  void getOrders(String from) {
+  void getOrders() {
       API(context).get('nearDonors').then((value) {
         if (value != null) {
           setState(() {

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/OrdersModel.dart';
 import 'package:flutter_pos/model/donorOrdersModel.dart';
 import 'package:flutter_pos/screens/account/addOrder.dart';
-import 'package:flutter_pos/screens/map_sample.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';

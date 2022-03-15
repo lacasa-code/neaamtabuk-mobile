@@ -6,7 +6,6 @@ import 'package:flutter_pos/model/nearDonors.dart';
 import 'package:flutter_pos/model/order_model.dart';
 import 'package:flutter_pos/screens/account/addOrder.dart';
 import 'package:flutter_pos/screens/map.dart';
-import 'package:flutter_pos/screens/map_sample.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';

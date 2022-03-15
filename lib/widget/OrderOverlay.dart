@@ -151,6 +151,7 @@ class OrderOverlayState extends State<OrderOverlay>
                                   print(value);
                                   if (value['status'] == true) {
                                     Navigator.pop(context);
+                                    Navigator.pop(context);
                                     Nav.routeReplacement(
                                         context, DelegateCompleated());
                                     showDialog(
