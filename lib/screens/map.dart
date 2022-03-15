@@ -30,7 +30,7 @@ class MapPage extends StatefulWidget {
   String status_id;
   bool accept = false;
   bool arrived = false;
-  MapPage(this.status_id,this.donation_id, this.longitude, this.latitude,
+  MapPage(this.status_id,this.donation_id, this.latitude, this.longitude,
       {this.arrived, this.accept});
 
   @override
@@ -181,7 +181,7 @@ class _MapPageState extends State<MapPage> {
                               textStyle:
                                   const TextStyle(fontWeight: FontWeight.w600),
                             ),
-                            child: const Text('مستفيد'),
+                            child: const Text('متبرع'),
                           ),
                       ],
                     ),

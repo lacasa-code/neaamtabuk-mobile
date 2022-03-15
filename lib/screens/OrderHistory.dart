@@ -98,7 +98,7 @@ class _OrdersState extends State<Orders> {
                                                         context) /
                                                     2.5,
                                                 child: AutoSizeText(
-                                                  '#${orders[index].id}',
+                                                  '#${orders[index].donation_number}',
                                                   maxLines: 1,
                                                   style:
                                                       TextStyle(fontSize: 13),
@@ -144,9 +144,7 @@ class _OrdersState extends State<Orders> {
                                         ),
                                         InkWell(
                                           onTap: ()  {
-                                          //  Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
                                             Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].latitude,orders[index].longitude,arrived: false,accept: true,));
-                                           // Nav.route(context, MapScreen(orders[index].id,orders[index].latitude,orders[index].longitude));
                                           },
                                           child: AutoSizeText(
                                             '${getTransrlate(context, 'OrderTrack')} ',
