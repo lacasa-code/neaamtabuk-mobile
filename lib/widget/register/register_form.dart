@@ -6,6 +6,7 @@ import 'package:flutter_pos/model/area_model.dart';
 import 'package:flutter_pos/model/city_model.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/screens/homepage.dart';
+import 'package:flutter_pos/screens/splash_screen.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -47,13 +48,20 @@ class _RegisterFormState extends State<RegisterForm> {
   int checkboxValueA = 1;
   final formKey = GlobalKey<FormState>();
   List<String> country = [];
-  List<String> items = ["male", "female"];
+  List<Area> items;
   List<Area> area;
   List<City> cities;
   TextEditingController addressController = TextEditingController();
 
   @override
   void initState() {
+    API(context).get('gender').then((value) {
+      if (value != null) {
+        setState(() {
+          items = AreaModel.fromJson(value).data;
+        });
+      }
+    });
     API(context).get('areas').then((value) {
       if (value != null) {
         setState(() {
@@ -252,29 +260,34 @@ class _RegisterFormState extends State<RegisterForm> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
+
+                items==null?Container():  Column(
                   children: [
-                    Text(
-                      getTransrlate(context, 'gender'),
+                    Row(
+                      children: [
+                        Text(
+                          getTransrlate(context, 'gender'),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    DropdownSearch<Area>(
+                      mode: Mode.MENU,
+                      maxHeight: 120,
+                      validator: (Area item) {
+                        if (item == null) {
+                          return "${getTransrlate(context, 'requiredempty')}";
+                        } else
+                          return null;
+                      },
+                      items: items,
+                      //  onFind: (String filter) => getData(filter),
+                      itemAsString: (Area u) => u.nameAr,
+                      onChanged: (Area data) => model.gender = data.id,
                     ),
                   ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                DropdownSearch<String>(
-                  mode: Mode.MENU,
-                  maxHeight: 120,
-                  validator: (String item) {
-                    if (item == null) {
-                      return "${getTransrlate(context, 'requiredempty')}";
-                    } else
-                      return null;
-                  },
-                  items: items,
-                  //  onFind: (String filter) => getData(filter),
-                  itemAsString: (String u) => u,
-                  onChanged: (String data) => model.gender = data,
                 ),
                 MyTextFormField(
                   labelText: getTransrlate(context, 'password'),
@@ -406,7 +419,7 @@ class _RegisterFormState extends State<RegisterForm> {
         var user = value['data'];
         prefs.setString("user_email", user['email']);
         prefs.setString("user_name", user['username']);
-        // prefs.setString("token", user['token']??'');
+         prefs.setString("token", value['access_token']??'');
         prefs.setString("mobile", user['mobile']);
         prefs.setString("role_id", "${user['role_id']}");
         prefs.setInt("user_id", user['id']);
@@ -415,7 +428,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 context: context,
                 builder: (_) => ResultOverlay('${value['message']}'))
             .whenComplete(() {
-          Nav.routeReplacement(context, LoginPage());
+          Nav.routeReplacement(context, SplashScreen());
         });
       } else {
         showDialog(

@@ -144,7 +144,7 @@ class _OrdersState extends State<Orders> {
                                         ),
                                         InkWell(
                                           onTap: ()  {
-                                            Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].latitude,orders[index].longitude,arrived: false,accept: true,));
+                                            Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].latitude,orders[index].longitude));
                                           },
                                           child: AutoSizeText(
                                             '${getTransrlate(context, 'OrderTrack')} ',

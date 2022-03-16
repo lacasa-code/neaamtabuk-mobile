@@ -28,10 +28,7 @@ class MapPage extends StatefulWidget {
   String longitude;
   String latitude;
   String status_id;
-  bool accept = false;
-  bool arrived = false;
-  MapPage(this.status_id,this.donation_id, this.latitude, this.longitude,
-      {this.arrived, this.accept});
+  MapPage(this.status_id,this.donation_id, this.latitude, this.longitude,);
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -243,7 +240,7 @@ class _MapPageState extends State<MapPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                widget.accept
+                widget.status_id=="4"
                     ? Container(
                   margin: EdgeInsets.only(top: 12, bottom: 0),
                   child: FlatButton(
@@ -257,11 +254,9 @@ class _MapPageState extends State<MapPage> {
                           {}).then((value) {
                         print(value);
                         if (value['status'] == true) {
-                          setState(() {
-                            widget.accept=false;
-                            widget.arrived=true;
-                          });
-
+setState(() {
+  widget.status_id="3";
+});
                           showDialog(
                               context: context,
                               builder: (_) =>
@@ -283,47 +278,6 @@ class _MapPageState extends State<MapPage> {
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
                         ),
-                      ),
-                    ),
-                  ),
-                )
-                    : widget.status_id=="4"
-                    ?  Container(
-                  margin: EdgeInsets.only(top: 12, bottom: 0),
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(1.0),
-                    ),
-                    color: theme.getColor(),
-                    onPressed: () async {
-                      API(context).post(
-                          'status/${widget.donation_id}', {"status_id": "1"}).then((value) {
-                        print(value);
-                        if (value['status'] == true) {
-                          setState(() {
-                            widget.accept=false;
-                            widget.arrived=false;
-                            widget.status_id="1";
-                          });
-                          showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  ResultOverlay('${value['message']}'));
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  ResultOverlay('${value['message']}'));
-                        }
-                      });
-                    },
-                    child: Text(
-                      "أستلام الطلب",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
@@ -416,6 +370,7 @@ class _MapPageState extends State<MapPage> {
     Location location = new Location();
     try {
       myLocation = await location.getLocation();
+      _goToPosition1(LatLng(myLocation.latitude, myLocation.longitude));
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
         error = 'please grant permission';
@@ -428,8 +383,7 @@ class _MapPageState extends State<MapPage> {
       myLocation = null;
     }
 
-    LatLng latLng=new LatLng(myLocation.latitude, myLocation.longitude);
-    _goToPosition1(latLng);
+
 
   }
 
@@ -445,9 +399,7 @@ class _MapPageState extends State<MapPage> {
           zoom: 15,
           target:latLng);
     });
-    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: 15,
-        target: latLng)));
+    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
     _addMarker(latLng);
   }
 }

@@ -41,9 +41,9 @@ class _UserInfoState extends State<UserInfo> {
   Model model = Model();
   String password;
   List<Area> area;
+  List<Area> items;
   List<City> city;
   final _formKey = GlobalKey<FormState>();
-  List<String> items = ["male", "female"];
   TextEditingController addressController = TextEditingController();
   submitForm() async {
     FocusScope.of(context).requestFocus(new FocusNode());
@@ -61,6 +61,13 @@ class _UserInfoState extends State<UserInfo> {
       if (value != null) {
         setState(() {
           area = AreaModel.fromJson(value).data;
+        });
+      }
+    });
+    API(context).get('gender').then((value) {
+      if (value != null) {
+        setState(() {
+          items = AreaModel.fromJson(value).data;
         });
       }
     });
@@ -177,7 +184,6 @@ class _UserInfoState extends State<UserInfo> {
 
                                           )),
                                     ),
-
                                     Padding(
                                       padding: EdgeInsets.only(
                                           left: 25.0, right: 25.0, top: 25.0),
@@ -219,7 +225,6 @@ class _UserInfoState extends State<UserInfo> {
                                         userModal.region = data.id,
                                       ),
                                     ),
-
                                     city==null?Container():   Column(
                                       children: [
                                         Padding(
@@ -248,9 +253,9 @@ class _UserInfoState extends State<UserInfo> {
                                             items: city,
                                             //  onFind: (String filter) => getData(filter),
                                             itemAsString: (City u) => "${u?.cityName}",
-                                          // selectedItem:city?.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city??' ')) ,
+                                           selectedItem:city?.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city??' ')) ,
                                             onSaved: (City data) =>
-                                            userModal.city = "${data?.id}",
+                                            userModal.city = data?.id,
                                           ),
                                         ),
                                       ],
@@ -330,22 +335,23 @@ class _UserInfoState extends State<UserInfo> {
                                           right: 25.0,
                                           top: 10.0,
                                           bottom: 10),
-                                      child: DropdownSearch<String>(
+                                      child: DropdownSearch<Area>(
                                         maxHeight: 120,
-                                        validator: (String item) {
+                                        validator: (Area item) {
                                           if (item == null) {
                                             return "${getTransrlate(context, 'requiredempty')}";
                                           } else
                                             return null;
                                         },
                                         items: items,
-                                        selectedItem: userModal.gender,
+                                       // selectedItem: userModal.gender,
+                                        selectedItem:items?.firstWhere((element) => element.id==userModal.gender,orElse: ()=>Area(nameAr:userModal.gender??' ')) ,
 
                                         enabled: !_status,
                                         //  onFind: (String filter) => getData(filter),
-                                        itemAsString: (String u) => u,
-                                        onChanged: (String data) =>
-                                            userModal.gender = data,
+                                        itemAsString: (Area u) => u.nameAr,
+                                        onChanged: (Area data) =>
+                                            userModal.gender = data.id,
                                       ),
                                     ),
                                     _status
@@ -407,6 +413,7 @@ class _UserInfoState extends State<UserInfo> {
                         "address": userModal.address,
                         "mobile": userModal.phoneNo,
                         "gender": userModal.gender,
+                        "city": userModal.city,
                         "region": userModal.region,
                         "longitude": userModal.longitude,
                         "latitude": userModal.latitude,
@@ -560,8 +567,16 @@ class _UserInfoState extends State<UserInfo> {
             pref.setString("address", "${user['address']}");
             pref.setString("lat", "${user['latitude']}");
             pref.setString("lang", "${user['longitude']}");
+
             setState(() {
               userModal = UserInformation.fromJson(value).data;
+            });
+            API(context).get('cities/${userModal.region}').then((value) {
+              if (value != null) {
+                setState(() {
+                  city = City_model.fromJson(value).data;
+                });
+              }
             });
             addressController = TextEditingController(text: userModal.address);
           } else {

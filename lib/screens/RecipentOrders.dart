@@ -89,7 +89,7 @@ class _RecipentOrdersState extends State<RecipentOrders> {
                                                 context) /
                                                 2.5,
                                             child: AutoSizeText(
-                                              '${getTransrlate(context, 'OrderNO')}  #${orders[index].id} ',
+                                              '${getTransrlate(context, 'OrderNO')}  #${orders[index].donationNumber} ',
                                               maxLines: 1,
                                               style:
                                               TextStyle(fontSize: 13),
@@ -101,35 +101,12 @@ class _RecipentOrdersState extends State<RecipentOrders> {
                                         Row(
                                           children: [
                                             AutoSizeText(
-                                              'Username  : ',
+                                              '${getTransrlate(context, 'representative')}  : ',
                                               maxLines: 1,
                                             ),
                                             Center(
                                               child: AutoSizeText(
                                                 '${orders[index].delegateUsername}',
-                                                textAlign:
-                                                TextAlign.center,
-                                                maxLines: 2,
-                                                maxFontSize: 13,
-                                                minFontSize: 10,
-                                                style: TextStyle(color:themeColor.getColor()),
-
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Row(
-                                          children: [
-                                            AutoSizeText(
-                                              'Email  : ',
-                                              maxLines: 1,
-                                            ),
-                                            Center(
-                                              child: AutoSizeText(
-                                                '${orders[index].delegateEmail}',
                                                 textAlign:
                                                 TextAlign.center,
                                                 maxLines: 2,
@@ -169,13 +146,9 @@ class _RecipentOrdersState extends State<RecipentOrders> {
                                         ),
                                         Row(
                                           children: [
-                                            AutoSizeText(
-                                              'region  : ',
-                                              maxLines: 1,
-                                            ),
                                             Center(
                                               child: AutoSizeText(
-                                                '${orders[index].delegateregion}',
+                                                '${getTransrlate(context, 'category')}  : ${orders[index].category}',
                                                 textAlign:
                                                 TextAlign.center,
                                                 maxLines: 2,

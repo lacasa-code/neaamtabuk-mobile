@@ -99,7 +99,7 @@ class _DelegateState extends State<Delegate> {
                                                         context) /
                                                     2.5,
                                                 child: AutoSizeText(
-                                                  '#${orders[index].id}',
+                                                  '#${orders[index].donationNumber}',
                                                   maxLines: 1,
                                                   style:
                                                       TextStyle(fontSize: 13),
@@ -129,29 +129,7 @@ class _DelegateState extends State<Delegate> {
                                             ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Row(
-                                          children: [
-                                            AutoSizeText(
-                                              'Email  : ',
-                                              maxLines: 1,
-                                            ),
-                                            Center(
-                                              child: AutoSizeText(
-                                                '${orders[index].donationEmail}',
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                                maxFontSize: 13,
-                                                minFontSize: 10,
-                                                style: TextStyle(
-                                                    color:
-                                                        themeColor.getColor()),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+
                                         SizedBox(
                                           height: 15,
                                         ),
@@ -178,40 +156,17 @@ class _DelegateState extends State<Delegate> {
                                         SizedBox(
                                           height: 15,
                                         ),
-                                        Row(
-                                          children: [
-                                            AutoSizeText(
-                                              'region  : ',
-                                              maxLines: 1,
-                                            ),
-                                            Center(
-                                              child: AutoSizeText(
-                                                '${orders[index].donationregion}',
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                                maxFontSize: 13,
-                                                minFontSize: 10,
-                                                style: TextStyle(
-                                                    color:
-                                                        themeColor.getColor()),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
                                         Container(
                                             width:
                                                 ScreenUtil.getWidth(context) /
                                                     1.5,
                                             child: AutoSizeText(
-                                              '${orders[index].donationAddress}',
+                                              '${orders[index].distance} km',
                                               style: TextStyle(
                                                   color: themeColor.getColor()),
                                             )),
                                         SizedBox(
-                                          height: 5,
+                                          height: 10,
                                         ),
                                         Row(
                                           children: [
@@ -238,7 +193,7 @@ class _DelegateState extends State<Delegate> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].donationLatitude,orders[index].donationLongitude,accept: false,arrived: true,));
+                                            Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].donationLatitude,orders[index].donationLongitude));
                                           },
                                           child: AutoSizeText(
                                             '${getTransrlate(context, 'OrderTrack')} ',
@@ -254,19 +209,19 @@ class _DelegateState extends State<Delegate> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        orders[index].close!=null?Container():Center(
+                                        orders[index].status_id!="1"?Container():orders[index].close!=null?Container():Center(
                                           child: Container(
                                             height: 40,
                                             width:
-                                                ScreenUtil.getWidth(context) /
-                                                    2,
+                                            ScreenUtil.getWidth(context) /
+                                                2,
                                             margin: EdgeInsets.only(
                                                 top: 12, bottom: 0),
                                             child: FlatButton(
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    new BorderRadius.circular(
-                                                        1.0),
+                                                new BorderRadius.circular(
+                                                    1.0),
                                               ),
                                               color: themeColor.getColor(),
                                               onPressed: () async {
@@ -275,7 +230,7 @@ class _DelegateState extends State<Delegate> {
                                                     {}).then((value) {
                                                   print(value);
                                                   if (value['status'] == true) {
-                                           getOrders();
+                                                    getOrders();
 
                                                     showDialog(
                                                         context: context,
@@ -305,9 +260,7 @@ class _DelegateState extends State<Delegate> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+
                                         Container(
                                           height: 1,
                                           color: Colors.black12,

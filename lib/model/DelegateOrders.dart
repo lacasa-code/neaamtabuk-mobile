@@ -37,6 +37,7 @@ class DelegateOrders {
 class DelegateOrder {
   DelegateOrder({
       this.id, 
+      this.distance,
       this.donationNumber,
       this.status_id,
       this.donationUsername,
@@ -60,7 +61,8 @@ class DelegateOrder {
 
   DelegateOrder.fromJson(dynamic json) {
     id = json['id'];
-    donationNumber = json['donationNumber'];
+    donationNumber = json['donation_number'];
+    distance = json['distance'];
     donationUsername = json['donationUsername'];
     status_id = json['status_id'];
     donationEmail = json['donationEmail'];
@@ -83,6 +85,7 @@ class DelegateOrder {
   }
   String id;
   String donationNumber;
+  String distance;
   String donationUsername;
   String status_id;
   String donationEmail;

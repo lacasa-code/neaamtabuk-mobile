@@ -28,7 +28,7 @@ class User {
   String address;
   String phoneNo;
   String region;
-  String city;
+  int city;
   String longitude;
   String latitude;
   String status;
@@ -47,6 +47,7 @@ class User {
     name = json['username'];
     email = json['email'];
     address = json['address'];
+    city =int.parse("${json['city']??0}");
     phoneNo = json['mobile'];
     region = json['region'];
     gender = json['gender'];

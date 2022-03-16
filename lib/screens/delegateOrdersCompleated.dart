@@ -98,7 +98,7 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
                                                         context) /
                                                     2.5,
                                                 child: AutoSizeText(
-                                                  '#${orders[index].id}',
+                                                  '#${orders[index].donationNumber}',
                                                   maxLines: 1,
                                                   style:
                                                       TextStyle(fontSize: 13),
@@ -177,35 +177,13 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
                                         SizedBox(
                                           height: 15,
                                         ),
-                                        Row(
-                                          children: [
-                                            AutoSizeText(
-                                              'region  : ',
-                                              maxLines: 1,
-                                            ),
-                                            Center(
-                                              child: AutoSizeText(
-                                                '${orders[index].donationregion}',
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                                maxFontSize: 13,
-                                                minFontSize: 10,
-                                                style: TextStyle(
-                                                    color:
-                                                        themeColor.getColor()),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+
                                         Container(
                                             width:
                                                 ScreenUtil.getWidth(context) /
                                                     1.5,
                                             child: AutoSizeText(
-                                              '${orders[index].donationAddress}',
+                                              '${orders[index].distance} km',
                                               style: TextStyle(
                                                   color: themeColor.getColor()),
                                             )),
