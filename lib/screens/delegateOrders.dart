@@ -238,9 +238,7 @@ class _DelegateState extends State<Delegate> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            //  Nav.route(context, MapSample(orders[index].id,orders[index].latitude,orders[index].longitude));
-                                            Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].donationLongitude,orders[index].donationLongitude,accept: false,arrived: true,));
-                                            // Nav.route(context, MapScreen(orders[index].id,orders[index].latitude,orders[index].longitude));
+                                            Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].donationLatitude,orders[index].donationLongitude,accept: false,arrived: true,));
                                           },
                                           child: AutoSizeText(
                                             '${getTransrlate(context, 'OrderTrack')} ',

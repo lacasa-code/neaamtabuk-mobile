@@ -235,7 +235,7 @@ class _RegisterFormState extends State<RegisterForm> {
                             items: cities,
 
                             //  onFind: (String filter) => getData(filter),
-                            itemAsString: (City u) => u.cityName,
+                            itemAsString: (City u) => "${u.cityName}",
 //                                        selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
                             onChanged: (City data) {
                               model.city = "${data.id}";

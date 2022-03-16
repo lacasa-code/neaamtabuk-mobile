@@ -37,7 +37,8 @@ class NearDonors {
 class NearDonor {
   NearDonor({
       this.id, 
-      this.username, 
+      this.donation_number,
+      this.username,
       this.status_id,
       this.mobile,
       this.gender, 
@@ -49,6 +50,7 @@ class NearDonor {
   NearDonor.fromJson(dynamic json) {
     id = json['id'].toString();
     username = json['username'];
+    donation_number = json['donation_number'];
     mobile = json['mobile'];
     gender = json['gender'];
     address = json['address'];
@@ -59,6 +61,7 @@ class NearDonor {
   }
   String id;
   String username;
+  String donation_number;
   String status_id;
   String mobile;
   String gender;

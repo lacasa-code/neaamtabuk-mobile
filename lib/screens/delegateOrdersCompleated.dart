@@ -52,7 +52,7 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
               Container(
                   width: ScreenUtil.getWidth(context) / 2,
                   child: AutoSizeText(
-                    getTransrlate(context, 'Myorders'),
+                    getTransrlate(context, 'ordersCompleated'),
                     minFontSize: 10,
                     maxFontSize: 16,
                     maxLines: 1,
