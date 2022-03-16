@@ -88,7 +88,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                                           context) /
                                           2.5,
                                       child: AutoSizeText(
-                                        '${getTransrlate(context, 'OrderNO')}  #${orders[index].donorId} ',
+                                        '${getTransrlate(context, 'OrderNO')}  #${orders[index].donation_number} ',
                                         maxLines: 1,
                                         style:
                                         TextStyle(fontSize: 13),
