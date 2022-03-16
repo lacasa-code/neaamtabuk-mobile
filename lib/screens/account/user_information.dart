@@ -219,38 +219,41 @@ class _UserInfoState extends State<UserInfo> {
                                         userModal.region = data.id,
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 10.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            getTransrlate(context, 'City'),
+
+                                    city==null?Container():   Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 25.0, right: 25.0, top: 10.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                getTransrlate(context, 'City'),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    city==null?Container():   Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25.0, right: 25.0, top: 10.0),
-                                      child: DropdownSearch<City>(
-                                        enabled: !_status,
-                                        mode: Mode.MENU,
-                                        validator: (City item) {
-                                          if (item == null) {
-                                            return "${getTransrlate(context, 'requiredempty')}";
-                                          } else
-                                            return null;
-                                        },
-                                        items: city,
-                                        //  onFind: (String filter) => getData(filter),
-                                        itemAsString: (City u) => u.cityName,
-//                                        selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
-                                        onChanged: (City data) =>
-                                        userModal.city = "${data?.id}",
-                                        onSaved: (City data) =>
-                                        userModal.city = "${data?.id}",
-                                      ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 25.0, right: 25.0, top: 10.0),
+                                          child: DropdownSearch<City>(
+                                            enabled: !_status,
+                                            mode: Mode.MENU,
+                                            validator: (City item) {
+                                              if (item == null) {
+                                                return "${getTransrlate(context, 'requiredempty')}";
+                                              } else
+                                                return null;
+                                            },
+                                            items: city,
+                                            //  onFind: (String filter) => getData(filter),
+                                            itemAsString: (City u) => "${u?.cityName}",
+                                          // selectedItem:city?.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city??' ')) ,
+                                            onSaved: (City data) =>
+                                            userModal.city = "${data?.id}",
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Padding(
                                         padding: EdgeInsets.only(

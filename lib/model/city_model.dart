@@ -101,7 +101,7 @@ class City {
 
   City.fromJson(dynamic json) {
     _id = json["id"];
-    _cityName = json["name_ar"];
+    _cityName = json["name"];
     _cityName_en = json["name_en"];
     _areaId = json["area_id"];
     _countryId = json["country_id"];
