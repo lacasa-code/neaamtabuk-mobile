@@ -203,7 +203,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   itemAsString: (Area u) => u.nameAr,
 
                   onChanged: (Area data) {
-                    model.region = data.nameAr;
+                    model.region = data.id;
                     setState(() {
                       cities=null;
                     });

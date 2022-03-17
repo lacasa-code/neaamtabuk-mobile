@@ -253,7 +253,7 @@ class _UserInfoState extends State<UserInfo> {
                                             items: city,
                                             //  onFind: (String filter) => getData(filter),
                                             itemAsString: (City u) => "${u?.cityName}",
-                                           selectedItem:city?.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city??' ')) ,
+                                           selectedItem:city?.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:"${userModal?.city??' '}")) ,
                                             onSaved: (City data) =>
                                             userModal.city = data?.id,
                                           ),

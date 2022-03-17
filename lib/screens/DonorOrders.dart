@@ -117,29 +117,6 @@ class _DonorOrdersState extends State<DonorOrders> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: AutoSizeText(
-                                              '${getTransrlate(context, 'status_pack')} :',
-                                              maxLines: 1,
-                                              style: TextStyle(color: themeColor.getColor()),
-                                            ),
-                                          ),
-                                          Container(
-                                              decoration: BoxDecoration(color: themeColor.getColor(),borderRadius: BorderRadius.circular(9.0) ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: AutoSizeText(
-                                                  '${orders[index].readyToDistribute=='1'?getTransrlate(context, 'pack'):getTransrlate(context, 'nonpack')} ',
-                                                  maxLines: 1,
-                                                  style: TextStyle(color: Colors.white),
-                                                ),
-                                              )),
-                                        ],
-                                      ),
-                                      SizedBox(height:10,),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: AutoSizeText(
                                               '${getTransrlate(context, 'status_distribute')}  : ',
                                               maxLines: 1,
                                               style: TextStyle(color: themeColor.getColor()),
@@ -154,6 +131,30 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                   maxLines: 1,
                                                   style: TextStyle(color: Colors.white),
 
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(height:10,),
+
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: AutoSizeText(
+                                              '${getTransrlate(context, 'status_pack')} :',
+                                              maxLines: 1,
+                                              style: TextStyle(color: themeColor.getColor()),
+                                            ),
+                                          ),
+                                          Container(
+                                              decoration: BoxDecoration(color: themeColor.getColor(),borderRadius: BorderRadius.circular(9.0) ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: AutoSizeText(
+                                                  '${orders[index].readyToPack=='1'?getTransrlate(context, 'pack'):getTransrlate(context, 'nonpack')} ',
+                                                  maxLines: 1,
+                                                  style: TextStyle(color: Colors.white),
                                                 ),
                                               )),
                                         ],

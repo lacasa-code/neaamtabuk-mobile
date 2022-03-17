@@ -114,7 +114,7 @@ class _HomeState extends State<Home> {
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Text(
-                                  '${getTransrlate(context, 'Myorders')}',
+                                  '${getTransrlate(context, 'MyordersDonner')}',
                                   style: TextStyle(
                                       color:theme.getColor(), fontWeight: FontWeight.bold),
                                 ),

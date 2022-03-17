@@ -32,9 +32,9 @@ class _VolunteerPageState extends State<VolunteerPage> {
   Provider_control themeColor;
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  int ready_to_pack = 0;
+  int ready_to_pack = 1;
   int location = 0;
-  int ready_to_distribute = 0;
+  int ready_to_distribute = 1;
   Categories_item categories_item;
   List<Categories_item> catedories;
   Model model = Model();
@@ -161,7 +161,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                         child: Row(
                           children: <Widget>[
                             Container(
-                              width: ScreenUtil.getWidth(context) / 2.5,
+                              width: ScreenUtil.getWidth(context) / 2.2,
                               child: ListTile(
                                 title: Text('${getTransrlate(context,'myLocation')}'),
                                 leading: Radio<int>(
@@ -177,7 +177,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                               ),
                             ),
                             Container(
-                              width: ScreenUtil.getWidth(context) / 2.5,
+                              width: ScreenUtil.getWidth(context) / 2.2,
                               child: ListTile(
                                 title: Text('${getTransrlate(context,'otherLocation')}'),
                                 leading: Radio<int>(
@@ -251,7 +251,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                   child: ListTile(
                                     title: Text('${getTransrlate(context,'yes')}'),
                                     leading: Radio<int>(
-                                      value: 0,
+                                      value: 1,
                                       groupValue: ready_to_distribute,
                                       activeColor: themeColor.getColor(),
                                       onChanged: (int value) {
@@ -267,7 +267,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                   child: ListTile(
                                     title: Text('${getTransrlate(context,'no')}'),
                                     leading: Radio<int>(
-                                      value: 1,
+                                      value: 0,
                                       activeColor: themeColor.getColor(),
                                       groupValue: ready_to_distribute,
                                       onChanged: (int value) {
@@ -295,7 +295,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                   child: ListTile(
                                     title: Text('${getTransrlate(context,'yes')}'),
                                     leading: Radio<int>(
-                                      value: 0,
+                                      value: 1,
                                       activeColor: themeColor.getColor(),
                                       groupValue: ready_to_pack,
                                       onChanged: (int value) {
@@ -311,7 +311,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                   child: ListTile(
                                     title: Text('${getTransrlate(context,'no')}'),
                                     leading: Radio<int>(
-                                      value: 1,
+                                      value: 0,
                                       activeColor: themeColor.getColor(),
                                       groupValue: ready_to_pack,
                                       onChanged: (int value) {
