@@ -423,7 +423,6 @@ class _RegisterFormState extends State<RegisterForm> {
         prefs.setString("address", "${user['address']}");
         prefs.setString("lat", "${user['latitude']}");
         prefs.setString("lang", "${user['longitude']}");
-
         prefs.setString("mobile", user['mobile']);
         prefs.setString("role_id", "${user['role_id']}");
         prefs.setInt("user_id", user['id']);
