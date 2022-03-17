@@ -44,8 +44,8 @@ class _VolunteerPageState extends State<VolunteerPage> {
   void initState() {
     SharedPreferences.getInstance().then((pref) => {
       setState(() {
-        model.longitude = pref.getString('lang');
-        model.latitude = pref.getString('lat');
+        model.longitude = pref.getString('lang')??'30';
+        model.latitude = pref.getString('lat')??'20';
         model.address = pref.getString('address');
       }),
       addressController.text=pref.getString('address')??''

@@ -420,6 +420,10 @@ class _RegisterFormState extends State<RegisterForm> {
         prefs.setString("user_email", user['email']);
         prefs.setString("user_name", user['username']);
          prefs.setString("token", value['access_token']??'');
+        prefs.setString("address", "${user['address']}");
+        prefs.setString("lat", "${user['latitude']}");
+        prefs.setString("lang", "${user['longitude']}");
+
         prefs.setString("mobile", user['mobile']);
         prefs.setString("role_id", "${user['role_id']}");
         prefs.setInt("user_id", user['id']);
