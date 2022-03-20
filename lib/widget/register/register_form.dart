@@ -117,12 +117,21 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.email = value;
                   },
                 ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      getTransrlate(context, 'phone'),
+                    ),
+                  ],
+                ),
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: MyTextFormField(
-                    labelText: getTransrlate(context, 'phone'),
                     hintText: getTransrlate(context, 'phone'),
-                    isEmail: true,
+                    istitle: true,
                     inputFormatters:[
                       new LengthLimitingTextInputFormatter(9),
                     ],
@@ -188,7 +197,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 Row(
                   children: [
                     Text(
-                      getTransrlate(context, 'area'),
+                      getTransrlate(context, 'City'),
                     ),
                   ],
                 ),
@@ -230,10 +239,11 @@ class _RegisterFormState extends State<RegisterForm> {
                           Row(
                             children: [
                               Text(
-                                getTransrlate(context, 'City'),
+                                getTransrlate(context, 'area'),
                               ),
                             ],
                           ),
+
                           SizedBox(
                             height: 5,
                           ),
@@ -264,11 +274,11 @@ class _RegisterFormState extends State<RegisterForm> {
                 SizedBox(
                   height: 10,
                 ),
-                MyTextFormField(
+                widget.role_id==3?MyTextFormField(
                   labelText:
-                  getTransrlate(context, 'NoOfmeals'),
+                  getTransrlate(context, 'family_members'),
                   hintText:
-                  getTransrlate(context, 'NoOfmeals'),
+                  getTransrlate(context, 'family_members'),
                   enabled: true,
                   validator: (String value) {
                     if (value.isEmpty) {
@@ -280,9 +290,9 @@ class _RegisterFormState extends State<RegisterForm> {
                   },
                   keyboard_type: TextInputType.number,
                   onSaved: (String value) {
-                    // = value;
+                    model.family_members=value;
                   },
-                ),
+                ):Container(),
 
                 SizedBox(
                   height: 10,
@@ -438,6 +448,7 @@ class _RegisterFormState extends State<RegisterForm> {
       'role_id': widget.role_id,
       'donation_type_id': 1,
       'status': "active",
+      'family_members': model.family_members,
       'longitude': model.longitude ?? '',
       'latitude': model.latitude ?? '',
     }).then((value) {

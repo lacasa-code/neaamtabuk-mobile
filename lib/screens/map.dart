@@ -28,7 +28,13 @@ class MapPage extends StatefulWidget {
   String longitude;
   String latitude;
   String status_id;
-  MapPage(this.status_id,this.donation_id, this.latitude, this.longitude,);
+
+  MapPage(
+    this.status_id,
+    this.donation_id,
+    this.latitude,
+    this.longitude,
+  );
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -43,7 +49,6 @@ class _MapPageState extends State<MapPage> {
   Marker _destination;
   Directions _info;
   LocationData myLocation;
-
 
   int id;
 
@@ -240,73 +245,77 @@ class _MapPageState extends State<MapPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                widget.status_id=="4"
+                widget.status_id == "4"
                     ? Container(
-                  margin: EdgeInsets.only(top: 12, bottom: 0),
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(1.0),
-                    ),
-                    color: theme.getColor(),
-                    onPressed: () async {
-                      API(context).post(
-                          'orderDelegate/${widget.donation_id}',
-                          {}).then((value) {
-                        print(value);
-                        if (value['status'] == true) {
-setState(() {
-  widget.status_id="3";
-});
-                          showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  ResultOverlay('${value['message']}'));
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  ResultOverlay('${value['message']}'));
-                        }
-                      });
-                    },
-                    child: Center(
-                      child: Text(
-                        "قبول الطلب",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
+                        margin: EdgeInsets.only(top: 12, bottom: 0),
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(1.0),
+                          ),
+                          color: theme.getColor(),
+                          onPressed: () async {
+                            API(context).post(
+                                'orderDelegate/${widget.donation_id}',
+                                {}).then((value) {
+                              print(value);
+                              if (value['status'] == true) {
+
+                                setState(() {
+                                  widget.status_id = "3";
+                                });
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message']}')).whenComplete(() {
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  Nav.route(context, Delegate());
+                                });
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message']}'));
+                              }
+                            });
+                          },
+                          child: Center(
+                            child: Text(
+                              "قبول الطلب",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        margin: EdgeInsets.only(top: 12, bottom: 0),
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(1.0),
+                          ),
+                          color: theme.getColor(),
+                          onPressed: () async {
+                            showDialog(
+                                context: context,
+                                builder: (_) => OrderOverlay(
+                                      donation_id: widget.donation_id,
+                                    ));
+                          },
+                          child: Text(
+                            "تم الوصول",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                )
-                    : Container(
-                  margin: EdgeInsets.only(top: 12, bottom: 0),
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(1.0),
-                    ),
-                    color: theme.getColor(),
-                    onPressed: () async {
-                      showDialog(
-                          context: context,
-                          builder: (_) => OrderOverlay(
-                            donation_id: widget.donation_id,
-                          ));
-                    },
-                    child: Text(
-                      "تم الوصول",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-
               ],
             ),
           )
@@ -326,7 +335,6 @@ setState(() {
       ),
     );
   }
-
 
   DirectionsRepository() async {
     String url =
@@ -350,14 +358,12 @@ setState(() {
     } finally {}
   }
 
-
   void _addMarker(LatLng pos) async {
     setState(() {
       _origin = Marker(
         markerId: const MarkerId('origin'),
         infoWindow: const InfoWindow(title: 'Origin'),
-        icon:
-        BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
         position: pos,
       );
     });
@@ -365,7 +371,6 @@ setState(() {
   }
 
   getUserLocation() async {
-
     String error;
     Location location = new Location();
     try {
@@ -382,9 +387,6 @@ setState(() {
       }
       myLocation = null;
     }
-
-
-
   }
 
   @override
@@ -395,9 +397,7 @@ setState(() {
 
   void _goToPosition1(LatLng latLng) {
     setState(() {
-      initialCameraPosition=CameraPosition(
-          zoom: 15,
-          target:latLng);
+      initialCameraPosition = CameraPosition(zoom: 15, target: latLng);
     });
     //_googleMapController.animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
     _addMarker(latLng);

@@ -37,11 +37,13 @@ class _VolunteerPageState extends State<VolunteerPage> {
   int location = 0;
   int ready_to_distribute = 1;
   String desc = ' ';
+  String delivary_date = DateTime.now().toString();
   String NoOfmeals = ' ';
   Categories_item categories_item;
   List<Categories_item> catedories;
   Model model = Model();
   TextEditingController addressController = TextEditingController();
+  TextEditingController dateController = TextEditingController(text: DateTime.now().toString());
 
   @override
   void initState() {
@@ -183,30 +185,33 @@ class _VolunteerPageState extends State<VolunteerPage> {
                               height: 20,
                             ),
                             DateTimePicker(
+                              controller: dateController,
                               type: DateTimePickerType.dateTimeSeparate,
-                              dateMask: 'd MMM, yyyy',
-                              initialValue: DateTime.now().toString(),
+                              dateMask: 'yyyy/MM/dd',
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2100),
-
+                              locale: Locale(themeColor.local,''),
                               use24HourFormat: false,
                               icon: Icon(Icons.event),
                               dateLabelText: '${getTransrlate(context, 'Data')}',
                               timeLabelText: '${getTransrlate(context, 'Time')}',
-                              selectableDayPredicate: (date) {
-                                // Disable weekend days to select from the calendar
-                                if (date.weekday == 6 || date.weekday == 7) {
-                                  return false;
-                                }
-
-                                return true;
-                              },
-                              onChanged: (val) => print(val),
                               validator: (val) {
-                                print(val);
+                                if (val==null) {
+                                  return getTransrlate(
+                                      context, 'requiredempty');
+                                }
+                                _formKey.currentState.save();
                                 return null;
                               },
-                              onSaved: (val) => print(val),
+                              onChanged:(val) {
+                                dateController.text=val.toString();
+                                print(val.toString());
+                                delivary_date=val.toString();
+                              },
+                              onSaved: (val) {
+                                print(val.toString());
+                                delivary_date=val.toString();
+                              },
                             ),
                             SizedBox(
                               height: 20,
@@ -584,6 +589,9 @@ class _VolunteerPageState extends State<VolunteerPage> {
       'category_id': categories_item.id,
       'ready_to_distribute': ready_to_distribute,
       'ready_to_pack': ready_to_pack,
+      'description': desc,
+      'delivary_date': delivary_date,
+      'meals_num': NoOfmeals,
       'latitude': model.latitude,
       'longitude': model.longitude,
       'address': model.address,

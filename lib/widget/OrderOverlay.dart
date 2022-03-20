@@ -150,15 +150,16 @@ class OrderOverlayState extends State<OrderOverlay>
                                 }).then((value) {
                                   print(value);
                                   if (value['status'] == true) {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                    Nav.routeReplacement(
-                                        context, DelegateCompleated());
+
                                     showDialog(
                                         context: context,
                                         builder: (_) =>
                                             ResultOverlay(
-                                                '${value['message']}'));
+                                                '${value['message']}')).whenComplete(() {
+                                      Navigator.pop(context);
+                                      Nav.routeReplacement(
+                                          context, DelegateCompleated());
+                                    });
                                   } else {
                                     showDialog(
                                         context: context,
