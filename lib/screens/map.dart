@@ -399,7 +399,8 @@ class _MapPageState extends State<MapPage> {
     setState(() {
       initialCameraPosition = CameraPosition(zoom: 15, target: latLng);
     });
-    //_googleMapController.animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
     _addMarker(latLng);
+    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
+
   }
 }
