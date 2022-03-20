@@ -47,7 +47,7 @@ class User {
     name = json['username'];
     email = json['email'];
     address = json['address'];
-    city =int.parse("${json['city']??0}");
+    city =int.tryParse("${json['city']??0}");
     phoneNo = json['mobile'];
     region = json['region'];
     gender = json['gender'];

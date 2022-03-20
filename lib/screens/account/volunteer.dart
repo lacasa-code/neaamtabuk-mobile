@@ -1,3 +1,4 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,8 @@ class _VolunteerPageState extends State<VolunteerPage> {
   int ready_to_pack = 1;
   int location = 0;
   int ready_to_distribute = 1;
+  String desc = ' ';
+  String NoOfmeals = ' ';
   Categories_item categories_item;
   List<Categories_item> catedories;
   Model model = Model();
@@ -43,13 +46,13 @@ class _VolunteerPageState extends State<VolunteerPage> {
   @override
   void initState() {
     SharedPreferences.getInstance().then((pref) => {
-      setState(() {
-        model.longitude = pref.getString('lang')??'30';
-        model.latitude = pref.getString('lat')??'20';
-        model.address = pref.getString('address');
-      }),
-      addressController.text=pref.getString('address')??''
-    });
+          setState(() {
+            model.longitude = pref.getString('lang') ?? '30';
+            model.latitude = pref.getString('lat') ?? '20';
+            model.address = pref.getString('address');
+          }),
+          addressController.text = pref.getString('address') ?? ''
+        });
 
     API(context).get('categories').then((value) {
       if (value != null) {
@@ -57,7 +60,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
         if (value['status'] == true) {
           setState(() {
             catedories = Categories_model.fromJson(value).data;
-            catedories.isNotEmpty?categories_item=catedories[0]:null;
+            catedories.isNotEmpty ? categories_item = catedories[0] : null;
           });
         }
       }
@@ -115,255 +118,366 @@ class _VolunteerPageState extends State<VolunteerPage> {
                 ),
               ),
 
-              catedories==null?Custom_Loading(): Container(
-                padding: EdgeInsets.only(right: 16, left: 16),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        getTransrlate(context, 'category'),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      catedories.isEmpty?Container():   DropdownSearch<Categories_item>(
-                        maxHeight: 120,
-                        validator: (Categories_item item) {
-                          if (item == null) {
-                            return "${getTransrlate(context, 'requiredempty')}";
-                          } else
-                            return null;
-                        },
-                        items: catedories,
-                        dropdownBuilder: (context, item) {
-                          return item == null
-                              ? Container()
-                              : Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(" ${item?.name} "),
-                                );
-                        },
-                        selectedItem:catedories[0] ,
-                        //  onFind: (String filter) => getData(filter),
-                        itemAsString: (Categories_item u) => u.name,
-                        onChanged: (Categories_item data) =>
-                            categories_item = data,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text("${getTransrlate(context,'LocationUsage')}"),
-                      Container(
-                        width: ScreenUtil.getWidth(context),
-                        height: ScreenUtil.getHeight(context) / 10,
-                        child: Row(
+              catedories == null
+                  ? Custom_Loading()
+                  : Container(
+                      padding: EdgeInsets.only(right: 16, left: 16),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            Text(
+                              getTransrlate(context, 'category'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            catedories.isEmpty
+                                ? Container()
+                                : DropdownSearch<Categories_item>(
+                                    maxHeight: 120,
+                                    validator: (Categories_item item) {
+                                      if (item == null) {
+                                        return "${getTransrlate(context, 'requiredempty')}";
+                                      } else
+                                        return null;
+                                    },
+                                    items: catedories,
+                                    dropdownBuilder: (context, item) {
+                                      return item == null
+                                          ? Container()
+                                          : Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(" ${item?.name} "),
+                                            );
+                                    },
+                                    selectedItem: catedories[0],
+                                    //  onFind: (String filter) => getData(filter),
+                                    itemAsString: (Categories_item u) => u.name,
+                                    onChanged: (Categories_item data) =>
+                                        categories_item = data,
+                                  ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            MyTextFormField(
+                              labelText: getTransrlate(context, 'desc'),
+                              hintText: getTransrlate(context, 'desc'),
+                              isEmail: true,
+                              enabled: true,
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return getTransrlate(
+                                      context, 'requiredempty');
+                                }
+                                _formKey.currentState.save();
+                                return null;
+                              },
+                              onSaved: (String value) {
+                                desc = value;
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            DateTimePicker(
+                              type: DateTimePickerType.dateTimeSeparate,
+                              dateMask: 'd MMM, yyyy',
+                              initialValue: DateTime.now().toString(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2100),
+
+                              use24HourFormat: false,
+                              icon: Icon(Icons.event),
+                              dateLabelText: '${getTransrlate(context, 'Data')}',
+                              timeLabelText: '${getTransrlate(context, 'Time')}',
+                              selectableDayPredicate: (date) {
+                                // Disable weekend days to select from the calendar
+                                if (date.weekday == 6 || date.weekday == 7) {
+                                  return false;
+                                }
+
+                                return true;
+                              },
+                              onChanged: (val) => print(val),
+                              validator: (val) {
+                                print(val);
+                                return null;
+                              },
+                              onSaved: (val) => print(val),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text("${getTransrlate(context, 'LocationUsage')}"),
                             Container(
-                              width: ScreenUtil.getWidth(context) / 2.2,
-                              child: ListTile(
-                                title: Text('${getTransrlate(context,'myLocation')}'),
-                                leading: Radio<int>(
-                                  value: 0,
-                                  activeColor: themeColor.getColor(),
-                                  groupValue: location,
-                                  onChanged: (int value) {
-                                    setState(() {
-                                      location = value;
-                                    });
-                                  },
-                                ),
+                              width: ScreenUtil.getWidth(context),
+                              height: ScreenUtil.getHeight(context) / 10,
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width: ScreenUtil.getWidth(context) / 2.2,
+                                    child: ListTile(
+                                      title: Text(
+                                          '${getTransrlate(context, 'myLocation')}'),
+                                      leading: Radio<int>(
+                                        value: 0,
+                                        activeColor: themeColor.getColor(),
+                                        groupValue: location,
+                                        onChanged: (int value) {
+                                          setState(() {
+                                            location = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: ScreenUtil.getWidth(context) / 2.2,
+                                    child: ListTile(
+                                      title: Text(
+                                          '${getTransrlate(context, 'otherLocation')}'),
+                                      leading: Radio<int>(
+                                        value: 1,
+                                        activeColor: themeColor.getColor(),
+                                        groupValue: location,
+                                        onChanged: (int value) {
+                                          setState(() {
+                                            location = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            location == 0
+                                ? Container()
+                                : MyTextFormField(
+                                    labelText:
+                                        '${getTransrlate(context, "AddressTitle")}',
+                                    controller: addressController,
+                                    validator: (String value) {
+                                      if (value.isEmpty) {
+                                        return getTransrlate(
+                                            context, 'requiredempty');
+                                      }
+                                      if (model.latitude == null &&
+                                          model.longitude == null) {
+                                        return getTransrlate(
+                                            context, 'LocationSelected');
+                                      }
+                                      _formKey.currentState.save();
+                                      return null;
+                                    },
+                                    suffixIcon: IconButton(
+                                        icon: Icon(Icons.location_pin),
+                                        onPressed: () {
+                                          showDialog(
+                                                  context: context,
+                                                  builder: (_) =>
+                                                      MapOverlay(this.model))
+                                              .whenComplete(() {
+                                            model.latitude =
+                                                this.model.latitude;
+                                            model.longitude =
+                                                this.model.longitude;
+                                            addressController.text =
+                                                '${this.model.address ?? ''}';
+                                          });
+                                        }),
+                                    inputFormatters: [
+                                      new LengthLimitingTextInputFormatter(254),
+                                    ],
+                                    onSaved: (String val) =>
+                                        model.address = val,
+                                    onChange: (String val) {
+                                      model.address = val;
+                                    },
+                                  ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            categories_item?.id == 2
+                                ? Container()
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      MyTextFormField(
+                                        labelText:
+                                            getTransrlate(context, 'NoOfmeals'),
+                                        hintText:
+                                            getTransrlate(context, 'NoOfmeals'),
+                                        enabled: true,
+                                        validator: (String value) {
+                                          if (value.isEmpty) {
+                                            return getTransrlate(
+                                                context, 'requiredempty');
+                                          }
+                                          _formKey.currentState.save();
+                                          return null;
+                                        },
+                                        keyboard_type: TextInputType.number,
+                                        onSaved: (String value) {
+                                          NoOfmeals = value;
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                          " ${getTransrlate(context, 'ready_to_distribute')}"),
+                                      Container(
+                                        width: ScreenUtil.getWidth(context),
+                                        height:
+                                            ScreenUtil.getHeight(context) / 10,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              width:
+                                                  ScreenUtil.getWidth(context) /
+                                                      2.5,
+                                              child: ListTile(
+                                                title: Text(
+                                                    '${getTransrlate(context, 'yes')}'),
+                                                leading: Radio<int>(
+                                                  value: 1,
+                                                  groupValue:
+                                                      ready_to_distribute,
+                                                  activeColor:
+                                                      themeColor.getColor(),
+                                                  onChanged: (int value) {
+                                                    setState(() {
+                                                      ready_to_distribute =
+                                                          value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width:
+                                                  ScreenUtil.getWidth(context) /
+                                                      2.5,
+                                              child: ListTile(
+                                                title: Text(
+                                                    '${getTransrlate(context, 'no')}'),
+                                                leading: Radio<int>(
+                                                  value: 0,
+                                                  activeColor:
+                                                      themeColor.getColor(),
+                                                  groupValue:
+                                                      ready_to_distribute,
+                                                  onChanged: (int value) {
+                                                    setState(() {
+                                                      ready_to_distribute =
+                                                          value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                          "${getTransrlate(context, 'ready_to_pack')}"),
+                                      Container(
+                                        width: ScreenUtil.getWidth(context),
+                                        height:
+                                            ScreenUtil.getHeight(context) / 10,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              width:
+                                                  ScreenUtil.getWidth(context) /
+                                                      2.5,
+                                              child: ListTile(
+                                                title: Text(
+                                                    '${getTransrlate(context, 'yes')}'),
+                                                leading: Radio<int>(
+                                                  value: 1,
+                                                  activeColor:
+                                                      themeColor.getColor(),
+                                                  groupValue: ready_to_pack,
+                                                  onChanged: (int value) {
+                                                    setState(() {
+                                                      ready_to_pack = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width:
+                                                  ScreenUtil.getWidth(context) /
+                                                      2.5,
+                                              child: ListTile(
+                                                title: Text(
+                                                    '${getTransrlate(context, 'no')}'),
+                                                leading: Radio<int>(
+                                                  value: 0,
+                                                  activeColor:
+                                                      themeColor.getColor(),
+                                                  groupValue: ready_to_pack,
+                                                  onChanged: (int value) {
+                                                    setState(() {
+                                                      ready_to_pack = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                    ],
+                                  ),
                             Container(
-                              width: ScreenUtil.getWidth(context) / 2.2,
-                              child: ListTile(
-                                title: Text('${getTransrlate(context,'otherLocation')}'),
-                                leading: Radio<int>(
-                                  value: 1,
-                                  activeColor: themeColor.getColor(),
-                                  groupValue: location,
-                                  onChanged: (int value) {
-                                    setState(() {
-                                      location = value;
-                                    });
-                                  },
+                              height: 40,
+                              width: ScreenUtil.getWidth(context),
+                              margin: EdgeInsets.only(
+                                  top: 12, bottom: 0, right: 16, left: 16),
+                              padding: EdgeInsets.only(right: 16, left: 16),
+                              child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(1.0),
+                                ),
+                                color: themeColor.getColor(),
+                                onPressed: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    _formKey.currentState.save();
+                                    setState(() => _isLoading = true);
+                                    register(themeColor);
+                                  }
+                                },
+                                child: Text(
+                                  getTransrlate(context, 'placeorder'),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      location==0?Container() :MyTextFormField(
-                        labelText: '${getTransrlate(context, "AddressTitle")}',
-                        controller: addressController,
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return getTransrlate(context, 'requiredempty');
-                          }
-                          if (model.latitude==null && model.longitude==null) {
-                            return getTransrlate(context, 'LocationSelected');
-                          }
-                          _formKey.currentState.save();
-                          return null;
-                        },
-                        suffixIcon:IconButton( icon: Icon(Icons.location_pin),
-                            onPressed: (){
-                              showDialog(context: context,
-                                  builder: (_) => MapOverlay(this.model)).whenComplete(() {
-                                model.latitude=this.model.latitude;
-                                model.longitude=this.model.longitude;
-                                addressController.text =
-                                '${this.model.address ?? ''}';
-                              });
-                            }),
-                        inputFormatters: [
-                          new LengthLimitingTextInputFormatter(254),
-                        ],
-                        onSaved: (String val) =>
-                        model.address = val,
-                        onChange: (String val) {
-                          model.address = val;
-                        },
-
-                      ),
-
-                      SizedBox(
-                        height: 20,
-                      ),
-
-                     categories_item?.id==2?Container(): Column(
-                       crossAxisAlignment: CrossAxisAlignment.start,
-
-                       children: [
-                          Text(" ${getTransrlate(context,'ready_to_distribute')}"),
-                          Container(
-                            width: ScreenUtil.getWidth(context),
-                            height: ScreenUtil.getHeight(context) / 10,
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width: ScreenUtil.getWidth(context) / 2.5,
-                                  child: ListTile(
-                                    title: Text('${getTransrlate(context,'yes')}'),
-                                    leading: Radio<int>(
-                                      value: 1,
-                                      groupValue: ready_to_distribute,
-                                      activeColor: themeColor.getColor(),
-                                      onChanged: (int value) {
-                                        setState(() {
-                                          ready_to_distribute = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: ScreenUtil.getWidth(context) / 2.5,
-                                  child: ListTile(
-                                    title: Text('${getTransrlate(context,'no')}'),
-                                    leading: Radio<int>(
-                                      value: 0,
-                                      activeColor: themeColor.getColor(),
-                                      groupValue: ready_to_distribute,
-                                      onChanged: (int value) {
-                                        setState(() {
-                                          ready_to_distribute = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("${getTransrlate(context,'ready_to_pack')}"),
-                          Container(
-                            width: ScreenUtil.getWidth(context),
-                            height: ScreenUtil.getHeight(context) / 10,
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width: ScreenUtil.getWidth(context) / 2.5,
-                                  child: ListTile(
-                                    title: Text('${getTransrlate(context,'yes')}'),
-                                    leading: Radio<int>(
-                                      value: 1,
-                                      activeColor: themeColor.getColor(),
-                                      groupValue: ready_to_pack,
-                                      onChanged: (int value) {
-                                        setState(() {
-                                          ready_to_pack = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: ScreenUtil.getWidth(context) / 2.5,
-                                  child: ListTile(
-                                    title: Text('${getTransrlate(context,'no')}'),
-                                    leading: Radio<int>(
-                                      value: 0,
-                                      activeColor: themeColor.getColor(),
-                                      groupValue: ready_to_pack,
-                                      onChanged: (int value) {
-                                        setState(() {
-                                          ready_to_pack = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-
-                      Container(
-                        height: 40,
-                        width: ScreenUtil.getWidth(context),
-                        margin: EdgeInsets.only(
-                            top: 12, bottom: 0, right: 16, left: 16),
-                        padding: EdgeInsets.only(right: 16, left: 16),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(1.0),
-                          ),
-                          color: themeColor.getColor(),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
-                              setState(() => _isLoading = true);
-                              register(themeColor);
-
-                            }
-                          },
-                          child: Text(
-                            getTransrlate(context, 'placeorder'),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
               SizedBox(
                 height: 50,
               )

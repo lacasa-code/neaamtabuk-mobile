@@ -47,6 +47,8 @@
     }
   },
   "welcome": " Welcome ",
+  "Data": "Data",
+  "Time": "Time",
   "DeliveryTime": "Delivery time",
   "DeliveryDate": "Delivery Date",
   "Select": "Select Now",
@@ -203,6 +205,8 @@
   "updates": "Updates",
   "updateCart": "Update Cart",
   "descupdates": "Notify me of New Features",
+  "desc": "Description",
+  "NoOfmeals": "Number of Meals",
   "google": "Google",
   "facebook": "Facebook",
   "send": "Send",

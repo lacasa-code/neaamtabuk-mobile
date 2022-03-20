@@ -399,7 +399,7 @@ setState(() {
           zoom: 15,
           target:latLng);
     });
-    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
+    //_googleMapController.animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
     _addMarker(latLng);
   }
 }

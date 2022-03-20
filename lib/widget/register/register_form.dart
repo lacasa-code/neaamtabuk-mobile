@@ -117,30 +117,34 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.email = value;
                   },
                 ),
-                MyTextFormField(
-                  labelText: getTransrlate(context, 'phone'),
-                  hintText: getTransrlate(context, 'phone'),
-                  isEmail: true,
-                  inputFormatters:[
-                    new LengthLimitingTextInputFormatter(10),
-                  ],
-                  prefix: IconButton(
-                    icon: Center(child: Text("$CountryNo")),
-                    onPressed: () {},
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: MyTextFormField(
+                    labelText: getTransrlate(context, 'phone'),
+                    hintText: getTransrlate(context, 'phone'),
+                    isEmail: true,
+                    inputFormatters:[
+                      new LengthLimitingTextInputFormatter(9),
+                    ],
+                    textDirection: TextDirection.ltr,
+                    prefix: IconButton(
+                      icon: Center(child: Text("$CountryNo")),
+                      onPressed: () {},
+                    ),
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return getTransrlate(context, 'requiredempty');
+                      }else if (value.length<9) {
+                        return "${getTransrlate(context, 'shorterphone')}";
+                      }
+                      _formKey.currentState.save();
+                      return null;
+                    },
+                    onSaved: (String value) {
+                      model.mobile = value;
+                    },
+                    keyboard_type: TextInputType.phone,
                   ),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(context, 'requiredempty');
-                    }else if (value.length<8) {
-                      return "${getTransrlate(context, 'shorterphone')}";
-                    }
-                    _formKey.currentState.save();
-                    return null;
-                  },
-                  onSaved: (String value) {
-                    model.mobile = value;
-                  },
-                  keyboard_type: TextInputType.phone,
                 ),
                 InkWell(
                   onTap: (){
@@ -260,6 +264,29 @@ class _RegisterFormState extends State<RegisterForm> {
                 SizedBox(
                   height: 10,
                 ),
+                MyTextFormField(
+                  labelText:
+                  getTransrlate(context, 'NoOfmeals'),
+                  hintText:
+                  getTransrlate(context, 'NoOfmeals'),
+                  enabled: true,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return getTransrlate(
+                          context, 'requiredempty');
+                    }
+                    _formKey.currentState.save();
+                    return null;
+                  },
+                  keyboard_type: TextInputType.number,
+                  onSaved: (String value) {
+                    // = value;
+                  },
+                ),
+
+                SizedBox(
+                  height: 10,
+                ),
 
                 items==null?Container():  Column(
                   children: [
@@ -355,6 +382,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.password_confirmation = value;
                   },
                 ),
+
                 Container(
                   height: 40,
                   width: ScreenUtil.getWidth(context),
@@ -411,7 +439,7 @@ class _RegisterFormState extends State<RegisterForm> {
       'donation_type_id': 1,
       'status': "active",
       'longitude': model.longitude ?? '',
-      'latitude': model.longitude ?? '',
+      'latitude': model.latitude ?? '',
     }).then((value) {
       print(value);
       if (value['status'] == true) {

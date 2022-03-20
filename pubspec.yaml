@@ -43,6 +43,7 @@ dependencies:
   geolocator: ^8.0.5
   location: ^4.3.0
   flutter_polyline_points: ^1.0.0
+  date_time_picker: ^2.1.0
 
 dev_dependencies:
   flutter_test:
