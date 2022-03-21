@@ -86,6 +86,7 @@ class MyTextFormField extends StatelessWidget {
                   width: 1.0,
                 ),
               ),
+
               filled: true,
               suffixIcon: this.suffixIcon,
             ),

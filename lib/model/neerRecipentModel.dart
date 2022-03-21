@@ -37,8 +37,9 @@ class NeerRecipentModel {
 class NeerRecipent {
   NeerRecipent({
       this.id, 
-      this.username, 
-      this.mobile, 
+      this.family_members,
+      this.username,
+      this.mobile,
       this.gender, 
       this.address, 
       this.longitude, 
@@ -47,6 +48,7 @@ class NeerRecipent {
 
   NeerRecipent.fromJson(dynamic json) {
     id = json['id'];
+    family_members = json['family_members'];
     username = json['username'];
     mobile = json['mobile'];
     gender = json['gender'];
@@ -57,6 +59,7 @@ class NeerRecipent {
   }
   int id;
   String username;
+  String family_members;
   String mobile;
   String gender;
   String address;

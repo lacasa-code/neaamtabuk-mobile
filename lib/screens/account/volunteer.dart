@@ -138,7 +138,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                             catedories.isEmpty
                                 ? Container()
                                 : DropdownSearch<Categories_item>(
-                                    maxHeight: 120,
+                                    maxHeight: 200,
                                     validator: (Categories_item item) {
                                       if (item == null) {
                                         return "${getTransrlate(context, 'requiredempty')}";
@@ -164,22 +164,49 @@ class _VolunteerPageState extends State<VolunteerPage> {
                             SizedBox(
                               height: 20,
                             ),
-                            MyTextFormField(
-                              labelText: getTransrlate(context, 'desc'),
-                              hintText: getTransrlate(context, 'desc'),
-                              isEmail: true,
-                              enabled: true,
-                              validator: (String value) {
-                                if (value.isEmpty) {
-                                  return getTransrlate(
-                                      context, 'requiredempty');
-                                }
-                                _formKey.currentState.save();
-                                return null;
-                              },
-                              onSaved: (String value) {
-                                desc = value;
-                              },
+
+                            Text("${getTransrlate(context, 'LocationUsage')}"),
+                            Container(
+                              width: ScreenUtil.getWidth(context),
+                              height: ScreenUtil.getHeight(context) / 10,
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width: ScreenUtil.getWidth(context) / 2.2,
+                                    child: ListTile(
+                                      title: Text(
+                                          '${getTransrlate(context, 'myLocation')}'),
+                                      leading: Radio<int>(
+                                        value: 0,
+                                        activeColor: themeColor.getColor(),
+                                        groupValue: location,
+                                        onChanged: (int value) {
+                                          setState(() {
+                                            location = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: ScreenUtil.getWidth(context) / 2.2,
+                                    child: ListTile(
+                                      title: Text(
+                                          '${getTransrlate(context, 'otherLocation')}'),
+                                      leading: Radio<int>(
+                                        value: 1,
+                                        activeColor: themeColor.getColor(),
+                                        groupValue: location,
+                                        onChanged: (int value) {
+                                          setState(() {
+                                            location = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(
                               height: 10,
@@ -225,54 +252,9 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                         color: Theme.of(context).focusColor.withOpacity(0.2))),
                               ),
                             ),
+
                             SizedBox(
-                              height: 20,
-                            ),
-                            Text("${getTransrlate(context, 'LocationUsage')}"),
-                            Container(
-                              width: ScreenUtil.getWidth(context),
-                              height: ScreenUtil.getHeight(context) / 10,
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    width: ScreenUtil.getWidth(context) / 2.2,
-                                    child: ListTile(
-                                      title: Text(
-                                          '${getTransrlate(context, 'myLocation')}'),
-                                      leading: Radio<int>(
-                                        value: 0,
-                                        activeColor: themeColor.getColor(),
-                                        groupValue: location,
-                                        onChanged: (int value) {
-                                          setState(() {
-                                            location = value;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: ScreenUtil.getWidth(context) / 2.2,
-                                    child: ListTile(
-                                      title: Text(
-                                          '${getTransrlate(context, 'otherLocation')}'),
-                                      leading: Radio<int>(
-                                        value: 1,
-                                        activeColor: themeColor.getColor(),
-                                        groupValue: location,
-                                        onChanged: (int value) {
-                                          setState(() {
-                                            location = value;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
                             location == 0
                                 ? Container()
@@ -319,10 +301,34 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                     },
                                   ),
                             SizedBox(
-                              height: 10,
+                              height: 5,
                             ),
-                            categories_item?.id == 2
-                                ? Container()
+                            categories_item?.id != 1
+                                ? Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    MyTextFormField(
+                                      labelText: getTransrlate(context, 'desc'),
+                                      hintText: getTransrlate(context, 'desc'),
+                                      isEmail: true,
+                                      enabled: true,
+                                      // validator: (String value) {
+                                      //   if (value.isEmpty) {
+                                      //     return getTransrlate(
+                                      //         context, 'requiredempty');
+                                      //   }
+                                      //   _formKey.currentState.save();
+                                      //   return null;
+                                      // },
+
+                                      onSaved: (String value) {
+                                        desc = value;
+                                      },
+                                    ),
+                                  ],
+                                )
                                 : Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,

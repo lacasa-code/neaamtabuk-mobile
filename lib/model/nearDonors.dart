@@ -38,7 +38,14 @@ class NearDonor {
   NearDonor({
       this.id, 
       this.donation_number,
+      this.readyToDistribute,
+      this.readyToPack,
       this.username,
+      this.number_of_meals,
+      this.category_id,
+      this.category,
+      this.description,
+      this.delivary_date,
       this.status_id,
       this.mobile,
       this.gender, 
@@ -50,7 +57,12 @@ class NearDonor {
   NearDonor.fromJson(dynamic json) {
     id = json['id'].toString();
     username = json['username'];
+    category_id = json['category_id'];
     donation_number = json['donation_number'];
+    description = json['description'];
+    category = json['category'];
+    delivary_date = json['delivary_date'];
+    number_of_meals = json['number_of_meals'];
     mobile = json['mobile'];
     gender = json['gender'];
     address = json['address'];
@@ -58,9 +70,18 @@ class NearDonor {
     longitude = json['longitude'];
     latitude = json['latitude'];
     distance = json['distance'];
+    readyToDistribute = json['ready_to_distribute'];
+    readyToPack = json['ready_to_pack'];
   }
   String id;
   String username;
+  String category;
+  String readyToDistribute;
+  String readyToPack;
+  String category_id;
+  String number_of_meals;
+  String delivary_date;
+  String description;
   String donation_number;
   String status_id;
   String mobile;

@@ -110,7 +110,34 @@ class _DonorOrdersState extends State<DonorOrders> {
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  orders[index].category=="Home furniture"||orders[index].category=="أثاث منزلي"?Container():Column(
+                                  orders[index].category_id!='1'?Container(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        orders[index].description==null?Container() :  Row(
+                                          children: [
+                                            AutoSizeText(
+                                              '${getTransrlate(context, 'desc')}  : ',
+                                              maxLines: 1,
+                                            ),
+                                            Center(
+                                              child: AutoSizeText(
+                                                '${orders[index].description}',
+                                                textAlign:
+                                                TextAlign.center,
+                                                maxLines: 2,
+                                                maxFontSize: 13,
+                                                minFontSize: 10,
+                                                style: TextStyle(color:themeColor.getColor()),
+
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ):Column(
                                     children: [
                                       Row(
                                         children: [
@@ -136,7 +163,6 @@ class _DonorOrdersState extends State<DonorOrders> {
                                         ],
                                       ),
                                       SizedBox(height:10,),
-
                                       Row(
                                         children: [
                                           Padding(
@@ -159,12 +185,69 @@ class _DonorOrdersState extends State<DonorOrders> {
                                               )),
                                         ],
                                       ),
+                                      SizedBox(height:10,),
+
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              AutoSizeText(
+                                                '${getTransrlate(context, 'NoOfmeals')}  : ',
+                                                maxLines: 1,
+                                              ),
+                                              Center(
+                                                child: AutoSizeText(
+                                                  '${orders[index].number_of_meals}',
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  maxLines: 2,
+                                                  maxFontSize: 13,
+                                                  minFontSize: 10,
+                                                  style: TextStyle(color:themeColor.getColor()),
+
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          AutoSizeText(
+                                            '${getTransrlate(context, 'OrderDate')}  : ',
+                                            maxLines: 1,
+                                          ),
+                                          Center(
+                                            child: AutoSizeText(
+                                              '${orders[index].delivary_date}',
+                                              textAlign:
+                                              TextAlign.center,
+                                              maxLines: 2,
+                                              maxFontSize: 13,
+                                              minFontSize: 10,
+                                              style: TextStyle(color:themeColor.getColor()),
+
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                   SizedBox(
                                     height: 5,
-                                  ),
-                                  Row(
+                                  )   ,Row(
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                     children: [

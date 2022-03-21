@@ -93,7 +93,7 @@ class OrderOverlayState extends State<OrderOverlay>
                             top: 10.0,
                             bottom: 10),
                         child: DropdownSearch<NeerRecipent>(
-                          mode: Mode.MENU,
+                          mode: Mode.DIALOG,
 
                           dropdownBuilder: (context, item) {
                             return item == null
@@ -255,9 +255,16 @@ class OrderOverlayState extends State<OrderOverlay>
       child: ListTile(
         selected: isSelected,
         title: Text(item?.username ?? ''),
-        subtitle: Text(item?.address?.toString() ?? ''),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text("${getTransrlate(context,"phone")} : 0${item?.mobile?.toString() ?? ''}"),
+            Text("${getTransrlate(context,"family_members")} : ${item?.family_members?.toString() ?? ''}"),
+          ],
+        ),
         leading: CircleAvatar(
-          child: Text("${item?.distance?.toString() ?? ''}K"),
+          child: Text("${double.tryParse(item?.distance??'0').roundToDouble()}K"),
         ),
       ),
     );
