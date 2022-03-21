@@ -84,7 +84,11 @@ class _OrdersState extends State<Orders> {
                                   itemCount: orders.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return Column(
+
+                                    return
+                                      orders[index].delivary_date!=null?
+                                      DateTime.tryParse(orders[index].delivary_date).isBefore(DateTime.now())?
+                                      Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -108,8 +112,9 @@ class _OrdersState extends State<Orders> {
                                           ],
                                         ),
                                         SizedBox(
-                                          height: 5,
+                                          height: 10,
                                         ),
+
                                         Container(
                                             width:
                                                 ScreenUtil.getWidth(context) /
@@ -121,7 +126,7 @@ class _OrdersState extends State<Orders> {
                                               maxLines: 1,
                                             )),
                                         SizedBox(
-                                          height: 5,
+                                          height: 10,
                                         ),
                                         Container(
                                             width:
@@ -131,6 +136,10 @@ class _OrdersState extends State<Orders> {
                                               '${getTransrlate(context, 'phone')} : ${orders[index].mobile} ',
                                               maxLines: 1,
                                             )),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+
                                         Row(
                                           children: [
                                             AutoSizeText(
@@ -152,7 +161,7 @@ class _OrdersState extends State<Orders> {
                                           ],
                                         ),
                                         SizedBox(
-                                          height: 5,
+                                          height: 10,
                                         ),
                                         Row(
                                           children: [
@@ -311,9 +320,9 @@ class _OrdersState extends State<Orders> {
                                                 ],
                                               ),
                                         SizedBox(
-                                          height: 5,
+                                          height: 15,
                                         ),
-                                        InkWell(
+                                        DateTime.tryParse(orders[index].delivary_date).isAfter(DateTime.now())?Container():InkWell(
                                           onTap: () {
                                             Nav.route(
                                                 context,
@@ -341,7 +350,7 @@ class _OrdersState extends State<Orders> {
                                           color: Colors.black12,
                                         ),
                                       ],
-                                    );
+                                    ):Container():Container();
                                   },
                                 ),
                         ],

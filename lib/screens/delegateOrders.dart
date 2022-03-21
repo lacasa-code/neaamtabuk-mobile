@@ -343,14 +343,14 @@ class _DelegateState extends State<Delegate> {
                                             height: 40,
                                             width:
                                             ScreenUtil.getWidth(context) /
-                                                2,
+                                                3,
                                             margin: EdgeInsets.only(
                                                 top: 12, bottom: 0),
                                             child: FlatButton(
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                 new BorderRadius.circular(
-                                                    1.0),
+                                                    9.0),
                                               ),
                                               color: themeColor.getColor(),
                                               onPressed: () async {
@@ -389,9 +389,12 @@ class _DelegateState extends State<Delegate> {
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          height: 1,
-                                          color: Colors.black12,
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            height: 1,
+                                            color: Colors.black12,
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 15,
