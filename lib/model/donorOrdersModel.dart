@@ -37,6 +37,7 @@ class DonorOrdersModel {
 class DonorOrder {
   DonorOrder({
       this.donorId, 
+      this.donationUsername,
       this.donation_number,
       this.delivary_date,
       this.category_id,
@@ -48,6 +49,9 @@ class DonorOrder {
       this.close,});
 
   DonorOrder.fromJson(dynamic json) {
+    donationUsername = json['donationUsername'];
+    donationMobile = json['donationMobile'];
+    distance = json['distance'];
     donorId = json['donor_id'];
     description = json['description'];
     delivary_date = json['delivary_date'];
@@ -60,15 +64,19 @@ class DonorOrder {
     readyToPack = json['ready_to_pack'];
     status = json['status'];
     close = json['close'];
+    category_id = json['category_id'];
   }
+  String distance;
   String donation_number;
+  String donationUsername;
+  String category_id;
+  String donationMobile;
   String donorId;
   String number_of_meals;
   String delivary_date;
   String description;
   String donationNumber;
   String category;
-  String category_id;
   String readyToDistribute;
   String readyToPack;
   String status;

@@ -115,7 +115,7 @@ class _OrdersState extends State<Orders> {
                                                 ScreenUtil.getWidth(context) /
                                                     1.5,
                                             child: AutoSizeText(
-                                              '${orders[index].username}',
+                                              '${getTransrlate(context, 'Username')} : ${orders[index].username}',
                                               style: TextStyle(
                                                   color: themeColor.getColor()),
                                               maxLines: 1,
@@ -128,7 +128,7 @@ class _OrdersState extends State<Orders> {
                                                 ScreenUtil.getWidth(context) /
                                                     1.5,
                                             child: AutoSizeText(
-                                              '${orders[index].mobile} ',
+                                              '${getTransrlate(context, 'phone')} : ${orders[index].mobile} ',
                                               maxLines: 1,
                                             )),
                                         Row(
@@ -182,7 +182,7 @@ class _OrdersState extends State<Orders> {
                                                 ScreenUtil.getWidth(context) /
                                                     1.5,
                                             child: AutoSizeText(
-                                              '${orders[index].distance} Km',
+                                              '${getTransrlate(context, 'distance')}  : ${orders[index].distance} Km',
                                               maxLines: 1,
                                             )),
                                         SizedBox(

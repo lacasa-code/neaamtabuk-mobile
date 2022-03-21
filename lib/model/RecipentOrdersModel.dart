@@ -64,13 +64,27 @@ class RecipentOrder {
     delegateLatitude = json['delegateLatitude'];
     status = json['status'];
     close = json['close'];
+    delivary_date = json['delivary_date'];
+    distance = json['distance'];
+    category_id = json['category_id'];
+    number_of_meals = json['number_of_meals'];
+    readyToDistribute = json['readyToDistribute'];
+    readyToPack = json['readyToPack'];
+    description = json['description'];
   }
   String id;
   String donationNumber;
+  String readyToDistribute;
+  String readyToPack;
+  String description;
+  String number_of_meals;
+  String distance;
   String category;
   String delegateUsername;
+  String category_id;
   String delegateEmail;
   String delegateMobile;
+  String delivary_date;
   String delegateGender;
   String delegateAddress;
   String delegateregion;

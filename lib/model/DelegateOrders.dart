@@ -84,9 +84,21 @@ class DelegateOrder {
     recipientregion = json['recipientregion'];
     status = json['status'];
     close = json['close'];
+    delivary_date = json['delivary_date'];
+    category = json['category'];
+    category_id = json['category_id'];
+    number_of_meals = json['number_of_meals'];
+    readyToDistribute = json['readyToDistribute'];
+    readyToPack = json['readyToPack'];
   }
   String id;
   String donationNumber;
+  String delivary_date;
+  String category;
+  String category_id;
+  String number_of_meals;
+  String readyToPack;
+  String readyToDistribute;
   String description;
   String distance;
   String donationUsername;

@@ -272,7 +272,9 @@
   "paymentMethod": "طريقة الدفع",
   "paymentsMethod": "طرق الدفع",
   "MethodShipping": "طرق الشحن",
+
   "OrderTrack": "تتبع الشحنة",
+  "Orderdelivery": "توصيل الشحنة",
 
   "banklist": "قائمة البنوك",
   "carmade": "بلد المنشا",
@@ -371,6 +373,7 @@
   "notAvailableOrder": "المنتج نفذ من المخزن الان !",
   "OrderDitails": "تفاصيل الطلب",
   "OrderDate": "تاريخ الطلب",
+  "distance": "المسافة",
   "OrderShipping": "بيانات الشحن",
   "custCode": "كود العميل",
   "name": "الاسم",

@@ -206,6 +206,8 @@
   "updateCart": "Update Cart",
   "descupdates": "Notify me of New Features",
   "desc": "Description",
+  "Orderdelivery": "Orderdelivery",
+  "distance": "Distance",
   "NoOfmeals": "Number of Meals",
   "family_members": "Family Members",
   "google": "Google",
@@ -225,8 +227,6 @@
   "ProfileSettings": "Profile",
   "vendorSettings": "Vendor Profile",
   "FAQ": "F A Q",
-
-
   "product": "Products",
   "cleans": "Laundry",
 
