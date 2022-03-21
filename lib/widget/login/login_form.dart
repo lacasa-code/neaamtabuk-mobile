@@ -68,6 +68,7 @@ class _LoginFormState extends State<LoginForm> {
                   MyTextFormField(
                     intialLabel: '',
                     labelText: getTransrlate(context, 'password'),
+                    keyboard_type:TextInputType.visiblePassword ,
                     hintText: getTransrlate(context, 'password'),
                     suffixIcon: IconButton(
                       icon: Icon(

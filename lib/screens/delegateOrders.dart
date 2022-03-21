@@ -112,7 +112,7 @@ class _DelegateState extends State<Delegate> {
                                         Row(
                                           children: [
                                             AutoSizeText(
-                                              'Username  : ',
+                                              '${getTransrlate(context, 'Username')} : ',
                                               maxLines: 1,
                                             ),
                                             Center(
@@ -136,7 +136,31 @@ class _DelegateState extends State<Delegate> {
                                         Row(
                                           children: [
                                             AutoSizeText(
-                                              'Mobile  : ',
+                                              '${getTransrlate(context, 'desc')} : ',
+                                              maxLines: 1,
+                                            ),
+                                            Center(
+                                              child: AutoSizeText(
+                                                '${orders[index].description}',
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                                maxFontSize: 13,
+                                                minFontSize: 10,
+                                                style: TextStyle(
+                                                    color:
+                                                        themeColor.getColor()),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Row(
+                                          children: [
+                                            AutoSizeText(
+                                              '${getTransrlate(context, 'phone')} : ',
                                               maxLines: 1,
                                             ),
                                             Center(

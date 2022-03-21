@@ -182,36 +182,48 @@ class _VolunteerPageState extends State<VolunteerPage> {
                               },
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 10,
+                            ),
+                            Text("${getTransrlate(context, 'OrderDate')}"),
+                            SizedBox(
+                              height: 10,
                             ),
                             DateTimePicker(
-                              controller: dateController,
                               type: DateTimePickerType.dateTimeSeparate,
                               dateMask: 'yyyy/MM/dd',
+                              controller: dateController,
                               firstDate: DateTime.now(),
-                              lastDate: DateTime(2100),
-                              locale: Locale(themeColor.local,''),
-                              use24HourFormat: false,
+                              lastDate: DateTime.now().add(Duration(days: 5 * 365)),
+                             // initialDate: initStartDate,
+                              //use24HourFormat: false,
                               icon: Icon(Icons.event),
                               dateLabelText: '${getTransrlate(context, 'Data')}',
                               timeLabelText: '${getTransrlate(context, 'Time')}',
-                              validator: (val) {
-                                if (val==null) {
-                                  return getTransrlate(
+                              onChanged: (val) => setState(() => dateController.text = val),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return  getTransrlate(
                                       context, 'requiredempty');
                                 }
-                                _formKey.currentState.save();
                                 return null;
                               },
-                              onChanged:(val) {
-                                dateController.text=val.toString();
-                                print(val.toString());
-                                delivary_date=val.toString();
-                              },
-                              onSaved: (val) {
-                                print(val.toString());
-                                delivary_date=val.toString();
-                              },
+                              onSaved: (val) => setState(() => dateController.text = val ?? ''),
+                              decoration: InputDecoration(
+                                labelStyle: TextStyle(color: Colors.grey[700]),
+                                filled: true,
+                                fillColor: Colors.white,
+                                contentPadding:
+                                EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).focusColor.withOpacity(0.2))),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).focusColor.withOpacity(0.5))),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).focusColor.withOpacity(0.2))),
+                              ),
                             ),
                             SizedBox(
                               height: 20,
@@ -590,7 +602,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
       'ready_to_distribute': ready_to_distribute,
       'ready_to_pack': ready_to_pack,
       'description': desc,
-      'delivary_date': delivary_date,
+      'delivary_date': dateController.text,
       'meals_num': NoOfmeals,
       'latitude': model.latitude,
       'longitude': model.longitude,

@@ -22,6 +22,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MapPage extends StatefulWidget {
   String donation_id;
@@ -243,8 +244,32 @@ class _MapPageState extends State<MapPage> {
           Positioned(
             bottom: 5,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                Container(
+                  margin: EdgeInsets.only(top: 12, bottom: 0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(1.0),
+                    ),
+                    color: theme.getColor(),
+                    onPressed: () async {
+                      _launchMaps(LatLng(_origin.position.latitude,_origin.position.longitude));
+                    },
+                    child: Center(
+                      child: Text(
+                        "انتقل الى جوجل ماب",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10,),
                 widget.status_id == "4"
                     ? Container(
                         margin: EdgeInsets.only(top: 12, bottom: 0),
@@ -402,5 +427,22 @@ class _MapPageState extends State<MapPage> {
     _addMarker(latLng);
     _googleMapController.animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
 
+  }
+
+
+  _launchMaps(LatLng latLng) async {
+    String googleUrl =
+        'comgooglemaps://?center=${latLng.latitude},${latLng.longitude}';
+    String appleUrl =
+        'https://maps.apple.com/?sll=${latLng.latitude},${latLng.longitude}';
+    if (await canLaunch("comgooglemaps://")) {
+      print('launching com googleUrl');
+      await launch(googleUrl);
+    } else if (await canLaunch(appleUrl)) {
+      print('launching apple url');
+      await launch(appleUrl);
+    } else {
+      throw 'Could not launch url';
+    }
   }
 }

@@ -177,13 +177,37 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
                                         SizedBox(
                                           height: 15,
                                         ),
+                                        Row(
+                                          children: [
+                                            AutoSizeText(
+                                              '${getTransrlate(context, 'desc')} : ',
+                                              maxLines: 1,
+                                            ),
+                                            Center(
+                                              child: AutoSizeText(
+                                                '${orders[index].description??''}',
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                                maxFontSize: 13,
+                                                minFontSize: 10,
+                                                style: TextStyle(
+                                                    color:
+                                                    themeColor.getColor()),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        SizedBox(
+                                          height: 15,
+                                        ),
 
                                         Container(
                                             width:
                                                 ScreenUtil.getWidth(context) /
                                                     1.5,
                                             child: AutoSizeText(
-                                              '${orders[index].distance} km',
+                                              '${orders[index].distance??''} km',
                                               style: TextStyle(
                                                   color: themeColor.getColor()),
                                             )),

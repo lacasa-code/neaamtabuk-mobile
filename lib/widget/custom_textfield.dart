@@ -66,6 +66,7 @@ class MyTextFormField extends StatelessWidget {
         ],
             //autofocus: true,
             onTap: press,
+
             initialValue: intialLabel,
             decoration: InputDecoration(
               fillColor: Colors.white,
