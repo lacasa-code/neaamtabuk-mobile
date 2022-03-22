@@ -158,8 +158,9 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                   ),
                                                 ],
                                               ),
+
                                               SizedBox(
-                                                height: 5,
+                                                height: 10,
                                               ),
                                               Row(
                                                 mainAxisAlignment:
@@ -232,33 +233,31 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                       ),
                                                     )
                                                   : Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.start,
                                                       children: [
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
                                                         Row(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          mainAxisAlignment: MainAxisAlignment.start,
                                                           children: [
-                                                            Row(
-                                                              children: [
-                                                                AutoSizeText(
-                                                                  '${getTransrlate(context, 'NoOfmeals')}  : ',
-                                                                  maxLines: 1,
-                                                                ),
-                                                                Center(
-                                                                  child: AutoSizeText(
-                                                                    '${orders[index].number_of_meals??''}',
-                                                                    textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                    maxLines: 2,
-                                                                    maxFontSize: 13,
-                                                                    minFontSize: 10,
-                                                                    style: TextStyle(
-                                                                        color: themeColor
-                                                                            .getColor()),
-                                                                  ),
-                                                                ),
-                                                              ],
+                                                            AutoSizeText(
+                                                              '${getTransrlate(context, 'NoOfmeals')}  : ',
+                                                              maxLines: 1,
+                                                            ),
+                                                            AutoSizeText(
+                                                              '${orders[index].number_of_meals??''}',
+                                                              textAlign:
+                                                              TextAlign
+                                                                  .start,
+                                                              maxLines: 2,
+                                                              maxFontSize: 13,
+                                                              minFontSize: 10,
+                                                              style: TextStyle(
+                                                                  color: themeColor
+                                                                      .getColor()),
                                                             ),
                                                           ],
                                                         ),
