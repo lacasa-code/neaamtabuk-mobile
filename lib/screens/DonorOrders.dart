@@ -241,7 +241,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                           ),
                                                           Center(
                                                             child: AutoSizeText(
-                                                              '${orders[index].number_of_meals}',
+                                                              '${orders[index].number_of_meals??''}',
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -274,7 +274,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                 ),
                                                 Center(
                                                   child: AutoSizeText(
-                                                    '${orders[index].delivary_date}',
+                                                    '${orders[index].delivary_date??''}',
                                                     textAlign: TextAlign.center,
                                                     maxLines: 2,
                                                     maxFontSize: 13,

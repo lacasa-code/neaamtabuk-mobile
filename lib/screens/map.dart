@@ -60,7 +60,7 @@ class _MapPageState extends State<MapPage> {
             id = pref.getInt('user_id');
           }),
         });
-
+print('f');
     // location.onLocationChanged.listen((LocationData currentLocation) {
     //   setState(() {
     //     initialCameraPosition = CameraPosition(
@@ -242,7 +242,7 @@ class _MapPageState extends State<MapPage> {
               ),
             ),
           Positioned(
-            bottom: 5,
+            bottom: 15,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -250,20 +250,23 @@ class _MapPageState extends State<MapPage> {
                   margin: EdgeInsets.only(top: 12, bottom: 0),
                   child: FlatButton(
                     shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(1.0),
+                      borderRadius: new BorderRadius.circular(9.0),
                     ),
                     color: theme.getColor(),
                     onPressed: () async {
                       _launchMaps(LatLng(_origin.position.latitude,_origin.position.longitude));
                     },
                     child: Center(
-                      child: Text(
-                        "انتقل الى جوجل ماب",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "انتقل الى جوجل ماب",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     ),
@@ -275,7 +278,7 @@ class _MapPageState extends State<MapPage> {
                         margin: EdgeInsets.only(top: 12, bottom: 0),
                         child: FlatButton(
                           shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(1.0),
+                            borderRadius: new BorderRadius.circular(9.0),
                           ),
                           color: theme.getColor(),
                           onPressed: () async {
@@ -305,13 +308,19 @@ class _MapPageState extends State<MapPage> {
                             });
                           },
                           child: Center(
-                            child: Text(
-                              "قبول الطلب",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "قبول الطلب",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -321,7 +330,7 @@ class _MapPageState extends State<MapPage> {
                         margin: EdgeInsets.only(top: 12, bottom: 0),
                         child: FlatButton(
                           shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(1.0),
+                            borderRadius: new BorderRadius.circular(9.0),
                           ),
                           color: theme.getColor(),
                           onPressed: () async {
@@ -331,12 +340,15 @@ class _MapPageState extends State<MapPage> {
                                       donation_id: widget.donation_id,
                                     ));
                           },
-                          child: Text(
-                            "تم الوصول",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "تم الوصول",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
                         ),
@@ -399,8 +411,10 @@ class _MapPageState extends State<MapPage> {
     String error;
     Location location = new Location();
     try {
-      myLocation = await location.getLocation();
-      _goToPosition1(LatLng(myLocation.latitude, myLocation.longitude));
+      //myLocation = await location.getLocation();
+      var _locationData = await  Geolocator.getCurrentPosition();
+
+      _goToPosition1(LatLng(_locationData.latitude, _locationData.longitude));
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
         error = 'please grant permission';

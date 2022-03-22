@@ -26,6 +26,11 @@
 	<key>CFBundleName</key>
 	<string>naeemtubk</string>
 	<key>CFBundlePackageType</key>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>googlechromes</string>
+        <string>comgooglemaps</string>
+    </array>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>

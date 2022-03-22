@@ -211,10 +211,10 @@ class _VolunteerPageState extends State<VolunteerPage> {
                             SizedBox(
                               height: 10,
                             ),
-                            Text("${getTransrlate(context, 'OrderDate')}"),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            // Text("${getTransrlate(context, 'OrderDate')}"),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
                             DateTimePicker(
                               type: DateTimePickerType.dateTimeSeparate,
                               dateMask: 'yyyy/MM/dd',
@@ -235,22 +235,22 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                 return null;
                               },
                               onSaved: (val) => setState(() => dateController.text = val ?? ''),
-                              decoration: InputDecoration(
-                                labelStyle: TextStyle(color: Colors.grey[700]),
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding:
-                                EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).focusColor.withOpacity(0.2))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).focusColor.withOpacity(0.5))),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).focusColor.withOpacity(0.2))),
-                              ),
+                              // decoration: InputDecoration(
+                              //   labelStyle: TextStyle(color: Colors.grey[700]),
+                              //   filled: true,
+                              //   fillColor: Colors.white,
+                              //   contentPadding:
+                              //   EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+                              //   border: OutlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //           color: Theme.of(context).focusColor.withOpacity(0.2))),
+                              //   focusedBorder: OutlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //           color: Theme.of(context).focusColor.withOpacity(0.5))),
+                              //   enabledBorder: OutlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //           color: Theme.of(context).focusColor.withOpacity(0.2))),
+                              // ),
                             ),
 
                             SizedBox(
@@ -314,6 +314,8 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                       hintText: getTransrlate(context, 'desc'),
                                       isEmail: true,
                                       enabled: true,
+                                      minLines: 5,
+                                      maxLines: 5,
                                       // validator: (String value) {
                                       //   if (value.isEmpty) {
                                       //     return getTransrlate(
@@ -322,7 +324,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                       //   _formKey.currentState.save();
                                       //   return null;
                                       // },
-
+keyboard_type: TextInputType.multiline,
                                       onSaved: (String value) {
                                         desc = value;
                                       },
@@ -469,6 +471,10 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                       ),
                                     ],
                                   ),
+
+                            SizedBox(
+                              height: 25,
+                            ),
                             Container(
                               height: 40,
                               width: ScreenUtil.getWidth(context),

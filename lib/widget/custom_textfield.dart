@@ -16,6 +16,8 @@ class MyTextFormField extends StatelessWidget {
   final bool isEmail;
   final List<TextInputFormatter> inputFormatters;
 
+  final int minLines;
+  final int maxLines;
   final bool enabled;
   final bool isPhone;
   final Widget prefix;
@@ -29,6 +31,8 @@ class MyTextFormField extends StatelessWidget {
   MyTextFormField(
       {this.hintText,
       this.validator,
+      this.minLines,
+      this.maxLines,
       this.textAlign,
       this.errorText,
       this.enabled,
@@ -61,6 +65,8 @@ class MyTextFormField extends StatelessWidget {
             textAlign:textAlign??TextAlign.start ,
             controller: controller,
             focusNode: focus,
+            minLines: minLines,
+            maxLines: isPassword?1:maxLines,
             inputFormatters:inputFormatters??[
               new LengthLimitingTextInputFormatter(254),
         ],
