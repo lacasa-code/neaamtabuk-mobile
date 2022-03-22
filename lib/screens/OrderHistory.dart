@@ -191,7 +191,7 @@ class _OrdersState extends State<Orders> {
                                                 ScreenUtil.getWidth(context) /
                                                     1.5,
                                             child: AutoSizeText(
-                                              '${getTransrlate(context, 'distance')}  : ${orders[index].distance} Km',
+                                              '${getTransrlate(context, 'distance')}  : ${double.tryParse(orders[index].distance).toStringAsFixed(4)} Km',
                                               maxLines: 1,
                                             )),
                                         SizedBox(

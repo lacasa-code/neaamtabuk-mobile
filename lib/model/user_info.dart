@@ -29,6 +29,7 @@ class User {
   String phoneNo;
   String region;
   int city;
+  String cityName;
   String longitude;
   String latitude;
   String status;
