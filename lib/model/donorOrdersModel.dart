@@ -52,7 +52,7 @@ class DonorOrder {
     donationUsername = json['donationUsername'];
     donationMobile = json['donationMobile'];
     distance = json['distance'];
-    donorId = json['donor_id'];
+    donorId = json['donate_id'];
     description = json['description'];
     delivary_date = json['delivary_date'];
     number_of_meals = json['number_of_meals'];
@@ -65,7 +65,10 @@ class DonorOrder {
     status = json['status'];
     close = json['close'];
     category_id = json['category_id'];
+    order_id = json['order_id'];
+    status_id = json['status_id'];
   }
+  String status_id;
   String distance;
   String donation_number;
   String donationUsername;
@@ -80,6 +83,7 @@ class DonorOrder {
   String readyToDistribute;
   String readyToPack;
   String status;
+  String order_id;
   dynamic close;
 
   Map<String, dynamic> toJson() {

@@ -26,6 +26,7 @@ class User {
   String name;
   String email;
   String address;
+  String family_member;
   String phoneNo;
   String region;
   int city;
@@ -41,12 +42,14 @@ class User {
       {this.name,
         this.email,
         this.address,
+        this.family_member,
         this.phoneNo,
         this.region,
         this.gender});
 
   User.fromJson(Map<String, dynamic> json) {
     name = json['username'];
+    family_member = json['family_member'];
     email = json['email'];
     address = json['address'];
     city =int.tryParse("${json['city']??0}");

@@ -199,6 +199,8 @@ class _OrdersState extends State<Orders> {
                                             ? Column(
                                                 children: [
                                                   Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+
                                                     children: [
                                                       AutoSizeText(
                                                         '${getTransrlate(context, 'NoOfmeals')}  : ',
@@ -219,19 +221,18 @@ class _OrdersState extends State<Orders> {
                                                       ),
                                                     ],
                                                   ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
                                                   Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: AutoSizeText(
-                                                          '${getTransrlate(context, 'status_distribute')}  : ',
-                                                          maxLines: 1,
-                                                          style: TextStyle(
-                                                              color: themeColor
-                                                                  .getColor()),
-                                                        ),
+                                                      AutoSizeText(
+                                                        '${getTransrlate(context, 'status_distribute')}  : ',
+                                                        maxLines: 1,
+                                                        style: TextStyle(
+                                                            color: themeColor
+                                                                .getColor()),
                                                       ),
                                                       Container(
                                                           decoration: BoxDecoration(
@@ -259,18 +260,15 @@ class _OrdersState extends State<Orders> {
                                                     height: 10,
                                                   ),
                                                   Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+
                                                     children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: AutoSizeText(
-                                                          '${getTransrlate(context, 'status_pack')} :',
-                                                          maxLines: 1,
-                                                          style: TextStyle(
-                                                              color: themeColor
-                                                                  .getColor()),
-                                                        ),
+                                                      AutoSizeText(
+                                                        '${getTransrlate(context, 'status_pack')} :',
+                                                        maxLines: 1,
+                                                        style: TextStyle(
+                                                            color: themeColor
+                                                                .getColor()),
                                                       ),
                                                       Container(
                                                           decoration: BoxDecoration(

@@ -237,6 +237,7 @@
   "codeDone": "لقد تفعيل الكود",
   "NotConnection": "لا يوجد اتصال بالانترنت",
   "doneDelete": "تم إزالة المنتج",
+  "Delete": " إزالة ",
   "Alert": "تنبية",
   "AskDelete": "هل تريد حذف المنتج من العربة",
   "yes": "نعم",
@@ -274,7 +275,8 @@
   "MethodShipping": "طرق الشحن",
 
   "OrderTrack": "تتبع الشحنة",
-  "Orderdelivery": "أستلام الشحنة",
+  "Orderreceved": "أستلام الشحنة",
+  "Orderdelivery": "توصيل الشحنة",
 
   "banklist": "قائمة البنوك",
   "carmade": "بلد المنشا",

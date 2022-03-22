@@ -15,6 +15,7 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/MapOverlay.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
+import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoder/geocoder.dart';
@@ -58,6 +59,13 @@ class _UserInfoState extends State<UserInfo> {
 
   @override
   void initState() {
+    SharedPreferences.getInstance().then((pref) => {
+      setState(() {
+        role_id = pref.getString('role_id');
+        print(role_id);
+      }),
+      addressController.text = pref.getString('address') ?? ''
+    });
     API(context).get('areas').then((value) {
       if (value != null) {
         setState(() {
@@ -422,6 +430,35 @@ class _UserInfoState extends State<UserInfo> {
                                             userModal.gender = data.id,
                                       ),
                                     ),
+                                    role_id=="3"?Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25.0,
+                                          right: 25.0,
+                                          top: 10.0,
+                                          bottom: 10),
+                                      child: MyTextFormField(
+                                        intialLabel: userModal.family_member,
+                                        labelText:
+                                        getTransrlate(context, 'family_members'),
+                                        hintText:
+                                        getTransrlate(context, 'family_members'),
+                                        enabled: true,
+                                        validator: (String value) {
+                                          if (value.isEmpty) {
+                                            return getTransrlate(
+                                                context, 'requiredempty');
+                                          }
+                                          _formKey.currentState.save();
+                                          return null;
+                                        },
+                                        keyboard_type: TextInputType.number,
+                                        onSaved: (String value) {
+                                          userModal.family_member=value;
+                                        },
+                                      ),
+                                    ):Container(),
+
+
                                     _status
                                         ? _getEditIcon()
                                         : _getActionButtons(),
@@ -486,6 +523,7 @@ class _UserInfoState extends State<UserInfo> {
                         "region": userModal.region,
                         "longitude": userModal.longitude,
                         "latitude": userModal.latitude,
+                        "family_member": userModal.family_member,
                         "role_id": role_id,
 
                       }).then((value) {

@@ -344,7 +344,7 @@ class _DelegateState extends State<Delegate> {
                                             Nav.route(context, MapPage(orders[index].status_id,orders[index].id,orders[index].donationLatitude,orders[index].donationLongitude));
                                           },
                                           child: AutoSizeText(
-                                            '${getTransrlate(context, 'Orderdelivery')} ',
+                                            '${   orders[index].status_id!="1"?getTransrlate(context, 'Orderreceved'):getTransrlate(context, 'Orderdelivery')} ',
                                             maxLines: 1,
                                             style: TextStyle(
                                                 color:
