@@ -30,6 +30,7 @@ class User {
   String region;
   int city;
   String cityName;
+  int district;
   String longitude;
   String latitude;
   String status;
@@ -52,6 +53,7 @@ class User {
     phoneNo = json['mobile'];
     region = json['region'];
     gender = json['gender'];
+    district =int.tryParse("${json['district']??0}");
     latitude = json['latitude'];
     longitude = json['longitude'];
   }

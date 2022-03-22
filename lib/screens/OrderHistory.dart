@@ -86,8 +86,6 @@ class _OrdersState extends State<Orders> {
                                       (BuildContext context, int index) {
 
                                     return
-                                      orders[index].delivary_date!=null?
-                                      DateTime.tryParse(orders[index].delivary_date).isBefore(DateTime.now())?
                                       Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -120,7 +118,7 @@ class _OrdersState extends State<Orders> {
                                                 ScreenUtil.getWidth(context) /
                                                     1.5,
                                             child: AutoSizeText(
-                                              '${getTransrlate(context, 'Username')} : ${orders[index].username}',
+                                              '${getTransrlate(context, 'Donation_name')} : ${orders[index].username}',
                                               style: TextStyle(
                                                   color: themeColor.getColor()),
                                               maxLines: 1,
@@ -299,16 +297,19 @@ class _OrdersState extends State<Orders> {
                                                 ],
                                               )
                                             : Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   AutoSizeText(
                                                     '${getTransrlate(context, 'desc')}  : ',
                                                     maxLines: 1,
                                                   ),
-                                                  Center(
+                                                  Container(
+                                                    width: ScreenUtil.getWidth(context)/1.5,
+
                                                     child: AutoSizeText(
                                                       '${orders[index].description ?? "لا يوجد  "}',
                                                       textAlign:
-                                                          TextAlign.center,
+                                                          TextAlign.start,
                                                       maxLines: 2,
                                                       maxFontSize: 13,
                                                       minFontSize: 10,
@@ -322,7 +323,8 @@ class _OrdersState extends State<Orders> {
                                         SizedBox(
                                           height: 15,
                                         ),
-                                        DateTime.tryParse(orders[index].delivary_date).isAfter(DateTime.now())?Container():InkWell(
+                                        orders[index].delivary_date!=null?  ! DateTime.tryParse(orders[index].delivary_date).isBefore(DateTime.now())?Container():
+                                        InkWell(
                                           onTap: () {
                                             Nav.route(
                                                 context,
@@ -341,7 +343,7 @@ class _OrdersState extends State<Orders> {
                                                 decoration:
                                                     TextDecoration.underline),
                                           ),
-                                        ),
+                                        ):Container(),
                                         SizedBox(
                                           height: 15,
                                         ),
@@ -350,7 +352,7 @@ class _OrdersState extends State<Orders> {
                                           color: Colors.black12,
                                         ),
                                       ],
-                                    ):Container():Container();
+                                    );
                                   },
                                 ),
                         ],

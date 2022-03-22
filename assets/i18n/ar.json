@@ -274,7 +274,7 @@
   "MethodShipping": "طرق الشحن",
 
   "OrderTrack": "تتبع الشحنة",
-  "Orderdelivery": "توصيل الشحنة",
+  "Orderdelivery": "أستلام الشحنة",
 
   "banklist": "قائمة البنوك",
   "carmade": "بلد المنشا",
@@ -386,6 +386,7 @@
   "Firstname": "الاسم الاول",
   "Lastname": "اسم العائله",
   "Username": "اسم المستخدم",
+  "Donation_name": "اسم المتبرع",
   "UsernameError": "اسم المستخدم فصير جداً",
   "cod": "الدفع عند الاستلامً",
   "showAll": "عرض الكل",

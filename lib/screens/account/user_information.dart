@@ -43,6 +43,7 @@ class _UserInfoState extends State<UserInfo> {
   List<Area> area;
   List<Area> items;
   List<City> city;
+  List<City> districts;
   final _formKey = GlobalKey<FormState>();
   TextEditingController addressController = TextEditingController();
   submitForm() async {
@@ -214,6 +215,10 @@ class _UserInfoState extends State<UserInfo> {
                                         selectedItem:area.firstWhere((element) => element.id==userModal.region,orElse: ()=>Area(nameAr:userModal.region)) ,
                                         onChanged: (Area data) {
                                           userModal.region = data.id;
+                                          setState(() {
+                                            districts=null;
+                                            city==null;
+                                          });
                                           API(context).get('cities/${data.id}').then((value) {
                                             if (value != null) {
                                               setState(() {
@@ -256,9 +261,19 @@ class _UserInfoState extends State<UserInfo> {
                                             //  onFind: (String filter) => getData(filter),
                                             onChanged: (City data) {
                                               print(data.id);
+
                                               setState(() {
                                                 userModal.city = data.id;
                                                 userModal.cityName = "${data.cityName}";
+                                                districts=null;
+
+                                              });
+                                              API(context).get('districts/${data.id}').then((value) {
+                                                if (value != null) {
+                                                  setState(() {
+                                                    districts = City_model.fromJson(value).data;
+                                                  });
+                                                }
                                               });
                                             },
                                             itemAsString: (City u) => "${u?.cityName}",
@@ -268,6 +283,50 @@ class _UserInfoState extends State<UserInfo> {
                                           ),
                                         ),
                                       ],
+                                    ),
+                                    districts==null?Container():   Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25.0, right: 25.0, top: 10.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                getTransrlate(context, 'district'),
+                                              ),
+                                            ],
+                                          ),
+
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          DropdownSearch<City>(
+                                            mode: Mode.MENU,
+                                            enabled: !_status,
+
+                                            validator: (City item) {
+                                              if (item == null) {
+                                                return "${getTransrlate(context, 'requiredempty')}";
+                                              } else return null;
+                                            },
+                                            items: districts,
+                                            //  onFind: (String filter) => getData(filter),
+                                            itemAsString: (City u) => "${u.cityName}",
+                                            selectedItem:districts.firstWhere((element) => element.id==userModal.district,orElse: ()=>City(cityName:'')) ,
+                                            onChanged: (City data) {
+                                              print(data.id);
+                                              userModal.district = data.id;
+                                            },
+                                            onSaved: (City data) {
+                                              userModal.district = data.id;
+
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Padding(
                                         padding: EdgeInsets.only(
@@ -423,6 +482,7 @@ class _UserInfoState extends State<UserInfo> {
                         "mobile": userModal.phoneNo,
                         "gender": userModal.gender,
                         "city": userModal.city,
+                        "district": userModal.district,
                         "region": userModal.region,
                         "longitude": userModal.longitude,
                         "latitude": userModal.latitude,
@@ -584,6 +644,13 @@ class _UserInfoState extends State<UserInfo> {
               if (value != null) {
                 setState(() {
                   city = City_model.fromJson(value).data;
+                });
+              }
+            });
+            API(context).get('districts/${userModal.city}').then((value) {
+              if (value != null) {
+                setState(() {
+                  districts = City_model.fromJson(value).data;
                 });
               }
             });

@@ -90,13 +90,29 @@ class _DelegateState extends State<Delegate> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                                width: ScreenUtil.getWidth(
+                                                    context) /
+                                                    2.5,
+                                                child: AutoSizeText(
+                                                  '#${orders[index].donationNumber}',
+                                                  maxLines: 1,
+                                                  style:
+                                                  TextStyle(fontSize: 13),
+                                                )),
+                                          ],
+                                        ),
 
                                         Container(
                                             width:
                                             ScreenUtil.getWidth(context) /
                                                 1.5,
                                             child: AutoSizeText(
-                                              '${getTransrlate(context, 'Username')} : ${orders[index].donationUsername}',
+                                              '${getTransrlate(context, 'Donation_name')} : ${orders[index].donationUsername}',
                                               style: TextStyle(
                                                   color: themeColor.getColor()),
                                               maxLines: 1,
@@ -274,16 +290,19 @@ class _DelegateState extends State<Delegate> {
                                           ],
                                         )
                                             : Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             AutoSizeText(
                                               '${getTransrlate(context, 'desc')}  : ',
                                               maxLines: 1,
                                             ),
-                                            Center(
+                                            Container(
+                                              width: ScreenUtil.getWidth(context)/1.5,
+
                                               child: AutoSizeText(
                                                 '${orders[index].description ?? "لا يوجد  "}',
                                                 textAlign:
-                                                TextAlign.center,
+                                                TextAlign.start,
                                                 maxLines: 2,
                                                 maxFontSize: 13,
                                                 minFontSize: 10,

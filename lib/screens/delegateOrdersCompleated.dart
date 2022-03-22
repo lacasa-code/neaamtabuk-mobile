@@ -261,16 +261,18 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
                                           ],
                                         )
                                             : Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             AutoSizeText(
                                               '${getTransrlate(context, 'desc')}  : ',
                                               maxLines: 1,
                                             ),
-                                            Center(
+                                            Container(
+                                              width: ScreenUtil.getWidth(context)/1.5,
                                               child: AutoSizeText(
                                                 '${orders[index].description ?? "لا يوجد  "}',
                                                 textAlign:
-                                                TextAlign.center,
+                                                TextAlign.start,
                                                 maxLines: 2,
                                                 maxFontSize: 13,
                                                 minFontSize: 10,

@@ -326,7 +326,53 @@ print('f');
                           ),
                         ),
                       )
-                    : Container(
+                    : widget.status_id != "1"
+                    ?  Container(
+                        margin: EdgeInsets.only(top: 12, bottom: 0),
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(9.0),
+                          ),
+                          color: theme.getColor(),
+                          onPressed: () async {
+                            API(context).post(
+                                'status/${widget.donation_id}',
+                                {
+                                  "status_id":"1"
+                                }).then((value) {
+                              print(value);
+                              if (value['status'] == true) {
+
+                                setState(() {
+                                  widget.status_id = "1";
+                                });
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message']}')).whenComplete(() {
+
+                                });
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        ResultOverlay('${value['message']}'));
+                              }
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "تم الاستلام",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ) :Container(
                         margin: EdgeInsets.only(top: 12, bottom: 0),
                         child: FlatButton(
                           shape: RoundedRectangleBorder(
@@ -343,7 +389,7 @@ print('f');
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "تم الوصول",
+                              "توزيع",
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,

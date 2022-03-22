@@ -51,6 +51,7 @@ class _RegisterFormState extends State<RegisterForm> {
   List<Area> items;
   List<Area> area;
   List<City> cities;
+  List<City> districts;
   TextEditingController addressController = TextEditingController();
 
   @override
@@ -172,10 +173,10 @@ class _RegisterFormState extends State<RegisterForm> {
                     suffixIcon: IconButton(
                       onPressed: () {
                         showDialog(
-                                context: context,
-                                builder: (_) => MapOverlay(this.model))
+                            context: context,
+                            builder: (_) => MapOverlay(this.model))
                             .whenComplete(() => addressController.text =
-                                '${model.address ?? ''}');
+                        '${model.address ?? ''}');
                       },
                       icon: Icon(Icons.location_pin),
                     ),
@@ -219,14 +220,16 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.region = data.id;
                     setState(() {
                       cities=null;
+                      districts=null;
+
                     });
-                  API(context).get('cities/${data.id}').then((value) {
-                    if (value != null) {
-                      setState(() {
-                        cities = City_model.fromJson(value).data;
-                      });
-                    }
-                  });
+                    API(context).get('cities/${data.id}').then((value) {
+                      if (value != null) {
+                        setState(() {
+                          cities = City_model.fromJson(value).data;
+                        });
+                      }
+                    });
                   },
                 ),
                 SizedBox(
@@ -235,42 +238,94 @@ class _RegisterFormState extends State<RegisterForm> {
                 cities == null
                     ? Container()
                     : Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                getTransrlate(context, 'area'),
-                              ),
-                            ],
-                          ),
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          getTransrlate(context, 'area'),
+                        ),
+                      ],
+                    ),
 
-                          SizedBox(
-                            height: 5,
-                          ),
-                          DropdownSearch<City>(
-                            mode: Mode.MENU,
-                            validator: (City item) {
-                              if (item == null) {
-                                return "${getTransrlate(context, 'requiredempty')}";
-                              } else return null;
-                            },
-                            items: cities,
+                    SizedBox(
+                      height: 5,
+                    ),
+                    DropdownSearch<City>(
+                      mode: Mode.MENU,
+                      validator: (City item) {
+                        if (item == null) {
+                          return "${getTransrlate(context, 'requiredempty')}";
+                        } else return null;
+                      },
+                      items: cities,
 
-                            //  onFind: (String filter) => getData(filter),
-                            itemAsString: (City u) => "${u.cityName}",
+                      //  onFind: (String filter) => getData(filter),
+                      itemAsString: (City u) => "${u.cityName}",
 //                                        selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
-                            onChanged: (City data) {
-                              model.city = "${data.id}";
-                            },
-                            onSaved: (City data) {
+                      onChanged: (City data) {
+                        model.city = "${data.id}";
+                        setState(() {
+                          districts=null;
+                        });
+                        API(context).get('districts/${data.id}').then((value) {
+                          if (value != null) {
+                            setState(() {
+                              districts = City_model.fromJson(value).data;
+                            });
+                          }
+                        });
+                      },
+                      onSaved: (City data) {
 
-                              },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                districts == null
+                    ? Container()
+                    : Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          getTransrlate(context, 'district'),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 5,
+                    ),
+                    DropdownSearch<City>(
+                      mode: Mode.MENU,
+                      validator: (City item) {
+                        if (item == null) {
+                          return "${getTransrlate(context, 'requiredempty')}";
+                        } else return null;
+                      },
+                      items: districts,
+                      //  onFind: (String filter) => getData(filter),
+                      itemAsString: (City u) => "${u.cityName}",
+//                          selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
+                      onChanged: (City data) {
+                        model.district = "${data.id}";
+                      },
+                      onSaved: (City data) {
+                        model.district = "${data.id}";
+
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 10,
                 ),
@@ -293,11 +348,9 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.family_members=value;
                   },
                 ):Container(),
-
                 SizedBox(
                   height: 10,
                 ),
-
                 items==null?Container():  Column(
                   children: [
                     Row(
@@ -425,10 +478,10 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
         _isLoading
             ? Container(
-                color: Colors.white,
-                height: ScreenUtil.getHeight(context) / 2,
-                width: ScreenUtil.getWidth(context),
-                child: Custom_Loading())
+            color: Colors.white,
+            height: ScreenUtil.getHeight(context) / 2,
+            width: ScreenUtil.getWidth(context),
+            child: Custom_Loading())
             : Container()
       ],
     );
@@ -444,6 +497,7 @@ class _RegisterFormState extends State<RegisterForm> {
       'mobile': model.mobile,
       'region': model.region,
       'city': model.city,
+      'district': model.district,
       'gender': model.gender,
       'role_id': widget.role_id,
       'donation_type_id': 1,
@@ -458,7 +512,7 @@ class _RegisterFormState extends State<RegisterForm> {
         var user = value['data'];
         prefs.setString("user_email", user['email']);
         prefs.setString("user_name", user['username']);
-         prefs.setString("token", value['access_token']??'');
+        prefs.setString("token", value['access_token']??'');
         prefs.setString("address", "${user['address']}");
         prefs.setString("lat", "${user['latitude']}");
         prefs.setString("lang", "${user['longitude']}");
@@ -467,8 +521,8 @@ class _RegisterFormState extends State<RegisterForm> {
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);
         showDialog(
-                context: context,
-                builder: (_) => ResultOverlay('${value['message']}'))
+            context: context,
+            builder: (_) => ResultOverlay('${value['message']}'))
             .whenComplete(() {
           Nav.routeReplacement(context, SplashScreen());
         });

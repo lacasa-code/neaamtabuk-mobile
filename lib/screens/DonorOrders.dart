@@ -108,6 +108,64 @@ class _DonorOrdersState extends State<DonorOrders> {
                                               style: TextStyle(fontSize: 13),
                                             )),
                                         SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                AutoSizeText(
+                                                  '${getTransrlate(context, 'OrderDate')}  : ',
+                                                  maxLines: 1,
+                                                ),
+                                                Center(
+                                                  child: AutoSizeText(
+                                                    '${orders[index].delivary_date??''}',
+                                                    textAlign: TextAlign.center,
+                                                    maxLines: 2,
+                                                    maxFontSize: 13,
+                                                    minFontSize: 10,
+                                                    style: TextStyle(
+                                                        color: themeColor
+                                                            .getColor()),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                AutoSizeText(
+                                                  '${getTransrlate(context, 'OrderState')}  : ',
+                                                  maxLines: 1,
+                                                ),
+                                                Center(
+                                                  child: AutoSizeText(
+                                                    '${orders[index].status}',
+                                                    textAlign: TextAlign.center,
+                                                    maxLines: 2,
+                                                    maxFontSize: 13,
+                                                    minFontSize: 10,
+                                                    style: TextStyle(
+                                                        color: themeColor
+                                                            .getColor()),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
                                           height: 5,
                                         ),
                                         orders[index].category_id != '1'
@@ -121,18 +179,21 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                             null
                                                         ? Container()
                                                         : Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
                                                               AutoSizeText(
                                                                 '${getTransrlate(context, 'desc')}  : ',
                                                                 maxLines: 1,
                                                               ),
-                                                              Center(
+                                                              Container(
+                                                                width: ScreenUtil.getWidth(context)/1.5,
+
                                                                 child:
                                                                     AutoSizeText(
                                                                   '${orders[index].description}',
                                                                   textAlign:
                                                                       TextAlign
-                                                                          .center,
+                                                                          .start,
                                                                   maxLines: 2,
                                                                   maxFontSize:
                                                                       13,
@@ -150,6 +211,39 @@ class _DonorOrdersState extends State<DonorOrders> {
                                               )
                                             : Column(
                                                 children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          AutoSizeText(
+                                                            '${getTransrlate(context, 'NoOfmeals')}  : ',
+                                                            maxLines: 1,
+                                                          ),
+                                                          Center(
+                                                            child: AutoSizeText(
+                                                              '${orders[index].number_of_meals??''}',
+                                                              textAlign:
+                                                              TextAlign
+                                                                  .center,
+                                                              maxLines: 2,
+                                                              maxFontSize: 13,
+                                                              minFontSize: 10,
+                                                              style: TextStyle(
+                                                                  color: themeColor
+                                                                      .getColor()),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+
                                                   Row(
                                                     children: [
                                                       Padding(
@@ -225,98 +319,9 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                           )),
                                                     ],
                                                   ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          AutoSizeText(
-                                                            '${getTransrlate(context, 'NoOfmeals')}  : ',
-                                                            maxLines: 1,
-                                                          ),
-                                                          Center(
-                                                            child: AutoSizeText(
-                                                              '${orders[index].number_of_meals??''}',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              maxLines: 2,
-                                                              maxFontSize: 13,
-                                                              minFontSize: 10,
-                                                              style: TextStyle(
-                                                                  color: themeColor
-                                                                      .getColor()),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
                                                 ],
                                               ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                AutoSizeText(
-                                                  '${getTransrlate(context, 'OrderDate')}  : ',
-                                                  maxLines: 1,
-                                                ),
-                                                Center(
-                                                  child: AutoSizeText(
-                                                    '${orders[index].delivary_date??''}',
-                                                    textAlign: TextAlign.center,
-                                                    maxLines: 2,
-                                                    maxFontSize: 13,
-                                                    minFontSize: 10,
-                                                    style: TextStyle(
-                                                        color: themeColor
-                                                            .getColor()),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                AutoSizeText(
-                                                  '${getTransrlate(context, 'OrderState')}  : ',
-                                                  maxLines: 1,
-                                                ),
-                                                Center(
-                                                  child: AutoSizeText(
-                                                    '${orders[index].status}',
-                                                    textAlign: TextAlign.center,
-                                                    maxLines: 2,
-                                                    maxFontSize: 13,
-                                                    minFontSize: 10,
-                                                    style: TextStyle(
-                                                        color: themeColor
-                                                            .getColor()),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+
                                         SizedBox(
                                           height: 5,
                                         ),
