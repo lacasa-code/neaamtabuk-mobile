@@ -457,8 +457,6 @@ class _UserInfoState extends State<UserInfo> {
                                         },
                                       ),
                                     ):Container(),
-
-
                                     _status
                                         ? _getEditIcon()
                                         : _getActionButtons(),
@@ -523,7 +521,7 @@ class _UserInfoState extends State<UserInfo> {
                         "region": userModal.region,
                         "longitude": userModal.longitude,
                         "latitude": userModal.latitude,
-                        "family_member": userModal.family_member,
+                        "family_members": int.tryParse(userModal.family_member??'0'),
                         "role_id": role_id,
 
                       }).then((value) {

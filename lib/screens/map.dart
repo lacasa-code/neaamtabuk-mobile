@@ -296,8 +296,7 @@ print('f');
                                     builder: (_) =>
                                         ResultOverlay('${value['message']}')).whenComplete(() {
                                   Navigator.pop(context);
-                                  Navigator.pop(context);
-                                  Nav.route(context, Delegate());
+                                  Nav.routeReplacement(context, Delegate());
                                 });
                               } else {
                                 showDialog(
@@ -347,7 +346,8 @@ print('f');
                                     context: context,
                                     builder: (_) =>
                                         ResultOverlay('${value['message']}')).whenComplete(() {
-
+                                  Navigator.pop(context);
+                                  Nav.routeReplacement(context, Delegate());
                                 });
                               } else {
                                 showDialog(

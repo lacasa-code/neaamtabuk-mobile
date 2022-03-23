@@ -49,7 +49,7 @@ class User {
 
   User.fromJson(Map<String, dynamic> json) {
     name = json['username'];
-    family_member = json['family_member'];
+    family_member = json['family_members'];
     email = json['email'];
     address = json['address'];
     city =int.tryParse("${json['city']??0}");

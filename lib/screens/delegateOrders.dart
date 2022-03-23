@@ -357,57 +357,6 @@ class _DelegateState extends State<Delegate> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        orders[index].status_id!="1"?Container():orders[index].close!=null?Container():Center(
-                                          child: Container(
-                                            height: 40,
-                                            width:
-                                            ScreenUtil.getWidth(context) /
-                                                3,
-                                            margin: EdgeInsets.only(
-                                                top: 12, bottom: 0),
-                                            child: FlatButton(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                new BorderRadius.circular(
-                                                    9.0),
-                                              ),
-                                              color: themeColor.getColor(),
-                                              onPressed: () async {
-                                                API(context).Put(
-                                                    'closeAt/${orders[index].id}',
-                                                    {}).then((value) {
-                                                  print(value);
-                                                  if (value['status'] == true) {
-                                                    getOrders();
-
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (_) =>
-                                                            ResultOverlay(
-                                                                '${value['message']}'));
-                                                  } else {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (_) =>
-                                                            ResultOverlay(
-                                                                '${value['message']}'));
-                                                  }
-                                                });
-                                              },
-                                              child: Center(
-                                                child: Text(
-                                                  "${getTransrlate(context, 'closeOrder')}",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Container(

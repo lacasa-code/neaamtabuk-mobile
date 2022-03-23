@@ -208,6 +208,54 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                 ],
                               ),
                             ),
+
+                            SizedBox(
+                              height: 10,
+                            ),
+                            location == 0
+                                ? Container()
+                                : MyTextFormField(
+                              labelText:
+                              '${getTransrlate(context, "AddressTitle")}',
+                              controller: addressController,
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return getTransrlate(
+                                      context, 'requiredempty');
+                                }
+                                if (model.latitude == null &&
+                                    model.longitude == null) {
+                                  return getTransrlate(
+                                      context, 'LocationSelected');
+                                }
+                                _formKey.currentState.save();
+                                return null;
+                              },
+                              suffixIcon: IconButton(
+                                  icon: Icon(Icons.location_pin),
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) =>
+                                            MapOverlay(this.model))
+                                        .whenComplete(() {
+                                      model.latitude =
+                                          this.model.latitude;
+                                      model.longitude =
+                                          this.model.longitude;
+                                      addressController.text =
+                                      '${this.model.address ?? ''}';
+                                    });
+                                  }),
+                              inputFormatters: [
+                                new LengthLimitingTextInputFormatter(254),
+                              ],
+                              onSaved: (String val) =>
+                              model.address = val,
+                              onChange: (String val) {
+                                model.address = val;
+                              },
+                            ),
                             SizedBox(
                               height: 10,
                             ),
@@ -253,53 +301,6 @@ class _VolunteerPageState extends State<VolunteerPage> {
                               // ),
                             ),
 
-                            SizedBox(
-                              height: 10,
-                            ),
-                            location == 0
-                                ? Container()
-                                : MyTextFormField(
-                                    labelText:
-                                        '${getTransrlate(context, "AddressTitle")}',
-                                    controller: addressController,
-                                    validator: (String value) {
-                                      if (value.isEmpty) {
-                                        return getTransrlate(
-                                            context, 'requiredempty');
-                                      }
-                                      if (model.latitude == null &&
-                                          model.longitude == null) {
-                                        return getTransrlate(
-                                            context, 'LocationSelected');
-                                      }
-                                      _formKey.currentState.save();
-                                      return null;
-                                    },
-                                    suffixIcon: IconButton(
-                                        icon: Icon(Icons.location_pin),
-                                        onPressed: () {
-                                          showDialog(
-                                                  context: context,
-                                                  builder: (_) =>
-                                                      MapOverlay(this.model))
-                                              .whenComplete(() {
-                                            model.latitude =
-                                                this.model.latitude;
-                                            model.longitude =
-                                                this.model.longitude;
-                                            addressController.text =
-                                                '${this.model.address ?? ''}';
-                                          });
-                                        }),
-                                    inputFormatters: [
-                                      new LengthLimitingTextInputFormatter(254),
-                                    ],
-                                    onSaved: (String val) =>
-                                        model.address = val,
-                                    onChange: (String val) {
-                                      model.address = val;
-                                    },
-                                  ),
                             SizedBox(
                               height: 5,
                             ),
