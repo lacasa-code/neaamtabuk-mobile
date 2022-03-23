@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/model/Categories_model.dart';
 import 'package:flutter_pos/model/donorOrdersModel.dart';
+import 'package:flutter_pos/screens/DonorOrders.dart';
 import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -114,7 +115,7 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
                         color: Colors.black12,
                       ),
                       Text(
-                        getTransrlate(context, 'placeorder'),
+                        getTransrlate(context, 'edit'),
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -505,7 +506,7 @@ keyboard_type: TextInputType.multiline,
                                   }
                                 },
                                 child: Text(
-                                  getTransrlate(context, 'placeorder'),
+                                  getTransrlate(context, 'save'),
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white,
@@ -634,11 +635,13 @@ keyboard_type: TextInputType.multiline,
     }).then((value) {
       print(value);
       if (value['status'] == true) {
-        Navigator.pop(context);
 
         showDialog(
             context: context,
-            builder: (_) => ResultOverlay('${value['message']}'));
+            builder: (_) => ResultOverlay('${value['message']}')).whenComplete(() {
+          Navigator.pop(context);
+          Nav.routeReplacement(context, DonorOrders());
+        });
       } else {
         showDialog(
             context: context,
