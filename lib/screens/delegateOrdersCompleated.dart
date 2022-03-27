@@ -94,6 +94,16 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
                                             ScreenUtil.getWidth(context) /
                                                 1.5,
                                             child: AutoSizeText(
+                                              '# ${orders[index].donationNumber}',
+                                              style: TextStyle(
+                                                  color: themeColor.getColor()),
+                                              maxLines: 1,
+                                            )),
+                                        Container(
+                                            width:
+                                            ScreenUtil.getWidth(context) /
+                                                1.5,
+                                            child: AutoSizeText(
                                               '${getTransrlate(context, 'Username')} : ${orders[index].donationUsername}',
                                               style: TextStyle(
                                                   color: themeColor.getColor()),

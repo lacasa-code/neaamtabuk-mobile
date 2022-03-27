@@ -38,7 +38,7 @@ class _OrdersState extends State<Orders> {
               InkWell(
                 onTap: () async {
                   await Nav.route(
-                      context, MapPage('30', "37", " 30.431297", "37.773972"));
+                      context, MapPage('30', "37", " 30.431297", "37.773972",'10 k '));
                 },
                 child: Icon(
                   Icons.local_shipping_outlined,
@@ -330,7 +330,9 @@ class _OrdersState extends State<Orders> {
                                                     orders[index].status_id,
                                                     orders[index].id,
                                                     orders[index].latitude,
-                                                    orders[index].longitude));
+                                                    orders[index].longitude,
+                                                    orders[index].distance,
+                                                ));
                                           },
                                           child: AutoSizeText(
                                             '${getTransrlate(context, 'OrderTrack')} ',

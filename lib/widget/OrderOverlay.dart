@@ -157,6 +157,7 @@ class OrderOverlayState extends State<OrderOverlay>
                                             ResultOverlay(
                                                 '${value['message']}')).whenComplete(() {
                                       Navigator.pop(context);
+                                      Navigator.pop(context);
                                       Nav.routeReplacement(
                                           context, Delegate());
                                     });

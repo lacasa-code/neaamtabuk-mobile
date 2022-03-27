@@ -263,10 +263,11 @@ class _RegisterFormState extends State<RegisterForm> {
                       itemAsString: (City u) => "${u.cityName}",
 //                                        selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
                       onChanged: (City data) {
-                        model.city = "${data.id}";
                         setState(() {
                           districts=null;
                         });
+                        model.city = "${data.id}";
+
                         API(context).get('districts/${data.id}').then((value) {
                           if (value != null) {
                             setState(() {
@@ -304,8 +305,8 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                     DropdownSearch<City>(
                       mode: Mode.MENU,
-                      validator: (City item) {
-                        if (item == null) {
+                      validator: (City it) {
+                        if (it == null) {
                           return "${getTransrlate(context, 'requiredempty')}";
                         } else return null;
                       },
@@ -317,7 +318,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         model.district = "${data.id}";
                       },
                       onSaved: (City data) {
-                        model.district = "${data.id}";
+                        model.district = "${data?.id}";
 
                       },
                     ),
@@ -345,7 +346,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   },
                   keyboard_type: TextInputType.number,
                   onSaved: (String value) {
-                    model.family_members=value;
+                    model.family_members=int.tryParse(value??'0');
                   },
                 ):Container(),
                 SizedBox(

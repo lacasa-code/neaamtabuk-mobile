@@ -162,35 +162,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      AutoSizeText(
-                                                        '${getTransrlate(context, 'OrderState')}  : ',
-                                                        maxLines: 1,
-                                                      ),
-                                                      Center(
-                                                        child: AutoSizeText(
-                                                          '${orders[index].status}',
-                                                          textAlign: TextAlign.center,
-                                                          maxLines: 2,
-                                                          maxFontSize: 13,
-                                                          minFontSize: 10,
-                                                          style: TextStyle(
-                                                              color: themeColor
-                                                                  .getColor()),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
+
                                               orders[index].category_id != '1'
                                                   ? Container(
                                                       child: Row(
@@ -342,6 +314,30 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                         ),
                                                       ],
                                                     ),
+
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  AutoSizeText(
+                                                    '${getTransrlate(context, 'OrderState')}  : ',
+                                                    maxLines: 1,
+                                                  ),
+                                                  Center(
+                                                    child: AutoSizeText(
+                                                      '${orders[index].status}',
+                                                      textAlign: TextAlign.center,
+                                                      maxLines: 2,
+                                                      maxFontSize: 13,
+                                                      minFontSize: 10,
+                                                      style: TextStyle(
+                                                          color: themeColor
+                                                              .getColor()),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
 
                                               SizedBox(
                                                 height: 5,

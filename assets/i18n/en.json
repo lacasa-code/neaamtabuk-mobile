@@ -214,6 +214,13 @@
   "NoOfmeals": "Number of Meals",
   "family_members": "Family Members",
   "google": "Google",
+
+  "distribution": "Distribution",
+  "received": "Received",
+  "RequestAccept": "Request Accept",
+  "GotoGoogleMap": "Goto Google Map",
+
+
   "facebook": "Facebook",
   "send": "Send",
   "Next": "NEXT",

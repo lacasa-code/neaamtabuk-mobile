@@ -276,7 +276,14 @@
 
   "OrderTrack": "تتبع الشحنة",
   "Orderreceved": "أستلام الشحنة",
+
   "Orderdelivery": "توصيل الشحنة",
+
+
+  "distribution": "توزيع",
+  "received": "تم الاستلام",
+  "RequestAccept": "قبول الطلب",
+  "GotoGoogleMap": "انتقل الى جوجل ماب",
 
   "banklist": "قائمة البنوك",
   "carmade": "بلد المنشا",
@@ -376,6 +383,8 @@
   "OrderDitails": "تفاصيل الطلب",
   "OrderDate": "تاريخ الطلب",
   "distance": "المسافة",
+
+
   "OrderShipping": "بيانات الشحن",
   "custCode": "كود العميل",
   "name": "الاسم",

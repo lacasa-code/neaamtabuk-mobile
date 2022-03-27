@@ -13,30 +13,30 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-
-
   @override
   void initState() {
-
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<Provider_control>(context);
 
     return Scaffold(
       appBar: buildAppBar(themeColor),
-      body:  SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-        child: Image.asset('assets/images/logo.png',width: ScreenUtil.getWidth(context)/2),
-              height: ScreenUtil.getHeight(context)/4,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                child: Image.asset('assets/images/logo.png',
+                    width: ScreenUtil.getWidth(context) / 2),
+                height: ScreenUtil.getHeight(context) / 4,
               ),
+            ),
             aboutItem(),
-
           ],
-
         ),
       ),
     );
@@ -44,20 +44,8 @@ class _SettingState extends State<Setting> {
 
   AppBar buildAppBar(Provider_control themeColor) {
     return AppBar(
-      brightness: Brightness.light,
-      elevation: 0,
-      centerTitle: true,
       title: Text(
-       "${getTransrlate(context, 'About')}",
-      ),
-      leading: InkWell(
-        onTap: (){
-          Navigator.pop(context);
-        },
-        child: Icon(
-          Icons.chevron_left,
-          color: themeColor.getColor(),
-        ),
+        "${getTransrlate(context, 'About')}",
       ),
     );
   }
@@ -81,7 +69,7 @@ class _SettingState extends State<Setting> {
             )
           ]),
       child: Container(
-        padding: EdgeInsets.only(left: 12, top: 6,right: 12, bottom: 6),
+        padding: EdgeInsets.only(left: 12, top: 6, right: 12, bottom: 6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -89,16 +77,18 @@ class _SettingState extends State<Setting> {
               "الفكرة",
               style: TextStyle(color: Colors.green),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Align(
               alignment: Alignment.bottomRight,
               child: RichText(
                 textDirection: TextDirection.rtl,
                 text: TextSpan(
-                  text:" بدأت بمبادرة من صاحب السمو الملكي الأمير فهد بن سلطان أمير منطقة تبوك يحفظه الله بهدف حفظ النعمة من الهدر وذلك بإنشاء جمعية خيرية لحفظ النعم بكوادر شابة متعلمة تطبق وتدير هذا العمل المبارك في منطقة تبوك بطريقة احترافية متطورة.",
+                  text:
+                      " بدأت بمبادرة من صاحب السمو الملكي الأمير فهد بن سلطان أمير منطقة تبوك يحفظه الله بهدف حفظ النعمة من الهدر وذلك بإنشاء جمعية خيرية لحفظ النعم بكوادر شابة متعلمة تطبق وتدير هذا العمل المبارك في منطقة تبوك بطريقة احترافية متطورة.",
                   style: TextStyle(
-                    color: Colors.black,
-                       fontWeight: FontWeight.w400),
+                      color: Colors.black, fontWeight: FontWeight.w400),
                 ),
               ),
             ),
@@ -106,20 +96,21 @@ class _SettingState extends State<Setting> {
               "من نحن",
               style: TextStyle(color: Colors.green),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Align(
               alignment: Alignment.bottomRight,
               child: RichText(
                 textDirection: TextDirection.rtl,
                 text: TextSpan(
-                  text: "مؤسسة خيرية غير ربحية متخصصة في الغذاء والكساء والأثاث، هدفها الأساسي هو حفظ النعم.",
+                  text:
+                      "مؤسسة خيرية غير ربحية متخصصة في الغذاء والكساء والأثاث، هدفها الأساسي هو حفظ النعم.",
                   style: TextStyle(
-                    color: Colors.black,
-                       fontWeight: FontWeight.w400),
+                      color: Colors.black, fontWeight: FontWeight.w400),
                 ),
               ),
             ),
-
           ],
         ),
       ),
@@ -133,7 +124,4 @@ class _SettingState extends State<Setting> {
       throw 'Could not launch $url';
     }
   }
-
-
-
 }

@@ -29,12 +29,14 @@ class MapPage extends StatefulWidget {
   String longitude;
   String latitude;
   String status_id;
+  String dist;
 
   MapPage(
     this.status_id,
     this.donation_id,
     this.latitude,
     this.longitude,
+    this.dist,
   );
 
   @override
@@ -163,7 +165,7 @@ print('f');
                               textStyle:
                                   const TextStyle(fontWeight: FontWeight.w600),
                             ),
-                            child: const Text('مندوب'),
+                            child: Text('${getTransrlate(context, 'representative')}'),
                           ),
                         SizedBox(
                           width: 50,
@@ -184,7 +186,7 @@ print('f');
                               textStyle:
                                   const TextStyle(fontWeight: FontWeight.w600),
                             ),
-                            child: const Text('متبرع'),
+                            child:Text('${widget.status_id=="4"?getTransrlate(context, 'Donor'):getTransrlate(context, 'Beneficiary')}'),
                           ),
                       ],
                     ),
@@ -193,7 +195,7 @@ print('f');
                         Column(
                           children: [
                             Text(
-                              'وقت',
+                              '${getTransrlate(context, 'Time')}',
                               style: const TextStyle(
                                 fontSize: 18.0,
                                 //  color: Colors.white,
@@ -217,7 +219,7 @@ print('f');
                         Column(
                           children: [
                             Text(
-                              'مسافة',
+                              '${getTransrlate(context, 'distance')}',
                               style: const TextStyle(
                                 fontSize: 18.0,
                                 //  color: Colors.white,
@@ -225,11 +227,10 @@ print('f');
                               ),
                             ),
                             Text(
-                              '${_info.totalDistance}',
+                              '${double.parse(widget.dist).toStringAsFixed(4)}',
                               style: const TextStyle(
                                 fontSize: 18.0,
                                 //  color: Colors.white,
-
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -260,7 +261,7 @@ print('f');
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "انتقل الى جوجل ماب",
+                          "${getTransrlate(context, 'GotoGoogleMap')}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
@@ -310,7 +311,7 @@ print('f');
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "قبول الطلب",
+                                "${getTransrlate(context, 'RequestAccept')}",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 16,
@@ -360,7 +361,7 @@ print('f');
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "تم الاستلام",
+                              "${getTransrlate(context, 'received')}",
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
@@ -386,7 +387,7 @@ print('f');
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "توزيع",
+                              "${getTransrlate(context, 'distribution')}",
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,

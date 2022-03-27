@@ -89,7 +89,7 @@ class DelegateOrder {
     category_id = json['category_id'];
     number_of_meals = json['number_of_meals'];
     readyToDistribute = json['readyToDistribute'];
-    readyToPack = json['readyToPack'];
+    readyToPack = json['ready_to_pack'];
   }
   String id;
   String donationNumber;
