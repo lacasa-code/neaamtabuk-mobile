@@ -13,7 +13,7 @@ class Model {
   String latitude;
   String role_id;
   String donation_type_id;
-  int family_members;
+  int family_members=0;
 
   Model(
       {this.Name,

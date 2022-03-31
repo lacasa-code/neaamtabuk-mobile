@@ -1,12 +1,7 @@
-import 'dart:async';
 import 'dart:convert';
-
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:flutter_pos/model/neerRecipentModel.dart';
 import 'package:flutter_pos/model/direction_model.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/service/api.dart';
@@ -52,7 +47,6 @@ class _MapPageState extends State<MapPage> {
   Marker _destination;
   Directions _info;
   LocationData myLocation;
-
   int id;
 
   @override
@@ -418,8 +412,7 @@ print('f');
   }
 
   DirectionsRepository() async {
-    String url =
-        'https://maps.googleapis.com/maps/api/directions/json?origin=${_origin.position.latitude},${_origin.position.longitude}&destination=${_destination.position.latitude},${_destination.position.longitude}&key=$kGoogleApiKey';
+    String url = 'https://maps.googleapis.com/maps/api/directions/json?origin=${_origin.position.latitude},${_origin.position.longitude}&destination=${_destination.position.latitude},${_destination.position.longitude}&key=$kGoogleApiKey';
     print(url);
     try {
       http.Response response = await http.get(Uri.parse(url), headers: {

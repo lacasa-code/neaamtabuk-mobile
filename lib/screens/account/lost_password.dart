@@ -8,6 +8,7 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 
 class LostPassword extends StatefulWidget {
+
   const LostPassword({Key key}) : super(key: key);
 
   @override
@@ -25,7 +26,8 @@ class _LostPasswordState extends State<LostPassword> {
       appBar: AppBar(
           title: Image.asset(
         "assets/images/logo.png",
-        width: ScreenUtil.getWidth(context) / 4,
+        width: ScreenUtil.getWidth(context) / 10,
+
       )),
       body: Form(
         key: _formKey,

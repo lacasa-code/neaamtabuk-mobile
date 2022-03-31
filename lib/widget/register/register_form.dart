@@ -503,7 +503,7 @@ class _RegisterFormState extends State<RegisterForm> {
       'role_id': widget.role_id,
       'donation_type_id': 1,
       'status': "active",
-      'family_members': model.family_members,
+      'family_members': model.family_members??0,
       'longitude': model.longitude ?? '',
       'latitude': model.latitude ?? '',
     }).then((value) {
