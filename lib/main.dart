@@ -16,18 +16,25 @@ Future<void> main() async {
   await GlobalConfiguration().loadFromAsset("configurations");
   print("base_url: ${GlobalConfiguration().getString('base_url')}");
   SharedPreferences.getInstance().then((prefs) async {
-    String local ;
+    String local;
     if (prefs.getString('local') != null) {
       local = prefs.getString('local');
     }
-    await runApp(MultiProvider(providers: [
-      ChangeNotifierProvider<Provider_control>(
-        create: (_) => Provider_control(local),
+    await runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ProviderControl>(
+            create: (_) => ProviderControl(local),
+          ),
+          ChangeNotifierProvider<Provider_Data>(
+            create: (_) => Provider_Data(),
+          ),
+        ],
+        child: Phoenix(
+          child: MyApp(),
+        ),
       ),
-      ChangeNotifierProvider<Provider_Data>(
-        create: (_) => Provider_Data(),
-      ),
-    ], child: Phoenix(child: MyApp())));
+    );
     // await SentryFlutter.init(
     //       (options) {
     //     options.dsn = 'https://536b9d1a8e014f0dbca91d2f7f5c487a@o551399.ingest.sentry.io/5825146';
@@ -67,13 +74,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     getIntial();
-    _locale=Provider.of<Provider_control>(context, listen: false).local==null?null: Locale(Provider.of<Provider_control>(context, listen: false).local, "");
+    _locale = Provider.of<ProviderControl>(context, listen: false).local ==
+            null
+        ? null
+        : Locale(
+            Provider.of<ProviderControl>(context, listen: false).local, "");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -89,32 +100,28 @@ class _MyAppState extends State<MyApp> {
       ],
       locale: _locale,
       localeResolutionCallback: (devicelocale, supportedLocales) {
-        WidgetsBinding.instance.addPostFrameCallback((_){
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           themeColor.setLocal(devicelocale.languageCode);
         });
         for (var locale in supportedLocales) {
-          if (locale.languageCode == devicelocale.languageCode ) {
-
-            return Locale(devicelocale.languageCode,'');
+          if (locale.languageCode == devicelocale.languageCode) {
+            return Locale(devicelocale.languageCode, '');
           }
         }
         return supportedLocales.first;
       },
-      supportedLocales: [
-        Locale("ar", ""),
-        Locale("en", "")
-      ],
+      supportedLocales: [Locale("ar", ""), Locale("en", "")],
       theme: ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         }),
-        primaryColor:  Color(0xff424242),
-        appBarTheme: AppBarTheme(color: Color(0xff424242),iconTheme: IconThemeData(color: Colors.white)),
+        primaryColor: Color(0xff424242),
+        appBarTheme: AppBarTheme(
+            color: Color(0xff424242),
+            iconTheme: IconThemeData(color: Colors.white)),
         fontFamily: 'Cairo',
         textTheme: TextTheme(
-          caption: TextStyle(
-              height: 1.5
-          ),
+          caption: TextStyle(height: 1.5),
         ),
         snackBarTheme: SnackBarThemeData(
           backgroundColor: themeColor.getColor(),

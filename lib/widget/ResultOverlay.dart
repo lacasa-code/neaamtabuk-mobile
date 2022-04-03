@@ -40,7 +40,7 @@ class ResultOverlayState extends State<ResultOverlay>
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(

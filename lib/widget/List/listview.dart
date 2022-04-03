@@ -15,7 +15,7 @@ class List_product extends StatefulWidget {
 class _List_productState extends State<List_product> {
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
 
     return ListView.builder(
       primary: false,

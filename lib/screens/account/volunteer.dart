@@ -30,7 +30,7 @@ class VolunteerPage extends StatefulWidget {
 
 class _VolunteerPageState extends State<VolunteerPage> {
   String email, facebook_id;
-  Provider_control themeColor;
+  ProviderControl themeColor;
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   int ready_to_pack = 1;
@@ -71,7 +71,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
 
   @override
   Widget build(BuildContext context) {
-    themeColor = Provider.of<Provider_control>(context);
+    themeColor = Provider.of<ProviderControl>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: themeColor.getColor(),
@@ -312,8 +312,8 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                     ),
                                     MyTextFormField(
                                       labelText: getTransrlate(context, 'desc'),
-                                      hintText: getTransrlate(context, 'desc'),
-                                      isEmail: true,
+                                      // hintText: getTransrlate(context, 'desc'),
+                                      // isEmail: true,
                                       enabled: true,
                                       minLines: 5,
                                       maxLines: 5,
@@ -339,8 +339,8 @@ keyboard_type: TextInputType.multiline,
                                       MyTextFormField(
                                         labelText:
                                             getTransrlate(context, 'NoOfmeals'),
-                                        hintText:
-                                            getTransrlate(context, 'NoOfmeals'),
+                                        // hintText:
+                                            // getTransrlate(context, 'NoOfmeals'),
                                         enabled: true,
                                         validator: (String value) {
                                           if (value.isEmpty) {
@@ -519,7 +519,7 @@ keyboard_type: TextInputType.multiline,
     );
   }
 
-  Widget routeLoginWidget(Provider_control themeColor, BuildContext context) {
+  Widget routeLoginWidget(ProviderControl themeColor, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 36, left: 48),
       child: Column(
@@ -608,7 +608,7 @@ keyboard_type: TextInputType.multiline,
     );
   }
 
-  register(Provider_control themeColor) async {
+  register(ProviderControl themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('donate', {
       'category_id': categories_item.id,

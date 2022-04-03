@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_pos/screens/account/register_page.dart';
@@ -17,85 +18,93 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
 
     return Scaffold(
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    'assets/images/trkar_logo_white (copy).png',
-                    fit: BoxFit.contain,
-                    //color: themeColor.getColor(),
-                  ),
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical : 30,horizontal: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,),
-                        Text(getTransrlate(context, 'login'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),),
-                        Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,)
-                      ],
-                    ),
-                  ),
-                ),
-                LoginForm(),
-                routeLoginWidget(themeColor, context),
-
-              ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                'assets/images/trkar_logo_white (copy).png',
+                fit: BoxFit.contain,
+                //color: themeColor.getColor(),
+              ),
             ),
-          ),
-        ));
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              child: Text(
+                getTransrlate(context, 'login'),
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            LoginForm(),
+            routeLoginWidget(themeColor, context),
+          ],
+        ),
+      ),
+    ));
   }
-  Widget routeLoginWidget(Provider_control themeColor, BuildContext context) {
+
+  Widget routeLoginWidget(ProviderControl themeColor, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 20, left: 20, bottom: 12),
       child: Column(
         children: <Widget>[
           Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical : 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,),
-                  Container(child: Text(getTransrlate(context, 'RegisterNew'),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),)),
-                  Container(height: 1,width: ScreenUtil.getWidth(context)/4,color: Colors.black12,)
-                ],
+              padding: const EdgeInsets.symmetric(vertical: 25),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '${getTransrlate(
+                        context,
+                        'dont_have_account',
+                      )} ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Nav.routeReplacement(context, RegisterPage());
+                        },
+                      text: '${getTransrlate(
+                        context,
+                        'create_account',
+                      )} ',
+                      style: TextStyle(
+                        color: Color(0xff78C693),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              // child: Container(
+              //     child: Text(
+              //   getTransrlate(context, 'RegisterNew'),
+              //   style: TextStyle(
+              //     color: Colors.black,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // )),
             ),
           ),
-          FlatButton(minWidth: ScreenUtil.getWidth(context),
-            shape: RoundedRectangleBorder(
-              borderRadius:  BorderRadius.circular(1.0),
-              side: BorderSide(color: Colors.black26)
-            ),
-            child: Text(
-              getTransrlate(context, 'AreadyAccount'),
-              style: TextStyle(
-                fontSize: 14,
-                color: themeColor.getColor(),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            onPressed: () {
-              Nav.routeReplacement(context, RegisterPage());
-            },
-          )
         ],
       ),
     );
   }
-
 }

@@ -27,7 +27,7 @@ String phone='0559751131',email='info@neaamtabuk.org';
   @override
   Widget build(BuildContext context) {
 
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(getTransrlate(context, 'contact'))),

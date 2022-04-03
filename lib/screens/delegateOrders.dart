@@ -38,7 +38,7 @@ class _DelegateState extends State<Delegate> {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Scaffold(
         appBar: AppBar(
           title: Row(

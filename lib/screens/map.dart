@@ -82,7 +82,7 @@ print('f');
 
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<Provider_control>(context);
+    final theme = Provider.of<ProviderControl>(context);
     return Scaffold(
       appBar: AppBar(
         //  title: Center(child: Text(getTransrlate(context, 'LocationSelected'))),

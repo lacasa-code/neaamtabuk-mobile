@@ -47,7 +47,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Drawer(
       child: Container(
         color: themeColor.getColor(),
@@ -247,7 +247,7 @@ class _HiddenMenuState extends State<HiddenMenu> {
                                     size: 25,
                                     color: Colors.white,
                                   ),
-                                  name: Provider.of<Provider_control>(context)
+                                  name: Provider.of<ProviderControl>(context)
                                               .local ==
                                           'ar'
                                       ? 'English'

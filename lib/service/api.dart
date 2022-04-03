@@ -41,7 +41,7 @@ class API {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-        'Lang': Provider.of<Provider_control>(context,listen: false).getlocal(),
+        'Lang': Provider.of<ProviderControl>(context,listen: false).getlocal(),
       });
       print(full_url);
       print(response.body);
@@ -73,7 +73,7 @@ class API {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-            'Lang': Provider.of<Provider_control>(context,listen: false).getlocal(),
+            'Lang': Provider.of<ProviderControl>(context,listen: false).getlocal(),
           },
           body: json.encode(body));
       print("body =${response.body}");
@@ -137,7 +137,7 @@ class API {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-            'Lang': Provider.of<Provider_control>(context,listen: false).getlocal(),
+            'Lang': Provider.of<ProviderControl>(context,listen: false).getlocal(),
           },
           body: json.encode(body));
       return getAction(response);
@@ -161,7 +161,7 @@ class API {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-          'Lang': Provider.of<Provider_control>(context,listen: false).getlocal(),
+          'Lang': Provider.of<ProviderControl>(context,listen: false).getlocal(),
         },
       );
       return getAction(response);

@@ -23,22 +23,35 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   String email, facebook_id;
-  Provider_control themeColor;
+  ProviderControl themeColor;
 
   @override
   Widget build(BuildContext context) {
-    themeColor = Provider.of<Provider_control>(context);
+    themeColor = Provider.of<ProviderControl>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: themeColor.getColor(),
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset(
-            'assets/images/trkar_logo_white (copy).png',
-            height:50,
-            fit: BoxFit.fill,
-            //color: themeColor.getColor(),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: ImageIcon(
+                AssetImage(
+                  'assets/icons/arrowBack.png',
+                ),
+                color: Color(0xff46B16C),
+              )),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+            '${getTransrlate(context, 'want_to_buy_products')}',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         // resizeToAvoidBottomInset: false,
@@ -46,35 +59,6 @@ class _SignUpPageState extends State<SignUpPage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Center(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 1,
-                        width: ScreenUtil.getWidth(context) / 4,
-                        color: Colors.black12,
-                      ),
-                      Text(
-                        '${getTransrlate(context, 'want_to_buy_products')}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Container(
-                        height: 1,
-                        width: ScreenUtil.getWidth(context) / 4,
-                        color: Colors.black12,
-                      )
-                    ],
-                  ),
-                ),
-              ),
               RegisterForm(1),
               SizedBox(
                 height: 50,
@@ -88,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget routeLoginWidget(Provider_control themeColor, BuildContext context) {
+  Widget routeLoginWidget(ProviderControl themeColor, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 36, left: 48),
       child: Column(
@@ -173,7 +157,4 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-
-
-
 }

@@ -26,7 +26,7 @@ class AddOrderPage extends StatefulWidget {
 
 class _AddOrderPageState extends State<AddOrderPage> {
   String email, facebook_id;
-  Provider_control themeColor;
+  ProviderControl themeColor;
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   int ready_to_pack = 0;
@@ -48,7 +48,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    themeColor = Provider.of<Provider_control>(context);
+    themeColor = Provider.of<ProviderControl>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: themeColor.getColor(),
@@ -271,7 +271,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
     );
   }
 
-  Widget routeLoginWidget(Provider_control themeColor, BuildContext context) {
+  Widget routeLoginWidget(ProviderControl themeColor, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 36, left: 48),
       child: Column(
@@ -360,7 +360,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
     );
   }
 
-  register(Provider_control themeColor) async {
+  register(ProviderControl themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('order',
         {

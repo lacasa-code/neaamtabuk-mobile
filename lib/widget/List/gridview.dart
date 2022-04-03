@@ -17,7 +17,7 @@ class grid_product extends StatefulWidget {
 class _grid_productState extends State<grid_product> {
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
 
     return ResponsiveGridList(
         desiredItemWidth: 150,

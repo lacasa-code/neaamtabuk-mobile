@@ -34,7 +34,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
 
     return Container(
       padding: EdgeInsets.only(right: 20, left: 20),
@@ -49,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
                     intialLabel: '',
                     keyboard_type: TextInputType.emailAddress,
                     labelText: getTransrlate(context, 'mail'),
-                    hintText: getTransrlate(context, 'mail'),
+                    // hintText: getTransrlate(context, 'mail'),
                     isPhone: true,
                     validator: (String value) {
                       if (value.isEmpty) {
@@ -68,8 +68,8 @@ class _LoginFormState extends State<LoginForm> {
                   MyTextFormField(
                     intialLabel: '',
                     labelText: getTransrlate(context, 'password'),
-                    keyboard_type:TextInputType.multiline ,
-                    hintText: getTransrlate(context, 'password'),
+                    keyboard_type: TextInputType.multiline,
+                    // hintText: getTransrlate(context, 'password'),
                     suffixIcon: IconButton(
                       icon: Icon(
                         // Based on passwordVisible state choose the icon
@@ -113,12 +113,24 @@ class _LoginFormState extends State<LoginForm> {
                   Container(
                     height: 42,
                     width: ScreenUtil.getWidth(context),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xff2CA649),
+                          Color(0xff2CA649),
+                          Color(0xff4BB146),
+                          Color(0xff4BB146),
+                          Color(0xff66BA44),
+                          Color(0xff77C042),
+                        ],
+                      ),
+                    ),
                     margin: EdgeInsets.only(top: 25, bottom: 12),
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(1.0),
                       ),
-                      color: themeColor.getColor(),
+                      // color: themeColor.getColor(),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
@@ -135,13 +147,18 @@ class _LoginFormState extends State<LoginForm> {
                               if (value['status'] == true) {
                                 print("${value['access_token']}");
                                 var user = value['data'];
-                                prefs.setString("token", "${value['access_token']}");
-                                prefs.setString("role_id", "${user['role_id']}");
-                                prefs.setString("user_email", "${user['email']}");
-                                prefs.setString("address", "${user['address']}");
+                                prefs.setString(
+                                    "token", "${value['access_token']}");
+                                prefs.setString(
+                                    "role_id", "${user['role_id']}");
+                                prefs.setString(
+                                    "user_email", "${user['email']}");
+                                prefs.setString(
+                                    "address", "${user['address']}");
                                 prefs.setString("lat", "${user['latitude']}");
                                 prefs.setString("lang", "${user['longitude']}");
-                                prefs.setString("user_name", "${user['username']}");
+                                prefs.setString(
+                                    "user_name", "${user['username']}");
                                 prefs.setInt("user_id", user['id']);
                                 themeColor.setLogin(true);
                                 Phoenix.rebirth(context);

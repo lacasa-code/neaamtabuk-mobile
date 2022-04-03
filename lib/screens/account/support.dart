@@ -14,7 +14,7 @@ class Support_Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -81,7 +81,7 @@ class Support_Screen extends StatelessWidget {
                           children: <Widget>[
                             MyTextFormField(
                               labelText: getTransrlate(context, 'name'),
-                              hintText: getTransrlate(context, 'name'),
+                              // hintText: getTransrlate(context, 'name'),
                               validator: (String value) {
                                 if (value.isEmpty) {
                                   return getTransrlate(context, 'requiredempty');
@@ -94,7 +94,7 @@ class Support_Screen extends StatelessWidget {
                             ),
                             MyTextFormField(
                               labelText: getTransrlate(context, 'Email'),
-                              hintText: getTransrlate(context, 'Email'),
+                              // hintText: getTransrlate(context, 'Email'),
                               isEmail: true,
                               validator: (String value) {
                                 if (value.isEmpty) {
@@ -113,7 +113,7 @@ class Support_Screen extends StatelessWidget {
                             ),
                             MyTextFormField(
                               labelText: getTransrlate(context, 'phone'),
-                              hintText: getTransrlate(context, 'phone'),
+                              // hintText: getTransrlate(context, 'phone'),
                               isEmail: true,
                               validator: (String value) {
                                 if (value.isEmpty) {
@@ -128,7 +128,7 @@ class Support_Screen extends StatelessWidget {
                             ),
                             MyTextFormField(
                               labelText: getTransrlate(context, 'massage'),
-                              hintText: getTransrlate(context, 'massage'),
+                              // hintText: getTransrlate(context, 'massage'),
                               isEmail: true,
                               validator: (String value) {
                                 if (value.isEmpty) {

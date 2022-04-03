@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final provider_Data = Provider.of<Provider_Data>(context);
-    final theme = Provider.of<Provider_control>(context);
+    final theme = Provider.of<ProviderControl>(context);
     return Scaffold(
       key: _scaffoldKey,
      drawer: HiddenMenu(),

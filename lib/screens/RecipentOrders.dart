@@ -29,7 +29,7 @@ class _RecipentOrdersState extends State<RecipentOrders> {
   }
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Scaffold(
         appBar: AppBar(
           title: Row(

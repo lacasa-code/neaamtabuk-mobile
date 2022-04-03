@@ -56,7 +56,7 @@ class _changePasswordState extends State<changePassword> {
                   intialLabel: email??' ',
                   keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'Email'),
-                  hintText: getTransrlate(context, 'Email'),
+                  // hintText: getTransrlate(context, 'Email'),
                   isPhone: true,
                   enabled: true,
                   validator: (String value) {
@@ -78,7 +78,7 @@ class _changePasswordState extends State<changePassword> {
                   intialLabel: '',
                   keyboard_type: TextInputType.visiblePassword,
                   labelText: getTransrlate(context, 'password'),
-                  hintText: getTransrlate(context, 'password'),
+                  // hintText: getTransrlate(context, 'password'),
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
@@ -109,7 +109,7 @@ class _changePasswordState extends State<changePassword> {
                   intialLabel: '',
                   keyboard_type: TextInputType.visiblePassword,
                   labelText: getTransrlate(context, 'NewPassword'),
-                  hintText: getTransrlate(context, 'NewPassword'),
+                  // hintText: getTransrlate(context, 'NewPassword'),
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
@@ -145,7 +145,7 @@ class _changePasswordState extends State<changePassword> {
                   intialLabel: '',
                   keyboard_type: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'ConfirmPassword'),
-                  hintText: getTransrlate(context, 'ConfirmPassword'),
+                  // hintText: getTransrlate(context, 'ConfirmPassword'),
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon

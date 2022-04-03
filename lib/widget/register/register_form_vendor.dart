@@ -41,7 +41,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Stack(
       children: <Widget>[
         Container(
@@ -52,7 +52,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
               children: <Widget>[
                 MyTextFormField(
                   labelText: getTransrlate(context, 'name'),
-                  hintText: getTransrlate(context, 'name'),
+                  // hintText: getTransrlate(context, 'name'),
                   validator: (String value) {
                     if (value.isEmpty) {
                       return "${getTransrlate(context, 'requiredempty')}";
@@ -67,7 +67,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                 ),
                 MyTextFormField(
                   labelText: getTransrlate(context, 'Email'),
-                  hintText: getTransrlate(context, 'Email'),
+                  // hintText: getTransrlate(context, 'Email'),
                   isEmail: true,
                   validator: (String value) {
                     if (value.isEmpty) {
@@ -103,7 +103,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
 
                 MyTextFormField(
                   labelText: getTransrlate(context, 'password'),
-                  hintText: getTransrlate(context, 'password'),
+                  // hintText: getTransrlate(context, 'password'),
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
@@ -139,7 +139,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                 ),
                 MyTextFormField(
                   labelText: getTransrlate(context, 'ConfirmPassword'),
-                  hintText: getTransrlate(context, 'ConfirmPassword'),
+                  // hintText: getTransrlate(context, 'ConfirmPassword'),
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
@@ -215,7 +215,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
       ],
     );
   }
-  register(Provider_control themeColor) async {
+  register(ProviderControl themeColor) async {
     model.gender = checkboxValueA.toString();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('vendor/register', {

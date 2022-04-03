@@ -38,7 +38,7 @@ class AlertsState extends State<Alerts>
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Align(
       alignment: Alignment.center,
       child: Material(

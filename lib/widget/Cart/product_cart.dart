@@ -19,7 +19,7 @@ class ProductCart extends StatefulWidget {
     this.carts,
   }) : super(key: key);
 
-  final Provider_control themeColor;
+  final ProviderControl themeColor;
   final OrderDetails carts;
 
   @override
@@ -49,7 +49,7 @@ class _ProductCartState extends State<ProductCart> {
   @override
   Widget build(BuildContext context) {
     final ServiceData = Provider.of<Provider_Data>(context);
-    final Servicetheme = Provider.of<Provider_control>(context);
+    final Servicetheme = Provider.of<ProviderControl>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -251,8 +251,8 @@ class _ProductCartState extends State<ProductCart> {
                                                   TextInputType.number,
                                               labelText: getTransrlate(
                                                   context, 'quantity'),
-                                              hintText: getTransrlate(
-                                                  context, 'quantity'),
+                                              // hintText: getTransrlate(
+                                              //     context, 'quantity'),
                                               isPhone: true,
                                               validator: (String value) {
                                                 if (value.isEmpty) {

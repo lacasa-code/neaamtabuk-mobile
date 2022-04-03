@@ -20,7 +20,7 @@ class _SettingState extends State<Setting> {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
 
     return Scaffold(
       appBar: buildAppBar(themeColor),
@@ -42,7 +42,7 @@ class _SettingState extends State<Setting> {
     );
   }
 
-  AppBar buildAppBar(Provider_control themeColor) {
+  AppBar buildAppBar(ProviderControl themeColor) {
     return AppBar(
       title: Text(
         "${getTransrlate(context, 'About')}",

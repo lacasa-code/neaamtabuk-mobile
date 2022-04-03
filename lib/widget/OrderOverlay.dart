@@ -54,7 +54,7 @@ class OrderOverlayState extends State<OrderOverlay>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<Provider_control>(context);
+    final theme = Provider.of<ProviderControl>(context);
     return Align(
       alignment: Alignment.bottomCenter,
       child: Material(

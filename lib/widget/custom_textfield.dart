@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 
 class MyTextFormField extends StatelessWidget {
+  /// localization hint text ...
   final String hintText;
+
   final String labelText;
   final String errorText;
   final Function validator;
@@ -24,7 +27,7 @@ class MyTextFormField extends StatelessWidget {
   final TextInputType keyboard_type;
   final String intialLabel;
   final GestureTapCallback press;
-  final FocusNode focus ;
+  final FocusNode focus;
   final TextEditingController controller;
   final TextAlign textAlign;
 
@@ -40,15 +43,17 @@ class MyTextFormField extends StatelessWidget {
       this.isPassword = false,
       this.isEmail = false,
       this.isPhone = false,
-        this.istitle=false,
+      this.istitle = false,
       this.labelText,
       this.suffixIcon,
       this.textDirection,
       this.prefix,
       this.keyboard_type,
       this.intialLabel,
-        this.inputFormatters,
-        this.onChange,this.focus,this.controller,
+      this.inputFormatters,
+      this.onChange,
+      this.focus,
+      this.controller,
       this.press});
 
   @override
@@ -58,18 +63,33 @@ class MyTextFormField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          istitle?Container(): Text(labelText??'',style: TextStyle(color: Colors.black,fontSize: 16),),
-          errorText==null?Container(): Text(errorText??'',style: TextStyle(color: Colors.red,fontSize: 14),),
-          istitle?Container():SizedBox(height: 4,),
+          istitle
+              ? Container()
+              : Text(
+                  labelText ?? '',
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+          errorText == null
+              ? Container()
+              : Text(
+                  errorText ?? '',
+                  style: TextStyle(color: Colors.red, fontSize: 14),
+                ),
+          istitle
+              ? Container()
+              : SizedBox(
+                  height: 4,
+                ),
           TextFormField(
-            textAlign:textAlign??TextAlign.start ,
+            textAlign: textAlign ?? TextAlign.start,
             controller: controller,
             focusNode: focus,
             minLines: minLines,
-            maxLines: isPassword?1:maxLines,
-            inputFormatters:inputFormatters??[
-              new LengthLimitingTextInputFormatter(254),
-        ],
+            maxLines: isPassword ? 1 : maxLines,
+            inputFormatters: inputFormatters ??
+                [
+                  new LengthLimitingTextInputFormatter(254),
+                ],
             //autofocus: true,
             onTap: press,
 
@@ -77,7 +97,8 @@ class MyTextFormField extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: Colors.white,
               prefixIcon: prefix,
-            //  hintText: hintText,
+              hintText: getTransrlate(context, hintText),
+              //  hintText: hintText,
               contentPadding: EdgeInsets.all(10.0),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(1.0),
@@ -98,13 +119,13 @@ class MyTextFormField extends StatelessWidget {
             ),
             obscureText: isPassword ? true : false,
             validator: validator,
-           // autovalidate: true,
+            // autovalidate: true,
 
             textDirection: textDirection,
             onSaved: onSaved,
             enabled: enabled,
-            onChanged:onChange ,
-            keyboardType: keyboard_type??TextInputType.multiline,
+            onChanged: onChange,
+            keyboardType: keyboard_type ?? TextInputType.multiline,
           ),
         ],
       ),

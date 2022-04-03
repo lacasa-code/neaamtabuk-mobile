@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-class Provider_control with ChangeNotifier {
+class ProviderControl with ChangeNotifier {
   Color _themeData = Color(0xff078c25);
   String local;
   String car_model='' ;
@@ -11,7 +11,7 @@ class Provider_control with ChangeNotifier {
   int index =  0;
   Color color;
   bool isLogin = true;
-  Provider_control(this.local);
+  ProviderControl(this.local);
   getColor() => _themeData;
   getCar_made() => car_model;
   getcar_type() => car_type;

@@ -12,20 +12,19 @@
   "products": "products",
   "filter": "Filter",
   "Donation_name": "Donation name",
-
+  "dont_have_account": "Do not have an account ?",
+  "create_account":"Create a new account",
   "district": "District",
   "HomeNo": "Home Number",
   "apartment_no": "Apartment Number",
   "FloorNo": "Floor Number",
   "telphone": " Landline phone",
   "telphone0": "Landline phone must start 0",
-
   "nearest_milestone": "Nearest Milestone",
   "Empty": "No found Orders !",
   "EmptyRate": "No Found Rate",
   "EmptyQuastion": "No Questions Found",
   "EmptyCate": "There are no categories in this section",
-
   "good_morning": "Good Morning",
   "good_night": "Good Night",
   "contact": "Contact us",
@@ -33,13 +32,11 @@
   "allproduct": "all Product",
   "category": "Categories",
   "Cart": "Cart",
-
   "add": "Add",
   "en": "English",
   "es": "Spanish",
   "fa": "Persian",
   "ar": "Arabic",
-
   "plural": {
     "demo": {
       "0": "Please start pushing the 'plus' button.",
@@ -59,20 +56,16 @@
   "anyTime": "Any Time",
   "OrderPeriod": "Automatic re-order",
   "allPeriod": "Repeat Order",
-
   "Shopping": "Shopping Now",
   "SelectDate": "Select Date",
   "SelectTime": "Select Time",
   "gender": "Gender",
-
   "day": "day",
   "weekly": "weekly",
   "15day": "two week",
   "month": "monthly",
   "birthdate": "Birthdate",
   "2month": "two month",
-
-
   "OrderNote": "Note",
   "OrderHint": "Enter the order Notes",
   "couponcode": "Enter coupon code",
@@ -80,16 +73,11 @@
   "ORDERCOMPLETE": "ORDER COMPLETE",
   "SelectPhone": "Please Select Phone",
   "OrderError": "Error in Order Check your information",
-
   "Content": "Content",
-
   "offers": "Recently Added ",
   "diconts": "Discount ",
   "moresale": "Best Seller",
   "intersted": "Recent View",
-
-
-
   "yourComment": "Your Comment",
   "avalidComment": "Please enter a valid Comment",
   "Comment": "Comment",
@@ -115,26 +103,22 @@
   "ChooseAnewVehicle": "Choose a new vehicle",
   "brand": "Brand",
   "NoSelect": "Not Selected",
-
   "Model": "Model",
   "manufacturingYear": "Manufacturing Year",
   "transmissionName": "Transmission",
   "vehicleProducts": "View vehicle products",
   "AddtoMyCars": "Add to MyCars",
   "rate": "Rate",
-
   "allrate": "all reviews",
   "writerate": "write review",
   "typeTickit": "Ticket Type",
   "selectAddressMsg": "Add your shipping address",
   "selectAddressPopupMsg": "Please select a shipping address to move to the next step.",
-
   "ProductTicket": "Product Ticket",
   "addressTickit": "Title Ticket",
   "manufacturers": "Manufacturers",
   "ReSet": "Reset",
   "priortyTickit": " Ticket priority",
-
   "Tellproduct": "Tell us what you think of the product",
   "questions": "questions",
   "writequestions": "Write questions",
@@ -158,17 +142,14 @@
   "solutionTickit": "problem has been resolved",
   "nosolutionTickit": "the problem was not solved",
   "ConnectionFailed": "Connection Failed",
-
   "from": "from",
   "to": "to",
   "loading": "Uploading , please wait",
-
   "install_vendor_app": "You can manage your account through the seller app",
   "Orinstall_app": "Or through the control panel on",
   "thisLink": "This Link",
   "incompletvendor": "Your request has been sent successfully, we will respond to you as soon as possible.",
   "rejectvendor": "Sorry, your request has been rejected",
-
   "validvendor": "Your account as a seller is currently active",
   "VendorType": "Vendor Type",
   "commercialNo": "Commercial Registration No",
@@ -178,14 +159,12 @@
   "WholesalerPermit": "Wholesaler Permit",
   "Bankaccountnumber": "Bank account number",
   "continueLater": "Save and continue later",
-
   "invalidvendor": "Your account as a seller is currently not activated, please complete and send the following data to activate your account",
   "invalidpass": "Uppercase,Lowercase,Number and Special Character",
   "invalidemail": "Please enter a valid email",
   "invalidname": "field cannot accept floating point",
   "Accept": "apply",
   "invalidnamber": "invalid Number",
-
   "requiredempty": "Required ",
   "requiredlength": "The field is too short",
   "PasswordShorter": "Password should be minimum 7 characters",
@@ -214,13 +193,10 @@
   "NoOfmeals": "Number of Meals",
   "family_members": "Family Members",
   "google": "Google",
-
   "distribution": "Distribution",
   "received": "Received",
   "RequestAccept": "Request Accept",
   "GotoGoogleMap": "Goto Google Map",
-
-
   "facebook": "Facebook",
   "send": "Send",
   "Next": "NEXT",
@@ -239,18 +215,13 @@
   "FAQ": "F A Q",
   "product": "Products",
   "cleans": "Laundry",
-
   "Currency": " SAR ",
-
   "Settings": "Settings ",
-
   "About": "About Us",
   "Conditions": "Terms and Conditions",
   "return": "Return Policy",
-
   "company": "Company",
   "problem": "Report a problem",
-
   "shippingTo": "Shipping To",
   "shipping": "Shipping",
   "payment": "Payment",
@@ -259,7 +230,6 @@
   "Shipping": "Ship",
   "backToshoppingCart": "Back To Shopping Cart",
   "backToshopping": "Back To Shopping",
-
   "CardNumber": "Card Number",
   "CardName": "Card Name",
   "month": "Month",
@@ -267,12 +237,10 @@
   "Cvv": "Cvv",
   "Recvivedorders": "Received orders",
   "MyordersDonner": "My Orders",
-
   "available": "Available",
   "share": "Share Friend",
   "AddFavorit": "Add Favorite",
   "closeOrder": "Close Order",
-
   "total_product": "Total Product",
   "fees_ship": "Fees Shiping",
   "total_order": "Total Order",
@@ -297,7 +265,6 @@
   "your_profile": "Profile Information",
   "editProfile": "Edit Profile",
   "edit": "Edit",
-
   "profile_name": "Name",
   "mail": "Email",
   "display_name": "Display Name",
@@ -313,14 +280,8 @@
   "Alert": "Alert",
   "AskDelete": "Are you delete ?",
   "banklist": "Bank List",
-
-
   "viewProfile": "view Profile",
   "vistStore": "vist Store",
-
-
-
-
   "yes": "Yes",
   "no": "No",
   "ok": "OK",
@@ -343,28 +304,23 @@
   "total_tax": "tax",
   "addressShipping": "Address Shipping",
   "addressVendor": "Address Vendor",
-
   "totalOrder": "Total Order",
   "totalShipping": "Total Shipping",
   "totalWeight": "total Weight",
-
   "carmade": "Origin Country",
   "saller": "Saller",
   "Productsaller": "Products Saller",
   "volunteer": "volunteer",
-
   "auto": "Motor",
   "brand": "Brand",
   "manufacturer": "Manufacturer",
   "compatible": "Compatible",
   "ShippingBy": "Shipping By",
   "quantity": "Quantity",
-
   "distribute": "Distribution",
   "pack": "Packing",
   "nondistribute": "non distribution",
   "nonpack": "non packing ",
-
   "totaldiscount": "Total discount",
   "total": "Total",
   "placeorder": " Order",
@@ -393,10 +349,8 @@
   "notlogin": "No have Account",
   "PleaseLogin": "Please Login Now !",
   "product": "Products",
-
   "status_distribute": "Status Distribute",
   "status_pack": "Status packing ",
-
   "allcatery": "All Category",
   "AccountType": "Account Type",
   "Donor": "Donor",
@@ -423,7 +377,6 @@
   "ordersCompleated": "Compleated Orders",
   "ready_to_distribute": "Do you are ready for distribution ?",
   "ready_to_pack": "Is the food ready for packaging ?",
-
   "CodeConfirm": "Code Confirm",
   "Confirm": "Confirm",
   "close": "Close",
@@ -444,18 +397,14 @@
   "cod": "Cash on deliveryً",
   "paypal": "PayPal",
   "SaveAddress": "Save Address",
-
   "showAll": "Show all",
   "search": "Product search..",
   "massage": "Massage",
   "Saudi": "A Saudi electronic selling platform for the sale of spare parts for trucks and cars",
-
   "Schedule_order": "Schedule Order",
   "shipingditils": "Aramix time expacted 3-5 day: ",
-
   "change": "Change",
   "Copyright": "Copyright (C) 2021 trkar",
-
   "version": "Version",
   "skip": "Skip",
   "selectCar": "Select Car",
@@ -465,18 +414,16 @@
   "webContant": "and termination or cancellation\nWithout prejudice to any of your rights or remedies or without any liability to you, we may limit, suspend or withdraw your access to or use of the Services, cancel any order of Products and/or delete Content provided by you in our sole discretion. For the avoidance of doubt, any amounts paid and received by us in connection with a canceled product order will be refunded.\nReport a violation of the terms of use:\nWe are committed to ensuring that the products and content on the Site comply with these Terms of Use. If the content provided does not comply with these Terms of Use please notify us and we will investigate the matter.\nNoon affiliates and additional services\nNoon E-Marketing Solutions One Person Company LLC and/or its affiliates (\"Noon Affiliates\") will provide site features and other products and services to you when you use or subscribe as a buyer and/or seller on the Site. “Affiliate” means, in relation to a particular person, any company that directly or indirectly controls, is controlled by, or is under common control with that person.\nTo enhance your experience through the Site and with Noon affiliates, you hereby agree that we may create additional services, functions and/or accounts on your behalf, using the information you provide to us on the Site.\nGeneral Provisions\nApplicable Law: These Terms of Use and any related non-contractual rights or duties shall be governed by and construed in accordance with the laws applicable in the Kingdom of Saudi Arabia.\nDispute Resolution: If you have any issues with our services please contact us. We will work hard to solve your problem as soon as possible. Any disputes or controversies relating to these Terms of Use, including any related non-contractual rights or duties, shall be settled by the courts of the Kingdom of Saudi Arabia.\nThird Party Rights: A person who is not part of these Terms of Use has no right to enforce any of their Terms.\nRelationship of the parties: Nothing in these terms of use can be interpreted or interpreted by the parties or by others to explain the relationship between us as between partners or agents or to create a joint project between the parties, but it is understood and clear that all parties to the agreement are independent parties.\nAdditional Assurances: The Parties shall act or arrange to act, release documents and other matters within their power to enforce and verify these Terms of Use, including but not limited to assisting each Party to comply with applicable law.\nWaiver: These Terms of Use are bound to ensure the benefit of the parties and their respective and authorized successors. You agree that you will not assign or transfer the Terms of Use or any of your rights or duties in connection with these Terms of Use, whether directly or indirectly, without our prior written consent.\nENTIRE AGREEMENT: These Terms of Use and the documents referred to or included in the Terms of Use represent the entire agreement between the parties with respect to the subject matter of the Agreement and supersede and override all prior agreements, negotiations and representations, written or oral, relating to the subject matter. Except as specified in the Terms of Use and the documents referred to or included in these Terms of Use, there are no conditions, representations, warranties, undertakings or agreements between the parties, whether direct, indirect, collective, express or implied.\nModifications: No modification to, or additions to, these Terms of Use may be made. We reserve the right to make any modification, change, addition or supplement to these Terms of Use at any time or from time to time. We will post the current version of the Terms of Use on the Website and will be effective when posted on the Website or upon the date specified by us as the “Effective Date” (if any). Your continued use of the Services in the event of any changes constitutes your agreement to be bound by the revised Terms of Use.\nSeverability: If any provision of these Terms of Use is held to be void by any of the competent courts, illegal or unenforceable, this provision of these Terms of Use shall be rescinded and the remainder of the Terms and Conditions shall continue in effect as long as the legal and economic substance remains The transactions carried out under its terms shall remain in effect without any adverse effect on its parties.\nForce Majeure: Neither party shall be liable for loss, damage, delay, or non-performance as a result of the actions beyond the control of any of the parties whether that action could be foreseen (such as act of God and actions of the legislative, judicial, or regulatory authorities of either federal or local government). or judicial authorities, actions of any of our subcontractors or any third party supplier of goods or services to us, labor disruption, complete power outage, or economic boycott).\nNo Waiver: A waiver of any provision of these Terms of Use shall not be deemed a waiver of any other provision (similar or not), and no further waiver shall be deemed a continuing waiver of any of the relevant provisions, unless expressly stated in writing.\nCommunication: You can contact us via e-mail, via our social networking sites, live chat on the site, or call our call center at 800-3-8888 (in the UAE) or 800-11-60-210 (in KSA).\nContinuity of Effect: All provisions which are stated to remain in effect or which are in effect by their nature after termination of the Contract shall remain in effect after the termination or suspension of your membership in the Site.",
   "webreturn": "You can return the product if it is not in the Noon list of non-returnable products, and if you received it in the following cases:\n\nIncorrect product (if product has not been used and in its original packaging with all tags and labels included).\nDamaged/defective item (For electronics, unpacked items will be accepted if the description or pictures shown are different).\nIf you change your mind or order a product in error, we will accept your return under the following specific terms:\nThe products are in the original seller's packaging (closed and sealed box) and are not damaged or in poor condition. Packaging must be sealed and intact.\nIn the case of apparel and apparel orders, the original product tags and labels must be present with the original packaging.\nFor other products, returns will be accepted if the product is in its original packaging, including all accessories.",
   "Policy_return_title": "In the event that the product specifications differ from the displayed, the return will be without any burden on the buyer and the seller will be charged with shipping fees • In the event that there is no difference between the specifications of the product received and displayed, the buyer will bear the shipping value, taking into account whether the product is returnable and taking into account the laws of consumer protection",
-  "You_can_contact_us":"You can contact us",
-  "You_can_request":"You can request the return or replacement of products in the event that you receive a product that has a defect, a manufacturer defect, a breakage, that does not match the product you purchased, or a defect in the product as a result of shipping or packaging processes, or when you receive a product that does not match your request as simply and easily as possible Possible, within 5 days from the date of purchase. We provide you with a policy to return and exchange products according to the following controls",
-
+  "You_can_contact_us": "You can contact us",
+  "You_can_request": "You can request the return or replacement of products in the event that you receive a product that has a defect, a manufacturer defect, a breakage, that does not match the product you purchased, or a defect in the product as a result of shipping or packaging processes, or when you receive a product that does not match your request as simply and easily as possible Possible, within 5 days from the date of purchase. We provide you with a policy to return and exchange products according to the following controls",
   "founded_Cars": "Favorite Empty ",
   "NoSelect": "Not Selected",
   "ShippingTo": "Shipping To",
   "NoteCheckout": "Thank you for your trust in Tracar.. You will receive a message on your mobile phone and e-mail with order and delivery information",
-
-  "Terms_exchange":"Terms of return and exchange",
-  "Gaffair_Online_Shopping":"We at the Gaffair Online Shopping Store are always happy to provide the highest levels of service, and to benefit from our return and exchange policy, the following conditions are required: - Our sellers in the Gaffair store accept returns or replacement requests in the event that you receive a product that has a defect, a manufacturer defect, a fracture, or a product that does not match the product You have purchased our products, or there is a defect in the product as a result of shipping or packaging processes, or when you receive a product that does not match your order - the product must be in its original condition, unused, unopened, unlabeled for electronic products, or unworn for T-shirts and shoes.- The product must be wrapped in the original packaging and in the same condition that you received it.- The original purchase invoice must be attached when starting the procedures for replacing or returning the products.- The customer has the right to return the value of the product or replace it with another product of his choice.- Please note that this policy and conditions are not applicable. On the exhibition - when a product is requested to be returned, it is subject to an examination process by the management of the Gefer store to ensure its condition, and the refund is approved after ensuring that the condition of the product matches the return policy.",
-  "Review_exchange":"Review the exchange or return request:",
-  "event_return":"We can help you and communicate with you during official working hours from Sunday to Thursday from 9 am to 9 pm KSA time.",
+  "Terms_exchange": "Terms of return and exchange",
+  "Gaffair_Online_Shopping": "We at the Gaffair Online Shopping Store are always happy to provide the highest levels of service, and to benefit from our return and exchange policy, the following conditions are required: - Our sellers in the Gaffair store accept returns or replacement requests in the event that you receive a product that has a defect, a manufacturer defect, a fracture, or a product that does not match the product You have purchased our products, or there is a defect in the product as a result of shipping or packaging processes, or when you receive a product that does not match your order - the product must be in its original condition, unused, unopened, unlabeled for electronic products, or unworn for T-shirts and shoes.- The product must be wrapped in the original packaging and in the same condition that you received it.- The original purchase invoice must be attached when starting the procedures for replacing or returning the products.- The customer has the right to return the value of the product or replace it with another product of his choice.- Please note that this policy and conditions are not applicable. On the exhibition - when a product is requested to be returned, it is subject to an examination process by the management of the Gefer store to ensure its condition, and the refund is approved after ensuring that the condition of the product matches the return policy.",
+  "Review_exchange": "Review the exchange or return request:",
+  "event_return": "We can help you and communicate with you during official working hours from Sunday to Thursday from 9 am to 9 pm KSA time.",
   "wholesale": "Wholesale",
   "piece": "Piece",
   "minOfOrder": "Min Of Order",
@@ -484,16 +431,12 @@
   "want_to_buy_products": "I want to volunteer",
   "mixed": "It is not possible to complete the purchase with wholesale and retail products in the same order, please choose only wholesale or retail products",
   "notavailable": "Not Available",
-
   "register_as_seller": "I want to register as recipent",
-  "Opening_contact":"Opening times and contact",
-  "General_conditions":"General conditions for registrationt",
-  "Return_Policy":"Return Policy",
-  "How_use_app":"How to use the app",
-  "Regular_user":" \n Regular user \n• Register with an email and mobile number \n• Register a shipping address\nThe seller \n• Register with the name of the company or organization \n• Attach the commercial registration \n• Attach the tax number \n• Attach the value-added tax \n• Attach the national address \n• Attach the shipping addresses \n• Approval of the contract, the regular user ",
-
-  "Replies_User":"Replies User",
-  "usage_User":"We grant you a non-transferable or revocable license to use the Site under the specified terms and conditions. The purpose of this license is to shop for personal items sold on the Site. Use for commercial purposes or use on behalf of any third party is prohibited, except as clearly and transparently permitted in advance by us. Any breach of these Terms and Conditions will result in the immediate revocation of the license granted in this paragraph without any prior notice. The content provided on this website is for informational purposes only. Product explanations expressed on this site are those of the sellers themselves and are not made by us. Comments or opinions expressed on this Site are the property of each individual posted and do not reflect our opinions. Certain services and related features that may be available on the Site require registration or subscription. By choosing to register or subscribe to any of these services or related features, you agree to provide accurate and current information about yourself and to promptly update it if there are any changes. Each user of the site is solely responsible for keeping passwords, passwords, or other methods of identification safe and secure. The entire responsibility lies with the account holder for all activities that occur under his password or under his account. In addition, you must inform us of any unauthorized use of your password or account. Finally, the site is not responsible, directly or indirectly, in any way, for any loss or damage of any kind, which may result from your failure to comply with this section or in connection with it at least. You agree, during the registration process, to Receiving promotional emails from the site. You can later opt out of this option and not receive promotional emails."
-
-
+  "Opening_contact": "Opening times and contact",
+  "General_conditions": "General conditions for registrationt",
+  "Return_Policy": "Return Policy",
+  "How_use_app": "How to use the app",
+  "Regular_user": " \n Regular user \n• Register with an email and mobile number \n• Register a shipping address\nThe seller \n• Register with the name of the company or organization \n• Attach the commercial registration \n• Attach the tax number \n• Attach the value-added tax \n• Attach the national address \n• Attach the shipping addresses \n• Approval of the contract, the regular user ",
+  "Replies_User": "Replies User",
+  "usage_User": "We grant you a non-transferable or revocable license to use the Site under the specified terms and conditions. The purpose of this license is to shop for personal items sold on the Site. Use for commercial purposes or use on behalf of any third party is prohibited, except as clearly and transparently permitted in advance by us. Any breach of these Terms and Conditions will result in the immediate revocation of the license granted in this paragraph without any prior notice. The content provided on this website is for informational purposes only. Product explanations expressed on this site are those of the sellers themselves and are not made by us. Comments or opinions expressed on this Site are the property of each individual posted and do not reflect our opinions. Certain services and related features that may be available on the Site require registration or subscription. By choosing to register or subscribe to any of these services or related features, you agree to provide accurate and current information about yourself and to promptly update it if there are any changes. Each user of the site is solely responsible for keeping passwords, passwords, or other methods of identification safe and secure. The entire responsibility lies with the account holder for all activities that occur under his password or under his account. In addition, you must inform us of any unauthorized use of your password or account. Finally, the site is not responsible, directly or indirectly, in any way, for any loss or damage of any kind, which may result from your failure to comply with this section or in connection with it at least. You agree, during the registration process, to Receiving promotional emails from the site. You can later opt out of this option and not receive promotional emails."
 }

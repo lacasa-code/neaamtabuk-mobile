@@ -1,11 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/area_model.dart';
 import 'package:flutter_pos/model/city_model.dart';
-import 'package:flutter_pos/screens/account/login.dart';
-import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/screens/splash_screen.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -17,19 +14,14 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:flutter_pos/widget/register/register_form_model.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:location/location.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../main.dart';
-
 class RegisterForm extends StatefulWidget {
-  int role_id;
+  final int roleId;
 
-  RegisterForm(this.role_id);
+  RegisterForm(this.roleId);
 
   @override
   _RegisterFormState createState() => _RegisterFormState();
@@ -38,10 +30,10 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
   Model model = Model();
-  bool PhoneStatue = false;
+  bool phoneStatue = false;
   bool passwordVisible = true;
   bool _isLoading = false;
-  String CountryNo = '+996';
+  String countryNo = '+996';
   String verificationId;
   String errorMessage = '';
   String smsOTP;
@@ -75,7 +67,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Stack(
       children: <Widget>[
         Container(
@@ -85,8 +77,10 @@ class _RegisterFormState extends State<RegisterForm> {
             child: Column(
               children: <Widget>[
                 MyTextFormField(
-                  labelText: getTransrlate(context, 'name'),
-                  hintText: getTransrlate(context, 'name'),
+                  hintText: 'name',
+                  prefix: Icon(
+                    Icons.person_outline,
+                  ),
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
@@ -100,8 +94,13 @@ class _RegisterFormState extends State<RegisterForm> {
                   },
                 ),
                 MyTextFormField(
-                  labelText: getTransrlate(context, 'Email'),
-                  hintText: getTransrlate(context, 'Email'),
+                  istitle: true,
+
+                  hintText: 'Email',
+                  prefix: Icon(
+                    Icons.email_outlined,
+                  ),
+                  // hintText: getTransrlate(context, 'Email'),
                   isEmail: true,
                   validator: (String value) {
                     if (value.isEmpty) {
@@ -118,33 +117,31 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.email = value;
                   },
                 ),
-                SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      getTransrlate(context, 'phone'),
-                    ),
-                  ],
-                ),
+
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: MyTextFormField(
-                    hintText: getTransrlate(context, 'phone'),
+                    hintText: 'phone',
+                    // hintText: getTransrlate(context, 'phone'),
                     istitle: true,
-                    inputFormatters:[
+
+                    inputFormatters: [
                       new LengthLimitingTextInputFormatter(9),
                     ],
                     textDirection: TextDirection.ltr,
-                    prefix: IconButton(
-                      icon: Center(child: Text("$CountryNo")),
-                      onPressed: () {},
+                    prefix: ImageIcon(
+                      AssetImage(
+                        'assets/icons/phone.png',
+                      ),
                     ),
+                    // prefix: IconButton(
+                    //   icon: Center(child: Text("$CountryNo")),
+                    //   onPressed: () {},
+                    // ),
                     validator: (String value) {
                       if (value.isEmpty) {
                         return getTransrlate(context, 'requiredempty');
-                      }else if (value.length<9) {
+                      } else if (value.length < 9) {
                         return "${getTransrlate(context, 'shorterphone')}";
                       }
                       _formKey.currentState.save();
@@ -157,28 +154,30 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     showDialog(
-                        context: context,
-                        builder: (_) => MapOverlay(this.model))
-                        .whenComplete(() => addressController.text =
-                    '${model.address ?? ''}');
+                            context: context,
+                            builder: (_) => MapOverlay(this.model))
+                        .whenComplete(() =>
+                            addressController.text = '${model.address ?? ''}');
                   },
                   child: MyTextFormField(
                     controller: addressController,
-                    labelText: getTransrlate(context, 'AddressTitle'),
-                    hintText: getTransrlate(context, 'AddressTitle'),
-                    isEmail: true,
+                    hintText: 'AddressTitle',
+                    // hintText: getTransrlate(context, 'AddressTitle'),
+                    istitle: true,
                     enabled: true,
-                    suffixIcon: IconButton(
+                    prefix: IconButton(
                       onPressed: () {
                         showDialog(
-                            context: context,
-                            builder: (_) => MapOverlay(this.model))
+                                context: context,
+                                builder: (_) => MapOverlay(this.model))
                             .whenComplete(() => addressController.text =
-                        '${model.address ?? ''}');
+                                '${model.address ?? ''}');
                       },
-                      icon: Icon(Icons.location_pin),
+                      icon: Icon(
+                        Icons.location_on_outlined,
+                      ),
                     ),
                     validator: (String value) {
                       if (value.isEmpty) {
@@ -195,22 +194,28 @@ class _RegisterFormState extends State<RegisterForm> {
                     },
                   ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      getTransrlate(context, 'City'),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Text(
+                //       getTransrlate(context, 'City'),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: 10,
                 ),
                 DropdownSearch<Area>(
+                  hint: getTransrlate(context, 'City'),
+                  prefixIcon: Icon(Icons.location_city),
+
+                  dropDownButton: Icon(Icons.keyboard_arrow_down_outlined),
+
                   mode: Mode.MENU,
                   validator: (Area item) {
                     if (item == null) {
                       return "${getTransrlate(context, 'requiredempty')}";
-                    } else return null;
+                    } else
+                      return null;
                   },
                   items: area,
                   //  onFind: (String filter) => getData(filter),
@@ -219,9 +224,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   onChanged: (Area data) {
                     model.region = data.id;
                     setState(() {
-                      cities=null;
-                      districts=null;
-
+                      cities = null;
+                      districts = null;
                     });
                     API(context).get('cities/${data.id}').then((value) {
                       if (value != null) {
@@ -238,151 +242,143 @@ class _RegisterFormState extends State<RegisterForm> {
                 cities == null
                     ? Container()
                     : Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          getTransrlate(context, 'area'),
-                        ),
-                      ],
-                    ),
+                        children: [
+                          DropdownSearch<City>(
+                            dropDownButton:
+                                Icon(Icons.keyboard_arrow_down_outlined),
+                            mode: Mode.MENU,
+                            hint: getTransrlate(context, 'area'),
+                            prefixIcon: Icon(Icons.location_city),
 
-                    SizedBox(
-                      height: 5,
-                    ),
-                    DropdownSearch<City>(
-                      mode: Mode.MENU,
-                      validator: (City item) {
-                        if (item == null) {
-                          return "${getTransrlate(context, 'requiredempty')}";
-                        } else return null;
-                      },
-                      items: cities,
+                            validator: (City item) {
+                              if (item == null) {
+                                return "${getTransrlate(context, 'requiredempty')}";
+                              } else
+                                return null;
+                            },
+                            items: cities,
 
-                      //  onFind: (String filter) => getData(filter),
-                      itemAsString: (City u) => "${u.cityName}",
+                            //  onFind: (String filter) => getData(filter),
+                            itemAsString: (City u) => "${u.cityName}",
 //                                        selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
-                      onChanged: (City data) {
-                        setState(() {
-                          districts=null;
-                        });
-                        model.city = "${data.id}";
+                            onChanged: (City data) {
+                              setState(() {
+                                districts = null;
+                              });
+                              model.city = "${data.id}";
 
-                        API(context).get('districts/${data.id}').then((value) {
-                          if (value != null) {
-                            setState(() {
-                              districts = City_model.fromJson(value).data;
-                            });
-                          }
-                        });
-                      },
-                      onSaved: (City data) {
+                              API(context)
+                                  .get('districts/${data.id}')
+                                  .then((value) {
+                                if (value != null) {
+                                  setState(() {
+                                    districts = City_model.fromJson(value).data;
+                                  });
+                                }
+                              });
+                            },
+                            onSaved: (City data) {},
+                          ),
+                        ],
+                      ),
 
-                      },
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
                 districts == null
                     ? Container()
                     : Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          getTransrlate(context, 'district'),
-                        ),
-                      ],
-                    ),
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          DropdownSearch<City>(
+                            prefixIcon: Icon(Icons.location_city),
+                            hint: getTransrlate(context, 'district'),
 
-                    SizedBox(
-                      height: 5,
-                    ),
-                    DropdownSearch<City>(
-                      mode: Mode.MENU,
-                      validator: (City it) {
-                        if (it == null) {
-                          return "${getTransrlate(context, 'requiredempty')}";
-                        } else return null;
-                      },
-                      items: districts,
-                      //  onFind: (String filter) => getData(filter),
-                      itemAsString: (City u) => "${u.cityName}",
+                            dropDownButton:
+                                Icon(Icons.keyboard_arrow_down_outlined),
+
+                            mode: Mode.MENU,
+                            validator: (City it) {
+                              if (it == null) {
+                                return "${getTransrlate(context, 'requiredempty')}";
+                              } else
+                                return null;
+                            },
+                            items: districts,
+                            //  onFind: (String filter) => getData(filter),
+                            itemAsString: (City u) => "${u.cityName}",
 //                          selectedItem:city.firstWhere((element) => element.id==userModal.city,orElse: ()=>City(cityName:userModal.city)) ,
-                      onChanged: (City data) {
-                        model.district = "${data.id}";
-                      },
-                      onSaved: (City data) {
-                        model.district = "${data?.id}";
+                            onChanged: (City data) {
+                              model.district = "${data.id}";
+                            },
+                            onSaved: (City data) {
+                              model.district = "${data?.id}";
+                            },
+                          ),
+                        ],
+                      ),
 
-                      },
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                widget.role_id==3?MyTextFormField(
-                  labelText:
-                  getTransrlate(context, 'family_members'),
-                  hintText:
-                  getTransrlate(context, 'family_members'),
-                  enabled: true,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return getTransrlate(
-                          context, 'requiredempty');
-                    }
-                    _formKey.currentState.save();
-                    return null;
-                  },
-                  keyboard_type: TextInputType.number,
-                  onSaved: (String value) {
-                    model.family_members=int.tryParse(value??'0');
-                  },
-                ):Container(),
-                SizedBox(
-                  height: 10,
-                ),
-                items==null?Container():  Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          getTransrlate(context, 'gender'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    DropdownSearch<Area>(
-                      mode: Mode.MENU,
-                      maxHeight: 120,
-                      validator: (Area item) {
-                        if (item == null) {
-                          return "${getTransrlate(context, 'requiredempty')}";
-                        } else
+                widget.roleId == 3
+                    ? MyTextFormField(
+                        prefix: Icon(Icons.card_membership),
+                        hintText: 'family_members',
+                        // hintText: getTransrlate(context, 'family_members'),
+                        enabled: true,
+                        istitle: true,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return getTransrlate(context, 'requiredempty');
+                          }
+                          _formKey.currentState.save();
                           return null;
-                      },
-                      items: items,
-                      //  onFind: (String filter) => getData(filter),
-                      itemAsString: (Area u) => u.nameAr,
-                      onChanged: (Area data) => model.gender = data.id,
-                    ),
-                  ],
+                        },
+                        keyboard_type: TextInputType.number,
+                        onSaved: (String value) {
+                          model.family_members = int.tryParse(value ?? '0');
+                        },
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 10,
                 ),
+                items == null
+                    ? Container()
+                    : Column(
+                        children: [
+                          DropdownSearch<Area>(
+                            prefixIcon: ImageIcon(
+                              AssetImage(
+                                'assets/icons/gender.png',
+                              ),
+                            ),
+
+                            hint: getTransrlate(context, 'gender'),
+                            dropDownButton:
+                                Icon(Icons.keyboard_arrow_down_outlined),
+                            mode: Mode.MENU,
+                            maxHeight: 120,
+                            validator: (Area item) {
+                              if (item == null) {
+                                return "${getTransrlate(context, 'requiredempty')}";
+                              } else
+                                return null;
+                            },
+                            items: items,
+                            //  onFind: (String filter) => getData(filter),
+                            itemAsString: (Area u) => u.nameAr,
+                            onChanged: (Area data) => model.gender = data.id,
+                          ),
+                        ],
+                      ),
                 MyTextFormField(
-                  labelText: getTransrlate(context, 'password'),
-                  hintText: getTransrlate(context, 'password'),
+                  prefix: ImageIcon(
+                    AssetImage(
+                      'assets/icons/Vectorlock.png',
+                    ),
+                  ),
+                  hintText: 'password',
+                  istitle: true,
+
+                  // hintText: getTransrlate(context, 'password'),
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
@@ -415,12 +411,19 @@ class _RegisterFormState extends State<RegisterForm> {
                   },
                 ),
                 MyTextFormField(
-                  labelText: getTransrlate(context, 'ConfirmPassword'),
-                  hintText: getTransrlate(context, 'ConfirmPassword'),
+                  hintText: 'ConfirmPassword',
+                  istitle: true,
+
+                  prefix: ImageIcon(
+                    AssetImage(
+                      'assets/icons/Vectorlock.png',
+                    ),
+                  ),
+                  // hintText: getTransrlate(context, 'ConfirmPassword'),
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      passwordVisible ? Icons.visibility_off:Icons.visibility,
+                      passwordVisible ? Icons.visibility_off : Icons.visibility,
                       color: Colors.black26,
                     ),
                     onPressed: () {
@@ -446,16 +449,28 @@ class _RegisterFormState extends State<RegisterForm> {
                     model.password_confirmation = value;
                   },
                 ),
-
                 Container(
                   height: 40,
                   width: ScreenUtil.getWidth(context),
                   margin: EdgeInsets.only(top: 12, bottom: 0),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xff2CA649),
+                        Color(0xff2CA649),
+                        Color(0xff4BB146),
+                        Color(0xff4BB146),
+                        Color(0xff66BA44),
+                        Color(0xff77C042),
+                      ],
+                    ),
+                  ),
                   child: FlatButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(1.0),
                     ),
-                    color: themeColor.getColor(),
+
+                    // color: themeColor.getColor(),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
@@ -479,16 +494,16 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
         _isLoading
             ? Container(
-            color: Colors.white,
-            height: ScreenUtil.getHeight(context) / 2,
-            width: ScreenUtil.getWidth(context),
-            child: Custom_Loading())
+                color: Colors.white,
+                height: ScreenUtil.getHeight(context) / 2,
+                width: ScreenUtil.getWidth(context),
+                child: Custom_Loading())
             : Container()
       ],
     );
   }
 
-  register(Provider_control themeColor) async {
+  register(ProviderControl themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('register', {
       'username': model.Name,
@@ -500,10 +515,10 @@ class _RegisterFormState extends State<RegisterForm> {
       'city': model.city,
       'district': model.district,
       'gender': model.gender,
-      'role_id': widget.role_id,
+      'role_id': widget.roleId,
       'donation_type_id': 1,
       'status': "active",
-      'family_members': model.family_members??0,
+      'family_members': model.family_members ?? 0,
       'longitude': model.longitude ?? '',
       'latitude': model.latitude ?? '',
     }).then((value) {
@@ -513,7 +528,7 @@ class _RegisterFormState extends State<RegisterForm> {
         var user = value['data'];
         prefs.setString("user_email", user['email']);
         prefs.setString("user_name", user['username']);
-        prefs.setString("token", value['access_token']??'');
+        prefs.setString("token", value['access_token'] ?? '');
         prefs.setString("address", "${user['address']}");
         prefs.setString("lat", "${user['latitude']}");
         prefs.setString("lang", "${user['longitude']}");
@@ -522,8 +537,8 @@ class _RegisterFormState extends State<RegisterForm> {
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);
         showDialog(
-            context: context,
-            builder: (_) => ResultOverlay('${value['message']}'))
+                context: context,
+                builder: (_) => ResultOverlay('${value['message']}'))
             .whenComplete(() {
           Nav.routeReplacement(context, SplashScreen());
         });

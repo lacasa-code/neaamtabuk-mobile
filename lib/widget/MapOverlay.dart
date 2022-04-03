@@ -54,7 +54,7 @@ class MapOverlayState extends State<MapOverlay>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<Provider_control>(context);
+    final theme = Provider.of<ProviderControl>(context);
     return Align(
       alignment: Alignment.bottomCenter,
       child: Material(
@@ -98,7 +98,7 @@ class MapOverlayState extends State<MapOverlay>
                         child: MyTextFormField(
                           controller: addressController,
                           labelText: getTransrlate(context, 'AddressTitle'),
-                          hintText: getTransrlate(context, 'AddressTitle'),
+                          // hintText: getTransrlate(context, 'AddressTitle'),
                           isEmail: true,
                           enabled: false,
                           validator: (String value) {

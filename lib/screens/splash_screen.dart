@@ -22,7 +22,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  Provider_control themeColor;
+  ProviderControl themeColor;
   Provider_Data _provider_data;
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    themeColor = Provider.of<Provider_control>(context);
+    themeColor = Provider.of<ProviderControl>(context);
     _provider_data = Provider.of<Provider_Data>(context);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
@@ -46,23 +46,30 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          image: DecorationImage(
-            image: new ExactAssetImage('assets/images/splashscreen.png'),
-            fit: BoxFit.cover,
-          ),
-          color: Color(0xff27332F),
+          // image: DecorationImage(
+          //   image: new ExactAssetImage('assets/images/splashscreen.png'),
+          //   fit: BoxFit.cover,
+          // ),
+          color: Colors.white,
         ),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.only(top: 100, bottom: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: ScreenUtil.getHeight(context) / 2,
-                  width: ScreenUtil.getWidth(context) / 1.5,
+                  // height: ScreenUtil.getHeight(context) / 2,
+                  // width: ScreenUtil.getWidth(context) / 1.5,
                   child: Image.asset(
-                    'assets/images/logo.png',
+                    'assets/images/logoIcon.png',
+                  ),
+                ),
+                Container(
+                  // height: ScreenUtil.getHeight(context) / 2,
+                  // width: ScreenUtil.getWidth(context) / 1.5,
+                  child: Image.asset(
+                    'assets/images/logoText.png',
                   ),
                 ),
               ],
@@ -75,9 +82,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _auth() async {
     //themeColor.setCar_made(getTransrlate(context, 'selectCar'));
-    final SharedPreferences prefs =
-    await SharedPreferences.getInstance();
-    API(context,Check: false).get('isValidToken').then((value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    API(context, Check: false).get('isValidToken').then((value) async {
       if (value != null) {
         if (value['status'] == true) {
           themeColor.setLogin(true);
@@ -87,7 +93,6 @@ class _SplashScreenState extends State<SplashScreen>
           // prefs.setInt("user_id", user['id']);
           themeColor.setLogin(true);
           Nav.routeReplacement(context, Home());
-
         } else {
           themeColor.setLogin(false);
           SharedPreferences.getInstance().then((prefs) {

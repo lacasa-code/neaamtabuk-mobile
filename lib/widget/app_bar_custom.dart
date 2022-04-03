@@ -14,7 +14,7 @@ class AppBarCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Container(
       height: ScreenUtil.getHeight(context) / 7,
       color: Colors.white,

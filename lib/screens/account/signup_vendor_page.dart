@@ -21,22 +21,35 @@ class SignUpVendorPage extends StatefulWidget {
 
 class _SignUpVendorPageState extends State<SignUpVendorPage> {
   String email, facebook_id;
-  Provider_control themeColor;
+  ProviderControl themeColor;
 
   @override
   Widget build(BuildContext context) {
-    themeColor = Provider.of<Provider_control>(context);
+    themeColor = Provider.of<ProviderControl>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: themeColor.getColor(),
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset(
-            'assets/images/trkar_logo_white (copy).png',
-            fit: BoxFit.fill,
-            height: 50,
-            //color: themeColor.getColor(),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: ImageIcon(
+                AssetImage(
+                  'assets/icons/arrowBack.png',
+                ),
+                color: Color(0xff46B16C),
+              )),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+            '${getTransrlate(context, 'register_as_delegate')}',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         // resizeToAvoidBottomInset: false,
@@ -44,35 +57,6 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Center(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 1,
-                        width: ScreenUtil.getWidth(context) / 4,
-                        color: Colors.black12,
-                      ),
-                      Text(
-                        '${getTransrlate(context, 'register_as_delegate')}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Container(
-                        height: 1,
-                        width: ScreenUtil.getWidth(context) / 4,
-                        color: Colors.black12,
-                      )
-                    ],
-                  ),
-                ),
-              ),
               RegisterForm(2),
               SizedBox(
                 height: 50,
@@ -86,7 +70,7 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
     );
   }
 
-  Widget routeLoginWidget(Provider_control themeColor, BuildContext context) {
+  Widget routeLoginWidget(ProviderControl themeColor, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 36, left: 48),
       child: Column(
@@ -174,7 +158,8 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
       ),
     );
   }
-  register(Provider_control themeColor) async {
+
+  register(ProviderControl themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('login/facebook',
         {'facebook_id': facebook_id, 'email': email}).then((value) {
@@ -186,7 +171,6 @@ class _SignUpVendorPageState extends State<SignUpVendorPage> {
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);
         Phoenix.rebirth(context);
-
       } else {
         showDialog(
             context: context,

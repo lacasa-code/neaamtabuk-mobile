@@ -86,7 +86,7 @@ class _UserInfoState extends State<UserInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Provider.of<Provider_control>(context);
+    final themeColor = Provider.of<ProviderControl>(context);
     return Scaffold(
         appBar: AppBar(
           title: Row(
@@ -440,8 +440,8 @@ class _UserInfoState extends State<UserInfo> {
                                         intialLabel: userModal.family_member,
                                         labelText:
                                         getTransrlate(context, 'family_members'),
-                                        hintText:
-                                        getTransrlate(context, 'family_members'),
+                                        // hintText:
+                                        // getTransrlate(context, 'family_members'),
                                         enabled: true,
                                         validator: (String value) {
                                           if (value.isEmpty) {
