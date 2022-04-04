@@ -188,7 +188,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a68039e510e275717902879a3bc4b44b561d0afa
+      resolved-ref: "280018ba166eae56441989ebf34af613a45ba509"
       url: "https://github.com/AbdullahGaber96/searchable_dropdown.git"
     source: git
     version: "2.0.1"
@@ -286,6 +286,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  flutter_screenutil:
+    dependency: "direct main"
+    description:
+      name: flutter_screenutil
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.3.1"
   flutter_svg:
     dependency: "direct main"
     description:

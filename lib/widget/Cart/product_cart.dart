@@ -48,7 +48,7 @@ class _ProductCartState extends State<ProductCart> {
 
   @override
   Widget build(BuildContext context) {
-    final ServiceData = Provider.of<Provider_Data>(context);
+    final ServiceData = Provider.of<ProviderData>(context);
     final Servicetheme = Provider.of<ProviderControl>(context);
 
     return Column(
@@ -375,7 +375,7 @@ class _ProductCartState extends State<ProductCart> {
     );
   }
 
-  void deleteItem(Provider_Data ServiceData) {
+  void deleteItem(ProviderData ServiceData) {
     setState(() => loading = true);
 
     API(context).post('delete/from/cart', {

@@ -504,6 +504,7 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   register(ProviderControl themeColor) async {
+    print('object');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post('register', {
       'username': model.Name,

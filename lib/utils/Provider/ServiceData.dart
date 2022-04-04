@@ -6,7 +6,7 @@ import 'package:flutter_pos/model/product_most_view.dart';
 import 'package:flutter_pos/model/shipping_address.dart';
 import 'package:flutter_pos/service/api.dart';
 
-class Provider_Data with ChangeNotifier {
+class ProviderData with ChangeNotifier {
    Cart_model cart_model;
    Address address;
    List<Product> product,productMostSale;
@@ -14,7 +14,7 @@ class Provider_Data with ChangeNotifier {
    List<Categories_item> categories;
    List<Categories_item> Mostcategories;
    List<Product> wishList;
-   Provider_Data();
+   ProviderData();
    getCart_model() => cart_model;
    getCart(BuildContext context) {
     API(context, Check: false).post('show/cart', {}).then((value) {

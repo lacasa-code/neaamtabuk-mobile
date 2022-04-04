@@ -88,32 +88,32 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Nav.route(context, SignUpVendorPage());
-                    },
-                    child: Container(
-                      width: ScreenUtil.getWidth(context) / 1.3,
-                      decoration: BoxDecoration(
-                          color: Color(0xff1CA04A),
-                          border:
-                              Border.all(color: Color(0xff1CA04A), width: 1)),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            '${getTransrlate(context, 'register_as_delegate')}',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 25,
+                  // ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     Nav.route(context, SignUpVendorPage());
+                  //   },
+                  //   child: Container(
+                  //     width: ScreenUtil.getWidth(context) / 1.3,
+                  //     decoration: BoxDecoration(
+                  //         color: Color(0xff1CA04A),
+                  //         border:
+                  //             Border.all(color: Color(0xff1CA04A), width: 1)),
+                  //     child: Center(
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(16.0),
+                  //         child: Text(
+                  //           '${getTransrlate(context, 'register_as_delegate')}',
+                  //           style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontWeight: FontWeight.bold),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 25,
                   ),
@@ -179,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextSpan(
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Nav.routeReplacement(context, RegisterPage());
+                          Nav.routeReplacement(context, LoginPage());
                         },
                       text: '${getTransrlate(
                         context,

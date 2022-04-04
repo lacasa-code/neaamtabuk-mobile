@@ -2,6 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 import 'AppLocalizations.dart';
 
-String getTransrlate (BuildContext context,String key){
-  return AppLocalizations.of(context).translate(key);
+String getTransrlate(BuildContext context, String key) {
+  return AppLocalizations.of(context).translate(key) ?? '$key key not found';
 }

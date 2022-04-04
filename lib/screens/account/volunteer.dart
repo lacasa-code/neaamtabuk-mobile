@@ -43,7 +43,8 @@ class _VolunteerPageState extends State<VolunteerPage> {
   List<Categories_item> catedories;
   Model model = Model();
   TextEditingController addressController = TextEditingController();
-  TextEditingController dateController = TextEditingController(text: DateTime.now().toString());
+  TextEditingController dateController =
+      TextEditingController(text: DateTime.now().toString());
 
   @override
   void initState() {
@@ -67,6 +68,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
         }
       }
     });
+    super.initState();
   }
 
   @override
@@ -215,47 +217,47 @@ class _VolunteerPageState extends State<VolunteerPage> {
                             location == 0
                                 ? Container()
                                 : MyTextFormField(
-                              labelText:
-                              '${getTransrlate(context, "AddressTitle")}',
-                              controller: addressController,
-                              validator: (String value) {
-                                if (value.isEmpty) {
-                                  return getTransrlate(
-                                      context, 'requiredempty');
-                                }
-                                if (model.latitude == null &&
-                                    model.longitude == null) {
-                                  return getTransrlate(
-                                      context, 'LocationSelected');
-                                }
-                                _formKey.currentState.save();
-                                return null;
-                              },
-                              suffixIcon: IconButton(
-                                  icon: Icon(Icons.location_pin),
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) =>
-                                            MapOverlay(this.model))
-                                        .whenComplete(() {
-                                      model.latitude =
-                                          this.model.latitude;
-                                      model.longitude =
-                                          this.model.longitude;
-                                      addressController.text =
-                                      '${this.model.address ?? ''}';
-                                    });
-                                  }),
-                              inputFormatters: [
-                                new LengthLimitingTextInputFormatter(254),
-                              ],
-                              onSaved: (String val) =>
-                              model.address = val,
-                              onChange: (String val) {
-                                model.address = val;
-                              },
-                            ),
+                                    labelText:
+                                        '${getTransrlate(context, "AddressTitle")}',
+                                    controller: addressController,
+                                    validator: (String value) {
+                                      if (value.isEmpty) {
+                                        return getTransrlate(
+                                            context, 'requiredempty');
+                                      }
+                                      if (model.latitude == null &&
+                                          model.longitude == null) {
+                                        return getTransrlate(
+                                            context, 'LocationSelected');
+                                      }
+                                      _formKey.currentState.save();
+                                      return null;
+                                    },
+                                    suffixIcon: IconButton(
+                                        icon: Icon(Icons.location_pin),
+                                        onPressed: () {
+                                          showDialog(
+                                                  context: context,
+                                                  builder: (_) =>
+                                                      MapOverlay(this.model))
+                                              .whenComplete(() {
+                                            model.latitude =
+                                                this.model.latitude;
+                                            model.longitude =
+                                                this.model.longitude;
+                                            addressController.text =
+                                                '${this.model.address ?? ''}';
+                                          });
+                                        }),
+                                    inputFormatters: [
+                                      new LengthLimitingTextInputFormatter(254),
+                                    ],
+                                    onSaved: (String val) =>
+                                        model.address = val,
+                                    onChange: (String val) {
+                                      model.address = val;
+                                    },
+                                  ),
                             SizedBox(
                               height: 10,
                             ),
@@ -268,21 +270,26 @@ class _VolunteerPageState extends State<VolunteerPage> {
                               dateMask: 'yyyy/MM/dd',
                               controller: dateController,
                               firstDate: DateTime.now(),
-                              lastDate: DateTime.now().add(Duration(days: 5 * 365)),
-                             // initialDate: initStartDate,
+                              lastDate:
+                                  DateTime.now().add(Duration(days: 5 * 365)),
+                              // initialDate: initStartDate,
                               //use24HourFormat: false,
                               icon: Icon(Icons.event),
-                              dateLabelText: '${getTransrlate(context, 'Data')}',
-                              timeLabelText: '${getTransrlate(context, 'Time')}',
-                              onChanged: (val) => setState(() => dateController.text = val),
+                              dateLabelText:
+                                  '${getTransrlate(context, 'Data')}',
+                              timeLabelText:
+                                  '${getTransrlate(context, 'Time')}',
+                              onChanged: (val) =>
+                                  setState(() => dateController.text = val),
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return  getTransrlate(
+                                  return getTransrlate(
                                       context, 'requiredempty');
                                 }
                                 return null;
                               },
-                              onSaved: (val) => setState(() => dateController.text = val ?? ''),
+                              onSaved: (val) => setState(
+                                  () => dateController.text = val ?? ''),
                               // decoration: InputDecoration(
                               //   labelStyle: TextStyle(color: Colors.grey[700]),
                               //   filled: true,
@@ -306,32 +313,33 @@ class _VolunteerPageState extends State<VolunteerPage> {
                             ),
                             categories_item?.id != 1
                                 ? Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    MyTextFormField(
-                                      labelText: getTransrlate(context, 'desc'),
-                                      // hintText: getTransrlate(context, 'desc'),
-                                      // isEmail: true,
-                                      enabled: true,
-                                      minLines: 5,
-                                      maxLines: 5,
-                                      // validator: (String value) {
-                                      //   if (value.isEmpty) {
-                                      //     return getTransrlate(
-                                      //         context, 'requiredempty');
-                                      //   }
-                                      //   _formKey.currentState.save();
-                                      //   return null;
-                                      // },
-keyboard_type: TextInputType.multiline,
-                                      onSaved: (String value) {
-                                        desc = value;
-                                      },
-                                    ),
-                                  ],
-                                )
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      MyTextFormField(
+                                        labelText:
+                                            getTransrlate(context, 'desc'),
+                                        // hintText: getTransrlate(context, 'desc'),
+                                        // isEmail: true,
+                                        enabled: true,
+                                        minLines: 5,
+                                        maxLines: 5,
+                                        // validator: (String value) {
+                                        //   if (value.isEmpty) {
+                                        //     return getTransrlate(
+                                        //         context, 'requiredempty');
+                                        //   }
+                                        //   _formKey.currentState.save();
+                                        //   return null;
+                                        // },
+                                        keyboard_type: TextInputType.multiline,
+                                        onSaved: (String value) {
+                                          desc = value;
+                                        },
+                                      ),
+                                    ],
+                                  )
                                 : Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -340,7 +348,7 @@ keyboard_type: TextInputType.multiline,
                                         labelText:
                                             getTransrlate(context, 'NoOfmeals'),
                                         // hintText:
-                                            // getTransrlate(context, 'NoOfmeals'),
+                                        // getTransrlate(context, 'NoOfmeals'),
                                         enabled: true,
                                         validator: (String value) {
                                           if (value.isEmpty) {

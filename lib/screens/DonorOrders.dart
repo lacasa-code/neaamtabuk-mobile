@@ -6,6 +6,7 @@ import 'package:flutter_pos/model/OrdersModel.dart';
 import 'package:flutter_pos/model/donorOrdersModel.dart';
 import 'package:flutter_pos/screens/account/addOrder.dart';
 import 'package:flutter_pos/screens/account/edit_volunteer.dart';
+import 'package:flutter_pos/screens/widgets/orders_text_widget.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
@@ -38,34 +39,33 @@ class _DonorOrdersState extends State<DonorOrders> {
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ProviderControl>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              Icon(
-                Icons.local_shipping_outlined,
-                color: Colors.white,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Container(
-                  width: ScreenUtil.getWidth(context) / 2,
-                  child: AutoSizeText(
-                    getTransrlate(context, 'orders'),
-                    minFontSize: 10,
-                    maxFontSize: 16,
-                    maxLines: 1,
-                  )),
-            ],
-          ),
-        ),
+        // appBar: AppBar(
+        //   title: Row(
+        //     children: [
+        //       Icon(
+        //         Icons.local_shipping_outlined,
+        //         color: Colors.white,
+        //       ),
+        //       SizedBox(
+        //         width: 10,
+        //       ),
+        //       Container(
+        //           width: ScreenUtil.getWidth(context) / 2,
+        //           child: AutoSizeText(
+        //             getTransrlate(context, 'orders'),
+        //             minFontSize: 10,
+        //             maxFontSize: 16,
+        //             maxLines: 1,
+        //           )),
+        //     ],
+        //   ),
+        // ),
         body: !themeColor.isLogin
             ? Notlogin()
             : orders == null
                 ? Center(child: Custom_Loading())
                 : SingleChildScrollView(
                     child: Container(
-
                       child: Column(
                         children: [
                           orders == null
@@ -82,24 +82,19 @@ class _DonorOrdersState extends State<DonorOrders> {
                                       (BuildContext context, int index) {
                                     return Container(
                                       padding: const EdgeInsets.all(8.0),
-                                      margin: const EdgeInsets.all(8.0),
-
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
                                       decoration: BoxDecoration(
-                                          color:orders[index].category_id=='1'?Colors.black12:orders[index].category_id=='2'?Colors.red[100]:Colors.green[100] ,
-                                          borderRadius: BorderRadius.circular(12),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(.2),
-                                              blurRadius: 9.0, // soften the shadow
-                                              spreadRadius: 0.0, //extend the shadow
-                                              offset: Offset(
-                                                0.0, // Move to right 10  horizontally
-                                                1.0, // Move to bottom 10 Vertically
-                                              ),
-                                            )
-                                          ]),                                        child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        border: Border.all(
+                                          width: 1.0,
+                                          color: themeColor.getColor(),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
                                             crossAxisAlignment:
@@ -108,80 +103,120 @@ class _DonorOrdersState extends State<DonorOrders> {
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Container(
-                                                  width:
-                                                      ScreenUtil.getWidth(context) /
-                                                          2.5,
-                                                  child: AutoSizeText(
-                                                    '${getTransrlate(context, 'OrderNO')}  #${orders[index].donation_number} ',
-                                                    maxLines: 1,
-                                                    style: TextStyle(fontSize: 13),
-                                                  )),
-                                              SizedBox(
-                                                height: 5,
+                                              OrderTextWidget(
+                                                title:
+                                                    '${getTransrlate(context, 'OrderNO').split('!')[0]}: ',
+                                                description:
+                                                    '#${orders[index].donation_number}',
                                               ),
-                                              Container(
-                                                  width:
-                                                      ScreenUtil.getWidth(context) /
-                                                          2.5,
-                                                  child: AutoSizeText(
-                                                    '${getTransrlate(context, 'category')}  ${orders[index].category} ',
-                                                    maxLines: 1,
-                                                    style: TextStyle(fontSize: 13),
-                                                  )),
                                               SizedBox(
                                                 height: 10,
                                               ),
                                               Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      AutoSizeText(
+                                                        '${getTransrlate(context, 'category')}  : ',
+                                                        maxLines: 1,
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Center(
+                                                        child: AutoSizeText(
+                                                          '${orders[index].category ?? ''}',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          maxLines: 2,
+                                                          maxFontSize: 13,
+                                                          minFontSize: 10,
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Row(
                                                     children: [
                                                       AutoSizeText(
                                                         '${getTransrlate(context, 'OrderDate')}  : ',
                                                         maxLines: 1,
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
                                                       Center(
                                                         child: AutoSizeText(
-                                                          '${orders[index].delivary_date??''}',
-                                                          textAlign: TextAlign.center,
+                                                          '${orders[index].delivary_date?.substring(0, 10)?.replaceAll('-', '/') ?? ''}',
+                                                          textAlign:
+                                                              TextAlign.center,
                                                           maxLines: 2,
                                                           maxFontSize: 13,
                                                           minFontSize: 10,
                                                           style: TextStyle(
-                                                              color: themeColor
-                                                                  .getColor()),
+                                                            fontSize: 13,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
                                                   ),
                                                 ],
                                               ),
-
                                               SizedBox(
                                                 height: 10,
                                               ),
                                               Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Row(
                                                     children: [
                                                       AutoSizeText(
                                                         '${getTransrlate(context, 'OrderState')}  : ',
                                                         maxLines: 1,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 13,
+                                                          color: Colors.black,
+                                                        ),
                                                       ),
                                                       Center(
                                                         child: AutoSizeText(
                                                           '${orders[index].status}',
-                                                          textAlign: TextAlign.center,
+                                                          textAlign:
+                                                              TextAlign.center,
                                                           maxLines: 2,
                                                           maxFontSize: 13,
                                                           minFontSize: 10,
                                                           style: TextStyle(
-                                                              color: themeColor
-                                                                  .getColor()),
+                                                            fontSize: 13,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
@@ -189,7 +224,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                 ],
                                               ),
                                               SizedBox(
-                                                height: 5,
+                                                height: 10,
                                               ),
                                               orders[index].category_id != '1'
                                                   ? Container(
@@ -198,33 +233,38 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          orders[index].description ==
+                                                          orders[index]
+                                                                      .description ==
                                                                   null
                                                               ? Container()
                                                               : Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
                                                                   children: [
                                                                     AutoSizeText(
                                                                       '${getTransrlate(context, 'desc')}  : ',
-                                                                      maxLines: 1,
+                                                                      maxLines:
+                                                                          1,
                                                                     ),
                                                                     Container(
-                                                                      width: ScreenUtil.getWidth(context)/1.5,
-
+                                                                      width: ScreenUtil.getWidth(
+                                                                              context) /
+                                                                          1.5,
                                                                       child:
                                                                           AutoSizeText(
                                                                         '${orders[index].description}',
                                                                         textAlign:
-                                                                            TextAlign
-                                                                                .start,
-                                                                        maxLines: 2,
+                                                                            TextAlign.start,
+                                                                        maxLines:
+                                                                            2,
                                                                         maxFontSize:
                                                                             13,
                                                                         minFontSize:
                                                                             10,
                                                                         style: TextStyle(
-                                                                            color: themeColor
-                                                                                .getColor()),
+                                                                            color:
+                                                                                themeColor.getColor()),
                                                                       ),
                                                                     ),
                                                                   ],
@@ -233,72 +273,47 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                       ),
                                                     )
                                                   : Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
                                                         Row(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
                                                           children: [
                                                             AutoSizeText(
-                                                              '${getTransrlate(context, 'NoOfmeals')}  : ',
+                                                              '${getTransrlate(context, 'NoOfmeals')} : ',
                                                               maxLines: 1,
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 13,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
                                                             ),
                                                             AutoSizeText(
-                                                              '${orders[index].number_of_meals??''}',
+                                                              '${orders[index].number_of_meals ?? ''}',
                                                               textAlign:
-                                                              TextAlign
-                                                                  .start,
+                                                                  TextAlign
+                                                                      .start,
                                                               maxLines: 2,
                                                               maxFontSize: 13,
                                                               minFontSize: 10,
                                                               style: TextStyle(
-                                                                  color: themeColor
-                                                                      .getColor()),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-
-                                                        Row(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: AutoSizeText(
-                                                                '${getTransrlate(context, 'status_distribute')}  : ',
-                                                                maxLines: 1,
-                                                                style: TextStyle(
-                                                                    color: themeColor
-                                                                        .getColor()),
+                                                                fontSize: 13,
+                                                                color: Colors
+                                                                    .black,
                                                               ),
                                                             ),
-                                                            Container(
-                                                                decoration: BoxDecoration(
-                                                                    color: themeColor
-                                                                        .getColor(),
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                9.0)),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(8.0),
-                                                                  child: AutoSizeText(
-                                                                    '${orders[index].readyToDistribute == '1' ? getTransrlate(context, 'distribute') : getTransrlate(context, 'nondistribute')} ',
-                                                                    maxLines: 1,
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  ),
-                                                                )),
                                                           ],
                                                         ),
                                                         SizedBox(
@@ -306,43 +321,71 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                         ),
                                                         Row(
                                                           children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: AutoSizeText(
-                                                                '${getTransrlate(context, 'status_pack')} :',
-                                                                maxLines: 1,
-                                                                style: TextStyle(
-                                                                    color: themeColor
-                                                                        .getColor()),
+                                                            AutoSizeText(
+                                                              '${getTransrlate(context, 'status_distribute')}  : ',
+                                                              maxLines: 1,
+                                                              style: TextStyle(
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black,
                                                               ),
                                                             ),
-                                                            Container(
-                                                                decoration: BoxDecoration(
-                                                                    color: themeColor
-                                                                        .getColor(),
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                9.0)),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(8.0),
-                                                                  child: AutoSizeText(
-                                                                    '${orders[index].readyToPack == '1' ? getTransrlate(context, 'pack') : getTransrlate(context, 'nonpack')} ',
-                                                                    maxLines: 1,
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  ),
-                                                                )),
+                                                            AutoSizeText(
+                                                              '${orders[index].readyToDistribute == '1' ? getTransrlate(context, 'distribute') : getTransrlate(context, 'nondistribute')} ',
+                                                              // '${orders[index].number_of_meals ?? ''}',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                              maxLines: 2,
+                                                              maxFontSize: 13,
+                                                              minFontSize: 10,
+                                                              style: TextStyle(
+                                                                fontSize: 13,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            AutoSizeText(
+                                                              '${getTransrlate(context, 'status_pack')}  : ',
+                                                              maxLines: 1,
+                                                              style: TextStyle(
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                            ),
+                                                            AutoSizeText(
+                                                              '${orders[index].readyToPack == '1' ? getTransrlate(context, 'pack') : getTransrlate(context, 'nonpack')} ',
+                                                              // '${orders[index].number_of_meals ?? ''}',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                              maxLines: 2,
+                                                              maxFontSize: 13,
+                                                              minFontSize: 10,
+                                                              style: TextStyle(
+                                                                fontSize: 13,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                            ),
                                                           ],
                                                         ),
                                                       ],
                                                     ),
-
                                               SizedBox(
                                                 height: 5,
                                               ),
@@ -352,67 +395,157 @@ class _DonorOrdersState extends State<DonorOrders> {
                                               ),
                                             ],
                                           ),
-                                          orders[index].status_id!='4'?Container():PopupMenuButton<int>(
-                                            itemBuilder: (context) => [
-                                              PopupMenuItem(
-                                                value: 1,
-                                                child: InkWell(
-                                                  borderRadius: BorderRadius.all(Radius.circular(50)),
-
-                                                  onTap: (){
-                                                    Navigator.pop(context);
-                                                    Nav.route(context, EditVolunteerPage(orders[index]));
-                                                  },
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.spaceAround,
-                                                    children: [
-                                                      Text("${getTransrlate(context,'edit')}"),
-                                                      Icon(
-                                                        Icons.edit_outlined,
-                                                        color: Colors.black54,
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              PopupMenuItem(
-                                                value: 2,
-                                                child:  InkWell(
-                                                  borderRadius: BorderRadius.all(Radius.circular(50)),
-
-                                                  onTap: (){
-                                                    Navigator.pop(context);
-                                                    API(context)
-                                                        .post("deleteDonate/${orders[index].donorId}",{})
-                                                        .then((value) {
-                                                      if (value != null) {
-                                                        showDialog(
-                                                            context: context,
-                                                            builder: (_) =>
-                                                                ResultOverlay('${value['message']}')).whenComplete(() {
-
+                                          orders[index].status_id != '4'
+                                              ? Container()
+                                              : Row(
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        Navigator.pop(context);
+                                                        Nav.route(
+                                                          context,
+                                                          EditVolunteerPage(
+                                                            orders[index],
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        color:
+                                                            Color(0xff69C088),
+                                                        padding:
+                                                            EdgeInsets.all(3),
+                                                        child: ImageIcon(
+                                                          AssetImage(
+                                                            'assets/icons/edit.png',
+                                                          ),
+                                                          color: Colors.white,
+                                                        ),
+                                                        // decoration:
+                                                        // BoxDecoration(
+                                                        // ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        API(context).post(
+                                                            "deleteDonate/${orders[index].donorId}",
+                                                            {}).then((value) {
+                                                          if (value != null) {
+                                                            showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (_) =>
+                                                                        ResultOverlay(
+                                                                            '${value['message']}'))
+                                                                .whenComplete(
+                                                                    () {});
+                                                          }
+                                                          getOrders();
                                                         });
-                                                      }
-                                                      getOrders();
-                                                    });
-                                                  },
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.spaceAround,
-                                                    children: [
-                                                      Text("${getTransrlate(context,'Delete')}"),
-                                                      Icon(
-                                                        CupertinoIcons.delete,
-                                                        color: Colors.black54,
-                                                      )
-                                                    ],
-                                                  ),
+                                                      },
+                                                      child: Container(
+                                                        color:
+                                                            Color(0xffFA6B6B),
+                                                        padding:
+                                                            EdgeInsets.all(3),
+                                                        child: ImageIcon(
+                                                          AssetImage(
+                                                            'assets/icons/delete.png',
+                                                          ),
+                                                          color: Colors.white,
+                                                        ),
+                                                        // decoration:
+                                                        // BoxDecoration(
+                                                        // ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                            ],
-                                          ),
 
+                                          /*
+                                              PopupMenuButton<int>(
+                                                  itemBuilder: (context) => [
+                                                    PopupMenuItem(
+                                                      value: 1,
+                                                      child: InkWell(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    50)),
+                                                        onTap: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          Nav.route(
+                                                              context,
+                                                              EditVolunteerPage(
+                                                                  orders[
+                                                                      index]));
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          children: [
+                                                            Text(
+                                                                "${getTransrlate(context, 'edit')}"),
+                                                            Icon(
+                                                              Icons
+                                                                  .edit_outlined,
+                                                              color: Colors
+                                                                  .black54,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    PopupMenuItem(
+                                                      value: 2,
+                                                      child: InkWell(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    50)),
+                                                        onTap: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          API(context).post(
+                                                              "deleteDonate/${orders[index].donorId}",
+                                                              {}).then((value) {
+                                                            if (value != null) {
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (_) =>
+                                                                      ResultOverlay(
+                                                                          '${value['message']}')).whenComplete(
+                                                                  () {});
+                                                            }
+                                                            getOrders();
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          children: [
+                                                            Text(
+                                                                "${getTransrlate(context, 'Delete')}"),
+                                                            Icon(
+                                                              CupertinoIcons
+                                                                  .delete,
+                                                              color: Colors
+                                                                  .black54,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                */
                                         ],
                                       ),
                                     );

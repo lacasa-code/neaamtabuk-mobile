@@ -11,6 +11,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/utils/shared_prefs_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,7 +24,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   ProviderControl themeColor;
-  Provider_Data _provider_data;
+  // Provider_Data _providerData;
   @override
   void initState() {
     super.initState();
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     themeColor = Provider.of<ProviderControl>(context);
-    _provider_data = Provider.of<Provider_Data>(context);
+    // _providerData = Provider.of<Provider_Data>(context);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: themeColor.getColor(),
@@ -82,7 +83,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _auth() async {
     //themeColor.setCar_made(getTransrlate(context, 'selectCar'));
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var sharedPreferences =
+        Provider.of<SharedPrefsProvider>(context, listen: false);
+    final SharedPreferences prefs = await sharedPreferences.getInstance();
+
     API(context, Check: false).get('isValidToken').then((value) async {
       if (value != null) {
         if (value['status'] == true) {

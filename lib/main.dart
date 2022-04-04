@@ -6,10 +6,12 @@ import 'package:flutter_pos/screens/splash_screen.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/AppLocalizations.dart';
+import 'package:flutter_pos/utils/shared_prefs_provider.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,14 +22,17 @@ Future<void> main() async {
     if (prefs.getString('local') != null) {
       local = prefs.getString('local');
     }
-    await runApp(
+    runApp(
       MultiProvider(
         providers: [
           ChangeNotifierProvider<ProviderControl>(
             create: (_) => ProviderControl(local),
           ),
-          ChangeNotifierProvider<Provider_Data>(
-            create: (_) => Provider_Data(),
+          ChangeNotifierProvider<ProviderData>(
+            create: (_) => ProviderData(),
+          ),
+          ChangeNotifierProvider<SharedPrefsProvider>(
+            create: (_) => SharedPrefsProvider(),
           ),
         ],
         child: Phoenix(
@@ -74,8 +79,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     getIntial();
-    _locale = Provider.of<ProviderControl>(context, listen: false).local ==
-            null
+    _locale = Provider.of<ProviderControl>(context, listen: false).local == null
         ? null
         : Locale(
             Provider.of<ProviderControl>(context, listen: false).local, "");
@@ -90,6 +94,9 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
+      builder: (context, child) => ScreenUtilInit(
+        builder: () => child,
+      ),
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [

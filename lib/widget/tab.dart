@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos/screens/homepage.dart';
+import 'package:flutter_pos/screens/homepage.dart' as home;
 import 'package:flutter_pos/widget/bottom_navigation.dart';
 
 class TabNavigatorRoutes {
@@ -18,7 +18,7 @@ class TabNavigator extends StatelessWidget {
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context,
       {int materialIndex: 500}) {
     return {
-      TabNavigatorRoutes.root: (context) => Home(),
+      TabNavigatorRoutes.root: (context) => home.Home(),
       TabNavigatorRoutes.detail: (context) => Container(),
     };
   }

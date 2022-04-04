@@ -47,8 +47,14 @@ class _LoginFormState extends State<LoginForm> {
                 children: <Widget>[
                   MyTextFormField(
                     intialLabel: '',
+                    istitle: true,
                     keyboard_type: TextInputType.emailAddress,
-                    labelText: getTransrlate(context, 'mail'),
+                    hintText: 'mail',
+                    prefix: ImageIcon(
+                      AssetImage(
+                        'assets/icons/email.png',
+                      ),
+                    ),
                     // hintText: getTransrlate(context, 'mail'),
                     isPhone: true,
                     validator: (String value) {
@@ -66,8 +72,15 @@ class _LoginFormState extends State<LoginForm> {
                     },
                   ),
                   MyTextFormField(
+                    istitle: true,
+
                     intialLabel: '',
-                    labelText: getTransrlate(context, 'password'),
+                    hintText: 'password',
+                    prefix: ImageIcon(
+                      AssetImage(
+                        'assets/icons/lock.png',
+                      ),
+                    ),
                     keyboard_type: TextInputType.multiline,
                     // hintText: getTransrlate(context, 'password'),
                     suffixIcon: IconButton(
@@ -107,8 +120,9 @@ class _LoginFormState extends State<LoginForm> {
                           },
                           child: AutoSizeText(
                             getTransrlate(context, 'LostPassword'),
-                            style:
-                                TextStyle(decoration: TextDecoration.underline),
+                            style: TextStyle(
+                              color: Color(0xff5BBA7D),
+                            ),
                           ))),
                   Container(
                     height: 42,

@@ -8,6 +8,7 @@ import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
+import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_pos/widget/OrderOverlay.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
@@ -56,7 +57,7 @@ class _MapPageState extends State<MapPage> {
             id = pref.getInt('user_id');
           }),
         });
-print('f');
+    print('f');
     // location.onLocationChanged.listen((LocationData currentLocation) {
     //   setState(() {
     //     initialCameraPosition = CameraPosition(
@@ -83,213 +84,440 @@ print('f');
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ProviderControl>(context);
+    // print(_info);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         //  title: Center(child: Text(getTransrlate(context, 'LocationSelected'))),
-        backgroundColor: theme.getColor(),
-      ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned.fill(
-            child: initialCameraPosition == null
-                ? Custom_Loading()
-                : GoogleMap(
-                    myLocationEnabled: true,
-                    compassEnabled: true,
-                    tiltGesturesEnabled: false,
-                    zoomControlsEnabled: false,
-                    mapType: MapType.normal,
-                    markers: {
-                      if (_origin != null) _origin,
-                      if (_destination != null) _destination
-                    },
-                    polylines: {
-                      if (_info != null)
-                        Polyline(
-                          polylineId: const PolylineId('طريق الى المستفيد'),
-                          color: theme.getColor(),
-                          width: 5,
-                          points: _info.polylinePoints
-                              .map((e) => LatLng(e.latitude, e.longitude))
-                              .toList(),
-                        ),
-                    },
-                    initialCameraPosition: initialCameraPosition,
-                    onMapCreated: (controller) =>
-                        _googleMapController = controller,
-                  ),
+        // backgroundColor: theme.getColor(),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back),
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          getTransrlate(
+            context,
+            'OrderTrack',
           ),
-          if (_info != null)
-            Positioned(
-              top: 10.0,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6.0,
-                  horizontal: 12.0,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.0),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(0, 2),
-                      blurRadius: 6.0,
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        if (_origin != null)
-                          TextButton(
-                            onPressed: () => _googleMapController.animateCamera(
-                              CameraUpdate.newCameraPosition(
-                                CameraPosition(
-                                  target: _origin.position,
-                                  zoom: 14.5,
-                                  tilt: 50.0,
-                                ),
-                              ),
-                            ),
-                            style: TextButton.styleFrom(
-                              primary: Colors.green,
-                              textStyle:
-                                  const TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                            child: Text('${getTransrlate(context, 'representative')}'),
-                          ),
-                        SizedBox(
-                          width: 50,
-                        ),
-                        if (_destination != null)
-                          TextButton(
-                            onPressed: () => _googleMapController.animateCamera(
-                              CameraUpdate.newCameraPosition(
-                                CameraPosition(
-                                  target: _destination.position,
-                                  zoom: 14.5,
-                                  tilt: 50.0,
-                                ),
-                              ),
-                            ),
-                            style: TextButton.styleFrom(
-                              primary: Colors.blue,
-                              textStyle:
-                                  const TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                            child:Text('${widget.status_id=="4"?getTransrlate(context, 'Donor'):getTransrlate(context, 'Beneficiary')}'),
-                          ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              '${getTransrlate(context, 'Time')}',
-                              style: const TextStyle(
-                                fontSize: 18.0,
-                                //  color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              '${_info.totalDuration}',
-                              textDirection: TextDirection.ltr,
-                              style: const TextStyle(
-                                fontSize: 18.0,
-                                //  color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 50,
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              '${getTransrlate(context, 'distance')}',
-                              style: const TextStyle(
-                                fontSize: 18.0,
-                                //  color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              '${double.parse(widget.dist).toStringAsFixed(4)}',
-                              style: const TextStyle(
-                                fontSize: 18.0,
-                                //  color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          Positioned(
-            bottom: 15,
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: ScreenUtil.getHeight(context) * 0.07,
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${getTransrlate(context, 'Beneficiary')} : ${double.tryParse(widget.dist ?? '0.0').toStringAsFixed(4)} Km',
+                  style: TextStyle(fontSize: 15, color: Color(0xff6AC088)),
+                ),
+                Text(
+                  '${getTransrlate(context, 'representative')} : ${_info?.totalDuration}',
+                  style: TextStyle(fontSize: 15, color: Color(0xff6AC088)),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned.fill(
+                  child: initialCameraPosition == null
+                      ? Custom_Loading()
+                      : GoogleMap(
+                          myLocationEnabled: true,
+                          compassEnabled: true,
+                          tiltGesturesEnabled: false,
+                          zoomControlsEnabled: false,
+                          mapType: MapType.normal,
+                          markers: {
+                            if (_origin != null) _origin,
+                            if (_destination != null) _destination
+                          },
+                          polylines: {
+                            if (_info != null)
+                              Polyline(
+                                polylineId:
+                                    const PolylineId('طريق الى المستفيد'),
+                                color: theme.getColor(),
+                                width: 5,
+                                points: _info.polylinePoints
+                                    .map((e) => LatLng(e.latitude, e.longitude))
+                                    .toList(),
+                              ),
+                          },
+                          initialCameraPosition: initialCameraPosition,
+                          onMapCreated: (controller) =>
+                              _googleMapController = controller,
+                        ),
+                ),
+                if (_info != null)
+                  Positioned(
+                    top: 10.0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 6.0,
+                        horizontal: 12.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black26,
+                            offset: Offset(0, 2),
+                            blurRadius: 6.0,
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              if (_origin != null)
+                                TextButton(
+                                  onPressed: () =>
+                                      _googleMapController.animateCamera(
+                                    CameraUpdate.newCameraPosition(
+                                      CameraPosition(
+                                        target: _origin.position,
+                                        zoom: 14.5,
+                                        tilt: 50.0,
+                                      ),
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.green,
+                                    textStyle: const TextStyle(
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  child: Text(
+                                      '${getTransrlate(context, 'representative')}'),
+                                ),
+                              SizedBox(
+                                width: 50,
+                              ),
+                              if (_destination != null)
+                                TextButton(
+                                  onPressed: () =>
+                                      _googleMapController.animateCamera(
+                                    CameraUpdate.newCameraPosition(
+                                      CameraPosition(
+                                        target: _destination.position,
+                                        zoom: 14.5,
+                                        tilt: 50.0,
+                                      ),
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.blue,
+                                    textStyle: const TextStyle(
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  child: Text(
+                                      '${widget.status_id == "4" ? getTransrlate(context, 'Donor') : getTransrlate(context, 'Beneficiary')}'),
+                                ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    '${getTransrlate(context, 'Time')}',
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      //  color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${_info.totalDuration}',
+                                    textDirection: TextDirection.ltr,
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      //  color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 50,
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    '${getTransrlate(context, 'distance')}',
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      //  color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${double.parse(widget.dist).toStringAsFixed(4)}',
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      //  color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                // Positioned(
+                // bottom: 15,
+                // child: Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   children: [
+                //     Container(
+                //       margin: EdgeInsets.only(top: 12, bottom: 0),
+                //       child: FlatButton(
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: new BorderRadius.circular(9.0),
+                //         ),
+                //         color: theme.getColor(),
+                //         onPressed: () async {
+                //           _launchMaps(LatLng(_origin.position.latitude,
+                //               _origin.position.longitude));
+                //         },
+                //         child: Center(
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(8.0),
+                //             child: Text(
+                //               "${getTransrlate(context, 'GotoGoogleMap')}",
+                //               textAlign: TextAlign.center,
+                //               style: TextStyle(
+                //                 fontSize: 16,
+                //                 color: Colors.white,
+                //                 fontWeight: FontWeight.w400,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       width: 10,
+                //     ),
+                //     widget.status_id == "4"
+                //         ? Container(
+                //             margin: EdgeInsets.only(top: 12, bottom: 0),
+                //             child: FlatButton(
+                //               shape: RoundedRectangleBorder(
+                //                 borderRadius: new BorderRadius.circular(9.0),
+                //               ),
+                //               color: theme.getColor(),
+                //               onPressed: () async {
+                //                 API(context).post(
+                //                     'orderDelegate/${widget.donation_id}',
+                //                     {}).then((value) {
+                //                   print(value);
+                //                   if (value['status'] == true) {
+                //                     setState(() {
+                //                       widget.status_id = "3";
+                //                     });
+                //                     showDialog(
+                //                             context: context,
+                //                             builder: (_) => ResultOverlay(
+                //                                 '${value['message']}'))
+                //                         .whenComplete(() {
+                //                       Navigator.pop(context);
+                //                       Nav.routeReplacement(context, Delegate());
+                //                     });
+                //                   } else {
+                //                     showDialog(
+                //                         context: context,
+                //                         builder: (_) =>
+                //                             ResultOverlay('${value['message']}'));
+                //                   }
+                //                 });
+                //               },
+                //               child: Center(
+                //                 child: Padding(
+                //                   padding: const EdgeInsets.all(8.0),
+                //                   child: Text(
+                //                     "${getTransrlate(context, 'RequestAccept')}",
+                //                     textAlign: TextAlign.center,
+                //                     style: TextStyle(
+                //                       fontSize: 16,
+                //                       color: Colors.white,
+                //                       fontWeight: FontWeight.w400,
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //           )
+                //         : widget.status_id != "1"
+                //             ? Container(
+                //                 margin: EdgeInsets.only(top: 12, bottom: 0),
+                //                 child: FlatButton(
+                //                   shape: RoundedRectangleBorder(
+                //                     borderRadius: new BorderRadius.circular(9.0),
+                //                   ),
+                //                   color: theme.getColor(),
+                //                   onPressed: () async {
+                //                     API(context).post(
+                //                         'status/${widget.donation_id}',
+                //                         {"status_id": "1"}).then((value) {
+                //                       print(value);
+                //                       if (value['status'] == true) {
+                //                         setState(() {
+                //                           widget.status_id = "1";
+                //                         });
+                //                         showDialog(
+                //                                 context: context,
+                //                                 builder: (_) => ResultOverlay(
+                //                                     '${value['message']}'))
+                //                             .whenComplete(() {
+                //                           Navigator.pop(context);
+                //                           Nav.routeReplacement(context, Delegate());
+                //                         });
+                //                       } else {
+                //                         showDialog(
+                //                             context: context,
+                //                             builder: (_) => ResultOverlay(
+                //                                 '${value['message']}'));
+                //                       }
+                //                     });
+                //                   },
+                //                   child: Padding(
+                //                     padding: const EdgeInsets.all(8.0),
+                //                     child: Text(
+                //                       "${getTransrlate(context, 'received')}",
+                //                       style: TextStyle(
+                //                         fontSize: 16,
+                //                         color: Colors.white,
+                //                         fontWeight: FontWeight.w400,
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               )
+                //             : Container(
+                //                 margin: EdgeInsets.only(top: 12, bottom: 0),
+                //                 child: FlatButton(
+                //                   shape: RoundedRectangleBorder(
+                //                     borderRadius: new BorderRadius.circular(9.0),
+                //                   ),
+                //                   color: theme.getColor(),
+                //                   onPressed: () async {
+                //                     showDialog(
+                //                         context: context,
+                //                         builder: (_) => OrderOverlay(
+                //                               donation_id: widget.donation_id,
+                //                             ));
+                //                   },
+                //                   child: Padding(
+                //                     padding: const EdgeInsets.all(8.0),
+                //                     child: Text(
+                //                       "${getTransrlate(context, 'distribution')}",
+                //                       style: TextStyle(
+                //                         fontSize: 16,
+                //                         color: Colors.white,
+                //                         fontWeight: FontWeight.w400,
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //   ],
+                // ),
+                // )
+              ],
+            ),
+          ),
+          Container(
+            height: ScreenUtil.getHeight(context) * 0.17,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
+                  height: 42,
+                  width: ScreenUtil.getWidth(context) * 0.8,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xff2CA649),
+                        Color(0xff2CA649),
+                        Color(0xff4BB146),
+                        Color(0xff4BB146),
+                        Color(0xff66BA44),
+                        Color(0xff77C042),
+                      ],
+                    ),
+                  ),
                   margin: EdgeInsets.only(top: 12, bottom: 0),
                   child: FlatButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(9.0),
                     ),
-                    color: theme.getColor(),
                     onPressed: () async {
-                      _launchMaps(LatLng(_origin.position.latitude,_origin.position.longitude));
+                      _launchMaps(LatLng(_origin.position.latitude,
+                          _origin.position.longitude));
                     },
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "${getTransrlate(context, 'GotoGoogleMap')}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
+                    child: Text(
+                      "${getTransrlate(context, 'GotoGoogleMap')}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 10,),
                 widget.status_id == "4"
                     ? Container(
+                        height: 42,
+                        width: ScreenUtil.getWidth(context) * 0.8,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xff2CA649),
+                              Color(0xff2CA649),
+                              Color(0xff4BB146),
+                              Color(0xff4BB146),
+                              Color(0xff66BA44),
+                              Color(0xff77C042),
+                            ],
+                          ),
+                        ),
                         margin: EdgeInsets.only(top: 12, bottom: 0),
                         child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(9.0),
-                          ),
-                          color: theme.getColor(),
                           onPressed: () async {
                             API(context).post(
                                 'orderDelegate/${widget.donation_id}',
                                 {}).then((value) {
                               print(value);
                               if (value['status'] == true) {
-
                                 setState(() {
                                   widget.status_id = "3";
                                 });
                                 showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay('${value['message']}')).whenComplete(() {
+                                        context: context,
+                                        builder: (_) => ResultOverlay(
+                                            '${value['message']}'))
+                                    .whenComplete(() {
                                   Navigator.pop(context);
                                   Nav.routeReplacement(context, Delegate());
                                 });
@@ -301,12 +529,101 @@ print('f');
                               }
                             });
                           },
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "${getTransrlate(context, 'RequestAccept')}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      )
+                    : widget.status_id != "1"
+                        ? Container(
+                            height: 42,
+                            width: ScreenUtil.getWidth(context) * 0.8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0xff2CA649),
+                                  Color(0xff2CA649),
+                                  Color(0xff4BB146),
+                                  Color(0xff4BB146),
+                                  Color(0xff66BA44),
+                                  Color(0xff77C042),
+                                ],
+                              ),
+                            ),
+                            margin: EdgeInsets.only(top: 12, bottom: 0),
+                            child: FlatButton(
+                              onPressed: () async {
+                                API(context).post(
+                                    'status/${widget.donation_id}',
+                                    {"status_id": "1"}).then((value) {
+                                  print(value);
+                                  if (value['status'] == true) {
+                                    setState(() {
+                                      widget.status_id = "1";
+                                    });
+                                    showDialog(
+                                            context: context,
+                                            builder: (_) => ResultOverlay(
+                                                '${value['message']}'))
+                                        .whenComplete(() {
+                                      Navigator.pop(context);
+                                      Nav.routeReplacement(context, Delegate());
+                                    });
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => ResultOverlay(
+                                            '${value['message']}'));
+                                  }
+                                });
+                              },
                               child: Text(
-                                "${getTransrlate(context, 'RequestAccept')}",
-                                textAlign: TextAlign.center,
+                                "${getTransrlate(context, 'received')}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(
+                            height: 42,
+                            width: ScreenUtil.getWidth(context) * 0.8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0xff2CA649),
+                                  Color(0xff2CA649),
+                                  Color(0xff4BB146),
+                                  Color(0xff4BB146),
+                                  Color(0xff66BA44),
+                                  Color(0xff77C042),
+                                ],
+                              ),
+                            ),
+                            margin: EdgeInsets.only(top: 12, bottom: 0),
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(9.0),
+                              ),
+                              onPressed: () async {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => OrderOverlay(
+                                          donation_id: widget.donation_id,
+                                        ));
+                              },
+                              child: Text(
+                                "${getTransrlate(context, 'distribution')}",
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -315,104 +632,29 @@ print('f');
                               ),
                             ),
                           ),
-                        ),
-                      )
-                    : widget.status_id != "1"
-                    ?  Container(
-                        margin: EdgeInsets.only(top: 12, bottom: 0),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(9.0),
-                          ),
-                          color: theme.getColor(),
-                          onPressed: () async {
-                            API(context).post(
-                                'status/${widget.donation_id}',
-                                {
-                                  "status_id":"1"
-                                }).then((value) {
-                              print(value);
-                              if (value['status'] == true) {
-
-                                setState(() {
-                                  widget.status_id = "1";
-                                });
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay('${value['message']}')).whenComplete(() {
-                                  Navigator.pop(context);
-                                  Nav.routeReplacement(context, Delegate());
-                                });
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) =>
-                                        ResultOverlay('${value['message']}'));
-                              }
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "${getTransrlate(context, 'received')}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ) :Container(
-                        margin: EdgeInsets.only(top: 12, bottom: 0),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(9.0),
-                          ),
-                          color: theme.getColor(),
-                          onPressed: () async {
-                            showDialog(
-                                context: context,
-                                builder: (_) => OrderOverlay(
-                                      donation_id: widget.donation_id,
-                                    ));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "${getTransrlate(context, 'distribution')}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
               ],
             ),
-          )
+          ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterTop,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        onPressed: () => _googleMapController.animateCamera(
-          // CameraUpdate.newCameraPosition(initialCameraPosition)
-          _info != null
-              ? CameraUpdate.newLatLngBounds(_info.bounds, 100.0)
-              : CameraUpdate.newCameraPosition(initialCameraPosition),
-        ),
-        child: const Icon(Icons.center_focus_strong),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterTop,
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Colors.white,
+      //   foregroundColor: Colors.black,
+      //   onPressed: () => _googleMapController.animateCamera(
+      //     // CameraUpdate.newCameraPosition(initialCameraPosition)
+      //     _info != null
+      //         ? CameraUpdate.newLatLngBounds(_info.bounds, 100.0)
+      //         : CameraUpdate.newCameraPosition(initialCameraPosition),
+      //   ),
+      //   child: const Icon(Icons.center_focus_strong),
+      // ),
     );
   }
 
   DirectionsRepository() async {
-    String url = 'https://maps.googleapis.com/maps/api/directions/json?origin=${_origin.position.latitude},${_origin.position.longitude}&destination=${_destination.position.latitude},${_destination.position.longitude}&key=$kGoogleApiKey';
+    String url =
+        'https://maps.googleapis.com/maps/api/directions/json?origin=${_origin.position.latitude},${_origin.position.longitude}&destination=${_destination.position.latitude},${_destination.position.longitude}&key=$kGoogleApiKey';
     print(url);
     try {
       http.Response response = await http.get(Uri.parse(url), headers: {
@@ -449,7 +691,8 @@ print('f');
     Location location = new Location();
     try {
       //myLocation = await location.getLocation();
-      var _locationData = await  Geolocator.getCurrentPosition();
+      var permission = await Geolocator.requestPermission();
+      var _locationData = await Geolocator.getCurrentPosition();
 
       _goToPosition1(LatLng(_locationData.latitude, _locationData.longitude));
     } on PlatformException catch (e) {
@@ -476,10 +719,9 @@ print('f');
       initialCameraPosition = CameraPosition(zoom: 15, target: latLng);
     });
     _addMarker(latLng);
-    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
-
+    _googleMapController
+        .animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
   }
-
 
   _launchMaps(LatLng latLng) async {
     String googleUrl =
