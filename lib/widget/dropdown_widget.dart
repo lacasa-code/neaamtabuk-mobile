@@ -1,6 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
+import 'package:provider/provider.dart';
 
 class DropDownWidget extends StatelessWidget {
   const DropDownWidget({
@@ -27,21 +29,30 @@ class DropDownWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Provider.of<ProviderControl>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: DropdownSearch(
         validator: (v) {
-          if (v == null) {
+          if ((v == null && enabled) || (value == null && !enabled)) {
             return "${getTransrlate(context, 'requiredempty')}";
           } else
             return null;
         },
         label: value,
         initialValue: value,
-        dropdownSearchDecoration: const InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
+        dropdownSearchDecoration: InputDecoration(
+          contentPadding: theme.local == 'ar'
+              ? EdgeInsets.fromLTRB(0, 0, 12, 12)
+              : EdgeInsets.fromLTRB(12, 12, 0, 0),
           border: OutlineInputBorder(),
           disabledBorder: OutlineInputBorder(),
+          errorStyle: TextStyle(color: Colors.red),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.red,
+            ),
+          ),
           labelStyle: TextStyle(
             color: Colors.black,
           ),

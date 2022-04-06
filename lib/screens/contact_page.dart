@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pos/main.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/widget/custom_textfield.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart' as util;
 
 class ContactPage extends StatefulWidget {
   @override
@@ -15,277 +19,313 @@ class ContactPage extends StatefulWidget {
 class _ContactPageState extends State<ContactPage> {
   @override
   void initState() {
-
     super.initState();
   }
 
-String phone='0559751131',email='info@neaamtabuk.org';
-  
-  final _formKey = GlobalKey<FormState>();
+  String phone = '0559751131', email = 'info@neaamtabuk.org';
 
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-
     final themeColor = Provider.of<ProviderControl>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(getTransrlate(context, 'contact'))),
+      appBar: AppBar(
+        title: Text(
+          getTransrlate(context, 'contact'),
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: util.ScreenUtil().setSp(17)),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: PopupMenuButton(
+              itemBuilder: (_) => [
+                CheckedPopupMenuItem(
+                  value: 'ar',
+                  checked: themeColor.local == 'ar',
+                  child: Text(
+                    'العربية',
+                  ),
+                ),
+                CheckedPopupMenuItem(
+                  value: 'en',
+                  checked: themeColor.local == 'en',
+                  child: Text(
+                    'English',
+                  ),
+                ),
+              ],
+              child: Icon(
+                Icons.language,
+                color: themeColor.getColor(),
+              ),
+              onSelected: (v) {
+                if (themeColor.local == v) {
+                  return;
+                }
+                themeColor.setLocal(v);
+                MyApp.setlocal(context, Locale(themeColor.getlocal(), ''));
+                SharedPreferences.getInstance().then((prefs) {
+                  prefs.setString('local', themeColor.local);
+                });
+              },
+            ),
+          ),
+        ],
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: Image.asset('assets/images/logo.png',width: ScreenUtil.getWidth(context)/2),
-              ),
+            ContactUsWidget(
+              iconPath: 'assets/icons/phone.png',
+              data: phone,
+              title: getTransrlate(context, 'phone'),
+              onPressed: () {
+                _launchURL('tel:' + phone);
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: IntrinsicHeight(
-                child: Row(
-                  children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text('$phone'),
-                        Text(
-                          getTransrlate(context, 'phone'),
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Expanded(child: Container(height: 10,)),
-                    InkWell(
-                      onTap: (){
-                        _launchURL('sms:'+phone);
-                      },
-                      child: SizedBox(
-                        child: Icon(
-                          Icons.message,
-                          color: themeColor.getColor(),
-                        ),
-                        height: 60,
-                        width: 60,
-                      ),
-                    ),
-                    InkWell(
-                      child: SizedBox(
-                        child: Icon(
-                          Icons.call,
-                          color: themeColor.getColor(),
-                        ),
-                        height: 60,
-                      ),
-                      onTap: (){
-                        _launchURL('tel:'+phone);
-                      },
-                    ),
-                  ],
-                ),
-              ),
+            ContactUsWidget(
+              iconPath: 'assets/icons/email.png',
+              data: email,
+              title: getTransrlate(context, 'Email'),
+              onPressed: () {
+                _launchURL('mailto:' + email);
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: IntrinsicHeight(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                          children: <Widget>[
-                            Text(email),
-                            Text(
-                              getTransrlate(context, 'Email'),
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.grey,
-                              ),
-                            ),
-
-                          ],
-                        ),
-                        InkWell(
-                          onTap: (){
-                            _launchURL('mailto:'+email);
-                          },
-                          child: SizedBox(
-                            child: Icon(
-                              Icons.email,
-                               color: themeColor.getColor(),
-                            ),
-                            height: 60,
-                            width: 60,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                          children: <Widget>[
-                            Text(phone),
-                            Text(
-                              "whats app",
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.grey,
-                              ),
-                            ),
-
-                          ],
-                        ),
-                        InkWell(
-                          onTap: (){
-                            _launchURL("https://api.whatsapp.com/send?phone=559751131&text=%D9%85%D8%B1%D8%AD%D8%A8%20%D8%A8%D9%83%D9%85");
-                          },
-                          child: SizedBox(
-                            child: Icon(
-                              Icons.phone_android,
-                               color: themeColor.getColor(),
-                            ),
-                            height: 60,
-                            width: 60,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            ContactUsWidget(
+              iconPath: 'assets/icons/WhatsApp.png',
+              data: phone,
+              title: 'WhatsApp',
+              onPressed: () {
+                _launchURL(
+                    "https://api.whatsapp.com/send?phone=559751131&text=%D9%85%D8%B1%D8%AD%D8%A8%20%D8%A8%D9%83%D9%85");
+              },
             ),
+            // Padding(
+            //   padding: const EdgeInsets.all(24.0),
+            //   child: IntrinsicHeight(
+            //     child: Row(
+            //       children: <Widget>[
+            //         Column(
+            //           crossAxisAlignment: CrossAxisAlignment.center,
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: <Widget>[
+            //             Text('$phone'),
+            //             Text(
+            //               getTransrlate(context, 'phone'),
+            //               style: TextStyle(
+            //                 fontSize: 11,
+            //                 color: Colors.grey,
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //         Expanded(
+            //             child: Container(
+            //           height: 10,
+            //         )),
+            //         InkWell(
+            //           onTap: () {
+            //             _launchURL('sms:' + phone);
+            //           },
+            //           child: SizedBox(
+            //             child: Icon(
+            //               Icons.message,
+            //               color: themeColor.getColor(),
+            //             ),
+            //             height: 60,
+            //             width: 60,
+            //           ),
+            //         ),
+            //         InkWell(
+            //           child: SizedBox(
+            //             child: Icon(
+            //               Icons.call,
+            //               color: themeColor.getColor(),
+            //             ),
+            //             height: 60,
+            //           ),
+            //           onTap: () {
+            //             _launchURL('tel:' + phone);
+            //           },
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.all(24.0),
+            //   child: IntrinsicHeight(
+            //     child: Column(
+            //       children: <Widget>[
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: <Widget>[
+            //             Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: <Widget>[
+            //                 Text(email),
+            //                 Text(
+            //                   getTransrlate(context, 'Email'),
+            //                   style: TextStyle(
+            //                     fontSize: 11,
+            //                     color: Colors.grey,
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //             InkWell(
+            //               onTap: () {
+            //                 _launchURL('mailto:' + email);
+            //               },
+            //               child: SizedBox(
+            //                 child: Icon(
+            //                   Icons.email,
+            //                   color: themeColor.getColor(),
+            //                 ),
+            //                 height: 60,
+            //                 width: 60,
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: <Widget>[
+            //             Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: <Widget>[
+            //                 Text(phone),
+            //                 Text(
+            //                   "whats app",
+            //                   style: TextStyle(
+            //                     fontSize: 11,
+            //                     color: Colors.grey,
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //             InkWell(
+            //               onTap: () {
+            //                 _launchURL(
+            //                     "https://api.whatsapp.com/send?phone=559751131&text=%D9%85%D8%B1%D8%AD%D8%A8%20%D8%A8%D9%83%D9%85");
+            //               },
+            //               child: SizedBox(
+            //                 child: Icon(
+            //                   Icons.phone_android,
+            //                   color: themeColor.getColor(),
+            //                 ),
+            //                 height: 60,
+            //                 width: 60,
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: themeColor.getColor(),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: Column(
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              getTransrlate(context, 'contact'),
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: <Widget>[
-                              ListTile(
-                                leading: const Icon(Icons.person),
-                                title: new TextField(
-                                  decoration: new InputDecoration(
-                                    hintText: getTransrlate(context, 'name'),
-
-                                  ),
-                                ),
-                              ),
-                              ListTile(
-                                leading: const Icon(Icons.phone),
-                                title: new TextField(
-                                  decoration: new InputDecoration(
-                                    hintText: getTransrlate(context, 'phone'),
-
-                                  ),
-                                ),
-                              ),
-                              ListTile(
-                                leading: const Icon(Icons.email),
-                                title: new TextField(
-                                  decoration: new InputDecoration(
-                                    hintText: getTransrlate(context, 'Email'),
-
-                                  ),
-                                ),
-                              ),
-                              ListTile(
-                                leading: const Icon(Icons.edit),
-                                title: new TextField(
-                                  decoration: new InputDecoration(
-                                    hintText: getTransrlate(context, 'Content'),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Container(
-                          height: 42,
-                          width: ScreenUtil.getWidth(context)/2,
-                          margin: EdgeInsets.only(top: 20, bottom: 12),
-                          child: FlatButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(8.0),
-                              ),
-                              color: themeColor.getColor(),
-                              onPressed: () async {
-                                if (_formKey.currentState.validate()) {
-                                  _formKey.currentState.save();
-                                  FocusScope.of(context).requestFocus(new FocusNode());
-                                //  setState(() => _isLoading = true);
-                                }
-                              },
-                              child: Text(
-                                getTransrlate(context, 'Submit'),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ),
-
-
-                      ],
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              child: Column(
+                children: <Widget>[
+                  MyTextFormField(
+                    istitle: true,
+                    hintText: 'name',
+                    prefix: ImageIcon(
+                      AssetImage('assets/icons/user.png'),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  getTransrlate(context, 'ThankYou'),
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w300,
+                  MyTextFormField(
+                    istitle: true,
+                    hintText: 'phone',
+                    prefix: ImageIcon(
+                      AssetImage('assets/icons/phone.png'),
+                    ),
                   ),
-                ),
+                  MyTextFormField(
+                    istitle: true,
+                    hintText: 'Email',
+                    prefix: ImageIcon(
+                      AssetImage('assets/icons/email.png'),
+                    ),
+                  ),
+                  MyTextFormField(
+                    istitle: true,
+                    hintText: 'Content',
+                    prefix: ImageIcon(
+                      AssetImage('assets/icons/edit.png'),
+                    ),
+                  ),
+                  Container(
+                    height: 42,
+                    width: ScreenUtil.getWidth(context),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xff2CA649),
+                          Color(0xff2CA649),
+                          Color(0xff4BB146),
+                          Color(0xff4BB146),
+                          Color(0xff66BA44),
+                          Color(0xff77C042),
+                        ],
+                      ),
+                    ),
+                    margin: EdgeInsets.only(
+                      top: 20,
+                      bottom: 12,
+                    ),
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(8.0),
+                      ),
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          //  setState(() => _isLoading = true);
+                        }
+                      },
+                      child: Text(
+                        getTransrlate(context, 'Submit'),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-
+            // Padding(
+            //   padding: const EdgeInsets.all(24),
+            //   child: Align(
+            //     alignment: Alignment.center,
+            //     child: Text(
+            //       getTransrlate(context, 'ThankYou'),
+            //       style: TextStyle(
+            //         fontSize: 17,
+            //         color: Colors.grey,
+            //         fontWeight: FontWeight.w300,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
     );
   }
-
 
   Container contactItem(
       String title, String description, String secondDescription) {
@@ -319,8 +359,7 @@ String phone='0559751131',email='info@neaamtabuk.org';
             RichText(
               text: TextSpan(
                 text: description,
-                style: TextStyle(
-                   fontWeight: FontWeight.w400),
+                style: TextStyle(fontWeight: FontWeight.w400),
               ),
             ),
             RichText(
@@ -333,6 +372,7 @@ String phone='0559751131',email='info@neaamtabuk.org';
       ),
     );
   }
+
   _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -340,5 +380,71 @@ String phone='0559751131',email='info@neaamtabuk.org';
       throw 'Could not launch $url';
     }
   }
+}
 
+class ContactUsWidget extends StatelessWidget {
+  const ContactUsWidget({
+    Key key,
+    @required this.iconPath,
+    @required this.title,
+    @required this.data,
+    @required this.onPressed,
+  }) : super(key: key);
+
+  final String iconPath;
+  final String title;
+  final String data;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final themeColor = Provider.of<ProviderControl>(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: onPressed,
+                child: ImageIcon(
+                  AssetImage(
+                    iconPath,
+                  ),
+                  color: themeColor.getColor(),
+                ),
+              ),
+              SizedBox(
+                width: util.ScreenUtil().setWidth(10),
+              ),
+              Text(
+                title,
+                style: TextStyle(
+                  color: themeColor.getColor(),
+                  fontWeight: FontWeight.bold,
+                  fontSize: util.ScreenUtil().setSp(16),
+                ),
+              ),
+              SizedBox(
+                width: util.ScreenUtil().setWidth(10),
+              ),
+              Text(
+                data ?? '',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: util.ScreenUtil().setSp(16),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: util.ScreenUtil().setHeight(10),
+        ),
+      ],
+    );
+  }
 }

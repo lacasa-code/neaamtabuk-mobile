@@ -30,9 +30,11 @@ class MyTextFormField extends StatelessWidget {
   final FocusNode focus;
   final TextEditingController controller;
   final TextAlign textAlign;
+  final bool autoFocus;
 
   MyTextFormField(
       {this.hintText,
+      this.autoFocus = false,
       this.validator,
       this.minLines,
       this.maxLines,
@@ -81,6 +83,7 @@ class MyTextFormField extends StatelessWidget {
                   height: 4,
                 ),
           TextFormField(
+            autofocus: autoFocus,
             textAlign: textAlign ?? TextAlign.start,
             controller: controller,
             focusNode: focus,
@@ -108,6 +111,13 @@ class MyTextFormField extends StatelessWidget {
                 ),
               ),
               enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(1.0),
+                borderSide: BorderSide(
+                  color: Colors.black12,
+                  width: 1.0,
+                ),
+              ),
+              disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(1.0),
                 borderSide: BorderSide(
                   color: Colors.black12,

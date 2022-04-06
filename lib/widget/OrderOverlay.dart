@@ -3,11 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/model/neerRecipentModel.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
+import 'package:flutter_pos/screens/tab_screen.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/home_provider.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/utils/tab_provider.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +66,6 @@ class OrderOverlayState extends State<OrderOverlay>
           scale: scaleAnimation,
           child: Container(
             width: ScreenUtil.getWidth(context),
-
             decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -87,152 +89,158 @@ class OrderOverlayState extends State<OrderOverlay>
                     recipent == null
                         ? Container()
                         : Padding(
-                        padding: EdgeInsets.only(
-                            left: 25.0,
-                            right: 25.0,
-                            top: 10.0,
-                            bottom: 10),
-                        child: DropdownSearch<NeerRecipent>(
-                          mode: Mode.DIALOG,
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 10.0, bottom: 10),
+                            child: DropdownSearch<NeerRecipent>(
+                              mode: Mode.DIALOG,
 
-                          dropdownBuilder: (context, item) {
-                            return item == null
-                                ? Container()
-                                : Padding(
-                              padding:
-                              const EdgeInsets.all(
-                                  8.0),
-                              child: Text(
-                                  " ${item?.username} "),
-                            );
-                          },
-                          validator: (NeerRecipent item) {
-                            if (item == null) {
-                              return "${getTransrlate(context, 'requiredempty')}";
-                            } else
-                              return null;
-                          },
-                          items: recipent,
-                          popupItemBuilder:
-                          _customPopupItemBuilderExample,
-                          //  onFind: (String filter) => getData(filter),
-                          onChanged: (NeerRecipent u) {
-                            setState(() {
-                              trakers = u;
-                            });
-                          },
-                          itemAsString: (NeerRecipent u) =>
-                          " ${u.username} ",
-                        )),
+                              dropdownBuilder: (context, item) {
+                                return item == null
+                                    ? Container()
+                                    : Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(" ${item?.username} "),
+                                      );
+                              },
+                              validator: (NeerRecipent item) {
+                                if (item == null) {
+                                  return "${getTransrlate(context, 'requiredempty')}";
+                                } else
+                                  return null;
+                              },
+                              items: recipent,
+                              popupItemBuilder: _customPopupItemBuilderExample,
+                              //  onFind: (String filter) => getData(filter),
+                              onChanged: (NeerRecipent u) {
+                                setState(() {
+                                  trakers = u;
+                                });
+                              },
+                              itemAsString: (NeerRecipent u) =>
+                                  " ${u.username} ",
+                            )),
                     trakers == null
                         ? Container()
                         : Column(
-                          children: [
-                            Container(
-                      height: 40,
-                      //width: ScreenUtil.getWidth(context),
-                      margin: EdgeInsets.only(
-                              top: 12, bottom: 0),
-                      child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                              new BorderRadius.circular(
-                                  1.0),
-                            ),
-                            color: theme.getColor(),
-                            onPressed: () async {
-                              if (formKey.currentState
-                                  .validate()) {
-                                formKey.currentState.save();
-                                API(context).post('orderRecipent/${widget.donation_id}', {
-                                  'recipient_id': trakers.id,
-                                  'status_id': 2,
-                                }).then((value) {
-                                  print(value);
-                                  if (value['status'] == true) {
-
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) =>
-                                            ResultOverlay(
-                                                '${value['message']}')).whenComplete(() {
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                      Nav.routeReplacement(
-                                          context, Delegate());
-                                    });
-                                  } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) =>
-                                            ResultOverlay(
-                                                '${value['message']}'));
-                                  }
-                                });
-                              }
-                            },
-                            child: Text(
-                              getTransrlate(
-                                  context, 'placeorder'),
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
+                            children: [
+                              Container(
+                                height: 40,
+                                //width: ScreenUtil.getWidth(context),
+                                margin: EdgeInsets.only(top: 12, bottom: 0),
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(1.0),
+                                  ),
+                                  color: theme.getColor(),
+                                  onPressed: () async {
+                                    if (formKey.currentState.validate()) {
+                                      formKey.currentState.save();
+                                      API(context).post(
+                                          'orderRecipent/${widget.donation_id}',
+                                          {
+                                            'recipient_id': trakers.id,
+                                            'status_id': 2,
+                                          }).then((value) {
+                                        print(value);
+                                        if (value['status'] == true) {
+                                          showDialog(
+                                                  context: context,
+                                                  builder: (_) => ResultOverlay(
+                                                      '${value['message']}'))
+                                              .whenComplete(() {
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                            Nav.routeReplacement(
+                                              context,
+                                              MultiProvider(
+                                                providers: [
+                                                  ChangeNotifierProvider(
+                                                    create: (_) =>
+                                                        TabProvider(),
+                                                  ),
+                                                  ChangeNotifierProvider(
+                                                    create: (_) =>
+                                                        HomeProvider()
+                                                          ..changeTabIndex(2),
+                                                  ),
+                                                ],
+                                                child: TabScreen(
+                                                  homeTabIndex: 2,
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) => ResultOverlay(
+                                                  '${value['message']}'));
+                                        }
+                                      });
+                                    }
+                                  },
+                                  child: Text(
+                                    getTransrlate(context, 'placeorder'),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                      ),
-                    ),
-                    //         Container(
-                    //   height: 40,
-                    //   //width: ScreenUtil.getWidth(context),
-                    //   margin: EdgeInsets.only(
-                    //           top: 12, bottom: 0),
-                    //   child: FlatButton(
-                    //         shape: RoundedRectangleBorder(
-                    //           borderRadius:
-                    //           new BorderRadius.circular(
-                    //               1.0),
-                    //         ),
-                    //         color: theme.getColor(),
-                    //         onPressed: () async {
-                    //           if (formKey.currentState
-                    //               .validate()) {
-                    //             formKey.currentState.save();
-                    //             API(context).post('closeAt/${widget.donation_id}', {
-                    //             }).then((value) {
-                    //               print(value);
-                    //               if (value['status'] == true) {
-                    //                 Navigator.pop(context);
-                    //                 Nav.routeReplacement(
-                    //                     context, Delegate());
-                    //
-                    //                 showDialog(
-                    //                     context: context,
-                    //                     builder: (_) =>
-                    //                         ResultOverlay(
-                    //                             '${value['message']}'));
-                    //               } else {
-                    //                 showDialog(
-                    //                     context: context,
-                    //                     builder: (_) =>
-                    //                         ResultOverlay(
-                    //                             '${value['message']}'));
-                    //               }
-                    //             });
-                    //           }
-                    //         },
-                    //         child: Text(
-                    //          "قفل الطلب",
-                    //           style: TextStyle(
-                    //             fontSize: 16,
-                    //             color: Colors.white,
-                    //             fontWeight: FontWeight.w400,
-                    //           ),
-                    //         ),
-                    //   ),
-                    // ),
-                          ],
-                        )
+                              //         Container(
+                              //   height: 40,
+                              //   //width: ScreenUtil.getWidth(context),
+                              //   margin: EdgeInsets.only(
+                              //           top: 12, bottom: 0),
+                              //   child: FlatButton(
+                              //         shape: RoundedRectangleBorder(
+                              //           borderRadius:
+                              //           new BorderRadius.circular(
+                              //               1.0),
+                              //         ),
+                              //         color: theme.getColor(),
+                              //         onPressed: () async {
+                              //           if (formKey.currentState
+                              //               .validate()) {
+                              //             formKey.currentState.save();
+                              //             API(context).post('closeAt/${widget.donation_id}', {
+                              //             }).then((value) {
+                              //               print(value);
+                              //               if (value['status'] == true) {
+                              //                 Navigator.pop(context);
+                              //                 Nav.routeReplacement(
+                              //                     context, Delegate());
+                              //
+                              //                 showDialog(
+                              //                     context: context,
+                              //                     builder: (_) =>
+                              //                         ResultOverlay(
+                              //                             '${value['message']}'));
+                              //               } else {
+                              //                 showDialog(
+                              //                     context: context,
+                              //                     builder: (_) =>
+                              //                         ResultOverlay(
+                              //                             '${value['message']}'));
+                              //               }
+                              //             });
+                              //           }
+                              //         },
+                              //         child: Text(
+                              //          "قفل الطلب",
+                              //           style: TextStyle(
+                              //             fontSize: 16,
+                              //             color: Colors.white,
+                              //             fontWeight: FontWeight.w400,
+                              //           ),
+                              //         ),
+                              //   ),
+                              // ),
+                            ],
+                          )
                   ],
                 ),
               ),
@@ -242,6 +250,7 @@ class OrderOverlayState extends State<OrderOverlay>
       ),
     );
   }
+
   Widget _customPopupItemBuilderExample(
       BuildContext context, NeerRecipent item, bool isSelected) {
     return Container(
@@ -249,10 +258,10 @@ class OrderOverlayState extends State<OrderOverlay>
       decoration: !isSelected
           ? null
           : BoxDecoration(
-        border: Border.all(color: Theme.of(context).primaryColor),
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.white,
-      ),
+              border: Border.all(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
       child: ListTile(
         selected: isSelected,
         title: Text(item?.username ?? ''),
@@ -260,12 +269,15 @@ class OrderOverlayState extends State<OrderOverlay>
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("${getTransrlate(context,"phone")} : 0${item?.mobile?.toString() ?? ''}"),
-            Text("${getTransrlate(context,"family_members")} : ${item?.family_members?.toString() ?? ''}"),
+            Text(
+                "${getTransrlate(context, "phone")} : 0${item?.mobile?.toString() ?? ''}"),
+            Text(
+                "${getTransrlate(context, "family_members")} : ${item?.family_members?.toString() ?? ''}"),
           ],
         ),
         leading: CircleAvatar(
-          child: Text("${double.tryParse(item?.distance??'0').roundToDouble()}K"),
+          child: Text(
+              "${double.tryParse(item?.distance ?? '0').roundToDouble()}K"),
         ),
       ),
     );

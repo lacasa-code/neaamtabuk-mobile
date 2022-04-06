@@ -2,8 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/screens/tab_screen.dart';
+import 'package:flutter_pos/utils/tab_provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart' as util;
 import 'package:flutter/services.dart';
+import 'package:flutter_pos/screens/about_page.dart';
 import 'package:flutter_pos/screens/account/login.dart';
+import 'package:flutter_pos/screens/account/user_information.dart';
+import 'package:flutter_pos/screens/contact_page.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/service/api.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
@@ -57,21 +63,37 @@ class _SplashScreenState extends State<SplashScreen>
           child: Padding(
             padding: const EdgeInsets.only(top: 100, bottom: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  // height: ScreenUtil.getHeight(context) / 2,
-                  // width: ScreenUtil.getWidth(context) / 1.5,
-                  child: Image.asset(
-                    'assets/images/logoIcon.png',
-                  ),
+                SizedBox(
+                  height: util.ScreenUtil().setHeight(70),
                 ),
-                Container(
-                  // height: ScreenUtil.getHeight(context) / 2,
-                  // width: ScreenUtil.getWidth(context) / 1.5,
-                  child: Image.asset(
-                    'assets/images/logoText.png',
-                  ),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      child: Image.asset(
+                        'assets/images/logoIcon.png',
+                        // width: ScreenUtil.getWidth(context) / 2,
+                      ),
+                      // height: ScreenUtil.getHeight(context) / 4,
+                    ),
+                    Positioned(
+                      right: -util.ScreenUtil().setWidth(80),
+                      left: -util.ScreenUtil().setWidth(80),
+                      bottom: -util.ScreenUtil().setWidth(110),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          child: Image.asset(
+                            'assets/images/logoText.png',
+                            // width: ScreenUtil.getWidth(context) / 2,
+                          ),
+                          // height: ScreenUtil.getHeight(context) / 4,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -96,7 +118,14 @@ class _SplashScreenState extends State<SplashScreen>
           // prefs.setString("user_name", "${user['name']}");
           // prefs.setInt("user_id", user['id']);
           themeColor.setLogin(true);
-          Nav.routeReplacement(context, Home());
+          Nav.routeReplacement(
+            context,
+            ChangeNotifierProvider<TabProvider>(
+              create: (_) => TabProvider(),
+              child: TabScreen(),
+            ),
+          );
+          // Nav.routeReplacement(context, Home());
         } else {
           themeColor.setLogin(false);
           SharedPreferences.getInstance().then((prefs) {

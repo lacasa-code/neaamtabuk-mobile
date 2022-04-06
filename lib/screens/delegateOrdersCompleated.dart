@@ -235,7 +235,8 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
                                                         minFontSize: 10,
                                                         style: TextStyle(
                                                           fontSize: 13,
-                                                          color: Colors.black,
+                                                          color:
+                                                              Color(0xff1ca04a),
                                                         ),
                                                       ),
                                                     ],
@@ -265,7 +266,8 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
                                                         minFontSize: 10,
                                                         style: TextStyle(
                                                           fontSize: 13,
-                                                          color: Colors.black,
+                                                          color:
+                                                              Color(0xff1ca04a),
                                                         ),
                                                       ),
                                                     ],
@@ -337,26 +339,26 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Row(
-                                          children: [
-                                            AutoSizeText(
-                                              '${getTransrlate(context, 'OrderState')}  : ',
-                                              maxLines: 1,
-                                            ),
-                                            Center(
-                                              child: AutoSizeText(
-                                                '${orders[index].status}',
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                                maxFontSize: 13,
-                                                minFontSize: 10,
-                                                style: TextStyle(
-                                                    color:
-                                                        themeColor.getColor()),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                        // Row(
+                                        //   children: [
+                                        //     AutoSizeText(
+                                        //       '${getTransrlate(context, 'OrderState')}  : ',
+                                        //       maxLines: 1,
+                                        //     ),
+                                        //     Center(
+                                        //       child: AutoSizeText(
+                                        //         '${orders[index].status}',
+                                        //         textAlign: TextAlign.center,
+                                        //         maxLines: 2,
+                                        //         maxFontSize: 13,
+                                        //         minFontSize: 10,
+                                        //         style: TextStyle(
+                                        //             color:
+                                        //                 themeColor.getColor()),
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // ),
                                         orders[index].close != null
                                             ? Container()
                                             : Align(

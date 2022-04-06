@@ -8,6 +8,7 @@ import 'package:flutter_pos/screens/account/addOrder.dart';
 import 'package:flutter_pos/screens/map.dart';
 import 'package:flutter_pos/screens/widgets/orders_text_widget.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/home_provider.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -71,15 +72,6 @@ class _DelegateState extends State<Delegate> {
                 ? Center(child: Custom_Loading())
                 : SingleChildScrollView(
                     child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1.0,
-                          color: themeColor.getColor(),
-                        ),
-                      ),
                       child: Column(
                         children: [
                           orders.isEmpty
@@ -94,319 +86,341 @@ class _DelegateState extends State<Delegate> {
                                   itemCount: orders.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 5,
+                                    return Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 1.0,
+                                          color: themeColor.getColor(),
                                         ),
-                                        OrderTextWidget(
-                                          title:
-                                              '${getTransrlate(context, 'OrderNO').split('!')[0]}: ',
-                                          description:
-                                              '#${orders[index].donationNumber}',
-                                        ),
-                                        // Row(
-                                        //   mainAxisAlignment:
-                                        //       MainAxisAlignment.spaceBetween,
-                                        //   children: [
-                                        //     Container(
-                                        //         width: ScreenUtil.getWidth(
-                                        //                 context) /
-                                        //             2.5,
-                                        //         child: AutoSizeText(
-                                        //           '#${orders[index].donation_number}',
-                                        //           maxLines: 1,
-                                        //           style:
-                                        //               TextStyle(fontSize: 13),
-                                        //         )),
-                                        //   ],
-                                        // ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        OrderTextWidget(
-                                          description:
-                                              orders[index].donationUsername,
-                                          title: '${getTransrlate(
-                                            context,
-                                            'Donation_name',
-                                          )} : ',
-                                        ),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          OrderTextWidget(
+                                            title:
+                                                '${getTransrlate(context, 'OrderNO').split('!')[0]}: ',
+                                            description:
+                                                '#${orders[index].donationNumber}',
+                                          ),
+                                          // Row(
+                                          //   mainAxisAlignment:
+                                          //       MainAxisAlignment.spaceBetween,
+                                          //   children: [
+                                          //     Container(
+                                          //         width: ScreenUtil.getWidth(
+                                          //                 context) /
+                                          //             2.5,
+                                          //         child: AutoSizeText(
+                                          //           '#${orders[index].donation_number}',
+                                          //           maxLines: 1,
+                                          //           style:
+                                          //               TextStyle(fontSize: 13),
+                                          //         )),
+                                          //   ],
+                                          // ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          OrderTextWidget(
+                                            description:
+                                                orders[index].donationUsername,
+                                            title: '${getTransrlate(
+                                              context,
+                                              'Donation_name',
+                                            )} : ',
+                                          ),
 
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        OrderTextWidget(
-                                          width: ScreenUtil.getWidth(context) /
-                                              1.5,
-                                          description:
-                                              orders[index].donationMobile,
-                                          title: '${getTransrlate(
-                                            context,
-                                            'phone',
-                                          )} : ',
-                                        ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          OrderTextWidget(
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    1.5,
+                                            description:
+                                                orders[index].donationMobile,
+                                            title: '${getTransrlate(
+                                              context,
+                                              'phone',
+                                            )} : ',
+                                          ),
 
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        OrderTextWidget(
-                                          width: ScreenUtil.getWidth(context) /
-                                              1.5,
-                                          description:
-                                              orders[index].delivary_date,
-                                          title: '${getTransrlate(
-                                            context,
-                                            'OrderDate',
-                                          )} : ',
-                                        ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          OrderTextWidget(
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    1.5,
+                                            description: orders[index]
+                                                .delivary_date
+                                                ?.substring(0, 10)
+                                                ?.replaceAll('-', '/'),
+                                            title: '${getTransrlate(
+                                              context,
+                                              'OrderDate',
+                                            )} : ',
+                                          ),
 
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        OrderTextWidget(
-                                          width: ScreenUtil.getWidth(context) /
-                                              1.5,
-                                          description: orders[index].category,
-                                          title: '${getTransrlate(
-                                            context,
-                                            'category',
-                                          )} : ',
-                                        ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          OrderTextWidget(
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    1.5,
+                                            description: orders[index].category,
+                                            title: '${getTransrlate(
+                                              context,
+                                              'category',
+                                            )} : ',
+                                          ),
 
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        OrderTextWidget(
-                                          width: ScreenUtil.getWidth(context) /
-                                              1.5,
-                                          description:
-                                              '${double.tryParse(orders[index].distance).toStringAsFixed(4)} Km',
-                                          title: '${getTransrlate(
-                                            context,
-                                            'distance',
-                                          )} : ',
-                                        ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          OrderTextWidget(
+                                            width:
+                                                ScreenUtil.getWidth(context) /
+                                                    1.5,
+                                            description:
+                                                '${double.tryParse(orders[index].distance).toStringAsFixed(4)} Km',
+                                            title: '${getTransrlate(
+                                              context,
+                                              'distance',
+                                            )} : ',
+                                          ),
 
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        orders[index].category_id == '1'
-                                            ? Column(
-                                                children: [
-                                                  Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      AutoSizeText(
-                                                        '${getTransrlate(context, 'NoOfmeals')} : ',
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 13,
-                                                          color: Colors.black,
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          orders[index].category_id == '1'
+                                              ? Column(
+                                                  children: [
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        AutoSizeText(
+                                                          '${getTransrlate(context, 'NoOfmeals')} : ',
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 13,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      AutoSizeText(
-                                                        '${orders[index].number_of_meals ?? ''}',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        maxLines: 2,
-                                                        maxFontSize: 13,
-                                                        minFontSize: 10,
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                          color: Colors.black,
+                                                        AutoSizeText(
+                                                          '${orders[index].number_of_meals ?? ''}',
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          maxLines: 2,
+                                                          maxFontSize: 13,
+                                                          minFontSize: 10,
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      AutoSizeText(
-                                                        '${getTransrlate(context, 'status_distribute')}  : ',
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                      AutoSizeText(
-                                                        '${orders[index].readyToDistribute == '1' ? getTransrlate(context, 'distribute') : getTransrlate(context, 'nondistribute')} ',
-                                                        // '${orders[index].number_of_meals ?? ''}',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        maxLines: 2,
-                                                        maxFontSize: 13,
-                                                        minFontSize: 10,
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      AutoSizeText(
-                                                        '${getTransrlate(context, 'status_pack')}  : ',
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                      AutoSizeText(
-                                                        '${orders[index].readyToPack == '1' ? getTransrlate(context, 'pack') : getTransrlate(context, 'nonpack')} ',
-                                                        // '${orders[index].number_of_meals ?? ''}',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        maxLines: 2,
-                                                        maxFontSize: 13,
-                                                        minFontSize: 10,
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              )
-                                            : Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  AutoSizeText(
-                                                    '${getTransrlate(context, 'desc')}  : ',
-                                                    maxLines: 1,
-                                                    style: TextStyle(
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black,
+                                                      ],
                                                     ),
-                                                  ),
-                                                  Container(
-                                                    width: ScreenUtil.getWidth(
-                                                            context) /
-                                                        1.5,
-                                                    child: AutoSizeText(
-                                                      '${orders[index].description ?? "لا يوجد  "}',
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      maxLines: 2,
-                                                      maxFontSize: 13,
-                                                      minFontSize: 10,
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        AutoSizeText(
+                                                          '${getTransrlate(context, 'status_distribute')}  : ',
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                        AutoSizeText(
+                                                          '${orders[index].readyToDistribute == '1' ? getTransrlate(context, 'distribute') : getTransrlate(context, 'nondistribute')} ',
+                                                          // '${orders[index].number_of_meals ?? ''}',
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          maxLines: 2,
+                                                          maxFontSize: 13,
+                                                          minFontSize: 10,
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            color: Color(
+                                                                0xff1ca04a),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        AutoSizeText(
+                                                          '${getTransrlate(context, 'status_pack')}  : ',
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                        AutoSizeText(
+                                                          '${orders[index].readyToPack == '1' ? getTransrlate(context, 'pack') : getTransrlate(context, 'nonpack')} ',
+                                                          // '${orders[index].number_of_meals ?? ''}',
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          maxLines: 2,
+                                                          maxFontSize: 13,
+                                                          minFontSize: 10,
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            color: Color(
+                                                                0xff1ca04a),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                )
+                                              : Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    AutoSizeText(
+                                                      '${getTransrlate(context, 'desc')}  : ',
+                                                      maxLines: 1,
                                                       style: TextStyle(
                                                         fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                         color: Colors.black,
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          children: [
-                                            AutoSizeText(
-                                              '${getTransrlate(context, 'OrderState')}  : ',
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Center(
-                                              child: AutoSizeText(
-                                                '${orders[index].status}',
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                                maxFontSize: 13,
-                                                minFontSize: 10,
+                                                    Container(
+                                                      width:
+                                                          ScreenUtil.getWidth(
+                                                                  context) /
+                                                              2,
+                                                      child: AutoSizeText(
+                                                        '${orders[index].description ?? "لا يوجد  "}',
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        maxLines: 2,
+                                                        maxFontSize: 13,
+                                                        minFontSize: 10,
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              AutoSizeText(
+                                                '${getTransrlate(context, 'OrderState')}  : ',
+                                                maxLines: 1,
                                                 style: TextStyle(
                                                   fontSize: 13,
+                                                  fontWeight: FontWeight.bold,
                                                   color: Colors.black,
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Container(
-                                            // height: 42,
-                                            width:
-                                                ScreenUtil.getWidth(context) *
-                                                    0.4,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(9),
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Color(0xff2CA649),
-                                                  Color(0xff2CA649),
-                                                  Color(0xff4BB146),
-                                                  Color(0xff4BB146),
-                                                  Color(0xff66BA44),
-                                                  Color(0xff77C042),
-                                                ],
+                                              Center(
+                                                child: AutoSizeText(
+                                                  '${orders[index].status}',
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  maxFontSize: 13,
+                                                  minFontSize: 10,
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                            margin: EdgeInsets.only(
-                                                top: 10, bottom: 10),
-                                            child: TextButton(
-                                              onPressed: () {
-                                                Nav.route(
-                                                    context,
-                                                    MapPage(
-                                                        orders[index].status_id,
-                                                        orders[index].id,
-                                                        orders[index]
-                                                            .donationLatitude,
-                                                        orders[index]
-                                                            .donationLongitude,
-                                                        orders[index]
-                                                            .distance));
-                                              },
-                                              child: AutoSizeText(
-                                                '${orders[index].status_id != "1" ? getTransrlate(context, 'Orderreceved') : getTransrlate(context, 'Orderdelivery')} ',
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 14,
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Container(
+                                              // height: 42,
+                                              width:
+                                                  ScreenUtil.getWidth(context) *
+                                                      0.4,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(9),
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0xff2CA649),
+                                                    Color(0xff2CA649),
+                                                    Color(0xff4BB146),
+                                                    Color(0xff4BB146),
+                                                    Color(0xff66BA44),
+                                                    Color(0xff77C042),
+                                                  ],
+                                                ),
+                                              ),
+                                              margin: EdgeInsets.only(
+                                                  top: 10, bottom: 10),
+                                              child: TextButton(
+                                                onPressed: () {
+                                                  Nav.route(
+                                                      context,
+                                                      MapPage(
+                                                          orders[index]
+                                                              .status_id,
+                                                          orders[index].id,
+                                                          orders[index]
+                                                              .donationLatitude,
+                                                          orders[index]
+                                                              .donationLongitude,
+                                                          orders[index]
+                                                              .distance));
+                                                },
+                                                child: AutoSizeText(
+                                                  '${orders[index].status_id != "1" ? getTransrlate(context, 'Orderreceved') : getTransrlate(context, 'Orderdelivery')} ',
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        //
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
+                                          //
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      ),
                                     );
                                   },
                                 ),

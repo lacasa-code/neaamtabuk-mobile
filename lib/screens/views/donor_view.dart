@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/Categories_model.dart';
 import 'package:flutter_pos/screens/widgets/page_header_widget.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/home_provider.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
@@ -86,8 +87,10 @@ class _VolunteerViewState extends State<VolunteerView>
                 if (v == null) {
                   return;
                 }
-                categoriesItem =
-                    catedories.firstWhere((element) => element.name == v);
+                setState(() {
+                  categoriesItem =
+                      catedories.firstWhere((element) => element.name == v);
+                });
               },
               prefixIcon: ImageIcon(
                 AssetImage('assets/icons/category.png'),
@@ -221,77 +224,253 @@ class _VolunteerViewState extends State<VolunteerView>
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: MyTextFormField(
-                hintText: 'NoOfmeals', istitle: true,
-                prefix: ImageIcon(
-                  AssetImage('assets/icons/meal.png'),
-                ),
-                // hintText:
-                // getTransrlate(context, 'NoOfmeals'),
-                enabled: true,
-                validator: (String value) {
-                  if (value.isEmpty) {
-                    return getTransrlate(context, 'requiredempty');
-                  }
-                  _formKey.currentState.save();
-                  return null;
-                },
-                keyboard_type: TextInputType.number,
-                onSaved: (String value) {
-                  noOfMeals = value;
-                },
-              ),
-            ),
-            DropDownWidget(
-              dropDownMode: Mode.MENU,
-              hint: 'ready_to_distribute',
-              items: [
-                getTransrlate(context, 'yes'),
-                getTransrlate(context, 'no'),
-              ],
-              onChanged: (v) {
-                if (v == null) {
-                  return;
-                }
-                setState(() {
-                  if (v == getTransrlate(context, 'yes')) {
-                    readyToDistribute = 1;
-                  } else {
-                    readyToDistribute = 0;
-                  }
-                  distributeLabel = v;
-                });
-              },
-              prefixIcon: ImageIcon(
-                AssetImage('assets/icons/meal.png'),
-              ),
-            ),
-            DropDownWidget(
-              dropDownMode: Mode.MENU,
-              hint: 'ready_to_pack',
-              items: [
-                getTransrlate(context, 'yes'),
-                getTransrlate(context, 'no'),
-              ],
-              onChanged: (v) {
-                if (v == null) {
-                  return;
-                }
-                setState(() {
-                  if (v == getTransrlate(context, 'yes')) {
-                    readyToPack = 1;
-                  } else {
-                    readyToPack = 0;
-                  }
-                  packLabel = v;
-                });
-              },
-              prefixIcon: ImageIcon(
-                AssetImage('assets/icons/meal.png'),
-              ),
-            ),
+            categoriesItem?.id != 1
+                ? Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                        ),
+                        child: MyTextFormField(
+                          hintText: 'desc',
+                          istitle: true,
+                          prefix: ImageIcon(
+                            AssetImage('assets/icons/edit.png'),
+                          ),
+                          labelText: getTransrlate(context, 'desc'),
+                          // hintText: getTransrlate(context, 'desc'),
+                          // isEmail: true,
+                          enabled: true,
+                          // validator: (String value) {
+                          //   if (value.isEmpty) {
+                          //     return getTransrlate(
+                          //         context, 'requiredempty');
+                          //   }
+                          //   _formKey.currentState.save();
+                          //   return null;
+                          // },
+                          keyboard_type: TextInputType.multiline,
+                          onSaved: (String value) {
+                            desc = value;
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: MyTextFormField(
+                          hintText: 'NoOfmeals', istitle: true,
+                          prefix: ImageIcon(
+                            AssetImage('assets/icons/meal.png'),
+                          ),
+                          // hintText:
+                          // getTransrlate(context, 'NoOfmeals'),
+                          enabled: true,
+                          validator: (String value) {
+                            if (value.isEmpty) {
+                              return getTransrlate(context, 'requiredempty');
+                            }
+                            _formKey.currentState.save();
+                            return null;
+                          },
+                          keyboard_type: TextInputType.number,
+                          onSaved: (String value) {
+                            noOfMeals = value;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ImageIcon(
+                              AssetImage('assets/icons/meal.png'),
+                              color: themeColor.getColor(),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              getTransrlate(context, 'ready_to_distribute'),
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                color: themeColor.getColor(),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Radio(
+                                  value: 1,
+                                  groupValue: readyToDistribute,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      readyToDistribute = v;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  getTransrlate(context, 'yes'),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  value: 0,
+                                  groupValue: readyToDistribute,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      readyToDistribute = v;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  getTransrlate(context, 'no'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ImageIcon(
+                              AssetImage('assets/icons/meal.png'),
+                              color: themeColor.getColor(),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              getTransrlate(context, 'ready_to_pack'),
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                color: themeColor.getColor(),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Radio(
+                                  value: 1,
+                                  groupValue: readyToPack,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      readyToPack = v;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  getTransrlate(context, 'yes'),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  value: 0,
+                                  groupValue: readyToPack,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      readyToPack = v;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  getTransrlate(context, 'no'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+            // DropDownWidget(
+            //   dropDownMode: Mode.MENU,
+            //   hint: 'ready_to_distribute',
+            //   items: [
+            //     getTransrlate(context, 'yes'),
+            //     getTransrlate(context, 'no'),
+            //   ],
+            //   onChanged: (v) {
+            //     if (v == null) {
+            //       return;
+            //     }
+            //     setState(() {
+            //       if (v == getTransrlate(context, 'yes')) {
+            //         readyToDistribute = 1;
+            //       } else {
+            //         readyToDistribute = 0;
+            //       }
+            //       distributeLabel = v;
+            //     });
+            //   },
+            //   prefixIcon: ImageIcon(
+            //     AssetImage('assets/icons/meal.png'),
+            //   ),
+            // ),
+            // DropDownWidget(
+            //   dropDownMode: Mode.MENU,
+            //   hint: 'ready_to_pack',
+            //   items: [
+            //     getTransrlate(context, 'yes'),
+            //     getTransrlate(context, 'no'),
+            //   ],
+            //   onChanged: (v) {
+            //     if (v == null) {
+            //       return;
+            //     }
+            //     setState(() {
+            //       if (v == getTransrlate(context, 'yes')) {
+            //         readyToPack = 1;
+            //       } else {
+            //         readyToPack = 0;
+            //       }
+            //       packLabel = v;
+            //     });
+            //   },
+            //   prefixIcon: ImageIcon(
+            //     AssetImage('assets/icons/meal.png'),
+            //   ),
+            // ),
             Container(
               height: 40,
               width: ScreenUtil.getWidth(context),
@@ -352,7 +531,7 @@ class _VolunteerViewState extends State<VolunteerView>
     }).then((value) {
       print(value);
       if (value['status'] == true) {
-        Navigator.pop(context);
+        Provider.of<HomeProvider>(context, listen: false).changeTabIndex(0);
 
         showDialog(
             context: context,

@@ -1,21 +1,16 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/screens/DonorOrders.dart';
 import 'package:flutter_pos/screens/OrderHistory.dart';
 import 'package:flutter_pos/screens/RecipentOrders.dart';
-import 'package:flutter_pos/screens/account/volunteer.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/screens/delegateOrdersCompleated.dart';
 import 'package:flutter_pos/screens/views/donor_view.dart';
 import 'package:flutter_pos/screens/widgets/page_header_widget.dart';
 import 'package:flutter_pos/utils/Provider/ServiceData.dart';
+import 'package:flutter_pos/utils/Provider/home_provider.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
-import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
-import 'package:flutter_pos/widget/app_bar_custom.dart';
-import 'package:flutter_pos/widget/hidden_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart' as util;
@@ -28,7 +23,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final ScrollController _scrollController = ScrollController();
   final navigatorKey = GlobalKey<NavigatorState>();
-  int tabId = 0;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String roleId;
@@ -44,155 +38,177 @@ class _HomeState extends State<Home> {
     final providerData = Provider.of<ProviderData>(context);
     final theme = Provider.of<ProviderControl>(context);
     return Scaffold(
-      body: Column(
-        children: [
-          PageHeaderWidget(),
-          if (roleId == '1') ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TabItem(
-                  iconPath: 'assets/icons/orders.png',
-                  title: 'MyordersDonner',
-                  isSelected: tabId == 0,
-                  onPressed: () {
-                    setState(() {
-                      tabId = 0;
-                    });
-                  },
+      body: Consumer<HomeProvider>(
+        builder: (context, snap, __) {
+          return Column(
+            children: [
+              PageHeaderWidget(),
+              if (roleId == '1') ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TabItem(
+                      iconPath: 'assets/icons/orders.png',
+                      title: 'MyordersDonner',
+                      isSelected: snap.tabIndex == 0,
+                      onPressed: () => snap.changeTabIndex(0),
+                    ),
+                    TabItem(
+                      iconPath: 'assets/icons/donor.png',
+                      title: 'volunteer',
+                      isSelected: snap.tabIndex == 1,
+                      onPressed: () => snap.changeTabIndex(1),
+                    ),
+                  ],
                 ),
-                TabItem(
-                  iconPath: 'assets/icons/donor.png',
-                  title: 'volunteer',
-                  isSelected: tabId == 1,
-                  onPressed: () {
-                    setState(() {
-                      tabId = 1;
-                    });
-                  },
-                ),
-              ],
-            ),
-            Expanded(
-              child: tabId == 0 ? DonorOrders() : VolunteerView(),
-            ),
-          ],
-          if (roleId == '2') ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TabItem(
-                  iconPath: 'assets/icons/user.png',
-                  title: 'donors',
-                  isSelected: tabId == 0,
-                  onPressed: () {
-                    setState(() {
-                      tabId = 0;
-                    });
-                  },
-                ),
-                TabItem(
-                  iconPath: 'assets/icons/orders.png',
-                  title: 'MyordersDonner',
-                  isSelected: tabId == 1,
-                  onPressed: () {
-                    setState(() {
-                      tabId = 1;
-                    });
-                  },
-                ),
-                TabItem(
-                  iconPath: 'assets/icons/donor.png',
-                  title: 'completed',
-                  isSelected: tabId == 2,
-                  onPressed: () {
-                    setState(() {
-                      tabId = 2;
-                    });
-                  },
+                Expanded(
+                  child: snap.tabIndex == 0 ? DonorOrders() : VolunteerView(),
                 ),
               ],
-            ),
+              if (roleId == '2') ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TabItem(
+                      iconPath: 'assets/icons/user.png',
+                      title: 'donors',
+                      isSelected: snap.tabIndex == 0,
+                      onPressed: () => snap.changeTabIndex(0),
+                    ),
+                    TabItem(
+                      iconPath: 'assets/icons/orders.png',
+                      title: 'MyordersDonner',
+                      isSelected: snap.tabIndex == 1,
+                      onPressed: () => snap.changeTabIndex(1),
+                    ),
+                    TabItem(
+                      iconPath: 'assets/icons/donor.png',
+                      title: 'completed',
+                      isSelected: snap.tabIndex == 2,
+                      onPressed: () => snap.changeTabIndex(2),
+                    ),
+                  ],
+                ),
 
-            Expanded(
-              child: tabId == 0
-                  ? Orders()
-                  : tabId == 1
-                      ? Delegate()
-                      : DelegateCompleated(),
-            ),
+                Expanded(
+                  child: snap.tabIndex == 0
+                      ? Orders()
+                      : snap.tabIndex == 1
+                          ? Delegate()
+                          : DelegateCompleated(),
+                ),
 
-            // Column(
-            //   children: [
-            //     InkWell(
-            //       onTap: () {
-            //         Nav.route(context, Orders());
-            //       },
-            //       child: Container(
-            //         width: ScreenUtil.getWidth(context) / 1.3,
-            //         decoration: BoxDecoration(
-            //             border: Border.all(color: theme.getColor(), width: 1)),
-            //         child: Center(
-            //           child: Padding(
-            //             padding: const EdgeInsets.all(16.0),
-            //             child: Text(
-            //               '${getTransrlate(context, 'Myorders')}',
-            //               style: TextStyle(
-            //                   color: theme.getColor(),
-            //                   fontWeight: FontWeight.bold),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     SizedBox(height: 10),
-            //     InkWell(
-            //       onTap: () {
-            //         Nav.route(context, Delegate());
-            //       },
-            //       child: Container(
-            //         width: ScreenUtil.getWidth(context) / 1.3,
-            //         decoration: BoxDecoration(
-            //             border: Border.all(color: theme.getColor(), width: 1)),
-            //         child: Center(
-            //           child: Padding(
-            //             padding: const EdgeInsets.all(16.0),
-            //             child: Text(
-            //               '${getTransrlate(context, 'orders')}',
-            //               style: TextStyle(
-            //                   color: theme.getColor(),
-            //                   fontWeight: FontWeight.bold),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     SizedBox(height: 10),
-            //     InkWell(
-            //       onTap: () {
-            //         Nav.route(context, DelegateCompleated());
-            //       },
-            //       child: Container(
-            //         width: ScreenUtil.getWidth(context) / 1.3,
-            //         decoration: BoxDecoration(
-            //             border: Border.all(color: theme.getColor(), width: 1)),
-            //         child: Center(
-            //           child: Padding(
-            //             padding: const EdgeInsets.all(16.0),
-            //             child: Text(
-            //               '${getTransrlate(context, 'ordersCompleated')}',
-            //               style: TextStyle(
-            //                   color: theme.getColor(),
-            //                   fontWeight: FontWeight.bold),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            // ],
-            // )
-          ],
-        ],
+                // Column(
+                //   children: [
+                //     InkWell(
+                //       onTap: () {
+                //         Nav.route(context, Orders());
+                //       },
+                //       child: Container(
+                //         width: ScreenUtil.getWidth(context) / 1.3,
+                //         decoration: BoxDecoration(
+                //             border: Border.all(color: theme.getColor(), width: 1)),
+                //         child: Center(
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(16.0),
+                //             child: Text(
+                //               '${getTransrlate(context, 'Myorders')}',
+                //               style: TextStyle(
+                //                   color: theme.getColor(),
+                //                   fontWeight: FontWeight.bold),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     SizedBox(height: 10),
+                //     InkWell(
+                //       onTap: () {
+                //         Nav.route(context, Delegate());
+                //       },
+                //       child: Container(
+                //         width: ScreenUtil.getWidth(context) / 1.3,
+                //         decoration: BoxDecoration(
+                //             border: Border.all(color: theme.getColor(), width: 1)),
+                //         child: Center(
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(16.0),
+                //             child: Text(
+                //               '${getTransrlate(context, 'orders')}',
+                //               style: TextStyle(
+                //                   color: theme.getColor(),
+                //                   fontWeight: FontWeight.bold),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     SizedBox(height: 10),
+                //     InkWell(
+                //       onTap: () {
+                //         Nav.route(context, DelegateCompleated());
+                //       },
+                //       child: Container(
+                //         width: ScreenUtil.getWidth(context) / 1.3,
+                //         decoration: BoxDecoration(
+                //             border: Border.all(color: theme.getColor(), width: 1)),
+                //         child: Center(
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(16.0),
+                //             child: Text(
+                //               '${getTransrlate(context, 'ordersCompleated')}',
+                //               style: TextStyle(
+                //                   color: theme.getColor(),
+                //                   fontWeight: FontWeight.bold),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                // ],
+                // )
+              ],
+              if (roleId == '3') ...[
+                Container(
+                  width: ScreenUtil.getWidth(context) / 1.3,
+                  decoration: BoxDecoration(
+                    color: theme.getColor(),
+                    border: Border.all(color: theme.getColor(), width: 1),
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ImageIcon(
+                            AssetImage(
+                              'assets/icons/orders.png',
+                            ),
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            '${getTransrlate(context, 'Recvivedorders')}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: RecipentOrders(),
+                ),
+              ],
+            ],
+          );
+        },
       ),
     );
     Scaffold(

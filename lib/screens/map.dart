@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/direction_model.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
+import 'package:flutter_pos/screens/homepage.dart';
+import 'package:flutter_pos/screens/tab_screen.dart';
 import 'package:flutter_pos/service/api.dart';
+import 'package:flutter_pos/utils/Provider/home_provider.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/utils/tab_provider.dart';
 import 'package:flutter_pos/widget/OrderOverlay.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
@@ -21,15 +25,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MapPage extends StatefulWidget {
-  String donation_id;
+  String donationId;
   String longitude;
   String latitude;
-  String status_id;
+  String statusId;
   String dist;
 
   MapPage(
-    this.status_id,
-    this.donation_id,
+    this.statusId,
+    this.donationId,
     this.latitude,
     this.longitude,
     this.dist,
@@ -121,7 +125,7 @@ class _MapPageState extends State<MapPage> {
                   style: TextStyle(fontSize: 15, color: Color(0xff6AC088)),
                 ),
                 Text(
-                  '${getTransrlate(context, 'representative')} : ${_info?.totalDuration}',
+                  '${getTransrlate(context, 'representative')} : ${double.parse(widget.dist).toStringAsFixed(4)}',
                   style: TextStyle(fontSize: 15, color: Color(0xff6AC088)),
                 ),
               ],
@@ -225,7 +229,7 @@ class _MapPageState extends State<MapPage> {
                                         fontWeight: FontWeight.w600),
                                   ),
                                   child: Text(
-                                      '${widget.status_id == "4" ? getTransrlate(context, 'Donor') : getTransrlate(context, 'Beneficiary')}'),
+                                      '${widget.statusId == "4" ? getTransrlate(context, 'Donor') : getTransrlate(context, 'Beneficiary')}'),
                                 ),
                             ],
                           ),
@@ -485,7 +489,7 @@ class _MapPageState extends State<MapPage> {
                     ),
                   ),
                 ),
-                widget.status_id == "4"
+                widget.statusId == "4"
                     ? Container(
                         height: 42,
                         width: ScreenUtil.getWidth(context) * 0.8,
@@ -506,12 +510,12 @@ class _MapPageState extends State<MapPage> {
                         child: FlatButton(
                           onPressed: () async {
                             API(context).post(
-                                'orderDelegate/${widget.donation_id}',
+                                'orderDelegate/${widget.donationId}',
                                 {}).then((value) {
                               print(value);
                               if (value['status'] == true) {
                                 setState(() {
-                                  widget.status_id = "3";
+                                  widget.statusId = "3";
                                 });
                                 showDialog(
                                         context: context,
@@ -519,7 +523,22 @@ class _MapPageState extends State<MapPage> {
                                             '${value['message']}'))
                                     .whenComplete(() {
                                   Navigator.pop(context);
-                                  Nav.routeReplacement(context, Delegate());
+                                  Nav.routeReplacement(
+                                    context,
+                                    MultiProvider(
+                                      providers: [
+                                        ChangeNotifierProvider(
+                                          create: (_) => TabProvider(),
+                                        ),
+                                        ChangeNotifierProvider(
+                                          create: (_) =>
+                                              HomeProvider(currentTabIndex: 1),
+                                        ),
+                                      ],
+                                      child: TabScreen(homeTabIndex: 1),
+                                    ),
+                                  );
+                                  // Nav.routeReplacement(context, Delegate());
                                 });
                               } else {
                                 showDialog(
@@ -540,7 +559,7 @@ class _MapPageState extends State<MapPage> {
                           ),
                         ),
                       )
-                    : widget.status_id != "1"
+                    : widget.statusId != "1"
                         ? Container(
                             height: 42,
                             width: ScreenUtil.getWidth(context) * 0.8,
@@ -560,21 +579,39 @@ class _MapPageState extends State<MapPage> {
                             margin: EdgeInsets.only(top: 12, bottom: 0),
                             child: FlatButton(
                               onPressed: () async {
-                                API(context).post(
-                                    'status/${widget.donation_id}',
+                                API(context).post('status/${widget.donationId}',
                                     {"status_id": "1"}).then((value) {
                                   print(value);
                                   if (value['status'] == true) {
                                     setState(() {
-                                      widget.status_id = "1";
+                                      widget.statusId = "1";
                                     });
                                     showDialog(
                                             context: context,
                                             builder: (_) => ResultOverlay(
                                                 '${value['message']}'))
                                         .whenComplete(() {
+                                      // Provider.of<HomeProvider>(context,
+                                      //         listen: false)
+                                      //     .changeTabIndex(1);
                                       Navigator.pop(context);
-                                      Nav.routeReplacement(context, Delegate());
+                                      Nav.routeReplacement(
+                                        context,
+                                        MultiProvider(
+                                          providers: [
+                                            ChangeNotifierProvider(
+                                              create: (_) => TabProvider(),
+                                            ),
+                                            ChangeNotifierProvider<
+                                                HomeProvider>(
+                                              create: (_) => HomeProvider(
+                                                  currentTabIndex: 1)
+                                                ..changeTabIndex(1),
+                                            ),
+                                          ],
+                                          child: TabScreen(homeTabIndex: 1),
+                                        ),
+                                      );
                                     });
                                   } else {
                                     showDialog(
@@ -619,7 +656,7 @@ class _MapPageState extends State<MapPage> {
                                 showDialog(
                                     context: context,
                                     builder: (_) => OrderOverlay(
-                                          donation_id: widget.donation_id,
+                                          donation_id: widget.donationId,
                                         ));
                               },
                               child: Text(
@@ -652,7 +689,7 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  DirectionsRepository() async {
+  directionsRepository() async {
     String url =
         'https://maps.googleapis.com/maps/api/directions/json?origin=${_origin.position.latitude},${_origin.position.longitude}&destination=${_destination.position.latitude},${_destination.position.longitude}&key=$kGoogleApiKey';
     print(url);
@@ -683,7 +720,7 @@ class _MapPageState extends State<MapPage> {
         position: pos,
       );
     });
-    DirectionsRepository();
+    directionsRepository();
   }
 
   getUserLocation() async {

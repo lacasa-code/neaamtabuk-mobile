@@ -7,6 +7,7 @@ import 'package:flutter_pos/utils/Provider/ServiceData.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/AppLocalizations.dart';
 import 'package:flutter_pos/utils/shared_prefs_provider.dart';
+import 'package:flutter_pos/utils/tab_provider.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,7 @@ Future<void> main() async {
           ChangeNotifierProvider<SharedPrefsProvider>(
             create: (_) => SharedPrefsProvider(),
           ),
+         
         ],
         child: Phoenix(
           child: MyApp(),

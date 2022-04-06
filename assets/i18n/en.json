@@ -235,6 +235,7 @@
   "month": "Month",
   "year": "year",
   "Cvv": "Cvv",
+  "NoOrder": "No previous orders",
   "Recvivedorders": "Received orders",
   "MyordersDonner": "My Orders",
   "available": "Available",

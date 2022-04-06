@@ -146,6 +146,7 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                       // color: themeColor.getColor(),
                       onPressed: () async {
+                        FocusManager.instance.primaryFocus?.unfocus();
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
                           setState(() => isloading = true);
