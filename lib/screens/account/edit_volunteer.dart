@@ -49,7 +49,8 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
   List<Categories_item> catedories;
   Model model = Model();
   TextEditingController addressController = TextEditingController();
-  TextEditingController dateController = TextEditingController(text: DateTime.now().toString());
+  TextEditingController dateController =
+      TextEditingController(text: DateTime.now().toString());
 
   @override
   void initState() {
@@ -61,11 +62,11 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
           }),
           addressController.text = pref.getString('address') ?? ''
         });
-    dateController = TextEditingController(text: widget.donorOrder.delivary_date);
+    dateController =
+        TextEditingController(text: widget.donorOrder.delivary_date);
     setState(() {
-      ready_to_distribute=int.parse(widget.donorOrder.readyToDistribute);
-      ready_to_pack=int.parse(widget.donorOrder.readyToPack);
-
+      ready_to_distribute = int.parse(widget.donorOrder.readyToDistribute);
+      ready_to_pack = int.parse(widget.donorOrder.readyToPack);
     });
     API(context).get('categories').then((value) {
       if (value != null) {
@@ -73,7 +74,10 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
         if (value['status'] == true) {
           setState(() {
             catedories = Categories_model.fromJson(value).data;
-            catedories.isNotEmpty ? categories_item = catedories.firstWhere((element) => element.id==int.parse(widget.donorOrder.category_id)) : null;
+            catedories.isNotEmpty
+                ? categories_item = catedories.firstWhere((element) =>
+                    element.id == int.parse(widget.donorOrder.category_id))
+                : null;
           });
         }
       }
@@ -149,6 +153,22 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
                             catedories.isEmpty
                                 ? Container()
                                 : DropdownSearch<Categories_item>(
+                                    dropdownSearchDecoration: InputDecoration(
+                                      contentPadding: themeColor.local == 'ar'
+                                          ? EdgeInsets.fromLTRB(0, 0, 12, 12)
+                                          : EdgeInsets.fromLTRB(12, 12, 0, 0),
+                                      border: OutlineInputBorder(),
+                                      disabledBorder: OutlineInputBorder(),
+                                      errorStyle: TextStyle(color: Colors.red),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                     maxHeight: 200,
                                     validator: (Categories_item item) {
                                       if (item == null) {
@@ -166,7 +186,7 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
                                               child: Text(" ${item?.name} "),
                                             );
                                     },
-                                    selectedItem:categories_item,
+                                    selectedItem: categories_item,
                                     //  onFind: (String filter) => getData(filter),
                                     itemAsString: (Categories_item u) => u.name,
                                     onChanged: (Categories_item data) =>
@@ -231,21 +251,26 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
                               dateMask: 'yyyy/MM/dd',
                               controller: dateController,
                               firstDate: DateTime.now(),
-                              lastDate: DateTime.now().add(Duration(days: 5 * 365)),
-                             // initialDate: initStartDate,
+                              lastDate:
+                                  DateTime.now().add(Duration(days: 5 * 365)),
+                              // initialDate: initStartDate,
                               //use24HourFormat: false,
                               icon: Icon(Icons.event),
-                              dateLabelText: '${getTransrlate(context, 'Data')}',
-                              timeLabelText: '${getTransrlate(context, 'Time')}',
-                              onChanged: (val) => setState(() => dateController.text = val),
+                              dateLabelText:
+                                  '${getTransrlate(context, 'Data')}',
+                              timeLabelText:
+                                  '${getTransrlate(context, 'Time')}',
+                              onChanged: (val) =>
+                                  setState(() => dateController.text = val),
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return  getTransrlate(
+                                  return getTransrlate(
                                       context, 'requiredempty');
                                 }
                                 return null;
                               },
-                              onSaved: (val) => setState(() => dateController.text = val ?? ''),
+                              onSaved: (val) => setState(
+                                  () => dateController.text = val ?? ''),
                               // decoration: InputDecoration(
                               //   labelStyle: TextStyle(color: Colors.grey[700]),
                               //   filled: true,
@@ -316,38 +341,41 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
                             ),
                             categories_item?.id != 1
                                 ? Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    MyTextFormField(
-                                      labelText: getTransrlate(context, 'desc'),
-                                      // hintText: getTransrlate(context, 'desc'),
-                                      isEmail: true,
-                                      enabled: true,
-                                      minLines: 5,
-                                      maxLines: 5,
-                                      // validator: (String value) {
-                                      //   if (value.isEmpty) {
-                                      //     return getTransrlate(
-                                      //         context, 'requiredempty');
-                                      //   }
-                                      //   _formKey.currentState.save();
-                                      //   return null;
-                                      // },
-keyboard_type: TextInputType.multiline,
-                                      onSaved: (String value) {
-                                        desc = value;
-                                      },
-                                    ),
-                                  ],
-                                )
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      MyTextFormField(
+                                        labelText:
+                                            getTransrlate(context, 'desc'),
+                                        // hintText: getTransrlate(context, 'desc'),
+                                        isEmail: true,
+                                        enabled: true,
+                                        minLines: 5,
+                                        maxLines: 5,
+                                        // validator: (String value) {
+                                        //   if (value.isEmpty) {
+                                        //     return getTransrlate(
+                                        //         context, 'requiredempty');
+                                        //   }
+                                        //   _formKey.currentState.save();
+                                        //   return null;
+                                        // },
+                                        keyboard_type: TextInputType.multiline,
+                                        onSaved: (String value) {
+                                          desc = value;
+                                        },
+                                      ),
+                                    ],
+                                  )
                                 : Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       MyTextFormField(
-                                        intialLabel: widget.donorOrder.number_of_meals??'',
+                                        intialLabel:
+                                            widget.donorOrder.number_of_meals ??
+                                                '',
                                         labelText:
                                             getTransrlate(context, 'NoOfmeals'),
                                         // hintText:
@@ -635,10 +663,10 @@ keyboard_type: TextInputType.multiline,
     }).then((value) {
       print(value);
       if (value['status'] == true) {
-
         showDialog(
-            context: context,
-            builder: (_) => ResultOverlay('${value['message']}')).whenComplete(() {
+                context: context,
+                builder: (_) => ResultOverlay('${value['message']}'))
+            .whenComplete(() {
           Navigator.pop(context);
           Nav.routeReplacement(context, DonorOrders());
         });

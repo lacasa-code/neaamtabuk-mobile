@@ -93,6 +93,22 @@ class OrderOverlayState extends State<OrderOverlay>
                                 left: 25.0, right: 25.0, top: 10.0, bottom: 10),
                             child: DropdownSearch<NeerRecipent>(
                               mode: Mode.DIALOG,
+                              dropdownSearchDecoration: InputDecoration(
+                                contentPadding: theme.local == 'ar'
+                                    ? EdgeInsets.fromLTRB(0, 0, 12, 12)
+                                    : EdgeInsets.fromLTRB(12, 12, 0, 0),
+                                border: OutlineInputBorder(),
+                                disabledBorder: OutlineInputBorder(),
+                                errorStyle: TextStyle(color: Colors.red),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
 
                               dropdownBuilder: (context, item) {
                                 return item == null

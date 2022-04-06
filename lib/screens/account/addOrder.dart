@@ -32,7 +32,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
   int ready_to_pack = 0;
   int ready_to_distribute = 0;
   Categories_item categories_item;
-  List<Categories_item>catedories;
+  List<Categories_item> catedories;
   @override
   void initState() {
     API(context).get('categories').then((value) {
@@ -43,7 +43,8 @@ class _AddOrderPageState extends State<AddOrderPage> {
             catedories = Categories_model.fromJson(value).data;
           });
         }
-  }});
+      }
+    });
   }
 
   @override
@@ -99,19 +100,32 @@ class _AddOrderPageState extends State<AddOrderPage> {
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
-                    padding: EdgeInsets.only(
-                        left: 25.0, right: 25.0, top: 25.0),
+                    padding:
+                        EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
                     child: Text(
                       getTransrlate(context, 'category'),
                     )),
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: 25.0,
-                    right: 25.0,
-                    top: 10.0,
-                    bottom: 10),
+                    left: 25.0, right: 25.0, top: 10.0, bottom: 10),
                 child: DropdownSearch<Categories_item>(
+                  dropdownSearchDecoration: InputDecoration(
+                    contentPadding: themeColor.local == 'ar'
+                        ? EdgeInsets.fromLTRB(0, 0, 12, 12)
+                        : EdgeInsets.fromLTRB(12, 12, 0, 0),
+                    border: OutlineInputBorder(),
+                    disabledBorder: OutlineInputBorder(),
+                    errorStyle: TextStyle(color: Colors.red),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
+                    ),
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
                   maxHeight: 120,
                   validator: (Categories_item item) {
                     if (item == null) {
@@ -122,8 +136,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                   items: catedories,
                   //  onFind: (String filter) => getData(filter),
                   itemAsString: (Categories_item u) => u.name,
-                  onChanged: (Categories_item data) =>
-                  categories_item = data,
+                  onChanged: (Categories_item data) => categories_item = data,
                 ),
               ),
               Container(
@@ -151,7 +164,6 @@ class _AddOrderPageState extends State<AddOrderPage> {
                                   value: 0,
                                   groupValue: ready_to_distribute,
                                   activeColor: themeColor.getColor(),
-
                                   onChanged: (int value) {
                                     setState(() {
                                       ready_to_distribute = value;
@@ -195,7 +207,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                               child: ListTile(
                                 title: Text('لا'),
                                 leading: Radio<int>(
-                                  value:0,
+                                  value: 0,
                                   activeColor: themeColor.getColor(),
                                   groupValue: ready_to_pack,
                                   onChanged: (int value) {
@@ -211,7 +223,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                               child: ListTile(
                                 title: Text('نعم'),
                                 leading: Radio<int>(
-                                  value:1,
+                                  value: 1,
                                   activeColor: themeColor.getColor(),
                                   groupValue: ready_to_pack,
                                   onChanged: (int value) {
@@ -362,26 +374,23 @@ class _AddOrderPageState extends State<AddOrderPage> {
 
   register(ProviderControl themeColor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    API(context).post('order',
-        {
-          'category_id': categories_item.id,
-          'ready_to_distribute': ready_to_distribute,
-          'ready_to_pack': ready_to_pack,
-          'status_id': 1,
-        }).then((value) {
+    API(context).post('order', {
+      'category_id': categories_item.id,
+      'ready_to_distribute': ready_to_distribute,
+      'ready_to_pack': ready_to_pack,
+      'status_id': 1,
+    }).then((value) {
       print(value);
       if (value['status'] == true) {
         Navigator.pop(context);
 
         showDialog(
             context: context,
-            builder: (_) =>
-                ResultOverlay('${value['message']}'));
+            builder: (_) => ResultOverlay('${value['message']}'));
       } else {
         showDialog(
             context: context,
-            builder: (_) =>
-                ResultOverlay('${value['message']}'));
+            builder: (_) => ResultOverlay('${value['message']}'));
       }
     });
   }

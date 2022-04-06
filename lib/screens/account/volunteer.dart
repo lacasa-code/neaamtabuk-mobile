@@ -140,6 +140,22 @@ class _VolunteerPageState extends State<VolunteerPage> {
                             catedories.isEmpty
                                 ? Container()
                                 : DropdownSearch<Categories_item>(
+                                    dropdownSearchDecoration: InputDecoration(
+                                      contentPadding: themeColor.local == 'ar'
+                                          ? EdgeInsets.fromLTRB(0, 0, 12, 12)
+                                          : EdgeInsets.fromLTRB(12, 12, 0, 0),
+                                      border: OutlineInputBorder(),
+                                      disabledBorder: OutlineInputBorder(),
+                                      errorStyle: TextStyle(color: Colors.red),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                     maxHeight: 200,
                                     validator: (Categories_item item) {
                                       if (item == null) {

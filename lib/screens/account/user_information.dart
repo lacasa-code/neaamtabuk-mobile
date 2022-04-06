@@ -84,9 +84,7 @@ class _UserInfoState extends State<UserInfo> {
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ProviderControl>(context);
     return WillPopScope(
-      onWillPop: (){
-        
-      },
+      onWillPop: () {},
       child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -178,7 +176,8 @@ class _UserInfoState extends State<UserInfo> {
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: <Widget>[
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -234,7 +233,8 @@ class _UserInfoState extends State<UserInfo> {
                                                           r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
                                                       .hasMatch(value)) {
                                                     return getTransrlate(
-                                                        context, 'invalidemail');
+                                                        context,
+                                                        'invalidemail');
                                                   }
                                                   _formKey.currentState.save();
                                                   return null;
@@ -274,8 +274,8 @@ class _UserInfoState extends State<UserInfo> {
                                                         254),
                                                   ],
                                                   suffixIcon: IconButton(
-                                                      icon: Icon(
-                                                          Icons.add_location_alt),
+                                                      icon: Icon(Icons
+                                                          .add_location_alt),
                                                       onPressed: () {
                                                         showDialog(
                                                                 context: context,
@@ -284,12 +284,15 @@ class _UserInfoState extends State<UserInfo> {
                                                                         .model))
                                                             .whenComplete(() {
                                                           userModal.latitude =
-                                                              this.model.latitude;
+                                                              this
+                                                                  .model
+                                                                  .latitude;
                                                           userModal.longitude =
                                                               this
                                                                   .model
                                                                   .longitude;
-                                                          addressController.text =
+                                                          addressController
+                                                                  .text =
                                                               '${this.model.address ?? ''}';
                                                         });
                                                       }),
@@ -302,7 +305,7 @@ class _UserInfoState extends State<UserInfo> {
                                                   ),
                                                 ),
                                               ),
-    
+
                                               // Container(
                                               //   height: 42,
                                               //   width: ScreenUtil.getWidth(context),
@@ -428,6 +431,32 @@ class _UserInfoState extends State<UserInfo> {
                                                     right: 15.0,
                                                     top: 10.0),
                                                 child: DropdownSearch<Area>(
+                                                  dropdownSearchDecoration:
+                                                      InputDecoration(
+                                                    contentPadding: themeColor
+                                                                .local ==
+                                                            'ar'
+                                                        ? EdgeInsets.fromLTRB(
+                                                            0, 0, 12, 12)
+                                                        : EdgeInsets.fromLTRB(
+                                                            12, 12, 0, 0),
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    disabledBorder:
+                                                        OutlineInputBorder(),
+                                                    errorStyle: TextStyle(
+                                                        color: Colors.red),
+                                                    errorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                    labelStyle: TextStyle(
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+
                                                   prefixIcon: ImageIcon(AssetImage(
                                                       'assets/icons/building.png')),
                                                   hint: getTransrlate(
@@ -449,8 +478,8 @@ class _UserInfoState extends State<UserInfo> {
                                                           element.id ==
                                                           userModal.region,
                                                       orElse: () => Area(
-                                                          nameAr:
-                                                              userModal.region)),
+                                                          nameAr: userModal
+                                                              .region)),
                                                   onChanged: (Area data) {
                                                     userModal.region = data.id;
                                                     setState(() {
@@ -458,20 +487,22 @@ class _UserInfoState extends State<UserInfo> {
                                                       city == null;
                                                     });
                                                     API(context)
-                                                        .get('cities/${data.id}')
+                                                        .get(
+                                                            'cities/${data.id}')
                                                         .then((value) {
                                                       if (value != null) {
                                                         setState(() {
-                                                          city =
-                                                              City_model.fromJson(
+                                                          city = City_model
+                                                                  .fromJson(
                                                                       value)
-                                                                  .data;
+                                                              .data;
                                                         });
                                                       }
                                                     });
                                                   },
                                                   onSaved: (Area data) =>
-                                                      userModal.region = data.id,
+                                                      userModal.region =
+                                                          data.id,
                                                 ),
                                               ),
                                         city == null
@@ -484,11 +515,46 @@ class _UserInfoState extends State<UserInfo> {
                                                         right: 15.0,
                                                         top: 10.0),
                                                     child: DropdownSearch<City>(
+                                                      dropdownSearchDecoration:
+                                                          InputDecoration(
+                                                        contentPadding:
+                                                            themeColor.local ==
+                                                                    'ar'
+                                                                ? EdgeInsets
+                                                                    .fromLTRB(
+                                                                        0,
+                                                                        0,
+                                                                        12,
+                                                                        12)
+                                                                : EdgeInsets
+                                                                    .fromLTRB(
+                                                                        12,
+                                                                        12,
+                                                                        0,
+                                                                        0),
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                        disabledBorder:
+                                                            OutlineInputBorder(),
+                                                        errorStyle: TextStyle(
+                                                            color: Colors.red),
+                                                        errorBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: Colors.red,
+                                                          ),
+                                                        ),
+                                                        labelStyle: TextStyle(
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+
                                                       prefixIcon: ImageIcon(
                                                         AssetImage(
                                                             'assets/icons/building.png'),
                                                       ),
-    
+
                                                       hint: getTransrlate(
                                                           context, 'area'),
                                                       enabled: !_status,
@@ -503,7 +569,7 @@ class _UserInfoState extends State<UserInfo> {
                                                       //  onFind: (String filter) => getData(filter),
                                                       onChanged: (City data) {
                                                         print(data.id);
-    
+
                                                         setState(() {
                                                           userModal.city =
                                                               data.id;
@@ -551,15 +617,50 @@ class _UserInfoState extends State<UserInfo> {
                                                 child: Column(
                                                   children: [
                                                     DropdownSearch<City>(
+                                                      dropdownSearchDecoration:
+                                                          InputDecoration(
+                                                        contentPadding:
+                                                            themeColor.local ==
+                                                                    'ar'
+                                                                ? EdgeInsets
+                                                                    .fromLTRB(
+                                                                        0,
+                                                                        0,
+                                                                        12,
+                                                                        12)
+                                                                : EdgeInsets
+                                                                    .fromLTRB(
+                                                                        12,
+                                                                        12,
+                                                                        0,
+                                                                        0),
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                        disabledBorder:
+                                                            OutlineInputBorder(),
+                                                        errorStyle: TextStyle(
+                                                            color: Colors.red),
+                                                        errorBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: Colors.red,
+                                                          ),
+                                                        ),
+                                                        labelStyle: TextStyle(
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+
                                                       prefixIcon: ImageIcon(
                                                           AssetImage(
                                                               'assets/icons/building.png')),
-    
+
                                                       hint: getTransrlate(
                                                           context, 'district'),
                                                       mode: Mode.MENU,
                                                       enabled: !_status,
-    
+
                                                       validator: (City item) {
                                                         if (item == null) {
                                                           return "${getTransrlate(context, 'requiredempty')}";
@@ -576,8 +677,10 @@ class _UserInfoState extends State<UserInfo> {
                                                                   element.id ==
                                                                   userModal
                                                                       .district,
-                                                              orElse: () => City(
-                                                                  cityName: '')),
+                                                              orElse: () =>
+                                                                  City(
+                                                                      cityName:
+                                                                          '')),
                                                       onChanged: (City data) {
                                                         print(data.id);
                                                         userModal.district =
@@ -610,7 +713,7 @@ class _UserInfoState extends State<UserInfo> {
                                         //       ],
                                         //       initialValue: userModal.email,
                                         //       decoration: const InputDecoration(),
-    
+
                                         //       enabled: false,
                                         //       onSaved: (String val) =>
                                         //           userModal.email = val,
@@ -661,8 +764,31 @@ class _UserInfoState extends State<UserInfo> {
                                               top: 10.0,
                                               bottom: 10),
                                           child: DropdownSearch<Area>(
-                                            hint:
-                                                getTransrlate(context, 'gender'),
+                                            dropdownSearchDecoration:
+                                                InputDecoration(
+                                              contentPadding:
+                                                  themeColor.local == 'ar'
+                                                      ? EdgeInsets.fromLTRB(
+                                                          0, 0, 12, 12)
+                                                      : EdgeInsets.fromLTRB(
+                                                          12, 12, 0, 0),
+                                              border: OutlineInputBorder(),
+                                              disabledBorder:
+                                                  OutlineInputBorder(),
+                                              errorStyle:
+                                                  TextStyle(color: Colors.red),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                              labelStyle: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+
+                                            hint: getTransrlate(
+                                                context, 'gender'),
                                             prefixIcon: ImageIcon(
                                               AssetImage(
                                                 'assets/icons/gender.png',
@@ -682,9 +808,9 @@ class _UserInfoState extends State<UserInfo> {
                                                     element.id ==
                                                     userModal.gender,
                                                 orElse: () => Area(
-                                                    nameAr:
-                                                        userModal.gender ?? ' ')),
-    
+                                                    nameAr: userModal.gender ??
+                                                        ' ')),
+
                                             enabled: !_status,
                                             //  onFind: (String filter) => getData(filter),
                                             itemAsString: (Area u) => u.nameAr,
@@ -701,8 +827,8 @@ class _UserInfoState extends State<UserInfo> {
                                                     bottom: 5),
                                                 child: MyTextFormField(
                                                   istitle: true,
-                                                  prefix:
-                                                      Icon(Icons.card_membership),
+                                                  prefix: Icon(
+                                                      Icons.card_membership),
                                                   intialLabel:
                                                       userModal.family_member,
                                                   hintText: 'family_members',
@@ -715,7 +841,8 @@ class _UserInfoState extends State<UserInfo> {
                                                           context,
                                                           'requiredempty');
                                                     }
-                                                    _formKey.currentState.save();
+                                                    _formKey.currentState
+                                                        .save();
                                                     return null;
                                                   },
                                                   keyboard_type:

@@ -205,6 +205,22 @@ class _RegisterFormState extends State<RegisterForm> {
                   height: 10,
                 ),
                 DropdownSearch<Area>(
+                  dropdownSearchDecoration: InputDecoration(
+                    contentPadding: themeColor.local == 'ar'
+                        ? EdgeInsets.fromLTRB(0, 0, 12, 12)
+                        : EdgeInsets.fromLTRB(12, 12, 0, 0),
+                    border: OutlineInputBorder(),
+                    disabledBorder: OutlineInputBorder(),
+                    errorStyle: TextStyle(color: Colors.red),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
+                    ),
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
                   hint: getTransrlate(context, 'City'),
                   prefixIcon: Icon(Icons.location_city),
 
@@ -244,6 +260,22 @@ class _RegisterFormState extends State<RegisterForm> {
                     : Column(
                         children: [
                           DropdownSearch<City>(
+                            dropdownSearchDecoration: InputDecoration(
+                              contentPadding: themeColor.local == 'ar'
+                                  ? EdgeInsets.fromLTRB(0, 0, 12, 12)
+                                  : EdgeInsets.fromLTRB(12, 12, 0, 0),
+                              border: OutlineInputBorder(),
+                              disabledBorder: OutlineInputBorder(),
+                              errorStyle: TextStyle(color: Colors.red),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              labelStyle: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
                             dropDownButton:
                                 Icon(Icons.keyboard_arrow_down_outlined),
                             mode: Mode.MENU,
@@ -290,6 +322,22 @@ class _RegisterFormState extends State<RegisterForm> {
                             height: 10,
                           ),
                           DropdownSearch<City>(
+                            dropdownSearchDecoration: InputDecoration(
+                              contentPadding: themeColor.local == 'ar'
+                                  ? EdgeInsets.fromLTRB(0, 0, 12, 12)
+                                  : EdgeInsets.fromLTRB(12, 12, 0, 0),
+                              border: OutlineInputBorder(),
+                              disabledBorder: OutlineInputBorder(),
+                              errorStyle: TextStyle(color: Colors.red),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              labelStyle: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
                             prefixIcon: Icon(Icons.location_city),
                             hint: getTransrlate(context, 'district'),
 
@@ -345,6 +393,22 @@ class _RegisterFormState extends State<RegisterForm> {
                     : Column(
                         children: [
                           DropdownSearch<Area>(
+                            dropdownSearchDecoration: InputDecoration(
+                              contentPadding: themeColor.local == 'ar'
+                                  ? EdgeInsets.fromLTRB(0, 0, 12, 12)
+                                  : EdgeInsets.fromLTRB(12, 12, 0, 0),
+                              border: OutlineInputBorder(),
+                              disabledBorder: OutlineInputBorder(),
+                              errorStyle: TextStyle(color: Colors.red),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              labelStyle: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
                             prefixIcon: ImageIcon(
                               AssetImage(
                                 'assets/icons/gender.png',
