@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/tab_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart' as util;
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/main.dart';
@@ -84,7 +85,10 @@ class _UserInfoState extends State<UserInfo> {
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ProviderControl>(context);
     return WillPopScope(
-      onWillPop: () {},
+      onWillPop: () async {
+        Provider.of<TabProvider>(context, listen: false).toHome();
+        return false;
+      },
       child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -136,6 +140,7 @@ class _UserInfoState extends State<UserInfo> {
           ),
           body: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Container(
                 //   color: Colors.black12,
@@ -153,14 +158,19 @@ class _UserInfoState extends State<UserInfo> {
                 //   ),
                 // ),
                 _isLoading
-                    ? Container(
-                        // height: double.infinity,
-                        // width: double.infinity,
-                        color: Colors.white,
-                        child: Center(
-                            child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    themeColor.getColor()))))
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              // height: double.infinity,
+                              // width: double.infinity,
+                              color: Colors.white,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          themeColor.getColor())))),
+                        ],
+                      )
                     : userModal == null
                         ? Custom_Loading()
                         : Container(
@@ -186,7 +196,7 @@ class _UserInfoState extends State<UserInfo> {
                                             children: <Widget>[
                                               MyTextFormField(
                                                 intialLabel: name,
-                                                enabled: false,
+                                                enabled: !_status,
                                                 istitle: true,
                                                 hintText: 'name' ?? '',
                                                 prefix: ImageIcon(
@@ -196,7 +206,7 @@ class _UserInfoState extends State<UserInfo> {
                                               ),
                                               MyTextFormField(
                                                 istitle: true,
-                                                enabled: false,
+                                                enabled: !_status,
                                                 intialLabel:
                                                     userModal?.phoneNo ?? '',
                                                 hintText: 'phone',
@@ -220,7 +230,7 @@ class _UserInfoState extends State<UserInfo> {
                                               MyTextFormField(
                                                 istitle: true,
                                                 hintText: 'Email',
-                                                enabled: false,
+                                                enabled: !_status,
                                                 onSaved: (String val) =>
                                                     userModal.email = val,
                                                 onChange: (String val) =>
@@ -298,7 +308,7 @@ class _UserInfoState extends State<UserInfo> {
                                                       }),
                                                   istitle: true,
                                                   hintText: 'AddressTitle',
-                                                  enabled: false,
+                                                  enabled: !_status,
                                                   prefix: ImageIcon(
                                                     AssetImage(
                                                         'assets/icons/location.png'),
@@ -399,7 +409,7 @@ class _UserInfoState extends State<UserInfo> {
                                         //             //   },
                                         //             // ),
                                         //             ),
-                                        //         enabled: false,
+                                        //         enabled: !_status,
                                         //         // inputFormatters: [
                                         //         //   new LengthLimitingTextInputFormatter(
                                         //         //       254),
@@ -714,7 +724,7 @@ class _UserInfoState extends State<UserInfo> {
                                         //       initialValue: userModal.email,
                                         //       decoration: const InputDecoration(),
 
-                                        //       enabled: false,
+                                        //       enabled: !_status,
                                         //       onSaved: (String val) =>
                                         //           userModal.email = val,
                                         //       onChanged: (String val) =>
@@ -876,6 +886,8 @@ class _UserInfoState extends State<UserInfo> {
   void dispose() {
     // Clean up the controller when the Widget is disposed
     myFocusNode.dispose();
+    addressController.dispose();
+
     super.dispose();
   }
 
@@ -935,8 +947,10 @@ class _UserInfoState extends State<UserInfo> {
                                   getUser();
                                   showDialog(
                                       context: context,
-                                      builder: (_) =>
-                                          ResultOverlay(value['message']));
+                                      builder: (_) => ResultOverlay(
+                                            value['message'],
+                                            success: true,
+                                          ));
                                   setState(() {
                                     _status = true;
                                     FocusScope.of(context)

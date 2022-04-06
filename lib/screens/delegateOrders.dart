@@ -394,15 +394,22 @@ class _DelegateState extends State<Delegate> {
                                                   Nav.route(
                                                       context,
                                                       MapPage(
-                                                          orders[index]
-                                                              .status_id,
-                                                          orders[index].id,
-                                                          orders[index]
-                                                              .donationLatitude,
-                                                          orders[index]
-                                                              .donationLongitude,
-                                                          orders[index]
-                                                              .distance));
+                                                        donationName: orders[
+                                                                index]
+                                                            .donationUsername,
+                                                        statusId: orders[index]
+                                                            .status_id,
+                                                        donationId:
+                                                            orders[index].id,
+                                                        donationLatitude: orders[
+                                                                index]
+                                                            .donationLatitude,
+                                                        donationlongitude: orders[
+                                                                index]
+                                                            .donationLongitude,
+                                                        dist: orders[index]
+                                                            .distance,
+                                                      ));
                                                 },
                                                 child: AutoSizeText(
                                                   '${orders[index].status_id != "1" ? getTransrlate(context, 'Orderreceved') : getTransrlate(context, 'Orderdelivery')} ',

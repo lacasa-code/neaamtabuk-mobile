@@ -24,20 +24,23 @@ Future<void> main() async {
       local = prefs.getString('local');
     }
     runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider<ProviderControl>(
-            create: (_) => ProviderControl(local),
-          ),
-          ChangeNotifierProvider<ProviderData>(
-            create: (_) => ProviderData(),
-          ),
-          ChangeNotifierProvider<SharedPrefsProvider>(
-            create: (_) => SharedPrefsProvider(),
-          ),
-         
-        ],
-        child: Phoenix(
+      Phoenix(
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<ProviderControl>(
+              create: (_) => ProviderControl(local),
+            ),
+            ChangeNotifierProvider<ProviderData>(
+              create: (_) => ProviderData(),
+            ),
+            ChangeNotifierProvider<SharedPrefsProvider>(
+              create: (_) => SharedPrefsProvider(),
+            ),
+            ChangeNotifierProvider<TabProvider>(
+              create: (_) => TabProvider(),
+            ),
+           
+          ],
           child: MyApp(),
         ),
       ),

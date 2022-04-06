@@ -100,6 +100,7 @@ class MyTextFormField extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: Colors.white,
               prefixIcon: prefix,
+              
               hintText:
                   hintText == null ? null : getTransrlate(context, hintText),
               //  hintText: hintText,

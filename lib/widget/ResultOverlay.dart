@@ -8,8 +8,12 @@ import 'package:provider/provider.dart';
 class ResultOverlay extends StatefulWidget {
   final String message;
   final Widget icon;
-
-  ResultOverlay(this.message, {this.icon});
+  final bool success;
+  ResultOverlay(
+    this.message, {
+    this.icon,
+    this.success = false,
+  });
 
   @override
   State<StatefulWidget> createState() => ResultOverlayState();
@@ -77,9 +81,15 @@ class ResultOverlayState extends State<ResultOverlay>
                               right: 0,
                               bottom: 0,
                               top: 0,
-                              child: Image.asset(
-                                'assets/icons/X_Mark.png',
-                              ),
+                              child: widget.success
+                                  ? Icon(
+                                      Icons.check,
+                                      color: themeColor.getColor(),
+                                      size: ScreenUtil.getHeight(context) * 0.2,
+                                    )
+                                  : Image.asset(
+                                      'assets/icons/X_Mark.png',
+                                    ),
                             ),
                           ],
                         ),

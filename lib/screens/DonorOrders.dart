@@ -412,11 +412,15 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                     InkWell(
                                                       onTap: () {
                                                         Navigator.pop(context);
-                                                        Nav.route(
+                                                        Navigator.push(
                                                           context,
-                                                          EditVolunteerPage(
-                                                            orders[index],
-                                                          ),
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) {
+                                                            return EditVolunteerPage(
+                                                              orders[index],
+                                                            );
+                                                          }),
                                                         );
                                                       },
                                                       child: Container(
@@ -445,13 +449,15 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                             {}).then((value) {
                                                           if (value != null) {
                                                             showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (_) =>
-                                                                        ResultOverlay(
-                                                                            '${value['message']}'))
-                                                                .whenComplete(
-                                                                    () {});
+                                                                context:
+                                                                    context,
+                                                                builder: (_) =>
+                                                                    ResultOverlay(
+                                                                      '${value['message']}',
+                                                                      success:
+                                                                          true,
+                                                                    )).whenComplete(
+                                                                () {});
                                                           }
                                                           getOrders();
                                                         });

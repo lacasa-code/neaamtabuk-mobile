@@ -26,17 +26,15 @@ class MapOverlayState extends State<MapOverlay>
   Animation<double> scaleAnimation;
   GoogleMapController _googleMapController;
   TextEditingController addressController = TextEditingController();
-   LocationData myLocation;
+  LocationData myLocation;
 
-  var initialCameraPosition=CameraPosition(
-      zoom: 15,
-      target: LatLng(33.0,30)) ;
+  var initialCameraPosition =
+      CameraPosition(zoom: 15, target: LatLng(33.0, 30));
   Marker _origin;
   Location location = new Location();
   final formKey = GlobalKey<FormState>();
   @override
   void initState() {
-
     super.initState();
 
     controller =
@@ -44,9 +42,7 @@ class MapOverlayState extends State<MapOverlay>
     scaleAnimation =
         CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
-    controller.addListener(() {
-
-    });
+    controller.addListener(() {});
     //getLocation();
     getUserLocation();
     controller.forward();
@@ -61,7 +57,7 @@ class MapOverlayState extends State<MapOverlay>
         color: Colors.transparent,
         child: ScaleTransition(
           scale: scaleAnimation,
-          child:SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -72,27 +68,29 @@ class MapOverlayState extends State<MapOverlay>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text("${getTransrlate(context, "LocationSelected")}"),
-                      initialCameraPosition==null?Custom_Loading():  Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Container(
-                          height: ScreenUtil.getWidth(context)/2,
-                          child: GoogleMap(
-                            myLocationEnabled: true,
-                            compassEnabled: true,
-                            tiltGesturesEnabled: false,
-                            zoomControlsEnabled: false,
-                            mapType: MapType.normal,
-                            onLongPress: _addMarker,
-                            onTap: _addMarker,
-                            markers: {
-                              if (_origin != null) _origin,
-                            },
-                            initialCameraPosition: initialCameraPosition,
-                            onMapCreated: (controller) =>
-                            _googleMapController = controller,
-                          ),
-                        ),
-                      ),
+                      initialCameraPosition == null
+                          ? Custom_Loading()
+                          : Padding(
+                              padding: const EdgeInsets.all(24.0),
+                              child: Container(
+                                height: ScreenUtil.getWidth(context) / 2,
+                                child: GoogleMap(
+                                  myLocationEnabled: true,
+                                  compassEnabled: true,
+                                  tiltGesturesEnabled: false,
+                                  zoomControlsEnabled: false,
+                                  mapType: MapType.normal,
+                                  onLongPress: _addMarker,
+                                  onTap: _addMarker,
+                                  markers: {
+                                    if (_origin != null) _origin,
+                                  },
+                                  initialCameraPosition: initialCameraPosition,
+                                  onMapCreated: (controller) =>
+                                      _googleMapController = controller,
+                                ),
+                              ),
+                            ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: MyTextFormField(
@@ -107,8 +105,7 @@ class MapOverlayState extends State<MapOverlay>
                             }
                             return null;
                           },
-                          onSaved: (String value) {
-                          },
+                          onSaved: (String value) {},
                         ),
                       ),
                       Padding(
@@ -136,7 +133,6 @@ class MapOverlayState extends State<MapOverlay>
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -148,29 +144,26 @@ class MapOverlayState extends State<MapOverlay>
     );
   }
 
-
   void _addMarker(LatLng pos) async {
-      setState(() {
-        _origin = Marker(
-          markerId: const MarkerId('origin'),
-          infoWindow: const InfoWindow(title: 'Origin'),
-          icon:
-          BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          position: pos,
-        );
-      });
-      final coordinates = new Coordinates(
-          pos.latitude, pos.longitude);
-      var addresses = await Geocoder.local.findAddressesFromCoordinates(
-          coordinates);
-      var first = addresses.first;
-      addressController.text="${first.locality??''}, ${first.adminArea??''},${first.subLocality??''}, ${first.subAdminArea??''},${first.addressLine??''}, ${first.featureName??''},${first.thoroughfare??''}, ${first.subThoroughfare??''}";
- setState(() {
-   widget.model.latitude="${pos.latitude}";
-   widget.model.longitude="${pos.longitude}";
-   widget.model.address = addressController.text;
- });
-
+    setState(() {
+      _origin = Marker(
+        markerId: const MarkerId('origin'),
+        infoWindow: const InfoWindow(title: 'Origin'),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        position: pos,
+      );
+    });
+    final coordinates = new Coordinates(pos.latitude, pos.longitude);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var first = addresses.first;
+    addressController.text =
+        "${first.locality ?? ''}, ${first.adminArea ?? ''},${first.subLocality ?? ''}, ${first.subAdminArea ?? ''},${first.addressLine ?? ''}, ${first.featureName ?? ''},${first.thoroughfare ?? ''}, ${first.subThoroughfare ?? ''}";
+    setState(() {
+      widget.model.latitude = "${pos.latitude}";
+      widget.model.longitude = "${pos.longitude}";
+      widget.model.address = addressController.text;
+    });
   }
 
   getUserLocation() async {
@@ -192,25 +185,23 @@ class MapOverlayState extends State<MapOverlay>
       myLocation = null;
     }
 
-    LatLng latLng=new LatLng(myLocation.latitude, myLocation.longitude);
+    LatLng latLng = new LatLng(myLocation.latitude, myLocation.longitude);
     _goToPosition1(latLng);
   }
 
   @override
   void dispose() {
     _googleMapController.dispose();
+    addressController.dispose();
     super.dispose();
   }
 
   void _goToPosition1(LatLng latLng) {
     setState(() {
-      initialCameraPosition=CameraPosition(
-          zoom: 15,
-          target:latLng);
+      initialCameraPosition = CameraPosition(zoom: 15, target: latLng);
     });
-    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: 15,
-        target: latLng)));
+    _googleMapController?.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(zoom: 15, target: latLng)));
     _addMarker(latLng);
   }
 }

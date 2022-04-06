@@ -396,10 +396,13 @@ class _DelegateCompleatedState extends State<DelegateCompleated> {
                                                           getOrders();
 
                                                           showDialog(
-                                                              context: context,
-                                                              builder: (_) =>
-                                                                  ResultOverlay(
-                                                                      '${value['message']}'));
+                                                            context: context,
+                                                            builder: (_) =>
+                                                                ResultOverlay(
+                                                              '${value['message']}',
+                                                              success: true,
+                                                            ),
+                                                          );
                                                         } else {
                                                           showDialog(
                                                               context: context,

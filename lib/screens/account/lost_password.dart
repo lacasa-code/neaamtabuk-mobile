@@ -8,7 +8,6 @@ import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_textfield.dart';
 
 class LostPassword extends StatefulWidget {
-
   const LostPassword({Key key}) : super(key: key);
 
   @override
@@ -27,7 +26,6 @@ class _LostPasswordState extends State<LostPassword> {
           title: Image.asset(
         "assets/images/logo.png",
         width: ScreenUtil.getWidth(context) / 10,
-
       )),
       body: Form(
         key: _formKey,
@@ -44,8 +42,8 @@ class _LostPasswordState extends State<LostPassword> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'mail');
-                    }else if (!RegExp(
-                        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                    } else if (!RegExp(
+                            r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
                         .hasMatch(value)) {
                       return getTransrlate(context, 'invalidemail');
                     }
@@ -72,8 +70,7 @@ class _LostPasswordState extends State<LostPassword> {
                           maxLines: 1,
                           minFontSize: 10,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green),
+                              fontWeight: FontWeight.bold, color: Colors.green),
                         ),
                       ),
                     ),
@@ -91,8 +88,10 @@ class _LostPasswordState extends State<LostPassword> {
                             } else {
                               showDialog(
                                   context: context,
-                                  builder: (_) =>
-                                      ResultOverlay(value['data']));
+                                  builder: (_) => ResultOverlay(
+                                        value['data'],
+                                        success: true,
+                                      ));
                             }
                           }
                         });

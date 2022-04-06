@@ -9,7 +9,7 @@ import 'package:flutter_pos/widget/custom_textfield.dart';
 import 'package:provider/provider.dart';
 
 class Support_Screen extends StatelessWidget {
-   Support_Screen({Key key}) : super(key: key);
+  Support_Screen({Key key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -40,13 +40,12 @@ class Support_Screen extends StatelessWidget {
                       '${getTransrlate(context, 'Saudi')}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          ),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
-
                 SizedBox(
                   height: 15,
                 ),
@@ -72,7 +71,7 @@ class Support_Screen extends StatelessWidget {
                               color: Colors.black12,
                               offset: Offset(1, 3))
                         ] // Make rounded corner of border
-                    ),
+                        ),
                     child: Form(
                       key: _formKey,
                       child: Padding(
@@ -84,7 +83,8 @@ class Support_Screen extends StatelessWidget {
                               // hintText: getTransrlate(context, 'name'),
                               validator: (String value) {
                                 if (value.isEmpty) {
-                                  return getTransrlate(context, 'requiredempty');
+                                  return getTransrlate(
+                                      context, 'requiredempty');
                                 }
                                 return null;
                               },
@@ -98,9 +98,10 @@ class Support_Screen extends StatelessWidget {
                               isEmail: true,
                               validator: (String value) {
                                 if (value.isEmpty) {
-                                  return getTransrlate(context, 'requiredempty');
+                                  return getTransrlate(
+                                      context, 'requiredempty');
                                 } else if (!RegExp(
-                                    r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                                        r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
                                     .hasMatch(value)) {
                                   return getTransrlate(context, 'invalidemail');
                                 }
@@ -117,7 +118,8 @@ class Support_Screen extends StatelessWidget {
                               isEmail: true,
                               validator: (String value) {
                                 if (value.isEmpty) {
-                                  return getTransrlate(context, 'requiredempty');
+                                  return getTransrlate(
+                                      context, 'requiredempty');
                                 }
                                 _formKey.currentState.save();
                                 return null;
@@ -132,7 +134,8 @@ class Support_Screen extends StatelessWidget {
                               isEmail: true,
                               validator: (String value) {
                                 if (value.isEmpty) {
-                                  return getTransrlate(context, 'requiredempty');
+                                  return getTransrlate(
+                                      context, 'requiredempty');
                                 }
                                 _formKey.currentState.save();
                                 return null;
@@ -156,7 +159,9 @@ class Support_Screen extends StatelessWidget {
                                     Navigator.pop(context);
                                     showDialog(
                                         context: context,
-                                        builder: (_) => ResultOverlay('  سيتم التواصل معكم فى اقرب وقت '
+                                        builder: (_) => ResultOverlay(
+                                              '  سيتم التواصل معكم فى اقرب وقت ',
+                                              success: true,
                                             ));
                                   }
                                 },

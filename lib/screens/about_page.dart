@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pos/utils/tab_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart' as util;
 import 'package:flutter_pos/main.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -25,86 +26,92 @@ class _SettingState extends State<Setting> {
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ProviderControl>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          getTransrlate(context, 'About'),
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: util.ScreenUtil().setSp(17)),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: PopupMenuButton(
-              itemBuilder: (_) => [
-                CheckedPopupMenuItem(
-                  value: 'ar',
-                  checked: themeColor.local == 'ar',
-                  child: Text(
-                    'العربية',
-                  ),
-                ),
-                CheckedPopupMenuItem(
-                  value: 'en',
-                  checked: themeColor.local == 'en',
-                  child: Text(
-                    'English',
-                  ),
-                ),
-              ],
-              child: Icon(
-                Icons.language,
-                color: themeColor.getColor(),
-              ),
-              onSelected: (v) {
-                if (themeColor.local == v) {
-                  return;
-                }
-                themeColor.setLocal(v);
-                MyApp.setlocal(context, Locale(themeColor.getlocal(), ''));
-                SharedPreferences.getInstance().then((prefs) {
-                  prefs.setString('local', themeColor.local);
-                });
-              },
-            ),
+    return WillPopScope(
+      onWillPop: () async {
+        Provider.of<TabProvider>(context, listen: false).toHome();
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            getTransrlate(context, 'About'),
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: util.ScreenUtil().setSp(17)),
           ),
-        ],
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
-      // appBar: buildAppBar(themeColor),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  child: Image.asset(
-                    'assets/images/logoIcon.png',
-                    width: ScreenUtil.getWidth(context) / 2,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: PopupMenuButton(
+                itemBuilder: (_) => [
+                  CheckedPopupMenuItem(
+                    value: 'ar',
+                    checked: themeColor.local == 'ar',
+                    child: Text(
+                      'العربية',
+                    ),
                   ),
-                  // height: ScreenUtil.getHeight(context) / 4,
+                  CheckedPopupMenuItem(
+                    value: 'en',
+                    checked: themeColor.local == 'en',
+                    child: Text(
+                      'English',
+                    ),
+                  ),
+                ],
+                child: Icon(
+                  Icons.language,
+                  color: themeColor.getColor(),
                 ),
-                Positioned(
-                  bottom: -util.ScreenUtil().setWidth(30),
-                  child: Container(
+                onSelected: (v) {
+                  if (themeColor.local == v) {
+                    return;
+                  }
+                  themeColor.setLocal(v);
+                  MyApp.setlocal(context, Locale(themeColor.getlocal(), ''));
+                  SharedPreferences.getInstance().then((prefs) {
+                    prefs.setString('local', themeColor.local);
+                  });
+                },
+              ),
+            ),
+          ],
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+        ),
+        // appBar: buildAppBar(themeColor),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
                     child: Image.asset(
-                      'assets/images/logoText.png',
+                      'assets/images/logoIcon.png',
                       width: ScreenUtil.getWidth(context) / 2,
                     ),
                     // height: ScreenUtil.getHeight(context) / 4,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: util.ScreenUtil().setHeight(25),
-            ),
-            aboutItem(themeColor),
-          ],
+                  Positioned(
+                    bottom: -util.ScreenUtil().setWidth(30),
+                    child: Container(
+                      child: Image.asset(
+                        'assets/images/logoText.png',
+                        width: ScreenUtil.getWidth(context) / 2,
+                      ),
+                      // height: ScreenUtil.getHeight(context) / 4,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: util.ScreenUtil().setHeight(25),
+              ),
+              aboutItem(themeColor),
+            ],
+          ),
         ),
       ),
     );

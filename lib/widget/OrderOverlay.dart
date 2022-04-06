@@ -29,15 +29,15 @@ class OrderOverlayState extends State<OrderOverlay>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
-  List<NeerRecipent> recipent;
+  List<NearRecipent> recipent;
   final formKey = GlobalKey<FormState>();
-  NeerRecipent trakers;
+  NearRecipent trakers;
   @override
   void initState() {
     API(context).get('nearRecipent').then((value) {
       if (value != null) {
         setState(() {
-          recipent = NeerRecipentModel.fromJson(value).data;
+          recipent = NearRecipentModel.fromJson(value).data;
         });
       }
     });
@@ -91,7 +91,7 @@ class OrderOverlayState extends State<OrderOverlay>
                         : Padding(
                             padding: EdgeInsets.only(
                                 left: 25.0, right: 25.0, top: 10.0, bottom: 10),
-                            child: DropdownSearch<NeerRecipent>(
+                            child: DropdownSearch<NearRecipent>(
                               mode: Mode.DIALOG,
                               dropdownSearchDecoration: InputDecoration(
                                 contentPadding: theme.local == 'ar'
@@ -118,7 +118,7 @@ class OrderOverlayState extends State<OrderOverlay>
                                         child: Text(" ${item?.username} "),
                                       );
                               },
-                              validator: (NeerRecipent item) {
+                              validator: (NearRecipent item) {
                                 if (item == null) {
                                   return "${getTransrlate(context, 'requiredempty')}";
                                 } else
@@ -127,12 +127,12 @@ class OrderOverlayState extends State<OrderOverlay>
                               items: recipent,
                               popupItemBuilder: _customPopupItemBuilderExample,
                               //  onFind: (String filter) => getData(filter),
-                              onChanged: (NeerRecipent u) {
+                              onChanged: (NearRecipent u) {
                                 setState(() {
                                   trakers = u;
                                 });
                               },
-                              itemAsString: (NeerRecipent u) =>
+                              itemAsString: (NearRecipent u) =>
                                   " ${u.username} ",
                             )),
                     trakers == null
@@ -161,10 +161,11 @@ class OrderOverlayState extends State<OrderOverlay>
                                         print(value);
                                         if (value['status'] == true) {
                                           showDialog(
-                                                  context: context,
-                                                  builder: (_) => ResultOverlay(
-                                                      '${value['message']}'))
-                                              .whenComplete(() {
+                                              context: context,
+                                              builder: (_) => ResultOverlay(
+                                                    '${value['message']}',
+                                                    success: true,
+                                                  )).whenComplete(() {
                                             Navigator.pop(context);
                                             Navigator.pop(context);
                                             Nav.routeReplacement(
@@ -268,7 +269,7 @@ class OrderOverlayState extends State<OrderOverlay>
   }
 
   Widget _customPopupItemBuilderExample(
-      BuildContext context, NeerRecipent item, bool isSelected) {
+      BuildContext context, NearRecipent item, bool isSelected) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8),
       decoration: !isSelected

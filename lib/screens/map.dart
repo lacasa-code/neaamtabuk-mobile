@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/model/direction_model.dart';
+import 'package:flutter_pos/model/neerRecipentModel.dart';
 import 'package:flutter_pos/screens/delegateOrders.dart';
 import 'package:flutter_pos/screens/homepage.dart';
 import 'package:flutter_pos/screens/tab_screen.dart';
@@ -12,6 +15,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/utils/shared_prefs_provider.dart';
 import 'package:flutter_pos/utils/tab_provider.dart';
 import 'package:flutter_pos/widget/OrderOverlay.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
@@ -26,18 +30,21 @@ import 'package:url_launcher/url_launcher.dart';
 
 class MapPage extends StatefulWidget {
   String donationId;
-  String longitude;
-  String latitude;
+  String donationlongitude;
+  String donationLatitude;
   String statusId;
   String dist;
+  final String donationName;
 
-  MapPage(
+  MapPage({
+    Key key,
     this.statusId,
     this.donationId,
-    this.latitude,
-    this.longitude,
+    this.donationLatitude,
+    this.donationlongitude,
     this.dist,
-  );
+    this.donationName,
+  }) : super(key: key);
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -52,7 +59,19 @@ class _MapPageState extends State<MapPage> {
   Marker _destination;
   Directions _info;
   LocationData myLocation;
+  Set<Marker> _recipentMarkers = {};
   int id;
+  var isInit = true;
+  void check(CameraUpdate u, GoogleMapController c) async {
+    c.animateCamera(u);
+    _googleMapController.animateCamera(u);
+    LatLngBounds l1 = await c.getVisibleRegion();
+    LatLngBounds l2 = await c.getVisibleRegion();
+    // print(l1.toString());
+    // print(l2.toString());
+    if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
+      check(u, c);
+  }
 
   @override
   void initState() {
@@ -62,6 +81,42 @@ class _MapPageState extends State<MapPage> {
           }),
         });
     print('f');
+    if (widget.statusId == '1') {
+      API(context).get('nearRecipent').then((value) {
+        log('response :: ${value ?? 'null '}');
+        if (value != null) {
+          List<NearRecipent> recipent = NearRecipentModel.fromJson(value).data;
+          if (recipent.isNotEmpty) {
+            Set<Marker> apiRecipentMarkers = {};
+            for (var i = 0; i < recipent.length; i++) {
+              var singleMarker = Marker(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => OrderOverlay(
+                      donation_id: widget.donationId,
+                    ),
+                  );
+                },
+                markerId: MarkerId('Place'),
+                position: LatLng(
+                  double.parse(recipent[i].latitude),
+                  double.parse(recipent[i].longitude),
+                ),
+                infoWindow: InfoWindow(
+                    title: recipent[i].username,
+                    snippet:
+                        '${getTransrlate(context, 'family_members')}: ${recipent[i].family_members}  ${getTransrlate(context, 'phone')} : ${recipent[i].mobile}'),
+              );
+              apiRecipentMarkers.add(singleMarker);
+            }
+            setState(() {
+              _recipentMarkers = apiRecipentMarkers;
+            });
+          }
+        }
+      });
+    }
     // location.onLocationChanged.listen((LocationData currentLocation) {
     //   setState(() {
     //     initialCameraPosition = CameraPosition(
@@ -75,20 +130,43 @@ class _MapPageState extends State<MapPage> {
     //
     //   DirectionsRepository();
     // });
-    setState(() {
-      _destination = Marker(
+    // getUserLocation();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (isInit) {
+      var prefs =
+          Provider.of<SharedPrefsProvider>(context, listen: false).prefs;
+      setState(() {
+        _origin = Marker(
+          markerId: MarkerId('myLocation'),
+          position: LatLng(
+            double.parse(prefs.getString('lat') ?? '0.0'),
+            double.parse(prefs.getString('lang') ?? '0.0'),
+          ),
+          infoWindow: InfoWindow(title: prefs.getString('user_name')),
+        );
+        _destination = Marker(
           markerId: MarkerId('Place'),
           position: LatLng(
-              double.parse(widget.latitude), double.parse(widget.longitude)));
-    });
-    getUserLocation();
-    super.initState();
+            double.parse(widget.donationLatitude),
+            double.parse(widget.donationlongitude),
+          ),
+          infoWindow: InfoWindow(title: widget.donationName),
+        );
+      });
+      directionsRepository();
+
+      isInit = false;
+    }
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ProviderControl>(context);
-    // print(_info);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -98,8 +176,12 @@ class _MapPageState extends State<MapPage> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(Icons.arrow_back),
-          color: Colors.black,
+          icon: ImageIcon(
+            AssetImage(
+              'assets/icons/arrowBack.png',
+            ),
+          ),
+          color: theme.getColor(),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -113,22 +195,25 @@ class _MapPageState extends State<MapPage> {
       ),
       body: Column(
         children: [
-          Container(
-            height: ScreenUtil.getHeight(context) * 0.07,
-            color: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${getTransrlate(context, 'Beneficiary')} : ${double.tryParse(widget.dist ?? '0.0').toStringAsFixed(4)} Km',
-                  style: TextStyle(fontSize: 15, color: Color(0xff6AC088)),
-                ),
-                Text(
-                  '${getTransrlate(context, 'representative')} : ${double.parse(widget.dist).toStringAsFixed(4)}',
-                  style: TextStyle(fontSize: 15, color: Color(0xff6AC088)),
-                ),
-              ],
+          Visibility(
+            visible: widget.statusId != '1',
+            child: Container(
+              height: ScreenUtil.getHeight(context) * 0.07,
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${getTransrlate(context, 'Beneficiary')} : ${double.tryParse(widget.dist ?? '0.0').toStringAsFixed(4)} Km',
+                    style: TextStyle(fontSize: 15, color: Color(0xff6AC088)),
+                  ),
+                  Text(
+                    '${getTransrlate(context, 'representative')} : ${_info?.totalDuration ?? ''}',
+                    style: TextStyle(fontSize: 15, color: Color(0xff6AC088)),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -142,30 +227,71 @@ class _MapPageState extends State<MapPage> {
                           myLocationEnabled: true,
                           compassEnabled: true,
                           tiltGesturesEnabled: false,
-                          zoomControlsEnabled: false,
-                          mapType: MapType.normal,
+                          // zoomControlsEnabled: false,
+                          // mapType: MapType.satellite,
                           markers: {
                             if (_origin != null) _origin,
-                            if (_destination != null) _destination
+                            if (_destination != null) _destination,
+                            if (_recipentMarkers.isNotEmpty) ..._recipentMarkers
                           },
-                          polylines: {
-                            if (_info != null)
-                              Polyline(
-                                polylineId:
-                                    const PolylineId('طريق الى المستفيد'),
-                                color: theme.getColor(),
-                                width: 5,
-                                points: _info.polylinePoints
-                                    .map((e) => LatLng(e.latitude, e.longitude))
-                                    .toList(),
-                              ),
-                          },
+                          // polylines: {
+                          //   if (_info != null)
+                          //     Polyline(
+                          //       polylineId:
+                          //           const PolylineId('طريق الى المستفيد'),
+                          //       color: theme.getColor(),
+                          //       width: 5,
+                          //       points: _info.polylinePoints
+                          //           .map((e) => LatLng(e.latitude, e.longitude))
+                          //           .toList(),
+                          //     ),
+                          // },
                           initialCameraPosition: initialCameraPosition,
-                          onMapCreated: (controller) =>
-                              _googleMapController = controller,
+                          onMapCreated: (controller) {
+                            setState(() {
+                              _googleMapController = controller;
+                              LatLngBounds bound;
+                              if (_origin.position.latitude >
+                                      _destination.position.latitude &&
+                                  _origin.position.longitude >
+                                      _destination.position.longitude) {
+                                bound = LatLngBounds(
+                                    southwest: _destination.position,
+                                    northeast: _origin.position);
+                              } else if (_origin.position.longitude >
+                                  _destination.position.longitude) {
+                                bound = LatLngBounds(
+                                    southwest: LatLng(_origin.position.latitude,
+                                        _destination.position.longitude),
+                                    northeast: LatLng(
+                                        _destination.position.latitude,
+                                        _origin.position.longitude));
+                              } else if (_origin.position.latitude >
+                                  _destination.position.latitude) {
+                                bound = LatLngBounds(
+                                    southwest: LatLng(
+                                        _destination.position.latitude,
+                                        _origin.position.longitude),
+                                    northeast: LatLng(_origin.position.latitude,
+                                        _destination.position.longitude));
+                              } else {
+                                bound = LatLngBounds(
+                                    southwest: _origin.position,
+                                    northeast: _destination.position);
+                              }
+
+                              CameraUpdate u2 =
+                                  CameraUpdate.newLatLngBounds(bound, 50);
+                              controller.animateCamera(u2).then((void v) {
+                                check(u2, controller);
+                              });
+
+                              // _controller./
+                            });
+                          },
                         ),
                 ),
-                if (_info != null)
+                /*   if (_info != null)
                   Positioned(
                     top: 10.0,
                     child: Container(
@@ -284,7 +410,7 @@ class _MapPageState extends State<MapPage> {
                         ],
                       ),
                     ),
-                  ),
+                  ),*/
                 // Positioned(
                 // bottom: 15,
                 // child: Row(
@@ -518,10 +644,11 @@ class _MapPageState extends State<MapPage> {
                                   widget.statusId = "3";
                                 });
                                 showDialog(
-                                        context: context,
-                                        builder: (_) => ResultOverlay(
-                                            '${value['message']}'))
-                                    .whenComplete(() {
+                                    context: context,
+                                    builder: (_) => ResultOverlay(
+                                          '${value['message']}',
+                                          success: true,
+                                        )).whenComplete(() {
                                   Navigator.pop(context);
                                   Nav.routeReplacement(
                                     context,
@@ -587,10 +714,11 @@ class _MapPageState extends State<MapPage> {
                                       widget.statusId = "1";
                                     });
                                     showDialog(
-                                            context: context,
-                                            builder: (_) => ResultOverlay(
-                                                '${value['message']}'))
-                                        .whenComplete(() {
+                                        context: context,
+                                        builder: (_) => ResultOverlay(
+                                              '${value['message']}',
+                                              success: true,
+                                            )).whenComplete(() {
                                       // Provider.of<HomeProvider>(context,
                                       //         listen: false)
                                       //     .changeTabIndex(1);
@@ -712,14 +840,14 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _addMarker(LatLng pos) async {
-    setState(() {
-      _origin = Marker(
-        markerId: const MarkerId('origin'),
-        infoWindow: const InfoWindow(title: 'Origin'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-        position: pos,
-      );
-    });
+    // setState(() {
+    //   _origin = Marker(
+    //     markerId: const MarkerId('origin'),
+    //     infoWindow: const InfoWindow(title: 'Origin'),
+    //     icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+    //     position: pos,
+    //   );
+    // });
     directionsRepository();
   }
 
@@ -757,18 +885,18 @@ class _MapPageState extends State<MapPage> {
     });
     _addMarker(latLng);
     _googleMapController
-        .animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
+        ?.animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
   }
 
   _launchMaps(LatLng latLng) async {
     String googleUrl =
-        'comgooglemaps://?center=${latLng.latitude},${latLng.longitude}';
+        'https://www.google.com/maps/search/?api=1&query=${latLng.latitude},${latLng.longitude}';
     String appleUrl =
         'https://maps.apple.com/?sll=${latLng.latitude},${latLng.longitude}';
-    if (await canLaunch("comgooglemaps://")) {
+    if (Platform.isAndroid) {
       print('launching com googleUrl');
       await launch(googleUrl);
-    } else if (await canLaunch(appleUrl)) {
+    } else if (Platform.isIOS) {
       print('launching apple url');
       await launch(appleUrl);
     } else {

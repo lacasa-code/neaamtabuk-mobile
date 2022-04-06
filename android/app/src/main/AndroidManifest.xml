@@ -27,7 +27,7 @@
         android:label="ج.خ لحفظ النعم"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCkMKB-UK5Fxwz9a3Y16r_LbSKAv_ydR6I"/>
+            android:value="AIzaSyAALm9ApAqso6kmCh0uc2O_E0wFMmbm1K0"/>
             <!-- android:value="AIzaSyAALm9ApAqso6kmCh0uc2O_E0wFMmbm1K0"/> -->
         <activity
             android:name=".MainActivity"

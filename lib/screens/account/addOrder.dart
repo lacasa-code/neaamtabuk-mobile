@@ -386,7 +386,10 @@ class _AddOrderPageState extends State<AddOrderPage> {
 
         showDialog(
             context: context,
-            builder: (_) => ResultOverlay('${value['message']}'));
+            builder: (_) => ResultOverlay(
+                  '${value['message']}',
+                  success: true,
+                ));
       } else {
         showDialog(
             context: context,

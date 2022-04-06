@@ -72,6 +72,13 @@ class _VolunteerPageState extends State<VolunteerPage> {
   }
 
   @override
+  void dispose() {
+    addressController.dispose();
+    dateController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     themeColor = Provider.of<ProviderControl>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -652,7 +659,10 @@ class _VolunteerPageState extends State<VolunteerPage> {
 
         showDialog(
             context: context,
-            builder: (_) => ResultOverlay('${value['message']}'));
+            builder: (_) => ResultOverlay(
+                  '${value['message']}',
+                  success: true,
+                ));
       } else {
         showDialog(
             context: context,

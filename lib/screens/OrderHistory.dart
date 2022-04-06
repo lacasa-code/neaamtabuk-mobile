@@ -371,16 +371,30 @@ class _OrdersState extends State<Orders> {
                                                             Nav.route(
                                                                 context,
                                                                 MapPage(
-                                                                  orders[index]
+                                                                  key: ValueKey(
+                                                                      orders[index]
+                                                                          .id),
+                                                                  donationName:
+                                                                      orders[index]
+                                                                          .username,
+
+                                                                  statusId: orders[
+                                                                          index]
                                                                       .status_id,
-                                                                  orders[index]
-                                                                      .id,
-                                                                  orders[index]
-                                                                      .latitude,
-                                                                  orders[index]
-                                                                      .longitude,
-                                                                  orders[index]
+                                                                  donationId:
+                                                                      orders[index]
+                                                                          .id,
+                                                                  donationLatitude:
+                                                                      orders[index]
+                                                                          .latitude,
+                                                                  donationlongitude:
+                                                                      orders[index]
+                                                                          .longitude,
+                                                                  dist: orders[
+                                                                          index]
                                                                       .distance,
+                                                                  // representativeLatitude: orders[index].,
+                                                                  // representativeLongitude: orders[index].recipientLongitude,
                                                                 ));
                                                           },
                                                           child: AutoSizeText(

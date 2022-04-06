@@ -14,11 +14,13 @@ class DropDownWidget extends StatelessWidget {
     this.prefixIcon,
     this.enabled = true,
     this.value,
+    this.removePadding = false,
   }) : super(key: key);
   final List<String> items;
   final void Function(String) onChanged;
   final Mode dropDownMode;
   final bool enabled;
+  final bool removePadding;
 
   /// localization hint .....
   final String hint;
@@ -31,7 +33,9 @@ class DropDownWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Provider.of<ProviderControl>(context, listen: false);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: removePadding
+          ? EdgeInsets.zero
+          : const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: DropdownSearch(
         validator: (v) {
           if ((v == null && enabled) || (value == null && !enabled)) {
@@ -39,7 +43,7 @@ class DropDownWidget extends StatelessWidget {
           } else
             return null;
         },
-        label: value,
+        label: hint == null ? null : getTransrlate(context, hint),
         initialValue: value,
         dropdownSearchDecoration: InputDecoration(
           contentPadding: theme.local == 'ar'
@@ -61,6 +65,7 @@ class DropDownWidget extends StatelessWidget {
         onChanged: onChanged,
         enabled: enabled,
         items: items,
+        selectedItem: value,
         mode: dropDownMode,
         hint: hint == null ? null : getTransrlate(context, hint),
         prefixIcon: prefixIcon,

@@ -45,7 +45,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only( right: 36, left: 48),
+          padding: EdgeInsets.only(right: 36, left: 48),
           child: Form(
             key: _formKey,
             child: Column(
@@ -56,7 +56,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return "${getTransrlate(context, 'requiredempty')}";
-                    }else   if (value.length<=2) {
+                    } else if (value.length <= 2) {
                       return "${getTransrlate(context, 'requiredlength')}";
                     }
                     return null;
@@ -72,8 +72,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    } else if (!RegExp(
-                            r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                    } else if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
                         .hasMatch(value)) {
                       return getTransrlate(context, 'invalidemail');
                     }
@@ -107,9 +106,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      passwordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
                       color: Colors.black26,
                     ),
                     onPressed: () {
@@ -143,9 +140,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      passwordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
                       color: Colors.black26,
                     ),
                     onPressed: () {
@@ -159,7 +154,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                   validator: (String value) {
                     if (value.isEmpty) {
                       return getTransrlate(context, 'requiredempty');
-                    }else if (value != model.password) {
+                    } else if (value != model.password) {
                       return getTransrlate(context, 'Passwordmatch');
                     }
 
@@ -197,7 +192,6 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -215,6 +209,7 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
       ],
     );
   }
+
   register(ProviderControl themeColor) async {
     model.gender = checkboxValueA.toString();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -240,8 +235,10 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
         //     context, MaterialPageRoute(builder: (_) => Account()), (r) => false);
         showDialog(
             context: context,
-            builder: (_) =>
-                ResultOverlay('${value['message']}')).whenComplete(() {
+            builder: (_) => ResultOverlay(
+                  '${value['message']}',
+                  success: true,
+                )).whenComplete(() {
           Nav.routeReplacement(context, LoginPage());
         });
       } else {

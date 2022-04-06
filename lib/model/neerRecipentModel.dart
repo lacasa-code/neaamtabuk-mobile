@@ -1,25 +1,28 @@
-class NeerRecipentModel {
-  NeerRecipentModel({
-      this.status, 
-      this.message, 
-      this.code, 
-      this.data,});
+class NearRecipentModel {
+  NearRecipentModel({
+    this.status,
+    this.message,
+    this.code,
+    this.data,
+  });
 
-  NeerRecipentModel.fromJson(dynamic json) {
+  NearRecipentModel.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
     code = json['code'];
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(NeerRecipent.fromJson(v));
+        data.add(NearRecipent.fromJson(v));
       });
+    } else {
+      data = [];
     }
   }
   bool status;
   String message;
   int code;
-  List<NeerRecipent> data;
+  List<NearRecipent> data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -31,22 +34,22 @@ class NeerRecipentModel {
     }
     return map;
   }
-
 }
 
-class NeerRecipent {
-  NeerRecipent({
-      this.id, 
-      this.family_members,
-      this.username,
-      this.mobile,
-      this.gender, 
-      this.address, 
-      this.longitude, 
-      this.latitude, 
-      this.distance,});
+class NearRecipent {
+  NearRecipent({
+    this.id,
+    this.family_members,
+    this.username,
+    this.mobile,
+    this.gender,
+    this.address,
+    this.longitude,
+    this.latitude,
+    this.distance,
+  });
 
-  NeerRecipent.fromJson(dynamic json) {
+  NearRecipent.fromJson(dynamic json) {
     id = json['id'];
     family_members = json['family_members'];
     username = json['username'];
@@ -79,5 +82,4 @@ class NeerRecipent {
     map['distance'] = distance;
     return map;
   }
-
 }

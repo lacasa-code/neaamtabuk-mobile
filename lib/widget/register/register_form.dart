@@ -66,6 +66,12 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   @override
+  void dispose() {
+    addressController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themeColor = Provider.of<ProviderControl>(context);
     return Stack(
@@ -602,9 +608,11 @@ class _RegisterFormState extends State<RegisterForm> {
         prefs.setInt("user_id", user['id']);
         themeColor.setLogin(true);
         showDialog(
-                context: context,
-                builder: (_) => ResultOverlay('${value['message']}'))
-            .whenComplete(() {
+            context: context,
+            builder: (_) => ResultOverlay(
+                  '${value['message']}',
+                  success: true,
+                )).whenComplete(() {
           Nav.routeReplacement(context, SplashScreen());
         });
       } else {
