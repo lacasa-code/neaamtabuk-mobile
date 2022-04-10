@@ -17,9 +17,12 @@ import 'package:provider/provider.dart';
 import '../screens/delegateOrdersCompleated.dart';
 
 class OrderOverlay extends StatefulWidget {
-  String donation_id;
-
-  OrderOverlay({this.donation_id});
+  final String donationId;
+  final int recipentId;
+  OrderOverlay({
+    this.donationId,
+    this.recipentId,
+  });
 
   @override
   State<StatefulWidget> createState() => OrderOverlayState();
@@ -38,6 +41,11 @@ class OrderOverlayState extends State<OrderOverlay>
       if (value != null) {
         setState(() {
           recipent = NearRecipentModel.fromJson(value).data;
+          if (widget.recipentId != null) {
+            trakers = recipent.firstWhere(
+                (element) => element.id == widget.recipentId,
+                orElse: null);
+          }
         });
       }
     });
@@ -109,7 +117,7 @@ class OrderOverlayState extends State<OrderOverlay>
                                   color: Colors.black,
                                 ),
                               ),
-
+                              selectedItem: trakers,
                               dropdownBuilder: (context, item) {
                                 return item == null
                                     ? Container()
@@ -153,7 +161,7 @@ class OrderOverlayState extends State<OrderOverlay>
                                     if (formKey.currentState.validate()) {
                                       formKey.currentState.save();
                                       API(context).post(
-                                          'orderRecipent/${widget.donation_id}',
+                                          'orderRecipent/${widget.donationId}',
                                           {
                                             'recipient_id': trakers.id,
                                             'status_id': 2,

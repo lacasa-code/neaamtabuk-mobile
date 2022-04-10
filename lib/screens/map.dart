@@ -94,7 +94,8 @@ class _MapPageState extends State<MapPage> {
                   showDialog(
                     context: context,
                     builder: (_) => OrderOverlay(
-                      donation_id: widget.donationId,
+                      donationId: widget.donationId,
+                      recipentId: recipent[i].id,
                     ),
                   );
                 },
@@ -156,6 +157,7 @@ class _MapPageState extends State<MapPage> {
           ),
           infoWindow: InfoWindow(title: widget.donationName),
         );
+        _goToPosition1(_destination.position);
       });
       directionsRepository();
 
@@ -167,6 +169,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ProviderControl>(context);
+    log('peoples:: ${_recipentMarkers.length}');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -250,41 +253,41 @@ class _MapPageState extends State<MapPage> {
                           onMapCreated: (controller) {
                             setState(() {
                               _googleMapController = controller;
-                              LatLngBounds bound;
-                              if (_origin.position.latitude >
-                                      _destination.position.latitude &&
-                                  _origin.position.longitude >
-                                      _destination.position.longitude) {
-                                bound = LatLngBounds(
-                                    southwest: _destination.position,
-                                    northeast: _origin.position);
-                              } else if (_origin.position.longitude >
-                                  _destination.position.longitude) {
-                                bound = LatLngBounds(
-                                    southwest: LatLng(_origin.position.latitude,
-                                        _destination.position.longitude),
-                                    northeast: LatLng(
-                                        _destination.position.latitude,
-                                        _origin.position.longitude));
-                              } else if (_origin.position.latitude >
-                                  _destination.position.latitude) {
-                                bound = LatLngBounds(
-                                    southwest: LatLng(
-                                        _destination.position.latitude,
-                                        _origin.position.longitude),
-                                    northeast: LatLng(_origin.position.latitude,
-                                        _destination.position.longitude));
-                              } else {
-                                bound = LatLngBounds(
-                                    southwest: _origin.position,
-                                    northeast: _destination.position);
-                              }
+                              // LatLngBounds bound;
+                              // if (_origin.position.latitude >
+                              //         _destination.position.latitude &&
+                              //     _origin.position.longitude >
+                              //         _destination.position.longitude) {
+                              //   bound = LatLngBounds(
+                              //       southwest: _destination.position,
+                              //       northeast: _origin.position);
+                              // } else if (_origin.position.longitude >
+                              //     _destination.position.longitude) {
+                              //   bound = LatLngBounds(
+                              //       southwest: LatLng(_origin.position.latitude,
+                              //           _destination.position.longitude),
+                              //       northeast: LatLng(
+                              //           _destination.position.latitude,
+                              //           _origin.position.longitude));
+                              // } else if (_origin.position.latitude >
+                              //     _destination.position.latitude) {
+                              //   bound = LatLngBounds(
+                              //       southwest: LatLng(
+                              //           _destination.position.latitude,
+                              //           _origin.position.longitude),
+                              //       northeast: LatLng(_origin.position.latitude,
+                              //           _destination.position.longitude));
+                              // } else {
+                              //   bound = LatLngBounds(
+                              //       southwest: _origin.position,
+                              //       northeast: _destination.position);
+                              // }
 
-                              CameraUpdate u2 =
-                                  CameraUpdate.newLatLngBounds(bound, 50);
-                              controller.animateCamera(u2).then((void v) {
-                                check(u2, controller);
-                              });
+                              // CameraUpdate u2 =
+                              //     CameraUpdate.newLatLngBounds(bound, 50);
+                              // controller.animateCamera(u2).then((void v) {
+                              //   check(u2, controller);
+                              // });
 
                               // _controller./
                             });
@@ -784,7 +787,7 @@ class _MapPageState extends State<MapPage> {
                                 showDialog(
                                     context: context,
                                     builder: (_) => OrderOverlay(
-                                          donation_id: widget.donationId,
+                                          donationId: widget.donationId,
                                         ));
                               },
                               child: Text(
