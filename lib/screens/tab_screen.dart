@@ -7,6 +7,7 @@ import 'package:flutter_pos/screens/account/login.dart';
 import 'package:flutter_pos/screens/account/user_information.dart';
 import 'package:flutter_pos/screens/contact_page.dart';
 import 'package:flutter_pos/screens/homepage.dart';
+import 'package:flutter_pos/utils/Provider/contact_us_provider.dart';
 import 'package:flutter_pos/utils/Provider/home_provider.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/navigator.dart';
@@ -31,7 +32,10 @@ class _TabScreenState extends State<TabScreen> {
   void initState() {
     _pages = [
       UserInfo(),
-      ContactPage(),
+      ChangeNotifierProvider(
+        create: (_) => ContactUsProvider(),
+        child: ContactPage(),
+      ),
       ChangeNotifierProvider<HomeProvider>(
         create: (_) => HomeProvider(
           currentTabIndex: widget.homeTabIndex,

@@ -191,8 +191,8 @@ class MapOverlayState extends State<MapOverlay>
 
   @override
   void dispose() {
-    _googleMapController.dispose();
-    addressController.dispose();
+    _googleMapController?.dispose();
+    addressController?.dispose();
     super.dispose();
   }
 

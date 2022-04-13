@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
@@ -41,7 +42,7 @@ class API {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-        'Lang': Provider.of<ProviderControl>(context,listen: false).getlocal(),
+        'Lang': Provider.of<ProviderControl>(context, listen: false).getlocal(),
       });
       print(full_url);
       print(response.body);
@@ -49,8 +50,8 @@ class API {
     } catch (exception, stackTrace) {
       showDialog(
         context: context,
-        builder: (_) => ResultOverlay(
-            "${getTransrlate(context, 'ConnectionFailed')}"),
+        builder: (_) =>
+            ResultOverlay("${getTransrlate(context, 'ConnectionFailed')}"),
       );
     } finally {}
   }
@@ -66,25 +67,24 @@ class API {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-
     try {
       http.Response response = await http.post(full_url,
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-            'Lang': Provider.of<ProviderControl>(context,listen: false).getlocal(),
+            'Lang':
+                Provider.of<ProviderControl>(context, listen: false).getlocal(),
           },
           body: json.encode(body));
       print("body =${response.body}");
 
       return getAction(response);
     } catch (e) {
-
       showDialog(
         context: context,
-        builder: (_) => ResultOverlay(
-            "${getTransrlate(context, 'ConnectionFailed')}"),
+        builder: (_) =>
+            ResultOverlay("${getTransrlate(context, 'ConnectionFailed')}"),
       );
     } finally {}
   }
@@ -102,31 +102,47 @@ class API {
       'Authorization': 'Bearer  ${prefs.getString('token')}'
     }; // remove headers if not wanted
     try {
-
       var request = http.MultipartRequest(
-        'POST', Uri.parse(full_url.toString())); // your server url
-    request.fields.addAll(body); // any other fields required by your server
-    attachment==null?null:  request.files.add(await http.MultipartFile.fromPath('attachment', '${attachment.path}')); // file you want to upload
-    commercialDocs==null?null:  request.files.add(await http.MultipartFile.fromPath('commercialDocs', '${commercialDocs.path}')); // file you want to upload
-    taxCardDocs==null?null: request.files.add(await http.MultipartFile.fromPath('taxCardDocs', '${taxCardDocs.path}')); // file you want to upload
-    wholesaleDocs==null?null: request.files.add(await http.MultipartFile.fromPath('wholesaleDocs', '${wholesaleDocs.path}')); // file you want to upload
-    bankDocs==null?null: request.files.add(await http.MultipartFile.fromPath('bankDocs', '${bankDocs.path}')); // file you want to upload
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
-    //print(await request.files);
+          'POST', Uri.parse(full_url.toString())); // your server url
+      request.fields.addAll(body); // any other fields required by your server
+      attachment == null
+          ? null
+          : request.files.add(await http.MultipartFile.fromPath(
+              'attachment', '${attachment.path}')); // file you want to upload
+      commercialDocs == null
+          ? null
+          : request.files.add(await http.MultipartFile.fromPath(
+              'commercialDocs',
+              '${commercialDocs.path}')); // file you want to upload
+      taxCardDocs == null
+          ? null
+          : request.files.add(await http.MultipartFile.fromPath(
+              'taxCardDocs', '${taxCardDocs.path}')); // file you want to upload
+      wholesaleDocs == null
+          ? null
+          : request.files.add(await http.MultipartFile.fromPath('wholesaleDocs',
+              '${wholesaleDocs.path}')); // file you want to upload
+      bankDocs == null
+          ? null
+          : request.files.add(await http.MultipartFile.fromPath(
+              'bankDocs', '${bankDocs.path}')); // file you want to upload
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      //print(await request.files);
 
-    return response.stream.bytesToString().then((value) {
-      print(jsonDecode(value));
-      return jsonDecode(value);
-    } );
+      return response.stream.bytesToString().then((value) {
+        print(jsonDecode(value));
+        return jsonDecode(value);
+      });
     } catch (e) {
       showDialog(
         context: context,
-        builder: (_) => ResultOverlay(
-            "${getTransrlate(context, 'ConnectionFailed')}"),
+        builder: (_) =>
+            ResultOverlay("${getTransrlate(context, 'ConnectionFailed')}"),
       );
     } finally {}
   }
+
   Put(String url, Map<String, dynamic> body) async {
     final full_url =
         Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
@@ -137,20 +153,21 @@ class API {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-            'Lang': Provider.of<ProviderControl>(context,listen: false).getlocal(),
+            'Lang':
+                Provider.of<ProviderControl>(context, listen: false).getlocal(),
           },
           body: json.encode(body));
       return getAction(response);
     } catch (e) {
       showDialog(
         context: context,
-        builder: (_) => ResultOverlay(
-            "${getTransrlate(context, 'ConnectionFailed')}"),
+        builder: (_) =>
+            ResultOverlay("${getTransrlate(context, 'ConnectionFailed')}"),
       );
     } finally {}
   }
-  Delete(String url) async {
 
+  Delete(String url) async {
     final full_url =
         Uri.parse('${GlobalConfiguration().getString('api_base_url')}$url');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -161,27 +178,24 @@ class API {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer ${prefs.getString('token') ?? identifier}',
-          'Lang': Provider.of<ProviderControl>(context,listen: false).getlocal(),
+          'Lang':
+              Provider.of<ProviderControl>(context, listen: false).getlocal(),
         },
       );
       return getAction(response);
     } catch (e) {
       showDialog(
         context: context,
-        builder: (_) => ResultOverlay(
-            "${getTransrlate(context, 'ConnectionFailed')}"),
+        builder: (_) =>
+            ResultOverlay("${getTransrlate(context, 'ConnectionFailed')}"),
       );
     } finally {}
   }
-  getAction(http.Response response) {
 
+  getAction(http.Response response) {
     if (Check) {
       if (response.statusCode == 500) {
-        Nav.route(
-            context,
-            Maintenance(
-              erorr: response.body.toString()
-            ));
+        Nav.route(context, Maintenance(erorr: response.body.toString()));
       } else if (response.statusCode == 401) {
         Nav.routeReplacement(context, LoginPage());
       } else {

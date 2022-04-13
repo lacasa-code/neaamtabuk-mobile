@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/main.dart';
+import 'package:flutter_pos/utils/Provider/contact_us_provider.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
@@ -24,8 +25,19 @@ class _ContactPageState extends State<ContactPage> {
   }
 
   String phone = '0559751131', email = 'info@neaamtabuk.org';
+  ContactUsProvider _contactUsProvider;
+  var isInit = true;
 
-  final _formKey = GlobalKey<FormState>();
+  @override
+  void didChangeDependencies() {
+    if (isInit) {
+      _contactUsProvider =
+          Provider.of<ContactUsProvider>(context, listen: false)..init(context);
+
+      isInit = false;
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,79 +252,132 @@ class _ContactPageState extends State<ContactPage> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                child: Column(
-                  children: <Widget>[
-                    MyTextFormField(
-                      istitle: true,
-                      hintText: 'name',
-                      prefix: ImageIcon(
-                        AssetImage('assets/icons/user.png'),
-                      ),
-                    ),
-                    MyTextFormField(
-                      istitle: true,
-                      hintText: 'phone',
-                      prefix: ImageIcon(
-                        AssetImage('assets/icons/phone.png'),
-                      ),
-                    ),
-                    MyTextFormField(
-                      istitle: true,
-                      hintText: 'Email',
-                      prefix: ImageIcon(
-                        AssetImage('assets/icons/email.png'),
-                      ),
-                    ),
-                    MyTextFormField(
-                      istitle: true,
-                      hintText: 'Content',
-                      prefix: ImageIcon(
-                        AssetImage('assets/icons/edit.png'),
-                      ),
-                    ),
-                    Container(
-                      height: 42,
-                      width: ScreenUtil.getWidth(context),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xff2CA649),
-                            Color(0xff2CA649),
-                            Color(0xff4BB146),
-                            Color(0xff4BB146),
-                            Color(0xff66BA44),
-                            Color(0xff77C042),
-                          ],
+                child: Form(
+                  key: _contactUsProvider.formKey,
+                  child: Column(
+                    children: <Widget>[
+                      MyTextFormField(
+                        istitle: true,
+                        hintText: 'name',
+                        validator: (v) =>
+                            _contactUsProvider.nameValidate(v, context),
+                        controller: _contactUsProvider.nameController,
+                        prefix: ImageIcon(
+                          AssetImage('assets/icons/user.png'),
                         ),
                       ),
-                      margin: EdgeInsets.only(
-                        top: 20,
-                        bottom: 12,
-                      ),
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(8.0),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
-                            FocusScope.of(context)
-                                .requestFocus(new FocusNode());
-                            //  setState(() => _isLoading = true);
-                          }
-                        },
-                        child: Text(
-                          getTransrlate(context, 'Submit'),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
+                      MyTextFormField(
+                        istitle: true,
+                        controller: _contactUsProvider.mobileController,
+                        hintText: 'phone',
+                        validator: (v) =>
+                            _contactUsProvider.mobileValidate(v, context),
+                        keyboard_type: TextInputType.phone,
+                        prefix: ImageIcon(
+                          AssetImage('assets/icons/phone.png'),
                         ),
                       ),
-                    ),
-                  ],
+                      MyTextFormField(
+                        istitle: true,
+                        controller: _contactUsProvider.emailController,
+                        hintText: 'Email',
+                        validator: (v) =>
+                            _contactUsProvider.emailValidate(v, context),
+                        keyboard_type: TextInputType.emailAddress,
+                        prefix: ImageIcon(
+                          AssetImage('assets/icons/email.png'),
+                        ),
+                      ),
+                      MyTextFormField(
+                        istitle: true,
+                        controller: _contactUsProvider.contentController,
+                        hintText: 'Content',
+                        validator: (v) =>
+                            _contactUsProvider.contentValidate(v, context),
+                        prefix: ImageIcon(
+                          AssetImage('assets/icons/edit.png'),
+                        ),
+                      ),
+                      Consumer<ContactUsProvider>(builder: (context, snap, __) {
+                        return snap.isLoading
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xff2CA649),
+                                      Color(0xff2CA649),
+                                      Color(0xff4BB146),
+                                      Color(0xff4BB146),
+                                      Color(0xff66BA44),
+                                      Color(0xff77C042),
+                                    ],
+                                  ),
+                                ),
+                                child: FlatButton(
+                                  minWidth: ScreenUtil.getWidth(context) / 2.5,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      height: 30,
+                                      child: Center(
+                                          child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Colors.white),
+                                      )),
+                                    ),
+                                  ),
+                                  onPressed: () async {},
+                                ),
+                              )
+                            : Container(
+                                height: 42,
+                                width: ScreenUtil.getWidth(context),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xff2CA649),
+                                      Color(0xff2CA649),
+                                      Color(0xff4BB146),
+                                      Color(0xff4BB146),
+                                      Color(0xff66BA44),
+                                      Color(0xff77C042),
+                                    ],
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  top: 20,
+                                  bottom: 12,
+                                ),
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(8.0),
+                                  ),
+                                  onPressed: () async {
+                                    _contactUsProvider.contactUs(context);
+                                    // if (_formKey.currentState.validate()) {
+                                    //   _formKey.currentState.save();
+                                    //   FocusScope.of(context)
+                                    //       .requestFocus(new FocusNode());
+                                    //   //  setState(() => _isLoading = true);
+                                    // }
+                                  },
+                                  child: Text(
+                                    getTransrlate(context, 'Submit'),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              );
+                      }),
+                    ],
+                  ),
                 ),
               ),
               // Padding(

@@ -16,6 +16,7 @@ import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/navigator.dart';
 import 'package:flutter_pos/utils/screen_size.dart';
+import 'package:flutter_pos/utils/tab_provider.dart';
 import 'package:flutter_pos/widget/MapOverlay.dart';
 import 'package:flutter_pos/widget/ResultOverlay.dart';
 import 'package:flutter_pos/widget/custom_loading.dart';
@@ -770,7 +771,13 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
                   success: true,
                 )).whenComplete(() {
           Navigator.pop(context);
-          Nav.routeReplacement(context, DonorOrders());
+          Nav.routeReplacement(
+            context,
+            ChangeNotifierProvider<TabProvider>(
+              create: (_) => TabProvider(),
+              child: TabScreen(),
+            ),
+          );
         });
       } else {
         showDialog(

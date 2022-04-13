@@ -398,10 +398,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                                                 SizedBox(
                                                   height: 5,
                                                 ),
-                                                Container(
-                                                  height: 1,
-                                                  color: Colors.black12,
-                                                ),
+                                              
                                               ],
                                             ),
                                           ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -157,6 +159,7 @@ class _LoginFormState extends State<LoginForm> {
                             'password': model.password,
                           }).then((value) {
                             print(value);
+                            log('phone is:=> ${value['data']['mobile'] ?? 'null phone'}');
                             setState(() => isloading = false);
                             if (value != null) {
                               if (value['status'] == true) {
@@ -164,6 +167,8 @@ class _LoginFormState extends State<LoginForm> {
                                 var user = value['data'];
                                 prefs.setString(
                                     "token", "${value['access_token']}");
+                                prefs.setString(
+                                    "mobile", "${value['data']['mobile']}");
                                 prefs.setString(
                                     "role_id", "${user['role_id']}");
                                 prefs.setString(

@@ -31,7 +31,7 @@ class UserInfo extends StatefulWidget {
 
 class _UserInfoState extends State<UserInfo> {
   String name, email, roleId;
-  bool _status = true;
+  bool _status = false;
   final FocusNode myFocusNode = FocusNode();
   bool _isLoading = false;
   bool loading = false;
@@ -864,9 +864,7 @@ class _UserInfoState extends State<UserInfo> {
                                                 ),
                                               )
                                             : Container(),
-                                        _status
-                                            ? _getEditIcon()
-                                            : _getActionButtons(),
+                                        _getActionButtons(),
                                         SizedBox(
                                           height: 20,
                                         )
@@ -903,21 +901,35 @@ class _UserInfoState extends State<UserInfo> {
               child: Padding(
                 padding: EdgeInsets.only(right: 10.0),
                 child: loading
-                    ? FlatButton(
-                        minWidth: ScreenUtil.getWidth(context) / 2.5,
-                        color: Colors.green,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 30,
-                            child: Center(
-                                child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
-                            )),
+                    ? Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xff2CA649),
+                              Color(0xff2CA649),
+                              Color(0xff4BB146),
+                              Color(0xff4BB146),
+                              Color(0xff66BA44),
+                              Color(0xff77C042),
+                            ],
                           ),
                         ),
-                        onPressed: () async {},
+                        child: FlatButton(
+                          minWidth: ScreenUtil.getWidth(context) / 2.5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 30,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
+                              )),
+                            ),
+                          ),
+                          onPressed: () async {},
+                        ),
                       )
                     : InkWell(
                         onTap: () async {
@@ -969,6 +981,7 @@ class _UserInfoState extends State<UserInfo> {
                         child: Container(
                             width: ScreenUtil.getWidth(context) / 2.5,
                             decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
                               gradient: LinearGradient(
                                 colors: [
                                   Color(0xff2CA649),
@@ -993,43 +1006,43 @@ class _UserInfoState extends State<UserInfo> {
               ),
               flex: 2,
             ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _status = true;
-                      FocusScope.of(context).requestFocus(new FocusNode());
-                    });
-                  },
-                  child: Container(
-                      width: ScreenUtil.getWidth(context) / 2.5,
-                      padding: const EdgeInsets.all(10.0),
-                      height: 42,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xff2CA649),
-                            Color(0xff2CA649),
-                            Color(0xff4BB146),
-                            Color(0xff4BB146),
-                            Color(0xff66BA44),
-                            Color(0xff77C042),
-                          ],
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          getTransrlate(context, 'cancel'),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                      )),
-                ),
-              ),
-              flex: 2,
-            ),
+            // Expanded(
+            //   child: Padding(
+            //     padding: EdgeInsets.only(left: 10.0, right: 10.0),
+            //     child: GestureDetector(
+            //       onTap: () {
+            //         setState(() {
+            //           _status = true;
+            //           FocusScope.of(context).requestFocus(new FocusNode());
+            //         });
+            //       },
+            //       child: Container(
+            //           width: ScreenUtil.getWidth(context) / 2.5,
+            //           padding: const EdgeInsets.all(10.0),
+            //           height: 42,
+            //           decoration: BoxDecoration(
+            //             gradient: LinearGradient(
+            //               colors: [
+            //                 Color(0xff2CA649),
+            //                 Color(0xff2CA649),
+            //                 Color(0xff4BB146),
+            //                 Color(0xff4BB146),
+            //                 Color(0xff66BA44),
+            //                 Color(0xff77C042),
+            //               ],
+            //             ),
+            //           ),
+            //           child: Center(
+            //             child: Text(
+            //               getTransrlate(context, 'cancel'),
+            //               style: TextStyle(
+            //                   fontWeight: FontWeight.bold, color: Colors.white),
+            //             ),
+            //           )),
+            //     ),
+            //   ),
+            //   flex: 2,
+            // ),
           ],
         ),
       ),

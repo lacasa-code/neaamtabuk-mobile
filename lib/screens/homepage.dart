@@ -35,7 +35,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final providerData = Provider.of<ProviderData>(context);
     final theme = Provider.of<ProviderControl>(context);
     return Scaffold(
       body: Consumer<HomeProvider>(

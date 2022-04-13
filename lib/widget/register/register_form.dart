@@ -101,7 +101,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
                 MyTextFormField(
                   istitle: true,
-
+                  keyboard_type: TextInputType.emailAddress,
                   hintText: 'Email',
                   prefix: Icon(
                     Icons.email_outlined,
