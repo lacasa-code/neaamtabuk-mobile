@@ -96,7 +96,7 @@ class MapOverlayState extends State<MapOverlay>
                         child: MyTextFormField(
                           controller: addressController,
                           labelText: getTransrlate(context, 'AddressTitle'),
-                          // hintText: getTransrlate(context, 'AddressTitle'),
+                          hintText: 'AddressTitle',
                           isEmail: true,
                           enabled: false,
                           validator: (String value) {
@@ -191,8 +191,7 @@ class MapOverlayState extends State<MapOverlay>
 
   @override
   void dispose() {
-    _googleMapController?.dispose();
-    addressController?.dispose();
+    _googleMapController.dispose();
     super.dispose();
   }
 
@@ -200,7 +199,7 @@ class MapOverlayState extends State<MapOverlay>
     setState(() {
       initialCameraPosition = CameraPosition(zoom: 15, target: latLng);
     });
-    _googleMapController?.animateCamera(CameraUpdate.newCameraPosition(
+    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(zoom: 15, target: latLng)));
     _addMarker(latLng);
   }

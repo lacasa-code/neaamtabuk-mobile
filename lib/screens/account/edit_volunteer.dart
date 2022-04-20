@@ -770,7 +770,6 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
                   '${value['message']}',
                   success: true,
                 )).whenComplete(() {
-          Navigator.pop(context);
           Nav.routeReplacement(
             context,
             ChangeNotifierProvider<TabProvider>(

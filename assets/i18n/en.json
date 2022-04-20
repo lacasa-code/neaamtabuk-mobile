@@ -143,6 +143,7 @@
   "nosolutionTickit": "the problem was not solved",
   "ConnectionFailed": "Connection Failed",
   "from": "from",
+  "address_required": "address required",
   "content_required": "content is required",
   "name_required": "the name is required",
   "email_required": "email is required",

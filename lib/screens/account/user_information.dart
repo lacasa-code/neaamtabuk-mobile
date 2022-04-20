@@ -196,7 +196,7 @@ class _UserInfoState extends State<UserInfo> {
                                             children: <Widget>[
                                               MyTextFormField(
                                                 intialLabel: name,
-                                                enabled: !_status,
+                                                enabled: false,
                                                 istitle: true,
                                                 hintText: 'name' ?? '',
                                                 prefix: ImageIcon(
@@ -309,6 +309,12 @@ class _UserInfoState extends State<UserInfo> {
                                                   istitle: true,
                                                   hintText: 'AddressTitle',
                                                   enabled: !_status,
+                                                  validator: (String v) {
+                                                    if (v.isEmpty) {
+                                                      return getTransrlate(context, 'address_required');
+                                                    }
+                                                    return null;
+                                                  },
                                                   prefix: ImageIcon(
                                                     AssetImage(
                                                         'assets/icons/location.png'),
@@ -964,7 +970,6 @@ class _UserInfoState extends State<UserInfo> {
                                             success: true,
                                           ));
                                   setState(() {
-                                    _status = true;
                                     FocusScope.of(context)
                                         .requestFocus(new FocusNode());
                                   });

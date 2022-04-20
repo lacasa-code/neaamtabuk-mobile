@@ -95,7 +95,7 @@ class _SettingState extends State<Setting> {
                     // height: ScreenUtil.getHeight(context) / 4,
                   ),
                   Positioned(
-                    bottom: -util.ScreenUtil().setWidth(30),
+                    bottom: -util.ScreenUtil().setHeight(30),
                     child: Container(
                       child: Image.asset(
                         'assets/images/logoText.png',

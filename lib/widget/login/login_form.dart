@@ -159,7 +159,7 @@ class _LoginFormState extends State<LoginForm> {
                             'password': model.password,
                           }).then((value) {
                             print(value);
-                            log('phone is:=> ${value['data']['mobile'] ?? 'null phone'}');
+                            
                             setState(() => isloading = false);
                             if (value != null) {
                               if (value['status'] == true) {

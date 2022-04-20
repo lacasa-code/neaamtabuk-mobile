@@ -94,6 +94,7 @@
   "ThankYou": "شكرا لك",
   "from": "من",
   "to": "الى",
+  "address_required": "العنوان مطلوب",
   "content_required": "المحتوى مطلوب",
   "name_required": "الاسم مطلوب",
   "email_required": "البريد الإلكتروني مطلوب",

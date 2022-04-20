@@ -333,7 +333,7 @@ class _OrdersState extends State<Orders> {
                                             height: 10,
                                           ),
                                           orders[index].delivary_date != null
-                                              ? !DateTime.tryParse(orders[index]
+                                              ? DateTime.tryParse(orders[index]
                                                           .delivary_date)
                                                       .isBefore(DateTime.now())
                                                   ? Container()
