@@ -50,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
                   MyTextFormField(
                     intialLabel: '',
                     istitle: true,
-                    keyboard_type: TextInputType.emailAddress,
+                    keyboardType: TextInputType.emailAddress,
                     hintText: 'mail',
                     prefix: ImageIcon(
                       AssetImage(
@@ -83,7 +83,7 @@ class _LoginFormState extends State<LoginForm> {
                         'assets/icons/lock.png',
                       ),
                     ),
-                    keyboard_type: TextInputType.multiline,
+                    keyboardType: TextInputType.multiline,
                     // hintText: getTransrlate(context, 'password'),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -159,7 +159,7 @@ class _LoginFormState extends State<LoginForm> {
                             'password': model.password,
                           }).then((value) {
                             print(value);
-                            
+
                             setState(() => isloading = false);
                             if (value != null) {
                               if (value['status'] == true) {

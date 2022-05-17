@@ -62,7 +62,7 @@ class _changePasswordState extends State<changePassword> {
                     children: [
                       MyTextFormField(
                         intialLabel: email ?? ' ',
-                        keyboard_type: TextInputType.emailAddress,
+                        keyboardType: TextInputType.emailAddress,
                         labelText: getTransrlate(context, 'Email'),
                         // hintText: getTransrlate(context, 'Email'),
                         isPhone: true,
@@ -84,7 +84,7 @@ class _changePasswordState extends State<changePassword> {
                       ),
                       MyTextFormField(
                         intialLabel: '',
-                        keyboard_type: TextInputType.visiblePassword,
+                        keyboardType: TextInputType.visiblePassword,
                         labelText: getTransrlate(context, 'password'),
                         // hintText: getTransrlate(context, 'password'),
                         suffixIcon: IconButton(
@@ -116,7 +116,7 @@ class _changePasswordState extends State<changePassword> {
                       ),
                       MyTextFormField(
                         intialLabel: '',
-                        keyboard_type: TextInputType.visiblePassword,
+                        keyboardType: TextInputType.visiblePassword,
                         labelText: getTransrlate(context, 'NewPassword'),
                         // hintText: getTransrlate(context, 'NewPassword'),
                         suffixIcon: IconButton(
@@ -154,7 +154,7 @@ class _changePasswordState extends State<changePassword> {
                       ),
                       MyTextFormField(
                         intialLabel: '',
-                        keyboard_type: TextInputType.emailAddress,
+                        keyboardType: TextInputType.emailAddress,
                         labelText: getTransrlate(context, 'ConfirmPassword'),
                         // hintText: getTransrlate(context, 'ConfirmPassword'),
                         suffixIcon: IconButton(

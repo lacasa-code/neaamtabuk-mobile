@@ -1,7 +1,7 @@
 name: flutter_pos
 description: A new Flutter application.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.3+8
 
@@ -38,7 +38,7 @@ dependencies:
   http: ^0.13.1
   intl: ^0.17.0
   jiffy: ^4.1.0
-  location: ^4.3.0
+  location: ^4.4.0
   lottie: ^1.2.2
   onesignal_flutter: ^3.2.3
   plugin_platform_interface: ^2.0.0
@@ -60,7 +60,6 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

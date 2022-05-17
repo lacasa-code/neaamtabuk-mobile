@@ -101,7 +101,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
                 MyTextFormField(
                   istitle: true,
-                  keyboard_type: TextInputType.emailAddress,
+                  keyboardType: TextInputType.emailAddress,
                   hintText: 'Email',
                   prefix: Icon(
                     Icons.email_outlined,
@@ -133,6 +133,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
                     inputFormatters: [
                       new LengthLimitingTextInputFormatter(9),
+                      FilteringTextInputFormatter.digitsOnly,
                     ],
                     textDirection: TextDirection.ltr,
                     prefix: ImageIcon(
@@ -156,7 +157,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     onSaved: (String value) {
                       model.mobile = value;
                     },
-                    keyboard_type: TextInputType.phone,
+                    keyboardType: TextInputType.phone,
                   ),
                 ),
                 InkWell(
@@ -385,7 +386,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           _formKey.currentState.save();
                           return null;
                         },
-                        keyboard_type: TextInputType.number,
+                        keyboardType: TextInputType.number,
                         onSaved: (String value) {
                           model.family_members = int.tryParse(value ?? '0');
                         },
@@ -616,10 +617,19 @@ class _RegisterFormState extends State<RegisterForm> {
           Nav.routeReplacement(context, SplashScreen());
         });
       } else {
+        var error = value["message"];
+        String errorMessage = '';
+        if (error.runtimeType == String) {
+          errorMessage = value["message"];
+        } else {
+          (error as Map<String, dynamic>).forEach((key, value) {
+            errorMessage += '${value[0]} \n';
+          });
+        }
         showDialog(
             context: context,
             builder: (_) =>
-                ResultOverlay('${value['message']}\n${value['errors']}'));
+                ResultOverlay('$errorMessage \n${value['errors'] ?? ''}'));
 
         setState(() => _isLoading = false);
       }

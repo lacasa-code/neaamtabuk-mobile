@@ -272,7 +272,7 @@ class _UserInfoState extends State<UserInfo> {
                                                   });
                                                 },
                                                 child: MyTextFormField(
-                                                  autoFocus: !_status,
+                                                  // autoFocus: !_status,
                                                   onSaved: (String val) =>
                                                       userModal.address = val,
                                                   onChange: (String val) {
@@ -311,7 +311,9 @@ class _UserInfoState extends State<UserInfo> {
                                                   enabled: !_status,
                                                   validator: (String v) {
                                                     if (v.isEmpty) {
-                                                      return getTransrlate(context, 'address_required');
+                                                      return getTransrlate(
+                                                          context,
+                                                          'address_required');
                                                     }
                                                     return null;
                                                   },
@@ -861,7 +863,7 @@ class _UserInfoState extends State<UserInfo> {
                                                         .save();
                                                     return null;
                                                   },
-                                                  keyboard_type:
+                                                  keyboardType:
                                                       TextInputType.number,
                                                   onSaved: (String value) {
                                                     userModal.family_member =
