@@ -240,9 +240,9 @@ class _UserInfoState extends State<UserInfo> {
                                                       roleId != "3") {
                                                     return getTransrlate(
                                                         context, 'mail');
-                                                  } else if (!RegExp(
-                                                          r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                                                      .hasMatch(value)) {
+                                                  } else if (value.isNotEmpty &&
+                                                      !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                                          .hasMatch(value)) {
                                                     return getTransrlate(
                                                         context,
                                                         'invalidemail');
@@ -948,7 +948,9 @@ class _UserInfoState extends State<UserInfo> {
                             setState(() => loading = true);
                             API(context).post('update', {
                               "username": userModal.name,
-                              "email": userModal.email,
+                              if (userModal.email.isNotEmpty) ...{
+                                "email": userModal.email,
+                              },
                               "address": userModal.address,
                               "mobile": userModal.phoneNo,
                               "gender": userModal.gender,

@@ -111,8 +111,9 @@ class _RegisterFormState extends State<RegisterForm> {
                   validator: (String value) {
                     if (value.isEmpty && widget.roleId != 3) {
                       return getTransrlate(context, 'requiredempty');
-                    } else if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
-                        .hasMatch(value)) {
+                    } else if (value.isNotEmpty &&
+                        !RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                            .hasMatch(value)) {
                       return getTransrlate(context, 'invalidemail');
                     }
                     _formKey.currentState.save();
@@ -576,7 +577,9 @@ class _RegisterFormState extends State<RegisterForm> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     API(context).post(widget.roleId == 3 ? 'register/recipent' : 'register', {
       'username': model.Name,
-      'email': model.email,
+      if (model.email.isNotEmpty) ...{
+        'email': model.email,
+      },
       'password': model.password,
       'address': model.address,
       'mobile': model.mobile,
