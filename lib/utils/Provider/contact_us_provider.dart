@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/model/user_profile_model.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/shared_prefs_provider.dart';
 import 'package:flutter_pos/utils/tab_provider.dart';
@@ -16,11 +17,20 @@ class ContactUsProvider with ChangeNotifier {
   var _isLoading = false;
   bool get isLoading => _isLoading;
 
-  init(BuildContext context) {
-    var prefs = Provider.of<SharedPrefsProvider>(context, listen: false).prefs;
-    nameController.text = prefs.getString('user_name');
-    emailController.text = prefs.getString('user_email');
-    mobileController.text = prefs.getString('mobile');
+  init(BuildContext context) async {
+    try{
+
+    var response = await API(context).get('userProfile');
+    if (response != null) {
+      var model = UserProfileModel.fromJson(response);
+      nameController.text = model?.data?.username;
+      emailController.text = model?.data?.email;
+      mobileController.text = model?.data?.phone;
+    }
+    notifyListeners();
+    }catch(eer){
+      
+    }
   }
 
   String nameValidate(String v, context) {

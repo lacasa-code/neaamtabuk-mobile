@@ -50,21 +50,14 @@ class _LoginFormState extends State<LoginForm> {
                   MyTextFormField(
                     intialLabel: '',
                     istitle: true,
-                    keyboard_type: TextInputType.emailAddress,
-                    hintText: 'mail',
-                    prefix: ImageIcon(
-                      AssetImage(
-                        'assets/icons/email.png',
-                      ),
-                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    hintText: 'email_or_phone',
+                    prefix: Icon(Icons.person_outlined),
                     // hintText: getTransrlate(context, 'mail'),
                     isPhone: true,
                     validator: (String value) {
                       if (value.isEmpty) {
                         return getTransrlate(context, 'requiredempty');
-                      } else if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
-                          .hasMatch(value)) {
-                        return getTransrlate(context, 'invalidemail');
                       }
                       _formKey.currentState.save();
                       return null;
@@ -83,7 +76,7 @@ class _LoginFormState extends State<LoginForm> {
                         'assets/icons/lock.png',
                       ),
                     ),
-                    keyboard_type: TextInputType.multiline,
+                    keyboardType: TextInputType.multiline,
                     // hintText: getTransrlate(context, 'password'),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -155,11 +148,11 @@ class _LoginFormState extends State<LoginForm> {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           API(context, Check: false).post('login', {
-                            'email': model.email,
+                            'login': model.email,
                             'password': model.password,
                           }).then((value) {
                             print(value);
-                            
+
                             setState(() => isloading = false);
                             if (value != null) {
                               if (value['status'] == true) {

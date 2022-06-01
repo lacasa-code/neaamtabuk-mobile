@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pos/main.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
 import 'package:flutter_pos/utils/local/LanguageTranslated.dart';
 import 'package:flutter_pos/utils/shared_prefs_provider.dart';
@@ -38,7 +39,12 @@ class _PageHeaderWidgetState extends State<PageHeaderWidget> {
   Widget build(BuildContext context) {
     var roleId = sharedPreferences.getString('role_id');
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+      padding: EdgeInsets.only(
+        top: ScreenUtil().setHeight(45),
+        left: 25,
+        right: 25,
+        bottom: 30,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

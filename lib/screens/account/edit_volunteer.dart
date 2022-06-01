@@ -426,8 +426,7 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
                                           //   _formKey.currentState.save();
                                           //   return null;
                                           // },
-                                          keyboard_type:
-                                              TextInputType.multiline,
+                                          keyboardType: TextInputType.multiline,
                                           onSaved: (String value) {
                                             desc = value;
                                           },
@@ -458,7 +457,7 @@ class _EditVolunteerPageState extends State<EditVolunteerPage> {
                                             _formKey.currentState.save();
                                             return null;
                                           },
-                                          keyboard_type: TextInputType.number,
+                                          keyboardType: TextInputType.number,
                                           onSaved: (String value) {
                                             noOfMeals = value;
                                           },

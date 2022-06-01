@@ -36,7 +36,7 @@ class _LostPasswordState extends State<LostPassword> {
               children: [
                 MyTextFormField(
                   intialLabel: '',
-                  keyboard_type: TextInputType.emailAddress,
+                  keyboardType: TextInputType.emailAddress,
                   labelText: getTransrlate(context, 'mail'),
                   isPhone: true,
                   validator: (String value) {

@@ -122,9 +122,6 @@ class _RegisterFormVendorState extends State<RegisterFormVendor> {
                       return getTransrlate(context, 'requiredempty');
                     } else if (value.length < 8) {
                       return getTransrlate(context, 'requiredlength');
-                    } else if (!value.contains(new RegExp(
-                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))) {
-                      return "${getTransrlate(context, 'invalidpass')}";
                     }
                     _formKey.currentState.save();
 

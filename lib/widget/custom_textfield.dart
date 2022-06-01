@@ -24,7 +24,7 @@ class MyTextFormField extends StatelessWidget {
   final bool enabled;
   final bool isPhone;
   final Widget prefix;
-  final TextInputType keyboard_type;
+  final TextInputType keyboardType;
   final String intialLabel;
   final GestureTapCallback press;
   final FocusNode focus;
@@ -50,7 +50,7 @@ class MyTextFormField extends StatelessWidget {
       this.suffixIcon,
       this.textDirection,
       this.prefix,
-      this.keyboard_type,
+      this.keyboardType,
       this.intialLabel,
       this.inputFormatters,
       this.onChange,
@@ -86,6 +86,7 @@ class MyTextFormField extends StatelessWidget {
             autofocus: autoFocus,
             textAlign: textAlign ?? TextAlign.start,
             controller: controller,
+
             focusNode: focus,
             minLines: minLines,
             maxLines: isPassword ? 1 : maxLines,
@@ -100,7 +101,7 @@ class MyTextFormField extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: Colors.white,
               prefixIcon: prefix,
-              
+
               hintText:
                   hintText == null ? null : getTransrlate(context, hintText),
               //  hintText: hintText,
@@ -137,7 +138,7 @@ class MyTextFormField extends StatelessWidget {
             onSaved: onSaved,
             enabled: enabled,
             onChanged: onChange,
-            keyboardType: keyboard_type ?? TextInputType.multiline,
+            keyboardType: keyboardType ?? TextInputType.multiline,
           ),
         ],
       ),

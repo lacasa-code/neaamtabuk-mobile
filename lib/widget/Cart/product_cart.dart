@@ -245,7 +245,7 @@ class _ProductCartState extends State<ProductCart> {
                                         istitle: true,
                                         intialLabel:
                                             widget.carts.quantity.toString(),
-                                        keyboard_type: TextInputType.number,
+                                        keyboardType: TextInputType.number,
                                         labelText:
                                             getTransrlate(context, 'quantity'),
                                         // hintText: getTransrlate(
@@ -391,7 +391,10 @@ class _ProductCartState extends State<ProductCart> {
         if (value['status_code'] == 200) {
           showDialog(
               context: context,
-              builder: (_) => ResultOverlay(value['message'],success: true,));
+              builder: (_) => ResultOverlay(
+                    value['message'],
+                    success: true,
+                  ));
           ServiceData.getCart(context);
         } else {
           showDialog(

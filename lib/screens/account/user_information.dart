@@ -236,7 +236,8 @@ class _UserInfoState extends State<UserInfo> {
                                                 onChange: (String val) =>
                                                     userModal.email = val,
                                                 validator: (String value) {
-                                                  if (value.isEmpty) {
+                                                  if (value.isEmpty &&
+                                                      roleId != "3") {
                                                     return getTransrlate(
                                                         context, 'mail');
                                                   } else if (!RegExp(
@@ -272,7 +273,7 @@ class _UserInfoState extends State<UserInfo> {
                                                   });
                                                 },
                                                 child: MyTextFormField(
-                                                  autoFocus: !_status,
+                                                  // autoFocus: !_status,
                                                   onSaved: (String val) =>
                                                       userModal.address = val,
                                                   onChange: (String val) {
@@ -311,7 +312,9 @@ class _UserInfoState extends State<UserInfo> {
                                                   enabled: !_status,
                                                   validator: (String v) {
                                                     if (v.isEmpty) {
-                                                      return getTransrlate(context, 'address_required');
+                                                      return getTransrlate(
+                                                          context,
+                                                          'address_required');
                                                     }
                                                     return null;
                                                   },
@@ -861,7 +864,7 @@ class _UserInfoState extends State<UserInfo> {
                                                         .save();
                                                     return null;
                                                   },
-                                                  keyboard_type:
+                                                  keyboardType:
                                                       TextInputType.number,
                                                   onSaved: (String value) {
                                                     userModal.family_member =
