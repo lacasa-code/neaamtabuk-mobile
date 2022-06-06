@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -946,6 +948,23 @@ class _UserInfoState extends State<UserInfo> {
                             _formKey.currentState.save();
                             //  final SharedPreferences prefs = await SharedPreferences.getInstance();
                             setState(() => loading = true);
+                            log('body =>${{
+                              "username": userModal.name,
+                              if (userModal.email.isNotEmpty) ...{
+                              "email": userModal.email,
+                              },
+                              "address": userModal.address,
+                              "mobile": userModal.phoneNo,
+                              "gender": userModal.gender,
+                              "city": userModal.city,
+                              "district": userModal.district,
+                              "region": userModal.region,
+                              "longitude": userModal.longitude,
+                              "latitude": userModal.latitude,
+                              "family_members":
+                                  int.tryParse(userModal.family_member ?? '0'),
+                              "role_id": roleId,
+                            }}');
                             API(context).post('update', {
                               "username": userModal.name,
                               if (userModal.email.isNotEmpty) ...{

@@ -1,4 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
+import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pos/utils/Provider/provider.dart';
@@ -26,14 +28,12 @@ class MapOverlayState extends State<MapOverlay>
   Animation<double> scaleAnimation;
   GoogleMapController _googleMapController;
   TextEditingController addressController = TextEditingController();
-  LocationData myLocation;
+  Position myLocation;
 
   var initialCameraPosition =
       CameraPosition(zoom: 15, target: LatLng(33.0, 30));
   Marker _origin;
   Location location = new Location();
-  final formKey = GlobalKey<FormState>();
-  @override
   void initState() {
     super.initState();
 
@@ -75,20 +75,22 @@ class MapOverlayState extends State<MapOverlay>
                               child: Container(
                                 height: ScreenUtil.getWidth(context) / 2,
                                 child: GoogleMap(
-                                  myLocationEnabled: true,
-                                  compassEnabled: true,
-                                  tiltGesturesEnabled: false,
-                                  zoomControlsEnabled: false,
-                                  mapType: MapType.normal,
-                                  onLongPress: _addMarker,
-                                  onTap: _addMarker,
-                                  markers: {
-                                    if (_origin != null) _origin,
-                                  },
-                                  initialCameraPosition: initialCameraPosition,
-                                  onMapCreated: (controller) =>
-                                      _googleMapController = controller,
-                                ),
+                                    myLocationEnabled: true,
+                                    compassEnabled: true,
+                                    tiltGesturesEnabled: false,
+                                    zoomControlsEnabled: false,
+                                    mapType: MapType.normal,
+                                    onLongPress: _addMarker,
+                                    onTap: _addMarker,
+                                    markers: {
+                                      if (_origin != null) _origin,
+                                    },
+                                    initialCameraPosition:
+                                        initialCameraPosition,
+                                    onMapCreated: (controller) => setState(
+                                          () =>
+                                              _googleMapController = controller,
+                                        )),
                               ),
                             ),
                       Padding(
@@ -167,12 +169,13 @@ class MapOverlayState extends State<MapOverlay>
   }
 
   getUserLocation() async {
-    print('fooooo');
+    print('FOOOFOOOOFOFOOFFOFOOFOFOFOFOOFOFOFOFOFOFOFOFO');
     //call this async method from whereever you need
     String error;
     Location location = new Location();
     try {
-      myLocation = await location.getLocation();
+      myLocation = await Geolocator.getCurrentPosition();
+      print('GDFDF');
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
         error = 'please grant permission';
@@ -184,7 +187,7 @@ class MapOverlayState extends State<MapOverlay>
       }
       myLocation = null;
     }
-
+    log('message');
     LatLng latLng = new LatLng(myLocation.latitude, myLocation.longitude);
     _goToPosition1(latLng);
   }
@@ -195,12 +198,17 @@ class MapOverlayState extends State<MapOverlay>
     super.dispose();
   }
 
-  void _goToPosition1(LatLng latLng) {
+  void _goToPosition1(LatLng latLng) async {
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
     setState(() {
       initialCameraPosition = CameraPosition(zoom: 15, target: latLng);
     });
     _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(zoom: 15, target: latLng)));
+    log('location get successfully');
+
     _addMarker(latLng);
   }
 }
