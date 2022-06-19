@@ -109,9 +109,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   // hintText: getTransrlate(context, 'Email'),
                   isEmail: true,
                   validator: (String value) {
-                    if (value.isEmpty && widget.roleId != 3) {
-                      return getTransrlate(context, 'requiredempty');
-                    } else if (value.isNotEmpty &&
+                    if (value.isNotEmpty &&
                         !RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
                             .hasMatch(value)) {
                       return getTransrlate(context, 'invalidemail');
@@ -575,7 +573,7 @@ class _RegisterFormState extends State<RegisterForm> {
   register(ProviderControl themeColor) async {
     print('object');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    API(context).post(widget.roleId == 3 ? 'register/recipent' : 'register', {
+    API(context).post('register', {
       'username': model.Name,
       if (model.email.isNotEmpty) ...{
         'email': model.email,
@@ -598,9 +596,10 @@ class _RegisterFormState extends State<RegisterForm> {
       if (value['status'] == true) {
         setState(() => _isLoading = false);
         var user = value['data'];
-        prefs.setString("user_email", user['email']);
+        prefs.setString("user_email", user['email'] ?? '');
         prefs.setString("user_name", user['username']);
-        prefs.setString("token", value['access_token'] ?? '');
+        prefs.setString("token",
+            value['access_token'] == null ? '' : value['access_token']);
         prefs.setString("address", "${user['address']}");
         prefs.setString("lat", "${user['latitude']}");
         prefs.setString("lang", "${user['longitude']}");

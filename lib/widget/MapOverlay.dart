@@ -174,6 +174,15 @@ class MapOverlayState extends State<MapOverlay>
     String error;
     Location location = new Location();
     try {
+      var permission = await Geolocator.checkPermission();
+      if (permission != LocationPermission.always &&
+          permission != LocationPermission.whileInUse) {
+        permission = await Geolocator.requestPermission();
+        if (permission != LocationPermission.always &&
+            permission != LocationPermission.whileInUse) {
+          Navigator.pop(context);
+        }
+      }
       myLocation = await Geolocator.getCurrentPosition();
       print('GDFDF');
     } on PlatformException catch (e) {

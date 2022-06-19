@@ -5,7 +5,7 @@ import 'package:flutter_pos/utils/screen_size.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NotFoundProduct extends StatelessWidget {
-   NotFoundProduct({Key key,this.title}) : super(key: key);
+  NotFoundProduct({Key key, this.title}) : super(key: key);
   String title;
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,9 @@ class NotFoundProduct extends StatelessWidget {
                 height: 15,
               ),
               Text(
-                "${title??getTransrlate(context, 'Empty')}",
+                "${title ?? getTransrlate(context, 'Empty')}",
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black45,fontSize: 20),
+                style: TextStyle(color: Colors.black45, fontSize: 20),
               ),
             ],
           ),

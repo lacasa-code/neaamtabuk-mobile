@@ -238,11 +238,7 @@ class _UserInfoState extends State<UserInfo> {
                                                 onChange: (String val) =>
                                                     userModal.email = val,
                                                 validator: (String value) {
-                                                  if (value.isEmpty &&
-                                                      roleId != "3") {
-                                                    return getTransrlate(
-                                                        context, 'mail');
-                                                  } else if (value.isNotEmpty &&
+                                                  if (value.trim().isNotEmpty &&
                                                       !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
                                                           .hasMatch(value)) {
                                                     return getTransrlate(
@@ -950,8 +946,8 @@ class _UserInfoState extends State<UserInfo> {
                             setState(() => loading = true);
                             log('body =>${{
                               "username": userModal.name,
-                              if (userModal.email.isNotEmpty) ...{
-                              "email": userModal.email,
+                              if (userModal.email.trim().isNotEmpty) ...{
+                                "email": userModal.email,
                               },
                               "address": userModal.address,
                               "mobile": userModal.phoneNo,
@@ -967,7 +963,7 @@ class _UserInfoState extends State<UserInfo> {
                             }}');
                             API(context).post('update', {
                               "username": userModal.name,
-                              if (userModal.email.isNotEmpty) ...{
+                              if (userModal.email.trim().isNotEmpty) ...{
                                 "email": userModal.email,
                               },
                               "address": userModal.address,
@@ -998,10 +994,23 @@ class _UserInfoState extends State<UserInfo> {
                                         .requestFocus(new FocusNode());
                                   });
                                 } else {
+                                  String errorMessage = '';
+
+                                  if (value['message'].runtimeType == String) {
+                                    errorMessage = value['message'];
+                                  } else {
+                                    if (value['message'] != null) {
+                                      (value['message'] as Map<String, dynamic>)
+                                          .forEach((key, value) {
+                                        errorMessage += '${value[0]} \n';
+                                      });
+                                    }
+                                  }
+
                                   showDialog(
                                       context: context,
                                       builder: (_) =>
-                                          ResultOverlay("${value['message']}"));
+                                          ResultOverlay("$errorMessage"));
                                 }
                               }
                             });

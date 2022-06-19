@@ -46,7 +46,7 @@ class _DonorOrdersState extends State<DonorOrders> {
                 child: Container(
                   child: Column(
                     children: [
-                      orders == null
+                      orders == null || orders.isEmpty
                           ? NotFoundProduct(
                               title: getTransrlate(context, 'NoOrder'),
                             )
